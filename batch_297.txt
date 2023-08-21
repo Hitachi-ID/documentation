@@ -1,0 +1,355 @@
+Criteria Description
+User ID Type the pr ofile  ID of the user for whom you want to
+generate the report. Alt ernativ ely ,  you can search for one
+or more pr ofile  IDs.
+User name Type the full name of the user for whom you want to
+generate the report.
+Users must have accounts on at least one of these target
+systemsType a comma-and-space-delimited list of target system
+IDs on which users must have accounts. Alt ernativ ely ,  you
+can search for one or more target systems.
+Target system group Select the target system groups that you want to add to
+the report output.
+Password e xpir ation  date Choose one of the following options  to de fine  a password
+e xpir ation  date.
+Date not required:  This is the default setting.  Password
+in f ormation  is reported regardless of the e xpir ation  date.
+Use r elativ e  date:
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the reportCriteria Description
+Option Description
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+Users are only included in the report if their password
+expires within the selected r elativ e  date range.
+Use selected date:
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+Users are only included in the report if their password
+expires between the Earliest password e xpir ation  date
+and Latest password e xpir ation  date.
+Use within the last N days:  Users are only included in the
+report if their password expired within the specified  last
+number of days.Criteria Description
+Use N or more days ago:  Users are only included in the
+report if their password expired more than the specified
+number of days ago.
+Use within the next N days:  Users are only included in
+the report if their password expires within the specified
+next number of days.
+Password e xpir ation  dates to display Select the types of password e xpir ation  dates that you
+want to add to the report output.
+Show all accounts If users have multiple  accounts, select this checkbox to
+list the password change date, expiry date and status for
+all accounts.
+Implementers
+Purpose:  Resources and associated oper ations  assigned to human implementers (not connectors).
+Executable:  implementerreport
+Search Criteria:
+Criteria Description
+Implementer type Select the implementer type:
+▪Explicitly assigned▪
+▪Assigned by user class▪
+Implementer ID Type the pr ofile  ID of the implementer for whom you
+want to run the report. Alt ernativ ely ,  you can search for
+one or more pr ofile  IDs.
+Target system ID Type a comma-and-space-delimited list of target system
+IDs to only include accounts from those systems.
+Alt ernativ ely ,  you can search for one or more target
+systems.
+Oper ation Select the oper ations  that you want to include. All
+oper ations  are included by default.
+This is only shown when implementer type is set to
+explicitly assigned.
+Orphan / Inactiv e
+Purpose:  Lists:
+▪Unclaimed accounts▪
+▪Users without an associated account▪
+▪Dormant accounts▪▪Dormant pr ofiles ▪
+"Dormant accounts" are user objects on target systems where the user has not logged in for at least N
+days. This number is de fined  by the Show inactiv e  accounts (days)  search criteria. See below for
+details.
+"Dormant pr ofiles"  are user pr ofiles  in Bravura Security Fabric , containing one or more accounts, all of
+which are dormant.
+Before running this report for a target system, you should generate a full attribut e  listing.  To do this,
+click Generate full list  on the Target system inf ormation  page, then run auto discovery.
+Bravura Security Fabric only supports Microsoft  Active  Directory and Microsoft  Windows server target
+systems for use with the Orphan / inactive  report. This report only supports Active  Directory target
+systems running on Microsoft  Windows Server 2008 or newer.
+Executable:  orphan
+Search Criteria:
+Criteria Description
+Report type Choose a report type from the drop-down list. The
+Orphan accounts (not attached  to a pr ofile)  setting  is
+selected by default.
+Orphan accounts (not attached  to a pr ofile):  Lists
+accounts that are not associated with any user’s pr ofile
+ID.
+Orphan pr ofiles  (have no accounts):  lists pr ofile  IDs that
+do not have an associated account.
+Inactiv e  accounts (N days with no login):  lists dormant
+accounts.
+Inactiv e  pr ofiles  (N days with no login):  lists dormant
+user pr ofiles.
+Target system ID To list unclaimed or inactiv e  accounts for one or more
+target systems, type a comma-and-space-delimited list of
+target system IDs. Alt ernativ ely ,  you can search for one or
+more target systems. The search engine only returns
+results for manually added target systems, not for
+discovered systems.
+This option  is only displayed if Report type  is set to
+Orphan accounts (not attached  to a pr ofile)  or Inactiv e
+accounts (N days with no login) .
+Account Type a comma-and-space-delimited list of long IDs (not
+short IDs) that match the accounts you want to include in
+the report. Alt ernativ ely ,  you can search for one or more
+accounts.
+This option  is only displayed if Report type  is set to
+Orphan accounts (not attached  to a pr ofile) , Inactiv eCriteria Description
+accounts (N days with no login)  or Inactiv e  pr ofiles  (N
+days with no login) .
+User ID Type the pr ofile  ID of the user for whom you want to
+generate the report. Alt ernativ ely ,  you can search for one
+or more pr ofile  IDs.
+This option  is only displayed if Report type  is set to
+Orphan pr ofiles  (have no accounts), Inactiv e  accounts (N
+days with no login)  or Inactiv e  pr ofiles  (N days with no
+login) .
+User name Type the full name of the user for whom you want to
+generate the report.
+This option  is only displayed if Report type  is set to
+Orphan pr ofiles  (have no accounts), Inactiv e  accounts (N
+days with no login)  or Inactiv e  pr ofiles  (N days with no
+login) .
+Number of days with no login Type a numeric value to only show acc oun ts/pr ofiles  that
+have been dormant for the specified  number of days.
+This option  is only displayed if Report type  is set to
+Inactiv e  accounts (N days with no login)  or Inactiv e
+pr ofiles  (N days with no login) .
+Discovered in the last N days Type a numeric value to filt er  results based on how
+recently the account was discovered during auto-
+discovery. A value of zero will return all results.
+This option  is only displayed if Report type  is set to
+Orphan accounts (not attached  to a pr ofile) .
+Access to product features
+Purpose : Security privileges held by product administrators.
+Lists product administrators, privileges, and finds  product administrators with selected adminis tr ativ e
+privileges.
+Executable : prodadmin
+Search Criteria:
+Criteria Description
+Product administrator Type a comma-and-space-delimited list of product
+administrators to include in the report. Alt ernativ ely ,  you
+can search for one or more product administrators. The
+default is all product administrators.
+Adminis tr ativ e  privileges Select one or more privileges to search on. All privileges
+are selected by default.Criteria Description
+Administrator group ID Select one or more groups to search on. All groups are
+selected by default.
+This field  is not displayed if there is no data available.
+Source of privileges You can specify whether to report on privileges granted
+to individual administrators, or granted by group
+membership.
+Pr ofile  and request attribut es
+Purpose:  Provides in f ormation  about users, and pr ofile  attribut es.
+Executable:  userattr
+Search Criteria:
+Criteria Description
+User ID Type a comma-and-space-delimited list of pr ofile  IDs to
+only include pr ofile  attribut es  for certain users.
+Alt ernativ ely ,  you can search for one or more pr ofile  IDs.
+Pr ofile  attribut e Select a pr ofile  attribut e  on which to filt er  users. You can
+select up to eight attribut es.  You can also select the same
+attribut e  multiple  times;  for example, you may want to
+list all users whose fir s t name is ’Mike’ or ’Michael’. All
+pr ofile  attribut es  are available, except for request-only
+attribut es  and encrypted attribut es.
+If no attribut es  are specified,  the report lists all user
+pr ofiles  filt er ed  by user ID.
+Value typeThis field  is displayed if a Pr ofile  attribut e  field  is other
+than Attribut e  not required. Select the value type of
+comparator to apply on selected the pr ofile  attribut e.
+Diff er en t  types of attribut es  have access to diff er en t  sets
+of value types.
+is empty  if you want Bravura Security Fabric  to search on
+empty values.
+is not empty  if you want Bravura Security Fabric  to
+search on non empty values.
+is equal to  if you want Bravura Security Fabric  to search
+on values equal to a specified  string.
+is not equal  to if you want Bravura Security Fabric  to
+search on values not equal to a specified  string.
+is less than  if you want Bravura Security Fabric  to search
+on values that are less than a specific  integer.Criteria Description
+is less than or equal to  if you want Bravura Security
+Fabric  to search on values that are less than or equal to a
+specific  integer.
+is greater than  if you want Bravura Security Fabric  to
+search on values that are greater than a specific  integer.
+is greater than or equal to  if you want Bravura Security
+Fabric  to search on values that are greater than or equal
+to a specific  integer.
+is greater than or equal to  if you want Bravura Security
+Fabric  to search on values that are greater than or equal
+to a specific  integer.
+is later than today + N days  if you want Bravura Security
+Fabric  to search on dates that are later than N days after
+today.
+is earlier than, or equal to, today - N days  if you want
+Bravura Security Fabric  to search on dates that are earlier
+or equal to N days before today.
+Value This field  is displayed and required if a Value type  field  is
+set to something other than is empty  or is not empty .
+Type or select the value to compare with.
+Display of attribut es Choose the display mode for attribut es.  Select:
+All attribut es  if you want all non null account attribut es
+to be displayed by the report.
+Searched on attribut es  if you only want the account
+attribut es  that are searched on to be displayed by the
+report.
+No attribut es  if you want no account attribut es  to be
+displayed by the report.
+Attribut es  that are searched on will be displayed in
+the All attribut es  and Searched on attribut es
+modes, regardless of whether they are null.
+Attribut e  match Select:
+Match on all  if you want Bravura Security Fabric  to match
+on all the pr ofile  attribut e  rows.
+Match on any  if you want Bravura Security Fabric  to
+match on any pr ofile  attribut e  rows.
+Pr ofiles
+Purpose:  Provides in f ormation  about user pr ofiles,  including accounts, group memberships and identity
+attribut es.Executable : users
+Search Criteria:
+Criteria Description
+User ID Type a comma-and-space-delimited list of pr ofile  IDs to
+only include in f ormation  about certain users.
+Alt ernativ ely ,  you can search for one or more pr ofile  IDs.
+User name Type the full name of the user for whom you want to
+generate the report.
+User attribut e  to search Select a pr ofile  attribut es  on which to filt er  users. The
+options  include all available pr ofile  attribut es,  excluding
+request-only attribut es.
+Attribut e  value to search This field  is displayed if User attribut e  to search  is other
+than Attribut e  not required . Type the value of the user
+attribut e.
+This searches against the attribut e’ s  stored string
+value in the database, regardless of attribut e  type.
+User attribut es  to display Select one or more pr ofile  attribut es  that you want to
+add to the report output.
+List only product administrators Filter the report to list only product administrators. This
+applies only to individual product administrators; not
+users added to administrator groups.
+Account r es triction Select one of the following options  to filt er  users based
+on whether they have accounts:
+▪(No r es triction) ▪
+▪only users with accounts▪
+▪only users without accounts▪
+Pr ofile  status Select one or more of the following options  to filt er  users
+based on the pr ofile  status:
+▪Locked▪
+▪Unlocked▪
+▪Enabled▪
+▪Disabled▪
+RBAC enforcement Select one of the following options  to filt er  users based
+on RBAC enforcement:
+▪All users▪
+▪Users under RBAC enforcement▪
+▪Users not under RBAC enforcement▪
+Show accounts Select this checkbox if you want to include a list of each
+user’s accounts in the report output.Criteria Description
+Users must have accounts on at least one of these target
+systemsType a comma-and-space-delimited list of target system
+IDs on which users must have accounts. Alt ernativ ely ,  you
+can search for one or more target systems.
+Target system group Select the target system groups that you want to add to
+the report output.
+Show managed groups Select this checkbox if you want to include a list of each
+user’s managed groups in the report output.
+Managed groups Type the long ID of one or more managed groups in
+which users must have accounts. Alt ernativ ely ,  you can
+search for one or more managed groups.
+Last login time Choose one of the following options  to de fine  a date
+range for the last login time:
+Use r elativ e  date :
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is

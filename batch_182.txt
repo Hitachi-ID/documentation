@@ -1,0 +1,311 @@
+Push Mode Privileged Access Management
+Implement push mode privileged access management by using auto discovery  to find server or
+w ork s t ation  objects on an Activ e  Directory domain. You can then manage these discovered objects using
+import rules.
+Alt ernativ ely ,  add managed system policies and managed systems manually. This is required for systems
+that are not on an Activ e  Directory domain.
+Push mode method 1: Aut omatic
+1.Add the Activ e  Directory domain controller as a target system, c on figuring  it as a source of Bravura 1.
+Security Fabric  Pr ofile  IDs and to discover computer objects.
+See Target Systems  (on page 480) for details.
+2. Con figur e  options  for managed system policies. 2.
+See Managed system policies  (on page 1834) for details.
+3.Import discovered objects as managed systems, either manually or by setting  up import rules. 3.
+See Infrastructure Auto Discovery  (on page 2080) for details.
+Push mode method 2: Manual
+1. Con figur e  options  for managed system policies. 1.
+2.Manually add target systems to Bravura Security Fabric , c on figuring  them to become push mode 2.
+managed systems.
+3.Assign the systems to particular  managed system policies. 3.
+4. De fine  the accounts the managed system policy is going to manage on the system. 4.
+Vault-only Privileged Access Management
+Implement vault-only privileged access management by manually adding a vault-only managed system,
+manually adding accounts to that system and then link the managed system to a vault-only managed
+system policy .
+1.Manually add a vault-only managed system to Bravura Security Fabric . 1.
+2.Add managed accounts to the managed system.2.
+3.Create a new vault-only managed system policy.3.
+4.Assign the system to a particular  managed system policy. 4.
+5. Con figur e  options  for the managed system policy. 5.
+Local Service Mode Privileged Access Management
+Implementing  local service mode requires softw ar e  to be installed on managed systems. The installed
+Local W ork s t ation  Service contacts the Bravura Security Fabric  server and registers the system as a
+discovered object. You can then add these discovered objects as managed systems manually or using
+import rules. To c on figur e  privileged access management using a Local W ork s t ation  Service:1.Download the MSI ins t allation  package and the .inf file. 1.
+2.Deploy the Local W ork s t ation  Service softw ar e  on all systems that you want to manage. 2.
+3.Allow all systems to contact the Bravura Security Fabric server and register themselves as discovered 3.
+systems.
+4. Con figur e  options  for managed system policies. 4.
+5.Import discovered objects as managed systems.5.
+See Managed systems  (on page 1815) for more in f ormation.
+Use cases and examples
+Manually manage accounts on a vault-only system
+This section  demonstrates how to manually manage administrator cr edentials  stored in a vault-only
+managed system:
+1.Create a new vault-only managed system policy . 1.
+a.Click Manage the system  > Privileged access  > Managed system policies . a.
+b.Click Add new … b.
+c.Enter the following:c.
+ID Vault-MSP
+Description MSP for vault-only managed systems
+Mode Vault-only
+Managed by Select the Privileged Access Manager Service in the Managed by list. This is the
+service that will manage systems in this policy.
+Authentic ation  type Password
+Enforce password policy leave deselected
+d.Click Add. d.
+2. De fine  the Access disclosure plugins. 2.
+a.Click the Access disclosure plugins tab. a.
+b.Click Select … b.
+c.Select the Copy and Display plugins and click Select . c.d.Select Access current password for both the copy and display plugins. d.
+e.Select Access old passwords for the display plugin. e.
+f.Click Update . f.
+3. Con figur e  Access control. 3.
+a.Click the Access control tab. a.
+b.Select the following for IT_SEC_USERS.b.
+▪View pr operties  for this policy ▪
+▪Modify pr operties  for this policy ▪
+▪Pre-approved check-out of managed accounts▪
+▪Randomize/override password of managed accounts▪
+These settings  are part of the privileges required to check out the managed accounts and to
+override the passwords.
+a.Click Update . a.
+4.Provide the IT_SEC_USERS group the Create managed systems adminis tr ativ e  privilege. This privilege 4.
+is required to override passwords.
+a.Click Manage the system  > Security > Access to product features  > Administrator groups . a.
+b.Click Add new... b.
+c.Enter the following:c.
+ID IT-SECURITY
+Description IT Security Group
+Allowed privileges Create managed systems
+d.Click Add. d.
+e.Click the Membership criteria tab. e.
+f.Click Select … f.
+g.Select the _IT_SECURITY_ user class.g.
+Members of the _IT_SECURITY_ user class are also linked to the IT_SEC_USERS group and can now
+override passwords in addition  to checking out accounts.
+h.Click Select . h.
+5.Create a vault-only managed system.5.
+a.Click Manage the system  > Privileged access  > Managed systems . a.
+b.Click Add new… b.
+c.Enter the following:c.
+ID Router-ADM
+Description Router used by the admin teamHelp URL http://in tr ane t/r out erin f o.h tml
+d.Click Add. d.
+6.Click the Policies tab. 6.
+7.Click Select … 7.
+8.Select the VAULT-MSP managed system policy . 8.
+9.Click Select . 9.
+10. Click the Managed accounts tab. 10.
+11. Click Add new… at the bottom  of the page. 11.
+12. Type the ID of the account in the Account field. 12.
+13. Type a password in the Password and Con firm  password fields. 13.
+14. Click Add. 14.Managed systems
+Bravura Privilege  manages local adminis tr ativ e  cr edentials  and groups for w ork s t ations  and servers. In
+the context of Bravura Privilege , these systems are referred to as managed systems .
+This chapter demonstrates how to:
+▪Adding push mode managed systems  (on page 1815) ▪
+▪Adding local service mode managed systems  (on page 1816) ▪
+▪Adding vault-only managed systems  (on page 1825) ▪
+▪Viewing and modifying managed system in f ormation  (on page 1826) ▪
+▪ Deleting  a managed system  (on page 1829) ▪
+Product administrators require appropriate privileges to access the privileged access areas of the Manage
+the system  (PSA) module; refer to User types and access rules  (on page 671) and ensure that all product
+administrator  access rights are correctly c on figur ed.
+Before adding managed system s, ensure that you have restricted prior adminis trative  access to accounts. 
+(on page 481)
+See also: 
+▪Managed system policies de fine  which accounts are managed, security settings  and c on figur ation ▪
+options  for member managed systems.
+See Managed system policies  (on page 1834) for details.
+▪You can c on figur e  options,  including password change intervals, globally for Bravura Privilege . Policy- ▪
+level settings  override global settings.
+See Privileged access management options  (on page 1932) for details.
+Adding push mode managed systems
+In push mode , Bravura Privilege  performs remote password resets and other oper ations.  This is
+controlled by the Privileged Access Manager Service that is installed aut omatic ally  on the Bravura
+Privilege  server.
+Add a push mode managed system by:
+▪ Designating  a target system as a Bravura Privilege  managed system ▪
+▪Managing discovered systems▪
+Adding a target system as a managed system
+You can make any target system a managed system by selecting  the Aut omatic ally  create a Privileged
+Access Manager managed system setting  on the Target system in f ormation  page.
+The system is added as a managed system during the next auto discovery . The Privileged Access Manager
+Service uses parameters of the target system to determine which connector program to run and what
+cr edentials  to use when it resets passwords for a managed system.Managing discovered systems as push mode managed systems
+To manage systems on a domain:
+1. Con figur e  an Activ e  Directory target system to list all w ork s t ations  or servers. 1.
+On the Target system in f ormation  page, select the Discovery options  tab, then select the type of
+systems you want to discover. Click Update  to save the changes.
+2.Run auto discovery  by clicking Maintenance > Auto discovery . 2.
+3.Manage the discovered systems manually, or aut omatic ally  by c on figuring  import rules. 3.
+See:
+▪Discovered Objects  (on page 2088) for more in f ormation  about managing discovered systems ▪
+Adding local service mode managed systems
+In local service mode , Bravura Privilege  performs local password resets and other oper ations  using
+softw ar e,  the Local W ork s t ation  Service, that you install on the managed resource. The system is
+aut omatic ally  registered the fir s t time  the Local W ork s t ation  Service communicates with the Bravura
+Privilege  server. For more in f ormation  about how this mode works, see Local service mode  (on page
+1806).
+To add a local service mode managed system:
+1.Download the MSI ins t allation  package and the ini file. 1.
+See Downloading the ins t allation  package  (on page 1816) for details.
+2.Install the Local W ork s t ation  Service on the system. 2.
+See Installing local service mode softw ar e  on Windows systems  (on page 1817) for details.
+3.Allow the system to contact the Bravura Privilege  to register itself as a discovered object. 3.
+4.Manage the discovered system, either manually, or using import rules.4.
+Downloading the ins t allation  package
+To download the ins t allation  package, from the Bravura Security Fabric  main menu:
+1.Click Manage the system > Privileged access > Local w ork s t ation  service ins t allation  package . 1.
+2.Click Local w ork s t ation  service ins t allation  package . 2.
+3.Click INF file download to download the idmsetup.inf file that contains the encrypted 3.
+w ork s t ation  authentic ation  key and address of the Bravura Privilege  server.
+4.Click on MSI download (32-bit) or MSI download (64-bit) , depending on the system type, to 4.
+download the Local W ork s t ation  Service installer. The installers are called hipamlws-win-
+x86.msi and hipamlws-win-x64.msi r espectiv ely .
+Alt ernativ ely ,  you can retrieve the ins t allation  package from the addon idarchive directory.
+You can now install the Local W ork s t ation  Service ins t allation  package.Installing local service mode softw ar e  on Windows systems
+This section  shows you how to install the Local W ork s t ation  Service on a Windows server or w ork s t ation
+by manually running the MSI installer that you downloaded in Downloading the ins t allation  package  (on
+page 1816).
+Listing  of accounts and groups are disabled for Local W ork s t ation  Service installed on domain controllers.
+Do not install Local W ork s t ation  Service on Bravura Privilege servers, or any server or work s t ation  which
+is discoverable through psupdate and can be managed as a push system.
+You can also install the softw ar e  aut omatic ally .  For example; use a softw ar e  package dis tribution  product
+like Micr osoft’ s  System Center Con figur ation  Manager and use the command line options  or using group
+policy.
+See Add-on ins t allation  command-line options  (on page 245) for more in f ormation  on the command line
+options.
+If you use work s t ation  images you can install Local W ork s t ation  Service as described below. Disable the
+service by default and c onfigure  to Aut omatic  after  the image is placed on the work s t ation  if you want to
+use the Local W ork s t ation  Service.
+You can use a plugin to digitally sign files if required. See Digitally signing files (on page 1047) for details.
+To install the Local W ork s t ation  Service manually:
+1.Copy the MSI and INF files that you downloaded earlier to a temporary loc ation  on the new server or 1.
+w ork s t ation.
+2.Launch the MSI.2.
+A welcome screen appears.
+3.Click Next . 3.
+4.Read and accept the license agreement.4.
+Click Next .
+5.Choose Typical setup type. 5.
+Clicking Custom allows you to change the install loc ation  hipamlws directory. This is not
+recommended.
+6.Enter the w ork s t ation  authentic ation  encr yption  key. 6.
+This is the authentic ation  key that was entered when Bravura Privilege  was originally installed. This
+should already be pr e- filled  if you downloaded the idmsetup.inf file.
+Click Next .
+7.Set the following parameters:7.
+▪Bravura Privilege  server The address and the virtual path of the Bravura Privilege CGI. This should ▪
+already be pr e- filled  if you downloaded the idmsetup.inf file. The format should be:  
+https://<server>/<instance>/cgi/pamlws.exe  
+Change server to the Bravura Privilege  server address and instance  to the instance name or
+virtual directory name if required.▪Web proxy If the Local W ork s t ation  Service must contact the Bravura Privilege  server through a ▪
+proxy, type the proxy server address and port number in the format: <address> :<port> .
+▪Validate server certific a t e  Enable this checkbox if the web server on your Bravura Privilege  server ▪
+is running HTTPS. This is strongly recommended in a pr oduction  ins t allation  to avoid in f ormation
+being sent over the network unencrypted.
+▪ Initial  poll delay (seconds) Specify the time  used to determine how long to wait before doing the ▪
+initial  poll to the Bravura Privilege  server.
+The actual wait time  will be ±10% of the specified  time,  randomly determined in order to prevent a
+large number of systems c on t acting  the Bravura Security Fabric  server at the same time.
+Click Advanced to set some extra options:
+▪Disable service after  ins t allation  Check this box to disable the Local W ork s t ation  Service after ▪
+ins t allation.  You may want to disable it, for example, when building a system image for
+w ork s t ations  with this service pre-installed.
+▪By default this option  is not checked. ▪
+▪Defer initial  service startup until  next system restart Check this box if you want to postpone ▪
+running the Local W ork s t ation  Service until  the system has been restarted. This requires that
+Disable service after  ins t allation  to be deselected.
+▪Re-register this w ork s t ation  Enable this option  if you are reinstalling the Local W ork s t ation  Service ▪
+on a system that has previously had the Local W ork s t ation  Service installed on it. When enabled,
+this option  checks if the managed system ID already exists on the Bravura Privilege  server. If it
+exists, then the managed system uses that ID as its own.
+Click Next .
+The installer displays the Select customized attribut e  file page.
+8.If required, enter the path of a Custom attribut e  file (on page 1821). 8.
+Click Next .
+The installer displays the Con firm  Ins t allation  page.
+9.Click Install to start the ins t allation. 9.
+The installer begins copying files to your computer. The Ins t allation  Complete  page appears after  the
+Bravura Privilege  features have been successfully installed.
+10. Click Finish to exit. 10.
+The Local W ork s t ation  Service can now contact the Bravura Privilege  server to register the host system as
+a discovered object. Once the service has contacted the server, it sends its system data and registers itself
+as a discovered system. The default interval for this initial  r egis tr ation  is 300 seconds. After  r egis tr ation,
+the service periodically polls the Bravura Security Fabric  to determine whether any jobs, such as
+password change or attribut e  listing ,  are required on the host system. Depending on the task that has
+been assigned, the service will contact the server at diff er en t  intervals. If no tasks are assigned, the
+service will wait the poll time,  as de fined  by the RES POLL INTERVAL, until  it rechecks the server for tasks.
+If the Local W ork s t ation  Service is unable to contact the Bravura Privilege  server using the proxy server, it
+will attemp t  to poll again without c onnecting  to the proxy server.In local service mode, a service running locally on the managed system, connects via TLS-encrypted
+c ommunic ation  over a single outgoing port, the one port made available by the IIS web server into the
+Bravura Privilege  nodes, by default, that port is 443. Please ensure, through either fir e w all,  switch,
+proxies, tunneling or other networking c on figur ation,  that the w ork s t ations  on which the Local
+W ork s t ation  Service is installed can connect to the Bravura Privilege  server IIS.
+You can capture log data on local service mode managed systems using the logutil
+Requirements
+You must run the logutil  command as an administrator with sufficien t  privileges.
+Usage
+logutil.e x e  [options]  -instance <instance> | -cleanup [-instance <instance> ]
+Argument Description
+-bufmax <count> Maximum number of buff er s.  The default value is the
+Windows Events MinimumBuff er s  + 20.
+-bufmin <count> Minimum number of buff er s.  The default value is the
+number of CPUs + 2.
+-bufsize <size> Size of the session buff er s  in multiples  of 4 kb. The
+default is 64 kb.
+-instance <instance> Instance to watch events for. For Bravura Privilege local
+service mode instances, the value is "Privileged Access
+Manager Client".
+-cleanup Terminate any logging sessions which are not connected
+to any activ e  client. If the instance name is specified,  only
+the logging session for this particular  instance is cleaned
+up.
+-level <level> Debug level 1-5. Default is 5.
+-list List all enabled Event Tracing for Windows sessions.
+-logfile  <filename> File to write events to. You must specify an absolute path.
+-makekey Generate an instance name and its log GUID in the
+registry.
+Note:  This option  needs to be run once only.
+-maxdelay <maxdelay> The maximum seconds to allow the sorting  buff er  to keep
+items before flushing  out into the log file. The default
+value is 300.
+-maxsorted <count> The maximum number of events that can be sorted in
+memory. The default value is 100,000.
+-outdbg Write events with an output debug string.
+When logutil  runs, a new registry entry is created to record the session. The entry is stored under:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\LogSessionThe name of the entry is the instance name. When you press [enter]  to stop a session, the key will be
+gone with the session; however, if you kill the session by typing [Ctrl] +[C], the registry entry will remain.
+Use the -cleanup option  to remove remaining registry entries.
+Note that various tools also have hardcoded instance names:
+▪browser-extension-win: "Browser Extension" ▪
+▪ fir e f o x -br o w ser -e xt ension:  "Firefox Browser Extension" ▪
+▪hidshext: "Shell Extension" ▪
+▪hipamlws-win: "Hipamlws" ▪
+▪hippm-sm: "Session Monitor" ▪
+▪intcpt: "Password Filter" ▪
+▪ ntfclien t:  "Notific ation  Client" ▪
+▪ ppm-activ e-c on tr ols:  "PPM Client Activ eX  Controls" ▪
+▪pslocalr: "Local Reset Extension" ▪
+▪psns: "Notes Extension" ▪
+▪ sc ar d-activ e x -c on tr ols:  "SmartCard PIN Management Activ eX  Controls" ▪
+▪ska/runurl: " Login Assistant" ▪
+▪ pamutil : "pamutil" ▪
+Examples
+▪To start logging data for client softw ar e  with a debug level of 4, type: ▪
+logutil.e x e  -makekey -instance Bravura_client -level 4 -logfile  c:\idarchive.log 
+▪To start logging data on a local service mode managed system with a debug level of 4, to a log file ▪
+named local_service.log, type:
+logutil.e x e  -instance "hipamlws" -level 4 -logfile  local_service.log 
+▪To start logging data on pamutil and runwithpass with a debug level of 4, to a log file named ▪
+pamutil.log ,  type:
+logutil.e x e  -instance "pamutil"  -level 4 -logfile  pamutil.log  
+▪To start logging data on Activ eX  password disclosure plugins at level 4 to log file activ e x.log ,  type: ▪
+logutil.e x e  -instance "PPM Client Activ eX  Controls" -level 4 -logfile  activ e x.log  
+You must run logutil with the -makekey argument firs t for the instance "PPM Client ActiveX
+Controls".
+▪To start logging data for the default Login Manager instance with a debug level of 4, type:▪
+logutil.e x e  -instance "Login Manager" -level 4 -logfile  c:\logfile.log  
+program which is installed with the service.

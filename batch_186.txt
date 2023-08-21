@@ -1,0 +1,352 @@
+Details: In-browser RDP: guacamole-rdp  (on page 1975)
+▪In-browser Remote App: guacamole-remote-app provides users with access to a remote ▪
+applic ation  (RemoteApp) hosted on a Windows server or client managed systems.
+Details: In-browser Remote App: guacamole-remote-app  (on page 1976)
+▪In-browser SSH: guacamole-ssh provides users with remote access to a server using Secure Shell ▪
+(SSH).
+Details: In-browser SSH: guacamole-ssh  (on page 1977)
+▪In-browser telnet: guacamole-telnet provides users with remote access to a server using ▪
+Telnet.
+Details: In-browser Telnet: guacamole-telnet  (on page 1977)
+▪In-browser VNC: guacamole-vnc provides users with remote access to a managed system with ▪
+Virtual Network Computing  (VNC) enabled.
+Details: In-browser VNC: guacamole-vnc  (on page 1978)
+All Guacamole access disclosure plugins provide aut omatic  c onnection  to the managed system without
+the need to enter the adminis tr ativ e  cr edentials  for the managed account and are c ompatible  with
+session recording.
+A Guacamole gateway is required in order to use Guacamole access disclosure plugins. See Installing and
+c on figuring  Guacamole  (on page 1979) on how to set up a Guacamole gateway and c on figur e  the controls
+to use it.
+Bravura Privilege  ships with the following website access disclosure plugins:
+▪Secure browser: securebrowser launches a dedicated program that aut omatic ally  logs into a ▪
+website using a c on figur ation  de fined  in a JSON file. This is c ompatible  with session recording.
+Requires ins t allation  of the Bravura Security Secure Browser program.
+Details: Secure browser: securebrowser  (on page 2010).
+▪Web app privileged sign-on: pswxwebapp launches a separate browser tab that aut omatic ally  logs ▪
+into a website using a c on figur ation  de fined  in a JSON file. Requires ins t allation  of the Bravura Security
+browser extension extension.
+Details: Web app privileged sign-on: pswxwebapp  (on page 2010).
+See also: 
+▪Access Disclosure Plugins  (on page 1957) to learn how to c on figur e  global settings  and default ▪
+behavior, and to add custom plugins.
+Enabling access disclosure plugins for a policy
+To select and enable access disclosure plugins for a managed system policy:
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.Select the access disclosure plugins tab. 2.Depending on the authentic ation  types de fined  for the managed system policy, only applicable
+disclosure plugins can be added to the policy.
+3.Click Select … . 3.
+4.Select the checkboxes next to the plugins you want to apply to the policy.4.
+5.Click Select . 5.
+6.Select the checkboxes or radio buttons  in the appropriate column for plugins to enable users to: 6.
+▪Access SSH keys – Users with sufficien t  privileges can use the plugin to access a privileged account ▪
+using their SSH keys. One or more must be selected.
+▪Access group set – Users with sufficien t  privileges can use the plugin to access a group set. One or ▪
+more can be selected.
+▪Access current password – Users with sufficien t  privileges can use the plugin to access a privileged ▪
+account. One or more must be selected.
+▪Access old passwords – Users with sufficien t  privileges can access password history. Only one ▪
+plugin can be selected.
+Depending on global settings,  some options  may not be selectable.
+7.Select the checkboxes for plugins you want to provide access current passwords, if applicable.7.
+8.Select the radio button  for the plugin you want to provide access to password history, if applicable. 8.
+9.Click Update . 9.
+Detaching access disclosure plugins
+To remove a plugin from a managed system policy:
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.Select the access disclosure plugins tab. 2.
+3.Select checkboxes next to the plugins you want to remove from the policy.3.
+4.Click Delete . 4.
+Overriding global settings  in managed system policies
+Con figur ation  settings  for access disclosure plugins can be applied globally. This includes their
+description,  selectability, and attribut es.
+You can override some access disclosure plugin settings  at the managed system policy level.
+Overriding an access disclosure plugin description
+To override basic c on figur ation  settings:
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.Select the access disclosure plugin tab. 2.
+3.Select the plugin you want to update.3.4.Type the Overridden description  to be used when displaying the plugin option  for accounts or groups 4.
+managed by this policy.
+5. Optional:  Select usage options  as described in Table Overriding an access disclosure plugin description 5.
+(on page 1853).
+6.Click Update . 6.
+access disclosure plugin c on figur ation  - managed system policy options
+Option Description
+Note:  These options  correspond to the checkboxes and radio buttons  on the policy’s access disclosure plugins
+page. You cannot override global settings  that prevent you from selecting  a plugin for a certain use.
+Use this plugin to access SSHkeys If checked, this plugin allows users with sufficien t  privileges to access the
+managed account using SSH keys.
+Use this plugin to access group set
+setsIf checked, this plugin allows users with sufficien t  privileges to access the
+group set.
+Use this plugin to access the current
+passwordIf checked, this plugin discloses the privileged password to users with
+sufficien t  access privileges
+Use this plugin to access old
+passwordsIf checked, this plugin discloses the old privileged password to users with
+sufficien t  access privileges
+Overriding default attribut e  settings
+To override access disclosure plugin attribut e  settings  to control behaviors at the group level:
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.Select the access disclosure plugin tab. 2.
+3.Select the plugin you want to update.3.
+4.Select the attribut e  you want to update. 4.
+5.Set the plugin attribut e  options,  as described in Table De fining  access disclosure attribut es  (on page 5.
+2012).
+See Access Disclosure Plugins  (on page 1957) for detailed in f ormation  about default plugin behaviors.
+6.Click Update . 6.
+To remove an override and revert to global settings,  click Remove in the Attribut es  for this plugin table.
+Cloning access disclosure plugins
+You can clone an e xisting  access disclosure plugin if you want to run multiple  instances of the plugin but
+with diff er en t  settings.
+To clone a plugin from a managed system policy:
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.Select the access disclosure plugins tab. 2.
+3.Select the checkbox next to the plugin you want to add to the policy.3.4.Click Select . 4.
+5.Select to update and modify an e xisting  plugin. 5.
+6.Click Clone . 6.
+7.Specify a description  and modify other options  as needed. 7.
+8.Click Add. 8.
+ See also: 
+▪You can also clone global access disclosure plugins.▪
+▪You can set up access disclosure plugins to allow end users to save sessions with their preferred▪
+settings.
+Viewing attribut es  passed into Activ eX  plugins
+To view the attribut es  passed into the Activ eX  control for debugging purposes, copy the logutil
+program onto the system and run it, specifying the instance "PPMClient ActiveX Controls" .
+You may need to generate an instance key to get logutil to capture Activ eX  logs. Ensure the system
+initializing  the Activ eX  control does not have IE ESC turned on. See logutil usage details
+Requirements
+You must run the logutil  command as an administrator with sufficien t  privileges.
+Usage
+logutil.e x e  [options]  -instance <instance> | -cleanup [-instance <instance> ]
+Argument Description
+-bufmax <count> Maximum number of buff er s.  The default value is the
+Windows Events MinimumBuff er s  + 20.
+-bufmin <count> Minimum number of buff er s.  The default value is the
+number of CPUs + 2.
+-bufsize <size> Size of the session buff er s  in multiples  of 4 kb. The
+default is 64 kb.
+-instance <instance> Instance to watch events for. For Bravura Privilege local
+service mode instances, the value is "Privileged Access
+Manager Client".
+-cleanup Terminate any logging sessions which are not connected
+to any activ e  client. If the instance name is specified,  only
+the logging session for this particular  instance is cleaned
+up.
+-level <level> Debug level 1-5. Default is 5.
+-list List all enabled Event Tracing for Windows sessions.
+-logfile  <filename> File to write events to. You must specify an absolute path.Argument Description
+-makekey Generate an instance name and its log GUID in the
+registry.
+Note:  This option  needs to be run once only.
+-maxdelay <maxdelay> The maximum seconds to allow the sorting  buff er  to keep
+items before flushing  out into the log file. The default
+value is 300.
+-maxsorted <count> The maximum number of events that can be sorted in
+memory. The default value is 100,000.
+-outdbg Write events with an output debug string.
+When logutil  runs, a new registry entry is created to record the session. The entry is stored under:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\LogSession
+The name of the entry is the instance name. When you press [enter]  to stop a session, the key will be
+gone with the session; however, if you kill the session by typing [Ctrl] +[C], the registry entry will remain.
+Use the -cleanup option  to remove remaining registry entries.
+Note that various tools also have hardcoded instance names:
+▪browser-extension-win: "Browser Extension" ▪
+▪ fir e f o x -br o w ser -e xt ension:  "Firefox Browser Extension" ▪
+▪hidshext: "Shell Extension" ▪
+▪hipamlws-win: "Hipamlws" ▪
+▪hippm-sm: "Session Monitor" ▪
+▪intcpt: "Password Filter" ▪
+▪ ntfclien t:  "Notific ation  Client" ▪
+▪ ppm-activ e-c on tr ols:  "PPM Client Activ eX  Controls" ▪
+▪pslocalr: "Local Reset Extension" ▪
+▪psns: "Notes Extension" ▪
+▪ sc ar d-activ e x -c on tr ols:  "SmartCard PIN Management Activ eX  Controls" ▪
+▪ska/runurl: " Login Assistant" ▪
+▪ pamutil : "pamutil" ▪
+Examples
+▪To start logging data for client softw ar e  with a debug level of 4, type: ▪
+logutil.e x e  -makekey -instance Bravura_client -level 4 -logfile  c:\idarchive.log 
+▪To start logging data on a local service mode managed system with a debug level of 4, to a log file ▪
+named local_service.log, type:
+logutil.e x e  -instance "hipamlws" -level 4 -logfile  local_service.log ▪To start logging data on pamutil and runwithpass with a debug level of 4, to a log file named ▪
+pamutil.log ,  type:
+logutil.e x e  -instance "pamutil"  -level 4 -logfile  pamutil.log  
+▪To start logging data on Activ eX  password disclosure plugins at level 4 to log file activ e x.log ,  type: ▪
+logutil.e x e  -instance "PPM Client Activ eX  Controls" -level 4 -logfile  activ e x.log  
+You must run logutil with the -makekey argument firs t for the instance "PPM Client ActiveX
+Controls".
+▪To start logging data for the default Login Manager instance with a debug level of 4, type:▪
+logutil.e x e  -instance "Login Manager" -level 4 -logfile  c:\logfile.log  
+.
+Use a plugin to de fine  access disclosure plugins
+You can use a plugin to determine which access disclosure plugins, and with what settings,  will be
+available to a recipient when attempting  to access a managed password. The recipient may be a product
+administrator  with permissions to access a managed password, or a user with an approved request to
+access a managed password.
+The PSW disclosure plugin is particularly  useful when deciding what disclosure plugins should be given to
+which users, in scenarios where the policy -de fined  plugins have a c on flict  based on the managed system
+policy c on figur ation.  It is also useful to c on figur e  which disclosure plugins users can have access to based
+on various other attribut es  and values.
+To use a PSW disclosure plugin:
+1.Click Manage the system  > Modules  > Privileged access . 1.
+2.Type the name of the plugin in the PSW DISCLOSURE PLUGIN field. 2.
+By default, the following in f ormation  is passed into the plugin:
+▪Current manually c on figur ed  disclosure plugins for the requested account or group set (based off of ▪
+c on figur ed  disclosure plugins for the managed system policies)
+▪Managed account in f ormation  (what account on which system, and which managed system policy ▪
+settings  its being checked out with)
+▪Request ID▪
+▪Requested plugin in f ormation  (only available when users check out passwords using a URL) ▪
+▪Recipient of the request▪
+Some data is not input by default. You must manually enable certain registry settings  to allow the plugin
+to receive this in f ormation.
+Ensure that you are comfortable and knowledgeable in the mechanics of the registry before you attemp t
+to change any c onfiguration  settings.  Contact support@bravurasecurity.com  if in doubt.
+See details on registry settings  to control data to disclosure pluginsTo enable additional  PSW DISCLOSURE PLUGIN  input, set these entries in the following key:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\idarch
+▪default plugin attribut es ▪
+This input is useful to determine what disclosure plugins are already available on the system, and
+what values the attribut es  they use are.
+Entry name plugin_psw_disclosure_default_plugins
+Value  0—1
+Data type  Reg_Dword
+Default  0
+▪discovered computer attribut es ▪
+This input provides the attribut es  of the discovered managed system that the managed account is on.
+Entry name  plugin_p s w_disclosur e_f ound_c omp_attr s
+Value  0—1
+Data type  Reg_Dword
+Default  0
+▪discovered computer multi- v alued  attribut es ▪
+This input provides the multi- v alued  attribut es  of the discovered managed system that the managed
+account is on.
+Entry name  plugin_p s w_disclosur e_f ound_c omp_m v_attr s
+Value  0—1
+Data type  Reg_Dword
+Default  0
+▪groups▪
+This input provides which managed group the requester is a member of.
+Entry name  plugin_psw_disclosure_groups
+Value  0—1
+Data type  Reg_Dword
+Default  0
+▪user pr ofile  attribut es ▪
+This input provides the pr ofile  attribut es  of the requester.
+Entry name  plugin_p s w_disclosur e_pr ofile_attr s
+Value  0—1
+Data type  Reg_Dword
+Default  0
+.There is a sample PSW disclosure plugin, psw-disclosure-plugin.psl , available in the samples
+directory. By default it displays no controls. You must initially  disable built-in controls before plugin-
+de fined  controls are available.
+See more in f ormation  on writing  a custom plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The plugin is called on any page where a user is granted access to a managed password or group set that
+they have successfully checked out.
+Inputs
+The plugin will receive the following input:
+"" "" = {
+      "default-disclosure-plugins" "" = {
+          "disclosure-plugin" "" = {
+              "description" = "<plugin description>"
+              "id" = "<plugin ID>"
+              "name" = "<plugin name eg. pswxtsvc.ocx>"
+              "attributes" "" = {
+                  "<attribute key> "" = {
+                      "<attribute key>" = "<attribute value>"
+                      ...
+                  }
+                  ...
+              }
+          }
+          ...
+          # Repeats for each default disclosure plugin available.
+          # if plugin_psw_disclosure_default_plugins regkey is set
+      }
+      "disclosure-plugins" "" = {
+          "disclosure-plugin" "" = {
+              "description" = "<plugin description>"
+              "id" = "<plugin ID>"
+              "name" = "<plugin name eg. pswxtsvc.ocx>"
+              "attributes" "" = {
+                  "<attribute key> "" = {
+                      "<attribute key>" = "<attribute value>"                      ...
+                  }
+                  ...
+              }
+          }
+          ...
+          # Repeats for each disclosure plugin configured for this managed
+          # password based on the managed system policy that it is requested from.
+      }
+      "ead_computer_attributes" "" = {
+          "mv_attributes" "" = {
+              "<attribute key>" = "<attribute value>" #0 or more
+              ...
+          } # If plugin_psw_disclosure_found_comp_mv_attrs regkey is set
+          "sv_attributes" "" = {
+              "<attribute key>" = "<attribute value>"
+              ...
+          } # if plugin_psw_disclosure_found_comp_attrs regkey is set
+      }
+      "groups" "" = {
+          "<targetid>" = "<groupid>"
+      } # if plugin_psw_disclosure_groups regkey is set
+      "managedaccount" "" = {
+         "accountid" = "<Managed Account ID>"
+         "msp" = "<Managed System Policy>"
+         "resourceid" = "<Managed System>"
+      }
+      "request" "" = {
+         "requestID" = "<Request ID>"
+      }
+      "requested-plugin" "" = {
+         "address" = "<address value>"
+         "name" = "<requester ID>"
+      } # Only available if user checks password out using URL method. See (comment about checking out passwords using URL. ticket 120127-010)
+      "viewer" "user" = {
+         "id" = "<Profile ID>"
+         "attribute" "<Profile attribute key>" = {
+             "value" "" = {
+                 "value" = "<Profile value>" # 0 or more
+                 ...
+             }         }
+         ...
+         # if plugin_psw_disclosure_profile_attrs regkey is set
+      }
+}
+Output
+The plugin returns:
+#KVGROUP-V1.0
+"" "" = {
+    "retval" = "0"
+    "errmsg" = ""
+    "disclosure-plugins" "" = {
+         "disclosure-plugin" "" = {
+              "description" = "<plugin description>"
+              "id" = "<plugin ID>"
+              "name" = "<plugin name eg. pswxtsvc.ocx>"
+              "attributes" "" = {
+                  "<attribute key> "" = {
+                      "<attribute key>" = "<attribute value>"
+                      ...
+                  }
+                  ...
+              }
+          }
+          ...
+          # Repeats for each disclosure plugin returned.
+    }
+}
+.
+Con figuring  policy-level options
+product administrator  s with the "Manage managed system policies"  adminis tr ativ e  privilege can c on figur e
+options  for each managed system policy  to which they are assigned.
+managed system policy  settings  override the default global settings  c on figur ed  in Manage the system >
+Privileged access > Options . You must be a product administrator  with all adminis tr ativ e  privileges enabled
+(superuser) to c on figur e  global settings.
+You can c on figur e  options  for Bravura Privilege  managed system policies to control:
+▪Email notific ation  intervals ▪

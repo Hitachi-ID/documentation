@@ -1,0 +1,268 @@
+Part II CUSTOMIZATIONAbout the user interface
+Bravura Security Fabric  has a customizable user interface that allows you to alter system messages, and
+the appearance of web pages:
+▪Headers▪
+▪Footers▪
+▪Fonts▪
+▪Color schemes▪
+▪ Button  faces ▪
+▪Graphics▪
+▪Text▪
+Bravura Security Fabric  is shipped with a responsive skin that works on both mobile and desktop
+browsers. The skin uses American English (en-us) by default and supports language loc aliz ation.
+User interface cus t omiz ation  is simple to implement if you are familiar with HTML and CSS. Knowledge of
+m4, JavaScript, and the Angular framework may also be helpful; however, this is not necessary.
+About the UI files
+Bravura Security Fabric  creates its web GUI at run time  from Legacy and Angular portions  of the skin. The
+Legacy web GUI is constructed from HTML code snippets from the skin with pieces dynamically replaced
+with session-specific  data. The Angular web GUI is dynamically constructed by client-side TypeScript.
+Skin files
+Files for the Legacy portion  of the skin are located in two main directories: \<instance>\skin\  and
+\<instance>\wwwdocs\ .
+Files for the Angular portion  of the skins are located in the \<instance>\ui\  directory.
+The skin directory
+The Legacy portion  of the skin consists of Z and HTML files located in the \<instance>\skin
+\default\ directory :
+▪Z files  contain the code snippets loaded by Bravura Security Fabric . These files are not meant to be ▪
+human-readable. They have a .z extension.
+▪HTML files  each contain a widget (an HTML component of the GUI); for example, the date-select ▪
+fields.  They have a .html extension.
+Within the \<instance>\skin\default\  directory, there is one subdirectory for each language
+that you have installed. For example, the \<instance>\skin\default\en-us\  directory is for
+the default skin and contains American English.
+The \<instance>\skin\widget\  directory contains the widget HTML component files for the GUI.The wwwdocs directory
+The Legacy portion  of the skins includes files located in the \ <instance>\wwwdocs\  directory:
+▪ St atic  HTML files  for the specified  language and locale ▪
+▪JavaScript files ▪
+Within the \<instance>\wwwdocs\<skin ID>\  directory, there are subdirectories for the s t atic
+HTML, and JavaScript cus t omiz ations.  For example:
+▪<lang>-<locale>\  contains the s t atic  HTML files.  A separate directory exists for each language that was ▪
+generated for the skin ID.
+▪js\ contains the minimized JavaScript cus t omiz ations  for the skin. ▪
+▪js\<lang>-<locale>\ contains the JavaScript cus t omiz ations  for the specified  language. ▪
+The ui directory
+The Angular portion  of the skin consists of files located in the \<instance>\ui\  directory:
+▪Index.html  is the page that loads when a user visits Bravura Security Fabric . It is dynamically updated ▪
+when a user interacts with Bravura Security Fabric .
+▪Javascript files ▪
+▪Font files ▪
+▪Image files  such as icons ▪
+▪JSON files  for languages and languag e-specific  page to URL mappings ▪
+Files in the base directory make up the core of the applic ation.  The files are all generated when the skin is
+built and should not be manipulated directly.
+In \<instance>\ui\assets\,  there are subdirectories for images and loc aliz ation  files;  for
+example:
+▪images\  contains image files such as icons. ▪
+▪ loc aliz ation\  contains language files and page-to-URL mappings for languages other than American ▪
+English; for example, fr-fr.json.
+The loc aliz ation  folder is only present when a language other than American English is installed. The
+American English language and route code is bundled in the files in the base \<instance>\ui\ directory.
+Design files
+The "building blocks" for the skin are a set of m4, KVGroup, JavaScript, TypeScript and Sassy Cascading
+Style Sheet (SCSS) files located in the \<instance>\design\  directory. They are used by a built-in
+script, make.bat, to generate the skin files.
+In general, Angular code is contained in \ <instance>\design\src\ui\ . Legacy code is contained
+in other directories within \ <instance>\design\src\ .
+Legacy skin design filesThe following files are used to build the Legacy portions  of the skins:
+▪KVGroup files  determine the text that Bravura Security Fabric  displays to users. These files are written ▪
+in KVGroup format and have a .kvg extension.
+Each language requires its own set of KVGroup files.  For American English, these files are named en-
+us-language.kvg  and en-us-errmsg.kvg .
+m4 files  control the design of web pages, including the placement of fields,  buttons,  and text. m4 files
+contain macros that are expanded into longer strings. They have a .m4 extension.
+▪JavaScript files  contain code for JavaScript features, such as the c on firm  action  functionality  for delete ▪
+buttons.  They have a .js extension.
+Angular skin design files
+The following files are used to build the Angular portions  of the skin:
+▪Angular unit tests  verify the functionality  of the UI. These are TypeScript files with the extension ▪
+*.spec.ts
+▪Angular template files  control the design of the Angular pages. These are HTML files with the ▪
+extension *.html.
+▪Angular files  contain code which controls the web applic ation.  For example, some files map each URL ▪
+to a page. These are TypeScript files and with the extensions *.component.ts, *.service.ts, and
+*.pipe.ts.
+▪Angular build c on figur ation  files  are scripts which control how the web applic ation  is packaged. ▪
+Usually these have *.js or *.json extensions.
+▪Sassy cascading style sheet (SCSS) files  to modify the look and f ormatting  of the GUI. They have ▪
+a .scss extension.
+For more inf ormation  about the Angular framework, visit http s://angular .io/docs
+Tags in <lang>-<locale>-errmsg.kvg  cannot be used in JavaScript or TypeScript files.  As a
+result you cannot include these tags in the Angular portion  of the skin, or the portions  of the Legacy
+skin that use JavaScript. Tags in <lang>-<locale>-language.kvg  can be used everywhere.
+SCSS is an extension of CSS, which means that every valid CSS file is also a valid SCSS file.
+Design File Directories
+The \<instance>\design\  directory is organized into multiple  subdirectories. In particular:
+▪connector-pack\src\common\ Houses original, or "source", language files installed with Connector ▪
+Pack. In general, you should not modify this directory.
+▪custom\  This is where you create custom files,  based on the originals, and make your edits. ▪
+The base custom\ directory is used for global cus t omiz ations;  that is, the changes apply to all skins
+unless there is an override for a specific  skin.
+If you make changes in files at this level, you need to regenerate all skins to apply the changes.
+▪custom\ui\  This is a directory that you have to manually create within the custom\ directory where ▪
+you add cus t omiz ations  that only apply to the Angular portion  of the skin.▪examples\  Contains examples of page style files.  Shipped examples include: ▪
+▪customLogo (sample UI to add a custom logo)▪
+▪ska (default UI that is specific ally  for use with the secure kiosk account (SKA)) ▪
+▪unbranded (sample UI to remove branding)▪
+▪skins\  Houses the output of the make.bat script. This is like a staging area. When you run the script ▪
+with the install argument, it uses these files to install the skin.
+▪src\ Houses the original or "source" files installed with the Bravura Security Fabric  instance. In ▪
+general, you should not modify this directory.
+How cus t omiz ations  work
+Skins
+The files that you create in the custom\ directory correspond to the built-in files in the src\ directory.
+When you generate a skin, the make.bat script looks for a custom file with the same name as the source
+file. If the custom file exists, then it applies your cus t omiz ations.  For example, the Legacy skin file src\z
+\psf.m4 contains the tags sinclude(custom/psf.m4)  and sinclude(custom/_SKIN/
+psf.m4)  that tell make.bat to apply the code contained in either custom\psf.m4 or custom\default
+\psf.m4.
+Legacy cus t omiz ations
+Legacy skin-specific  changes override the built-in and global files in the following way:
+The following built-in files are taken, then any global changes are applied, then any skin-specific  changes
+are applied, o v er writing  only those tags that were customized. The entir e  file need not be customized,
+just individual tags:
+▪src\common\*.m4 (except header*.m4 and footer*.m4)▪
+▪src\common\*.kvg▪
+▪src\z\*.m4▪
+The following built-in files are replaced by any global file matching its name, which is replaced by any skin
+specific  file matching its name:
+▪src\common\header*.m4▪
+▪src\common\footer*.m4▪
+▪src\js\*.js▪
+There are ins tructions  inside these files on how to customize them. All cus t omiz ations  for Legacy
+JavaScript related files (found in src\js\) must be in a js directory in the same loc ation  r elativ e  to the
+source files;  for example, if the source file is \<instance>\design\src\js\libs\core.js, then the path for the
+JavaScript cus t omiz ation  must be \<instance>\design\custom\js\libs\core.js.
+For more in f ormation  on skin cus t omiz ations,  see Customizing Skin Design  (on page 3493).
+Angular cus t omiz ationsTo customize the Angular skins, override files in \<instance>\design\src\ui. For each file, create a new file
+with the same name in the same r elativ e  path in \<instance>\design\custom\, which will override the file
+of the same name in the same r elativ e  loc ation  in \<instance>\design\src\ui\.
+Style cus t omiz ations
+The following built-in file is replaced by a global file matching its name:
+▪src\ui\src\styles.scss▪
+There are ins tructions  inside of this file on how to customize it.
+The following built-in files are appended with the contents of a global file with a matching name pattern
+(basename-custom.scss) where basename is the portion  of the filename  before the extension:
+▪src\ui\src\styles.scss▪
+▪src\ui\src\styles\_common.scss▪
+There are ins tructions  inside of these files on how to customize them.
+For more in f ormation  on style cus t omiz ations,  see Modifying Style  (on page 3497).
+Widgets
+The files that you create in the custom\widget\ directory correspond to the built-in files in skin\widget\
+directory. When a page is loaded the CGI searches for a custom file with the same name as the source
+file. If the custom file exists, then your cus t omiz ations  are applied to the page. There is no need to run
+make.bat for custom widgets.
+Widgets are only used in m4 files.  For more in f ormation  on customizing widgets, see Customizing
+Widgets  (on page 3499).Gener ating  and installing skins
+Whenever you make a change to any of the Bravura Security Fabric  design files,  you must generate and
+install a new set of skins. You do this using the make.bat  batch file in the <instance>\design\ directory.
+Using make.bat
+To generate and install new or modified  skin files,  use the following format for the commands to run from
+the <instance>\design\ directory, where en-us  is American English:
+1.Compile the skins:1.
+make.bat default en-us
+Changes are saved in the instance's <instance>\design\skin\ directory
+2.Install the skins:2.
+make.bat install default en-us
+The compiled files are copied to the instance's skin\ directory
+3.If necessary, reload and review any changes to Bravura Security Fabric  web pages. 3.
+Do not run the second command to install the skins if they fail to compile, especially if the firs t m4 file
+(links.m4) fails to compile.
+Skins can fail to compile if something in the environment is locking the skin files.  That can be a malware
+program, an automated backup tool running at the time,  but more likely the product UI itself being in use
+at the time  of the skin c ompilation
+Have a test instance where you can compile the skins when the instance is not being used. Make a backup
+copy of the files on the production  instance in case you need to quickly roll them back. Review changes on
+the test instance, then copy the skin files to the production  instance.
+Additional  languages
+If you have installed additional  languages, you must run make.bat for each language. The procedure is
+the same as for American English, except that you replace en-us with the appropriate language code:
+make.bat default <lang>-<locale>
+make.bat install default <lang>-<locale>
+For example, to generate and install new skin files for the default skin and for the Spanish language, run:
+1.Generate and install files for the Spanish language: 1.
+make.bat default es-es 
+make.bat install default es-es
+2.Generate and install files for the default, English language: 2.
+make.bat default en-us 
+make.bat install default en-usYou must run the two default skin commands (as in step 2 above) in addition  to any previous
+commands any time  any language kvg file is touched.
+Language support is covered in more detail in Supporting  Multiple  Languages and Locales  (on page
+3479).
+The skin name and the language code match the directory names where the skin and language are
+installed. For example, the \<instance>\skin\default\en-us\ directory contains American English and is for
+the default skin.
+See About the UI files (on page 3472) for more in f ormation  about the files and their loc ations.
+Example skins
+Example skins are provided in the <instance>\design\examples\ directory. Follow the ins tructions  noted
+in the files for the example skin.
+Shipped examples include:
+▪customLogo – sample UI to add a custom logo▪
+▪ska – default UI that is specific ally  for use with the Login Assistant SKA ▪
+▪unbranded – sample UI to remove branding▪Supporting  multiple  languages and locales
+▪The entir e  Bravura Security Fabric  user interface supports in t ernationaliz ation,  including non-roman ▪
+character based languages such as T r aditional  Chinese. Language packs (translated skins) are not
+shipped with Bravura Security Fabric . They are available separately from Bravura Security. Bravura
+Security  can provide additional  languages at additional  cost, or you can provide your own tr anslations
+Language pack availability may vary from release to release. For more inf ormation  about language packs
+contact your Bravura Security  Account R epresen t ative.
+The Bravura Security Fabric interface uses UTF-8 encoding. When modifying language packs, ensure that
+your editing  tool is set to use UTF-8 encoding.
+Install language packs for standard pages
+To install  Bravura Security Fabric  language pack:
+1.Obtain the necessary <lang>-<locale>.<version>.zip file from Bravura Security . 1.
+2.Place the <lang>-<locale>.<version>.zip file in the \<instance>\ directory and unzip it. 2.
+Verify that language pack source files are correctly placed in the \<instance>\design\src\common\
+directory.
+In a replicated environment  (on page 269), install on the primary node.
+3.Generate and install the new skin files for the language. 3.
+From the \<instance>\design\ directory, run the following command:
+make.bat default <lang>-<locale> 
+make.bat install default <lang>-<locale>
+The language skin files are installed to their own <lang>-<locale> directory within the \<instance>\skin
+\ directory.
+4.Generate and install the default American English skin to complete ins t allation  of the language pack. 4.
+make.bat default en-us 
+make.bat install default en-us
+Close browsers if you have them open and then re-open them to test the changes.
+If you do not see changes as expected, try clearing the browser cache before re-opening the browser.
+You must run the two default skin commands (as in step above) in addition  to any previous commands
+any time  any language or errmsg kvg file is touched.
+When the new skins are generated, the en-us language tags are used as a set of defaults to fall back
+on. If a tag exists in the en-us language file and is missing or undefined  in the foreign language files,
+the value of the corresponding en-us language tag is used instead.
+You can now use the translator interface  (on page 3485) or edit KVG files (on page 3489) to alter text if
+required.R eplic ation
+If you have Bravura Security Fabric  installed on multiple  nodes, install the language pack on the primary
+node. Any language files are aut omatic ally  propagated to secondary nodes when auto discovery runs the
+updinst  program  (on page 2725), towards the end of the process. You can also propagate the files
+manually with the following command from the util directory:
+updinst.exe -syncfile
+The time  this takes depends on the number of files you have to propagate, but is faster than running auto
+discovery.
+See the R eplic ation  and Recovery  site for a more detailed e xplanation  of file s ynchr oniz ation .
+Install language packs for component files
+Components may contain user interface text and error message text that may require tr anslating  into
+other languages.
+To install language pack for component files:
+1.Obtain the necessary <lang>-<locale>.<comp>.zip file from Bravura Security. 1.
+2.Place the <lang>-<locale>.<version>.zip file in the \<instance>\component\ directory and unzip it. 2.
+Verify that language pack source files are correctly placed in the \<instance>\component\Language\
+directory.
+The structure must mirror the component repositories, but each component folder needs to only
+contain the KVG files.
+3.Load the component files and generate the new skin files for the language. 3.
+From the \<instance>\script\ directory, run the following command:
+manage_components.py load --patch
+This process can take some time.  The manage_components.py script loads the component files and
+generates skin files for them.
+4.Close browsers if you have them open and then re-open them to test the changes.4.
+If you do not see changes as expected, try clearing the browser cache before re-opening the browser.
+When the new skins are generated, the en-us language tags are used as a set of defaults to fall back
+on. If a tag exists in the en-us language file and is missing or undefined  in the foreign language files,
+the value of the corresponding en-us language tag is used instead
+Create new language skins
+If a language pack is not available and you want to create new skins that use another language besides
+English, ensure that the following source KVG files exist:
+▪\<instance>\design\src\common\<lang>-<locale>-language.kvg▪
+▪\<instance>\design\src\common\<lang>-<locale>-errmsg.kvg▪
+These files must include the outer KVGroup:

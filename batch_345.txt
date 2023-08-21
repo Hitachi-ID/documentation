@@ -1,0 +1,83 @@
+framework for administrators to de fine  rules that determine which categories and reports will be shown
+to users in the Analytics  app.
+This component is installed by default when you install Bravura Security Fabric .
+Deployment
+The hid_policy_analytics_filt er  table contains all the rules that determine what categories and reports are
+shown for a particular  user. Like all component framework policy tables, it contains the following basic
+fields:
+▪StageNumber (required int) The policy engine will run checks in stages. Each stage completes before ▪
+rules in the next stage are tested; only after  all stages are completed, or a rule finaliz es  processing, are
+the final  results passed.
+▪RuleNumber (required int) Within each stage, the engine processes the rules in number order. Note ▪
+that this is not necessarily table entry order.
+▪CategoryID (required string) Name of the folder or report category is shown or hidden. Default value ▪
+is a dot and wild card .
+▪ReportName (required string) Report name is shown or hidden. Default value is a dot and wild card .* ▪
+▪ShowMatches (required Boolean) When disabled only categories and reports not matching are ▪
+shown. Default value is True .
+▪Enabled (required Boolean) When disabled the whole rule is not processed. Default value is True ▪
+▪Proceed (required Boolean) If the rule matches or mismatches, should the engine c ontinue  processing ▪
+further rules (True), or if the rules matches, should it stop (False).
+▪Comment (optional  string) Used to explain what the rule means in English. Like all comments, this is ▪
+very useful if kept correct, and activ ely  dangerous if not.
+▪ViewUserID (optional  string) User ID once matched is able to view or not view the categories and ▪
+reports set in the required fields.
+▪ViewUserClass (optional  string) The engine allows or disallows users who have matching user class ▪
+membership to view categories and reports.
+▪ Attribut eID  (optional  string) User that has user attribut e  matching the value in Attribut eV alue  can or ▪
+can not view analytics  categories and reports.
+▪ Attribut eV alue  (optional  string) User attribut e  is set here. ▪
+Individual rule examples
+The following are various examples of rules to show how the fields  in the table work together.
+Rule example
+RuleNumber CategoryID ReportName ShowMatches Enabled Proceed
+1 .* PASSWORD_RESET_REQUESTS True True True
+2 ANALYTICS_CATEGORY_USERS .* True True True
+3 .* REPORTS_* False True TrueRuleNumber CategoryID ReportName ShowMatches Enabled Proceed
+4 .* SOD_* True False True
+5 .* REPORTS_LOGIN_FAILURES True True False
+The rules do the following:
+▪Rule 1 Analytics  report PASSWORD_RESET_REQUESTS under all categories are shown ▪
+▪Rule 2  All analytics  reports under category ANALYTICS_CATEGORY_USERS are shown ▪
+▪Rule 3  All analytics  reports matching string REPORTS_  are hidden. Non-matched reports are shown. ▪
+▪Rule 4  Is disabled; Enabled  is set to False. ▪
+▪Rule 5  If there are no analytics  reports matching string REPORTS_LOGIN_FAILURES , subsequent ▪
+rules are processed. If there is matching, no subsequents are processed.
+Policies analytics  reports
+Dormant and orphan accounts
+This report provides details about accounts that have no login in f ormation  or have not been used for a
+certain amount of days.
+Each section  of the graph can be clicked to display a detailed report.
+Violation  e x ception  status
+This report displays the breakdown of all Segr eg ation  of duties  (SoD) violations  by their approved
+e x ception  status.
+All violations  are classified  as either having received an approved e x ception  or not.Drilling down into either of these two statuses in the chart will result in a report listing  the SoD violations.
+Violation  e x ception  details
+This report contains the status, with approved e x ception  or not, for each Segr eg ation  of duties  (SoD).
+Clicking on an element in the chart will produce a report for the selected SoD and its’ approved e x ception
+status.Violation  details
+This report contains the breakdown of Segr eg ation  of duties  (SoD) violations  by SoD ID.
+Clicking into the chart will produce a drill down report that lists the SoD violators for the selected SoD.
+Included in the report is the approved e x ception  status for the violation.Authentic ation  Chain St atistics
+This report monitors and displays the total login count, the successful login count, and the failed login
+count and rate on the system.
+The values in the last two columns: Failure count  and Failure rate (%)  have clickable links. Clicking them
+displays details such as user ID, user name, oper ation  code, and date when login fails.W orkflo w  analytics  reports
+Request summary
+This report provides details about w orkflo w  requests.
+Various sections  of this report can be clicked on to produce a detailed report; for example:
+▪You can view requests for the last day, last week, last month, last quarter or last year by clicking on the▪
+button  with that particular  title.
+▪You can click Open requests  and view all open requests. ▪Privileged Access reports
+Web app privileged sign-on c on figur ation
+This report provides details about the web app c on figur ations  that are associated with managed
+accounts.▪Click the 
+  next to Con figur ation  file to view the c on figur ation  file. ▪
+▪Click a particular  Managed account  view more details about that particular  account; for example, the ▪
+vault the account is associated with and the team that manages the account.
+▪Click the Check-outs  tab to view current check-outs and check-out history. ▪Certific ation  analytics  reports
+Campaign s t atistics
+This report provides details about activ e,  completed and canceled campaigns.
+Each section  of the pie graph can be clicked on to produce a more detailed report.
+Entitlemen t  review aging
+This report provides a review of pr ofile,  account, group membership and role entitlemen ts.

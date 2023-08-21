@@ -1,0 +1,215 @@
+Accurate logging requires an accurate time  stamp. It is recommended that the server set its time  using a
+reliable network time  server.
+An audit log is only e ff ectiv e  if it is examined. Logs provide the best indic ations  of break-ins, fraud and
+misuse. It is highly recommended that logs be examined on a regular basis.
+Micr osoft  Security Compliance Toolkit
+For environments that require added security, there are additional  measures that can be taken to harden
+the servers. However, it is very important to conduct thorough t esting  in a test environment before
+implementing  them in pr oduction.
+Micr osoft  Security Compliance Toolkit has replaced all previous Micr osoft  security guides. Once installed
+you will have access to a myriad of guides and tools provided by Micr osoft’ s  security experts including:
+▪Windows Server Security Guides▪
+▪ Micr osoft  recommended security baselines ▪
+▪Tools to customize and export a security baseline for deployment▪
+Further in f ormation
+For further in f ormation  on network security and server hardening refer to the following:
+▪The SANS Institut e  - An industry trusted or g aniz ation  that provides extensive c ollection  of research ▪
+documents in r elation  to in f ormation  security.
+▪ National  Security Agency (NSA) ▪
+▪ National  Institut e  of Standards and Technology (NIST) ▪
+▪Internet Security Alliance (ISA) - in f ormation  on industry best pr actices. ▪
+▪The Center for Internet Security (CIS) - industry accepted hardening standards.▪
+▪ In t ernational  Or g anisation  for St andar diz ation  (ISO) - industry accepted hardening standards. ▪
+▪ National  Institut e  of Standards Technology (NIST) - industry accepted hardening standards. ▪
+▪Health Insurance Portability and Accountability Act (HIPAA)▪
+▪Gramm-Leach-Bliley Act 2002 (GLBA)▪
+The listed organiz ations  provide inf ormation  on computer security. Any mention  of a commercial
+product is for inf ormational  purposes only and does not imply a rec ommendation  or endorsement by
+Bravura Security.Part XI ComponentsAbout the component framework
+What is a component?
+A component is a c ollection  of scripts and data which provide extra functionality  to Bravura Security
+Fabric . Components rely on the component framework , which is built from a library of Python scripts and
+SQLite tables to store c on figur ation.  The component framework acts as a control layer between Bravura
+Security Fabric  and individual components, ensuring that each installed component is run at the
+appropriate time  and with the correct runtime  parameters.
+Each component is designed to implement or handle a specific  feature or piece of functionality  in
+Bravura Security Fabric ; for example, the AuthMod component adds a policy-driven system for
+controlling authoriz ation  for requests. A typical component comprises some or all of the following
+modules:
+1.Manifest file – is always present and is essentially  the ”backbone” of the component. It dictates what 1.
+modules the component contains, what dependencies it requires, and how and when the various
+scripts interact with the product.
+2.Python scripts – drive the c omput ational  logic of the component to dynamically change how the 2.
+product should react to a user’s actions  or w orkflo w  events. Data for these c alculations  can be derived
+from the SQLite tables.
+3.SQLite Tables – used by the Bravura Security Fabric  administrator to de fine  policies and c on figur ations 3.
+for components. These components are stored in an extdb  which is a SQLite database. See http s://
+w w w .sqlit e.or g /  for more in f ormation  about SQLite.
+In addition  to the default components provided as part of the Bravura Security Fabric  install package,
+custom components can be written  by those with sufficien t  understanding of Bravura Security Fabric  and
+Python. Custom components can provide new functionality ,  or can override e xisting  components to alter
+the default functionality .
+Types of components
+There are four main types of components, each of which have a diff er en t  purpose:
+▪Data – Data components contain product c on figur ations,  such as target system, attribut e,  and request ▪
+c on figur ation  elements. They contain no scripted logic, and can be modified  by environment files.
+▪ Functional  – Functional  components provide script and policy extensions to enable additional ▪
+functionality  in Bravura Security Fabric , such as modifying the authoriz ation  w orkflo w  or managing
+authentic ation  chains. On their own functional  components do nothing; they provide a library of
+functionality  for other, generally higher level, components. Functional  components include data
+components or other functional  components as dependencies.
+▪Scenario – Scenario components extend functional  components to implement a particular  use case, or ▪
+scenario. A scenario could be as simple as adding some specific  c on figur ation  parameters for a
+functional  component (so that it implements a use case) or as complex as adding several functional
+components, scripts, and many data components.▪RefBuild – RefBuild components de fine  a reference implemen t ation , which is either a built-in Bravura ▪
+P attern  edition  or customer specific.  They typically contain a c ollection  of scenario components and
+independent data components. R efbuild  components have no data or code, and should just be a
+manifest file with dependencies de fined.
+Component and script priorities
+Component manifest files de fine  two types of priorities:
+The fir s t one, in the component element itself, determines the order of loading of components.
+▪Component dependencies are installed before the component that lists them as dependencies.▪
+▪Where there are "tie-br eak er s"  required (several components with the same dependencies a ff ecting ▪
+the same policies, but with no cross-dependencies between them), the component priority also
+determines the component e v aluation  order.
+▪The higher the priority setting ,  the later it is evaluated, so the higher its actual priority in e v aluating  its ▪
+function  (for example attribut e  c alculation).
+The second type of priority is that for scripts running inside exit traps or plugin points.
+▪That script priority, similarly with the component priority, determines the order of running several▪
+components which are de fined  for the same plugin point or exit trap.
+▪The higher the priority number, the later the script is run compared to the other ones de fined  by ▪
+other components for the same event.Managing components
+This chapter shows you how to list, add, install, disable, and remove components.
+Getting  started
+When you install Bravura Security Fabric , the default components are aut omatic ally  added to the
+<instance>\component\default \ directory.
+You can manage components using a web interface via Manage components . No setup is required.
+Alt ernativ ely ,  you can manage components from the command line using the
+manage_components.py  script located in <Program Files path>\Bravura Security
+\Bravura Security Fabric\<instance>\util\ . See Managing components from the command
+line (on page 319) for details.
+Loading components
+Whenever components are added to the component folder, you must reload the list of available
+components. It is best pr actice  to do this before you start managing components.
+To load the list of available components from the Manage components , click Reload DB .
+Bravura Security Fabric  displays status messages once loading is complete.
+If any components fail to be loaded, the failure will be reported in detail in the idmsuite  log file.
+Listing  components
+Before installing components, review what is already installed and available.Click on a component to view a description,  as well as its extensions and dependencies.
+You can search by name, click on the advanced search icon 
+ , or click on one of the side categories to
+filt er  components by type.
+Viewing component details
+For each component listed in Bravura Security Fabric , you can view a brief description,  as well as a list of
+the component’s dependencies, in the component UI.
+In f ormation  can also be viewed in the manifest file for the component. The manifest file is an XML file
+containing ins t allation  in f ormation  for the component. A manifest file may include any or all of the
+following tags:
+▪< description > - A brief description  of the component ▪
+▪<removable > - A boolean value that determines if the component may be uninstalled. If False, the ▪
+component may only be disabled, not removed.
+▪<version > - The component version number ▪
+▪<priority > - An integer that controls the order in which the component is installed. Components with a ▪
+smaller priority number are installed before those with larger priority numbers
+▪<depends > - Dependencies of the component, which are other components that contain c on figur ation ▪
+required by this component to function.
+▪<python_depends > - Python packages required by this component. The ins t allation  of the component ▪
+will fail if any required package is missing.
+▪< c on fig da t a > - Files containing c on figur ation  in f ormation  for the component. ▪
+▪<extension > - Script hooks or plugin points that this component contains scripts to hook into. ▪
+Installing components
+To install components:1.List components as described in Listing  components  (on page 315). 1.
+2.Select the checkbox next to one or more component names.2.
+3.Click Install component(s) in the right panel, and c on firm  the action. 3.
+The component management program installs the components along with any dependencies. This
+may take some time  depending on c on figur ation  requirements and dependencies. You should
+see ”Completed install for component” messages for each selected component in the Task Status
+panel.
+When you install a component, the component management program creates the database tables,
+framework, and c on figur ations  that are necessary for the plugin points to function.  Additional  in-product
+c on figur ation  may still be required to properly run the scenarios.
+Upgrading components
+You can upgrade components by replacing the manifest file, with an incremented version, and any
+relevant Python code in the component directory. If a folder titled  ‘upgrade’ exists in the component
+directory, relevant code from this directory will be run to upgrade the component to the newest version.
+For example, if your Bravura Security Fabric  deployment is currently running a component version 1.0.0,
+and you upgrade to version 2.0.0, the upgrade process will detect the existence of a file called
+1_0_0to2_0_0.py  in the upgrade folder (if it exists) and run the relevant script inside. These scripts
+will often  be used to upgrade the database schema which the component relies on, or make other
+changes to the system that the newest version of the component requires.
+In order to trigger the upgrade process, you must reload the components, so that the updated manifest
+file can be processed, as described in Loading components  (on page 315).
+Removing and disabling components
+If you want to stop using a component, you can remove it or disable it, depending on the component and
+your needs.
+Removing components
+Removing a component removes its c on figur ation  and prevents any associated scripted logic from
+e x ecuting  when the plugin points run their processes.Components can only be removed if they have the removable flag in their manifest.xml  file set
+to ”true”:
+<removable>true</removable>
+If you try to remove a component that does not have this flag set to ”true” in its manifest.xml  file,
+the component management program will report an error indic ating  that the component cannot be
+removed. If this is the case you can disable the component  (on page 318) instead.
+The component management program also reports an error if you attemp t  to remove a component that
+is a dependency of another component.
+To remove a component:
+1.List components as described in Listing  components  (on page 315). 1.
+2.Select the checkbox next to one or more component names.2.
+3.Click Remove component(s) in the right panel. 3.
+The component management program removes the components along with its dependencies. This may
+take some time  depending on c on figur ation  requirements and dependencies. You should see ”Completed
+remove for component” messages for each selected component in the Task Status panel.
+Disabling components
+Disabling a component prevents any scripts associated with that from e x ecuting.  If you are unable to
+remove a component it is recommended that you disable the component instead.
+Take care when disabling dependency components; other installed components may also rely on them.
+To disable a component:
+1.List components as described in Listing  components  (on page 315). 1.
+2.Select the checkbox next to one or more component names.2.
+3.Click Disable component(s) in the right panel. 3.
+The component management program removes the components along with its dependencies. This may
+take some time  depending on c on figur ation  requirements and dependencies. You should see ”Completed
+disable for component” messages for each selected component in the Task Status panel.Cr eating  custom components
+Bravura Security Fabric  administrators with sufficien t  Python knowledge may create custom components,
+either by copying an e xisting  default component or by cr eating  an entir ely  new component from scratch.
+All components and their dependencies exist in <instance> \component\Default. If changes need to be
+made, they can be:
+▪Rules can be changed or added after  ins t allation  in the extdb table. This is simple, but must be done ▪
+manually in each environment (DEV, QA, PROD) and must be backed up manually as well.
+▪Place custom components in the <instance>\component\Custom \directory to ensure that they are ▪
+loaded properly and not o v er written  during an upgrade.
+▪In the data subdirectory of the Custom Scenario, change the csv to have the modified/ added  rules. ▪
+▪Ensure the Custom Scenario directory is in the new environment. When the component is installed,▪
+the modified  rules will be installed in the table.
+▪The same method can be used with json instead of csv, to change the data used by the scenarios.▪
+Most commonly, adding cell providers’ email-to-text gateways for the smspin_email scenario.
+▪The same method can be used to customize the behavior of the chain, by customizing the functional ▪
+component.
+Managing components from the command line
+This section  shows you how to manage components from the command line using the
+manage_components.py  script.
+Setting  up the component management command-line program
+The component management program ( manage_components.py ) is a Python executable script
+located in the <Program Files path>\Bravura Security\Bravura Security Fabric\<instance>\ script\ directory. In
+order to run it from the command line, you may need to c on figur e  a number of environment variables. To
+do this:
+1.Launch a command prompt as an Administrator and navigate to the <Program Files path>\Bravura 1.
+Security\Bravura Security Fabric\<instance>\  directory.
+2.Run the command:  2.
+instance.bat 
+3.Navigate to the script directory.3.
+You should now be able to run the component management program. Ensure that you always run it as an
+Administrator.
+Loading from the command line
+To load the list of available components from the command line:
+1.Launch a command prompt as an Administrator and navigate to the script directory, as described in1.
+Setting  up the component management command-line program  (on page 319).2.Run the command:  2.
+manage_components.py load 
+Listing  from the command line
+To list all components from the command line:
+1.Launch a command prompt as an Administrator and navigate to the script directory, as described in1.
+Setting  up the component management command-line program  (on page 319).
+2.Run the command:  2.
+manage_components.py list all 
+3.Navigate through the list using [space] and [-] keys. 3.
+You should see a list of all the components available to you with a status marker to the left of the name.

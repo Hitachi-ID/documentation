@@ -1,0 +1,359 @@
+Select an e xisting  import rule to update rule settings,  associate the rule with managed system
+policies , modify c onditions,  and evaluate c onditions
+You can also enable, disable, delete or test rules  (on page 2125) on this page.
+for a managed system or managed account.
+2.Click Policies . 2.
+3.Select the policies with which you want to associate the rule.3.
+4.Click Update . 4.
+You can also link rules to policies on the Managed system policy in f ormation  page ( Manage the system  >
+Privileged access  > Managed system policies  > <policy> ).
+To unlink an import rule from a managed system policy, all objects that were added by the import rule
+must fir s t be removed from the policy.
+Offboar ding  managed accounts and systems with import rules
+Managed account import rules can be used to unbind managed accounts from specific  Managed System
+Policies (MSPs). This process is referred to as "offboar ding"  the managed account. When a managed
+account is offboar ded  by a managed account import rule:
+▪If the managed account password has not yet been modified  within Bravura Privilege  (randomized / ▪
+overridden / etc)
+▪The managed account is removed from the MSPs specified  by the rule c on figur ations. ▪
+▪Resource attribut es  for the managed account are deleted. ▪
+▪If the managed account password has been modified  within Bravura Privilege : ▪
+▪The managed account is removed from the MSPs specified  by the rule c on figur ations  and then ▪
+placed into the HISTORICAL_DATA_GRP policy.
+▪The managed system for the account:▪
+▪Will be added to the HISTORICAL_DATA_GRP policy▪
+▪Will be removed from the MSP the account was unbound from given the system has no other▪
+managed account assigned to that MSP .
+▪Resource attribut es  for the managed account are deleted. ▪
+The MSP assignment of a managed system is derived from the MSP assignment of its managed
+accounts. For example, if a managed system has Account1 on Policy1 and Account2 on Policy2 then
+the managed system belongs to Policy1 and Policy2. Policy1 and Policy2 can be any MSP including
+HISTORICAL_DATA_GRP . Managed accounts at any given time  can only belong to one MSP .
+Managed system import rules can be used to unbind managed systems from specific  MSPs. This process
+is referred to as "offboar ding"  the managed system. When a managed system is offboar ded  by a
+managed system import rule:
+▪If the managed system has no managed accounts with passwords modified  by Bravura Privilege ▪
+(randomized / overridden / etc):▪Both the managed system and its managed accounts will be removed from the MSP specified  by ▪
+the rule c on figur ations.
+▪Resource attribut es  for the managed system are deleted. Resource attribut es  for this system’s ▪
+managed accounts are deleted.
+▪If the managed system has managed accounts with passwords modified  by Bravura Privilege : ▪
+▪Both the managed system and its managed accounts will be removed from the MSP specified  by ▪
+the rule c on figur ations  and then placed into the HISTORICAL_DATA_GRP policy.
+▪Resource attribut es  for the managed system are deleted. Resource attribut es  for this system’s ▪
+managed accounts are deleted.
+Passwords for managed accounts that get placed in HISTORICAL_DATA_GRP are still accessible, but
+the passwords can not be randomized.
+Managed account/system import rules can offboar d  a managed account/system in one of two ways:
+1.The object is offboar ded  when it no longer matches the c onditions  of the bind rule that managed it. 1.
+▪This happens for import rules which have option  Unbind objects if they no longer satis f y  this rule ▪
+enabled in the General tab of the import rule c on figur ations.  This type of bind rule should only
+offboar d  and remove resource attribut es  for systems/accounts it originally bound.
+▪The Policies tab shows the MSPs this import rule is acting  on behalf of. ▪
+2.The object is offboar ded  when it matches the c onditions  of an unbind rule 2.
+▪A managed system/account unbind rule is an import rule that sets Action  to perform on matching ▪
+objects = Unbind all discovered objects that satis f y  this rule in the General tab.
+▪The Policies tab shows the MSPs this import rule is acting  on behalf of. ▪
+Teams are assigned by resource attribut es  in Bravura Privilege . When resource attribut es  are removed
+due to a managed system / managed account offboar d  via import rules they are offboar ded  from the
+team to which they are assigned.
+An offboar d  on either a managed account that is checked out or a managed system with checked out
+accounts is not possible. The managed account must fir s t be checked in and the unbind will be r e-
+attemp t ed  the next time  the import rules are evaluated.
+Take care when c on figuring  an unbind rule to prevent misc on figur ations.  See Consider ations  when
+c on figuring  import rules to offboar d  or delete managed objects  (on page 2104) for more in f ormation.
+Deleting  systems and accounts from Bravura Privilege  using import rules
+Target system import rules can be used to delete a system and its accounts from Bravura Privilege . When
+a delete is processed by a target system import rule the following happens:
+▪The managed system and its managed accounts will be removed from all managed system policies▪
+they are bound on.
+▪The system and accounts are removed from all policies (including HISTORICAL_DATA_GRP) and are▪
+then deleted from Bravura Privilege . Passwords will no longer be accessible.
+▪Resource attribut es  for the managed system are deleted. Resource attribut es  for this system’s ▪
+managed accounts are deleted.▪Other in f ormation  associated with the system and accounts (e.g. password history, etc) will also get ▪
+deleted.
+Target system import rules will delete system and accounts when it matches the c onditions  of a delete
+rule:
+▪A target system delete rule is an import rule that sets Action  to perform on matching objects = Delete ▪
+all discovered objects that satis f y  this rule in the General Tab.
+Teams are assigned by resource attribut es  in Bravura Privilege . When resource attribut es  are removed
+due to target system delete via import rules they are offboar ded  from the team to which they are
+assigned.
+The target system delete rule will be unable to perform the deletion  if activ e  checkouts exist on the
+managed accounts. The managed accounts must fir s t be checked in and the deletion  will be r e-attemp t ed
+the next time  the delete rule is evaluated.
+If the system is deleted directly from Activ e  Directory the Bravura Privilege  discovered system (from
+which the import rule evaluates c onditions  against) remains unchanged and the system will not be
+deleted unless handled manually or explicitly by a target system import rule.
+Delete rule c onfigur ation  example
+To delete a push type system that can no longer be contacted by the Bravura Security Fabric  server,
+create a target system delete rule. For example, you could c on figur e  the rule with one of the following
+c onditions  (on page 2105):
+▪The number of days since the system was last discovered is greater than 100:▪
+a.Set the PUSH COMP NOT DISCOVERED THRESHOLD system variable to 100.a.
+b. Con figur e  a c ondition  containing: b.
+Type : Attribut e
+Attribut e : compNotDiscoveredPastThreshold
+Comparison Method : equals
+Value type : Number
+Value : 1
+▪The number of days since the last successful c onnection  to the system is greater than 100: ▪
+a.Set the PUSH COMP NOT CONNECTED THRESHOLD system variable to 100.a.
+b. Con figur e  a c ondition  containing: b.
+Type : Attribut e
+Attribut e : compNotConnectedPastThreshold
+Comparison Method : equals
+Value type : Number
+Value: 1
+▪The number of days since the last successful agent in t er action  (e.g. c onnection  / r andomiz ation  / ▪
+listing  / etc) with the system is greater than 100:a.Set the COMP FAILURE THRESHOLD system variable to 100.a.
+b. Con figur e  a c ondition  containing: b.
+Type : Attribut e
+Attribut e : compFailurePastThreshold
+Comparison Method : equals
+Value type : Number
+Value 1
+Take care when c on figuring  an unbind rule to prevent misc on figur ations.  See Consider ations  when
+c on figuring  import rules to offboar d  or delete managed objects  (on page 2104) for more in f ormation.
+Consider ations  when c on figuring  import rules to offboar d  or delete managed objects
+When c on figuring  import rules to offboar d  objects (such as accounts or systems) or delete systems
+careful c onsider ation  and review should be taken. The planned offboar d/dele t e  should be reviewed
+against:
+▪All e xisting  managed account / managed system / target system bind rules to ensure no c on flicts  with ▪
+those rules.
+▪The current solution  design to see if the offboar d  or delete use case is already handled; for example if ▪
+you are planning to offboar d  a managed object by attribut e,  are there already business requirements
+and/or rules which will offboar d  the object by time  (such as how long the system is offline)
+Lack of proper review may result in a misc on figur ation.  Common misc on figur ation  issues include:
+1. Unin t entional  offboar d  or deletion  of a managed object 1.
+When cr eating  an unbind or delete rule it will be able to offboar d/dele t e  an object originally bound by
+any of the de fined  bind rules. If the c onditions  of your unbind rule are not specific  enough you may
+offboar d  or delete an object you were originally not intending to.
+Misc on figur ation  example
+▪Managed System Bind Rule 1:▪
+▪ (Condition  1) "Name" contains "UAT" ▪
+▪ (Condition  2) "DistinguishedName"  contains "DC=mydomain, DC=com" ▪
+▪Managed System Bind Rule 2:▪
+▪(General) "Unbind objects if they no longer satis f y  this rule" enabled ▪
+▪ (Condition  1) "Name" contains "UAT" ▪
+▪ (Condition  2) "DistinguishedName"  contains "DC=mydomain2, DC=com" ▪
+▪ (Condition  3) "compNotDiscoveredPastThreshold" = "0" (assume PUSH COMP NOT DISCOVERED ▪
+THRESHOLD = 60)
+▪Managed System Unbind Rule:▪
+▪(Intended Use Case) Offboar d  all UAT systems that are offline  for 30 days or more. ▪
+▪ (Condition  1) "Name" contains "UAT" ▪▪ (Condition  2) "compNotDiscoveredDays" >= 30. ▪
+In the above example the Unbind rule could unin t entionally  offboar d  systems bound by
+“Managed System Bind Rule 2” earlier (30 days) than they were meant to be (60 days).
+2.Rule de finitions  which can repeatedly offboar d/bind  an object or delete/add a system 2.
+If the c onditions  de fined  by an account/system bind and unbind rule or target system bind and delete
+rule both match an object it can cause the object to be repeatedly processed by those rules every
+time  they are evaluated.
+Referring back to the misc on figur ation  example above, assume a system named UAT2 in
+"DC=mydomain2,DC=com". When UAT2 is offline  for between 30 to 60 days it will pass the c onditions
+for `Managed System Bind Rule 2` and `Managed System Unbind Rule`. On every it er ation  of import
+rule e v aluation  the system will be onboarded and offboar ded.
+De fining  c onditions
+Discovered objects are compared against import rule c onditions  to determine which systems or accounts
+satis f y  the import rule.
+These comparisons use:
+▪Simple attribut e  matching  (on page 2105) that return either true or false ▪
+▪PSLang expressions  (on page 2107) that return either true or false ▪
+Discovered computer attribut es  and account attribut es  can be used in the expressions.
+▪A plugin  (on page 2111) copied into the plugin directory ▪
+On the Import rules page, you determine whether discovered objects:
+▪Must Match all c onditions  to satis f y  the import rule. ▪
+Or,
+▪Can Match any c ondition  to satis f y  the import rule. ▪
+Setting  the order of c onditions  
+If an import rule has more than one c onditions  de fined,  then you can c on figur e  the order in which
+c onditions  are compared against objects. The c onditions  are compared in descending order.
+To move a c ondition  up or down the list, use the arrows 
+  in the Order  column.
+Using threshold attribut es
+"PastThreshold" attribut es  should be used for import rule comparisons over the similar "Days"
+counterparts for performance purposes; for example CompNotDiscoveredPastThreshold (0/1
+comparison) should be used instead of CompNotDiscoveredDays (a regularly changing number) to
+avoid the import rule re-checks.
+De fining  c onditions  based on attribut es
+To add an import rule c ondition  based on attribut es:1.Navigate to the Import rules  page 1.
+Use the Privileged access tab in the Manage the system  (PSA) module to add, test, and delete import
+rules for managed systems and accounts. You can also use this page to access additional  c on figur ation
+settings.
+To navigate to the import rules page for managed systems and managed accounts:
+1.Click Manage the system  > Privileged access  > Import rules . 1.
+2.Select an import rule type:2.
+▪Managed systems – to determine managed system policy membership for managed systems ▪
+▪Managed accounts – to determine which accounts to manage on member systems in managed ▪
+system policies
+3.Click Add new... to add a new managed system or managed account import rule  (on page 2097). 3.
+Or,
+Select an e xisting  import rule to update rule settings,  associate the rule with managed system
+policies , modify c onditions,  and evaluate c onditions
+You can also enable, disable, delete or test rules  (on page 2125) on this page.
+for a managed system or managed account.
+2.Select the Conditions  tab. 2.
+3.Click Add new… 3.
+4.Enter an ID, and optionally  a Description . 4.
+5.Enable the c ondition  for this import rule by checking the box, or leave it unchecked to exclude the 5.
+c ondition.
+6.Set the c ondition  Type to ” Attribut e” . 6.
+7.Select the attribut e  that the c ondition  will evaluate. 7.
+The attribut e  must be discovered by Bravura Security Fabric before it can be used in an e valuation.
+8.Choose an Attribut e  type : 8.
+▪Computer : the attribut e  comes from discovered systems. ▪
+▪Account : the attribut e  comes from discovered accounts. ▪
+Account attribut es  are only available for managed account import rules.
+9.Choose a Comparison method that will be used to compare the value with the system attribut es. 9.
+When comparing against all items in a multi- valued  attribut e,  using 'does not' comparison methods
+behaves diff eren tly  from negating  the comparison. For example, if using the ’does not contain’
+comparison method, this would only check if any of the items lack the value. If using the ’contains’
+method with the c ondition  negated, this would check if no items contain the value.
+10. Select the Value type . 10.
+11. Select Case sensitiv e  comparison if needed. 11.
+12. Select Negate c ondition  to negate the comparison if needed. 12.13. Specify the Value used to compare with the system attribut es. 13.
+14. Click Add. 14.
+De fining  c onditions  using PSLang expressions
+You can write PSLang expressions to de fine  import rule c onditions,  based on the attribut es  of discovered
+objects. You can use any of the listed attribut es  as variables for comparison.
+To add an import rule c ondition  based on a PSLang expression:
+1.Navigate to the Import rules  page 1.
+Use the Privileged access tab in the Manage the system  (PSA) module to add, test, and delete import
+rules for managed systems and accounts. You can also use this page to access additional  c on figur ation
+settings.
+To navigate to the import rules page for managed systems and managed accounts:
+1.Click Manage the system  > Privileged access  > Import rules . 1.
+2.Select an import rule type:2.
+▪Managed systems – to determine managed system policy membership for managed systems ▪
+▪Managed accounts – to determine which accounts to manage on member systems in managed ▪
+system policies
+3.Click Add new... to add a new managed system or managed account import rule  (on page 2097). 3.
+Or,
+Select an e xisting  import rule to update rule settings,  associate the rule with managed system
+policies , modify c onditions,  and evaluate c onditions
+You can also enable, disable, delete or test rules  (on page 2125) on this page.
+for a managed system or managed account.
+2.Select the Conditions  tab. 2.
+3.Click Add new… 3.
+4.Enter an ID, and optionally  a Description . 4.
+5.Enable the c ondition  for this import rule by checking the box, or leave it unchecked to exclude the 5.
+c ondition.
+6.Set the c ondition  Type to "PSLang Expression". 6.
+7.Enter expressions you want evaluated.7.
+8.Click Add. 8.
+For example, the following values are extracted while discovering systems during auto discovery :
+ computer "" = { 
+      cn = <cn>; 
+      name = <name>; 
+      operatingSystem = "<operatingSystem>";       ADsPath = "<ADsPath>"; 
+   } 
+In order to access attribut es  discovered from computer objects, you need to de fine  variables like this:
+comp["<attribute name>"][n]  where n may be either 0 or a number, depending on whether
+the attribut e  has single or multiple  values.
+In order to access attribut es  discovered for accounts, you need to de fine  variables like this:
+acct["<attribute name>"][n]  where n may be either 0 or a number, depending on whether
+the attribut e  has single or multiple  values.
+The PSLang expression must be 256 characters or less. For larger expressions, you must use a plugin  (on
+page 2111) instead.
+Viewing system and account attribut es
+You can view discovered system and account attribut es  and values via the Manage the system >
+Resources > Discovered objects menu. Systems pages display all discovered attribut es  and their values,
+both single and multi- v alued.  Accounts pages display certain attribut es,  discovered services, tasks, IIS and
+DCOM objects.
+Attribut es  de fined  with Bravura Privilege  may also be displayed here, though some are not displayed
+until  they are set. For example:
+▪The attachedPolicies attribut e  is blank by default: comp["attachedPolicies"] ▪
+[0]=""
+Managed systems and managed accounts import rules which are set to use the attachedP olicies
+attribut e  will only work if the managed system is a member of the policy before the import rule is
+evaluated.
+If a member system is placed into a policy by an import rule during auto discovery , this inf ormation  will
+not be made available until  the next time  the import rule is evaluated.
+▪If the discovered system no longer appears on the discovered system list files,  the ▪
+compDiscovered attribut e  will be set to 0; otherwise it will be set to 1.
+▪The compNotDiscoveredDays attribut e  will be incremented for every day the discovered ▪
+computer has not appeared in the system list files.
+The system variable PSW CLEAN DELETED WSTN DELAY and PSW CLEAN NEVER MANAGED LWS
+DELAY are used to control when the Bravura Security Fabric will permanently remove discovered
+systems from the database.
+▪The compNotDiscoveredPastThreshold attribut e  will be set to true if the threshold is ▪
+reached for the number of days the discovered computer has not been discovered (as de fined  in
+attribut e  compNotDiscoveredDays ).
+▪The compNotConnectedPastThreshold attribut e  will be set to true if the threshold is reached ▪
+for the number of days since the last successful c onnection  to the discovered computer (as de fined  in
+attribut e  compNotConnectoredIntervals ).▪The compFailurePastThreshold attribut e  will be set to true if the threshold is reached for the ▪
+number of days the discovered computer has uninterrupted failures of a password r andomiz ation  or
+list oper ation.
+▪The compNotConnectedIntervals attribut e  is incremented by 1 for every 10 day period since ▪
+the last successful c onnection  to the discovered computer.
+Use the PUSH COMP NOT DISCOVERED THRESHOLD system variable ( Manage the system > Resources >
+Options , or from the Import rules tab in Manage the system > Privileged access > Options ) to set the
+threshold value that determines the compNotDiscoveredPastThreshold  attribut e  for push
+mode discovered systems. Similarly, use the LWS COMP NOT DISCOVERED THRESHOLD system variable
+to set the threshold value for local service mode discovered systems. The default threshold value is 7
+days for both system variables.
+Use the PUSH COMP NOT CONNECTED THRESHOLD system variable ( Manage the system > Resources >
+Options , or from the Import rules tab in Manage the system > Privileged access > Options ) to set the
+threshold value that determines the compNotConnectedPastThreshold  attribut e  for push mode
+discovered systems. The default number of days is 30.
+Use the COMP FAILURE THRESHOLD system variable to set the threshold value that determines the
+compFailurePastThreshold  attribut e.  The default number of days is 30. For push mode systems,
+the threshold is the number of days of uninterrupted r andomiz ation  or listing  failures. For Local service
+mode systems, the threshold is the number of days since the system’s last contact with the server.
+When choosing which computer attribut es  to use, note how often  the attribut es  change. Each time  they
+change, the rule is evaluated during the daily psupdate/discovery process and several entries are added
+to several historical tables. Whenever possible, choose threshold attribut es,  such as
+compNotDiscoveredPastThreshold  for push mode systems and
+compFailurePastThreshold  for local service mode systems, over their non-threshold
+counterparts.
+Condition  examples using expressions
+1.The computer name must match the string “user1-ws”:  1.
+$comp["name"][0]=="user1-ws"  
+2.The string “OU=Domain control” must exist within the value of the variable $ADsPath:  2.
+%strlen(strstr($ADsPath,"OU=Domain Control"))>0 
+strcontains($comp["ADsPath"][0],"OU=Domain Control") 
+3.If the length of the computer name is greater than 5 characters and its oper atingS y s t em  is Micr osoft 3.
+Windows Server 2008, then return true, otherwise return false:  
+iif(((strlen($comp["name"][0])>5)&&($comp["operatingSystem"]
+[0] == "Windows 
+Server 2008")),"true","false") 
+4.This expression is useful for moving managed systems that are already known to be a member of4.
+another policy:  
+function MV() {for (var $i=0; $i< size($comp["attachedPolicies"][0]); $i++)  {if($comp["attachedPolicies"]
+[$i]=="<managed system ID>") { return 1;}} return 0; } MV(); 
+This rule must be evaluated twice in order for the necessary inf ormation  to be gathered.
+This expression would be useful, for example, in cases where systems must be placed in a default
+policy, or if a system is a member of a tombstone policy  (grouping non-contactable systems) and
+should not be a member of any other policy.
+5.To detect systems that Bravura Privilege has not been able to contact for the set time  period: 5.
+Con figur e  the COMP FAILURE THRESHOLD system variable to <N> (where N = number of days)
+$comp["compFailurePastThtreshold"][0] == 1
+6.To detect systems that Bravura Privilege has not been able to contact since a specified  time  period (in 6.
+this example 2 months) past a certain date based on their last successful c onnection  time:   
+function dateComparison() { var $certainDate; var $attributeDate;  var $period = P2M; toDate($attributeDate, $comp["lastSuccessConnection"]
+[0]); toDate($certainDate, "2012-07-15 13:48:00 (GMT-07:00)"); if($attributeDate > ($certainDate + $period)) { return 1;} return 0; } dateComparison(); 
+7.To detect previously-discovered systems that Bravura Privilege has not been able to discover from the 7.
+domain:
+$comp["compDiscovered"][0] == 0
+8.To detect the number managed systems that have not been discovered by Bravura Privilege in the last 8.
+10 days:
+$comp[compNotDiscovered][0] > 10
+9.This expression allows you to create import rules based on Activ e  Directory structures, and place 9.
+managed systems into dedicated managed system policies for structures like loc ation  or department:
+strcontains(($comp["ADsPath"][0]|$comp["distinguishedName"]
+[0]), <AD object organization object such as CN values, or OU>)
+Or,
+strlen(strstr(($comp["ADsPath"][0]|$comp["distinguishedName"]
+[0]), <AD object organization object such as CN values, or OU>))>0
+10. To determine if a discovered account is a domain account or not: 10.
+$acct["accountDomain"][0] == "<domain>"
+11. If you are manually providing computer list files,  you can also provide custom attribut es: 11.
+$comp["<custom attribute>"][0] == "<custom value>"
+12. To determine whether an attribut e  exists on a discovered object:  12.
+compAttrExists("<attribute_name>"  , "<optional attribute value>" , "<1|0 multi-value or not>"); 
+If the attribut e  value is empty, the expression simply determines whether the attribut e  exists or not. If
+the value is included, the attribut e  must exists and have the same value.
+This expression is particularly  useful when providing custom attribut es  for a set of specific  discovered
+objects.
+13. Conditions  may also contain logical statements; for example:  13.
+(<condition 1>) && (<condition 2>) && (<condition 3>) && ... 
+(<condition 1>) || (<condition 2>) || (<condition 3>) || ... 

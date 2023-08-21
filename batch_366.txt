@@ -1,0 +1,290 @@
+1.Move all users to the vault:1.
+didtovault.exe -ai admin.id -ap p455w0rD -s 10.0.1.68 -t LOTUS4 -
+all -vault "IBM_ID_VAULT\vault.nsf" -verbose
+2.Move specified  users to the vault: 2.
+didtovault.exe -ai admin.id -ap p455w0rD -s 10.0.1.68 -t LOTUS4 -
+ui "CN=user1 vault/O=hrnyc" -vault "IBM_ID_VAULT\vault.nsf" -verbose
+3.Exclude specified  users from being moved to the vault: 3.
+didtovault.exe -ai admin.id -ap p455w0rD -s 10.0.1.68 -t LOTUS4 -
+vault "IBM_ID_VAULT\vault.nsf" -verbose -ei "CN=user1 vault/O=hrnyc"
+ 
+4.Remove users from the DID table after  a successful move: 4.
+didtovault.exe -ai admin.id -ap p455w0rD -s 10.0.1.68 -t LOTUS4 -
+ui "CN=user1 vault/O=hrnyc" -vault "IBM_ID_VAULT\vault.nsf" -
+verbose -r
+5.Exclude specified  users from being moved to the vault, then delete the successfully moved DIDs: 5.
+didtovault.exe -ai admin.id -ap p455w0rD -s 10.0.1.68 -t LOTUS4 -
+ei "CN=user1 vault/O=hrnyc" -vault "IBM_ID_VAULT\vault.nsf" -
+verbose -r
+dumpacl
+Use the dumpacl  program to view the elements of an object’s security descriptor. A security descriptor
+contains data and security in f ormation  for a securable object in Windows. For more in f ormation  search
+for security descriptors at:
+http://msdn.micr osoft.c om/libr ar y/
+This program is useful, for example, when c on figuring  the _homedir_acl attribut e  for Micr osoft  Windows
+NT target systems, or cr eating  Notes ID files for Lotus Notes users.
+Usage
+Run dumpacl with the following arguments:
+dumpacl.exe [-dacl] [-sacl] [-owner] [-group] [-share] <filepath>
+Argument Description
+<filepa th> Specifies  the path to the object.
+-dacl Displays the DACL (discr etionar y  access control list) for
+the object.
+-sacl Displays the SACL (systems access control list) for the
+object.
+-owner Displays the object’s owner.Argument Description
+-group Displays the object’s primary group.
+-share Indicates that the filepa th  is a network share.
+See also
+dumpsid  (on page 3652) is a similar program used to view an object’s security identifier  (SID).
+dumpsid
+Use the dumpsid  program to view an object’s security identifier  (SID). An SID is a unique number that
+identifies  user, group, and computer accounts in Windows. SIDs play a role in security descriptors and
+access control lists.
+Usage
+dumpsid.exe [\\<server>\]<userid>
+See also
+dumpacl  (on page 3651) is a similar program used to view elements of an object’s security descriptor.setpxidm
+Use the setpxidm program to manage c on figur ation  of pxidm access from the command line.
+This program c on figur es  the c onnection  in f ormation  on another Bravura Security product instance server
+to access the Bravura Security Fabric 12.6 SOAP API.
+Usage
+setpxidm.exe -uri <SOAP URL> -apiuser <console ID> -
+password <console password>
+Argument Description
+-uri The SOAP address to the Bravura Security Fabric 12.2.0
+SOAP API.
+-apiuser <console ID> The console ID to authentic a t e  to the Bravura Security
+Fabric 12.2.0 SOAP API.
+-password <password> The password to authentic a t e  to the Bravura Security
+Fabric 12.2.0 SOAP API.
+listadresources
+Use the listadresources program to list network resources (shares, printers, mail dis tribution  lists)
+in a Micr osoft  Activ e  Directory domain.
+You can then use the r esulting  output file with the loadnetres  (on page 3655)  program to import the
+resources into Bravura Security Fabric .
+Usage
+listadresources -hostid <target ID> -outfile <filename> [-validateperm]
+Option Description
+-hostid  <target ID> The target ID of the Activ e  Directory domain in Bravura Security Fabric.
+-outfile  <filename> The output filename.
+-validateperm Determines the value of the Users are only allowed to see sub-resources when they read permission for a resource checkbox for a share/folder
+resource. Including this option  sets -validateperm to true. If unspecified,  the value is false; the default value is false.
+Output file format
+The output file format for listadresources is the same as the input file format for loadnetres .
+The file is written  in KVGroup format:
+"" "" = {
+  "<resource type>" "<publish name>"= {           # required
+    "Address" = "<UNC path of the resource>"        # required for shares and printers    "TargetId" = "<target ID>"                       # required
+    "Description" = "<description>"  # not required
+    "ValidatePermissions" = "<true|false>"          # not required
+  }
+ ...   # You can specify multiple KVGroups, one for each resource.
+}
+The <resource type> is one of:
+▪F – share/folder resource ▪
+▪M – mail dis tribution  list ▪
+▪P – printer resource ▪
+ValidatePermissions determines the value of the Users are only allowed to see sub-resources when they
+have read permission for a resource checkbox for a share/folder resource. The default is false.
+Example
+The following is an example of the file format:
+# KVGROUP-V1.0
+"" "" = {
+  "F" "share1" = {
+    "Address" = "\\\\10.0.26.115\\share1"
+    "Description" = "A shared folder"
+    "TargetId" = "ADDOM"
+  }
+  "M" "AllSalesGroup" = {
+    "Description" = "Distribution list for sales"
+    "TargetId" = "ADDOM"
+  }
+  "P" "COMPUTERNAME-Printer1" = {
+    "Address" = "\\\\computername.example.com\\Printer1"
+    "Description" = "First floor printer"
+    "TargetId" = "ADDOM"
+  }
+  "F" "share2" = {
+    "Address" = "\\\\10.0.26.115\\share2"
+    "Description" = "Another shared folder"
+    "TargetId" = "ADDOM"
+    "ValidatePermissions" = "true"
+  }
+}loadnetres
+Use loadnetres to import in f ormation  about network resources to Bravura Security Fabric.
+This program can use the output file created by listadresources , (on page 3653) the diff s  of two
+files,  or your own customized file.
+Usage
+   loadnetres [<FILE1>] <FILE2>
+If <FILE1> is specified,  loadnetres compares the two files and adds, removes, or modifies  resources
+as appropriate.
+Input file format
+The file is written  in KVGroup format:
+"" "" = {
+  "<resource type>" "<publish name>"= {           # required
+    "Address" = "<UNC path of the resource>"        # required for shares and printers
+    "TargetId" = "<target ID>"                       # required
+    "Description" = "<description>"  # not required
+    "ValidatePermissions" = "<true|false>"          # not required
+  }
+ ...   # You can specify multiple KVGroups, one for each resource.
+}
+The <resource type> is one of:
+▪F – share/folder resource ▪
+▪M – mail dis tribution  list ▪
+▪P – printer resource ▪
+ValidatePermissions determines the value of the Users are only allowed to see sub-resources when they
+have read permission for a resource checkbox for a share/folder resource. The default is false.
+Example
+The following is an example of the file format:
+# KVGROUP-V1.0
+"" "" = {
+  "F" "share1" = {
+    "Address" = "\\\\10.0.26.115\\share1"
+    "Description" = "A shared folder"
+    "TargetId" = "ADDOM"
+  }  "M" "AllSalesGroup" = {
+    "Description" = "Distribution list for sales"
+    "TargetId" = "ADDOM"
+  }
+  "P" "COMPUTERNAME-Printer1" = {
+    "Address" = "\\\\computername.example.com\\Printer1"
+    "Description" = "First floor printer"
+    "TargetId" = "ADDOM"
+  }
+  "F" "share2" = {
+    "Address" = "\\\\10.0.26.115\\share2"
+    "Description" = "Another shared folder"
+    "TargetId" = "ADDOM"
+    "ValidatePermissions" = "true"
+  }
+}loadplatform
+Use the loadplatform program to query connectors for their abilities  and populate platform,
+objoper and objrel database tables with the in f ormation;  Also it sets the default attribut es  for the
+connector platforms  by populating  attr de f  and attr de f v al  tables. This is particularly  useful when custom
+connectors have been created and the target type needs to be available in the user interface.
+Bravura Security Fabric  target systems types are displayed in Type drop-down list on the Target system
+in f ormation  page. Target types in this list are displayed according to target system category.
+loadplatform is installed in the Bravura Security Fabric  instance util directory. This chapter describes
+usage in f ormation  for 12.6.
+Requirements
+The client softw ar e  required by the specified  target systems must be installed or else the platform  data
+for the connector will not be imported to the database.
+The loadplatform program loads a binary executable (.exe), or a scripted platform  de finition  file
+that calls a binary agent. If you do not specify an .exe or .con extension, the program looks for files with
+either extension. If both exist, loadplatform loads the .exe file.
+To load and list official  scripted connectors, both the scripted platform  de finition  file (.con) and the
+c on figur ation  script specified  within the .con file must be located in the agent directory.
+Usage
+loadplatform.e x e  -a <connector name> [-dry-run]
+loadplatform.e x e  -target [-dry-run]
+Argument Description
+-v, --version Print out version and exit
+-a, --agent <connector name> Load the specified  connector.
+-target Load all target system connectors.
+-d, --dir <directory path> Changes the directory to look for the agents and
+connectors in the specified  path.
+-32bit Load 32-bit connectors.
+-dry-run Query the specified  connectors but do not write the
+in f ormation  to the database.
+-force Forcibly update attribut e  in f ormation  if c on flict  exists.
+-list-db-inserts Include a list of all inserted database values.
+Examples
+1.To import in f ormation  about the Unix connector into the database, type: 1.
+ loadplatform.exe -a agtunix.exe2.To see the oper ations  supported by the Activ e  Directory DN connector, type: 2.
+loadplatform.exe -dry-run -a agtaddn.exe
+Loading a new scripted target system type
+Some target system types listed on the Target system in f ormation  page are de fined  by scripted platform
+de finition  files that call a binary agent such as the SSH scripted agent ( agtssh ) and specify a
+c on figur ation  script that de fines  supported oper ations.
+Scripted platform  de finition  files are written  in the following format:
+  # KVGROUP-V2.0
+   <name> = {
+     agent = <binaryToRun>;
+     script = <script>;
+     category = <category>;
+     platform  = <platformId>;
+     description  = <languageTagName>;
+   }
+for example:
+   # KVGROUP-V2.0
+   agtssh-sample = {
+     agent = agtssh.exe;
+     script = sampleScript.cfg;
+     category = SCRIPT;
+     platform  = AGTSSH-SAMPLE;
+     description  = !!!AGTSSH-SAMPLE-DESC;
+   }
+Official  scripted connectors are only c ompatible  with Bravura Security Fabric 10.0 and above.
+The keys in the scripted platform  de finition  file are all required, and are all case sensitiv e.  The "category"
+must be a valid platform  category. These are described in platcat.csv  in the agent\dat directory.
+To load a new scripted target system type:
+1.Write a c on figur ation  script in the format described in Script systems  in the Connector Pack 1.
+documen t ation .
+2.Write a scripted platform  de finition  file in the format described on this page. 2.
+3.Add both the c on figur ation  script and the .con file to the agent directory. 3.4.From the util directory, run: 4.
+loadplatform -a <con filename>.con
+This loads the new target system type into the instance database.
+Scripted platform  de finition  files and c on figur ation  scripts can also be loaded from other directories
+outside the agent directory. To do this, place both the c on figur ation  script and the .con file into the
+desired directory and run loadplatform  with the absolute or r elativ e  path to the .con file. For example:
+loadplatform  -a <con filename>.c on  -d "C:\path\to\agent"
+SQL scripted connectors also support de fining  managed identities  by using a c on figur ation  file in
+following format:
+  # KVGROUP-V2.0
+   <name> = {
+     agent = <binaryToRun>;
+     script = <script>;
+     category = <category>;
+     platform  = <platformId>;
+     description  = <languageTagName>;
+     objects = <object type>;
+   }
+for example:
+   # KVGROUP-V2.0
+   agtoracustom = {
+     agent = agtorascript.exe;
+     script = agtoracustom.cfg;
+     category = ATTAP;
+     platform  = ORACUSTOM;
+     description  = "Custom oracle target";
+     system = false;
+     objects = {ACCT;ASSET;GRP;ROLE;};
+  }
+Providing managed identities  in the c on figur ation  file allows connectors to be loaded with only
+oper ations  related to the specified  objects.Loading a new platform  category
+Bravura Security Fabric  can load a new platform  category dynamically. Connector Pack 1.1 or later is
+required.
+To load a new platform  category:
+1.Modify the platcat.csv from the agent\dat directory.1.
+2.Add a new category to the platcat.csv file. 2.
+3.Add the language tag for this new category to the en-errmsg.kvg file. 3.
+4.Generate and install a new set of skins.4.
+To generate and install new or modified  skin files,  use the following format for the commands to run
+from the <instance>\design\ directory, where en-us  is American English:
+1.Compile the skins:1.
+make.bat default en-us
+Changes are saved in the instance's <instance>\design\skin\ directory
+2.Install the skins:2.
+make.bat install default en-us
+The compiled files are copied to the instance's skin\ directory
+3.If necessary, reload and review any changes to Bravura Security Fabric  web pages. 3.
+Do not run the second command to install the skins if they fail to compile, especially if the firs t m4
+file (links.m4) fails to compile.
+Skins can fail to compile if something in the environment is locking the skin files.  That can be a
+malware program, an automated backup tool running at the time,  but more likely the product UI itself
+being in use at the time  of the skin c ompilation
+Have a test instance where you can compile the skins when the instance is not being used. Make a
+backup copy of the files on the production  instance in case you need to quickly roll them back. Review
+changes on the test instance, then copy the skin files to the production  instance.
+See Cus t omiz ation  in the Bravura Security Fabric  Documen t ation  site for more in f ormation.
+5.From the util directory, run: 5.
+loadplatform -target
+This loads the new platform  category into the platcat table.
+Loading default attribut es
+Bravura Security Fabric can load default attribut es  for connectors from attribut e  files located in agent\dat
+directory. The default attribut es  for connectors are de fined  in diff er en t  files which may include account
+attribut es  file, group attribut es  file and object attribut es  file depending on the connector supported
+oper ations.
+To load the default attribut es:

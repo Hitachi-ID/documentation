@@ -1,0 +1,291 @@
+  }
+If the PLUGIN DATA USER ROLE DETAILS setting  is enabled in the W orkflo w  > Options  > Plugins  menu,
+regular user KVGroups include a key-value pairs list of all the user’s currently assigned roles.
+  "role" = "<role ID>" # 0 or more
+If the PLUGIN DATA USER ACCOUNT DETAILS setting  is enabled in the W orkflo w  > Options  > Plugins
+menu, regular user KVGroups include a list of all the user’s accounts.
+  "account" "" = {
+    "associated" = "<TRUE|FALSE>"
+    "helpdesk" = "<TRUE|FALSE>"
+    "hostid" = "<target ID>"
+    "invalid" = "<TRUE|FALSE>"
+    "longid" = "<long ID>"
+    "list" = "<TRUE|FALSE>"
+    "modby" = ""
+    "shortid" = "<short ID>"
+    "user" = "<TRUE|FALSE>"
+    "userid" = "<profile ID>"
+  }  # 1 or more
+Na vig ation  data
+Input protocol for plugins commonly includes a "na vig ation"  inner KVGroup that contains details of the
+end user na vig ation:
+"navigation" "" = {
+   "button"          = "<button name>"
+   # Button that was pressed prior to plugin being executed
+   "jump"            = "<link>"
+   # Link that was followed prior to the plugin being executed
+   "attrgroup"       = "<attribute group id>"
+   # Passed in when modifying attributes in an attribute on a subsidiary page
+   "managedresource" = "<managed resource id>"
+   # Set when using Group Manager
+   "prequest"        = "<predefined request id>"
+   # Set after selecting a pre-defined request
+   "roleid"          = "<role id>"
+   # Set when selecting optional members of a role
+   "targetid"        = "<target id>"
+   # Set when selecting groups to add to a request for a specific target
+   "wfpage"          = "<page>"
+   # Set on every page   # Possible values:
+      # - attrs
+      # - createaccount
+      # - groupselectionchange
+      # - groupselectionfull
+      # - idpattrsubsid
+      # - idprequestlong
+      # - idprequestshort
+      # - idrattrsubsid
+      # - idsattrsubsid
+      # - idsrequestlong
+      # - idsrequestshort
+      # - idvattrsubsid
+      # - idvrequestlong
+      # - jump
+      # - listrolesandtemplates
+      # - psaattrsubsid
+      # - pswattrsubsid
+      # - rbacvariances
+      # - requestsubmit
+      # - requestsubmitdeleteaccount
+      # - requestsubmitdeleterole
+      # - requestsubmitdisableaccount
+      # - requestsubmitenableaccount
+      # - requestsubmitgroupchange
+      # - requestsubmitmove
+      # - requestsubmitpredefinedrequest
+      # - requestsubmitrenameaccount
+      # - requestsubmitreplacerole
+      # - requestsubmitupdateaccounts
+      # - selectmanagedgroup
+      # - selectmanagedresource
+      # - selectmoveaccounts
+      # - selectoptionalrolemembers
+      # - selectpredefinedrequest
+      # - selectrenameaccounts
+      # - selectrole
+      # - selecttemplate
+      # - sodviolations
+      # - userinfo
+}Part IX Event ActionsAbout event actions  (exit traps)
+Bravura Security Fabric can be interfaced to IT Service Management (Ticket) systems so that records are
+aut omatic ally  generated or updated, and email is sent to administrators, when certain events occur on
+the Bravura Security Fabric  server.
+In the target type listing  on the Target system in f ormation  page, these systems are listed as IT Service
+Management systems . They are also known as Ticket  systems.
+Bravura Security Fabric's  standard interface facility can:
+▪Exchange data with IT Service Management (Ticket) systems when an event transpires on the Bravura ▪
+Security Fabric server, such as user authentic ation,  account cr eation,  security violations,  and
+successful or failed oper ations.
+▪Support comprehensive business logic with s t atic  or dynamic w orkflo w  and performing diff er en t ▪
+actions  when diff er en t  events take place.
+▪Update in f ormation  about e xisting  records in other systems in real time. ▪
+▪Create new call records in your tick e t  system in real time. ▪
+▪Send SMTP email.▪
+▪Execute programs on the Bravura Security Fabric server. ▪
+Using email in t egr ation,  Bravura Security Fabric can notif y:
+▪Users that their requested security change or update has been successful▪
+▪Users that there has been a problem with their attemp t ed  change – sending them in f ormation  about ▪
+policies such as password rules, or which system failed with what error messages
+▪System administrators of persistent problems on their systems▪
+▪Help desk s t a ff  that a user is having difficulty  with Bravura Security Fabric , and asking them to ▪
+pr oactiv ely  contact the user with assistance
+Security s t a ff  of repeated failed attemp ts  to authentic a t e  as a user or Bravura Security Fabric support
+operator
+Interface architecture
+The event actions  interface is based on a de fined  set of Bravura Security Fabric settings  that provide
+in t er action  with tick e t  systems through a set of tick e t  management connectors and their associated
+c on figur ation  script files.
+The tick e t  management connectors, sometimes  known as exit trap or interface programs, are installed
+and modified  with Connector Pack .
+The programs are located in the interface directory, and sample scripts are located in the samples
+directory. The scripts are written  in PSLang, although Python variants maybe available. You can modify
+the scripts to suit your requirements and place them in the \<instance> \script\ directory so that they
+will be detected and used by Bravura Security Fabric . For more in f ormation  on PSLang, see the PSLang
+Manual ( pslang.pdf ).Note: You can specify an alt ernativ e  interpreter to execute event action  scripts
+using the Manage the system  > W orkflo w  > Options  > Plugins  > PLUGIN
+PROGRAM setting.  See Specifying a program to run plugins  (on page
+1504) for more in f ormation.
+In the Bravura Security Fabric web interface, event action  settings,  sometimes  referred to as exit traps,
+commonly begin with Program to execute when … . The interface allows you to c on figur e  an action  to be
+bound to an event. The event action  is to call one or more programs and to execute them. The programs
+are executed based on the ins tructions  they are provided by their r espectiv e  script files.
+Many event types are available and each one may be used to trigger the same or a diff er en t  program. For
+instance, it is possible to populate tick e ts  in one tick e t  system on some events, and in another tick e t
+system for other events. All event action  settings  can be c on figur ed  to run multiple  programs.
+The event types that can trigger Bravura Security Fabric to notif y  a tick e t  system are listed in System
+options  that can trigger external programs  (on page 1529).
+Whenever a de fined  event type takes place:
+1.The Bravura Security Fabric server checks whether an action  has been associated with this event; and 1.
+if one has, it executes the interface program.
+2.The interface program reads input that contains session data r elating  to that event. 2.
+3.The interface program parses a script file. 3.
+4.The interface program finds  the sub section  in the script for the particular  event. 4.
+5.The interface program carries out the ins tructions  for that sub section. 5.
+This includes the ability to search for data in the tick e t  system, add data to the tick e t  system, iterate
+through the in f ormation  from the event log, send email messages, and so on.
+Exit trap programs are asynchronous. That is, Bravura Security Fabric starts the interface program and
+does not wait for a response.
+Example interface
+The example below illustrates how the interface works:
+Business requirement
+When a user attemp ts  to access Bravura Security Fabric , and fails to authentic a t e,  the following events
+should take place:
+1.Search session data for previous failed authentic ation  attemp ts  by the same user. 1.
+2.If there is a previous failed attemp t,  send an email to a security officer ,  warning that the event may be 2.
+an attemp t ed  intrusion.
+3.Open a tick e t,  detailing relevant in f ormation  such as the date, time,  and user ID. 3.
+Interface detailsThis interface is implemented by de fining  one or more settings  in the Manage the system  (PSA) module for
+the event type LOGIN FAILURE where the setting ’ s  value is the name of a program, or list of programs, to
+execute.
+The event action  setting  is used to run a standard interface program – for example, Remedy ARS uses
+pxrem  – which executes the LOGIN FAILURE script procedure.Pr epar ation
+Before activ ating  event actions,  do the following:
+1.Determine the event, on the Bravura Security Fabric server, that you want to trigger an action,  the 1.
+action  you want to take when the event occurs, and what tick e t  system you want to connect to.
+See System options  that can trigger external programs  (on page 1529) for a list of events.
+2.Install any necessary client softw ar e  on the Bravura Security Fabric server. 2.
+3.If the action  includes sending email, ensure that the email server and related settings  have been 3.
+c on figur ed.
+Con figur e  the following settings:
+MAIL SERVER (required) The name of the server that handles email.
+MAIL SERVER PORT The port number for the mail server. The default is 25.
+MAIL AUTH LOGIN The login ID used to authentic a t e  against an smtp server.
+MAIL AUTH PASSWORD The login ID used to authentic a t e  against an smtp server.
+RECIPIENT EMAIL (required) The email address of the Bravura Security Fabric administrator
+who should receive notific ation  of events r elating  to the running of the
+server.
+SENDER EMAIL (required) The email address that will appear as the sender of emails.
+4.Determine the program or target type that you want to handle the event.4.
+Available programs are located in the interface directory and start with px. Most of the programs are
+designed to integrate with specific  support softw ar e;  for example, pxassyst is designed to work
+with Axios Assyst. Programs are listed in Table Interface programs  (on page 1527).
+If you do not see the program for your support system, you may need to run the Connector Pack
+setup program, and ensure that the system is selected.
+5.Set up tick e t  system target systems in Bravura Security Fabric . 5.
+ Next: Activ ating  event action  options  (on page 1556)
+Interface programs
+Interface programs
+Target type Interface
+programsDescription
+General programs
+Generic ODBC (Ticket) pxodbc Integrate with the database back end of a support system if no client
+and interface program are written  for that purpose.
+Generic PSLang (Ticket) pxnull Use when no support system is available or when one is not
+required. This program can be used to send email, or it can be used
+as the basis for a customized program. It is a general purpose
+program.Target type Interface
+programsDescription
+Python Script (Ticket) pxpython Use this program as a generic program to handle events on the
+Bravura Security Fabric server.
+Generic SOAP Web Service
+(Ticket)pxsoap Integrate with a generic SOAP Web service.
+in t egr ation  programs
+Bravura Pass  interface pxidm This program is shipped with Bravura Security Fabric for use on an
+integrated ins t allation  of a Bravura Security product older than 8.0.
+When a user is enabled or disabled in the other instance, pxidm
+propagates the changes to the Bravura Security Fabric 12.2.0
+database. This program is shipped with not Connector Pack .
+Product administrator s can integrate instances of Bravura Security
+Fabric 8.+ directly via the Manage the system  (PSA) module.
+Ticket system in t egr ation  programs
+Axios Assyst (Ticket) pxassyst Trigger aut omatic  updates with Axios Assyst Help Desk.
+CA Service Desk (Ticket) pxcasd Trigger aut omatic  updates with CA Service Desk.
+BMC FootPrints (Ticket) pxfootprint Trigger aut omatic  updates in BMC FootPrints.
+FrontRange HEAT 6 (Ticket) pxheat6 Trigger aut omatic  updates in FrontRange HEAT.
+FrontRange HEAT 7 (Ticket) pxheat7
+FrontRange HEAT 8 (Ticket) pxheat8
+FrontRange HEAT 9 (Ticket) pxheat9
+HP Service Manager, Web
+Service (Ticket)pxhpsm-ws-
+imTrigger aut omatic  updates in HP Service Manager Web Service.
+JIRA (Ticket) pxjira Trigger aut omatic  updates in JIRA.
+Micr osoft  System Center
+Service Manager (Ticket)pxmssm Trigger aut omatic  updates in Micr osoft  SCSM.
+Remedy Action  Request
+System 7.5+ (Ticket)pxrem Trigger aut omatic  updates in Remedy Action  Request System 7.5.x,
+7.6.x and 8.0.x
+Remedy Action  Request
+System 9.0+ (Ticket)pxrem9 Trigger aut omatic  updates in Remedy Action  Request System 9.0.x
+and 9.1.x
+BMC Remedyforce pxremedyforce Trigger aut omatic  updates in BMC Remedyforce
+ServiceNow IT Service
+Management Suitepxsvcnow Trigger aut omatic  updates in ServiceNow ID Service Management
+suite
+Cherwell IT Service
+Managementpxcherwell Trigger aut omatic  updates in Cherwell IT Service Management
+systems
+All px* programs use the - argument for debugging.
+See also:See IT Service Management (Ticket) Systems  in the Connector Pack  documen t ation  to learn how to
+integrate Bravura Security Fabric  with tick e t  systems, including:
+▪Axios Assyst▪
+▪CA Service Desk▪
+▪BMC FootPrints▪
+▪FrontRange HEAT▪
+▪HP Service Manager Web Service▪
+▪JIRA Server▪
+▪ Micr osoft  System Center Service Manager ▪
+▪Generic PSLang▪
+▪Generic ODBC▪
+▪Python Script▪
+▪Remedy Action  Request System ▪
+▪BMC Remedyforce▪
+▪SOAP Web Service▪
+▪ServiceNow IT Service Management Suite▪
+▪Cherwell IT Service Management▪
+System options  that can trigger external programs
+Login events (exit traps)
+The following identific ation  and authentic ation  events apply to all modules and can be accessed from the
+Con figur e  event  (ITSM) module or Manage the system  > Policies  > Login options :
+Option Description
+USER IDENTIFY SUCCESS A user is successfully identified  by Bravura Security Fabric .
+USER IDENTIFY FAILURE A user could not be identified  by Bravura Security Fabric .
+FEDIDP IDENTIFY SUCCESS A federated login attemp t  had its SAML request successfully parsed by
+Bravura Security Fabric .
+FEDIDP IDENTIFY FAILURE A federated login attemp t  SAML request could not be parsed by Bravura
+Security Fabric .
+AUTH MODULE FAILURE A user fails authentic ation  for a module c on figur ed  as part of an
+authentic ation  chain.
+AUTH CHAIN SUCCESS An authentic ation  chain step successfully authentic a t es  a user.
+AUTH CHAIN FAILURE A user fails an authentic ation  chain step.
+USER LOGIN CHANGED The user was successfully changed to another pr ofile  via an authentic ation
+chain.
+IDAPI LOGIN FAILURE A script fails to authentic a t e  via API Service (idapi).
+IDAPI LOGIN SUCCESS A script successfully authentic a t es  via API Service.Option Description
+USER LOGIN SUCCESS A user is successfully authentic a t ed  by Bravura Security Fabric .
+USER LOGIN FAILURE A user fails authentic ation.
+USER LOGIN LOCKOUT Too many invalid login attemp ts  to the end module causes the account to be
+locked out.
+FEDIDP AUTH SUCCESS A user attempting  federated login was successfully authentic a t ed,  and the
+outgoing SAML assertion  was successfully signed and issued.
+FEDIDP AUTH FAILURE A user attempting  federated login was successfully authentic a t ed,  but the
+outgoing SAML assertion  could not be signed and issued.
+FEDIDP SSO SESSION CREATE A single sign-on session was successfully initia t ed  as part of a federated login.
+FEDIDP SSO SESSION DESTROY A single sign-on session was successfully terminated.
+FEDSP SAMLAUTH ISSUED A SAML authentic ation  request has been submitted  by Bravura Security Fabric
+to an external identity  provider.
+FEDSP SAMLAUTH ASR SUCCESS A SAML assertion  from a trusted identity  provider was successfully received
+and parsed.
+FEDSP SAMLAUTH ASR FAILURE A SAML assertion  from a trusted identity  provider could not be parsed.
+Login failure events
+The following login failure options  can be accessed from Manage the system  > Maintenance > System
+variables  or Manage the system > Policies > Options .
+Login failure events that launch interface programs
+Option Description
+REMOTE IP LOCKED Program to execute when an IP
+address is locked out.
+REMOTE IP UNLOCKED Program to execute when an IP
+address is unlocked.
+User class cache events
+The following user class options  are triggered by the Manage the system  (PSA) module, API Service, or
+directly by running the loaduccache program. They can be accessed from Manage the system >
+Policies > Options :
+User class cache events that launch interface programs

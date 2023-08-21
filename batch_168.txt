@@ -1,0 +1,369 @@
+User account name: qa1000
+Checking the password filter Dll system registry setting...passed
+Checking the password filter Dll if it has been loaded...passed
+Checking the password filter service if it is running...passed
+Setting password for user [qa1000]:
+2010-02-02 11:15:28.561.2903 -
+ [] psintcpt.dll [388,2172] Info: Logging has been enabled, Log level: 4
+2010-02-02 11:15:28.576.5698 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], entered PasswordFilter, sequential number ( SNO ): 1
+2010-02-02 11:15:29.675.4688 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], SNO: 1, PasswordFilter returned [1]
+2010-02-02 11:15:29.717.0218 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], entered PasswordChangeNotify
+2010-02-02 11:15:29.720.6418 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], PasswordChangeNotify finished
+2010-02-02 11:15:29.724.6046 - [] diagutil.exe [3244,452] Info:
+***** User:[qa1000]'s password has been reset successfully *****
+If the debug level is greater than 4 (default), diagutil returns more detail on how the account falls
+into which categories.
+Con figuring  multiple  servers
+You may need to make further c on figur ation  changes to the server on which you install the interceptor if
+you have:
+▪Installed Bravura Pass  on multiple  servers with the Password Manager service running on each server ▪
+for load balancing,
+and
+▪ Con figur ed  the DNS servers to resolve the Bravura Pass  server name in a "round robin" sequence. ▪
+Sometimes  in this situation,  Windows will cache the result and send the request to the same server each
+time.  In this case, you c on figur e  the Windows server rotate the list of IP addresses.
+You may also want to ensure that the interceptor makes multiple  attemp ts  to contact a Bravura Pass
+server before failing, to handle a c ondition  where a single replica server is down. You can c on figur e  the
+Windows DNS Service to make as many attemp ts  as you require.
+After  you have installed the interceptor  (on page 1662):
+1.On the server on which the interceptor is installed, run the Windows nslookup program with the 1.
+Bravura Pass  server’s hostname to test whether Windows is caching the result. For example, type:
+   nslookup mercury
+The nslookup program displays all addresses de fined  for the Bravura Pass  server, in the order returned
+from the DNS server. For example:   Server:    mercury.example.com 
+   Addresses:  10.0.250.119, 10.0.130.108, 10.0.26.15
+2.Repeat Step 1 as many times  as there are Bravura Pass  servers. For example, if there are three 2.
+Bravura Pass  servers, run the nslookup program three times.
+If Windows is not caching the result, the order of the IP addresses is rotated with each query. For
+example:
+▪Try 1:▪
+   Server:    mercury.example.com 
+   Addresses:  10.0.250.119, 10.0.130.108, 10.0.26.15
+▪Try 2:▪
+   Server:    mercury.example.com 
+   Addresses:  10.0.130.108, 10.0.26.15, 10.0.250.119
+▪Try 3:▪
+   Server:    mercury.example.com 
+   Addresses: 10.0.26.15, 10.0.250.119, 10.0.130.108
+3.If the test shows that Windows is caching the result, force the server where the interceptor is3.
+installed, to rotate the list of IP addresses. To do this, add the ManualDNSR ot ation  registry entry:
+▪Entry name  ManualDNSR ot ation ▪
+▪Value 1 ▪
+▪Data type  REG_DWORD ▪
+to the following registry key:
+    HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric
+\servertools
+4.If necessary, set the number of times  you want the DLL to retry c onnecting  to a Bravura Pass  server. To 4.
+do this, add the ConnectRetry registry entry in the same registry key:
+▪Entry name ConnectRetry ▪
+▪Value  number of times  to retry c onnecting ▪
+▪Data type  REG_DWORD ▪
+Logging
+If a c onnection  failure occurs between the interceptor and the Password Manager service, the error is
+captured using Windows event logging. The error event is written  to the Applic ation  log and can be
+viewed using Windows Event Viewer.
+You can use the logutil program to enable logging, for debugging purposes, for add-on softw ar e.  To
+do so:
+1.Copy the logutil program, located in the util directory on the Bravura Security Fabric  server, to 1.
+the server hosting  the add-on tools. It can be placed anywhere on the server.
+2.Open a command prompt and invoke logutil with: 2.     logutil -makekey -instance <instance> -level <loglevel>
+The -makekey option  needs to be run once only, to generate an instance name and required registry
+entries.
+The Password Change Notific ation  Module installs with a diff er en t  logging tool ( diagutil ) that logs
+similarly to logutil , but has additional  arguments to help with tr oubleshooting  or monitoring
+Transparent s ynchr oniz ation.
+See also:
+logutil  usage in f ormation
+Requirements
+You must run the logutil  command as an administrator with sufficien t  privileges.
+Usage
+logutil.e x e  [options]  -instance <instance> | -cleanup [-instance <instance> ]
+Argument Description
+-bufmax <count> Maximum number of buff er s.  The default value is the
+Windows Events MinimumBuff er s  + 20.
+-bufmin <count> Minimum number of buff er s.  The default value is the
+number of CPUs + 2.
+-bufsize <size> Size of the session buff er s  in multiples  of 4 kb. The
+default is 64 kb.
+-instance <instance> Instance to watch events for. For Bravura Privilege local
+service mode instances, the value is "Privileged Access
+Manager Client".
+-cleanup Terminate any logging sessions which are not connected
+to any activ e  client. If the instance name is specified,  only
+the logging session for this particular  instance is cleaned
+up.
+-level <level> Debug level 1-5. Default is 5.
+-list List all enabled Event Tracing for Windows sessions.
+-logfile  <filename> File to write events to. You must specify an absolute path.
+-makekey Generate an instance name and its log GUID in the
+registry.
+Note:  This option  needs to be run once only.
+-maxdelay <maxdelay> The maximum seconds to allow the sorting  buff er  to keep
+items before flushing  out into the log file. The default
+value is 300.
+-maxsorted <count> The maximum number of events that can be sorted in
+memory. The default value is 100,000.Argument Description
+-outdbg Write events with an output debug string.
+When logutil  runs, a new registry entry is created to record the session. The entry is stored under:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\LogSession
+The name of the entry is the instance name. When you press [enter]  to stop a session, the key will be
+gone with the session; however, if you kill the session by typing [Ctrl] +[C], the registry entry will remain.
+Use the -cleanup option  to remove remaining registry entries.
+Note that various tools also have hardcoded instance names:
+▪browser-extension-win: "Browser Extension" ▪
+▪ fir e f o x -br o w ser -e xt ension:  "Firefox Browser Extension" ▪
+▪hidshext: "Shell Extension" ▪
+▪hipamlws-win: "Hipamlws" ▪
+▪hippm-sm: "Session Monitor" ▪
+▪intcpt: "Password Filter" ▪
+▪ ntfclien t:  "Notific ation  Client" ▪
+▪ ppm-activ e-c on tr ols:  "PPM Client Activ eX  Controls" ▪
+▪pslocalr: "Local Reset Extension" ▪
+▪psns: "Notes Extension" ▪
+▪ sc ar d-activ e x -c on tr ols:  "SmartCard PIN Management Activ eX  Controls" ▪
+▪ska/runurl: " Login Assistant" ▪
+▪ pamutil : "pamutil" ▪
+Examples
+▪To start logging data for client softw ar e  with a debug level of 4, type: ▪
+logutil.e x e  -makekey -instance Bravura_client -level 4 -logfile  c:\idarchive.log 
+▪To start logging data on a local service mode managed system with a debug level of 4, to a log file ▪
+named local_service.log, type:
+logutil.e x e  -instance "hipamlws" -level 4 -logfile  local_service.log 
+▪To start logging data on pamutil and runwithpass with a debug level of 4, to a log file named ▪
+pamutil.log ,  type:
+logutil.e x e  -instance "pamutil"  -level 4 -logfile  pamutil.log  
+▪To start logging data on Activ eX  password disclosure plugins at level 4 to log file activ e x.log ,  type: ▪
+logutil.e x e  -instance "PPM Client Activ eX  Controls" -level 4 -logfile  activ e x.log  
+You must run logutil with the -makekey argument firs t for the instance "PPM Client ActiveX
+Controls".▪To start logging data for the default Login Manager instance with a debug level of 4, type:▪
+logutil.e x e  -instance "Login Manager" -level 4 -logfile  c:\logfile.log  
+diagutil  usage in f ormation
+diagutil.exe [-l <debug level> ] [ -t <timeout> ]
+              -u <userID> -p <userPassword>
+Argument Description
+-l, --level <N> The debug level 1-6. The default is 4.
+-t, --timeout  <N> The timeout  in seconds to receive diagnostic  in f ormation.
+The default is 60 seconds.
+-u, --user <userID> The user to be diagnosed.
+-p, --password The user’s password.
+Examples
+For example:
+diagutil.exe -u qa1000 -p letmein!
+returns:
+User account name: qa1000
+Checking the password filter Dll system registry setting...passed
+Checking the password filter Dll if it has been loaded...passed
+Checking the password filter service if it is running...passed
+Setting password for user [qa1000]:
+2010-02-02 11:15:28.561.2903 -
+ [] psintcpt.dll [388,2172] Info: Logging has been enabled, Log level: 4
+2010-02-02 11:15:28.576.5698 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], entered PasswordFilter, sequential number ( SNO ): 1
+2010-02-02 11:15:29.675.4688 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], SNO: 1, PasswordFilter returned [1]
+2010-02-02 11:15:29.717.0218 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], entered PasswordChangeNotify
+2010-02-02 11:15:29.720.6418 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], PasswordChangeNotify finished
+2010-02-02 11:15:29.724.6046 - [] diagutil.exe [3244,452] Info:
+***** User:[qa1000]'s password has been reset successfully *****
+If the debug level is greater than 4 (default), diagutil returns more detail on how the account falls
+into which categories.
+Monitoring transparent password s ynchr oniz ation  with the Password Manager service
+Managing the Password Manager Service queueMonitor transparent password s ynchr oniz ation  by running s ynchr oniz ation  reports. You may need to
+remove queued items to improve performance.
+By selecting  unwanted queued transparent s ynchr oniz ation  items and removing them, the items will not
+be retried to synchronize to their destination  targets and will be marked as failed s ynchr oniz ation.
+To remove items from the transparent s ynchr oniz ation  queue:
+1.Click Manage the system > Maintenance > Services . 1.
+2.Select Bravura Security (idpm) Password Manager Service . 2.
+3.Select Manage work queue in the bottom  table. 3.
+4.Enter search criteria and click Search . 4.
+5.Select the items you want to remove and click Cancel . 5.
+Monitoring transparent password s ynchr oniz ation  on Windows servers
+Monitor the health of the Password Change Notific ation  Module on Windows NT PDCs and Activ e
+Directory DCs. Run netstat -an to see whether there are many (more than 20 or 30) TCP
+c onnections  pending between the PDC/DC and the Bravura Pass  server. If so, there may be a problem
+with the Bravura Pass  server.
+Sometimes,  you may find that the Password Manager service (idpm) appears to be failing to synchronize
+passwords changed on a Windows server. In many cases this is caused by the Password Change
+Notific ation  Module interceptor ( psintcpt.dll ) timing  out before it has communicated a password
+change to idpm . The default timeout  period for psintcpt.dll  is 60 seconds. You can extend this
+timeout  period in the intcptsvc.cfg file.
+See Password interceptor service (intcptsvc) c on figur ation
+The password interceptor service, intcptsvc , is part of the Bravura Security Password Change
+Notific ation  Module, which also includes the psintcpt.dll . The service queues dll requests and
+communicates with the Password Manager service ( idpm ). The dll is loaded into Windows Local Security
+Authority (lsa) policy to capture nativ e  password changes.
+This section  explains how you can extend functionality  of the Password Change Notific ation  Module to
+include using diff er en t  interceptor settings  based on user’s DN, group and attribut es.
+This service is installed by intcpt.msi  or intcpt-64.msi  on a Windows transparent password
+s ynchr oniz ation  trigger.
+You can c on figur e  the interceptor service, intcptsvc to include or exclude certain users when they
+make password change requests on Windows trigger systems. The excluded requests are not sent to the
+Password Manager service ( idpm ), but are instead processed by the Windows password change facility
+as usual. This can be used to reduce network tr a ffic  between the trigger system and idpm .
+You can c on figur e  the Password Change Notific ation  Module filt er  using the c on figur ation  file,
+intcptsvc.cfg , located in:
+<Program Files path>\Bravura SecurityPassword Filter\service\
+See the intcptsvc.cfg file for basic ins tructions,  and samples located in:<Program Files path>\Bravura SecurityPassword Filter\samples\
+CAUTION: Do not alter instsvc.cfg unless you know what you are doing.
+For deployments on Windows NT environments, areas that are commented out should not be edited, due
+to limit ations  of Windows NT.
+The sample intcptsvc.cfg file below shows a modified  c on figur ation  file for an Activ e  Directory
+environment. In this file:
+▪The QueryAttributes group has been edited to specify attribut es  to query. ▪
+Using QueryAttributes = All  may slow down interceptor performance because it needs to
+retrieve all user attribut es  that have values (non blank). This option  is good for designing the
+c on figur ation  at the early stage. You can then specify individual attribut es  once you know what you
+are looking for.
+▪Bypass de fines  matching that will not be sent to the Password Manager service for password strength ▪
+checking and password s ynchr oniz ation.
+When used with the NotAny oper ation,  it includes the de fined  accounts; that is to say: "do not skip
+these accounts".
+▪BypassNotify de fines  matching accounts that will not be sent to the Password Manager service ▪
+for password s ynchr oniz ation.
+▪The c on figur ation  file maps to one Password Manager service only. In the case below, it is mapped to ▪
+the service at IP address 10.0.5.8, port 3334. This can be the virtual IP of a Network Load Balancer.
+▪One physical Activ e  Directory DC maps to two logical Target IDs in Bravura Security Fabric ; ▪
+End_Users  and Admin_Users  logical targets in Bravura Pass . These two targets map to diff er en t
+target groups, which have their own password policies.
+The idea here is that the Activ e  Directory accounts meet administrator criteria:
+▪Is, at least, a member of specified  administrator groups; specified  by the Bypass oper ation  "NotAny" ▪
+"memberof" , which has the e ff ect  of including de fined  accounts.
+▪Is not the specified  account names; Guest and Krbtgt . ▪
+▪Is not a disabled account; specified  by userAccountControl match "([0-1])*10") ▪
+If an administrator is a member of Domain Administrators group, his changing password will be examined
+by the Password Manager service, but it will not be synchronized to other associated targets. Instead, his
+password will be changed locally only.
+Sample intcptsvc.cfg file
+1# KVGROUP-V2.0
+config "" = {
+3  PMServer = {
+    Address = 10.0.5.8;
+5    Port = 3334;
+    ConnectTimeOut = 10; # default timeout 10 seconds
+7    # How many times retry if connection or communication failed    MaxRetry = 10; # default maximum retry times is 10;
+9    RetryDelay = 5; # default interval between each retry
+    };
+11  # The total timeout for doing password strength check on all targets
+  StrengthCheckTimeOutSeconds = 60;
+13  # How many time retry if IDPM server returns recoverable error
+  StrengthCheckRetry = 3;
+15  # Queue polling time
+  QueuePollTimeSeconds = 60;
+17  # Queued item will discarded if exceed this setting
+  NotificationExpireSeconds = 86400;
+19  # Discard this notification if it has been tried max times
+  DiscardNotificationAfterTried = 100;
+21  # if an exception occurred, 1 --
+ return StrengthCheck succeeded, 0 -- return strength check failed
+  BypassStrengthOnException = 1;
+23  MaxSessionLifeSeconds = 60; # default max life time for session is 60
+25  # regular expression to bypass both strength check and password change notification based on
+  # sAMAccountName before retrieving account attributes.
+27  # Default setting is for bypassing empty user name and computer account
+  sAMAccountNameBypassRegEx = "^\\s ⋆$|^.⋆\\$+$";
+29
+  # ADsPath has the syntax as: LDAP://HostName[:PortNumber][/
+DistinguishedName]
+31  # following variables can be used for the HostName and DistinguishedName
+  # %PDC%    -- primary domain controller
+33  # %DC%     -- default domain controller
+  # %DN%     -- default naming context
+35  ADsPath = "LDAP://%DC%/%DN%";
+37  # LDAP search filter for querying account's attributes, the account name variable %USER
+% can be used in the filter
+  # %USER%   -- the account name
+39  # ADsSearchFilter = "(&(objectCategory=person)(objectClass=user)
+(sAMAccountName=%USER%))";
+  ADsSearchFilter = "(sAMAccountName=%USER%)";
+41
+  # QueryAttributes defines attributes that will be used by the PSLang BypassCheck
+43  # function and the Target-
+based bypass check for integrating with Active Directory.
+  # There is one inherent attribute, '_AccountName_'; this is the only45  # attribute that can be supported on a non-
+Active Directory platform.
+  # Following are sample attributes for and Active Directory provider.
+47  # Specifying "All" as QueryAttributes, instead of a list of attributes,
+  # indicates to query all possible attributes for the user.
+49  # QueryAttributes = All;
+51
+  # Active Directory attributes sample
+53   QueryAttributes = {
+     "distinguishedName";
+55     "userAccountControl";
+     "memberOf";
+57     "objectSid";
+     "pwdLastSet";
+59     "replPropertyMetaData";
+     "whenCreated";
+61     "whenChanged";
+     "logonHours";
+63     "lastLogon";
+     };
+65
+67
+  Targets = {
+69    End_Users = {
+      # IDPM return code:
+71      #   0 -- Communication failure
+      #   1 -- Communication timeout
+73      #  99 -- IDPM service internal database access failure
+      # 100 -- Weak password
+75      # 101 -- Access denied ( ACL )
+      # 102 -- User not found
+77      # 103 -- User has been locked out
+      # 104 -- User has not been registered
+79      # 105 -- User has been disabled
+      # 106 -- Account not specified
+81      # 107 -- TargetID not specified
+      # 119 -- Invalid operation code
+83      # 120 -- Invalid request version
+      # 200 -- Good password
+85      CheckStrengthFailIfIDPMReturn = { 100; };
+      CheckStrengthOnly = 0;87      # If the target longid isn't the default sAMAccountName, define the longid as:
+      # LongID = "%sAMAccountName%";
+89      # LongID = "DomainName\\%sAMAccountName%";
+      # LongID = "%distinguishedName%";
+91      LongID = "LongIDMatchesPMTarget";
+93      # Target based bypass setting is based on 'Condition Group', the 'Condition Group' has below definitions:
+      #
+95      # Defines the conditions to bypass both strength check and password change notification
+      # Bypass "LogicalOperation" = {
+97      #   ConditionGroup1;
+      #   ConditionGroup2;
+99      #   ...
+      #   };
+101      #
+      # ConditionGroup:
+103      # LogicalOperation [Attribute] = {
+      #   Expression1;
+105      #   Expression2;
+      #   ConditionGroup1;
+107      #   ConditionGroup2;
+      #   };
+109      #
+      # LogicalOperations:
+111      # "Any", "All", "NotAny", "NotAll"
+      #
+113      # ComparisonOperators:
+      #  Equal, NotEqual, Like, NotLike, Match, NotMatch, Great, Less, GreatEqual, LessEqual
+115      # SpecialOperations: Exists, NotExists
+      #
+117      # Expression:
+      #   ComparisonOperator[:OperationModifier] = Pattern;
+119      #   SpecialOperations;
+      #
+121      # The 'Match' and 'NotMatch' use TR1 Regular Expression standard and ECMA script grammar
+      # The 'OperationModifier' is an option for the 'ComparisonOperation', specify 'i'
+123      # to make comparison case insensitive. The KVG expression treats value and
+      # pattern as string by default, use the 'OperationModifier' to specify type or transform
+125      # both value and pattern before make comparision.
+      #   'i' -- insensitive case comparison
+127      #   'b' -- convert decimal integer to bit string
+      #   'h' -- convert decimal integer to hexadecimal string

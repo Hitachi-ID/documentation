@@ -1,0 +1,304 @@
+Batch and web notific ation
+Applies to Bravura Pass license 
+The Bravura Security Fabric  user notific ation  system allows you to:
+▪Streamline Bravura Security Fabric  deployment and ensure c ontinued  security compliance ▪
+▪ Notif y  users of pending password expiry ▪
+▪ Notif y  users of other events ▪
+▪Force users to comply with r egis tr ation  or other requirements ▪
+About notific ations
+There are two kinds of notific ation  events:
+▪Batch notific ations  Are evaluated at certain times  of day, or as requested by  Bravura Security Fabric ▪
+administrators. They are evaluated for all users, and those that meet the selection  criteria are usually
+sent notific ation  via email.
+▪Web notific ations  Are triggered when a single user does something, such as log into a w ork s t ation  or ▪
+into Bravura Security Fabric .
+The action  or event causes a c onnection  with the Notific ation  Service, which evaluates which
+notific ations  apply to the user, and whether any action  needs to be taken. For example, a user logging
+into his w ork s t ation  may have a reminder for a pending password expiry. The service could then cause
+a browser to open for the user to log in and then show an in f ormational  page for the notific ation.
+Web notific ations  can be c on figur ed  to force the user to take action  before allowing them to proceed.
+In the example above, the service might log the user off if he closes his web browser without changing
+his password.
+To set up user notific ations:
+1.Install the Notific ation  Client ( psntfclient ) (on page 436), if users will receive notific ation  via their 1.
+web browser.
+2.Add password expiry de t ection  (on page 443), if users will be notified  when their network password is 2.
+about to expire.
+3. Con figur e  web notific ations  (on page 448) or batch notific ations  (on page 459). 3.
+You must have the "Manage notific ations"  adminis trative  privilege to be able to c onfigure  user
+notific ations..
+User notific ation  system components
+The Bravura Security Fabric  user notific ation  system consists of four main binaries:Notific ation  Service Updates the database with in f ormation  about notific ation  events and compliance
+rules, and runs plugins that:
+▪Check if a user is in compliance for a particular  event ▪
+▪Send reminders to non-compliant users, either by web or email▪
+▪Take action  if the reminder limit for a user is exceeded ▪
+▪Generate a list of non-compliant users for batch notific ation ▪
+Notific ation  Client The Notific ation  Client ( psntfclient ) is required only if users will receive
+notific ation  via their web browser. The client is installed on a network share and is
+responsible for c on t acting  the Notific ation  Service ( psntfsvc ) to determine if users
+have any pending notific ations.  If they do, the psntfclient program opens a
+browser on the user’s w ork s t ation  for the user to fir s t log in and then to display the
+notific ation  message in Bravura Security Fabric . If any of those notific ations  are force-
+level, the psntfclient opens the browser in kiosk mode, pr e v enting  the user
+from accessing na vig ation  or other functionality  until  the user becomes compliant.
+User notific ations  (PSN)
+moduleActs as the gateway between the Notific ation  Client ( psntfclient ) and the
+Notific ation  Service, and enables users to receive, acknowledge, and act on
+notific ations  from their web browser.
+ntftrigger Bravura Security Fabric  uses the ntftrigger program to communicate with the
+Notific ation  Service and send out notific ations.  Scheduling a batch notific ation  creates
+a scheduled job to run ntftrigger . You can use this program to test notific ations
+rather than wait for the scheduled time.
+Configure  the Startup Programs on all PCs, using a GPO, to call the Bravura Security Notific ation  Client,
+which will check if there are any messages to display to the user and, if so, launch their default web
+browser to the appropriate URL. The notific ation  client need not be installed locally on PCs – it can be run
+from a network share that is placed on the Intranet Zone to avoid security warnings.
+Secondary servers and r eplic ation
+Note the following in r elation  to secondary servers and r eplic ation:
+▪Web and batch notific ations  are replicated to replica server s during auto discovery. ▪
+▪You cannot add or c on figur e  notific ations  on a replica server , although you can schedule batch ▪
+notific ations  on a replica server . All fields  on the Manage the system > Policies > User notific ations
+pages, except for the batch notific ation  scheduling fields,  are read-only.
+▪Batch notific ations  are run only on the server on which they are scheduled. The schedule is not ▪
+replicated, to avoid duplicate notific ations.
+▪User s t atistics  and user notific ation  data are updated r eal-time. ▪
+Notific ation  Service (p sntfs v c)
+Notific ation  Service ( psntfsvc ) is installed and started on the Bravura Security Fabric  server when you
+install the Bravura Security Fabric  softw ar e.  You can modify default options  by clicking Manage the
+system > Maintenance > Services , then selecting  the Notific ation  Service.User notific ations  (PSN)
+The User notific ations  (PSN) module acts as the gateway between the Notific ation  Client ( psntfclient )
+and the Notific ation  Service, and enables users to receive, acknowledge, and act on notific ations  from
+their web browser
+When a web notific ation  is triggered, the user is prompted to log into Bravura Security Fabric  and then
+the web browser will open at the Notific ations  page of the User notific ations  (PSN) module. Users can also
+access this page, if they have notific ations,  from a link on the main menu.
+Enabling / disabling the User notific ations  (PSN) module 
+The User notific ations  (PSN) module is enabled by default.
+To disable the User notific ations  (PSN) module:
+1.Click Manage the system  > Modules  > User notific ation . 1.
+2.Turn off PSN ENABLED to disable the module. 2.
+3.Click Update to commit your changes. 3.
+Disabling the User notific ations  (PSN) module disables all web notific ations.  It does not aff ect  batch
+notific ations.
+Configuring  notific ation  events 
+If you are using a web notific ation  to enforce compliance with an Acceptable use policy  (on page 449)
+c on figur e  event options,  listed below, which trigger external programs. See Event actions  for more
+in f ormation  about c on figuring  event actions.
+User notific ations  (PSN) module events that launch interface programs
+Option Description
+AUP DONE A user accepts an acceptable use policy.
+AUP NOT DONE A user declines an acceptable use policy.
+Modify notific ations  and redirect users
+You can use a plugin to modify the order of notific ations  and redirect users as they navigate and act on
+notific ations.
+When the User notific ations  (PSN) module is enabled and the plugin is set, and a user logs into Bravura
+Security Fabric :1.The plugin presents a list of notific ations  in order of priority. 1.
+2. After  the user acts on a notific ation  (clicks Accept or Decline ), the plugin directs the user to the next 2.
+notific ation  in the list.
+3.When there are no more notific ations  left, the user is directed to the Front-end . 3.
+The plugin is set by the PSN MODIFY ORDER AND REDIRECTION PLUGIN field  (Manage the system >
+Modules> User notific ations  (PSN) )
+There are no shipped plugins for use with this plugin point. See more in f ormation  on writing  a custom
+plugin
+Requirements
+The plugin must return notific ations  not only in order but without any gaps in numbers. If there are 5
+notific ations  and you want to show them all, then they will have to be numbered 1, 2, 3, 4, 5. If say they
+were numbered 1, 2, 3, 4, 6 then the last one will be hidden.
+Notific ations  can be hidden by:
+▪ Setting  their priorities  to "0" or any number behind the real sequence; for example if you have 10 ▪
+notific ations:  1 through to 10, you can hide notific ations  by setting  the priority to 12, 100 or 9999.
+▪Removing particular  KVGroups from output altogether. Ensure that you update priorities  of all ▪
+notific ations  "behind" the deleted one.
+See W riting  plugins  for general requirements.
+Ex ecution  points
+This plugin is executed once when a user logs into Bravura Security Fabric .
+Input
+The following is a sample of input:
+# KVGROUP-V1.0
+"" "" = {
+  "notification" "" = {
+    "id" = "AUP1"
+    "desc" = "AUP1"
+    "severity" = "F"
+    "maxrem" = "-1"
+    "infomsg" = "AUP1"
+    "link" = "PSNAUP"
+    "status" = "R"
+    "nreminders" = "0"
+  }
+  "notification" "" = {    "id" = "AUP2"
+    "desc" = "AUP2"
+    "severity" = "F"
+    "maxrem" = "-1"
+    "infomsg" = "AUP2"
+    "link" = "PSNAUP"
+    "status" = "R"
+    "nreminders" = "0"
+  }
+  "notification" "" = {
+    "id" = "AUP3"
+    "desc" = "AUP3"
+    "severity" = "F"
+    "maxrem" = "-1"
+    "infomsg" = "AUP3"
+    "link" = "PSNAUP"
+    "status" = "R"
+    "nreminders" = "0"
+  }
+  "notification" "" = {
+    "id" = "AUP4"
+    "desc" = "AUP4"
+    "severity" = "I"
+    "maxrem" = "-1"
+    "infomsg" = "AUP4"
+    "link" = "PSNAUP"
+    "status" = "R"
+    "nreminders" = "0"
+  }
+}
+Output
+The following is an example of the possible output, where "AUP2" is hidden:
+# KVGROUP-V1.0
+  "" "" = {
+  retval = "0"
+    "notification" "1" = {
+      "id" = "AUP1"
+      "desc" = "AUP1"
+      "severity" = "F"      "maxrem" = "-1"
+      "infomsg" = "AUP1"
+      "link" = "PSNAUP"
+      "status" = "R"
+      "nreminders" = "0"
+    }
+    "notification" "3" = {
+      "id" = "AUP3"
+      "desc" = "AUP3"
+      "severity" = "F"
+      "maxrem" = "-1"
+      "infomsg" = "AUP3"
+      "link" = "PSNAUP"
+      "status" = "R"
+      "nreminders" = "0"
+    }
+    "notification" "2" = {
+      "id" = "AUP4"
+      "desc" = "AUP4"
+      "severity" = "I"
+      "maxrem" = "-1"
+      "infomsg" = "AUP4"
+      "link" = "PSNAUP"
+      "status" = "R"
+      "nreminders" = "0"
+    }
+  }
+Note that:
+▪Output has to contain a "retval" KV-pair.▪
+▪KVGroup key has to be "notific ation"  precisely and cannot be changed. ▪
+▪KVGroup names have embedded integers, r epr esenting  the order in which plugin has organized the ▪
+notices.  St arting  from 0: "0" is the fir s t notice,  "1" is the second, and so on.
+.
+Notific ation  Client (p sntfclien t)
+Client softw ar e  is required only if users will be notified  via their web browser. For Windows clients,
+Bravura Security provides ntfclient.msi , or ntfclient-x64.msi  for 64-bit systemslocated in
+the \<instance>\addon\  directory. For Unix/MacOSX clients, you can write a Perl script based on
+ntfclient.pl , located in the \<instance>\samples\  directory.Requirements
+▪ Micr osoft  Edge WebView2 Runtime  must be installed with elevated privileges prior to installing with ▪
+psntfclient-x64.msi or psntfclient.msi.
+If it is not installed or it is not installed with elevated privileges, you will see a message such as this
+when opening the notific ation  client: Runtime error: Couldn't find WebView2
+runtime, it should be installed as admin.
+To install with elevated privileges, either open a command prompt using the Run as administrator
+option  for cmd.exe or right click on the installer and click Run as administrator , then install Micr osoft
+Edge WebView2 Runtime.
+The installer simply copies the psntfclient program to the file system. It does not c onfigure  the
+client to launch. It is recommended that you install the client on network share, and set up a GPO
+(Group Policy Object) to launch the client upon user login to their work s t ation  with a command such as
+psntfclient.exe -userid %USERNAME% .
+There are two ways that the p sntfclien t  can be deployed:
+▪Run the ntfclient  MSI installer on every w ork s t ation. ▪
+▪Place the psntfclient.exe  and webbrowser.dll  on a file share. ▪
+Steps
+To manually install the Notific ation  Client for Windows using the ntfclient.msi or nftclient-
+x64.msi :
+1.Copy the installer from the addon directory to a scratch directory (C: \temp) on the local w ork s t ation 1.
+or to a publicly accessible share.
+2.Launch the installer.2.
+Click Next .3.Read the Bravura Security Fabric  license. Select I accept the terms in the License Agreement if you 3.
+agree to the terms and click Next .
+4.Click:4.
+▪Typical (recommended) ▪
+▪Custom if you want to change the default ins t allation  directory from C:\Program Files\Bravura ▪
+Security\\Notific ation  Client\
+5.Set the URL for the User notific ations  (PSN) module on the Bravura Security Fabric  server, and the 5.
+Timeout in minutes.
+Click Next .
+6.Click Install to start the ins t allation. 6.The installer begins copying files to your computer. The Ins t allation  Complete dialog appears after  the
+notific ation  client has been successfully installed.
+7.Click Finish to exit. 7.
+ See also: 
+▪Installing Add-on Softw ar e  (on page 240) for general requirements for using a client MSI installer, and ▪
+ins tructions  for aut omatic  ins t allation  using a group policy.
+▪ ntfclien t.msi  / ntfclien t - x64.MSI  (on page 250) for more in f ormation  about setting  MSI pr operties  in a ▪
+transform file or from the command line.
+▪More in f ormation  about psntfclient , including command line usage ▪
+The Notific ation  Client ( psntfclient ) is required only if users will receive notific ation  via their web
+browser. The client is installed on a network share and is responsible for c on t acting  the Notific ation
+Service ( psntfsvc ) to determine if users have any pending notific ations.  If they do, the
+psntfclient program opens a browser on the user’s w ork s t ation  for the user to fir s t log in and
+then to display the notific ation  message in Bravura Security Fabric . If any of those notific ations  are
+force-level, the psntfclient opens the browser in kiosk mode, pr e v enting  the user from
+accessing na vig ation  or other functionality  until  the user becomes compliant.
+Use the ntfclient.msi from the addon directory to install the Notific ation  Client
+(psntfclient ). It is recommended that you install and run the client from a shared folder and
+include it in a login script.
+Requirement
+The psntfsvc service  (on page 2835) must be installed and started on the Bravura Security Fabric
+server.
+The psntfclient program is intended to be run from a public share. The webbrowser.dll ,
+which is used to open a browser to the User notific ations  (PSN) module if notific ations  exist, must also
+be located in the same share.
+Bravura Security recommends that the Notific ation  Client communicates with the Bravura Security
+Fabric  server using SSL (HTTPS).
+Ins t allation
+The Notific ation  Client can be installed by launching the MSI manually or aut omatic ally  using a group
+policy.
+Usage
+psntfclient -userid <user ID>[-url http[s]://<server>[:<port>]/
+<path>/cgi/psn.exe ] [-targetid <target ID> ] [-width <width> -
+height <height>] [-skin <skinID>] [-lang <lang-locale>]Option  / Argument Description
+-userid <userid> Use %USERNAME% to use the currently logged in user, or
+specify a user ID.
+-url <URL> The path to the User notific ations  (psn) module on the
+Bravura Security Fabric  server. If used, this value
+overrides the URL set during ins t allation.
+-t ar g etid  <target ID> Specify a target system if the user ID is not a Bravura
+Security Fabric  pr ofile  ID. The url can optionally  specify a
+port and security.
+-width <width> Specify the notific ation  window width.
+-height <height> Specify the notific ation  window height.
+-skin <skinID> Specify a skin ID. If used, this value overrides the one that
+is specified  for the user in the LASTSKIN tag in the
+userstat table.
+-lang <lang-locale> Specify a language code for the language-locale. If used,
+this value overrides the one that is specified  for the user
+in the LASTLANG tag in the userstat table.
+The Notific ation  Client has a minimum width and height of 913 x 338 pixels. If the specified  -width or -
+height is less than the minimum required dimensions, or if there are any force-type notific ations,  then
+the browser opens at 913 x 338 pixels.
+Examples
+1.To launch the notific ation  page for user JOHNS: 1.
+psntfclient.exe -userid JOHNS
+2.To launch the notific ation  page for user JOHNS with specified  width and height: 2.
+psntfclient.exe -userid JOHNS -width 913 -height 338
+3.To launch the notific ation  page with the secure kiosk account (SKA) skin for user JOHNS: 3.
+psntfclient.exe -userid JOHNS -ska 1
+4.To launch the notific ation  page for the user aduser1 de fined  on target system AD1, overriding the 4.
+default URL set during ins t allation,  and using SSL and port 8080:
+psntfclient.exe -userid aduser1 -target AD1 -url https://
+10.0.51.26:8080/idmsuite/cgi/psn.exe
+5.To launch the notific ation  page for the user JOHNS and specifying a skin named myskin and 5.
+specifying the fr-fr language and locale, overriding the values in the userstat table for LASTSKIN and
+LASTLANG:
+p sntfclien t.e x e  -userid JOHNS -skin myskin -lang fr-fr
+Usage

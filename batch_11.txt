@@ -1,0 +1,308 @@
+Bravura Security Fabric 12.0.2
+Resolved Issues 12.0.2
+Authentic ation
+▪Fixed an issue where any deep links into Angular routes did not work when SAML was enabled.▪
+Auto discovery
+▪Fixed an issue where an unde fined  target attribut e  caused iddiscover to stop merging data. ▪
+Bravura P attern  / Components
+▪Updated loaddb function  to allow assocID to be "sticky"  on discoveries so they won’t be lost. ▪
+▪The Scenario.im_corp_lookup_ou component correctly adds the movecontext oper ation  when a ▪
+request is issued to move a user to a diff er en t  OU.
+▪Updated manage_components script to retain expected order for extdb data when loading▪
+environment.
+IDMLib
+▪Updated idmlib to make loaddb components act on attribut e  removals. ▪
+Mobile
+▪Fixed SSO issue on Android devices.▪
+Privileged access c on figur ation
+▪Fixed team management OTP trustee privilege so that users with the privilege can request team OTP▪
+API accounts even without the Requester privilege.
+▪Corrected issue so that session monitoring packages can be downloaded from any r eplic ation  node. ▪
+Services
+▪Fixed an issue where idapisoap was deleting  a session if an input was too long. ▪
+▪The move context oper ation  for the Activ e  Directory connector will now successfully move a user from ▪
+one Or g aniz ational  Unit to another.
+Utilities
+▪ Modified  pamutil to run regardless of whether apilib and libcurl options  are provided in the c on fig ▪
+file.Bravura Security Fabric 12.0.1
+Features and improvements 12.0.1
+API
+▪Added RegSysvarSet function  to set registry-based system variables. ▪
+▪Improved IDMLib function  call_proc and call_proc_cached to accept limit and off se t  arguments. ▪
+Bravura P attern  / components
+▪A new c on figur ation  loader was added to Functional.hid_c on figur ation  that allows administrators to ▪
+specify JSON data and store/update registry key values from the data.
+Mobile
+▪Added support for Debian 9 for the Bravura Security  Mobile Access proxy server. ▪
+Security questions
+▪Added the "View answers to security questions"  privilege for global help desk and self-service rules ▪
+that allows for the answers for a user’s security questions  to be shown.
+Usability
+▪Improved accessibility for certific ation  applic ation;  in particular ,  the Show and View button  usability. ▪
+Resolved Issues 12.0.1
+API
+▪IDAPI SOAP service c on figur ation  has been improved to allow a port specific ation. ▪
+▪Fixed an issue in idmlib where API functions  returning generators were not called as expected and ▪
+lead to unexpected results.
+▪Made group retrieval methods in w f object.pr ofile  more v er satile. ▪
+▪Updated messaging Workers to clear lru_caches after  a FINAL reply. ▪
+▪Fixed the bug in setting  GRUA oper ation  as out-of-boundary action  when submitting  from API. ▪
+Auto discovery
+▪Updated Bravura Group  to identif y  object r elationship s  properly when objects move between listing ▪
+OU and non-listing  OU.Bravura P attern  / Components
+▪Fixed a pot ential  issue in new employee onboarding approval requests under r eplic ation  environment ▪
+where w orkflo w  requests were failed to submit and could result in databases not being synchronized
+between nodes for the new accounts.
+▪Disabled the connector timeout  for the batch request target, so that large request batches can be ▪
+processed properly.
+▪Fixed dependency issue and error log issue caused by Functional.hid_authchain_2f act or  component. ▪
+▪The Healthcheck URL now shows the hostname instead of localhost.▪
+▪Fixed PAM_UTIL to handle managed accounts that have missing or multiple  teams de fined  when ▪
+cr eating  an OTP API user account using team management.
+▪Corrected issue so that e xisting  OTP API accounts are filt er ed  out when onboarding new OTP API ▪
+accounts using team management.
+▪Fixed Submit a request batch via CSV for Bravura Privilege P attern  team management pr e-de fined ▪
+requests.
+▪Fixed the wizard display for the Submit a batch request via CSV pr e-de fined  request so that the ▪
+dropdown list of pr e-de fined  requests is correctly displayed.
+▪Updated Scenario.pam_sample_import_rules sample component to include offboar ding  rules for ▪
+managed systems and accounts.
+Login Assistant / SKA
+▪Fixed an issue so that enabling w ork s t ation  lock down won’t break pslocalr. ▪
+Logging
+▪Fixed an issue that verbose level logging of data returned by procedures was sometimes  dropping ▪
+logs.
+Performance
+▪Resolved an issue where services were not releasing system resources after  handling w orkflo w ▪
+requests.
+▪Improved the performance of the PAMCCESS search engine filt ering  for users with many team ▪
+memberships.
+Privileged access c on figur ation
+▪When both personal access owner and resource team attribut es  are c on figur ed,  personal access ▪
+owner will be used.
+Provisioning
+▪Corrected issue so that import rules do not get hidden when there are many c onditions  de fined. ▪Reports and dashboards
+▪The configureanalytics  utility  can publish report from custom category on report server to file ▪
+system.
+Services
+▪Fixed a memory c orruption  issue in the Asynchronous Request Service (ajaxsvc.exe). ▪
+User interface
+▪Fixed back button  na vig ation  between managed system policy tabs. ▪
+Upgrade and migr ation
+▪Column "ExpressionMatch" is present under table "hid_policy_attr v al_de f ault"  in r eplic ation  nodes ▪
+after  being upgraded from 11.1.3 to 12.0.
+▪Fixed a pot ential  upgrade issue where W orkflo w  Manager Service (idwfm) failed to submit requests ▪
+after  upgrading from an instance with component frameworks installed.
+▪Fixed upgrade of external database.▪
+▪Fixed upgrade to list the correct server that is assigned to run the PSUPDATE scheduled job.▪
+▪Instances with group sets c on figur ed  are upgraded without issue. ▪
+▪The migratedata utility  can now support migr ating  pamteam data from HiPAM version 10.1.4. ▪
+▪ Modified  the migratedata utility  to validate if expected tables and fields  exist before importing  data, ▪
+and aborts if any are missing.
+▪Added pamteam support for migr ating  vaulted files,  personal admin accounts and help desk trustees ▪
+using the migratedata utility .
+▪Fixed PAM_UTIL to handle managed accounts that have missing or multiple  teams de fined  when ▪
+cr eating  an OTP API user account using team management.
+▪Fixed migratedata utility  so that the madmin database table is included when migr ating  pamteam ▪
+data.
+▪The migratedata utility  can now support migr ating  pamteam data from HiPAM version 10.1.4. ▪
+▪ Modified  the migratedata utility  to validate if expected tables and fields  exist before importing  data, ▪
+and aborts if any are missing.
+▪Added pamteam support for migr ating  vaulted files,  personal admin accounts and help desk trustees ▪
+using the migratedata utility .
+▪Fixed migratedata utility  so that the madmin database table is included when migr ating  pamteam ▪
+data.
+W orkflo w
+▪Improved performance of processing requests that add large amount of members to a group.▪
+▪Updated wizard to avoid updating  the account attribut es  if the attribut es  do not allow update action. ▪Bravura Security Fabric 12.0.0
+Features and improvements 12.0.0
+Reports and dashboards
+See REPORTS  (on page 2891) for more in f ormation  about c on figuring  and using reports.
+Analytics
+▪Added a new SSRS "Entitlemen t  Review Aging" dashboard in the Certific ation  section  of analytics. ▪
+▪Added a new Analytics  dashboard "Request summary" in the w orkflo w  section  of analytics. ▪
+▪Added a new Analytics  dashboard "Dormant and Orphan accounts" in the policies section  of analytics. ▪
+▪Added a new Analytics  dashboard "Segr eg ation  of duties  rules violations"  in the policies section  of ▪
+analytics.
+▪Added option  for user to manually update cache through the UI. ▪
+▪Added ACL "Recompute analytics  cache" to allow r e-c omput ation  of the cache by an end-user. ▪
+▪Add a new dashboard campaigns s t atistics  in the Analytics  app. ▪
+▪Added a report feature, Analytics  app, to allow users to run, read, and save analytics  reports. ▪
+Reports user interface
+Added a feature to allow report columns to be hidden by default.
+Reports plugins
+▪New plugin point REPORT CRITERIA PLUGIN is available to control report criteria. Users can be▪
+presented with defaults, which they may or may not be able to change.
+Attribut e  values
+▪Encrypted r esour ce/pr ofile  attribut es  are not shown in the search criteria option  list in reports. The ▪
+values of encrypted r esour ce/pr ofile  attribut es  are masked in reports output.
+Users reports
+▪Updated Enrollment report to add selection  of user attribut es  to be displayed in detailed report. ▪
+Policies reports
+▪Created a new question  set c on figur ations  report which details which users have answered and not ▪
+answered the pr ede fined  questions.
+W orkflow  reports
+▪Added "Show detailed report" and "Request attribut es  to display" options  for Search requests report ▪
+▪Request by status added to allow the r eporting  of requests processed by Bravura Security Fabric. ▪▪Added support for wildcard search for request ID in search request reports.▪
+Resources reports
+▪Enhanced the target system report by adding three search criteria:▪
+▪Address; Help URL; Resource attribut es. ▪
+▪Added four columns to the output for summary report type: Number of associated accounts;▪
+Number of managed groups; Number of imported account attribut es;  Number of account attribut e
+values.
+▪Added sorting  by group ID to Group Changes report output. ▪
+Roles and groups reports
+▪Added two columns "Deleted by" and "Deletion  Date" to membership report for deleted ▪
+memberships.
+▪Added a feature that allows displaying the oper ations  "remove unknown owner from a group" and ▪
+"remove unknown object from a group" in the Group changes report.
+▪Added a plugin feature to filt er  search criteria in all group reports. ▪
+▪Added a feature to Bravura Security Fabric to allow user members of a specific  user class to run, save, ▪
+and download Groups app reports.
+Certific ation  reports
+▪Added a report Certific ation  review deleg ations  and esc alations  to report on the deleg ation  and ▪
+esc alation  of certific ation  campaigns.
+▪Added a report Review certific ation  deleg ations  to provide in f ormation  regarding delegated ▪
+certific ation  campaigns or items.
+▪Added a "Disable account" option  in the Show summary of these oper ations  selection  list in the ▪
+Review certific ation  details report.
+▪In the Review certific ation  details report, "Primary reviewer attribut es  to display" and "Actual ▪
+reviewer attribut es  to display" in search criteria section  have been added.
+▪Fixed the issue where invalid items are treated as being signed off and given to certifier  data in the ▪
+"Review certific ation  details" report.
+Privileged access reports
+▪Added PAM Team Management c on figur ation  to the list of Privileged access: Con figur ation  reports. ▪
+▪Added option  in the Sessions disconnected report to filt er  sessions from group set check-outs. ▪
+▪Added Access disclosure plugins e x ecution  trend report. ▪
+▪Updated import rule search engines accessible from reports to use new search engine UI format.▪
+▪Updated managed system search engines accessible through reports to use new search engine UI▪
+format.
+▪Updated group set search engines accessible from reports to use the new search engine UI format.▪▪Updated managed system policy search engines accessible from reports to use new search engine UI▪
+format.
+▪Added ability to search for managed accounts in Privileged access reports.▪
+▪Privileged access dashboards for account, account set, and group set reports will only display results▪
+for managed system policies that the user has permission to view.
+▪Added option  to hide plugin attribut es  in the Access disclosure plugins e x ecution  report. ▪
+▪Added a summary mode and improved the search filt er s  in the Password change history report. ▪
+▪Added new c on figur ed  user groups in managed system policies report. ▪
+System oper ation  reports
+▪The new "User device IP address" column is added in the SSO session activity  report. ▪
+Data quality reports
+▪Report for entitlemen ts  with invalid implementers has been added to data quality reports. ▪
+▪Added new report, Entitlemen ts  with invalid implementers, to check if entitlemen ts  have invalid ▪
+implementers. For "Invalid implementer" type, the report does not check implementers de fined  in a
+userclass. For "No implementer" type, the report checks implementers de fined  in a userclass.
+Entitlemen ts  analysis reports
+▪Renamed SSH Trust Web report to SSH Web of Trust, and moved it to Entitlemen ts  analysis reports ▪
+menu.
+▪Added support to SSH Web of Trust report to see through root access.▪
+▪Added drilldown capability to SSH Web of Trust report.▪
+Audit reports
+▪Added an Out-of-band group changes audit report.▪
+Search
+General search enhancements
+Other search enhancements include:
+▪Added a new feature Saved search▪
+▪Added support for quick searches on batchid in the request app.▪
+▪Improved the performance of user account searches.▪
+▪Updated discovered system search engines reachable from privileged access reports to use the new▪
+search UI format.
+▪Added a new "valid" field  to the ManageableAccountSearch search engine to filt er  out deleted ▪
+accounts if set to true.▪Parameter ’Request ID’ is now shown in search filt er  plugin input file when system variable ’SEARCH ▪
+FILTER PLUGIN ALLOWED ENGINES’ is set to HOST and ’SEARCH FILTER PLUGIN’ field  is set to a plugin
+script.
+▪Search filt er  plugins now support filt ering  based on the requester’s client and/or proxy IP address. ▪
+▪New parameter ’wizardDisplayPageType’ is added in KVG search filt er  plugin input file for search ▪
+types: TEMPLATE, MANAGEDGROUP , ROLE, GROUPFORGROUP , ACCOUNTFORGROUP ,
+MANAGEABLEACCOUNTS, WORKSTATION, FOUNDCOMPUTER, and USER.
+▪Updated group membership search and group owner search with dynamic pr ofile  attribut e  search. ▪
+See Searching  (on page 362) for in f ormation  on c on figuring  and using search functionality  in Bravura
+Security Fabric.
+Attribut es
+▪Added generic request attribut e  encr yption  for all attribut e  types. ▪
+Pr ofile  attribut es
+▪Removed r es triction  of r esour ce/pr ofile/r eques t  attribut e  value size. ▪
+Requests and w orkflo w
+Aut omation
+▪Added a checkbox "Aut omatic ally  add users who satis f y  the membership criteria" in Assignments tab ▪
+in role and group c on figur ation  pages. When auto-add is disabled for a role or group, auto discovery
+will not aut omatic ally  add that role or group entitlemen t  to pr ofiles  that match the role or group
+criteria.
+▪Added an aut omatic  assignment option  to roles and groups c on figur ation  to Submit no requests if ▪
+there are more than this many oper ations  detected in a single run (0 disables the limit).
+▪Improved performance in request processing.▪
+▪The idtrack program has been enhanced to work with managed identities. ▪
+Requests app
+▪The new system variable IDP UPDATE ATTRIBUTES ENABLED is added to allow or disallow e xisting ▪
+users to update their requests after  submission.
+▪Added indic ations  of attemp ts  or failures in the Requests app. ▪
+▪A new ’Submitted’  times t amp  field  is added to the Request details page. ▪
+▪Added a feature to view Indirect membership details in the Request details page.▪
+▪In Change role membership wizards, inc ompatible  attribut e  groups whose display setting  is "Auto" are ▪
+hidden. If the display setting  is "Shown" or if the wizard plugin (wfreq) makes it show, the page should
+be available in the wizard.Pr ofile  comparison
+▪Enhanced the user pr ofile  comparison page to make oper ations  easier to understand and complete. ▪
+W orkflo w  service
+▪Added a new system variable IDWFM_DAYS_COUNT_WEEKDAY_ONLY . If it is enabled, the W orkflo w ▪
+Manager Service auto reject time  and esc alation  time  only includes weekdays.
+▪Added a c on figur able  event (exit trap), IDWFM EVENT EMAIL MISSING, that is triggered when there is ▪
+no email address for the email recipient.
+Authoriz ation
+▪Added an authorizer state of "abstain" for situations  in which it is inappropriate for an authorizer to ▪
+act due to c on flict  of interest.
+▪Added Changes made will invalidate authoriz ations  checkbox for resource attribut es. ▪
+▪ Modified  the w orkflo w  process to invalidate authoriz ations  based on the setting  if such an attribut e  is ▪
+changed
+▪Added sysvar WF WAIT AUTHORIZER CALCULATION. When it is enabled, role membership will be▪
+added or deleted even if some dependent oper ations  fail.
+Deleg ation
+▪Added Show invalid on the Delegate authority page if there is terminated user.▪
+Pr e-de fined  requests
+▪Added a pr e-de fined  request _IDTRACK_ that can be used as preqid for requests submitted  by idtrack. ▪
+W orkflo w  plugins
+▪Enhanced WF_WIZARD_PLUGIN to support customized warning dialog when a request needs no user▪
+input.
+▪Added new key in wizard plugin to identif y  the origin of the caller for the plugin. The origin could be ▪
+one of the following:
+▪API▪
+▪AUTORES▪
+▪CERT▪
+▪RBACENFORCE▪
+▪REPORTTOPDR▪
+▪UI▪
+▪The wfreq plugin and wizard service can control whether the Submit button  is enabled or not when ▪
+request is empty. This is done through a new plugin key _enable_submit_with_no_changes whose
+value is "false" by default, meaning don’t enable the Submit button  if there are no changes in the
+request.▪The authmod plugin now supports passing in message text to display to authorizers as a toast▪
+notific ation  in apps.
+API calls
+▪Added system variable WF RESERVE ON PRIMARY . Enable this option  to send reserve requests to the ▪
+primary instance when the requests are made from a r eplic ation  node.
+▪Added ManagedSystemManagedAccountList API to list accounts managed on a managed system.▪
+▪Added the ability to delete unknown members from a group using the API.▪
+Ins t allation  and licensing
+Installer
+▪Added retry ability to installer actions  for s t arting ,  stopping, installing and uninstalling services. ▪
+▪Added retry ability on database errors during installer actions. ▪
+▪Mapped ’PROFILEID’ to ’@shortID’ aut omatic ally  for source of pr ofiles  on new ins t allation  and ▪
+upgrade.
+▪script error, ’TRY_CONVERT’ is not a recognized built-in function  name] ▪
+Updated the database c ompatibility  mode v erific ation  to check for a minimum of SQL Server 2012
+(110).
+Licensing
+▪The license count is adjusted to count only enabled pr ofiles. ▪
+▪Added pam-user-based.lic license. The per-user license is a subset of the per-system (pam.lic) license.▪
+The following is excluded from this license:
+▪ pamutil  api calls ▪
+▪subscriber or ches tr ation ▪
+Browser support
+▪Chromium Edge has been tested and found to work with Bravura Security Fabric without issue.▪
+User interface
+Specific  user interface improvements include:
+▪Added a feature that allows users to use a URL to open a page with a specific  group in the Groups app. ▪
+▪Added the extend button  component to support an icon-only button. ▪
+▪Embedded (or clickable) links are disabled by default and can be enabled using an Embedded links▪
+checkbox above an object list or table.
+▪Added sidebar items on wizard password pages.▪
+▪Email and phone number values are masked in the Verify mobile/SMS PIN and Verify email PIN pages.▪
+▪The layout of the security questions  page has changed to be more user friendly and accessible. ▪

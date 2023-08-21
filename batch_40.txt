@@ -1,0 +1,331 @@
+▪Request w orkflo w  in the end user documen t ation  for in f ormation  about tracking requests ▪
+Manage External Data Store
+The Manage external data store  (DBE) module allows product administrators to view and update data on
+external database tables on a SQLite c onnection.  The data can be accessed through an API Service
+(idapi ) function  call. This provides the ability to use external in f ormation  in plugin points and a means
+to maintain the external in f ormation.   
+Product administrators require the Manage external data store  privilege to access the Manage external data
+store  (DBE) module. Once the adminis tr ativ e  privilege is granted and the requirements are met, the
+Manage external data store  link is displayed on Front-end .
+See External Data Store  (on page 1163) for in f ormation  about c on figuring  and using the module.Change product administrator password
+If you are a product administrator  and your password is not v erified  against a target system, you may be
+required to change your password in Bravura Security Fabric  at regular intervals. When your password
+expires, you are directed to the Change product adminis tr ation  password  adminis tr ation  password page
+upon login.
+There are two ways that you can change a product administrator’s password. You can change it using the
+Bravura Security Fabric  web interface or by using the adm_set  program in the <ins t ance>\util\
+directory.
+If you forget the password for your Bravura Security Fabric  superuser, then using adm_set  is by default
+the only way to reset the product administrator’s password.
+Change the password using the web UI
+To change your Bravura Security Fabric  console login password:
+1.On the main menu, click Change product adminis tr ation  password . 1.
+2.Type your current password and new password in the appropriate fields. 2.
+3.Re-type your new password in the Con firm  your new password field.  The password can be up to 64 3.
+characters long.
+4.Click Change my password . 4.
+If you are a product administrator  and your password is v erified  against a target system, password expiry is
+determined by the target system, and the Change product adminis tr ation  password link is not included
+on the main menu.  
+Change the password using the adm_set utility
+1.Open a Windows command prompt  (on page 3535) ( cmd.exe ) as administrator. 1.
+2.Change directory to the loc ation  of the adm_set  utility  using the following command: 2.
+cd c:\Program Files\Bravura Security\Bravura Security Fabric\default
+\util
+3.Change the password of the superuser using the adm_set  utility  using the following command: 3.
+adm_set.exe -user superuser -pass <new password> 
+If you are prompted to make changes to the computer, click Yes.
+4.Log in to the Front-end (PSF) as superuser with the new password.4.
+If the login is successful, then the superuser password was correctly reset using the adm_set  utility .
+The adm_set  utility  can also be used to unlock a product administrator account. See adm_set  usage
+in f ormation
+adm_set.exe -user <profile ID> [-name "<full name>"]
+        [-pass <password> [-noexpire ] | -nopass]        [-type A | -acl <rights list> ]
+        [-delete | -enable | -disable | -unlock]
+        [-ipmask <IP/CIDRmask>]
+        [-nooverwrite]
+Argument Description
+-acl <rights list> Grant the rights specified  in the <rights list> to the user.
+The <rights list> consists of a sequence of keywords
+separated by spaces. See Adminis tr ativ e  privileges
+The following table describes all available
+adminis tr ativ e  privileges. It also includes the
+internal keyword – used in c on figur ation  files,  plugin
+input/output, and by the adm_set program – for
+each privilege.
+Adminis tr ativ e  privileges
+Right Keyword Description
+General system c onfigur ation
+Manage
+resourcesresource The product administrator can manage target systems, auto-discovered objects,
+and other resources.
+Manage
+policiespolicy The product administrator can manage user classes, segr eg ation  of duties  (SoD),
+authentic ation  and identific ation  policies, authentic ation  chains, question  sets,
+import rules, login options.
+Manage
+notific ationsmngnotif s The product administrator can manage notific ations  and notific ation-r ela t ed
+scheduled jobs.
+Con figur e
+w orkflo w
+setupw orkflo w The product administrator can c on figur e  w orkflo w .
+Con figur e
+modulesmodule The product administrator can modify web modules c on figur ation.
+Maintain
+serversmaintain The product administrator can manage services, schedule jobs, and c on figur e
+auto discovery.Argument Description
+Right Keyword Description
+Manage
+reportsrunreport The product administrator can run or schedule reports from the Manage reports
+app.
+Analytics analytics The product administrator can run, save or read reports from the Analytics  app.
+Recompute
+Analytics
+cacher ec analyticsc asch The product administrator can update the cached data on dashboards from the
+Analytics  app.
+Con figur e
+Login Managermanagesso The product administrator can c on figur e  Login Manager
+Manage
+external data
+storeextdb The product administrator can Manage external data store.
+Dashboards
+View
+certific ation
+dashboardviewcertdash The product administrator can use the View dashboards to view the certific ation
+dashboard.
+View
+privileged
+access
+dashboardviewpswdash The product administrator can use the View dashboards to view the privileged
+access dashboard.
+View w orkflo w
+dashboardviewworkdash The product administrator can use the View dashboards to view the w orkflo w
+dashboard.
+View
+enrollment
+dashboardviewpsadash The product administrator can use the View dashboards to view the enrollment
+dashboard.Argument Description
+Right Keyword Description
+View OrgChart
+dashboardvieworgdash The product administrator can use the View dashboards to view the OrgChart
+dashboard.
+View helpdesk
+dashboardviewhelpdeskdash The product administrator can use the View dashboards to view the help desk
+dashboard.
+Recompute
+dashboard
+cacherecdashcache The product administrator can use the View dashboards to update the cached
+data on dashboards.
+Security adminis tr ation
+Manage
+securitysecurity The product administrator can manage User access rules and Options  in the
+Manage the system Security menu.
+Manage
+product
+administratorconsole The product administrator can create and manage other product administrators.
+A product administrator may only manage or create new product administrators
+with equal or lesser rights assigned to them. A product administrator cannot
+manage his or her own rights.
+Manage user
+groupsmngacl The product administrator can manage user access controls in the Manage the
+system module.
+Privileged access management
+Create
+managed
+system policiescreategroup The product administrator can create managed system policies in the Manage
+the system. As owner of the managed system policy, the product administrator
+has access to the policy but not the passwords managed by the policy - that
+permission must be specific ally  assigned via user group access controls.
+Manage
+orphan
+managed
+systemsmngorphanres The product administrator can manage orphaned systems (not a member of a
+managed system policy) in the Manage the system.Argument Description
+Right Keyword Description
+Create
+managed
+systemscreateres The product administrator can add a user-managed system in the Manage the
+system.
+Manage
+managed
+system policiesgroupmgmt The product administrator can be granted access to modify or remove e xisting
+managed system policies in the Manage the system. Access to managed system
+policies must also be granted in the Manage the system > Security > Privileged
+access to systems  menu. The product administrator cannot update user groups
+of which they are a member. This right does not give the product administrator
+access to orphan managed systems, nor access groups of which they are an
+e xisting  member.
+Recover last
+managed
+passwordrecoverpwd The product administrator can recover the last stored managed password for a
+managed account, regardless of the state of the target (whether it is managed,
+unmanaged or remanaged) using the RecoverKeyByAccount function  call and
+OTP caller and LogonEx to connect to the API service.
+Access certific ation
+Manage
+certific ation
+processcertif y The product administrator can manage the access certific ation  process, by which
+one or more reviewers c on firm  or remove access privileges of users, and remove
+stale users.
+Initia t e
+entitlemen t
+certific ation
+campaignssingleuser certif y The product administrator can initia t e  a access certific ation  process, by which a
+single reviewer can c on firm  or remove access privileges of users, and remove
+stale users.
+OrgChart management
+Start Org
+building
+roundscreateorg The product administrator can use the Manage the OrgChart to initia t e  OrgChart
+building rounds.
+Manage the
+OrgChartupdateorg The product administrator can use the Manage the OrgChart to manually change
+the OrgChart structure.Argument Description
+Right Keyword Description
+Remote API
+IDAPI caller apicaller The product administrator can access the API Service (idapi) Login function  from
+the IP addresses specified  in the IP address with CIDR bitmask field.
+This right can only be combined with other rights by adding an individual
+administrator with the IDAP caller right to an administrator group with other
+rights.
+OTP IDAPI
+callerotpcaller The product administrator can access the API Service LoginEx function  from the
+IP addresses specified  in the IP address with CIDR bitmask field.  The LoginEx
+function  gains access to the KMKeyGetByAccount function,  which is used to
+retrieve passwords that Bravura Privilege  manages.
+This right can only be combined with other rights by adding an individual
+administrator with the OTP IDAP caller right to an administrator group with other
+rights.
+Guacamole
+IDAPI callerguacamolecaller The product administrator can access the API Service Login function  from the IP
+addresses specified  in the IP address with CIDR bitmask field.  The Login function
+gains access to the CheckoutParamsGet and CheckoutStatusGet functions,  which
+is used for a Guacamole gateway to periodically check whether a managed
+account checkout is still valid during an activ e  Guacamole access disclosure
+session.
+This right can only be combined with other rights by adding an individual
+administrator with the Guacamole IDAPI caller right to an administrator group
+with other rights.
+R eplic ation
+Con figur e
+r eplic ationr eplic ation The product administrator can c on figur e  database r eplic ation  (Manage the
+system > Maintenance > Database r eplic ation )
+View in f ormation
+View
+in f ormation:T ar g e t
+systemsviewhost The product administrator can view additional  in f ormation  about target systems
+via embedded links.
+View
+in f ormation:Manag ed
+groupsviewmgrp The product administrator can view additional  in f ormation  about managed
+groups via embedded links.Argument Description
+Right Keyword Description
+View
+in f ormation:R olesviewrole The product administrator can view additional  in f ormation  about roles via
+embedded links.
+View
+in f ormation:Segr eg ation
+of duties  rulesviewsod The product administrator can view additional  in f ormation  about segr eg ation  of
+duties  rules via embedded links.
+View
+in f ormation:User
+classesviewuc The product administrator can view additional  in f ormation  about user classes via
+embedded links.
+View
+in f ormation:Acc oun tsviewacct The product administrator can view additional  in f ormation  about accounts via
+embedded links.
+View
+in f ormation:Pr e-
+de fined
+requestsviewpdr The product administrator can view additional  in f ormation  about pr e-de fined
+requests via embedded links.
+View
+in f ormation:T empla t e
+accountsviewtpl The product administrator can view additional  in f ormation  about template
+accounts via embedded links.
+View
+in f ormation:User
+notific ationsvie wntf The product administrator can view additional  in f ormation  about user
+notific ations  via embedded links.
+View
+in f ormation:Certific ation
+campaignsviewcert The product administrator can view additional  in f ormation  about certific ation
+campaigns via embedded links.
+for the list of available keywords.
+-delete Remove the user’s product administrator rights.Argument Description
+-disable Disable the user.
+-enable Enable the user.
+-unlock Unlock the user.
+-ipmask <IP/CIDRmask> Specify, in Classless Inter-Domain R outing  (CIDR)
+not ation,  the IP addresses from which the user is allowed
+to connect to the Bravura Security Fabric  API.
+Use this argument if the user has either of the IDAPI
+caller or OTP IDAPI caller rights.
+For more in f ormation  about CIDR refer to the link below.
+-name "<full name>" Set the full name of the product administrator.
+If the user is an e xisting  user whose full name is stored in
+Bravura Security Fabric , you do not need to type a full
+name.
+-noexpire Set the password to not expire.
+This argument applies only to product administrators
+whose passwords are stored in the Bravura Security
+Fabric  database.
+-nooverwrite Do not set an e xisting  password.
+-pass <password> Set the password of the product administrator.
+Use this argument if you want the user to authentic a t e
+using a password stored in Bravura Security Fabric . A
+password is only required if the user does not have any
+accounts; that is, you are cr eating  a console-only user.
+-nopass Prevent the user from authentic ating  remotely.
+-type A Grant the user all possible adminis tr ativ e  privileges. This
+overrides the -acl argument.
+-user <pr ofile  ID> The product administrator’s pr ofile  ID.
+Type an e xisting  user’s pr ofile  ID if you want to grant or
+modify his or her adminis tr ativ e  privileges or pr ofile
+status.
+Type the pr ofile  ID of a non-existent user if you want to
+create a new Bravura Security Fabric  user, similar to the
+superuser, that only performs adminis tr ativ e  tasks
+(console-only access). Users created this way are not
+mapped to accounts on target systems, and cannot
+access any of the self-service modules.
+CIDR not ation
+See more in f ormation  on CIDR not ation
+The purpose of the IP addresses field  is to identif y  specific  external server(s) that are allowed to access
+the Bravura Security Fabric  server within the boundaries of the specified  access rights. This isaccomplished by using Classless Inter-Domain R outing  (CIDR) not ation  to de fine  an IP address block. The
+address block is represented by an IP address and a pr e fix  size and is written  in slash not ation  <IP>/
+<pr e fix>  where:
+▪IP is the IPv4 (<0-255>.<0-255>.<0-255>.<0-255>) or IPv6 address (<0000- ff ff>:<0000- ff ff>:<0000- ▪
+ff ff>:<0000- ff ff>:<0000- ff ff>:<0000- ff ff>:<0000- ff ff>:<0000- ff ff>)
+▪ pr e fix  is the pr e fix  size for the mask and must be an integer within the range 0-32 for IPv4 or 0-128 for ▪
+IPv6
+The subnet mask determines the size of the address block (the number of IP addresses belonging to the
+block), and used in c onjunction  with the IP address, specifies  which particular  IP addresses belong to that
+block. Some planning is required. You need to determine whether the entry is going to be used to
+represent a single address or a range of c onsecutiv e  addresses.
+The size of the address block, or the number of IP addresses that the block contains is
+number of entries = 2(32- < subnetmask > )
+To determine the IP addresses of the servers that will be granted access to the Bravura Security Fabric
+server from the IP address/subnet entry do the following:
+1.Turn the IP address into binary not ation;  for example, 1.
+▪128.10.12.1 = 10000000.00001010.00001100.00000001▪
+2.Start at the left hand side of the binary r epr esen t ation  and mark off the number of binary digits 2.
+specified  by the subnet mask; for example, using a 30 bit subnet mask, the fir s t 30 digits are marked
+off (bolded).
+▪10000000.00001010.00001100.000000 01 ▪
+Valid or matching IP addresses must be based on these fir s t 30 digits.
+3.Calculate the valid addresses by cr eating  all possible permut ations  using the remaining binary digits. 3.
+In this case, there are only two unmasked digits, and as a result there are only 2(32 - 30)= 22= 4
+possible addresses that match.
+▪10000000.00001010.00001100.000000 00 = 128.10.12.0 ▪
+▪10000000.00001010.00001100.000000 01 = 128.10.12.1 ▪
+▪10000000.00001010.00001100.000000 10 = 128.10.12.2 ▪
+▪10000000.00001010.00001100.000000 11 = 128.10.12.3 ▪
+To restrict access to a single server use a complete pr e fix  (32 for IPv4 or 128 for IPv6). This means that
+the IP address must match exactly.
+To restrict access only to processes (servers) that reside on the Bravura Security Fabric  server, use the
+local host address with a complete pr e fix  (127.0.0.1/32 or ::1/128 for IPv4 and IPv6 r espectiv ely).
+External access will be denied.
+.
+Examples
+1.To re-create the default superuser user, type:1.

@@ -1,0 +1,333 @@
+To enable Bravura Privilege  to gather data from user interface elements during a session, c on figur e  the
+following in the Recorded sessions  (on page 2033) options  tab:
+Option Description
+SMON RESTRICT SCOPE Ensure this is disabled to allow the user interface meta
+data to be recorded.
+See Con figuring  scope and display of monitoring  (on
+page 2034) for more in f ormation  about this setting.
+SMON UI COLLECT EDITABLE When the user interface module is enabled, collect
+editable text data, such as in form and loc ation  bars.
+SMON UI COLLECT SELECTABLE When the user interface module is enabled, collect text
+from elements that are focused or clicked.
+SMON UI COLLECT TITLES When the user interface module is enabled, collect the
+titles  of windows that users work in.
+SMON UI ENABLE Enables Bravura Privilege to capture text data from
+user interface elements during a recorded session.
+The in f ormation  is compiled into ui-editable-data.xml , ui-focusable-data.xml , and ui-
+title-data.xml  files in the directory set by Manage the system  > Modules  > Recorded session
+management  session management ( smon ) > SMON TEXT STORAGE PATH .
+Clipboard capture
+The clipboard capture module collects copy/paste in f ormation  during a privileged session.
+To enable Bravura Privilege  to capture clipboard data during a session, c on figur e  the following in the
+Recorded sessions  (on page 2033) options  tab:
+Option Description
+SMON CLIPBOARD ENABLE Enables Bravura Privilege  to capture
+clipboard data during recorded sessions.
+The in f ormation  is compiled into a clipboard-data.xml file in the directory set by Manage the
+system  > Modules  > Recorded session management  (smon ) > SMON TEXT STORAGE PATH .
+Webcam capture
+This is not c ompatible  with Guacamole access disclosure plugins.
+To enable Bravura Privilege  to periodically capture still images from any attached  webcams during a
+session,c on figur e  the following in the Recorded sessions  (on page 2033) options  tab:
+Option Description
+SMON WEBCAM CAPTURE
+FREQUENCYFrequency in seconds that webcam snapshots should
+be taken (Default once every 30 seconds).Option Description
+SMON WEBCAM ENABLE Enables Bravura Privilege  to periodically capture
+images from any attached  web cams during a
+recorded session.
+SMON WEBCAM ENABLE CIDR Enables the webcam module only if the w ork s t ation’ s
+IP address falls within the specified  CIDR rule.
+SMON WEBCAM ENABLE
+DOMAINEnables the webcam module only if the w ork s t ation  is
+a member of the specified  domain.
+SMON WEBCAM MAX COUNT
+PER ARCHIVEMaximum number of webcam images per archive file.
+This must be a number between 1 and 65535.
+The webcam images are stored in the directory path set by Manage the system  > Modules  > Recorded
+session management  session management ( smon ) > SMON WEBCAM STORAGE PATH .
+See also: 
+▪Session monitor app  (on page 1255) to learn how to set options  for the storage of recorded data, ▪
+search engine controls, and other module behavior.
+▪Session monitoring utilities  (on page 3620) for in f ormation  about session data processing utilities, ▪
+including smonprocessmeta , smonsavemeta , and smonavi .
+Recorded session access request options
+You can control how users can access recorded sessions by setting  options,  globally or per policy. Some
+options  can be overridden by the user when issuing their requests.
+The following options  are located on the Recorded session access request  tab
+To c on figur e  session monitoring options  click Manage the system > Privileged access > Options  to
+c on figur e  global options,  or click Manage the system  > Privileged access  > Managed system policies >
+<Policy> > Options  to c on figur e  policy-level options
+▪Select the Recorded sessions tab to set options  for c on figuring: ▪
+▪Scope and display of monitoring  (on page 2034) ▪
+▪Session monitor c onnectivity  (on page 2035) ▪
+▪Recorded session data c ollection  modules  (on page 2038) ▪
+▪Select the Recorded session access request tab to set options  for c on figuring  recorded session access ▪
+request options  (on page 2042).
+To c on figur e  web module options  click Manage the system  > Modules  > Recorded session management
+management (smon) for:
+▪Session monitoring activ ation  plugin  (on page 1255) ▪
+▪File storage  (on page 1257) ▪
+▪Search controls  (on page 1258) ▪
+▪Video processing  (on page 1259) ▪▪Event triggers  (on page 1262), Event triggers  (on page 1540) ▪
+:
+Recorded session access request options
+Option Description
+SMON DEFAULT REQ PACKAGE LIFE The number of days before a generated package is
+deleted. This value can be overridden per request.
+The default value is 7.
+SMON DEFAULT REQ PACKAGE LIFE
+MAXThe maximum number of days a package will remain
+available. The default value is 30.
+SMON DEFAULT REQ SESSION
+ACTIVE BEGINSearch for sessions activ e  s t arting  this number of
+days r elativ e  to the day the request is issued, where a
+neg ativ e  number represent days before the request is
+issued and a positiv e  number represent days after
+the request was issued. This value can be overridden
+per request. The default value is -30.
+SMON DEFAULT REQ SESSION
+ACTIVE ENDSearch for sessions activ e  until  this number of days
+r elativ e  to the day the request is issued, where a
+neg ativ e  number represents days before the request
+is issued and a positiv e  number represents days after
+the request was issued. This value can be overridden
+per request. The default value is 0.
+SMON DEFAULT REQ SESSION
+ACTIVE MAXThe maximum range (in days) of recorded sessions
+the user will be able to search. The default is 200.
+SMON DEFAULT REQ SESSION
+BROWSER VIEW BEGINThe user can start viewing the recorded session this
+number of days r elativ e  to the day the request is
+issued. This value can be overridden per request. The
+default value is 0.
+SMON DEFAULT REQ SESSION
+BROWSER VIEW ENDThe user can view the recorded session until  this
+number of days r elativ e  to the day the request is
+issued. This value can be overridden per request. The
+default value is 7.
+SMON DEFAULT REQ SESSION
+BROWSER VIEW MAXThe maximum range (in days) a recorded session can
+be viewed. The default is 31.
+SMON DEFAULT REQ SESSION
+SEARCH BEGINThe user can start searching this number of days
+r elativ e  to the day the request is issued. This value
+can be overridden per request. The default is 0.
+SMON DEFAULT REQ SESSION
+SEARCH ENDThe user can search until  this number of days r elativ e
+to the day the request is issued. This value can be
+overridden per request. The default is 7.
+SMON DEFAULT REQ SESSION
+SEARCH MAXThe maximum dur ation  (in days) the user will be able
+to search. The default is 31.
+ See also: ▪Session monitor app  (on page 1255) to learn how to set options  for the storage of recorded data, and ▪
+other module behavior.
+▪ Pr ofile  and Request Attribut es  (on page 1264) for in f ormation  about built-in attribut es  related to ▪
+requests for recorded session data.
+Cross-origin resource sharing for session recording
+When an auditor or someone with appropriate privileges  (on page 726) requests a session recording
+package, the package is stored in the SMON PACKAGE STORAGE PATH  (on page 1257) on the Bravura
+Security Fabric  server where that auditor's WebUI session is running. When that created package is
+downloaded during a WebUI session connected to other servers, Cross-origin resource sharing  (CORS)
+must be c on figur ed  in order for the downloader's browser to allow retrieval of the compiled video or
+recording archive. You c on figur e  CORS by listing  ALLOWED ORIGINS ( Manage the system> Maintenance>
+System variables ). Enter a comma-separated list of node-specific  URLs of all the user-accessible nodes
+(see example below).
+CORS blocks the retrieval oper ation  -- the HTTP(s) request going to a diff er en t  server than the one where
+the rest of the current WebUI is rendered. It is not required for search, nor for viewing recorded session
+metadata that's loaded in the backend database tables after  the session is closed and processed by
+smonprocessmeta .
+The following is an example of the process in detail:
+1.The auditor w anting  to request a package connects to the applic ation  URL. 1.
+2.The load balancer sends them to one node (server1).2.
+3.The user session is created on that node and a w ell-c on figur ed  load balancer keeps all HTTP requests 3.
+from that session going to that same server1 node.
+▪SMON HTTP URL  (on page 2035) can be c on figur ed  so that session monitoring files go to a ▪
+dedicated applic ation  node, or via a separate load balancer, to a subset of dedicated nodes not
+encumbered by aut omation  or by processing user sessions.
+▪If that's not the case, and session recording is using the same load balancer that the users and▪
+applic ation  administrators WebUI use, review the settings  (on page 295) required for the load
+balancer to send all recorded remote session data to the same applic ation  node that is rendering
+the user's WebUI session.
+4.The auditor requests a session recording package.4.
+5.The package is written  on that server at the SMON PACKAGE STORAGE PATH. 5.
+The path has to be available on every node exactly the same, including the drive letter ,  even if the
+actual storage loc ation  is diff er en t;  for example, diff er en t  directories of the same Network Attached
+Storage (NAS) or Storage Area Network (SAN) can be mounted to the same loc ation  on every
+applic ation  node:
+▪SAN has directory server1\packages\ mapped as S:/privilege/packages/ on the node whose▪
+hostname is server1.
+▪The same SAN has directory server2\packages\ mapped as S:/privilege/packages/ on the node▪
+whose hostname is server2.▪In this case SMON PACKAGE STORAGE PATH can be S:/privilege/packages /. ▪
+6.When a downloader user connects from another w ork s t ation,  the load balancer can place their 6.
+session on another node (server2) and keep it serving from there.
+7.In order for the packages to be accessible for download from server2, the CORS setting  has to allow 7.
+users' browsers to collect resources from the node-specific  URLs of all the user-accessible nodes.
+In the case described above, that value would be:
+https://server1.domain.com/,https://server2.domain.com/
+Censoring recorded data
+When Recorded session management  (smon) module is c ollecting  keystroke and clipboard data, users may
+be required to enter personal data that should not be visible. You can restrict sensitiv e  data from being
+shown by using Recorded data censorship rules . These rules use a regular expression that, when
+satis fied,  will replace any data captured from keystrokes and clipboard with a series of r epeating
+characters.
+There are shipped 4 censorship rules:
+▪CC – censors credit card numbers ▪
+▪PASSWORD – censors passwords with at least 7 characters, mixed case, 3 letter s,  1 digit ▪
+▪SIN – censors social insurance numbers ▪
+▪SSN – censors social security numbers ▪
+To add a new censorship rule:
+▪Navigate to Manage the system > Privileged access > Recorded data censorship rules . ▪
+▪Click Add new... button. ▪
+▪ Con figur e  the following in f ormation: ▪
+a.Provide a unique ID for the rule a.
+b.Provide a Description  for the rule b.
+c.Set a Regular expression for the types of strings to censor. c.
+d. (Optional)  Set a character to censor the value in the Replace with field. d.
+e.Select the Enabled checkbox. e.
+▪Click Add. ▪
+By default, the shipped censorship rules are enabled. You can modify these rules to not censor data by
+deselecting  the Enabled checkbox.
+After  a session has been captured, when users request and view the keystrokes and clipboard values of
+the session, all instances where the censorship rules are applied to display the Replace with character.
+For example, the SIN number 123-456-789 will be set to ###########. This process is done when
+smonprocessmeta is run.In t egr ating  with Hitachi Content Platform  (HCP)
+Bravura Security Fabric  can be integrated with the Hitachi Content Platform  object storage system to
+store and retrieve video-based session monitoring data. Rather than keeping the data on the instance
+server, Bravura Security Fabric  can archive it in the Hitachi Content Platform  using smonprocessmeta ,
+and remove the data from the instance server’s local file system. When a user submits a request to view
+a session, smonsavemeta  retrieves the data from the object storage system and generates the data for
+download.
+To integrate Bravura Security Fabric  with Hitachi Content Platform:
+1.Ensure that either SMON SCREENSHOT ENABLE or SMON WEBCAM ENABLE is enabled. See 1.
+Con figuring  recorded session data c ollection  modules  (on page 2038) for more in f ormation.
+2.Add a new NULL target system for Hitachi Content Platform. 2.
+3.Specify the address of the target system as  3.
+{server=https://[namespace].
+[tenant].hcp.hcpdomain.com;dir=[directory];} 
+▪server is a URL to an Hitachi Content Platform  namespace to store the data. Ensure that this URL is ▪
+resolvable from the SMON server.
+▪dir is a directory under that namespace to store in f ormation  into. ▪
+4.Specify the cr edentials  for the target system. This is the username and password of the tenant. 4.
+5.Add the target ID of the Hitachi Content Platform  to Manage the system  > Modules > Session monitor 5.
+> SMON HCP TARGET ID .
+Use cases
+This section  outlines use cases to demonstrate how session monitoring may be implemented.
+Monitor access to a privileged applic ation  using BravuraPrivilege Auto-Connect Plugin
+In this use case, Bravura Privilege  is activ ely  managing the cr edentials  for a privileged financial
+applic ation  running on a Oracle server database normally only accessible by high-level employees in the
+Finance department.
+A problem has occurred on the system that requires in v estig ation  from an Oracle server administrator, in
+order to diagnose the issue the Oracle server administrator requires system access. System access leaves
+the sensitiv e  financial  in f ormation  vulnerable.
+In order to ensure that any attemp ts  to view and/or copy the sensitiv e  in f ormation  are recorded the
+company has deployed session monitoring for this resource.
+The process flo w s  as follows:
+1.Administrator checks-out access to Oracle System cr edentials. 1.
+2.The command-line based auto-connect plugin is used to launch a SQLPlus session.2.
+3.Session monitoring logic (embedded in the Activ eX)  begins as soon as the plugin is launched, no pr e- 3.
+e xisting  client softw ar e  required.4.As the administrator does his work, keystrokes, copy-and-paste items, textual UI elements, and screen4.
+captures are collected for the SQLPlus instance and sent to a central server.
+5.The administrator finishes  his work and closes SQLPlus; the session monitoring terminates. 5.
+Since all in f ormation  regarding the sessions activities  were recorded, it is possible for an auditor to view
+the session to ensure that the administrator was not stealing in f ormation.
+Rogue Administrator attemp ts  to tamper with session monitor
+In this situation,  a rogue administrator who is aware of the fact that session monitoring is installed
+attemp ts  to prevent recording in order to perform illicit activities:
+1.The rogue administrator checks out cr edentials  to a sensitiv e  system in order to steal in f ormation. 1.
+2.The administrator sets a proxy that routes all tr a ffic  bound to the session monitoring data c ollection 2.
+server to ”/dev/null”.
+3.The administrator uses the Bravura Privilege  terminal services auto-connect plugin to login to the 3.
+system, this triggers session monitoring to begin.
+4.Before launching the terminal-services c onnection,  the session monitor attemp ts  to contact the data 4.
+c ollection  server. Since the server cannot be contacted the auto-connect plugin refuses to launch the
+terminal services client.
+5.The administrator’s e ff orts  are blocked, pr e v enting  access to the sensitiv e  resource. 5.
+Auditor in v estig ating  security breach on monitored resource
+In this situation,  a security breach has been detected on a protected resource. The security in v estig ation
+team knows that the breach occurred over the past month, but a number of people have had access to
+the server. The breach consisted of the release of three bank account numbers.
+Because the resource was protected with session monitoring, the security in v estig ation  team track down
+the source of the security breach:
+1.The security in v estig a t or  logs into Bravura Privilege  and performs a request to search for monitored 1.
+sessions.
+2.The in v estig a t or  enters the time  frame and resource name into the search criteria. Since the account 2.
+involved and suspect is unknown, these fields  are left blank.
+3.The request to search is sent to the appropriate authorizers and they either approve or deny this3.
+request.
+4.Once approved, the in v estig a t or  uses the session monitoring interface to further narrow the search 4.
+results. He searches for one of the bank account numbers using the available meta-data search
+parameters.
+5.This query returns two matching sessions for diff er en t  individuals. In order to see which of these 5.
+individuals had malicious intent, the in v estig a t or  requests a video and full meta-data to be generated
+for both sessions.
+6.This request is sent to another set of authorizers for approval.6.7.Once approved, the video and meta-data are generated and an email with download details is sent to7.
+the in v estig a t or .
+8.Using the data, the in v estig a t or  is able to pinpoint the source of the security breach and appropriate 8.
+action  can be taken against that individual.Applic ation  accounts
+The runwithpass program allows you to securely download large cr edential  files,  as well as retrieve
+privileged passwords from the Bravura Privilege  vault and use them to execute scripts and command-line
+programs.
+The pamutil shared library is a library that provides the same functionality  but is intended to be
+invoked from locally compiled programs; that is, it allows a program to fetch a password on demand.
+To use the program or library, you must:
+1. Con figur e  product administrator access. 1.
+2.Copy the program or library, and c on figur ation  files,  to the system on which you will run scripts or 2.
+commands.
+3.Edit the c on figur ation  file. 3.
+Con figuring  access
+To use this program, your OTP API user needs to have permissions to view the password:
+1.Create a new product administrator ( Manage the system > Security > Access to product features ) 1.
+with the "OTP IDAPI caller" privilege.
+2.Create a privileged access user group ( Manage the system > Security > Privileged access to systems ). 2.
+3.On the  Membership Criteria  tab, create a user class, or use an e xisting  one, that contains the 3.
+administrator you created in Step 1.
+4.Give the user group the permission "Pre-approve check-out of managed accounts" on the policy that4.
+the password is managed under.
+See Using a plugin to de fine  access to passwords  (on page 2049) for details on managing large numbers
+of OTP API callers with limited permissions.
+Using a plugin to de fine  access to passwords
+You can de fine  a plugin that can be used to determine user access controls when viewing passwords
+using pamutil . This plugin is c on figur ed  from Manage the system > Privileged access > Options
+> General > Account access request > RES PWD ACL PLUGIN .
+This plugin only applies to KMKeyGetByAccount and RecoverKeyByAccount API functions  and is intended
+to simplify management of large numbers of OTP API callers with limited permissions. It determines
+whether users will be able to retrieve the passwords of accounts directly.
+The plugin point will receive a KVGroup in the following format:
+   "" "" = {
+      "userid" = "<ID of user calling the API function>";
+      "managedaccount" = "<ID of managed account of the password being viewed>";
+      "managedsystem" = "<ID of managed system of the managed account>";   }
+It must return a KVGroup in the following format:
+    "output" "plugin_passwordacl" = {
+        "acl" "" = {
+            "view" = "<permission>"
+        }
+        "retval" = "0"
+    }
+Where "<permission>"  can be either "allow" or "deny".
+If "view"="allow" , the user will be granted access to view the password for this API call only,
+bypassing all other access control checks. Likewise, if "view"="deny" , the user will be denied access,
+bypassing all other access control checks.
+It is acceptable to return a KVGroup with no view pair. In this case processing will c ontinue  as though
+the plugin had not been called at all, and the user’s permissions will be determined based on their user
+group memberships as usual.
+Installing files
+Copy the appropriate program or library, and c on figur ation  files,  to the system on which you will run
+scripts or commands.
+Windows systems
+For deployment on Windows systems, the program, library and c on figur ation  files are located in zip files
+in the util and utilx64  directories. Use the package appropriate for your system and needs:
+▪pamutil(-x64).zip  which includes common files for deployment on Windows systems ▪
+▪pamutil-devkit(x64).zip  which includes additional  files for developers writing  programs that ▪
+link against pamutil
+Unix/Linux systems
+For deployment on Unix/Linux systems, use the dis tribution’ s  package manager to install the hid-
+common, hid-idapi and hid-pamutil  packages found in the Unix/Linux *tar.gz archives in the <instance>
+\addon\idmunix directory. Once the packages have been installed the program, library and c on figur ation
+files are typically located in the /usr/local/psunix/ directory.
+Bravura Security Fabric  includes binaries and library files for a variety of Unix and Linux variants. Contact
+support@bravurasecurity.com  for additional  variants.
+Install the following shared object libraries fir s t,  which are required by pamutil.
+▪openssl – available from http://w w w .openssl.or g /  (version 1.1.x has been v erified  on supported ▪
+platforms  )

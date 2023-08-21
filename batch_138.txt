@@ -1,0 +1,184 @@
+      "authorizationsReceived" = "0" 
+      "authorizationsRequired" = "1" 
+      "authorizer" = "alyce.costa" 
+    } 
+    "accountID" = "steve.benes" 
+    "finalized" = "false" 
+    "itemType" = "groupID" 
+    "operation" = "GRUA" 
+    "targetid" = "NORSE" 
+    "groupID" = "CN=FIN-
+AR,OU=resources,OU=staff,DC=norse,DC=bravurasecurity,DC=com" 
+   } 
+}  
+.
+Components for authoriz ation  w orkflo w
+The F unctional.im_policy_authoriz ation  component, installed with Bravura P attern , provides a policy
+framework to determine authorizers for diff er en t  types of requests.
+When installed, F unctional.im_policy_authoriz ation  aut omatic ally  sets the Bravura Security Fabric
+IDSYNCH AUTH CRITERIA MOD PLUGIN to control\plugin_authmod.py .
+The im_policy_authoriz ation  table aggregates authoriz ation  rules that are set up by components. Product
+administrators can add new authoriz ation  rules and modify e xisting  ones by modifying this table; to add
+or remove authorizers based on request attribut es,  requester or recipient in f ormation,  and oper ations
+requested.
+The rules set in the im_policy_authoriz ation  table override any settings  made in the Manage the system
+(PSA) module.
+Key parameters to set in the table include:
+▪PDRId  The pr e-de fined  request ID that this rule should apply to. ▪▪ Action  Whether to add, flush  (remove), or replace authorizers. ▪
+▪AuthUserclass  The user class used to attach  or replace authorizers. ▪
+▪MinAuthorizers  The required number of approvals for a request. ▪
+▪Phase  The authoriz ation  phase the rule applies to. ▪
+▪Authnote  A note with the reason to be appended to this request. ▪
+The component-based policy approach to authoriz ation  w orkflo w  supersedes the plugin functionality .
+You can access the policy via the external data store ( extdb ) module  (on page 1373), rather than needing
+to edit script files on the Bravura Security Fabric  server.
+The business logic and all its e ff ects  can be analyzed in smaller cr oss-sections  by filt ering  it with searches
+down to:
+▪ Specific  use cases (scenarios and functional  components), ▪
+Component details
+Every external database table is de fined  in the model.py  script of the functional  component, usually
+installed as a dependency of a scenario component.
+The default component's script is component/Default/Functional/
+im_policy_authorization/model.py , which also imports component/Default/
+Functional/hid_policy_authmod/model.py .
+The table model of im_policy_authoriz ation  adds columns to the ones imported from
+hid_policy_authmod
+The names of columns can be found in the _column_order attribut e  of the policy class (in this case,
+P olicyAuthoriz ation).
+The default data that the component brings to the solution  is usually in CSV files provided as part of
+either a functional,  scenario, or pattern  component. Component data at component install time  can be
+further modified  with diff er ences  specific  to each environment where the instance is to be installed, in
+the instance's environment\ directory.
+The default policy data is loaded by other components which depend on Functional/
+im_policy_authoriz ation:
+▪Scenario components like: component/Default/Scenario/im_corp_loa/data/ ▪
+policy_authorization.csv
+▪ Functional  components like: component/Default/Functional/ ▪
+im_profile_risk_policy_core/data/policy_authorization.csv
+▪Data components for the Resource Management System (RMS): component/Default/Data/ ▪
+extdb_corp_onboard/policy_authorization.csv
+To check what Authoriz ation  policy use cases are available out-of-the-box, search the component\
+directory for files named: policy_authoriz ation.cs v .
+To check which of these are installed, one can look at the last column of the policy table.The functional  component does not add any policy data of its own; instead it adds two options  to the
+hid_global_c on figur ation  table:
+▪component/component/Default/Functional/im_policy_authorization/▪
+manifest.xml , which loads
+▪component/Default/Functional/im_policy_authorization/data/▪
+initial_data.csv
+The raw data of the policy table at any given point after  component install can be found in the instance's
+db\extdb.db  file, which is a sqlite3 database.
+For tr oubleshooting  purposes, you can view and search the database directly if needed from the
+command line or from a sqlite GUI like Sqlite Studio. In everyday use, it is recommended that any
+changes be applied through the product Manage external data store  module  (on page 1163).
+Do not edit the default components; if component cus t omiz ation  is required, copy them as custom and
+edit those.
+Setting  authoriz ation  rules via the im_policy_authoriz ation  table
+As detailed in Components for authoriz ation  w orkflo w  (on page 1371), installing the component sets up
+authoriz ation  rules in the im_policy_authoriz ation  table in the external data store ( extdb ). Product
+administrators can add new authoriz ation  rules and modify e xisting  ones by modifying this table; to add
+or remove authorizers based on request attribut es,  requester or recipient in f ormation,  and oper ations
+requested.
+To access the authoriz ation  policy, login as an administrator and navigate to Manage external data store
+> im_policy_authoriz ation.
+The authoriz ation  policy is a single SQL table with many columns to provides the "structure" of the policy.
+Not all columns need to be filled  for each rule; they are present in order to provide a large degree of
+granularity and fle xibility  to the access approval solution.
+This is in support of any c ombination  of use cases in the Bravura Identity  life cycle (like Leave of Absence,
+Rehire or Name change after  a marriage). These use cases are brought into the policy by a c ombination
+of scenario components.
+Each row of the table is a policy "rule", made up of three types of columns:
+▪"match" (which determine in which cases, and for which objects the rule will be activ e) ▪
+▪ "action"  (which determine what action  will be done when a rule matches a specific  object being ▪
+▪"policy-wide" (which are used to determine functional,  rule-use and rule-provenience) ▪
+The policy table acts like a snowball:
+▪Each rule is evaluated in turn, for each Request in the order of 'RuleNumber' for stage 1, then all▪
+'RuleNumbers' for stage 2, and so on.
+▪When a rule "matches", its "actions"  are added to the snowball. ▪
+You need to make changes only on the instance's primary server in a replicated environment.Search the policy
+In-depth authoriz ation  policies can be quite large. You can use the Search field  on the top left side of the
+table view where you can add SQL WHERE clauses to filt er  the records, for example:
+▪Only rules that apply to a specific  Pr ede fined  Request: ▪
+where "PDRId" = 'UPDATE_ACCOUNT'
+▪All rules which cause Requesters and Recipients to not be allowed as their own Approvers:▪
+where "RemoveAuthorizerIf"='is both'
+▪All rules which match a Role that contains HR in its ID (like HR_ADMIN):▪
+where "Role" like '%HR%'
+See External Data Store  (on page 1163) for general in f ormation  on using the interface.
+Lab: Setting  authoriz ation  rules via the im_policy_authoriz ation  table
+As you build your authoriz ation  rules for roles, groups, targets, templates, and so on, you may want to
+remove authoriz ation  for particular  pr e-de fined  requests or other situations.  You can do this by setting
+rules in the im_policy_authoriz ation  table. In this example, we will override the entitlemen t  authoriz ation
+that was set up for the NEW-ENGINEER pr e-de fined  request, and only require that the request be
+authorized by users within the CONTRACT-HIRE-APPROVAL user class.
+Requirements
+This use case assumes that:
+▪Bravura Security Fabric  and Connector Pack are installed. ▪
+▪An Activ e  Directory target system is added as a source of pr ofiles. ▪
+▪Security questions  are set up. ▪
+▪A NEW-ENGINEER pr e-de fined  request is set up to create a new user from a role. ▪
+▪ Authoriz ation  for groups has been set up as shown in Example: Con figur e  s t atic  authoriz ation  (on page ▪
+1341).
+Add rule to im_policy_authoriz ation  table
+1.Log in to the Front-end (PSF) as superuser . 1.
+2.Click Manage external data store > im_policy_authoriz ation . 2.
+3.Click Edit 
+ next to an empty row. 3.
+4.Add the following rule to the table:4.
+▪StageNumber  1 ▪
+▪RuleNumber  29 ▪
+▪SkipRemaining  Stage ▪
+▪PDRid  NEW-ENGINEER ▪
+▪ResourcesOnly  False ▪
+▪ Action  replace ▪▪AuthUserclass  CONTRACT-HIRE-APPROVAL ▪
+▪MinAuthorizers  1 ▪
+▪AutoReject  False ▪
+▪Phase  1 ▪
+▪Authnote  Authoriz ation  required from users who approve contracts ▪
+Click Done .
+5.Click Update  at the bottom  of the table once you have added your entry. 5.
+The rule may appear on the second page of the rules table.
+The rule you have just added for the NEW-ENGINEER  PDR tells Bravura Security Fabric  that when a
+user submits a request using the NEW-ENGINEER  PDR, it needs to replace any authorizers from the
+template, managed groups, roles...etc. in phase 1 authoriz ation,  with members of the CONTRACT-HIRE-APPROVAL  user class. The request will only require 1 user to approve the request for phase 1
+authoriz ation  from the CONTRACT-HIRE-APPROVAL  user class before moving to phase 2 authoriz ation
+logic. Phase 2 authoriz ation  will progress with requiring ABBYN's approval, as previously set in the
+product UI.
+Modify the CONTRACT-HIRE-APPROVAL user class
+Currently, participan ts  for the CONTRACT-HIRE-APPROVAL user class are specified  as users whose
+department is HR-RECRUIT. You will modify the pr ofile  attribut e  value to use HR-ADMIN instead.
+1.Log in to the Front-end (PSF) as superuser .. 1.
+2.Click Manage the system > Policies > User classes . 2.
+3.Search for and select the CONTRACT-HIRE-APPROVAL user class.3.
+4.Click on the Criteria  tab. 4.
+5.Under P articipan ts  have pr ofile  attribut es  matching: , select the USERID row. 5.
+6.Change the Value  to HR-ADMIN. 6.7.Click Update . 7.
+Test the new authoriz ation
+1.Log in to the Front-end (PSF) as BERNAP . 1.
+2.Click Create a new user pr ofile . 2.3.Select the Hire a new engineer  pr e-de fined  request. 3.
+4.On the request wizard pages, enter the following in f ormation: 4.
+▪First name  Engineer ▪
+▪Last name  Authoriz ation ▪
+▪Employee type  Employee ▪
+▪Employee number  E1234567 ▪
+▪Department  ENG-PM ▪
+▪Mother's maiden name  Bravura ▪
+5. After  entering the Mother's maiden name  on the Personally identif ying  inf ormation  page, click 5.
+Submit  to skip the Change role membership  page.
+6.View the request details and the authorizers assigned.6.The request will have multiple  authorizers:
+▪BERNAP and other members of the CONTRACT-HIRE-APPROVAL  user class (MERRIJ, BRUCEN, ▪
+HEATHV, DARAK, KASEYA, SHEBAC, HARRIMO1, ABBYN, TIERRC, TANNES, ELLIOC, JOHNBO, DONNP)
+are added as authorizers.
+▪Phase one authoriz ation  is already complete since the system has aut omatic ally  provided approval ▪
+for BERNAP's authoriz ation.  This is because the product is c on figur ed  for authoriz ations  to auto-
+approve for the authorizer if they are also the requester, as BERNAP is. Due to BERNAP's approval,
+authoriz ation  from other members of his user class is no longer needed.
+The rule set in the im_policy_authoriz ation  extdb table is only applied to phase one authoriz ation.
+This means that phase two authoriz ation  is still taken from our authoriz ation  rules set for
+templates, groups, roles...etc.
+▪We set up the AD_TEMPLATE  template account to require authoriz ation  from the requester’s ▪
+direct manager; therefore, ABBYN, as direct manager for BERNAP , is also added for phase two
+authoriz ation.
+7.Complete the second authoriz ation  phase of the AuthorEn  request by logging in to Bravura Security 7.
+Fabric  as ABBYN  and approving the request.
+8.Review the request and you will see the status of the request should change to " Approved, 8.
+performing requested operations " and then to " Processed ".

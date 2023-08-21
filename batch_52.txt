@@ -1,0 +1,343 @@
+When a target system has an in finit e  list timeout  and hangs up psupdate , only that target system’s
+agent process needs to be killed. A good way to determine long-running agents, either hours or days
+after  the incident, is to open PowerShell and run a piped command similar to the following:  
+Get-Process | Where {$_.name -eq "<agent>"} | Select name,id,starttime 
+and then determine the parent process for the listed agent processes.
+If the parent process is psupdate , the agent can be killed; if it is agtsvc, the agent is being run for a
+persistent listing  target system and does not have to be killed. If you think there is something wrong with
+a persistent listed target, use the agtsvccli utility  to do a full listing.
+Once you have a process ID for a rogue agent using the previous command, you can find its parent
+process with a command such as:  
+wmic process get processid,parentprocessid,executablepath|
+find "<agent_processId>" 
+Alt ernativ ely ,  use sys internals’ Process Explorer in tree mode if you have it on the Bravura Security Fabric
+server.
+Best pr actice  for determining list timeout  
+Here is a best pr actice  to determine a useful timeout  that results in r elativ ely  fast psupdate processing
+even when c onnection  to a target system drops, and still allows the connector to finish  listing  (and
+aut omatic ally  restore the list backups) when that happens:
+1.Perform several full lists on each given target system ( psupdate -target <targetID> - 1.
+list ) at the time  auto discovery  is normally scheduled to run, and with the target system running at
+high load.
+2.Time each list oper ation  in seconds to get the maximum time  it takes to list completely and 2.
+successfully, then add a margin of error as follows:
+For target systems listing  under 30 minutes, you can double the list time  to get the timeout;  for target
+systems that take upwards of three hours you could add an extra hour; if you schedule auto discovery
+several times  a day you need to balance the dur ation  of each auto discovery  with the time  available for
+it to run. Note that psupdate runs several connectors at once (controlled by system variable
+UPDATE SYSTEM AGENT COUNT , by default 50), so you can take that into account when determining
+the timeouts.
+Extended attribut es
+The extended target system in f ormation  can be viewed from the Extended attribut es  section  of the
+target c on figur ation  page after  auto discovery . The pop-up page will contain in f ormation  regarding the
+host name, oper ating  system version, and various other target system in f ormation.
+Incremental listing
+To reduce the amount of data that is discovered each time,  Bravura Security Fabric  supports incremental
+listing  of account attribut es  on some target system types, such as LDAP and Activ e  Directory. For thesetarget systems, once the initial  discovery has been run, Bravura Security Fabric  only lists attribut es  for
+accounts where it detects a change on subsequent runs of auto discovery . The incremental listing  setting  is
+enabled by default for target systems that support it.
+When listing  takes a long time,  or if time  zone/daylight savings gets processed on the target system while
+listing  is happening, some attribut e  changes on the target system can be missed, so:
+1.If full attribut e  listing  from a target does not take too long, it is recommended to turn off incremental 1.
+listing  for that target;
+2.For target systems that take a long time  listing  attribut es,  find a time  when auto discovery  is not 2.
+running and run full attribut e  listing  (but only for those target systems).
+Persistent listing
+Target systems can change (sometimes  dr astic ally)  between scheduled discoveries. Bravura Security
+Fabric  supports persistent listing  for Activ e  Directory DN or LDAP Directory Service target systems.
+Persistent listing  allows Bravura Security Fabric  to list changes as soon as they happen on the domain
+controller to which the Persistent Connector Service ( agtsvc ) (on page 2874) connects. It makes these
+target systems good candidates for a Source of Record ; it would update the Bravura Security Fabric
+database and trigger any c on figur ed  aut omation  as soon as possible after  changes were made.
+When persistent listing  is enabled:
+▪Regular auto discovery  is disabled for the target system. The target system’s Run discovery button  is ▪
+changed to a Start discovery button.  Click this button  to run the Persistent Connector Service on the
+target.
+▪The fir s t time  the Persistent Connector Service runs it will list all objects and will then just list changes. ▪
+▪To stop the service, click the Stop discovery button  on the Target system in f ormation  page. ▪
+▪If it is stopped, upon restart it will list all changes since it was stopped.▪
+▪The domain controller that it lists from can be changed without losing data.▪
+▪Target systems c on figur ed  in the address field  to use OU lists will work correctly. ▪
+▪If you change what objects are listed, where objects are listed from, or which attribut es  are listed (for ▪
+example, such as to change the OUs to list users or groups from):
+▪Use targetsync ▪
+Use the targetsync  program to synchronize the instance database state with the state from
+target systems without blocking other high value r eplic ation  data for prolonged periods of time.
+Usage
+ targetsync.exe [options]...
+Argument Description
+-j Specify the number of targets to process in parallel
+(default: 1)
+-nolist Skip agent list updateArgument Description
+-target Specify the ID of the target for which to run targetsync to
+synchronize the state of the instance database. This
+option  can be used multiple  times  to select multiple
+targets
+-targetmanual Select all manual targets
+-wait Wait for discovery to complete
+Examples
+1.To synchronize the state of an Activ e  Directory target system AD and a Windows NT target 1.
+system WINNT, type:
+ targetsync.exe -target AD -target WINNT
+2.To synchronize the state of all manual targets, process 2 targets in parallel and wait for discovery2.
+to complete, type:
+ targetsync.exe -targetmanual -j 2 -wait
+to synchronize the instance database state with the state of the target system.
+▪Stop discovery on the target system then use the Persistent Connector Service client program,▪
+agtsvccli
+The agtsvccli program controls the Persistent Connector Service (agtsvc)  (on page 2874).
+Usage
+agtsvccli.exe <option>
+Argument Description
+-c --cookie Cookie value to send to connector. This argument is for
+developer use only.
+-debug Debug logging is enabled for additional  diagnostics.
+-full When s t arting  a list, do not c ontinue  the previous list.
+This will result in a full list and load of all data.
+-h --help Print out help/usage message and exit
+-hid --host <host> Agent service host.
+-infolist Shows s t atistic al  in f ormation  in kvgroup format for the
+currently running persistent list target.
+-i --listid  <ID> ID of the oper ation.
+--loopcount Set a limit on list processing for the number of
+incremental in t er ations  up to the specified  loop count
+after  which persistent list will be terminated. Each
+it er ation  is determined by the ’Persistent list search wait
+time’  target address option.  If not specified,  the default
+is ’0’ to run inde finit ely .Argument Description
+-p --port <port> Agent service port
+-showlists Show currently running lists.
+-startlist Start a list.
+-stoplist Stop a list.
+-t --t ar g etid  <target> Target system.
+-v --version Print out version and exit
+Examples
+1.To stop listing  on Activ e  Directory target system corpdirectory : 1.
+agtsvccli.exe  -endlist -t corpdirectory
+2.To make a new full list on corpdirectory : 2.
+agtsvccli.exe -startlist -t corpdirectory -full
+, to make a new full list with the -full option.
+▪You can create a target system with persistent listing  enabled; there is no need to do a regular list ▪
+before enabling persistent listing.
+▪For LDAP , persistent listing  only works for Activ e  Directory Lightweight Directory Services (AD LDS), ▪
+formerly Activ e  Directory Applic ation  Mode (ADAM).
+St arting  persistent listing  from the Start discovery button  for the target system or with the
+agtsvccli client program without the -full option  will c ontinue  persistent listing  from the previous
+list. If a full list to reload all data must be redone, this can only be accomplished using the -full option
+with the agtsvccli client program.
+The Persistent Connector Service by default will resynchronize accounts and groups when running a full
+list. This means that when accounts or groups are not found during listing  and there are changes such as
+for a modific ation  for the filt er s,  they will now be invalidated on a full list.
+This option  can be disabled using the AGTSVC_RESYNC_ON_FULL registry key:
+1.Go to Start menu, type regedit in the search box, and click on the program to access the Registry 1.
+Editor.
+2.In HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance name>, create a DWORD2.
+value called AGTSVC_RESYNC_ON_FULL and set its value to 0.
+Manual listing
+If auto discovery is not supported by your system or if for some reason you will not c on figur e  Bravura
+Security Fabric  to collect in f ormation,  you must manually provide an inventory of login IDs and any other
+items. This is normally done using a scripted (batch) process on the target system that lists, formats and
+places the required files in Bravura Security Fabric ’s p sc on fig  directory.
+You can create a SQLite .db file in the following way:1.Add a target as close as possible to the type of the target that can't be listed directly, but target a1.
+reachable system.
+2.Use the target system's List Override  option  to aut omatic ally  copy the list file during auto-discovery. 2.
+See the Connector Pack  documen t ation  for an example for cr eating  a list file to support challenge-
+response authentic ation  for RADIUS .
+Exploring an e xisting  list file
+List files since version 12.0.0 and Connector Pack 4.0.0 are sqlite3 databases ( .db files).
+Their schema can vary from version to version.
+Their table contents can be checked with any Sqlite3 client, using the or a .
+The examples linked here are just examples, not endorsements.
+Modifying listed data before loading
+List files can be changed after  listing  from their targets or before loading into the Bravura Security Fabric
+database in one of two ways:
+1.Use an e xisting  loaddb component; for example, Functional.hid_loaddb_tr ans f orm  or Custom, that 1.
+uses a policy table to specify changes to specific  listed objects.
+2.If the fir s t method can not be used, or leads to consuming too many system resources, use a to run 2.
+SQL commands directly against the list file via an sqlite3 command line utility .  Usually the plugin is
+psupdate_loaddb_pre, however,psupdate_list_AD_post be used.
+Both of these methods require knowledge of the component framework  or scripting ,  SQL, the schema of
+the list files and the way each listed object type is processed. A Professional Services engagement is
+recommended for these types of scripted in t egr ations.
+Allowing users to specify a destination  container
+You can c on figur e  Bravura Security Fabric  to use a profile  and request attribut e  to prompt users for the
+destination  container when cr eating  or moving accounts on a target system that supports contexts, such
+as LDAP Directory Service, NDS, Exchange 2007/2010/2013/2016, and Activ e  Directory.
+When the Pr ofile/r eques t  attribut e  to use as the container DN option  is c on figur ed  on the Target system
+in f ormation  page ( Manage the system > Resources > Target systems ), users can:
+▪Set the destination  container when cr eating  new accounts. ▪
+Users do this by setting  the pr ofile/r eques t  attribut e  value in the request form. By default, Bravura
+Security Fabric  creates new accounts in the same container as the template. Without the pr ofile/
+r eques t  attribut e,  you may need to set up identic al  templates for each container.
+If enabled when setting  the target system address, Bravura Security Fabric  can also create a container
+if a non-e xisting  one is specified.
+▪Move e xisting  accounts on the target system to a diff er en t  container. ▪Users do this by setting  the To container value – which is actually the pr ofile/r eques t  attribut e,  but
+with a diff er en t  name – on the move accounts page. Bravura Security Fabric  only displays the move
+oper ation  (the Move button)  for users with accounts that can be moved between containers.
+To allow users to select a container for a create account or move context oper ation:
+1.Add a pr ofile  attribut e  to provide a place to prompt the user for this in f ormation. 1.
+It is recommended that you c on figur e  the pr ofile  attribut e  to have a set of restricted values, so that
+the requester or product administrator  can select from a drop-down list.
+2.Ensure that you set read/write permissions for the pr ofile  attribut e. 2.
+3.Provide a group of users the ”Move user from one context to another” rule.3.
+4.Update the Target system in f ormation  page ( Manage the system > Resources > Target systems ) by 4.
+typing the name of the pr ofile  attribut e  in the Pr ofile/r eques t  attribut e  to use as the container DN
+field.
+This allows Bravura Security Fabric  to use the pr ofile  attribut e  for this purpose.
+Hiding the target system on user-management pages
+By default, target system in f ormation  is listed for all available self-service and adminis tr ativ e  user-
+management options.  You can use the options  in the Display modules section  of the T arget system
+in f ormation  page to prevent the display of the target system in the applicable module web page. This
+only a ff ects  the display of the target system in the web interface; the target system is still referenced in
+any appropriate emails.
+This is useful if the target system is only being used for a single purpose (verifying passwords, storing
+administrator cr edentials,  or as a read-only source of attribut e  in f ormation)  and is not a full password
+management or provisioning target. It is also useful if you do not want the user to be able to apply any of
+the options  available on that page to that particular  target system.
+Cr eating  a list file and copying data from other targets
+If you wish to copy the listing  data from one or more targets to use as the list file for another target, you
+can use the Copy data from these targets, separated by commas, during auto-discovery  target system
+option  as well as the Connector e x ecution  order  auto-discovery list and a post psupdate script for the
+target that you are copying list data to.
+This is useful for when a target does not have the ability to list accounts or other objects from the target
+system directly.
+One example is for RADIUS Authentic ation  targets, which do not list accounts directly. In this case, a
+SQLite database list file must be created for the RADIUS target which would then associate users during
+auto-discovery, so that users can authentic a t e  against the target system for RADIUS Authentic ation
+challenge-response.
+You can create the file by copying it from one or more other target systems such as from an Activ e
+Directory target system.
+You can c on figur e  this using the following steps:1.Copy the psupdate_list_AD1_post.py  script from samples to the <Program Files path>\Bravura Security 1.
+\Bravura Security Fabric\<instance>\ script\ directory.
+2.Rename the script file so that "AD1" is the target id of the target that you are copying listing  data to. 2.
+3.Add a target system for the one that you will be copying the listing  data to; for example, RADIUS. List 3.
+Accounts is checked for the target system settings.
+4.Set the Connector e x ecution  order  so that the targets that you are copying data from are fir s t in the 4.
+list and the target that you are copying data to is last.
+5.Modify the target system settings  for the target that you will be copying listing  data to and set Copy 5.
+data from these targets, separated by commas, during auto-discovery  to the list of targets that you
+are copying data from.
+6.Modify the post psupdate script as necessary.  For example, in the sample "AD1" refers to the target6.
+you are copying data to.  "ADDN2" and "NT1" refer to the target systems that you are copying data
+from.  "CORP" should be replaced with the domain name for your Activ e  Directory target.  These
+modific ations  allow for the shortid  format of the user ids to be used instead the longid, which for
+Activ e  Directory users, includes the domain name.
+Con figuring  resource attribut es
+It is possible to add resource attribut es  to this resource type; you can use resource attribut es  to create
+and set attribut e  values for individual resources. Before you can do this, you must add the resource
+attribut es  to at least one resource attribut e  group, and c on figur e  access to resource attribut es.
+Adding target system administrators
+To add a target system administrator  for a target system:
+1.Navigate to the target system’s Administrator cr edentials  page  (on page 489). 1.
+2.Type the target system administrator ’s login ID in the Administrator ID field.  These cr edentials  will be 2.
+used to connect to the remote agent.
+3.Type the account password in the Password and Con firm  password fields. 3.
+4.If you want enable the target system administrator  to run Bravura Security Fabric  processes on the 4.
+Bravura Security Fabric  server, select the Run as? checkbox.
+By default, all connectors run the Bravura Security Fabric  processes on the Bravura Security Fabric
+server as the local psadmin account. See the Connector Pack Documen t ation  for in f ormation  about a
+particular  system.
+Any target system adminis trative  credential  used for the Run as?  option  must be part of the local
+Administrator group on the target system.
+5.If the account is a special-purpose system ID (required on certain systems), select the System 5.
+password checkbox.
+(on page 518)
+6.If the target system is administered remotely, and if the target system administrator ’s password is 6.
+managed by Bravura Security Fabric  , set the:▪Managed system o the ID of the managed system where the target system administrator ’s password ▪
+is being managed.
+▪Account ID o the login ID of the target system administrator . ▪
+The account ID and administrator ID should be the same.
+(on page 518)
+7.If the target system is imported into Bravura Security Fabric  , then the cr edentials  could be 7.
+randomized by a managed system policy. To keep the target system cr edentials  synchronized with the
+password for the managed account, select the Updated by Bravura Privilege  Privilege? checkbox.
+8.Click Update . 8.
+If the target system’s administrator credentials  are from a domain account, then Bravura Security
+Fabric attemp ts  to verify them on the target system. If they do not pass verific ation,  then these
+administrator credentials  are not added for the target system.
+Additional  target system administrators
+You can de fine  multiple  target system administrator s so that if Bravura Security Fabric  cannot log into the
+target system with the current target system administrator  account, because of target system oper ation
+locking, the cr edentials  of the next target system administrator  in the list are used. You can also de fine
+additional  target system administrator s if Bravura Security Fabric  requires a special system ID and password
+to connect to the target system.
+Any additional  target system administrator’s credentials  must be defined  firs t under the target system’s
+local Administrator group before they are used.
+System password
+Some systems require that you supply diff er en t  login IDs to access diff er en t  parts of the system. For
+example, on system XYZ, sysadmin may have adminis tr ativ e  access to the database backend and
+sysuser2 may have connect privileges for the system front end. Using this example, you would select
+the System password  checkbox for sysuser2 .
+Check the Connector Pack Documen t ation  to determine whether system cr edentials  apply to a particular
+target system.
+Remotely administered target systems
+A target system is remotely administered if its cr edentials  are stored on an external source; for example,
+a Cisco router that stores its cr edentials  on an Activ e  Directory domain.
+You can link the account cr edentials  from the external source, such as an Activ e  Directory DN target, so
+that Bravura Privilege  can update the target system administrator ’s password when the source password is
+randomized.
+To allow Bravura Privilege  to remotely administer target systems, the TARGET CREDENTIAL ASSOCIATION
+system variable must be enabled in the Manage the system  > Modules  > Options  menu. By default, this
+system variable is enabled.From the target system cr edentials  page, click the 
+  icon under ”Get cr edential  from Bravura Privilege ”
+to select from the list of managed accounts. You must have ” Access” permission to the cr edentials  you
+want to use here.
+T esting  c onnections  for a target system
+You can perform the following tests to help determine whether your target system has been set up and
+added to Bravura Security Fabric  correctly (required client softw ar e  is installed, target system address
+and target system administrator  cr edentials  are accurate, and so on). This is not supported for IT Service
+Management (Ticket) systems.
+Administrator cr edentials
+For this test, Bravura Security Fabric  performs simple password v erific ations  using the selected target
+system administrator s’ cr edentials.  The test uses the connector’s ’get server in f ormation’  oper ation.  As of
+Connector Pack  1.3, this oper ation  is supported by the following target system types:
+To run this test:
+1.Navigate to the target system’s Test c onnection  page  (on page 489). 1.
+2.If required, clear the checkboxes next to the target system administrator s whose cr edentials  you do not 2.
+want to test.
+3.Click Test cr edentials . 3.
+Bravura Security Fabric  displays the results next to each target system administrator .
+WARNING! Depending on your target system’s security policies, t esting  an invalid
+password too many times  may trigger an intruder lockout on that system.
+If you are unsure of the actual password, do not repeat this oper ation.
+User lists
+For this test, Bravura Security Fabric  performs a list oper ation  to enumerate user accounts on the target
+system. The results of the list oper ation  are for t esting  purposes only and, unlike during auto discovery ,
+will not be loaded into the database.
+Listing  can be a costly operation  on the target system. When you click Test list , the operation  is run to
+c ompletion  which may take a long time  on some systems.
+To run this test:
+1.Navigate to the target system’s Test c onnection  page  (on page 489). 1.
+2.If required, type the Timeout (in seconds) for list oper ation . 2.
+If there are many accounts on the target system, you may need to increase the timeout.
+3.Click Test list . 3.
+Bravura Security Fabric  begins the user list oper ation.
+4.Click Show users to display the contents of the generated user list file (<target ID>.test.db ). 4.Conversely, you can click Hide users to hide the list file contents.
+While the list oper ation  is running, you can click the Refresh button  in the Bravura Security Fabric
+na vig ation  bar to update the page status. When the oper ation  completes, the “Number of users found”
+should match the number of accounts on the target system.
+See also
+The Test list  button  executes the testlist  program. See usage in f ormation  for testlist
+Use the testlist  program to perform a test of the user list oper ation  for a specified  target system.
+This program generates a SQLite-based user list file, <target ID>.test.db, in the \<ins t ance>\p sc on fig\
+directory.
+Usage
+ testlist  -targetid <target ID> -timeout <seconds>
+Argument Description
+-h, --help Print out help/usage message and exit
+-v, --version Print out version and exit
+-quiet Only output result of oper ation
+-t ar g etid  <target ID> The ID of the target system for which to perform the user
+list oper ation
+-testconnect Execute serverinfo oper ation  to test target c onnection
+-timeout  <seconds> The timeout,  in seconds, for the list oper ation
+Examples
+To test the list oper ation  for your WINDOM1 target system, run:
+testlist.exe -targetid WINDOM1
+To execute serverinfo during the list oper ation  where list oper ation  will timeout  after  specified  seconds,
+run:
+testlist.exe -targetid WINDOM1 -testconnect -timeout 60
+See also
+This program is run by the Manage the system  (PSA) module when you click Test list  on a target’s Test
+c onnection  page  (on page 519).
+.

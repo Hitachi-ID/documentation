@@ -1,0 +1,334 @@
+3(Unless the primary node cannot be contacted, in which case the r andomiz ation  will be performed
+locally)▪verificationid : A times t amp-embedded  unique identifier  for a group of actions  taken. For ▪
+manual r esolution,  all actions  receive a separate v erific ationid.  For aut omatic  r esolution,  all actions
+taken in a particular  batch (spanning multiple  accounts) receive the same v erific ationid.
+▪actionreason : The process that caused action  to be taken. One of: ▪
+▪A: Aut omatic  v erific ation. ▪
+▪F: Forced r andomiz ation. ▪
+▪B: Password blanking.▪
+▪M: Manual tree c on flict  r esolution. ▪
+Summary
+The primary cause of password c on flicts  has historically been an aut omatic  scheduled r andomiz ation
+occurring on one node while a user checks in their account manually on another node. That sounds like
+something that should be very rare, but in busy systems with many passwords it happens surprisingly
+often.  To r ectif y  this, most r andomiz ations  on non-primary nodes are forwarded to the account’s primary
+node 3, which reduces the incidence of tree c on flicts  greatly.Service accounts on windows
+This chapter explains how Bravura Security Fabric  can manage service accounts on Windows systems.
+This chapter contains:
+▪How Bravura Security Fabric manages service accounts  (on page 1902) ▪
+▪Subscriber notific ation  (on page 1904) ▪
+▪Requirements  (on page 1903) ▪
+ Terminology 
+The following terminology is introduced in this chapter:
+Service accounts A managed account that has at least one subscriber. The service account provides a
+security context for a subscriber to authentic a t e  against.
+Subscriber A subscriber is an entity  that stores passwords or permissions used to authentic a t e  to
+a primary security database, such as local Windows SAM database or Activ e  Directory.
+It can be a process, program, or file, such as Service Control Manager, IIS, scheduler or
+DCOM objects.
+Or ches tr ation Or ches tr ation  is the coordinated process involving one service account password
+change and related subscriber notific ations.  Subscriber notific ation  can inform
+subscribers of a new password value for a service account that it uses. Notific ation
+may require extra steps, in addition  to providing the new password value - such as
+stopping and r es t arting  services.
+Product administrators can manage subscribers and c on figur e  subscriber notific ations.
+How Bravura Security Fabric  manages service accounts
+Bravura Privilege  can be c on figur ed  to secure service account passwords. This can be done two ways,
+depending on the mode of oper ation:
+▪In local service mode, the Bravura Privilege  w ork s t ation  service periodically scrambles service account ▪
+passwords locally, in c oor dination  with the central Bravura Privilege  server cluster.
+▪In push mode, Bravura Privilege  servers periodically connect to Windows servers in order to change ▪
+the passwords of service accounts.
+You can manage accounts on a domain controller by enabling all accounts to be discovered objects.
+However, subscribers cannot be listed from domain controllers.
+Bravura Privilege  must notif y  the program that launches services – the subscriber – of the new password
+value, so that it can successfully launch the service at the time  of the next system restart or when an
+administrator manually stops and restarts the service in question.  The Subscriber notific ation  (on page
+1904) component provides this functionality .
+Bravura Privilege  includes several mechanisms for managing subscribers:▪Auto-discovery of subscriber/account dependencies for a variety of subscriber types: IIS, Scheduler,▪
+SCM, DCOM, at various OS and subscriber versions.
+▪A white-list mechanism (usually table driven, but a plugin is available for more complex scenarios) so▪
+customers can control which service accounts should have their passwords randomized and when.
+▪Built-in tools to notif y  known subscribers of new password values. ▪
+▪A tr ansaction  manager that can retry notific ations  to off -line  subscribers. ▪
+The above are primarily used when managed systems are integrated with Bravura Privilege  in ”push
+mode” – that is, there is no locally installed softw ar e  on the target system and Bravura Privilege  initia t es
+all c onnections  remotely, over the network, directly or via a co-located Bravura Privilege  proxy server.
+In case push mode is inappropriate – for example because the relevant services (such as remote registry,
+WMI) are disabled or fir e w alled  or because the end system is offline  or inaccessible due to name
+r esolution  or IP r outing  issues (such as NAT), a Local W ork s t ation  Service can be installed on the managed
+system, which performs essentially  the same functions  but with much simpler c onnectivity  (call home
+over HTTPS) and no need for network accessible services on the local system.
+Local service mode is normally used on laptops and in some cases desktop PCs, but works on any system
+running any version of the Windows OS. Any problems encountered in updating  a service password can,
+and should be c on figur ed  to trigger an exit trap program on the Bravura Privilege  server, to notif y  an
+administrator of an imminent problem when the service in question  is next started.
+Requirements
+Some or g aniz ations  c on figur e  services on Windows servers to run in the context of a domain-level, rather
+than local service account. This is mandatory on domain controllers, which have no local security
+database. This is also common on non-domain controllers, since Micr osoft  encourages this pr actice.
+In Bravura Security's view, running a service on a member server in the security context of a domain
+account is not recommended, since the same service account may be used to run many diff er en t  services
+on many diff er en t  servers. This complicates changes to the password of the AD service account, since
+multiple  servers must be notified  of the new password. To complicate matter s  further, some of the
+servers may be offline  or unreachable when the service account password is changed on AD, making it
+even more complex to notif y  them of the new password.
+In general, Bravura Security recommends that or g aniz ations:
+▪Run services on AD DCs as SYSTEM or similar.▪
+▪Run services on member computers as local, not domain accounts.▪
+The following should also be considered when planning to manage service accounts:
+▪Bravura Security Fabric  can only list subscribers on servers that utiliz e  the Windows NT target system ▪
+type.
+▪A plugin program or script is required to determine which discovered object should be updated when▪
+the managed account’s password has been randomized. The program or script is called by the PAMSA
+SUBSCRIBER NOTIFICATION plugin point and is part of the subscriber notific ation  component.In order to prepare an account for subscriber or ches tr ation  you need to ensure that the notific ation  is
+c on figur ed  for all of the subscribers it runs. This is done by using the Sub scriberNotific ation  column of the
+pam_p w d_r andomiz ation_sub scriber  Manage external data store  (DBE) module table.
+Subscriber notific ation
+The subscriber notific ation  component, part of the Bravura Privilege P attern,  allows Bravura Security
+Fabric  to notif y  relevant subscribers, such as services, that an associated password is changing. Primarily
+this component is used for updating  service account passwords on their r espectiv e  service before or after
+performing the password change.
+Subscribers to an account are aut omatic ally  determined based on data gathered during auto discovery,
+and relevant in f ormation  associated with the subscribers is populated into a table in the SQLite External
+Data Store. Once the subscriber data has been populated, the record must be reviewed before subscriber
+or ches tr ation  will be enabled for that account. This process can be done by humans, or can be
+automated depending on the requirements of the Bravura Security Fabric  deployment.
+Subscriber or ches tr ation  will only take place if all servers that house subscribers can be contacted when
+the r andomiz ation  takes place. If any of the servers are unreachable then the password will not be
+randomized. This ensures that no services are left in an unusable state by Bravura Security Fabric .
+The following plugin points, scripts, and tables control the logic that powers the subscriber notific ation
+component, and are aut omatic ally  c on figur ed  when the component is installed:
+▪ Calculation  Logic – ▪
+▪PAMSA SUBSCRIBER NOTIFICATION – calls a plugin to give notific ations  of imminent service ▪
+account password r andomiz ation  to subscribers and receive or ches tr ation  in f ormation.
+▪PSUPDATE POST – the psupdate_post.psl script is called by psupdate at the end of auto ▪
+discovery after  all other tasks are complete.
+▪SQL Table – A table in the SQLite External Data Store called Subscriberscontains the data that is used ▪
+to determine which subscribers to notif y  of upcoming password r andomiz ation.
+Subscriber notific ation  plugin
+You use a plugin or PSLang script to determine which discovered object that is using a managed account’s
+cr edential  should be updated when the managed account’s password has been randomized. This allows
+you to control which objects on a discovered managed system should have cr edentials  updated, to
+prevent un-authorized services, scheduled tasks, dcom objects and IIS objects from obtaining the new
+password. If the plugin is empty, password r andomiz ation  will occur without any subscribers being
+notified.
+To control what objects to update after  a password r andomiz ation:
+1.Click Manage the system > Privileged access > Options  > Password r andomiz ation . 1.
+2.Type the name of the plugin in the PAMSA SUBSCRIBER NOTIFICATION  field. 2.
+3.Click Update . 3.If the Bravura Privilege P attern  is used the subscriber-notification.py  plugin will be installed
+with it. See more in f ormation  on writing  a custom plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The plugin is run as part of the password change or ches tr ation  process which occurs whenever a
+managed account password has been randomized by the Bravura Security Fabric  instance. This includes
+product administrators randomizing passwords, the scheduled password r andomiz ations,  and password
+check ins.
+Input
+The plugin has access to the following KVGroup input:
+Local accounts
+"orchestrationid" "<orchestration id>" = {
+    "target" "<target id>" ={
+        "ead_computer_attributes" "" = { # attributes discovered through auto discovery process
+            "sv_attributes" "" = {
+                "<attribute key>" = "<attribute value>"
+                ...
+            }
+            "mv_attributes" "" = {
+                "<attribute key 1>" = "<attribute value 1>"
+                "<attribute key 1>" = "<attribute value 2>"
+                "<attribute key 2>" = "<attribute value 3>"
+                ...
+            }
+        }
+        "ead_computer_attributes" "" = { # attributes listed
+            "<attribute key>" = "<attribute value>"
+            ...
+        }
+    }
+    "account" "<account longid>" = {
+        "account" "" = {
+            "account" "" = {
+                "userid" = "<user id>"
+                "hostid" = "<target system id>" # Target system the account is on
+                "longid" = "<longid>"                "shortid" = "<shortid>"
+                "helpdesk" = "<TRUE|FALSE>"
+                "list" = "TRUE|FALSE"
+                "user" = "TRUE|FALSE"
+                "associated" = "TRUE|FALSE"
+                "invalid" = "TRUE|FALSE"
+            }
+        }
+    }
+    "subscribers" "" = {
+        "<target system id>" "" = { # ID of target system where the subscriber is on
+            "HostID" = "<target system id>"
+            "accountDomain" = ""
+            "description" = "<target system description>"
+            ead_computer_attributes" "" = {
+               "sv_attributes" "" = {
+                   "<attribute key 1>" = "<attribute value>"
+                   ...
+               }
+               "mv_attributes" "" = {
+                "<attribute key 1>" = "<attribute value 1>"
+                "<attribute key 1>" = "<attribute value 2>"
+                "<attribute key 2>" = "<attribute value 3>"
+                ...
+               }
+            }
+            "<subscriber 1 address>" "Service|Task|IIS|DCOM" = {
+                "rawaccount" = "<account id>" # Account ID as it appears on the subscriber
+                "attribute" "" = {
+                    "<attribute>" = "<value>"
+                    ...
+                }
+            }
+            ...
+            "<subscriber N address>" "Service|Task|IIS|DCOM" = {
+                "rawaccount" = "<account id>" # Account ID as it appears on the subscriber
+                "attribute" "" = {
+                    "<attribute>" = "<value>"
+                    ...
+                }
+            }        }
+    }
+    "sessionid" = "<session id>"
+}
+Domain accounts
+"orchestrationid" "<orchestration id>" = {
+    "target" "<domain target id>" ={
+        "ead_computer_attributes" "" = { # attributes discovered through auto discovery process
+            "sv_attributes" "" = {
+                "<attribute key>" = "<attribute value>"
+                ...
+            }
+            "mv_attributes" "" = {
+                "<attribute key 1>" = "<attribute value 1>"
+                "<attribute key 1>" = "<attribute value 2>"
+                "<attribute key 2>" = "<attribute value 3>"
+                ...
+            }
+        }
+        "ead_computer_attributes" "" = { # attributes listed
+            "<attribute key>" = "<attribute value>"
+            ...
+        }
+    }
+    "account" "<account longid>" = {
+        "account" "" = {
+            "account" "" = {
+                "userid" = "<user id>"
+                "hostid" = "<target system id>" # Target system the account is on
+                "longid" = "<longid>"
+                "shortid" = "<shortid>"
+                "helpdesk" = "<TRUE|FALSE>"
+                "list" = "TRUE|FALSE"
+                "user" = "TRUE|FALSE"
+                "associated" = "TRUE|FALSE"
+                "invalid" = "TRUE|FALSE"
+            }
+        }
+    }
+    "subscribers" "" = {        "<target system 1 id>" "" = { # ID of target system where the subscriber is on
+            "HostID" = "<target system id>"
+            "accountDomain" = "<domain of account>" # Format dependent on how it was targeted
+            "description" = "<target system description>"
+            ead_computer_attributes" "" = {
+               "sv_attributes" "" = {
+                   "<attribute key 1>" = "<attribute value>"
+                   ...
+               }
+               "mv_attributes" "" = {
+                "<attribute key 1>" = "<attribute value 1>"
+                "<attribute key 1>" = "<attribute value 2>"
+                "<attribute key 2>" = "<attribute value 3>"
+                ...
+               }
+            }
+            "<subscriber 1 address>" "Service|Task|IIS|DCOM" = {
+                "rawaccount" = "<account id>" # Account ID as it appears on the subscriber
+                "attribute" "" = {
+                    "<attribute>" = "<value>"
+                    ...
+                }
+            }
+            ...
+            "<subscriber N address>" "Service|Task|IIS|DCOM" = {
+                "rawaccount" = "<account id>" # Account ID as it appears on the subscriber
+                "attribute" "" = {
+                    "<attribute>" = "<value>"
+                    ...
+                }
+            }
+        }
+        ... # Repeat for each system that has a subscriber use the domain account
+        "<target system N id>" "" = { # ID of target system where the subscriber is on
+            ...
+        }
+    }
+    "sessionid" = "<session id>"
+}
+OutputThe plugin expects the following return value:
+"output" "plugin_subscribernotification" = {
+    "orchestrationid" "<orchestration id>" = {
+        "changePassword" = "<true|false>"
+        "infomsg" = "<message>"
+        "warnmsg" = "<message>"
+        "operations" = "<operation id>" = { # Used for dependencies
+            "operation" "<SERI|UPRS|ACHG>" = {
+                "attributes" "" = {
+                    "restart" = "<true|false>"
+                    "position" = "<pre|post>"
+                }
+                "resourcetype" = "<up_scmpass|up_taskpass|up_iispass|
+up_compass|up_cuspass>"
+                "resourceaddress" = "<subscriber addresss>" # Matches subscriber Id on managed system
+                "rawaccount" = "<raw account id>" # Matches how account is set in subscriber
+                "accountTarget" = "<target system id>" # Where the account exists on (used for domain accounts)
+                "accountID" = "<account id>"
+            }
+            "depends" "" = {
+                "dependency" = "<orchestration id>" # Empty KVG signifies no dependency
+            }
+            "target" = "<target system id>" # Where the subscriber is
+        }
+        ...
+    }
+    "retval" = "0"
+}
+.Trusted SSH key management on Unix systems
+This chapter explains how Bravura Security Fabric  can manage temporary SSH trust r elationship s  for
+accounts on Unix servers.
+Trusted SSH Key Management eliminates the need to manipulate passwords since access is disclosed
+using SSH keys. In addition,  it gives privileged users the option  to connect directly to the system without
+having to use access disclosure plugins.
+This chapter contains:
+▪Requirements  (on page 1910) ▪
+▪How Bravura Security Fabric manages SSH public keys for accounts  (on page 1910) ▪
+▪Use case: SSH key access  (on page 1912) ▪
+Requirements
+The target system must have:
+▪Unix oper ating  system (Linux, Solaris, AIX, HP-UX are supported) ▪
+▪OpenSSH installed▪
+The following should be considered when planning to setup temporary SSH trust r elationship s:
+▪SSH public and authorized key discovery must be enabled for the target system. Listing  and managing ▪
+SSH keys are supported for the following target system types:
+▪Generic Linux Server (SSH)▪
+▪Oracle Solaris Server 9.x+ (SSH)▪
+▪AIX Server (SSH)▪
+▪HP-UX Server (SSH)▪
+SSH public key files being added/removed from HP-UX servers must have the comment removed
+from the file.
+See the Unix / Linux Connector Pack Documen t ation for more in f ormation  about t ar g eting  these systems.
+▪Only valid public keys and authorized keys on Unix servers are loaded when running auto discovery.▪
+SSH key files must be less than 100,000 KB in size (by default) and must be in OpenSSH format.
+▪It is best pr actice  to disable password authentic ation  when using a public key infrastructure for ▪
+authentic ation.
+In Connector Pack 3.2.x, the agtlinux-keymgmt connector was used for SSH key management. After
+upgrading from Connector Pack 3.2.x to 3.3.0 (or newer), targets using this connector will need to be
+rec onfigured  to use agtlinux instead as these two connectors have been merged together.
+How Bravura Security Fabric  manages SSH public keys for accounts
+Bravura Privilege  can be c on figur ed  to control access to accounts on Unix servers by using temporary SSH
+trust r elationship s.

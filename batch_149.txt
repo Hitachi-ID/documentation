@@ -1,0 +1,183 @@
+Example process
+Use case: Mobile device enrollment in vit ations  via email
+This use case shows you how to c on figur e  Bravura Security Fabric  to aut omatic ally  detect users without
+enrolled mobile devices registered and send an email encouraging them to register.
+Requirements
+This use case assumes that:
+▪Bravura Security Fabric  and the Connector Pack are installed. ▪
+▪An Activ e  Directory target has been c on figur ed. ▪
+▪The email settings  within Bravura Security Fabric  have been c on figur ed. ▪
+▪A Bravura One mobile proxy  is running and its corresponding service within Bravura Security Fabric  is ▪
+c on figur ed.
+▪A target system has been added as a source of pr ofiles  with individual email addresses. ▪
+Create a batch notific ation
+To create and c on figur e  a batch notific ation  for mobile device enrollment:
+1.Log in to Bravura Security Fabric . 1.
+2.Click Manage the system > Policies > User notific ations  > Batch notific ations . 2.
+3.Click Add new … to create a new batch notific ation.. 3.
+4.Enter an ID and Description. 4.
+5.Leave Severity set to Info. 5.
+6.Select Mobile enrollment  as the plug-in to determine compliance. 6.7.Click Add. 7.
+8.Click 
+  next to Global email plug-in. 8.
+9.Enter an email subject and mail message; reminding the user to register a mobile device. For9.
+convenience, put the URL of the Bravura Security Fabric  instance as part of the message. You can use
+Available variables  to personalize the message. For example:
+Subject  Reminder: Mobile device enrollment
+Mail Message  Hello %USERID%
+You have not yet enrolled a mobile device. Please do so at your
+earliest convenience.
+http://localhost/default/
+Thank you
+%MGRID%
+10. Click Update . 10.
+11. Click on the Schedule tab. 11.
+12. Con figur e  the settings  of the schedule as desired and then click Add. 12.Once the batch notific ation  has been created and properly c on figur ed  with a message and schedule,
+Bravura Security Fabric  will aut omatic ally  begin sending emails according to the set schedule.
+It is also possible to send an email immediately using the Run now button  on the notific ation’ s
+schedule tab.
+Use case: Install the Bravura One  app and register a pr ofile
+This use case shows you how to install the Bravura One  app on a mobile device, and then register a pr ofile
+with the app.
+Requirements
+This use case assumes that:
+▪Bravura Security Fabric  and the Connector Pack are installed. ▪
+▪An Activ e  Directory target has been c on figur ed. ▪
+▪A Bravura One mobile proxy  server is running and its corresponding service within Bravura Security ▪
+Fabric  is c on figur ed.
+▪A target system has been added as a source of pr ofiles  with individual email addresses. ▪
+▪The user is an end user intending to use the publicly released version of the Bravura One  app. ▪
+▪User self-service rules within the instance have been set to allow mobile r egis tr ation. ▪
+Download and install the Bravura One  app
+Before you install the Bravura One  app, ensure that your mobile device is c ompatible.  The Bravura One  app
+is available for both Android (4.4 or higher) and iOS (9 or higher).
+▪Open the app store on your device, either the Google Play Store or the Apple Store as appropriate.▪
+▪Search for the Bravura One  app in the store using the search bar. ▪
+▪Choose to install the applic ation. ▪
+Register and activ e  a mobile device
+To add the fir s t pr ofile  to your device:
+1.Log in to Bravura Security Fabric  on a desktop browser as an end user. 1.
+2.Click the Register mobile devices  link. 2.
+3.Click the Register button  to display a QR code. 3.
+4.On your mobile device open the Bravura One  app. 4.
+5.Tap SKIP INSTRUCTIONS  and then the + button  on Android or the Register Device button  on iOS. 5.6.In the case of a device that already has a pr ofile  saved, add a new pr ofile: 6.
+a.Tap the rocket icon.a.
+b.Select the pr ofile  name at the top left of the main screen to access the pr ofile  list. b.
+c.Select ADD SERVER . c.
+d.Tap the + button  on Android or the Register Device  button  on iOS. d.7.Tap OK to allow Bravura One  to access the camera. 7.
+8.Aim the device’s camera at the unobstructed QR code being displayed on the desktop monitor.8.
+9.Once the code has been recognized, tap Save . 9.
+10. Enter a Connection  pr ofile  name  and tap OK. 10.
+11. The Bravura One mobile proxy  communicates back to the Mobile Worker Service on the Bravura 11.
+Security Fabric  instance and authentic a t es  the activ ation  code.
+12. The Bravura One  app passes in the userid of the registered user and opens the page for the user’s 12.
+available authentic ation  methods to log in.
+You can also use the menu at the top left of the main screen to switch between pr ofiles  on the device.
+Use case: Self-service password reset
+This use case explains how to use the Bravura One  app to reset a user’s password.
+Requirements
+This use case assumes that:
+▪Bravura Security Fabric  and the Connector Pack are installed. ▪▪An Activ e  Directory target has been c on figur ed. ▪
+▪A Bravura One mobile proxy  is running and its corresponding service within Bravura Security Fabric  is ▪
+c on figur ed.
+▪A target system has been added as a source of pr ofiles  with individual email addresses. ▪
+▪A user has installed the Bravura One  app and registered a device to their pr ofile. ▪
+To reset a user’s password from the Bravura One  app
+1.Open the Bravura One  app. The ID of the user who activ a t ed  the mobile device is aut omatic ally  passed 1.
+in.
+2.If there are multiple  pr ofiles  registered to the device, tap the top left area and select the correct 2.
+pr ofile.
+3.If needed, tap the rocket icon to access the main menu.3.
+4.Select Phone login  from the main menu. 4.
+5.If multiple  authentic ation  chains exist, select the desired authentic ation  method from the choices 5.
+presented.
+6.Enter the authentic ation  in f ormation  as requested. 6.
+The main login page of the Bravura Security Fabric  instance is displayed, similar to what would be on a
+standard desktop browser.
+7.Tap Change passwords . 7.
+8.Tap Show [Password policy rules]  to view the password requirements. 8.
+9.Type a new password and c on firm.  Make sure the password chosen fulfills  all requirements listed. 9.
+10. Tap Change passwords . 10.
+11. Turn your mobile device to landscape mode to view the entir e  Results table, including the Password 11.
+changed?  column. Any failed password changes will be queued and retried.
+Use case: Viewing stored passwords
+The following example illustrates how end-users can view passwords they have stored in their personal
+vault:
+1.User : has access to an Internet c onnection.  He wants to login to a system to perform some tasks but 1.
+does not remember his cr edentials.
+2.User : launches the Bravura One  app on a mobile device. 2.
+3.Bravura One  app: opens the page for the user’s available authentic ation  methods to log in. 3.
+4.User : chooses one of the authentic ation  methods such as answering security questions  or providing a 4.
+password.
+5.Bravura One  app: authentic a t es  the user to Front-end (PSF). 5.
+6.User : scrolls through the applic ation  and taps on the Personal vault link. 6.
+7.User : selects a filt er  to find the account in. 7.
+8.User : selects the account to view the details panel. 8.
+9.User : clicks View button  to see available plugins for viewing the password. 9.10. User : clicks the disclosure button  to view the password. 10.
+11. User : logs in to the system with the cr edentials  and performs his tasks. 11.
+Use case: Privileged access check-out
+The following example illustrates how end-users can check-out a password for a managed account:
+1.User : is away from the network but has access to an Internet c onnection.  He wants to login to a 1.
+managed system to perform some tasks but needs the administrator cr edentials.
+2.User : launches the Bravura One  app on a mobile device. 2.
+3.Bravura One  app: opens the page for the user’s available authentic ation  methods to log in. 3.
+4.User : chooses one of the authentic ation  methods such as answering security questions  or providing a 4.
+password.
+5.Bravura One  app: authentic a t es  the user to Front-end (PSF). 5.
+6.User : scrolls through the applic ation  and taps on the Privileged access  link. 6.
+7.User : selects the type of privileged access to request. 7.
+8.User : selects a managed account to request access for. 8.
+9.User : specifies  a recipient, check-out/check-in time,  emails for recipients and submits the request. 9.
+10. Authorizer : reviews and approves the request. 10.
+11. Bravura Security Fabric  server : processes the request. 11.
+12. User : goes back to the Front-end (PSF) and clicks the Your privileged access request has been 12.
+approved.  link.
+13. Bravura One  app: navigates the user to the approved request in the Privileged access applic ation. 13.
+14. User : clicks Check out  button  to check out the account access. 14.
+15. User : clicks View button  to view the managed account password. 15.
+16. User : logs in to the managed system with the cr edentials  and performs his tasks. 16.
+17. User : clicks Check in  when he is finished  accessing the managed system. 17.
+Use case: View recorded session
+The following example illustrates how end-users can view a recorded session of a user’s check-out:
+1.User : is away from the network but has access to an Internet c onnection.  He wants to quickly check 1.
+the data captured for a specific  session.
+2.User : launches the Bravura One  app on a mobile device. 2.
+3.Bravura One  app: opens the page for the user’s available authentic ation  methods to log in. 3.
+4.User : chooses one of the authentic ation  methods such as answering security questions  or providing a 4.
+password.
+5.Bravura One  app: authentic a t es  the user to Front-end (PSF). 5.
+6.User : scrolls through the applic ation  and taps on the Session monitor link. 6.
+7.User : makes a request to search a specific  set of sessions. 7.8.Authorizer : reviews and approves the request to search sessions. 8.
+9.User : finds  the session and selects it to view more details. 9.
+10. User : makes a request to view the session. 10.
+11. Authorizer : reviews and approves the request to view the session. 11.
+12. User : selects the session again, a View button  is now available. 12.
+13. User : clicks View button  to view the captured data from the session. 13.
+Use case: Request authoriz ation  w orkflo w
+The following example illustrates how an authorizer can review and approve a request:
+1.Authorizer : launches the Bravura One  app from their mobile device and logs in. 1.
+2.Authorizer : clicks on the link to review their open requests. 2.
+3.Authorizer : may optionally  click on other Requests menu options  to access and search request pages 3.
+such as Activ e,  Recent, All , etc, in addition  to Pending my approval .
+4.Authorizer : chooses or searches for an open request. 4.
+5.Authorizer : clicks on the Approve button  to approve the request (they may also optionally  reject, 5.
+update, or delegate the request).
+6.Bravura Security Fabric  server : processes the request. 6.
+Use case: Tracking requests
+The following example illustrates how a user can review their own requests:
+1.User : launches the Bravura One  app from their mobile device and logs in. 1.
+2.User : clicks on the link to review their open requests. 2.
+3.User : may optionally  click on other Requests menu options  to access and search request pages such 3.
+as Activ e,  Recent, All , etc, in addition  to My activ e  requests .
+4.User : chooses or searches for an open request. 4.
+5.User : views an open request and may optionally  update or cancel the request. 5.
+Use case: Downloading a contact record
+The following example illustrates how a user can download a user pr ofile  as a vCard and import the
+contact record into the nativ e  contacts list for Android or iOS mobile devices.
+1.User : launches the Bravura One  app from their mobile device and logs in. 1.
+2.User : clicks on the View and update pr ofile  link under the Other users  section. 2.
+3.User : chooses or searches for a user that has the vCard pr ofile  attribut es  filled  in for them. 3.
+4.User : scrolls down to the bottom  of the Pr ofile  in f ormation  and resources  page for the selected user. 4.
+5.User : clicks on the Add to contacts  link. 5.
+6.User : clicks OK for the c on firmation  prompt that the contact has been added. 6.
+7.User : opens the mobile device’s Contacts list and searches for the user. 7.

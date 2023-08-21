@@ -1,0 +1,327 @@
+b.Click OK to c on firm  your action. b.
+or
+Unmanage the target system:
+a.Select the target system you want to remove (de fined  by Target ID for manually de fined  or GUID a.
+for aut omatic ally  discovered).
+b.Select target system you want to remove.b.
+c.Deselect the Aut omatic ally  create a Privileged Access Manager managed system box. c.
+d.Click Update . d.
+WARNING! It is strongly recommended that you back up all passwords and their
+password histories before deleting  a target system that is a managed
+system.
+If you added managed system s on an Activ e  Directory domain aut omatic ally  via auto discovery , and you
+removed a computer from the domain, the managed system  associated is not removed during the next
+update, but is instead flag g ed  as deleted. Import rules should be c on figur ed  for system r esolution  and
+HISTORICAL_DATA_GRP policy assignment.
+Local service mode behaviors and files
+Con figur ation  files
+When the Local W ork s t ation  Service is installed on the system, it fir s t attemp ts  to register with the
+Bravura Privilege  server. After  it has contacted the Bravura Privilege  server for the fir s t time,  it retrieves
+c on figur ation  settings  from the Bravura Privilege  server. The service saves the settings  in a c on figur ation
+file, hipamlwsinst.dat , in the hipamlws directory.
+Learn more about the c on figur ation  files here  (on page 248).
+Resource key
+Bravura Privilege  uses a key to ensure secure c ommunic ation  between client and server. The key allows
+the Bravura Privilege  server to verify the identity  of a local service mode managed system, and to check
+whether the managed system is allowed to interact with the server. It also allows the Bravura Privilege
+service to c on firm  the identity  of the Bravura Privilege  server. This key is neg otia t ed  and set during the
+ins t allation  process of the Local W ork s t ation  Service.
+Bravura Privilege  also uses a key to encrypt sensitiv e  data, such as passwords, passed to the Local
+W ork s t ation  Service. This key is changed periodically. The number of days this key is valid for is controlled
+by the RESOURCE KEY CHANGE INTERVAL setting.
+If this encr yption  key is mismatched, the Bravura Privilege  will r eneg otia t e  a new key to the Local
+W ork s t ation  Service and the data will be resent using the new key.Setting  the resource key change interval
+Set the RESOURCE KEY CHANGE INTERVAL to control the interval, in days, after  which w ork s t ation  keys
+are changed. The default is 30 days.
+You can set options  for each managed system policy in the Options  tab. Product administrator s with all
+adminis tr ativ e  privileges (superuser) can set it globally in the Manage the system > Privileged access >
+Options  menu. Group level settings  override global settings.  See Privileged access management options
+(on page 1932) for more in f ormation.
+User attribut e  updates
+Changes made to user attribut es  on a local service mode managed system are updated on the next poll
+of the Local W ork s t ation  Service. You can c on figur e  this so that some user attribut es  are updated less
+frequently than the default poll time  of the Local W ork s t ation  Service.
+Using a separate time  interval RES ATTRIBUTE UPDATE DELAY , you can control the delay in which the
+user attribut es  will be updated. By default, the delay is set to 60 minutes.
+Only user attribut es  specified  in RES DELAY UPDATE ATTRIBUTES are updated according to this time
+interval, otherwise they are updated after  every poll. By default, the pwda (password age) user attribut e
+is updated using the RES ATTRIBUTE UPDATE DELAY .
+Cr eating  administrator accounts on target systems
+When adding local service mode systems using import rules, Bravura Privilege  can create new cr edentials
+on the systems in order to connect.
+Connection  credentials  are not required. Bravura Privilege can also use no credentials.
+If the administrator account cr eation  fails, Bravura Privilege  logs an appropriate error message, and
+retries at the interval specified  by RES ADMIN CREATE RETRY INTERVAL .
+By default, this interval is c on figur ed  for 1440 minutes. Product administrators with all adminis tr ativ e
+privileges (superuser) can set the RES ADMIN CREATE RETRY INTERVAL system variable in the Manage
+the system > Privileged access > Options  > Managed system policies  menu.
+This setting  allows for minimal in t er v ention  where the failure is caused by an issue on the w ork s t ation,
+for example, where a random password fails to meet local password policy requirements, and the issue
+may be resolved on subsequent attemp ts.
+If an import rule is misc onfigured,  for example with an invalid security group, before the firs t attemp t  to
+create an administrator account, you may have to recreate the import rule. Some settings,  such as
+security group, can only be set once per import rule.
+See Privileged access management options  (on page 1932) for more in f ormation  about global managed
+system policy options.Resynchronizing a local service mode system
+Registered local service mode systems resynchronize themselves by regularly re-sending their system
+details to the Bravura Privilege  instance server. Details sent include:
+▪User lists▪
+▪User attribut es ▪
+▪Group lists▪
+▪Group memberships▪
+▪Computer attribut es ▪
+R es ynchr oniz ation  is a recovery mechanism in case the Bravura Privilege  instance server is missing or has
+c on flicting  data compared to the local service mode system. R es ynchr oniz ation  will often  be sufficien t  in
+c orr ecting  any discrepancies. In the event that r es ynchr oniz ation  does not immediately correct
+discrepancies, such as database errors, it can reset the data once the source issue has been corrected.
+R es ynchr oniz ation  is aut omatic ally  triggered as c on figur ed  by the RES RESYNC INTERVAL. However, you
+may occasionally need to resynchronize manually. To do this:
+1.Click Manage the system  > Privileged access  > Managed systems . 1.
+2.Select the managed system  you want to manage. 2.
+3.Click Resynchronize . 3.
+When res ynchroniz ation  is running – that is, the system is in resync mode – normal operations  are
+paused and import rules are disabled.
+R es ynchr oniz ation  and tr ansaction  failures
+The Bravura Privilege  instance server will request a r es ynchr oniz ation  when a data tr ansaction  from the
+local service mode system fails. R es ynchr oniz ation  retries will occur as required.
+R es ynchr oniz ation  and r eplic ation  failures
+In a replicated environment, only one node communicates directly with local service mode systems.
+R es ynchr oniz ation  will take place as scheduled aut omatic ally  or manually, and the r esulting  state will be
+replicated to other nodes.Managed system policies
+A managed system policy is a container for managed systems and other policies. A system must be a
+member of a policy before it can be managed by Bravura Security Fabric .
+Managed system policies control:
+▪User access to managed systems▪
+▪Password strength rules▪
+▪Password change intervals▪
+▪External program triggers▪
+▪Which accounts can be managed and by whom▪
+▪Temporary group membership access▪
+▪access disclosure plugins▪
+Set up policies to suite your requirements; for example according to or g aniz ational  structure, physical
+loc ation,  or security level.
+See also: 
+In order to manage cr edentials  for a managed system, you must fir s t add it to the Bravura Security Fabric
+database. The way that you add a managed system depends on how it will be managed. See Managed
+systems  (on page 1815) for details.
+Built-in policies
+Push/Local service mode built-in policies
+The following managed system policies are available when Bravura Privilege  is installed. The Bravura
+Privilege P attern  does not utiliz e  these manage system policies by default.
+▪PULL_ADM_GRP secures access to adminis tr ativ e  accounts on local service mode Windows systems. ▪
+This policy has a complex default password policy.
+▪PULL_SVC_GRP secures access to service accounts on local service mode Windows systems. ▪
+This policy has a complex default password policy.
+▪PUSH_ADM_GRP secures access to adminis tr ativ e  accounts on push mode Windows systems. ▪
+This policy has a complex default password policy.
+▪PUSH_SVC_GRP secures access to service accounts on push mode Windows systems ▪
+This policy has a semi-complex default password policy.
+▪VAULT_ADM_GRP secures access to adminis tr ativ e  accounts on push mode systems and provides the ▪
+IT_SEC_USERS user group pre-approved privileges to check out accounts.
+This policy has a semi-complex default password policy.
+You must enable default policies by binding them to a Privileged Access Manager Service. Choose a
+Service ID from the Managed by drop-down menu on the Managed system policy in f ormation  page, thenclick Update . Passwords must be randomized before users can check out account access. See Enabling
+managed system policies  (on page 1837) for more in f ormation.
+VAULT_ADM_GRP
+The VAULT_ADM_GRP  managed system policy is pr ec on figur ed  for managing adminis tr ativ e  cr edentials
+on push mode target systems. This policy provides the IT_SEC_USERS  user group pre-approved privileges
+to check out accounts from this policy.
+By default, IT security users are not able to override or randomize the passwords for the managed
+accounts in this policy. You must c on figur e  the permissions for IT security users to allow this. The Bravura
+Privilege P attern  does not utiliz e  this managed system policy by default.
+Historical data policy
+The HISTORICAL_DATA_GRP  managed system policy is available by default when you install Bravura
+Security Fabric . This policy provides access to managed systems and accounts that no longer belong to
+any other policy.
+Bravura Privilege  moves managed systems and accounts to the historical data policy aut omatic ally  when
+they are unbound from any other managed system policy. If a managed system or account is again bound
+to a managed system policy, they are aut omatic ally  removed from the historical data policy. If a managed
+system is removed as a discovered target system , it will no longer be available in any managed system
+policy.
+Bravura Privilege  must have changed the password at least once to be moved to the historical data
+policy.
+The passwords for the managed accounts in this policy cannot be overridden or randomized.
+This policy has fewer c on figur ation  options  than vault-only, local service or push mode policies.
+Users are able to click the embedded link for the ID to find out that it was renamed and to see what it has
+been renamed to.
+Getting  started
+ Requirements 
+Product administrators with the "Create managed system policies"  adminis tr ativ e  privilege can create
+and manage managed system policies . Product administrators with the "Manage managed system policies"
+adminis tr ativ e  privilege can be granted permission to manage e xisting  managed system policies ; they must
+also belong to a user group with assigned access controls.
+Na vig ation  steps 
+You use the Managed system policy in f ormation  page to c on figur e  the basic policy de finition,  and to
+access additional  c on figur ation  settings.  To navigate to this page:
+1.Click Manage the system  > Privileged access  > Managed system policies . 1.2.Search for, or select the managed system policy  you want to view or modify. 2.
+Proceed to Enabling managed system policies  (on page 1837).
+or
+Click Add new … .
+See Adding a managed system policy  (on page 1836) to learn how to add a new policy.
+Adding a managed system policy
+To add a managed system policy:
+1.Click Manage the system  > Privileged access  > Managed system policies . 1.
+2.Click Add new … . 2.
+3.Type a unique ID containing only ASCII characters, and a Description  of the policy. 3.
+4.Select the Mode of service to use with this policy: 4.
+▪Push mode▪
+▪Local service mode▪
+▪Vault-only▪
+5.For push mode policies with the password or SSH key authentic ation  type, set the Scope of password 5.
+s ynchr oniz ation :
+▪No password s ynchr oniz ation  – Managed accounts within this policy may have diff er en t ▪
+passwords.
+▪Synchronize all accounts in policy – All managed accounts within this policy will be synchronized to ▪
+have the same password.
+▪Synchronize accounts with same ID All managed accounts with the same ID within this policy will ▪
+be synchronized to have the same password.
+6.Select the Privileged Access Manager Service in the Managed by list. This is the service that will 6.
+manage systems in this policy.
+The service ID is aut omatic ally  generated when Bravura Security Fabric  is installed. There may be
+more than one if Bravura Security Fabric  has been installed on multiple  nodes using either a shared
+schema, or in r eplic ation.
+7.Select the Authentic ation  type to use during check-out and check-in: 7.
+▪Group set (available for push mode and local service mode only▪
+▪Password▪
+▪SSH key (available for push mode only)▪
+Con figur ation  options  for the managed system policy become available depending on the
+authentic ation  types selected. Authentic ation  types cannot be removed if there are managed
+accounts or group sets c on figur ed  for the policy.
+(on page 1808)
+8.For vault-only mode policies, select Enforce password policy to have the option  to c on figur e  a 8.
+password policy for this specific  managed system policy. If left deselected, the Password policy tab
+will be hidden, and a password policy requiring only at least one character is applied.9.If managed system and managed account import rules are de fined,  you can associate them with new 9.
+push- or local-service-mode policies by selecting  them in the import rules section.
+10. Click Add. 10.
+Bravura Security Fabric  displays warnings 
+  about setup requirements that you must meet before
+you can reset passwords on member systems.
+ Next: 
+Con figur e  the policy as outlined on this page.
+Changing a managed system policy’s owner
+When you add a new managed system policy, you are the owner by default. The owner of a managed
+system policy may edit the policy’s settings,  as long as they are in a user group that has the View
+pr operties  for this policy access control for that policy.
+To change the owner of the managed system policy:
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.From the General tab, search for a new owner. 2.
+All the listed users are product administrator  s that have the ”Manage managed system policies”
+adminis tr ativ e  privilege.
+3.Select the new owner.3.
+4.Click Update 4.
+Enabling managed system policies
+Push mode and local service mode policies must be managed by a Bravura Privilege  service in order to
+manage passwords or group membership. Push mode policies must be managed by a Bravura Privilege
+service in order to manage passwords.
+You must update default policies to bind them to a service. On the Managed system policy in f ormation
+page, choose a Service ID from the Managed by  drop-down menu on the Managed system policy
+in f ormation  page, then click Update .
+Once managed system policies  are managed by a service, you must do the following:
+▪ De fining  member systems  (on page 1838). ▪
+▪ De fining  managed accounts  (on page 1839) to determine which passwords Bravura Privilege  will ▪
+manage on member systems.
+▪ De fining  group sets  (on page 1841) to determine which groups Bravura Privilege  will grant temporary ▪
+access to on member systems.
+▪ Attaching  authorizers to managed system policies  (on page 1847) to allow users to request access on ▪
+member systems. to be handled by the authoriz ation  w orkflo w  system.
+▪ De fining  access disclosure plugins  (on page 1849) to determine how Bravura Privilege  provides users ▪
+with access to a managed account. Enabling and disabling r andomiz ation  and check-outs 
+Users can only check out the password for accounts belonging to a managed system policy once the
+accounts’ passwords have been randomized. You can either wait for the managing service to poll the
+system, or randomize password immediately to have the policy take e ff ect.
+Account passwords do not need to be randomized in order to check out accounts using SSH key
+authentic ation.
+You can temporarily disable r andomiz ation  at any time,  which also checks in and blocks check-outs unless
+you specify that check-outs are allowed.
+De fining  member systems
+A managed system must belong to at least one managed system policy in order for users to be able to
+access or manage accounts for the system.
+You de fine  policy membership for managed systems in several ways:
+▪ Attaching  a target system from the Target system in f ormation  page ▪
+▪ Attaching  discovered systems to policies ▪
+▪Modifying membership via the Managed system policies menu ▪
+▪Modifying membership via the Managed systems menu ▪
+▪Using import rules to assign discovered managed systems.▪
+See Import rules  (on page 2095) for more in f ormation  about de fining  import rules.
+Attaching  a target system to a managed system policy
+Once you have added a target system with the Aut omatic ally  create a Privileged Access Manager
+managed system setting  enabled, you can attach  the system to a policy by clicking Policies at the bottom
+of the Target system in f ormation  page.
+Attaching  discovered systems to a managed system policy
+Discovered systems include servers and w ork s t ations  found on an Activ e  Directory target system during
+auto discovery, as well as systems with Local W ork s t ation  Service installed that have registered with the
+Bravura Privilege  server.
+To attach  discovered systems to policies:
+1.Navigate to Manage the system > Resources > Discovered objects > Systems 1.
+2.Select the discovered system to manage.2.
+3.Click Manage. 3.
+4.Select the managed system policy the discovered system will be bound to.4.
+5.Click Select . 5.
+6.Choose the appropriate template and c onnection  cr edentials. 6.
+7.Click Apply . 7.See Discovered Objects  (on page 2088) for more in f ormation  about managing discovered objects.
+Modifying memberships via the managed system policies menu
+After  managed system s have been added, you can manually add or remove managed system s’ membership
+to managed system policies .
+You cannot remove managed system policy  membership for a managed system  if there are any passwords or
+group sets checked-out from that system.
+To modify managed system policy  membership by adding or removing managed system s:
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.Select the Member systems tab. 2.
+3.Click Add new... to see the Managed systems page. 3.
+4.Check the boxes next to the managed system s you want to add to the policy. 4.
+Only managed system s matching the managed system policy ’s mode are listed.
+5.Click Select . 5.
+Modifying memberships via the managed systems menu
+You can modify managed system policy  membership for a managed system  using the Managed systems
+menu.
+A managed system must belong to at least one managed system policy in order for users to be able to
+access managed accounts or groups on the system.
+To apply one or more managed system s to a managed system policy :
+1.Click Manage the system  > Privileged access  > Managed systems . 1.
+2.Select the managed system you want to manage. 2.
+3.Click Policies . 3.
+4.Click Select... to view the list of available managed system policies . 4.
+5.Check the boxes next to the policies you want to assign to the managed system . 5.
+Only managed system policies  matching the managed system ’s mode are listed.
+6.Click Select . 6.
+De fining  managed accounts
+You must add accounts to a managed system policy  to determine which passwords or SSH keys Bravura
+Privilege  will manage on member systems. The managed system policy must have the password or SSH
+key authentic ation  type in order to de fine  managed accounts.
+The accounts are identified  by:
+▪The account ID for a push mode managed system ▪
+▪The login ID for a local service mode managed system ▪▪A unique ID that you de fine  for a vault-only managed system ▪
+The number of accounts managed in a managed system policy  is represented by the Attached  accounts
+column on the main Managed system policies page. This is the total number of managed accounts in the
+policy. You can associate accounts with a managed system policy  in the following ways:
+▪Manually, using the Managed system policies menu. ▪
+▪ Attaching  discovered accounts to policies via the Manage the system > Resources > Discovered ▪
+objects > Systems  menu.
+▪Using import rules to assign discovered managed accounts.▪
+You can only associate an account to a single managed system policy . If you try to attach  the managed
+account to another managed system policy , it will be removed from the original managed system policy .
+Ensure that you do not select a managed account for any other role, such as authorizer or workflo w
+manager, in Bravura Privilege.
+Manually adding an account
+You can manually add an account to a managed system policy . To manually add an account:
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.Select the Managed accounts tab. 2.
+3.Click Add new... 3.
+Bravura Privilege  displays all available accounts and its associated member system.
+4.Select the checkboxes for the account IDs you want to add, then click Select . 4.
+Only t argeting  credentials  for managed systems can be managed accounts on a push mode policy. The
+ability to manage any account is enabled when Bravura Privilege is included in the product license.
+There are no res trictions  for vault-only policies.
+Manually removing a managed account from a managed system policy
+You can manually remove a managed account from a managed system policy . If an account does not belong
+to any policy, it will be moved into the HISTORICAL_DATA_GRP policy where its passwords are stored. In
+this state, the passwords are still accessible, but no longer randomized. Managed accounts can be
+manually removed through their managed system policy  or their managed system .
+If a managed account is currently checked out, then it cannot be removed from a managed system policy.
+It is strongly recommended that you back up managed account passwords and their password histories
+before removing a managed account from a managed system policy .
+To remove a managed account from a managed system policy :
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+Alt ernativ ely ,  navigate to the Managed system in f ormation  page if removing the account from the
+managed system instead.
+2.Click the Managed accounts tab. 2.

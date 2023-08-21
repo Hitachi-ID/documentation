@@ -1,0 +1,87 @@
+Click Next .
+6.Add members to each team group.6.
+7.Click Submit . 7.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+8.Click the View request link at the top of the page to view the status of the request. 8.
+Once submitted  and approved, the group’s membership will be updated with the users that have been
+selected.
+Onboard a system vault
+1.Log into Front-end (PSF) as the system trustee for the vault-management-team.1.
+2.Click Manage Resources . 2.
+The Pr e-de fined  requests page is displayed.
+3.Click System: Onboard . 3.
+4.Select the Vault System type from the drop down menu.4.
+Click Next .
+5.Enter the System FQDN. A system vault will be created with this name.5.6.Select the Vault-Team to manage the system vault.6.
+7.Click Submit . 7.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+8.Click the View request link at the top of the page to view the status of the request. 8.
+Once the request has been approved, trustees can manage accounts on this system.Create vault users
+1.Log into Front-end (PSF) as the vault trustee for the vault-management-team.1.
+2.Click Manage Resources . 2.
+3.Click Vault Account: Create . 3.
+4.Select the Vault:system-vault managed system.4.Click Next .
+5.Enter the account in f ormation: 5.
+▪Account Name▪▪Managed Password▪
+6.Click Submit . 6.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+7.Click the View request link at the top of the page to view the status of the request. 7.Once the request has been approved, users assigned the requester or auto approved privileges in the
+Vault-Management-Team can now check out this account and view the password.
+Example: Onboard users from an Activ e  Directory target
+This example describes how to manage an Activ e  Directory target and onboard accounts to be managed
+by a team.
+Install the components
+Install the components
+1.Log in to Front-end (PSF) as a superuser.1.
+2.From the main menu click Manage components. 2.
+3.Search and select the checkbox for required components.3.
+4.Click Install component(s) . 4.
+The panel on the right will indicate when the ins t allation  is complete.
+for this example:
+▪RefBuild.pam_team_management.▪
+▪Scenario.pam_system_type_vault.▪
+Manage the Corporate AD target system
+1.Click Manage the system > Resources > Target systems >Manually de fined . 1.
+2.Select the Corporate AD target system.2.
+3.Select Aut omatic ally  create a Privileged Access Manager managed system . 3.
+4.Click Change next to the Address field  and enter the domain for your environment. 4.
+5.Click Continue . 5.
+6.Click Update . 6.
+7.Click the Cr edentials  tab. 7.
+8.Enter your target’s cr edentials. 8.
+9.Click Update . 9.
+10. Click Maintenance > Auto discovery Execute auto discovery . 10.
+11. Click Continue . 11.
+12. Click Privileged access > Managed system policies . 12.
+13. Select the ONBOARDED_ACCOUNTS managed system policy. 13.
+14. Click the Member systems tab. 14.
+15. Click Add new... . 15.
+16. Select the Corporate AD managed system and click Select . 16.Create and set up a team
+Create a team administrator:
+1.Click Manage the system > Policies > User classes . 1.
+2.Select the PAM_TEAM_ADMINS.2.
+3.Click the Explicit users tab. 3.
+4.Click Select . 4.
+5.Search and select a user.5.
+6.Click Add. 6.
+This user can now log in and create, delete and manage teams.
+1.Log into Front-end (PSF) as the team administrator.1.
+2.Click Manage Resources . 2.
+The Pr e-de fined  requests page is displayed.
+The team administrator can create, delete and manage teams using these pr e-de fined  requests.
+3.Click Team: Create . 3.
+Bravura Security Fabric  displays the team cr eation  wizard
+4.Enter the following in f ormation: 4.
+▪Team Nme : Vault-Management-Team ▪
+▪Team Description : Team to manage system vault ▪Click Next .
+5.Add six groups. Use the ”More” icon to add more team name fields  to the list. 5.
+▪Team Trustees Users who can make team management requests. ▪
+▪Account Trustees  Users who can make account management requests (onboard accounts). ▪
+▪Approvers  Users who allow or disallow access requests. ▪
+▪Auto Approved  Users who can check-out access to systems and accounts without making an access ▪
+request.
+▪Requesters Users who can make access requests. ▪
+▪ Cr edential_Manag er s  Users who can override or randomize the stored password on a checked-out ▪
+account.
+▪System Trustee Users who can make system management requests (onboard systems). ▪6.Click Next and add team descriptions. 6.
+Click Next .

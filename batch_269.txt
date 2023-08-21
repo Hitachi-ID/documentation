@@ -1,0 +1,316 @@
+For example:
+To populate the Inventory items list with unassigned tokens from the target system:
+Use the listunassigned program to get a list:
+listunassigned.exe -targetid RSAAM
+This writes a list of available tokens to a file, RSAAM-unassigned.db in the \<ins t ance>\p sc on fig\
+directory.
+Populate the Inventory items list:
+manageinv -add -target RSAAM -type TOKEN -loc NY -state N -
+listfile ..\psconfig\RSAAM-unassigned.db
+Removing a single item
+To remove a single item, -id and -type are required. For example:
+manageinv   -rm -id 00000000111 -type TOKEN
+Removing multiple  items using criteria
+You can use any c ombination  of -type, -loc ation,  -user, or -target to remove all items with those values.
+For example:
+manageinv -rm -type TOKEN -loc NY
+The list files may also be used to remove items found in those files.  For example:
+manageinv -rm -target RSAAM -type TOKEN -loc NY -listfile ..\psconfig
+\RSAAM.db
+manageinv -rm -target RSAAM -type TOKEN -loc NY -listfile ..\psconfig
+\RSAAM-unassigned.db
+Removing multiple  items using a file
+To remove multiple  items, only the -f option  is required. For example:
+manageinv -rm -f items.txt
+The text file must be in the format:
+itemid type
+Updating  an item
+To update an item in the INVOBJ table, use the -add argument to specify new in f ormation  about the item.
+for full details.Product administrators can manually enter individual inventory items using the Inventory item menu in
+the Manage the system  (PSA) module. Regular users assigned as inventory managers can manually enter
+individual inventory items using the Manage inventory menu.
+Getting  started
+Before you begin to de fine  inventory objects and states:
+▪Set up a placeholder or RSA Authentic ation  Manager 7.1/8.2 target system to manage inventory  (on ▪
+page 2657).
+▪Add inventory loc ations  and item types  (on page 2667). ▪
+▪Add inventory templates  (on page 2668). ▪
+De fining  usable inventory states
+Bravura Identity  keeps track of inventory items by altering their state in f ormation  in the database or
+external source. The following states are available to all inventory items by default:
+▪In stock▪
+▪Available▪
+▪Reserved▪
+▪Undelivered▪
+▪Assigned▪
+▪Outstanding▪
+You can enable other possible states to r e fine  the management of certain item types and loc ations;  for
+example, you may need a way to track items that are lost, or in repair. The possible states are listed in
+Table Inventory states  (on page 2682). In the table, default states are marked with 
+ . Figure : Inventory
+states and w orkflo w  (on page 2647) illustrates the r elationship  between inventory items, states, and
+provisioning w orkflo w .
+To enable possible states:
+1.Click Inventory > Inventory states . 1.
+2.Select the inventory Type and Loc ation  c ombination  that you want to modify inventory states for, 2.
+then click Update .
+3.On the Inventory states page, select the extra states that you want available by selecting  the 3.
+appropriate checkboxes.
+4.Click Update . 4.
+The following table describes the possible states of inventory items. Default states are marked with a 
+ .
+Items that are in a Disposed state must be manually deleted by a product administrator  or inventory
+manager.
+Inventory statesThis state … Means the item is …
+Before provisioning
+Approved purchase Approved for purchase, but has not yet been purchased and is unavailable
+for provisioning
+Ordered Approved for purchase and has been ordered, but is not yet in stock and
+not available for provisioning.
+In stock In stock but not yet available for provisioning.
+Provisioning w orkflo w
+Available Available for provisioning.
+Reserved Selected for provisioning.
+Undelivered Assigned but not yet in the possession of its user. The inventory manager
+must deliver the item to the user.
+In transit to user/received by user Shipped by the inventory manager and is in transit to the user or received
+by the user.
+Assigned Assigned and delivered.
+Removed from user / stock
+Outstanding Deleted from a user’s pr ofile  but has not been retrieved from its former
+user.
+Permanently damaged Damaged beyond repair and is not available for provisioning.
+Lost / Stolen Missing and is not available for provisioning.
+In repair Being repaired and is not available for provisioning.
+Disposed Damaged or no longer needed and removed from stock.
+Con figur ation  notes
+Users cannot change states in a way that would violate rules by which items are managed; for example,
+they cannot change a state from assigned to reserved.
+When an item is assigned during an authoriz ation  w orkflo w ,  it is put in a Reserved  state. If the request is
+denied, Bravura Identity  moves the item back to an Available state. If approved, the item is:
+▪Assigned if inventory managers or implementers are not c on figur ed ▪
+▪Undelivered if inventory managers are c on figur ed ▪
+An inventory manager must then move the item to Assigned status to acknowledge delivery.
+▪Reserved if implementers are c on figur ed ▪
+The item is Assigned once the implementer indicates the task is completed.
+When c on figur ed  the In transit and Received by user states are used together. The implementer marks
+the item as In transit , then the recipient logs in to acknowledge receipt, which marks the item as
+Received by user . These states are useful, for example, when items must be mailed to recipients.Inventory managers and product administrator  s can use the Bravura Security Fabric  interface to add items
+with the following states (when the state is enabled / usable):
+▪Approved purchase▪
+▪Ordered▪
+▪In stock▪
+▪Available▪
+▪Lost/Stolen▪
+▪Permanently damaged▪
+Inventory managers and product administrator s can move items:
+From … To …
+Approved purchase Ordered
+Ordered In stock
+Available In stock
+In stock Available
+Lost/Stolen
+Permanently damaged
+In transit to user Lost/Stolen
+Lost/Stolen In stock
+Outstanding In stock
+Lost/Stolen
+Permanently damaged
+In repair
+In repair Permanently damaged
+In stock
+Permanently damaged Disposed
+Assigned Available
+You can use the manageinv program
+Use the manageinv program to add, remove, and update inventory items.manageinv may be used to import assigned and unassigned inventory items from RSA Authentic ation
+Manager 7.1/8.2 and Vasco IDENTIKEY Server target systems.
+Usage
+manageinv [-nooverwrite] -add -id <itemID> -type <type> -
+location <location> [-user <userID>] [-notes "<notes>"] [-
+target <target>] [-state <state>] [-desc "<description>"]
+manageinv -rm -id <itemID> -type <type>
+manageinv -rm [-type <type>] | [-location <location>] | [-
+user <userID>] | [-target <target ID>]
+manageinv -add|-rm [<arguments>] -f <filename>
+manageinv -add|-rm -target <target> -type <type> -
+location <location> [-state <state>] -listfile <filename>
+Commands are de fined  using the following arguments:
+Argument Description
+-add Adds inventory items to the database, or updates e xisting
+entries.
+-rm Removes inventory items from the database.
+-nooverwrite Checks if the item being added to the inventory already
+exists or not. If the item already exists then the record is
+not updated.
+-id <ItemID> The item ID in Bravura Identity .
+-type <type> The type as de fined  in Bravura Identity . The <type> must
+be entered in uppercase; for example, -type TOKEN.
+-loc <loc ation> The loc ation  as de fined  in Bravura Identity .
+-user <userID> The ID of the user assigned to the item.
+-notes <notes> In f ormation  to be read by Bravura Identity  users. Must be
+enclosed in double quotes.
+-desc <description> Optional  description  of the item.
+-state <state> The state of the item (see list of available states below).
+-target <target ID> Bravura Security Fabric  target system the item belongs
+to. The <target ID> must be entered in upper case; for
+example, -target RSAAM.
+-f <t e xtfile> Uses a file listing  inventory items to be acted upon. See
+Adding multiple  items.
+-listfile  <t e xtfile> Uses a list file from an inventory type target system for
+items assigned to users or from a listing  file generated by
+listunassigned for unassigned items. See Adding multiple
+items.Adding a single item
+To add a single item, the item’s ID, type, and loc ation  are required. For example:
+manageinv -add -id 0000000111 -type TOKEN -loc NY
+Optional  arguments include:
+   [-state <state> | -desc <description> | -notes ‘‘<notes>'' | -user
+   <user> |  -target <target>]
+Adding multiple  items
+To add multiple  items, either the -f or -listfile  options  may be specified.   Specifying the -f option:    When
+using -f, only this option  is required. For example:
+manageinv -add -f items.txt
+The text file must be in the format:
+   itemid type location state description notes user target
+Where <state> can be any of:
+▪N - Available▪
+▪V - In stock▪
+▪R - Reserved▪
+▪U - Undelivered▪
+▪A - Assigned▪
+▪O - Outstanding▪
+▪P - Approved purchase▪
+▪o - Ordered▪
+▪D - Permanently damaged▪
+▪L - Lost/Stolen▪
+▪r - In repair▪
+▪d - Disposed▪
+▪T - In transit to user▪
+▪C - Received by user▪
+Use "" for any blank fields.  For example, the following text file row adds an unassigned item:
+00000000111 TOKEN CALGARY A "rsa token" "Notes for Calgary token" "" TOKEN1
+If you specify any of the values for -type, -loc ation,  -user, -notes, or -target, those values can be skipped
+in the text file. For example, if you use the options:
+-add  -type TOKEN  -notes "" -f items.txt
+then the text file would be in the format:itemid location user target
+Specifying the -listfile  option:   
+When using the -listfile  option,  the -target, -type, and -loc options  are also required.
+The -listfile  option  uses the <target>.db listing  file from an inventory type target system to add items that
+are assigned to users (such as for RSA Authentic ation  Manager 7.1/8.2 or for Vasco IDENTIKEY Server).
+For example:
+After  setting  up an RSA Authentic ation  Manager 7.1/8.2 target system, run auto discovery. Use the
+r esulting  list file to populate the Inventory items list with the assigned tokens:
+manageinv -add -target RSAAM -type TOKEN -loc NY -state A -
+listfile ..\psconfig\RSAAM.db
+The listing  file for unassigned items may also be used to add items from a listing  file generated by
+listunassigned  (on page 3611).
+For example:
+To populate the Inventory items list with unassigned tokens from the target system:
+Use the listunassigned program to get a list:
+listunassigned.exe -targetid RSAAM
+This writes a list of available tokens to a file, RSAAM-unassigned.db in the \<ins t ance>\p sc on fig\
+directory.
+Populate the Inventory items list:
+manageinv -add -target RSAAM -type TOKEN -loc NY -state N -
+listfile ..\psconfig\RSAAM-unassigned.db
+Removing a single item
+To remove a single item, -id and -type are required. For example:
+manageinv   -rm -id 00000000111 -type TOKEN
+Removing multiple  items using criteria
+You can use any c ombination  of -type, -loc ation,  -user, or -target to remove all items with those values.
+For example:
+manageinv -rm -type TOKEN -loc NY
+The list files may also be used to remove items found in those files.  For example:
+manageinv -rm -target RSAAM -type TOKEN -loc NY -listfile ..\psconfig
+\RSAAM.dbmanageinv -rm -target RSAAM -type TOKEN -loc NY -listfile ..\psconfig
+\RSAAM-unassigned.db
+Removing multiple  items using a file
+To remove multiple  items, only the -f option  is required. For example:
+manageinv -rm -f items.txt
+The text file must be in the format:
+itemid type
+Updating  an item
+To update an item in the INVOBJ table, use the -add argument to specify new in f ormation  about the item.
+to manage items in any state.
+Assigning inventory managers
+Inventory managers can manage inventory items by loc ation  and type.
+Using the Manage inventory  (IDV) module, an assigned inventory manager can:
+▪Add inventory items to the Bravura Security Fabric database. ▪
+▪Change the state of an item.▪
+▪Change the loc ation  of an item if they are responsible for the same item types in diff er en t  loc ations. ▪
+▪Unassign items.▪
+Before you start you must de fine  at least one inventory loc ation  and item type  (on page 2667).
+To assign a user as an inventory manager:
+1.Click Manage the system > Inventory > Inventory managers . 1.
+2.Click Add new... . 2.
+Bravura Security Fabric  displays a form for you to enter inventory manager in f ormation.
+3.Select the inventory item Type and Loc ation  for which you want to assign a manager. 3.
+4.Type the pr ofile  ID in the Inventory manager field,  or search to select the user that you want to de fine 4.
+as an inventory manager.
+5.Click Add. 5.
+You can assign the same user as inventory manager for diff er en t  loc ations  or item types.
+Adding inventory items
+To add inventory items:
+1.As a product administrator click Manage the system > Inventory > Template items 1.
+Or, as an inventory manager, click Inventory management .The Inventory item menu is displayed.
+2.Click Add new… 2.
+3.Type the ID that will display in the inventory items selection  list. 3.
+4.Select Type and Loc ation . 4.
+5.Select the State . 5.
+You can add items in Available or In stock status. Use the manageinv  program to add items in other
+states.
+6.Type a Description  that will display in inventory item lists. 6.
+7.Add Notes as required. 7.
+8.Click Add. 8.
+Changing inventory item states
+To change the state of an e xisting  inventory item:
+1.As a product administrator click Manage the system > Inventory > Template items . 1.
+Or, as an inventory manager, click Inventory management .
+2.Search for, or select, an item.2.
+3.Select a new State for the item 3.
+Inventory managers and product administrator s can move items:
+From … To …
+Approved purchase Ordered
+Ordered In stock
+Available In stock
+In stock Available
+Lost/Stolen
+Permanently damaged
+In transit to user Lost/Stolen
+Lost/Stolen In stock
+Outstanding In stock
+Lost/Stolen
+Permanently damaged
+In repairIn repair Permanently damaged
+In stock
+Permanently damaged Disposed
+Assigned Available
+You can use the manageinv program
+Use the manageinv program to add, remove, and update inventory items.
+manageinv may be used to import assigned and unassigned inventory items from RSA
+Authentic ation  Manager 7.1/8.2 and Vasco IDENTIKEY Server target systems.
+Usage
+manageinv [-nooverwrite] -add -id <itemID> -type <type> -
+location <location> [-user <userID>] [-notes "<notes>"] [-
+target <target>] [-state <state>] [-desc "<description>"]
+manageinv -rm -id <itemID> -type <type>
+manageinv -rm [-type <type>] | [-location <location>] | [-
+user <userID>] | [-target <target ID>]
+manageinv -add|-rm [<arguments>] -f <filename>
+manageinv -add|-rm -target <target> -type <type> -
+location <location> [-state <state>] -listfile <filename>
+Commands are de fined  using the following arguments:
+Argument Description
+-add Adds inventory items to the database, or updates e xisting
+entries.
+-rm Removes inventory items from the database.
+-nooverwrite Checks if the item being added to the inventory already
+exists or not. If the item already exists then the record is
+not updated.
+-id <ItemID> The item ID in Bravura Identity .
+-type <type> The type as de fined  in Bravura Identity . The <type> must
+be entered in uppercase; for example, -type TOKEN.
+-loc <loc ation> The loc ation  as de fined  in Bravura Identity .
+-user <userID> The ID of the user assigned to the item.
+-notes <notes> In f ormation  to be read by Bravura Identity  users. Must be
+enclosed in double quotes.
+-desc <description> Optional  description  of the item.

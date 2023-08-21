@@ -1,0 +1,351 @@
+WARNING! The arbitrary use of manual locks may interfere with internal locking
+behavior.
+De fining  a lock file directory
+The lock file directory is de fined  during the initial  ins t allation  of each instance of Bravura Security Fabric .
+The loc ation  of the lock files directory is controlled by the PSLockDir setting.  If this directory is not
+de fined,  lock files are created in the temporary directory specified  by the PSTempDir setting.
+By default, lock files are stored in the directory. However, you can select a diff er en t  directory if required.
+WARNING! To prevent failures on target systems which require locking, it is
+recommended that the value for PSLockDir remains constant for all
+Bravura Security Fabric  instances.
+To de fine  a lock file directory using the Manage the system  (PSA) module:
+1.Click Manage the system > Maintenance > Options . 1.
+2.Type the directory path for the lock files loc ation  in the PSLockDir field. 2.
+3.Click Update at the bottom  of the form. 3.
+Setting  lock file rules
+Set lock file rules to de fine  under what circumstances a system will be locked. The more circumstances
+you apply to a rule, the less r es trictiv e  it is. To set lock file rules:
+1.Click Manage the system > Maintenance > Connector concurrency rules . 1.
+2.Select the target system, on which you want the lock to occur, from the Target system drop-down list. 2.
+3.Select one of the following options  from the Oper ation  drop-down list: 3.
+▪ACHG – Any oper ation  where target system administrator  cr edentials  are used. ▪
+▪VERI – A password v erific ation  oper ation. ▪
+▪AVER – An alternate login ID v erific ation  oper ation. ▪
+▪VRRE – A transparent password s ynchr oniz ation  oper ation. ▪
+The lock file is created when the oper ation  selected from this drop-down list occurs on the selected
+target system.
+4.Select the appropriate Lock file items to determine the circumstances under which the lock file will be 4.
+created (multiple  selections  make the lock file less r es trictiv e):
+▪Local – Sets a lock on the primary server rather than on a proxy. ▪
+▪Target system – Sets a lock for the target system so multiple  client servers cannot communicate ▪
+with the target system simultaneously.
+▪Target system type – Sets a lock for the target system type so multiple  client servers cannot ▪
+communicate with the same target system type simultaneously.
+▪PID – Sets a lock so the same process cannot access multiple  target systems simultaneously. ▪▪User – Sets a lock so an individual user cannot access multiple  target systems simultaneously. For ▪
+example, if you are logged in as user1 on one target system, you cannot log in as user1 on any
+other target systems.
+▪Admin – Sets a lock so that only one of the multiple  target system administrator  IDs for the target ▪
+system can have access to the target system at a given time.
+▪ Oper ation  – Sets a lock when the selected oper ation  occurs on the target system. ▪
+Checkbox values also determine the name of the lock file. For example, if you select Target and
+User , then when user bsmith v erifies  his password on system1, the r esulting  lock file is named
+system1 bsmith.lock. This means that bsmith will not be able to perform the same oper ation  on
+system1 until  the initial  oper ation  is complete. However, user jwhite can access system1
+simultaneously, and generates a lock file named system1white.lock.
+5. Optional : Use the Replace with field  to override the name of the lock file as de fined  by the checkbox 5.
+values.
+You can use variables where the order of the variables is important, or use additional  text. For
+example, you can de fine  the lock file name as %ADMIN%%PID%mylock . The %LDIR% (lock file
+directory) variable and .lock suffix  are appended aut omatic ally .
+The variables available are:
+Variable Lock file
+%LOCAL% Local
+%HOST% Target
+%PLATFORM% Platform
+%PID% PID
+%USER% User
+%ADMIN% Admin
+%OPER% Oper ation
+6.Click Update . 6.
+R e writing  target system oper ations
+You can use a plugin to rewrite requested oper ations  on target systems. The plugin accepts in f ormation
+about requested actions,  and maps them to 0 or more sub-actions  on specified  target systems; for
+example, a single update oper ation  can be translated into an update and rename oper ation  on a target
+system. This plugin works in a similar way to the request rewrite plugin  (on page 1418), which rewrites
+requests before they have been approved.
+The oper ation  rewrite plugin is suited to situations  where authorizers do not need to know the details of
+the oper ation  rewrite.
+A common use case best describes the need for oper ation  rewrites. Upon employee t ermination,  many
+or g aniz ations  do not delete users’ system accounts. Instead, accounts are disabled for a certain amount
+of time  before they are deleted, and the user may be removed from security groups. On some systems
+the user is moved into a special group or or g aniz ational  unit.Implemen t ation  of such business rules requires a plugin that can translate one oper ation  into other type
+of oper ation  or oper ations.  In the example provided above, Bravura Identity  needs to translate the delete
+(DELU) oper ation  in two separate oper ations;  for example, disable (DNAU) and group user delete (GRUD)
+(Oper ation  codes are listed in ??).
+The oper ation  rewrite plugin point is used by the T r ansaction  Monitor Service ( idtm ) since it is
+responsible for e x ecuting  oper ations  by using Bravura Identity  connectors.
+The plugin used by the oper ation  rewrite plugin point is responsible for in v estig ating  the request
+submitted  by the end user and determining if the oper ation  requires r e-writing.  If the oper ation  does not
+require r e-writing ,  it is then executed by the T r ansaction  Monitor Service. If the oper ation  requires r e-
+writing ,  the plugin instructs the idtm to execute additional  or alt ernativ e  oper ations.
+Some of the common oper ation  rewrites include:
+▪Delete > disable▪
+▪Delete > group membership change▪
+▪Delete > OU context move▪
+▪ Attribut e  update > group membership change ▪
+Implemen t ation  of the operation  rewrite plugin point should be considered carefully and properly
+tested because the plugin point is used for every operation  executed by the T ransaction  Monitor
+Service.
+To use this plugin, type the name of the plugin in the IDTM BATCH OPREP PLUGIN field  on the T r ansaction
+Monitor Service c on figur ation  page.
+There are no shipped plugins in use with this plugin point. See more in f ormation  about writing  a custom
+plugin
+Requirements
+See W riting  plugins  for general requirements. See Oper ation  codes  (on page 3672) for a list of oper ation
+codes and their meaning.
+Ex ecution  points
+When c on figur ed,  an oper ation  rewrite plugin is run by the T r ansaction  Monitor Service after  a request
+has been approved, and just before the actual oper ation  would normally be executed (that is, by running
+the connector).
+Input
+In the following examples, user Auth4 is to be deleted from target system ADCANADA, and the result is
+that the user’s account is disabled and removed from the manager group.
+Following is the input expected by the plugin:
+"" "" = {
+  "batch" "20070503-113234-00" = { # Used in idtm and idwfm. Do not change.    "action" "20070503-113234-00_0" = { # Used by idwfm. Do not change for
+    # the primary action
+      "accountid" = "Auth4" # Account name
+      "fname" = "" # Full name used for create user operation
+      "groupid" = "" # Group ID on the target
+      "groupname" = "" # Used for group operations
+      "homeDir" = ""
+      "hostid" = "ADCANADA" # Target Id
+      "interactive" = "false" # Determines priority. The idtm service runs interactive jobs before non-
+interactive jobs.
+      "modelHomeDir" = ""
+      "modelid" = "" # The template ID (as entered in Workflow -
+> Template accounts)
+      "modelShare" = ""
+      "newpw" = "" # Password (encrypted). Required for Password Admin Reset and Password Admin Reset expire operations.
+      "operation" = "DELU" # Operation code
+      "replyid" = "eca0000000000000ff" # Tells idwfm the status of the operation
+      "share" = ""
+      "userid" = "AUTH4" # User name on the target
+      "depends" "" = { # Dependency for an added action. This KVGroup should
+      # be empty for the primary operation.
+      }
+    }
+  }
+  "recipient" "user" = { #The profile of the recipient
+    "ID" = "AUTH4"
+    "NAME" = "Auth 4"
+  }
+  "request" "" = {
+    "certround" = ""
+    "entryDate" = "456c5e5c"
+    "finalID" = "AUTH4"
+    "IDApprover" = ""
+    "initialID" = "AUTH4"
+    "macroStatus" = "Approved, performing requested operations"
+    "notes" = ""
+    "reason" = ""
+    "recipientEmail" = "Auth4@yan.local"
+    "requester" = "AUTH2"
+    "requesterEmail" = "auth2@yan.local"
+    "requesterName" = "Auth2"    "requestID" = "20061128-110548-00"
+    "reservationid" = "" # Output by attribute validation and idsynch id plugins
+    "authorizer" "AUTH1" = {
+      "actualAuthorizer" = "AUTH1"
+      "reason" = ""
+      "remindersSent" = "1"
+      "resource" = "4F12FA11531BCBC574BC4C4295D4872E"
+      "status" = "A"
+    }
+    "resource" "4F12FA11531BCBC574BC4C4295D4872E" = {
+      "authorizationsReceived" = "1"
+      "authorizationsRequired" = "1"
+      "authorizer" = "AUTH1"
+      "itemType" = "accountID"
+      "notes" = ""
+      "operation" = "DELU"
+      "result" = "I"
+      "accountID" = "doe.john"
+      "targetid" = "AD"
+   }
+ }
+}
+Some oper ations  – for example update template – require a main attribut e  KVGroup:
+   "attributes" "" = {
+              "<attribute name>" = "<value>"
+              "<attribute name>" = "<value>"
+              ...
+            }
+replyid
+The replyid is a unique ID the T r ansaction  Monitor Service service uses to tell the W orkflo w  Manager
+Service service when a particular  action  related to a request is completed. If a replyid is not specified,
+then idwfm is not informed. This generally occurs when an oper ation  is "fanned out". For example
+oper ation  rewrite can turn one action  into many. A disable action  can become a disable plus adding a
+user to a group. The disable action  would keep its replyid but the add user action  would be orphaned
+since a replyid can only be used once. See R e writing  custom requests  (on page 1418) for a solution  to this
+if required.
+Output
+Following is an example of the plugin output:   "" "" = {
+     "changed" = "true" # Must be true if anything has changed. If not, the change is not committed.
+     "retval" = "0" # 0=success. If an error occurs, the value is automatically set according to error type.
+     "batch" "20061128-110548-00" = { # Must be kept untouched from input
+       "action" "20061128-110548-00_0" = { # Do not change for the primary action
+         "accountid" = "Auth4"
+         "fname" = ""
+         "groupid" = ""
+         "groupname" = ""
+         "homeDir" = ""
+         "hostid" = "ADCANADA"
+         "interactive" = "false"
+         "modelHomeDir" = ""
+         "modelid" = ""
+         "modelShare" = ""
+         "newpw" = ""
+         "operation" = "DNAU"
+         "replyid" = "eca0000000000000ff"
+         "share" = ""
+         "userid" = "AUTH4"
+         "depends" "" = {# This should be empty for the primary action
+         }
+       }
+       "action" "20061128-110548-00_2" = { # Action ID for fanned action
+         "accountid" = "Auth4"
+         "fname" = ""
+         "groupid" = "CN=manager,OU=CANADA,DC=yan,DC=local"
+         "groupname" = ""
+         "homeDir" = ""
+         "hostid" = "ADCANADA"
+         "interactive" = "false"
+         "modelHomeDir" = ""
+         "modelid" = ""
+         "modelShare" = ""
+         "newpw" = ""
+         "operation" = "GRUD"
+         "replyid" = "" # Empty for the fanned action
+         "share" = ""
+         "userid" = "AUTH4"
+         "depends" "" = {# For the fanned action, this is required if
+      # the new action is processed only when the primary action      # returns success.
+           "local" "" = {
+             "action" = "20061128-110548-00_0"
+             "batch" = "20061128-110548-00"
+           }
+         }
+       }
+     }
+   }
+If there is any syntax error, idtm will ignore the whole oper ation  rewrite script and processes the
+primary action.  An error message is written  to the log.
+If one key is missing – for example "acc ountid"  – and the action  must have this value, an error message is
+displayed on the web interface to indicate what is missing in which action.
+.Users and accounts
+In Bravura Security Fabric , pr ofiles  are used to authentic a t e,  audit, and control access for individual users.
+Some systems do not diff er entia t e  between users and accounts; however, in Bravura Security softw ar e,
+some users – product administrators – do not necessarily have accounts. Note the following terminology:
+User  Bravura Security Fabric  user. Users are identified  by their pr ofile  IDs.
+Account An object on a target system that establishes a user’s identity  on that target system.
+Pr ofile A record within Bravura Security Fabric  describing a user, their associated accounts, and
+other data such as attribut es  or access controls.
+This chapter describes how to:
+▪Import users and accounts into Security Fabric  (on page 538) ▪
+▪Build user pr ofile  data  (on page 539) ▪
+▪Filter users and accounts  (on page 557) ▪
+▪Enable and disable user pr ofiles  (on page 559) ▪
+Importing  users and accounts
+You add users to Bravura Security Fabric  by importing  lists of users from one or more systems of record,
+referred to as target systems. The import process is part of auto discovery .
+To import users into Bravura Security Fabric  :
+1.Determine which target system should be used as your source of profile  IDs. 1.
+Users of this system will also become users of Bravura Security Fabric . Users’ full names and pr ofile
+IDs will be drawn from this system.
+A source of pr ofile  IDs target system should contain a login ID (account) for all or most of the Bravura
+Security Fabric  users in your or g aniz ation.  This system should use the most common or standardized
+naming c on v ention.  If necessary, you can have more than one target system that is a source of pr ofile
+IDs.
+2.Add your source of pr ofile  IDs target system to Bravura Security Fabric . 2.
+Ensure that you select the Source of pr ofile  IDs checkbox on the Target system in f ormation  page.
+See Filtering users and accounts for details.
+3.Set up ID filt ers  to determine which users you want or don’t want imported into Bravura Security 3.
+Fabric .
+By default, all users listed from a source of pr ofile  IDs target system are imported.
+See Filtering users and accounts for details.
+4.Execute auto discovery . 4.
+To do this, click Maintenance > Auto discovery  > Execute auto discovery , then click Continue .
+This process may take a while. You can click Refresh to reload the page and check progress.
+5.Determine whether the import was successful by running a users report.5.From the main menu click Manage reports > Reports  > Reports > Users > Accounts . See the REPORTS
+(on page 2891) for details.
+See also
+Users added by auto discovery  may not be able to log into Bravura Security Fabric  until  you set up one or
+more authentic ation  methods  (on page 825).
+Building user pr ofiles
+Bravura Security Fabric  stores the following in f ormation  about users:
+▪ Pr ofile  IDs ▪
+▪Owned accounts▪
+▪Group memberships▪
+▪ Pr ofile  attribut es ▪
+▪Access controls▪
+▪OrgChart data▪
+▪Security question  data ▪
+▪Inventory items▪
+Most of this in f ormation  is gathered during auto discovery. Other in f ormation  must be input manually by
+end users. Read this section  for an overview of how user pr ofiles  are built and the ways that you can
+modify and control how and what in f ormation  is stored in user pr ofiles.
+Pr ofile  IDs
+A profile  ID is a unique identifier  for a user in Bravura Security Fabric . Pr ofile  IDs are assigned when you
+import users into Bravura Security Fabric  , when you create a new user in the View and update pr ofile  (IDR)
+module, or when you create a new product administrator  with console-only access. Bravura Identity
+automated adminis tr ation  can also trigger the cr eation  of a new pr ofile  ID.
+All users who need to login to Bravura Security Fabric  need to have at least one pr ofile  ID. Bravura
+Security Fabric  preserves the case of what is imported or entered, (it can create two diff er en t  pr ofiles  for
+IDs that only diff er  in case), although the usage of pr ofile  names in the Web interface is case insensitiv e;
+for example a search for user1 will also list User1 .
+Designating  a source of Pr ofile  IDs
+Select a system or set of systems to designate as your Bravura Security Fabric  pr ofile  ID source, by
+selecting  the Source of pr ofile  IDs checkbox on a target system's General page  (on page 494). This system
+or set of systems should contain a login ID for all, or most, of the Bravura Security Fabric  users in your
+or g aniz ation.  If possible, designate a system that uses the most common or standardized naming
+c on v ention.
+By default, Bravura Security Fabric  aut omatic ally  uses the short ID on a Source of Pr ofiles  to de fine  the
+pr ofile  name. If you want to use a diff er en t  account attribut e  to create the pr ofile  ID, type the name ofthe account attribut e  in the Account attribut e  to use as pr ofile  ID field.  Make sure the chosen attribut e  is
+loaded from the target system  (on page 571) and that it is populated for all accounts with a unique value.
+The accounts for which this attribut e  is blank or doesn’t exist won’t create a pr ofile.  If the attribut e  has
+the same value for more than one account, no pr ofile  will be created and an error notice  about
+"duplicate accounts" will be logged. If the attribut e  has the same value for more than one account, all of
+those accounts will be associated with the fir s t pr ofile  to be created (usually in alphabetic al  order).
+Renaming accounts on target systems
+Renaming an account on a target system that is a source of pr ofiles  (SoP) may trigger a renaming of the
+user’s Pr ofile  ID. The following table outlines the result of renaming accounts in various cases:
+Case Result
+If the user has a single account on an
+SoP target system:Renaming the account on the target system will trigger a
+renaming of the user’s pr ofile  ID. If the user is logged in, he
+should log out and log back in.
+If the user has multiple  accounts on an
+SoP target system:Renaming only one of the accounts will not trigger a pr ofile
+ID rename. The renamed account will still be associated with
+the user.
+If the user has an account on an SoP
+target system, and an auto-associated
+account on a non-SoP target system:Renaming the account on the SoP target system will trigger a
+renaming of the user’s pr ofile  ID. The auto-associated
+account will be detached from the user’s pr ofile.
+Renaming an auto-associated account by renaming
+attribut es  used for aut o-association  – such as logon name on
+Activ e  Directory – will cause the account to be detached
+from the user’s pr ofile.
+Renaming an auto-associated account by renaming
+attribut es  not used for aut o-association  – such as fir s t name
+or last name on Activ e  Directory – will not cause the account
+to be detached from the user’s pr ofile.
+If the user has a single account on an
+SoP target system, and an manually-
+associated account on a non-SoP
+target system:Renaming the account on the target system will trigger a
+renaming of the user’s pr ofile  ID. The manually-associated
+account will remain attached  to the user’s pr ofile.
+If the user has accounts of the same
+name on multiple  SoP target systems:Renaming the account on one of the SoP target systems will
+not trigger a pr ofile  ID rename. All accounts will remain
+attached  to the user.
+Renaming the accounts with diff er en t  IDs will not trigger a
+pr ofile  ID rename. All accounts will remain attached  to the
+user.
+Renaming all account with the same ID will trigger a pr ofile
+ID rename.
+If the user has an account on a non-
+SoP Activ e  Directory target system:The user logon name and the userPrincipalName attribut e
+must both be renamed.

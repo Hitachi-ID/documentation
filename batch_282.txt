@@ -1,0 +1,360 @@
+Bravura Security Fabric  requires very little  ongoing adminis tr ation.  It is advisable, however, to monitor
+server health.
+Monitoring is primarily done on the Bravura Security Fabric  server. You should:
+▪Check service health, using the Maintenance > Services menu option  in the Manage the system (PSA) ▪
+module.
+▪Monitor CPU load and virtual memory c onsumption  on the Bravura Security Fabric  server. Both should ▪
+be stable (change only very slowly) and signific an tly  below the total resources available on the server.
+▪Monitor the amount of free disk on the Bravura Security Fabric  server. Bravura Security Fabric  will fail ▪
+if it runs out of disk space.
+▪Check the contents of the Bravura Security Fabric  log file (on page 2776) for errors and to ensure that ▪
+the auto discovery  process was successful.
+▪Review recent contents of the Bravura Security Fabric  session log, by running reports ( Reports > ▪
+System oper ation ) on user and administrator events. See REPORTS  (on page 2891) for details.
+▪Customize the Health check monitor  (on page 2795), which is installed by default, to suit your ▪
+environment. Health check monitor will periodically report the status of the following:
+▪Admin events▪
+▪ Applic ation  crashes ▪
+▪Disk space usage▪
+▪Health Check password c on flict  count ▪
+▪Long running processes▪
+▪Availability of Bravura Security Fabric  services ▪
+▪URL accessibility▪
+Additionally ,  your database administrator should check the size of the Bravura Security Fabric  database
+regularly. Unexpected results may occur if the Bravura Security Fabric  data exceeds the maximum
+database size or tablespace limit. It is expected that the Bravura Security Fabric  database will grow over
+time;  however, with the e x ception  of the session log (sesslogtable), rapid increases or decreases in size
+may indicate a problem.
+your servers health regularly is an important task that will identif y  if you need to add more physical
+resources. Conduct regular database maintenance and as your server nears it's physical capacity,
+consider upgrading the hardware or adding more resources.
+Database performance
+After  several years or product usage, the database can grow considerably and can a ff ect  performance
+and some important functions  of the product. Bravura Security Fabric  is constantly updating  its backend
+database with historical data, some of which may be useful for Audits, but it doesn't off er  by default any
+aut omatic  way to shrink data from the database.
+In addition  to hardware improvements the following maintenance tasks will also help improve
+performance. Such maintenance tasks have to be performed carefully, in accordance with your
+or g aniz ation's  mandatory applic ation  uptime  and data r e t ention  policies.It is highly recommended that these tasks are performed by a database administrator.
+There are four ways to reduce data our product processes and keep performance from degrading over
+time:
+▪Only list and load objects the Bravura Security Fabric  solution  needs from the target systems; use ▪
+filt er s  (on page 557) to reduce the data collected to the absolute minimum.
+▪Plan ahead if you're going to partition  tables in the database, to put older data on slower, cheaper ▪
+storage, and newer data on faster, more expensive storage.
+See dbarc' s partitioning  options  (on page 2812) below.
+▪Periodically "hide" data from the main table views in the database▪
+See dbarc 's hide options  (on page 2812) below.
+This doesn't reduce the database size, but it speeds up some oper ations  which run on table views
+rather than on the full tables.
+▪Periodically trim the data in the databases.▪
+See dbarc 's delete options  (on page 2812) below.
+To reduce the amount of unused space, a database "shrink" or "rebuild-indexes" maintenance
+oper ation  can be performed (best to be done in applic ation  low-use times  or planned outages,
+especially not while the auto discovery ( psupdate ) process is scheduled to run).
+All of the above direct database manipulation  has to be applied on all databases in an instance separately
+because the SQL run against the database in an instance does not aut omatic ally  replicate between
+applic ation  nodes.
+P artitioning  and archiving the database
+Use the dbarc program to c on figur e  the range of data Bravura Security Fabric  will use during normal
+oper ation.  It can partition  and archive data in the database; for example, you can divide data into
+partitions  for 2007+older, 2008, 2009, 2010+newer. This allows you to reduce the amount of data that
+Bravura Security Fabric  queries on a regular basis, which improves performance. You can also move the
+storage of chunks of data onto diff er en t  devices with diff er en t  performance char act eristics.
+The views created by dbarc can be used for exit traps and CGI programs when the relevant in f ormation
+is requested.
+Reports always use the full table, with an option  to set the date range to limit the in f ormation,  rather
+than using views.
+If the owner of the applic ation  objects is diff er en t  to the database user used by the Database Service
+(iddb), then you must create a file with dbarc and execute it manually on the client.
+Table partitions  and views are grouped in categories:
+Group Description
+checkout Privileged access checkout in f ormation
+pwhistory Password reset historyGroup Description
+request W orkflo w  request in f ormation
+rtaudit Auditing  in f ormation
+sesslog Report-related in f ormation
+sessmon Session monitoring in f ormation
+userhistory User and account de finition  in f ormation
+See debarc usage
+When dbarc.exe  is executed for the firs t time  the process can impact the performance of Bravura
+Security Fabric and take several hours to complete. Subsequent e x ecutions  only take a few minutes.
+Before running any code, including dbarc without the -f option,  check with Support if the (dbarc-)
+rendered SQL is correct for your needs; send support@bravurasecurity.com  the following:
+ - The planned SQL statements in a text file.
+ - The counts of rows resulting  from one of the queries from the section  above, as tab-separated text,
+with headers.
+In diff eren t  versions of the product dbarc may handle diff eren t  tables; check the help string of the
+utility  to see which tables are supported in your version:
+util\dbarc -h
+The following is a list of tables to consider when deciding how many days Bravura Security Fabric  will
+keep data:
+▪All products:▪
+▪sesslog - The largest group because it retains data from all sessions into the product. This group in▪
+some cases can retain half of the used space into the database usage.
+▪pwhistory - Check how many days is c on figur ed  on the password policy allow reuse of old ▪
+passwords after  N days  rule.
+▪userhistory▪
+▪rtaudit▪
+▪Bravura Identity: ▪
+▪request▪
+▪Bravura Privilege:▪
+▪checkout▪
+▪sessmon▪
+Before running dbarc:
+▪Test the results by running dbarc with its - file argument and the other arguments for each data ▪
+group that has to be handled fir s t.
+For example, to see how dbarc will try to remove any event log data older than a year, run the
+following from a command prompt:<Program Files path>\Bravura Security\Bravura Security Fabric\<instance>\ util\dbarc -delete sesslog -
+deletemaxage 366 - file reduceSesslog.sql
+▪Always a backup the data before making any changes.▪
+▪Replace the DELETE with SELECT * in the r esulting  queries, and before running the DELETEs. Save the ▪
+results of the SELECTs to a file from which you can search and recover the removed data if needed at a
+later date.
+Usage
+dbarc.exe  -listgroups
+dbarc.exe  -list Bravura Group
+dbarc.exe  -split Bravura Group -splitinterval <days> -
+splitadvance <num>
+dbarc.exe  -drop Bravura Group [-dropdate <YYYYMMDD>]|[-
+dropmaxage <days>]
+dbarc.exe  -delete Bravura Group -deletemaxage <days>
+dbarc.exe  -hideolder Bravura Group [-hidedate<YYYYMMDD|none> ]|[-
+hidemaxage <days|none>]
+dbarc.exe  -extract Bravura Group [-extractdir <directory>]
+dbarc.exe  -extractreset Bravura Group -
+extractresettime <YYYYMMDDHHMMSS>
+dbarc.exe  -file <filename>
+Argument Description
+-delete Bravura Group Delete partition  group content older than a specified  age
+of data (-deletemaxage).
+-deletemaxage <days> Delete content from partition  group older than this
+number of days from current.
+-drop Bravura Group Drop partitions  in the specified  group either older than a
+specified  date (-dropdate) or older than a specified  age of
+data (-dropmaxage).
+-dropdate <YYYYMMDD> Date value for dropping old data partition.
+-dropmaxage <days> Drop partitions  older than this number of days from
+current.
+-extract Bravura Group Extract data not previously extracted from the specified
+group to CSV files.
+-extractdir <directory> Extract data to this directory. The default is \Logs
+\<instance>\archive_extract\.
+-extractreset Bravura Group Clear ar chiv etime  previously set by "extract".
+-e x tr actr esettime  <YYYYMMDDHHMMSS> Earliest ar chiv etime  value previously set by "extract" to
+reset.
+- file <filename> Write commands to specified  file instead of running
+them.Argument Description
+-force Allow oper ations  that may be dangerous or time-
+c onsuming  to be executed.
+-hidedate <YYYYMMDD> Date value for hiding old data from full tables and put
+into views. Date can be none to disable hiding to retrieve
+full table content into views.
+-hidemaxage <days> Hide partitions  older than this number of days. Can be
+none to disable hiding.
+-hideolder Bravura Group Hide records older than the specified  date from the core
+product for the selected group.
+-list Bravura Group List partitions  in the specified  group.
+-listgroups Display a list of valid partition  groups.
+-split Bravura Group Split partitions  such that sufficien t  future partitions  are
+reserved. This in intended for scheduled tasks.
+-splitadvance <N> Number of intervals into the future to create partitions.
+-splitin t er v al  <days> Number of days between newly-split partitions.
+When splitting ,  dropping, hiding, e x tr acting  or r esetting  extract time  for partitions  in groups, you can
+specify all to have the oper ation  a ff ect  all groups.
+Examples
+1.To create 30 partitions  for the request group, with each partition  10 days apart from now: 1.
+dbarc -split request -splitadvance 30 -splitinterval 10
+2.To create 6 partitions  for all groups, with each partition  183 days apart from now: 2.
+dbarc -split all -splitadvance 6 -splitinterval 183
+3.To cache the sesslog group into a view for in f ormation  newer than June 15, 2013: 3.
+dbarc -hideolder sesslog -hidedate 20130615
+4.To drop pwhistory group partition  named and dated at ’20101215’: 4.
+dbarc -drop pwhistory -dropdate 20101215
+5.To drop all group partitions  older than 365 days. 5.
+dbarc -drop all -dropmaxage 365
+6.To extract checkout group data into CSV files: 6.
+dbarc -extract checkout
+7.To clear all groups of ar chiv etime  previously set by "extract" on June 15, 2013 at 01:00:00 or later: 7.
+dbarc -extractreset all -extractresettime 20130615010000
+IMPORTANT!
+▪When a large amount of rows need to be removed (the fir s t time  sesslog group data is removed), ▪
+depending on the amount of data in the database and the indexes fr agmen t ation,  the process cantake hours and a ff ects  the access to the UI. In a pr oduction  environment, consider a do wntime
+window to have it done. 
+▪Before performing these oper ations,  ensure there is enough free space in the partitions  where the ▪
+data files are maintained by MSSQL. At least 2.5 times  the size of the data files should be free before
+s t arting  the process.
+▪Ask your DBA to re-build indexes periodically specially for the tables on the sesslog group. These▪
+tables are the most used by the product and data is added every minute in there.
+for command-line usage and examples.
+Re-index
+On large databases, the index fr agmen t ation  can cause stored procedures using tables with fragmented
+indexes to perform 2-3 times  slower or more, which may not be visible in most PerfSproc log entries.
+Individual stored procedures may be sub-millisecond either way; however, when adding up thousands of
+stored procedure calls, especially when running auto discovery or rendering pages in solutions  with many
+resources (like PDRs, user classes and target systems), tin y diff er ences  slowly add up.
+Some tables in the backend database are rebuilt from scratch during psupdate , fr agmenting  their
+indexes, and with large tables, that leads to reduced performance. You can improve performance by:
+1.Analyze the PerfSproc entries in the following ways in idmsuite.log. This should reveal which stored1.
+procedures take most time;  address those and the large tables they use fir s t.
+2.Remove  data according to company data r e t ention  policies: 2.
+▪Trim unnecessary tables; for example, the cookie table.▪
+▪Back up and trim historical tables the daily use of the system doesn't require. For example,▪
+sesslog_full, *_audit, and*.hst.
+▪Back up and trim invalid data from the tables the system does use, especially used in the stored▪
+procedures which take the most time.  For example, account, acct attr ,  nosgroup, pr ofile,  user attr ,
+reqbatch, and managegrp.
+If those steps don't increase performance enough, then look at index maintenance.
+Rebuilding all indexes is simple in itself; however, it takes time  to get the parameter values just right and
+find the correct strategy regarding  the frequency and time  of day  in r elation  with other product and
+database server scheduled processes. Consider the following:
+▪Only tables with over millions of records will bene fit  from being inde x -optimiz ed,  and will result in a ▪
+meaningful increase in speed for long-running tasks like psupdate, idtrack, queue processing in
+services, or if they signific an tly  impact user experience due to WebUI slowness on complex pages.
+▪Indexes on historical/audit tables that tend to add entries at the end of the index list, can do with a▪
+smaller fill (70% to 90%).
+▪For indexes that can get new entries all over the index, the fill should be lower (50-% to 70%). ▪
+Experimen t ation  with these settings  can lead to a good balance between maintenance time  and
+improved performance results.Note: Make sure that you do no not reindex the database while psupdate,
+autores, idtrack, or other tasks are running.
+If reindex e x ecution  is f or ce-c on figur ed  with no locks, that will invalidate the e x ecution  plans that the
+database creates for the stored procedures used in those tasks, and often  cause deadlock-like symptoms.
+The following is an example script to use to identif y  fragmented indexes, check what slow stored
+procedures cause the unwanted slowdown, what tables they use  and the high percentage of the stored
+procedure e x ecution  those tables use in the e x ecution  plan, and rebuild only those.
+SELECT OBJECT_NAME(OBJECT_ID), index_id,index_type_desc,index_level,
+a v g_fr agmen t ation_in_per cen t,a v g_pag e_space_used_in_per cen t,pag e_c oun t
+FROM sys.dm_db_index_physical_stats
+(DB_ID(N'<database_name>'), NULL, NULL, NULL , 'SAMPLED')
+ORDER BY a v g_fr agmen t ation_in_per cen t  DESCand fill the quer y - fix -inde xing.sql  with the correct
+maintenance script, for example:
+USE <database_name>;
+ALTER INDEX ALL ON <table_name1> REBUILD WITH (FILLFACTOR=90);
+ALTER INDEX ALL ON <table_name2> REBUILD WITH (FILLFACTOR=70);
+Note: Ensure that you have sqlcmd installed on the primary node.
+The actual SQL script requires e xperimenting  with the index rebuild settings  to create a good balance of
+maintenance time  versus performance after  scripted maintenance is applied:
+▪For tables with multiple  indexes, rather than rebuilding ALL, individual indexes can be rebuilt (the ▪
+ones which a ff ect  specific ally -sough t  performance).
+▪In a pr oduction  environment you will have to find a way to call sqlcmd or a similar Micr osoft  utilility ▪
+without spelling out the cr edentials  on the command line.
+If all this has been completed and performance is still an issue for specific  stored procedures, contact
+support@bravurasecurity.com to ask  if it's possible to optimiz e  the specific  stored procedures that slow
+down binary e x ecution  . In your email, include  the steps you followed to increase performance, and:
+▪A log containing PerfSproc procedure entries for the binary runs that need optimiz ation, ▪
+or
+▪A verbose log for those binaries that did not have the PerfSproc option  in the logging service. ▪
+7 Services
+Bravura Security Fabric  uses service programs to perform specific  tasks in the background. For example,
+the Scheduler Service ( psscheduler ) is used to initia t e  scheduled jobs, including auto discovery tasks.
+The following is a list of Bravura Security Fabric  services that can be managed through the web interface:
+▪Password manager service ( idpm ) (on page 2820) ▪
+This service works in c onjunction  with trigger programs and libraries on various systems, to implement
+transparent password s ynchr oniz ation.▪ Notific ation  service ( psntfsvc ) (on page 2835) ▪
+▪The central component of the user notific ation  system. It updates the database with in f ormation ▪
+about notific ation  events and compliance rules, and runs plugins to check compliance, send
+reminders, or take other action.
+▪Privileged Access Manager Service ( idarch ) (on page 2839) ▪
+Installed on each Bravura Privilege replicated server and is responsible for controlling remote
+password resets for push-mode resources, and monitoring the status of checked-out passwords on all
+resources.
+▪ W orkflo w  manager service ( idwfm ) (on page 2840) ▪
+Carries out automated w orkflo w  tasks, and is responsible for notif ying  the actors in a request
+(requesters, recipients, authorizers).
+▪ T r ansaction  monitor service ( idtm ) (on page 2842) ▪
+Runs agent programs on behalf of the W orkflo w  Manager Service ( idwfm ) or client programs such as
+iddriver . If an agent oper ation  fails, idtm can retry the oper ation  at specified  intervals.
+Depending on how target systems are c on figur ed,  the idtm runs agents directly or through the
+Proxy Service ( psproxy ),
+▪API service ( idapi ) (on page 2846) ▪
+Enables client programs to access Bravura Security Fabric w orkflo w  and provisioning features
+pr ogr ammatic ally .
+▪API SOAP service ( idapisoap ) (on page 2847) ▪
+Provides access to the Bravura Security Fabric API Service (idapi) with the WWS web service API.
+▪Logging service ( idmlogsvc ) (on page 2854) ▪
+Manages logging sessions for a particular  instance. It captures event messages from Bravura Security
+Fabric program e x ecution,  and writes them to the c on figur ed  log file (idmsuite.log by default).
+▪Mobile Worker service ( mobworker ) (on page 2858) ▪
+Works in c onjunction  with the Bravura One  proxy server to allow the <mobileap> on mobile devices to
+access Bravura Security Fabric servers.
+▪File r eplic ation  service ( idfilerep ) (on page 2862) ▪
+Receives data from a master instance in a r eplic ation  environment, and is used in c onjunction  with the
+updinst utility  to synchronize files and registry keys between multiple  instances.
+▪Scheduler service ( psscheduler ) (on page 2869) ▪
+Schedules and executes periodic jobs. By default, it is c on figur ed  to run the psupdate program (for
+auto discovery) and the command to rotate log files.  It runs the default jobs nightly.
+The following is a list of Bravura Security Fabric  services that cannot be managed through the web
+interface:
+▪Database service ( iddb ) (on page 2844) ▪
+Responsible for c onnecting  Bravura Security Fabric to its backend database. This service cannot be
+managed from the web interface. It can be managed from a command prompt.▪Proxy service ( psproxy ) ▪
+Enables the Bravura Security Fabric proxy server on which it is installed to execute agents and exit trap
+programs on behalf of other Bravura Security Fabric servers. The service also periodically receives
+updates (agents, exit programs, c on figur ation  data) from the Bravura Security Fabric server.
+▪Persistent Connector Service ( agtsvc ) (on page 2874) ▪
+Runs connector programs that are enabled for persistent listing.  It can be managed from a command
+prompt.
+▪Discovery service ( iddiscover ) (on page 2875) ▪
+Runs connector programs to list changes on systems, communicates with idwfm  to propagate
+changes, Loads discovered data into database via iddb . This service cannot be managed from the
+web interface.
+▪Service Manager service ( idsvcmgr ) ▪
+Is used to manage other Bravura Security services. This service is for internal use only. This service
+cannot be managed from the web interface.
+Do not attemp t  to use idsvcmgr without the supervision of Bravura Security support s t aff .
+Managing a service program
+You can use the Manage the system  (PSA) module to manage Bravura Security Fabric  services. This includes
+viewing service status, modifying service parameters, and s t arting  and stopping services. Service
+programs are located in the services directory.
+To manage a service program using the Manage the system  (PSA) module:
+1.Click Manage the system > Maintenance > Services . 1.
+2.Select the service program you want to manage.2.
+3.Enter parameters for the service.3.
+Mandatory parameters are marked with a red asterisk.
+4.Click Update . 4.
+5.Select:5.
+▪Enable the service if it is not enabled. ▪
+▪Start the service if it is enabled but not started. ▪
+6.Ensure that the Service status is set to "On". 6.
+You can also stop or disable a service from this page.  
+T r oubleshooting
+The following common error messages may occur while installing or s t arting  a service program:
+The account name is invalid or does not exist Check that the account name and password are valid
+for the server on which the program is to be installed.
+The service did not start due to logon failure Check that the user has the right to log on as a service.Warning: Login failed: invalid password specified  for
+[_API_USER]Check to see if a password has been set for the
+_API_USER administrator and if the value for Allowed
+network addresses for remote API access has been
+modified.  If an API user is required for remote access
+(such as the UNIX Trigger for example), ensure that an
+alternate administrator is c on figur ed  for user for the
+remote c onnections.
+It is recommended that you use the same local user ID and password to run all services that you
+c onfigured  during ins t allation  .
+Password Manager Service (idpm)
+The idpm  service works in c onjunction  with trigger programs and libraries on various systems, to
+implement transparent password s ynchr oniz ation.
+Trigger systems establish a secure, encrypted TCP c onnection  with the idpm  service on the Bravura
+Security Fabric  server. Connecting  programs may:
+▪Prompt the idpm service to evaluate a new password selected by a user, and determine whether it ▪
+should be accepted (complies with password strength policy), or rejected.
+▪Prompt you for a textual description  of the current password policy. ▪
+▪Instruct the idpm service to synchronize a user’s passwords to a new value on all systems where the ▪
+user has a login account.
+The idpm  program can also extend the functionality  of web-based password management by allowing
+failed password changes to be queued for aut omatic  retry. Password changes may then be implemented
+aut omatic ally  for the accounts when the failed target system becomes available. Product administrators
+can enable queuing password changes  (on page 1197) for idpm .
+By default, the idpm  service is available to all users when transparent password s ynchr oniz ation  is
+activ a t ed.
+During auto discovery , idpm  queues password changes and sesslog entries. It will run strength checks for
+immediate response, but will not write to the database. After  the service is taken off hold, it will run
+through the queued commands and execute them and delete the temporary file.
+For more in f ormation  on implementing  transparent password s ynchr oniz ation,  see the Transparent
+Password S ynchr oniz ation  (on page 1651).
+Configur ation
+The service is aut omatic ally  installed and started on the Bravura Security Fabric  server during setup. You
+can modify the following parameters related to this service on the Service in f ormation  page:
+idpm service options
+Option Description
+Required parameters:

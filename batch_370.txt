@@ -1,0 +1,324 @@
+M4 processor
+Bravura Security Fabric  uses an off -the-shelf  text macro system called M4 to construct the skin files.  If
+you want to perform any of the cus t omiz ations  described in this document you must use M4. An M4
+macro processor is shipped with Bravura Security Fabric .
+M4 is a tool used to expand short strings (macros) into longer strings. It was made popular on Unix
+systems as a way to manage sendmail c on figur ation  files more easily. For more in f ormation  about M4,
+visit:
+http://w w w . gnu.or g / softw ar e/m4/
+See below for the actual license text.
+M4 License
+ 
+       Copyright (c) 1989, 1993 
+              The Regents of the University of California.  All rights reserved. 
+ 
+       This code is derived from software contributed to Berkeley by 
+       Ozan Yigit at York University. 
+ 
+       Redistribution and use in source and binary forms, with or without 
+       modification, are permitted provided that the following conditions 
+       are met: 
+       1. Redistributions of source code must retain the above copyright 
+          notice, this list of conditions and the following disclaimer. 
+       2. Redistributions in binary form must reproduce the above copyright 
+          notice, this list of conditions and the following disclaimer in the 
+          documentation and/
+or other materials provided with the distribution. 
+       3. All advertising materials mentioning features or use of this software 
+          must display the following acknowledgement: 
+              This product includes software developed by the University of 
+              California, Berkeley and its contributors. 
+       4. Neither the name of the University nor the names of its contributors 
+          may be used to endorse or promote products derived from this software 
+          without specific prior written permission. 
+ 
+       THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ‘‘AS IS'' AND 
+       ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+       IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+       ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE 
+       FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
+       DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS        OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
+       HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
+       LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
+       OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
+       SUCH DAMAGE.
+JavaScript Minifier
+Bravura Security Fabric  uses the jsmin JavaScript Minifier  filt er  written  by Douglas Crockford to
+remove comments and unnecessary whitespace from JavaScript files when skins are compiled and
+installed.
+Skins are compiled and installed by running make.bat  in the design directory. See Gener ating  and
+Installing Skins  (on page 3477) for more in f ormation.   
+Copyright notice:  
+Copyright (c) 2002 Douglas Crockford
+Dictionar y
+Bravura Security Fabric  includes dictionaries  distributed with the ispell program, and found on many
+open source Unices (Linux, *BSD, etc.). These dictionaries  are used to test the strength of new
+passwords.
+There does not appear to be a copyright notice  or a list of authors for this dictionar y ,  so Bravura Security
+extends a thank-you to the anonymous authors.
+zlib library
+Bravura Security Fabric  incorporates the zlib compression library written  by Jean-loup Gailly and Mark
+Adler.
+The de fla t e  format used by zlib was de fined  by Phil Katz. The de fla t e  and zlib specific ations  were written
+by L. Peter Deutsch.  
+Copyright notice:  
+(C) 1995-1998 Jean-loup Gailly and Mark Adler
+This software is provided `as-is’, without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+1. The origin of this software must not be misrepresented; you must not
+claim that you wrote the original software. If you use this softwareproduct, an acknowledgment in the product documentation would
+be appreciated but is not required.
+2. Altered source versions must be plainly marked as such, and must not
+be misrepresented as being the original software.
+3. This notice may not be removed or altered from any source
+distribution.
+Jean-loup Gailly Mark Adler
+jloup@gzip.org madler@alumni.caltech.eduAccessibility
+Screen readers
+No c on figur ation  is required to enable full accessibility for screen readers such as NVDA.
+The following are recommended browsers and oper ating  systems for screen reader usage:
+Screen reader Browser Oper ating  system
+NVDA Edge Chromium/Chrome/FireFox Windows 10
+VoiceOver Safari IOS
+VoiceOver Safari OS X
+ 
+Section  508 Amendment to the R ehabilit ation  Act of 1973
+The Bravura Security Fabric  interface complies with the following requirements of section  508 of the
+United States R ehabilit ation  Act of 1973:
+Section  1194.21 Softw ar e  Applic ations  and Oper ating  Systems
+▪When softw ar e  is designed to run on a system that has a keyboard, product functions  shall be ▪
+executable from a keyboard where the function  itself or the result of performing a function  can be
+discerned textually.
+▪ Applic ations  shall not disrupt or disable activ a t ed  features of other products that are identified  as ▪
+accessibility features, where those features are developed and documented according to industry
+standards. Applic ations  also shall not disrupt or disable activ a t ed  features of any oper ating  system
+that are identified  as accessibility features where the applic ation  programming interface for those
+accessibility features has been documented by the manufacturer of the oper ating  system and is
+available to the product developer.
+▪A w ell-de fined  on-screen indic ation  of the current focus shall be provided that moves among ▪
+in t er activ e  interface elements as the input focus changes. The focus shall be pr ogr ammatic ally
+exposed so that Assistiv e  Technology can track focus and focus changes.
+▪ Sufficien t  in f ormation  about a user interface element including the identity ,  oper ation  and state of the ▪
+element shall be available to Assistiv e  Technology. When an image represents a program element, the
+in f ormation  conveyed by the image must also be available in text.
+▪When bitmap images are used to identif y  controls, status indicators, or other pr ogr ammatic  elements, ▪
+the meaning assigned to those images shall be consistent throughout an applic ation’ s  performance.
+▪Textual in f ormation  shall be provided through oper ating  system functions  for displaying text. The ▪
+minimum in f ormation  that shall be made available is text content, text input caret loc ation,  and text
+attribut es.
+▪ Applic ations  shall not override user selected contrast and color selections  and other individual display ▪
+attribut es.▪Color coding shall not be used as the only means of conveying in f ormation,  indic ating  an action, ▪
+pr ompting  a response, or distinguishing  a visual element.
+▪ Softw ar e  shall not use flashing  or blinking text, objects, or other elements having a flash  or blink ▪
+frequency greater than 2 Hz and lower than 55 Hz.
+▪When electronic forms are used, the form shall allow people using Assistiv e  Technology to access the ▪
+in f ormation,  field  elements, and functionality  required for c ompletion  and submission of the form,
+including all dir ections  and cues.
+Section  1194.22 Web-based Internet in f ormation  and applic ations
+▪Equivalent alt ernativ es  for any multimedia  pr esen t ation  shall be synchronized with the pr esen t ation. ▪
+▪Web pages shall be designed so that all in f ormation  conveyed with color is also available without ▪
+color, for example from context or markup.
+▪Documents shall be organized so they are readable without requiring an associated style sheet.▪
+▪Row and column headers shall be identified  for data tables. ▪
+▪Markup shall be used to associate data cells and header cells for data tables that have two or more▪
+logical levels of row or column headers.
+▪A text-only page, with equivalent in f ormation  or functionality ,  shall be provided to make a web site ▪
+comply with the provisions of this part, when compliance cannot be accomplished in any other way.
+The content of the text-only page shall be updated whenever the primary page changes.
+▪Pages shall be designed to avoid causing the screen to flick er  with a frequency greater than 2 Hz and ▪
+lower than 55 Hz.
+▪When electronic forms are designed to be completed on-line, the form shall allow people using▪
+assistiv e  technology to access the in f ormation,  field  elements, and functionality  required for
+c ompletion  and submission of the form, including all dir ections  and cues.
+Section  1194.31 Functional  Performance Criteria
+▪At least one mode of oper ation  and in f ormation  retrieval that does not require user vision shall be ▪
+provided, or support for Assistiv e  Technology used by people who are blind or visually
+▪At least one mode of oper ation  and in f ormation  retrieval that does not require visual acuity greater ▪
+than 20/70 shall be provided in audio and enlarged print output working together or independently,
+or support for Assistiv e  Technology used by people who are visually impaired shall be provided.
+Section  1194.41 In f ormation,  Documen t ation  and Support
+▪Product support documen t ation  provided to end-users shall be made available in alternate formats ▪
+upon request, at no additional  charge.
+▪End-users shall have access to a description  of the accessibility and c ompatibility  features of products ▪
+in alternate formats or alternate methods upon request, at no additional  charge.
+▪Support services for products shall accommodate the c ommunic ation  needs of end-users with ▪
+disabilities.
+Other requirements of the section  are not relevant to Bravura Security Fabric .Third party dependency list
+Name Version License
+boost 1.67 http s://w w w .boos t.or g /LICENSE_1_0. tx t
+cairo 1.14.6 http s://w w w .c air ogr aphics.or g /
+cairomm 1.12.0 http s://w w w .c air ogr aphics.or g /
+cpprest 2.10.2 http s:// github.c om/micr osoft/ cppr es tsdk/blob/mas t er/license. tx t
+czmq 4.0.2 http s:// github.c om/z er omq/ czmq/blob/mas t er/LICENSE
+jsoncpp 1.8.4 http s:// github.c om/ open-sour ce-par ser s/jsoncpp/blob/mas t er/LICENSE
+ldapapi 6.0.6 http://w w w .apache.or g /licenses/LICENSE -2.0
+libharu 2.2.0 http s:// github.c om/libharu/libharu/blob/m as t er/LICENSE
+libiconv 1.16 http s:// sa v annah. gnu.or g /pr ojects/libic on v/
+libsigc++ 2.6.2 http s:// github.c om/lib sig cplusplus/lib sig cplusplus/blob/mas t er/C OP YING
+libxml2 2.9.7 http s:// gitlab. gnome.or g /GNOME/lib xml2/-/blob/mas t er/Cop yrigh t
+loki 0.1.5 http://loki-lib.sour ce f or g e.ne t/inde x.php?n=Main.License
+openssl 1.1.1i http s:// github.c om/ openssl/ openssl/blob/mas t er/LICENSE. tx t
+pugixml 1.11.2 http s://pugixml.or g /license.h tml
+putty -sr c 0.76 http s://w w w .chiark. gr eenend.or g.uk/~sg t a tham/putty/licence.html
+python 3.7.6 http s://docs.p y thon.or g /3/license.h tml
+sqlite3 3.36.0 http s://w w w .sqlit e.or g / c op yrigh t.h tml
+xmlsec 1.2.32 http s://w w w .alek se y .c om/xmlsec/
+zlib 1.2.7 http s://w w w . zlib.ne t/zlib_license.h tml
+zmq 4.2.2 http s://z guide. z er omq.or g /
+guacamole apache 2.0 http://w w w .apache.or g /licenses/LICENSE -2.0
+certifi 2018.04.16 http s:// github.c om/ certifi/p y thon-certifi/blob/mas t er/LICENSE
+chardet 3.0.4 http s:// github.c om/ char de t/ char de t/blob/mas t er/LICENSE
+docutils 0.12http s://docutils.sour ce f or g e.io/licenses/BSD-2-Clause . tx t  , http s://
+docutils.sour ce f or g e.io/licenses/ gpl-3-0. tx t  http s://docutils.sour ce f or g e.io/
+licenses/py thon-2-1-1. tx t
+idna 2.6 http s:// opensour ce.or g /licenses/BSD-3-Clause
+mako 1.0.1 http s:// opensour ce.or g /licenses/mit -license.php
+markupsafe 0.23 http s://palle tspr ojects.c om/license/Name Version License
+requests 2.18.4 http://w w w .apache.or g /licenses/LICENSE -2.0
+urllib3 1.22 http s:// github.c om/urllib3/urllib3/bl ob/main/LICENSE. tx t
+pyzmq 18.1.0 http s:// github.c om/z er omq/p y zmq/blob/main/C OP YING.BSD
+peewee 2.10.1 http s:// github.c om/ c oleif er/pee w ee/blob/mas t er/LICENSE
+flotr2 latest http s:// github.c om/HumbleSoftw ar e/Flotr2/blob/mas t er/LICENSE
+device.js 0.2.7 http s:// github.c om/matthe whudson/ curr en t -de vice/blob/mas t er/LICENSE
+qrcode.js n/a http s:// github.c om/da vidshimjs/qr c odejs/blob/mas t er/LICENSE
+guacamole javascript 1.1.0 http://w w w .apache.or g /licenses/LICENSE -2.0
+jquery.actual.js 1.0.16 http s:// github.c om/dr eamer slab/jquer y .actual/blob/mas t er/LICENSE. tx t
+jquery.autogrow.js 1.0.4 http s:// github.c om/ultima t edelman/ aut ogr o w/blob/mas t er/ aut ogr o w .min.js
+jquery.chosen.js 1.4.2 http s:// github.c om/k oenpun t/ chosen/blob/ option_adding /LICENSE.md
+jquery.cookie.js 1.4.1 http s:// github.c om/ c arhartl/jquer y -c ookie/blob/mas t er/MIT -LICENSE. tx t
+jquery.dataTables.js 1.10.13 http s://w w w .da t a t ables.ne t/license/mit
+jquer y .da t aT ablesButtons.js 1.1.2 http s://da t a t ables.ne t/license/mit
+jquer y .da t aT ablesButtonsColVis.js 1.1.2 http s://da t a t ables.ne t/license/mit
+jquery.dataTablesResponsive.js 2.0.2 http s://da t a t ables.ne t/license/mit
+jquery.dataTablesScroller.js 1.4.1 http s://da t a t ables.ne t/license/mit
+jquer y .da t etimepick er .js 2.5.4 http s:// github.c om/x dan/da t etimepick er/blob/mas t er/MIT -LICENSE. tx t
+jquery.gridster.js 0.5.6 No URL for license, code references MIT licsense
+jquery.inputmask.js 3.2.7 http s:// github.c om/R obinHerbots/Inputmask/b lob/5.x/LICENSE. tx t
+jquery.mobile-events.js 1.0.9 http s://jquer y .or g /license/
+jquery.mousewheel.js 3.1.13 http s:// github.c om/jquer y/jquer y -mouse wheel/blob/main/LICENSE. tx t
+jquer y .multi-select.js 0.9.11 http s:// github.c om/lou/multi-select/blob /mas t er/LICENSE. tx t
+jquery.unevent.js 0.2.1 http s:// github.c om/y ck art/jquer y .une v en t.js
+jquery.uri.js 1.17.1 http://w w w .opensour ce.or g /licenses/mit -license
+jquery.visible.js 1.2.0 http s:// github.c om/ cus t omd/jquer y - visible/blob/mas t er/LICENSE. tx t
+jquery-ui.contextmenu.js 1.18.1 http s:// github.c om/mar10/jquer y -ui-c on t e x tmenu/blob/mas t er/LICENSE. tx t
+jquery-ui.js 1.11.4 http s://jquer y .or g /license/
+jquer y -ui.s tructur edfilt er .js 1.0.4 http s:// github.c om/ e v olut eur/ s tructur ed- filt er/blob/mas t er/LICENSE.md
+@angular/ animations@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+@angular/cdk@8.2.3 see name http s:// github.c om/ angular/ c omponen ts/blob/mas t er/LICENSE
+@angular/common@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+@angular/compiler@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+@angular/core@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+@angular/forms@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+@angular/platform-br o w ser -dynamic@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSEName Version License
+@angular/platform-br o w ser@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+@angular/router@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+ajv@6.11.0 see name http s:// github.c om/ ajv - v alida t or/ ajv/blob/mas t er/LICENSE
+core-js@3.6.4 see name http s:// github.c om/zloir ock/ c or e-js/blob/mas t er/LICENSE
+fast-deep-equal@3.1.1 see name http s:// github.c om/ epober e zkin/f as t -deep-equal/blob/mas t er/LICENSE
+fast-json-stable-stringify@2.1.0 see name http s:// github.c om/ epober e zkin/f as t -json-s t able-s tringif y/blob/mas t er/LICENSE
+file-sa v er@2.0.2 see name http s:// github.c om/ epober e zkin/f as t -json-s t able-s tringif y/blob/mas t er/LICENSE
+font-awesome@4.7.0 see name http s:// github.c om/F ortAw esome/F on t -Aw esome/blob/mas t er/LICENSE. tx t
+hammerjs@2.0.8 see name http s:// github.c om/hammerjs/hammer .js/blob/mas t er/LICENSE.md
+jquery@2.2.4 see name http s:// github.c om/jquer y/jquer y/blob/main/LICENSE. tx t
+json-schema-traverse@0.4.1 see name http s:// github.c om/ epober e zkin/json-schema-tr a v er se/blob/mas t er/LICENSE
+lodash.get@4.4.2 see name http s:// github.c om/lodash/lodash/blob/mas t er/LICENSE
+lodash.isequal@4.5.0 see name http s:// github.c om/lodash/lodash/blob/mas t er/LICENSE
+lodash.merge@4.6.2 see name http s:// github.c om/lodash/lodash/blob/mas t er/LICENSE
+lodash.set@4.3.2 see name http s:// github.c om/lodash/lodash/blob/mas t er/LICENSE
+lodash@4.17.15 see name http s:// github.c om/lodash/lodash/blob/mas t er/LICENSE
+moment@2.24.0 see name http s:// github.c om/momen t/momen t/blob/de v elop/LICENSE
+ngx-store@2.1.0 see name http s:// github.c om/z oomspher e/ngx -s t or e/blob/mas t er/LICENSE
+papaparse@4.6.3 see name
+primeng@7.1.3 see name http s:// github.c om/prime f aces/primeng /blob/mas t er/LICENSE.md
+rxjs@6.5.4 see name http s:// github.c om/R eactiv eX/rxjs/blob/mas t er/LICENSE. tx t
+ts-debug@1.3.0 see name http s:// github.c om/ clebert/ts-c on fig /blob/mas t er/LICENSE
+tslib@1.10.0 see name http s:// github.c om/micr osoft/tslib/blob/main/LICE NSE. tx t
+unicode-9.0.0@0.7.5 see name http s:// github.c om/node-unic ode/unic ode-9.0.0#license
+uri-js@4.2.2 see name http s:// github.c om/ g ar y c ourt/uri-js/blob/mas t er/LICENSE
+zone.js@0.9.1 see name http s:// github.c om/ angular/z one.js/blob/mas t er/LICENSE
+Angular Development - dependencies we ship for development purposes but are not used when running a
+pr oduction  environment
+@angular-builders/custom-webpack@8.4.1 see name http s:// github.c om/jus t -jeb/ angular -builder s/blob/mas t er/LICENSE
+@angular-devkit/architect@0.803.25 see name http s:// github.c om/ angular/ angular -cli/blob/mas t er/LICENSE
+@angular-devkit/build-angular@0.803.25 see name http s:// github.c om/ angular/ angular -cli/blob/mas t er/LICENSE
+@angular -de vkit/build-optimiz er@0.803.25 see name http s:// github.c om/ angular/ angular -cli/blob/mas t er/LICENSE
+@angular-devkit/build-webpack@0.803.25 see name http s:// github.c om/ angular/ angular -cli/blob/mas t er/LICENSE
+@angular-devkit/core@8.3.25 see name http s:// github.c om/ angular/ angular -cli/blob/mas t er/LICENSE
+@angular -de vkit/ schematics@8.3.25 see name http s:// github.c om/ angular/ angular -cli/blob/mas t er/LICENSEName Version License
+@angular/ animations@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+@angular/cdk@8.2.3 see name http s:// github.c om/ angular/ c omponen ts/blob/mas t er/LICENSE
+@angular/cli@8.3.25 see name http s:// github.c om/ angular/ angular -cli/blob/mas t er/LICENSE
+@angular/common@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+@angular/compiler-cli@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+@angular/compiler@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+@angular/core@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+@angular/forms@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+@angular/language-service@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+@angular/platform-br o w ser -dynamic@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+@angular/platform-br o w ser@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+@angular/router@8.2.14 see name http s:// github.c om/ angular/ angular/blob/mas t er/LICENSE
+@babel/code-frame@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/compat-data@7.8.5 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/core@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/generator@7.8.4 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper-annotate-as-pure@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper-builder-binary-assignment-operator-
+visitor@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper-call-delegate@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper -c ompilation-t ar g e ts@7.8.4 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper-create-regexp-features-plugin@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper -de fine-map@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper-explode-assignable-expression@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper - function-name@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper -g e t - function-arity@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper-hoist-variables@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper -member -e xpr ession-t o- functions@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper-module-imports@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper-module-transforms@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper -optimise-c all-e xpr ession@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper -plugin-utils@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper-regex@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper-remap-async-to-generator@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper-replace-supers@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper-simple-access@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSEName Version License
+@babel/helper -split -e xport -declar ation@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helper -wr ap- function@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/helpers@7.8.4 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/highlight@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/parser@7.8.4 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-pr oposal-as ync-g ener a t or -
+functions@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-proposal-dynamic-import@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-proposal-json-strings@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-proposal-nullish-coalescing-
+operator@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-proposal-object-rest-spread@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-pr oposal-optional-c a t ch-binding@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-pr oposal-optional-chaining@7.8. 3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-proposal-unicode-property-regex@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-syntax-async-generators@7.8.4 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-syntax-dynamic-import@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-syntax-json-strings@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-syntax-nullish-coalescing-operator@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-syntax-object-rest-spread@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-s yn t a x -optional-c a t ch-binding@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-s yn t a x -optional-chaining@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-syntax-top-level-await@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-tr ans f orm-arr o w - functions@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-async-to-generator@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-tr ans f orm-block -sc oped- functions@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-block-scoping@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-classes@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-tr ans f orm-c omput ed-pr operties@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-destructuring@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-dotall-regex@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-duplicate-keys@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-tr ans f orm-e xponentiation-
+oper a t or@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-for-of@7.8.4 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-tr ans f orm- function-name@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-literals@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE

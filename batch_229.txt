@@ -1,0 +1,99 @@
+7.Click Submit . 7.
+The P AMUtil:  Create OTP API User PDR creates a managed account that appears in the
+PAM_OTP_ACCOUNTS managed system policy  in the format of PAM_UTIL_ <guid> , and a product
+administrator  pr ofile  to manage the account.Check out the account
+1.Log into Front-end (PSF) as a user from the OTP API Trustee group created earlier.1.
+2.Click Privileged access from the Privileged access to managed systems section. 2.
+3.Click Accounts from the Filter panel . 3.
+4.Select the PAM OTP account from the Results panel 4.5.Click Request check-out 5.
+6.Click Submit 6.
+7.Authorize the request.7.
+8.Click Check out from the Actions  panel 8.The PAM OTP account can now be used by the product administrator  pr ofile  created earlier, to retrieve
+cr edentials  of managed accounts it has access to using pamutil.
+Do not check out the vault account again because it will be randomized on check-out and then the one
+used with pamutil  will be wrong as it does not get updated with the new, randomized password.
+Example: Onboard a Windows server with subscribers
+This example describes how to install the subscriber scenario component, onboard a Windows server and
+c on figur e  the subscribers so they receive the new password when it is randomized.
+Install the components
+Install the components
+1.Log in to Front-end (PSF) as a superuser.1.
+2.From the main menu click Manage components. 2.
+3.Search and select the checkbox for required components.3.
+4.Click Install component(s) . 4.
+The panel on the right will indicate when the ins t allation  is complete.
+for this example:
+▪RefBuild.pam_team_management.▪
+▪Scenario.pam_system_type_vault.▪
+▪ Scenario.pam_sub scriber_v alidation▪
+▪Scenario.pam_system_type_winnt▪
+Create and set up a team
+Create a team administrator:
+1.Click Manage the system > Policies > User classes . 1.
+2.Select the PAM_TEAM_ADMINS.2.
+3.Click the Explicit users tab. 3.
+4.Click Select . 4.
+5.Search and select a user.5.
+6.Click Add. 6.
+This user can now log in and create, delete and manage teams.
+1.Log into Front-end (PSF) as the team administrator.1.
+2.Click Manage Resources . 2.
+The Pr e-de fined  requests page is displayed.The team administrator can create, delete and manage teams using these pr e-de fined  requests.
+3.Click Team: Create . 3.
+Bravura Security Fabric  displays the team cr eation  wizard
+4.Enter the following in f ormation: 4.
+▪Team Nme : Vault-Management-Team ▪
+▪Team Description : Team to manage system vault ▪
+Click Next .
+5.Add seven groups. Use the ”More” icon to add more team name fields  to the list. 5.
+▪Team Trustees Users who can make team management requests. ▪
+▪Account Trustees  Users who can make account management requests (onboard accounts). ▪
+▪Approvers  Users who allow or disallow access requests. ▪
+▪Auto Approved  Users who can check-out access to systems and accounts without making an access ▪
+request.
+▪Requesters Users who can make access requests. ▪
+▪ Cr edential_Manag er s  Users who can override or randomize the stored password on a checked-out ▪
+account.
+▪System Trustee Users who can make system management requests (onboard systems). ▪
+▪Subscriber Trustees  Users who can make subscriber v alidation  requests. ▪
+6.Click Next and add team descriptions. 6.
+Click Next .7.Assign privileges to the team groups:7.
+▪Team Trustees  Team trustees ▪
+▪Account Trustees  Account trustees ▪
+▪Approvers  Approvers ▪
+▪Auto Approved  Auto_Approved and requesters ▪
+▪Requesters Requesters ▪
+▪ Cr edential  Managers  Requesters and Cr edential_manag er ▪
+▪System Trustees  System trustees ▪
+▪Vault Trustees  Vault trustees ▪
+▪Subscriber Trustees  Subsriber trustees ▪
+The Cr edential_Manag er  privilege allows a user to override or randomize the stored password on a
+checked-out account.Click Next .8.Set the initial  team trustees for the new team. There must be at least one team trustee to create a 8.
+team.
+9.Click Submit . 9.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+10. Click the View request link at the top of the page to view the status of the request. 10.
+Once the request has been approved, the team will be c on figur ed.
+Add users to the additional  groups in the team.
+1.Log into Front-end (PSF) as a team trustee.1.
+2.From the home page, click Manage resources . 2.
+3.Click Team: Manage Group Membership . 3.
+4.Select the Vault-Team.4.
+Click Next .
+5.Select the Account Trustees, Approvers, Auto Approved, Requesters, System Trustees, Vault Trustees,5.
+Cr edential  Managers and Team Trustees groups.Click Next .
+6.Add members to each team group.6.
+7.Click Submit . 7.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+8.Click the View request link at the top of the page to view the status of the request. 8.
+Once submitted  and approved, the group’s membership will be updated with the users that have been
+selected.
+Onboard the Windows system
+1.Log into Front-end (PSF) as the system trustee for the Windows system team.1.
+2.Click Manage Resources . 2.
+The Pr e-de fined  requests page is displayed.
+3.Click System: Onboard . 3.
+4.Select the Windows Server system type from the drop down menu.4.
+Click Next .
+5.Enter the System FQDN.5.
+If the Windows system is not on the domain use <hostname>.local

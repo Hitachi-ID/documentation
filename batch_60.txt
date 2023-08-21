@@ -1,0 +1,356 @@
+Updating  group options
+To c on figur e  a managed group using the Manage the system  (PSA) module:
+1.Navigate to the Managed group in f ormation  page  (on page 590) for the group. 1.
+2.Set options  and variables as detailed in the table below. 2.
+3.Click Update . 3.
+Option Description
+Overridden description The description  to display to users.
+If you leave this field  blank, Bravura Security Fabric  uses
+the Group description  loaded from the target system.
+Help URL In case a longer description  would help users, you can
+compose and post a web page that describes this group
+further, and enter its URL here. Users can open the URL by
+clicking the group description  text wherever the text
+appears in the user interface.
+Track changes Select this checkbox to capture changes to this managed
+group. Changes include joining or leaving the group.
+See Tracking changes to group membership  (on page 599)
+for details.
+Detect out-of-band additions
+and aut omatic ally  generate a
+w orkflo w  requestIf enabled, then additions  of users or groups that were
+done without using Bravura Security Fabric  are detected,
+and requests are aut omatic ally  generated to undo or redo
+the change via the W orkflo w  Manager Service (idwfm).
+The Track changes  setting  must also be enabled.
+See Tracking changes to group membership  (on page 599)
+for details.
+Detect out-of-band deletions
+and aut omatic ally  generate a
+w orkflo w  requestIf enabled, then deletions  of users or groups that were
+done without using Bravura Security Fabric  are detected,
+and requests are aut omatic ally  generated to undo or redo
+the change via the W orkflo w  Manager Service (idwfm).
+The Track changes  setting  must also be enabled.
+See Tracking changes to group membership  (on page 599)
+for details.Option Description
+Aut omatic ally  add group
+owners as authorizersSelect this checkbox to aut omatic ally  add group owners as
+authorizers for the group. If the group owner is a group, its
+group members must be listed before they can be added
+as authorizers.
+See Managing groups aut omatic ally  (on page 587) for
+more in f ormation.
+Override authoriz ation
+c on figur ationDetermine whether to inherit authoriz ation  c on figur ation
+from the target system, specify gr oup-specific  authorizers,
+or a c ombination  of both.
+See Inheriting  authoriz ation  c on figur ation  from the target
+system  (on page 593) for details.
+Override implemen t ation
+c on figur ationDetermine whether to inherit implemen t ation
+c on figur ation  from the target system, specify gr oup-
+specific  implementers, or a c ombination  of both.
+See Inheriting  resource oper ation  c on figur ation  from the
+target system  (on page 601) for details.
+Minimum number of
+authorizers(Required) The number of authorizers who must approve
+requests related to this group.
+See Determining number of required approvals  (on page
+594) for details.
+Number of denials before a
+change request is terminated(Required) A resource request is canceled when this
+number of authorizers deny it.
+See Determining number of required approvals  (on page
+594) for details.
+Con figuring  group-level authoriz ation
+Read this section  to learn how to:
+▪ Inheriting  authoriz ation  c on figur ation  from the target system  (on page 593) ▪
+▪ Con figuring  phased authoriz ation  (on page 593) ▪
+▪Determining number of required approvals  (on page 594) ▪
+▪Manually assigning s t atic  authorizers  (on page 594) ▪
+▪Assigning authorizers by user class  (on page 594) ▪▪Using group owners as authorizers  (on page 595) ▪
+When r equesting  access to network resources using managed group , users can only submit requests for
+groups that have at least one authorizer or group owner assigned.
+Users must be loaded into the Bravura Security Fabric database before you can de fine  them as
+authorizers.
+You must assign enough authorizers to meet the minimum number of authorizers requirement. If you do
+not do this, requests involving the resource are aut omatic ally  denied unless authorizers are assigned by a
+w orkflo w  plug-in.
+Inheriting  authoriz ation  c on figur ation  from the target system
+You can c on figur e  target systems so that managed groups inherit the authoriz ation  c on figur ation  settings
+of the target system. You can also override the c on figur ation  for a group, or add authorizers.
+Enable inheritance by selecting  the Default authoriz ation  for child resources,including templates and
+managed groups, will be inherited from the target system option  on the relevant Target system
+in f ormation  page  (on page 494).
+To override or add to the c on figur ation  for a managed group:
+1.Navigate to the Managed group in f ormation  page  (on page 590). 1.
+2.Set Override authoriz ation  c on figur ation  to: 2.
+▪Only use inherited c on figur ation ▪
+▪Do not inherit any c on figur ation ▪
+▪Add to inherited c on figur ation  (default) ▪
+3.Click the Authoriz ation  tab. 3.
+▪If you chose to not inherit authoriz ation,  then the page shows authoriz ation  explicitly setup for the ▪
+managed group; no authoriz ation  from the target system should display.
+▪If you chose to add to inherited authoriz ation,  then the page displays settings  that are both ▪
+inherited and explicitly set for the group.
+When you choose to add to inherited authoriz ation,  the minimum number of required authorizers
+will be determined by the larger value set for the managed group or target system.
+Proceed to c on figur e  authoriz ation  as described in the rest of this section.
+Con figuring  phased authoriz ation
+If phased authoriz ation  is enabled, navigate to the managed group’s Authoriz ation  page  (on page 590),
+then:
+▪Click Add new… if you want to add a phase. ▪
+▪To change the order of phases, change the numbers in the Authoriz ation  phase column and click ▪
+Update .
+Select a phase to de fine  authorizers and settings.Determining number of required approvals
+To set authoriz ation  thresholds for a managed group :
+1.Navigate to the Managed group in f ormation  page  (on page 590). 1.
+2.Click the Authoriz ation  tab. 2.
+Select a phase if phased authoriz ation  is enabled.
+3.Type a value for the:3.
+▪Minimum number of authorizers – A value of 0 means requests for the resource are auto- ▪
+approved.
+The default value is set by the MIN AUTHORIZERS  policy.
+▪Number of denials before a change request is terminated – A resource request is canceled when ▪
+this number of authorizers deny it, as long as the Minimum number of authorizers has not been
+reached.
+4.The default value is set by the MAX REJECTIONS  policy. 4.
+5.Click Update . 5.
+Manually assigning s t atic  authorizers
+To assign s t atic  authorizers to a managed group :
+1.Navigate to the Managed group in f ormation  page  (on page 590). 1.
+2.Click the Authoriz ation  tab. 2.
+Select a phase if phased authoriz ation  is enabled.
+3.Click Select... at the bottom  of the Authorizers table. 3.
+4.Search for, or enable the checkboxes next to the authorizers that you want to assign.4.
+5.Click Select at the bottom  of the page. 5.
+Assigning authorizers by user class
+To assign authorizers to a managed group based on user class:
+1.Navigate to the Managed group in f ormation  page  (on page 590). 1.
+2.Click the Authoriz ation  tab. 2.
+Select a phase if phased authoriz ation  is enabled.
+The Users must be in the following user classes table allows you to de fine  membership criteria.
+3.To de fine  membership criteria: 3.
+▪Select e xisting  user classes: Click Select... and enable the checkboxes for the user classes you want ▪
+to add, then click Select .
+▪Create new user classes: Click 
+ Add new… . See Adding user classes  (on page 738) for full details ▪
+on how to create a new user class.
+4. Con figur e  P articipan t  mapping for each user class that you add. 4.Select and create user classes until  you have de fined  membership.
+5.If your membership criteria includes multiple  user classes, de fine  whether users are required to match 5.
+All of the user classes or Any of the user classes .
+ Removing users from membership
+To remove users from membership, you can:
+1.Edit user classes to change the participan ts. 1.
+2.Delete user classes from the membership criteria.2.
+a.Navigate to the membership criteria  page where user classes are listed. a.
+b.Enable the checkbox next to the user classes you want to delete.b.
+3.Click Delete . 3.
+Using group owners as authorizers
+Rather than assigning authorizers manually, you can c on figur e  Bravura Security Fabric  to aut omatic ally
+add group owners as authorizers. Bravura Security Fabric  determines group owners using:
+▪The idtrack  (on page 2431)  utility .  This program can detect: ▪
+▪The group owner▪
+Group owners can be either a single user or a group. If a group owner is a group, and the group
+owner is assigned as an authorizer, then all its members and its child group’s members will be
+added as group authorizers.
+▪The users added to and removed from the group▪
+▪Which accounts were added and deleted▪
+▪Which groups have been added and deleted▪
+▪The network resource management plugin. This plugin determines group owners by examining the▪
+group’s c on figur ation  on the target system.
+▪The group owners selection  plugin. This plugin is used in addition  to the resource management plugin. ▪
+It can:
+▪Replace the assigned owners.▪
+▪Add additional  owners. ▪
+▪Set owners for resources that have no owners assigned.▪
+Before you begin:
+▪Ensure that the Minimum number of authorizers  is greater than 0. ▪
+▪Ensure that all pot ential  group owners have email addresses. ▪
+▪Set the Managed group/Network resource target type for the target system on which the group ▪
+resides.
+This setting  determines the network resource management plugin to run. See Con figuring  general
+options  (on page 494) for details.
+To c on figur e  Bravura Security Fabric  to aut omatic ally  add group owners as authorizers:1.Navigate to the Managed group in f ormation  page  (on page 590). 1.
+2.Enable the Aut omatic ally  add group owners as authorizers checkbox. 2.
+3.Update other group options  as required  (on page 591). 3.
+4.Click Manage if the group is not already managed; otherwise, click Update . 4.
+Group owner selection  using a plugin
+Generally, Bravura Group  determines the owners of a particular  group by examining the group’s
+c on figur ation  on the target system. This is done in real time  using a network resource plugin such as
+nrsmb  or nrcifs .
+You can also write a group owner selection  plugin to do the following:
+▪Replace the assigned owners returned by nrsmb or nrcifs . ▪
+▪Add additional  owners for the user to select. ▪
+▪Set owners for resources that have no owners assigned.▪
+Any owner returned by the plugin will have the same requirements of an authorizer. If the owner is new,
+Bravura Group  adds the owner as a s t atic  authorizers and maps him to the Bravura Group object.
+Do not specify a user that is already a owner of a group. This will create duplicate owner entries for the
+group.
+Group owners are not necessarily the users who will authorize requests for a group. The IDSYNCH AUTH
+CRITERIA MOD PLUGIN may be c onfigured  to alter the list of authorizers at the time  that the W orkflo w
+Manager Service processes a request.
+To use a group owner selection  plugin:
+1.Click W orkflo w  > Options  > Plugins . 1.
+2.Type the name of the plugin program or PSLang script in the IDACCESS OWNERS PLUGIN  field. 2.
+3.Click Update . 3.
+There are no shipped plugins to use with this plugin point. A sample script, idaccessauthmod.psl ,
+is included in the samples\ directory. See more in f ormation  on how to write your own plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The plugin is run by View and update pr ofile  (IDR) module when users view resource details or submit
+requests to modify group memberships in Bravura Group .
+Input
+Input passed to the plugin is as follows:
+"" "" = {  "requester" = "<profile ID>" # The profile ID for the person submitting the request.
+  "resourceid" = "<resource ID>" # The resource ID of the resource being viewed.
+  "resourceunc" = "<network path>" # The UNC network path that is the groups are a part of.
+  "group" "<long ID of the group>" = {
+    "desc" = "<group desc>" # Description of the group
+    "hassubgroups" = "<true|
+false>" # Indicates if the group has members that are groups.
+    "member" = "<true|
+false>"  # Indicates the recipient's current membership status.
+    "owners" "" = { # Existing owners
+      "owner" = "<profile ID>" # 0 or more
+    }
+    "perm" "" = { # Permissions of the group for the resource selected.
+      "read" = "true" # present if the group has read permission to the resource.
+      "write" = "true" # present if the group has write permission to the resource.
+    }
+  } # 0 or more
+  "recipient" "<profile ID>" = {  # The recipient of the request.
+    "account" = "<account ID>" # The account ID that the groups could effect.
+  }
+}
+The following is an example of the input sent to the plugin program:
+"" "" = {
+  "requester" = "CLARKDAV"
+  "resourceid" = "PUB"
+  "resourceunc" = "\\\\ADSRV1\\PUB\\LEGAL"
+  "group" "CN=Management,OU=Groups,OU=IDM,DC=example,DC=local" = {
+    "desc" = ""
+    "hassubgroups" = "true"
+    "member" = "false"
+    "owners" "" = {
+      "owner" = "BanksH"
+    }
+    "perm" "" = {
+      "read" = "true"
+    }
+  }
+  "group" "CN=Sales,OU=Groups,OU=IDM,DC=example,DC=local" = {
+    "desc" = ""
+    "hassubgroups" = "false"    "member" = "false"
+    "owners" "" = {
+    }
+    "perm" "" = {
+      "read" = "true"
+    }
+  }
+  "recipient" "CLARKDAV" = {
+    "account" = "ClarkDav"
+  }
+}
+Output
+With the addition  of extra or replacement owners, the output should mirror the input to the plugin. The
+plugin output only a ff ects  the owners assigned to the r espectiv e  group.
+Output passed from the plugin is as follows:
+"" "" = {
+  "errmsg" = "<message>" # Error message returned by the plugin
+  "retval" = "0"  # Mandatory; zero is success and non-zero is failure.
+  "group" "<long ID of the group>" = {
+    "desc" = "<group desc>" # Description of the group
+    "hassubgroups" = "<true|
+false>" # Indicates if the group has members that are groups.
+    "member" = "<true|
+false>"  # Indicates the recipient's current membership status.
+    "owners" "" = { #  KVGroup that overrides the list of owners for the group
+      "owner" = "<profile ID>"   # Each owner is listed once.
+    }
+    "perm" "" = { # Permissions of the group for the resource selected.
+      "read" = "true" # present if the group has read permission to the resource.
+      "write" = "true" # present if the group has write permission to the resource.
+    }
+  } # A group for each one sent on input.
+}
+The following is an example of the expected output:
+"" "" = {
+  "errmsg" = ""
+  "retval" = "0"  # Success
+  "group" "CN=Management,OU=Groups,OU=IDM,DC=example,DC=local" = {    "desc" = ""
+    "hassubgroups" = "true"
+    "member" = "false"
+    "owners" "" = {
+      "owner" = "BanksH"
+      "owner" = "SMITHBO"
+    }
+    "perm" "" = {
+      "read" = "true"
+    }
+  }
+  "group" "CN=Sales,OU=Groups,OU=IDM,DC=example,DC=local" = {
+    "desc" = ""
+    "hassubgroups" = "false"
+    "member" = "false"
+    "owners" "" = {
+      "owner" = "SMITHBO"
+    }
+    "perm" "" = {
+      "read" = "true"
+    }
+  }
+}
+.
+Tracking changes to group membership
+You can c on figur e  Bravura Security Fabric  to track changes to group membership in managed groups on
+Activ e  Directory and LDAP Directory Service target systems.
+When the Track changes option  is c on figur ed  for a group, Bravura Security Fabric  compares the new
+group membership in f ormation,  extracted from the target system during auto discovery , with data in the
+Bravura Security Fabric  database, and creates a diff set. Bravura Security Fabric  can c on figur ed  to
+propagate changes on target systems or submit requests via Bravura Security Fabric 's w orkflo w  system.
+You can c on figur e  the default for this setting  with AUTO TRACK MGROUP in the Resources >  Options
+menu. If the setting  is enabled, new groups that are managed will use this setting  unless overridden.
+You can also set this option  on the target system in f ormation  page so that all groups on the target system
+are tracked.
+The tracked changes are viewable in reports as part of each user’s pr ofile  history.
+See Automated user adminis tr ation  (on page 2424) for more in f ormation.Handling out-of-band changes
+Out-of-band changes happen when a user or a group is added to or deleted from a managed group
+outside of Bravura Security Fabric . Tracking changes to group membership allows Bravura Security Fabric
+to monitor managed groups for out-of-band additions  or deletions,  then aut omatic ally  submit a request
+undo or redo the change via the w orkflo w  system.
+Note: When out-of-band settings  are fir s t c on figur ed,  users or groups who are
+already managed group members are not detected as out-of-band
+additions.
+To act on out-of-band changes to group membership in a managed group:
+1.Navigate to the Managed group in f ormation  page  (on page 590) for the group. 1.
+2.Enable the Track changes checkbox. 2.
+3.From the drop-down list, select an action  to: 3.
+▪Detect out-of-band additions  and aut omatic ally  generate a w orkflo w  request ▪
+▪Detect out-of-band deletions  and aut omatic ally  generate a w orkflo w  request ▪
+The default behavior is to take no action.  Bravura Security Fabric  can either submit a request to
+undo the change, or undo the change then submit a request to redo the change via the Bravura
+Security Fabric  w orkflo w  system.
+4.Click Update . 4.
+5. Con figuring  group-level authoriz ation  (on page 592). 5.
+6.Click Manage the system > W orkflo w  > Options  > Aut omation . 6.
+7.Type a pr ofile  ID for the OOB REQ GROUP JOIN REQUESTER and OOB REQ GROUP LEAVE REQUESTER . 7.
+This will be the ID of the requester on all aut omatic ally -submitted  requests to add or remove users or
+groups from managed groups.
+8. Optional:  Con figur e  event actions  for out-of-band changes to managed groups. See Automated 8.
+w orkflo w  events that launch interface programs  (on page 1534), Automated w orkflo w  events that
+launch interface programs  (on page 2446)  for details.
+9.Run auto discovery . 9.
+When auto discovery  is finished,  c on figur ation  is complete. Now if any out-of-band changes are made to
+group membership, then they will be detected the next time  auto discovery  is run. When an out-of-band
+addition  to the group is detected:
+▪A request is generated for the out-of-band user or group or join or leave the group. This request is▪
+sent to the group authorizer.
+▪An email is sent to the recipient (out-of-band user).▪
+▪An email is sent to the group authorizer.▪
+The content of these email messages can be customized using the following tags:
+▪EM_WORKFLOW_REQ_INITIAL_AUTHORIZER_NEEDAUTHOOB_CONTENT_PRIMARY – This is the email▪
+body that is sent to the group authorizer when a request is generated to add or remove the out-of-
+band user or group.

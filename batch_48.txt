@@ -1,0 +1,254 @@
+Batch notific ation  scheduled job settings
+Option Description
+Enabled Use this to turn on the scheduled job.
+Run this job on this Bravura Security
+Fabric  serverSelect this radio button  if you want the job to run on the current server
+Run this job on all Bravura Security
+Fabric  serversSelect this radio button  if you have multiple  Bravura Security Fabric  servers
+and want the job to run on all servers.
+Repeat type Select the frequency of the scheduled job using the drop-down list.
+Depending on the repeat type, set scheduling options:
+▪Run once  – you must select a Date and time  to run this job. Click the ▪
+Date and time  to run  field  to choose the date and hour. To edit the
+minutes enter a time  in the HH:MM format.
+▪Daily – you must select which Days to run this job by selecting  either ▪
+Every day or Only on weekends . Enter a Time to run  in HH:MM format.
+Select a Job time  range (see below).
+▪Weekly – you must Choose the days of the week to perform this task. ▪
+Enter a Time to run  in HH:MM format. Select a  Job time  range  (see
+below).
+▪Monthly – you must Choose the days of the month to perform this ▪
+task . You must Choose which months to perform this task , all are
+selected by default. Enter a Time to run in HH:MM format. Select a Job
+time  range (See below).
+▪Quarterly - you must select a Period mode , Period start date and time , ▪
+Last day of the month , and/or specify the month/week/day and Time to
+run. There are no required options,  but it won't be scheduled for a time
+period if none are chosen.
+▪Semi-annually - you must select a Period mode , Period start date and ▪
+time , Last day of the month , and/or specify the month/week/day and
+Time to run . There are no required options,  but it won't be scheduled
+for a time  period if none are chosen.
+▪Annually - you must select a Period mode , Period start date and time , ▪
+Last day of the month , and/or specify the month/week/day and Time to
+run. There are no required options,  but it won't be scheduled for a time
+period if none are chosen.
+Note: The default Time to run is set by Manage the system > Modules >
+Options  > DEFAULT SCHEDULE TIME.Option Description
+Job time  range Specify if you want your job to always run, to run for a specific  length of
+time,  or for a specific  number of it er ations  by selecting  one of the following
+from the drop-down list:
+▪Always run  – Scheduled job always runs as specified. ▪
+▪From specified  start date to end date – Click the da t e/time  fields  to ▪
+select a date and hour for the Start date and End date . To edit the
+minutes enter a time  in the HH:MM format.
+▪For number of it er ations  from specified  start date – Click the da t e/time ▪
+field  to choose a date and hour for the Start date.  To edit the minutes
+enter a time  in the HH:MM format. Specify a Number of it er ations  to
+run. Your job will only run for the number of it er ations  you enter here.
+T esting  batch notific ations
+Bravura Security Fabric  uses the ntftrigger  program to communicate with the Notific ation  Service
+and send out notific ations.  Scheduling a batch notific ation  creates a scheduled job to run ntftrigger .
+You can use this program to test notific ations  rather than wait for the scheduled time.
+To test batch notific ations,  on the Batch notific ation  in f ormation  page for a notific ation,  click the
+Schedule tab, then select 
+ Run now .
+Alt ernativ ely ,  type on the command line, in the util directory:
+ntftrigger.exe -runbatch -notifyid <notification ID> -increment P 
+See usage in f ormation  for ntftrigger
+Web notific ations:
+ntftrigger.exe -listusernotifications -user <user ID> [-
+targetid <target ID>]
+                 [-svcid <SVCID>] [-timeout <N>] [-threads <N> ]
+                 [-increment I|N|P]
+ntftrigger.exe -getusernotification -notifyid <notifyid> -
+user <user ID>
+                 [-targetid <target ID>]
+                 [-svcid <SVCID>] [-timeout <N>] [-threads <N>]
+                 [-increment I|N|P]
+Batch notific ations:
+ntftrigger.exe -runbatch -notifyid <notifyid> [-targetid <target ID>]
+                 [-svcid <SVCID>] [-timeout <N>] [-threads <N>]
+                 [-increment I|P]Argument Description
+-g e tusernotific ation Get a specified  web notific ation  for a specified  user.
+-increment <increment> User notific ation  increment indicator:
+I - increment
+N - no increment
+P - peek - used for a dry-run or test
+The default for web notific ations  is N. The N indicator
+does not apply to batch notific ations.
+-lis tusernotific ations List all web notific ations  for a specified  user.
+-notif yid  <notif yid> Notific ation  ID.
+-runbatch Run a specified  batch notific ation.
+-svcid <svcid> SVCID that the Notific ation  Service (p sntfs v c)  uses. If not
+specified,  it is read from the instance’s registry.
+-t ar g etid  <t ar g etid> Target system ID for the specified  account.
+-threads <threads> Number of threads to send concurrent requests. If not
+specified,  the default is 1.
+-timeout  <timeout> Connection  timeout  value. If not specified,  it is read from
+the instance’s registry.
+-user <user> Pr ofile  ID if TARGETID is not specified;  account/longid on
+TARGETID otherwise.
+Examples
+1.To list web notific ations  for a specific  user: 1.
+    ntftrigger.exe -listusernotifications -user brownwi
+2.To list a specific  web notific ation  for a specific  user: 2.
+    ntftrigger.exe -getusernotification -notifyid WEBNOTE -
+user brownwi
+3.To run a batch notific ation: 3.
+   ntftrigger.exe -runbatch -notifyid BATCHNOTE
+4.To dry-run a batch notific ation,  use the -increment P  option.  The batch notific ation  proceeds as 4.
+usual with the compliance plugin and will return non-compliant users. The users' notific ation  status
+will not be updated and the reminder plugin and action  plugin will not be executed. The option  is used
+to test the notific ation.
+   ntftrigger.exe -runbatch -notifyid BATCHNOTE -increment P
+for further details.
+R es t arting  batch notific ations
+To clear records of notific ations  sent for a particular  batch notific ation,  click Restart  at the bottom  of the
+Batch notific ation  inf ormation  page.You may want to do this, for example, if you change the maximum number of messages to send or other
+c on figur ation  settings.
+Setting  pr e-c onditions
+Once you have added a notific ation,  you can set any number of pr e-c onditions  for notif ying  users based
+on e v aluating  user s t atistics  stored in the USERSTAT table or users’ membership in user classes. This may
+improve performance by sending notific ations  to a subset of users.
+To de fine  pr e-c onditions  based on user s t atistics:
+1.On the Notific ation  in f ormation  page for a notific ation,  click the Pr e-c onditions  tab. 1.
+2.Type the name of the USERSTAT tag . 2.
+3.Select the comparison rule to determine that the tag value Must or Must not : 3.
+▪be equal to▪
+▪be less than▪
+▪be greater than▪
+▪exist▪
+4.Type the value used to evaluate the tag.4.
+5.Select the value type.5.
+6.Click Update . 6.
+To de fine  pr e-c onditions  based on user classes:
+1.On the Notific ation  in f ormation  page for a notific ation,  click the Pr e-c onditions  tab, then the User 1.
+classes link.
+2.Click Select... to select e xisting  user class or click on Add new... to create new user class. 2.
+See Adding user classes  (on page 738) for details on cr eating  a new user class.
+3.Click Update . 3.
+Adding user -specific  variables in notific ation  messages
+When you c on figur e  notific ation  plugins, you can include variables that expand to user -specific
+in f ormation  in messages shown to users. The following variables are available:
+Option Description
+%USERID% The Bravura Security Fabric  pr ofile  ID
+%USERNAME% The user’s full name
+%MGRID% The user ID of current user’s direct manager
+%MGRNAME% The full name of current user’s direct manager
+%MGREMAIL% The email of current user’s direct manager
+%NREMIND% The number of notific ations  the user has received to date; for example,
+This is notification %NREMIND% of 4.Option Description
+Only available for password expiry compliance check
+%DAYS% The number of days to password expiry; for example, Your password
+will expire in %DAYS% days.
+%EXPACCT% The account, whose password has expired or is about to expire, that
+triggers notific ation;  for example,  JANEAD1/test000
+%EXPACCTHOST% The target system of the account that triggered this notific ation
+%EXPACCTLONGID% The name of the account that triggered this notific ation
+%EXPTIME% The password expiry time  for the corresponding account in %EXPACCT%.
+%EXPINFO% passwords have expired or are about to expire; for example, JANEAD1/
+test000 - 6/9/2013 2:29 PM, JANEUNIX1/test001 -
+6/4/2013 5:48 PM.
+Only available for USERSTAT tag compliance check
+%USTATTAG% The USERSTAT tag that the compliance or batch plugin is using
+%USTATVAL% The USERSTAT value for the user
+Adding macros to messages
+You can use M4macros that expand to text strings, in the language of the user, in notific ation  messages.
+The macros can include HTML code to enhance the display of message content. The M4 system and
+requirements are detailed in the CUSTOMIZATION  (on page 3471).
+The p sntfs v c.m4  file in <Program Files path>\Bravura Security\Bravura Security Fabric\<instance>\ design\src\z\
+includes the following pr e-de fined  macros:
+Macro tag name English text
+EXPIRY_NONCOMP_MSG Your password will expire in [%DAYS%] days.
+EXPIRY_THANKS_MSG Thank-you for changing your password.
+EXPIRY_ACTION_MSG You have exceeded the maximum number of reminders
+for this notific ation,  no further reminders will be sent.
+QAREG_NONCOMP_MSG You have not completed your question  & answer
+r egis tr ation.
+QAREG_THANKS_MSG Thank-you for c ompleting  your question  & answer
+r egis tr ation.
+QAREG_ACTION_MSG You have exceeded the maximum number of reminders
+for this notific ation,  no further reminders will be sent.
+To use M4 macros, type the corresponding tag, beginning with !!!, in the relevant field  in the Con figur e
+notific ation  plugins pages; for example:
+!!!EXPIRY_NONCOMP_MSGAfter  you click Update, the Displayed value of the M4 macro is shown as it appears in the message sent
+to users. You can use this to verify that you have entered the correct macro without triggering a
+notific ation  message. For example, the tag shown in the example above has the following Displayed
+value:
+Your password will expire in [%DAYS%] days.
+To learn how to:
+▪Add HTML code to enhance the display of the message content, see Change the layout  (on page ▪
+3496).
+▪Modify the text de fined  by the m4 macros, see Altering text  (on page 3485). ▪
+The message subject line for batch notific ations  can contain macros that expand to text, but you
+cannot include HTML code in the subject.
+Adding custom tags
+To add customized messages to notific ation  plugin message fields:
+1.Create psntfsvc.m4 in <instance>\design\\custom\ , if it does not already exist. 1.
+2.Add lines to the custom file in the following format: 2.
+!!!<MESSAGE_TAG>
+<text>
+where <text>  can include HTML code and M4 macros.
+For example:
+!!!SIMPLE_MESSAGE_TAG
+Have a <strong>good</strong> day.
+!!!TRANSLATABLE_MESSAGE
+CUSTOM_MACRO_1
+CUSTOM_MACRO_2
+CUSTOM_MACRO_3
+3.To de fine  text in multiple  languages, create the <lang >-<locale >-language.kvg file for each 3.
+supported language in <DESIGN>\custom\ if it does not already exist.
+4.Edit the macro de finitions  as required, in the format: 4.
+ 
+"CUSTOM_MACRO_1" "" = { 
+  "text" = "This is the first line of the message" 
+} 
+"CUSTOM_MACRO_2" "" = { 
+  "text" = "... the second" 
+} 
+"CUSTOM_MACRO_3" "" = {   "text" = "...and the third.<br>Signed, your company" 
+} 
+5.In the relevant field  in the Manage the system  (PSA) module Con figur e  notific ation  plugins  pages, type 5.
+the corresponding tag beginning with !!! from psntfsvc.m4 ; for example, in Message to display
+to a non-compliant user for Set USERSTAT tag , type:
+!!!TRANSLATABLE_MESSAGE
+6.Recompile and install your skin (*.z) files by running make.bat in the design directory. 6.
+See also:
+See the CUSTOMIZATION  (on page 3471) for more in f ormation.Part II ResourcesTarget systems
+Bravura Security Fabric  manages access on and authentic a t es  to shared computer systems, referred to as
+target systems . Example target systems include oper ating  systems, databases, directories, and
+applic ations.  Bravura Identity  also uses target systems to manage inventory objects.
+Bravura Security Fabric  relies on softw ar e  components called connectors , which are installed with the
+Connector Pack :
+▪User management connectors, which can list users, manage accounts, groups, passwords, and other▪
+objects on a target system
+User management connectors may include:
+▪An agent binary located in the Bravura Security Fabric  instances agent directory. product ▪
+administrator s can use their process names to troubleshoot functionality  by finding  them in Bravura
+Security Fabric  logs or the Windows’ list of running processes.
+▪Any libraries used by the agent. This may include libraries in <Program Files>\Common Files▪
+\Bravura Security\, Windows or VisualC++ libraries and the various target libraries, SDKs, Python
+interpreter, and so on.
+▪In some cases, such as Unix systems, a listener installed on the target system.▪
+▪Ticket management connectors, also known as interface programs or exit trap programs, that can▪
+trigger updates on target systems when certain events occur on the Bravura Security Fabric  server
+Not all target systems are capable of supporting  all connector operations,  and some operations  are
+not available through the Bravura Security Fabric web interface. See Connector operations  for a full
+list and e xplanation  of each connector operation.
+Bravura Security Fabric  can connect and support oper ations  on a target system when you register the
+system using the Manage the system  (PSA) module. Optionally ,  you can register IT Service Management
+(Ticket) systems to c on figur e  event actions.  The security bene fit  of registering IT Service Management
+(Ticket) systems is that all sensitiv e  in f ormation  (server address, admin cr edentials)  is aut omatic ally
+passed to the tick e t  management connector, rather than stored in a c on figur ation  file in plain text.
+To add a target system to Bravura Security Fabric  (that is, to register it) you must provide the following
+in f ormation:
+▪The target system type▪
+▪The target system description ▪
+▪The target system address / c onnection  details ▪
+▪target system administrator  cr edentials ▪
+Additionally  you should modify the default c on figur ation  and policy settings  to match your target system
+and business requirements. For example, you may want to designate the target system as a source of
+pr ofile  IDs, or c on figur e  target-system-level authoriz ation.
+Bravura Privilege can also add target systems using the auto discovery  process. During auto discovery , all
+discovered systems are saved in the Manage the system  (PSA) module ( Manage the system > Resources >

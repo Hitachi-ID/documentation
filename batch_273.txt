@@ -1,0 +1,364 @@
+Argument Description
+-outfile  <fileName> Print all violations  that did not get submitted,  along with
+the error message returned, to this file.
+-requester <requester> Submits requests using the specified  user ID. The default
+is the user specified  by the system variable RBAC AUTO
+PROPAGATE REQUESTER.
+-resourceenforce <0-2> ∙0 – check all resources
+1 – only check resources that are under enforcement
+(default)
+2 – only check resources not under enforcement
+-returnbatch Returns batch IDs of successfully submitted  requests.
+-roleonly Only de ficits  will be checked.
+-skipenforce Bypasses RBAC ENFORCEMENT ENABLED, so rbacenforce
+can check for violations  and submit requests, even if
+RBAC ENFORCEMENT ENABLED is disabled.
+-submit Submit requests for users with surplus and/or de ficit
+violations.
+-userenforce <0-2> 0 – check all users
+1 – only check users that are under enforcement (default)
+2 – only check users not under enforcement
+-userid <userID> Specify a user on which to check violations.  This defaults
+-userenforce to 0.
+-users <fileName> Specify a file containing a list of pr ofile  IDs on which to
+check violations.  In the file, each user should be in its
+own line. This defaults userenforce to 0.
+Examples
+1.To check for any violation: 1.
+rbacenforce.exe
+2.To check and make a request to resolve violations: 2.
+rbacenforce.exe -submit
+3.To check a single user:3.
+rbacenforce.exe -userid <userID>
+4.To check all resources and users, regardless of whether they are under enforcement or not, and if4.
+RBAC ENFORCEMENT ENABLED is disabled:
+rbacenforce.exe -skipenforce -userenforce 0 -resourceenforce 0
+for command-line usage and examples.
+Checking inventory levels
+If the CHECK INVENTORY PLUGIN inventory option  is enabled, Bravura Security Fabric  runs a plugin to
+check the number of inventory objects available for provisioning. If inventory levels fall below a certainlevel, Bravura Security Fabric  notifies  the responsible inventory managers. This job is run at the end of
+auto discovery .
+Loading user class cache
+At the end of the auto discovery  process, Bravura Security Fabric  runs the loaduccache -load -
+hours 0  command. This command loads user class and user class point cache  (on page 804) for all
+caches.
+The caching that is evaluated on the Bravura Security Fabric  server is replicated to other Bravura Security
+Fabric  servers with Database Service r eplic ation.
+See loaduccache
+The loaduccache program caches user classes and user class points for single participan ts.  The
+program is run aut omatic ally  at the end of auto discovery to load user class and user class point cache for
+any expired caches ( loaduccache -load -expired ).
+In a replicated environment, cache rec alculation  can only be performed on the instance which runs
+psupdate . (on page 2715)
+Usage
+loaduccache.exe  -clearall | -list | -listuc | -listucp |
+      -load [-expired | -hours <hours> | -ucp <pointid>  <category> <phase> | -userclass <user class> ] |
+      -clear [-expired | -hours <hours> | -ucp <pointid>  <category> <phase> | -userclass <user class>]
+Argument Description
+-clearall Completely clear the cache
+-list List the cache validity for all user classes and user class
+points that were cached at least once
+-listuc List all user classes available for caching
+-listucp List all user class points available for caching
+-load Load the cache for user classes and/or user class points
+given load criteria
+-clear Clear the cache for user classes and/or user class points
+given the clearing criteria
+-threads Use this many threads to recalculate user class caches.
+The default thread number is 4.
+-expired Load/Clear user classes and user class points whose
+cache is expired (based on the value set for USERCLASS
+CACHE EXPIRY). When used with -load, loaduccache also
+loads invalidated or cleared user classes and user class
+points.Argument Description
+-hours <hours> Load/Clear user classes and user class points whose
+cache is older than the hours specified.
+-ucp <pointid>  <category> <phase> Load/Clear the specified  user class point cache.
+-userclass <user class> Load/Clear the specified  user class cache.
+When a load argument is used for a user class, user class
+points already cached are also recalculated.
+Examples
+1.To load all user classes and user class points:1.
+loaduccache.exe -load -hours 0
+2.To load all user classes and user class points with 6 threads:2.
+loaduccache.exe -load -hours 0 -threads 6
+3.To clear all user classes and user class points:3.
+loaduccache.exe -clearall
+4.To load a user class:4.
+loaduccache.exe -load -userclass HQUSERS
+5.To load a user class point:5.
+loaduccache.exe -load -ucp USERGROUP HQGROUP 1
+6.To list cached user classes and user class points:6.
+loaduccache.exe -list
+for command-line options  and examples.
+Submitting  aut omatic  assignment requests
+If aut omatic  assignment  (on page 2442) is c on figur ed,  Bravura Security Fabric  runs the autores -all
+-submit  command. The command calculates the aut omatic  assignment for c on figur ed  roles and groups
+and submits requests based on results.
+See autores
+Use the autores program to determine the aut omatic  role and group de ficits  and surpluses and issue
+requests. When aut omatic  assignment is c on figur ed,  the program is run aut omatic ally  at the end of the
+auto discovery process.
+Usage
+autores.exe -all [-submit | [-limitsubmit <max submissions> | -
+outfile <outfile> ] | -listfile <listfile> ] [-threshold <N>]
+autores.exe -group <targetid> <groupid> [-submit | [-
+limitsubmit <max submissions> | -outfile <outfile> ] | -
+listfile <listfile> ] [-threshold <N>]autores.exe -role <role id> [-deleteonly | -submit | [-
+limitsubmit <max submissions> | -outfile <outfile> ] | -
+listfile <listfile> ] [-threshold <N>]
+autores.exe -inputfile <inputfile> [-submit | [-
+limitsubmit <max submissions> | -outfile <outfile> ] | -
+listfile <listfile> ] [-threshold <N>]
+Option Description
+-all Act on all resources.
+-group <t ar g etid>  <groupid> Act on the specified  target system group.
+-role <role id> Act on the specified  role.
+-deleteonly Aut omatic  unassignment to a specified  role.
+-inputfile  <inputfile> File containing changes to submit.
+-submit Submit the requests for changes.
+-limitsubmit <max submissions> Limit the number of requests generated. Will override
+AUTO ASSIGNMENT MAXSUBMIT DEFAULT setting.
+-listfile  <listfile> File to output violations  to (default is autores.kvg).
+-outfile  <outfile> Output file for printing  all violations  that did not get
+submitted  along with the error message returned.
+(default is aut or es-unsubmitted.kv g)
+-threshold <N> Do not submit any request if number of requests to be
+submitted  exceeds <N>. If N= 0, no threshold. Using this
+setting  overrides the AUTO ASSIGNMENT THRESHOLD
+system variable.
+Examples
+1.To evaluate all the resources with aut omatic  assignment c on figur ed  and submit requests 1.
+autores.exe -all -submit
+2.To evaluate all the resources with aut omatic  assignment c on figur ed,  output to a dryrun.kvg file 2.
+without submitting  requests
+autores.exe -all -listfile dryrun.kvg
+3.To submit the dryrun.kvg file 3.
+autores.exe -submit -inputfile dryrun.kvg
+4.To evaluate the role with aut omatic  assignment c on figur ed  and submit requests 4.
+autores.exe -role GENERAL -submit
+5.To evaluate the role with aut omatic  unassignment c on figur ed  and submit requests 5.
+autores.exe -role GENERAL -deleteonly -submit
+6.To evaluated a group with aut omatic  assignment c on figur ed  and submit requests 6.
+autores.exe -group AD FINANCE -submit7.To evaluate multiple  groups and roles with aut omatic  assignment c on figur ed  and submit requests 7.
+autores.exe -group AD FINANCE -group AD HR -role GENERAL -
+role HELPDESK -submit
+for command-line options  and examples.
+Synchronizing server files  and registry keys
+In a replicated environment, Bravura Security Fabric  can synchronize all the files and registry keys
+between all nodes during auto discovery . You control this using the Maintenance > Options  > PSUPDATE
+FILE REPLICATION  setting.  When switched on (by default) psupdate  runs the updinst  program which
+synchronizes the files and registry keys between all nodes in the environment. This job is run at the end
+of auto discovery .
+See updinst
+The updinst program synchronizes files and registry settings  between servers in a multiple-ins t ance
+environment, or a r eplic ation  environment. The program is run during auto discovery when the
+Maintenance > Options  > PSUPDATE FILE REPLICATION  setting  is enabled. This is the default setting.
+This program also collects and synchronizes proxy log files onto the instance server.
+This program is used in c onjunction  with the File R eplic ation  Service ( idfilerep ).
+To determine which files and registry settings  updinst  replicates, there are whitelists and blacklists that
+specify what data to include and what data to omit in the context of file/r egis tr y  r eplic ation  You can write
+an updinst.cfg file to provide additional  c on figur ation.
+A sample of updinst.cfg is located in the samples directory. This c on figur ation  file must be placed in
+the \<instance> \ p sc on fig \ directory before it can be used by the File R eplic ation  Service. Use this
+c on figur ation  file to control which files and registry settings  are replicated to other instances (whitelist)
+and which are not replicated (blacklist). The whitelist settings  override blacklist settings.
+All file and c onfiguration  modific ations  should be done on the same server (the primary). When
+attempting  to run updinst from a node other than the primary, an error will occur, and the operation
+will be aborted. In extreme circumstances there is an option  to force external data store replic ation  (-
+extdb -forcerun) from a secondary node; however that should be done only when that database was
+corrupted on the primary (and its backups that are created every time  the external data store is updated,
+were also corrupted) but the database, or a backup, survived on a secondary node. If updinst is run
+from more than one server, or if file or registry changes are made on secondary nodes, it is possible for it
+to overwrite newer files or settings  that exist on secondary nodes. If a server with missing files runs
+updinst , that will remove those same files on all other instances.
+Do not attemp t  to replace Database Service ( iddb ) files using updinst or the File R eplic ation  Service.
+Updating  the Database Service and related files (such as iddbmssql.dll) must be done manually on all
+instances. This only applies to the Database Service service. All other services can be updated using the
+File R eplic ation  Service. To update the Database Service files manually, shut down all services on the
+instance, back up all services, and then replace the Database Service files.If a problem occurs during file r eplic ation  then a notific ation  email is sent to the administrator, and the
+FILE REPLICATION FAILURE event is triggered.
+Usage
+updinst.exe [-list] | [-showconfig] |
+  [-synchfile] [-syncreg] [-globalcp] [-serverid <serverid>...] [-dry-
+run] |
+[-extdb[-forcerun]] | [-getlogs] [-proxyfile <proxylist.csv>] [-
+removelogs]
+Argument Description
+-dry-run Only show what would be done without making changes.
+-getlogs Retrieve and synchronize all logs from all proxies
+c on figur ed  onto the instance server. Logs will be under
+their r espectiv e  \Logs\proxy_<proxy_IP> directory.
+-globalcp Synchronize the global connector pack in addition  to the
+current instance. Used in c onjunction  with the -s yncfile
+argument.
+-list List file r eplic ation  services involved and exit. Display the
+status of each service, node ID, address, and port. If the
+service is unreachable, check the c onnection  of the
+Database Service for each server.
+-pr o xy file  <proxylist.csv> Retrieve and synchronize all logs from proxies listed in
+the \<ins t ance>\p sc on fig\pr o xylis t.cs v  file. Logs will be
+under their r espectiv e  \Logs\proxy_>proxy_IP< directory.
+Where proxylist.csv contains a list of proxy IP addresses
+and their ports.
+This is only used in c onjunction  with -getlogs.
+-serverid <serverid> … Synchronize to specified  servers; can be used with
+multiple  server IDs. The server ID can be found using the
+-list argument. If no server is specified,  all servers are
+updated.
+-sho w c on fig Show built-in c on figur ation  and exit.
+-s yncfile Synchronize files to other servers.
+-syncreg Synchronize registry settings  to other servers.
+-extdb Synchronize the extdb tables.
+-forcerun Forces the current node to synchronize the extdb tables.
+-removelogs Remove all previously fetched logs from all proxies. Can
+be used in c onjunction  with -getlogs to remove logs that
+no longer exist on the remote server.
+- filedir  <filedir> Specific  file path from which files are synchronized to
+other servers. This is the r elativ e  path under the
+instance’s main file folder.Argument Description
+-registrydir <registrydir> Specific  registry path from which settings  are
+synchronized to other servers. This is the r elativ e  path
+under the instance’s main registry folder.
+Examples
+1.To show the default c on figur ation  file: 1.
+updinst -showconfig
+2.To show a list of all file r eplic ation  services that are running: 2.
+updinst -list
+3.To synchronize all files and registry settings  on all servers: 3.
+updinst -syncfile -syncreg
+4.To synchronize a specific  file directory on all servers: 4.
+updinst -syncfile -filedir <filedir>
+5.To synchronize multiple  file directories on all servers: 5.
+updinst -syncfile -filedir <filedir1> -filedir <filedir2> ...
+6.To synchronize a specific  registry setting  on all servers: 6.
+updinst -syncreg -registrydir <registrydir>
+7.To run a dry-run on a specific  server: 7.
+updinst -serverid <server id (guid)> -syncfile -syncreg
+8.To update global Connector Pack files: 8.
+updinst.exe -globalcp -syncfile
+9.To collect and synchronize logs from all proxies:9.
+updinst.exe -getlogs
+10. To collect and synchronize logs from all proxies listed in the proxylist file: 10.
+updinst.exe -getlogs -proxyfile <proxylist.csv>
+Where the proxylist.csv contains:
+::proxy, port:: 
+10.0.39.111, 3344 
+10.0.39.121, 3344
+11. To synchronize the extdb tables: 11.
+updinst.exe -extdb
+12. To remove all previously fetched logs: 12.
+updinst.exe -removelogs
+13. To remove logs that no longer exist on the remote server: 13.
+updinst.exe -removelogs -getlogs
+Update updinst c onfig  file
+In the updinst c on fig  file, all file paths are rooted at the backslash immediately after  the
+instance_name directory.Each item in the lists contained in the file is a regular expression (regex).
+While the sample .cfg file contains some entries from the default values built into the updinst binary
+(for regex illus tr ation  purposes), it's recommended that the cfg file actually used contain only new/
+custom values, which do not show up in the four lists when checking the c on figur ation  with no
+updinst.cfg  file in the p sc on fig  directory (it saves on comparisons, and the instance contains a lot of
+files and directories to compare with each declared regex string).
+If the file to add an e x ception  for is script\somefile.py , the most precise regex expression for it is:
+^\\\\script\\\\somefile.py$
+The s t arting  ^ represents the beginning of the string, so it would not match, for example, \samples
+\script\somefile.py.
+Similarly, the trailing $ represents the end of the string, so it won't match, for example, an extension
+like .pyg
+To exclude a whole directory, you can leave the $ off and the expression will match everything in that
+directory: files and other directories with their files.  This default option  for example matches all auto-
+discovered target list files:
+psconfig\\\\discovered
+Each backslash is escaped with a backslash, so \ becomes \\, and since that is itself inside of a KVG
+string, \\ becomes \\\\  (\s would simply escape the s).
+Below is an example that adds blacklisted registry entries and file entries (meaning that they will not be
+sent from the primary to secondary applic ation  nodes).
+# KVGROUP-V2.0  
+"updinst" "cfg" = {  
+}  
+# Registry path blacklist.  Registry paths that match the regular  
+# expressions here are not considered for replication, unless they  
+# appear in regWhitelist.  All paths are relative to the instance  
+# registry root.  Registry keys (and value names) are separated by  
+# double-escaped backslashes (\\\\).
+ "regBlacklist" = { "^IDAPISOAP\\\\endpoints",  
+                     "SENDER_EMAIL",  
+                     "ServerAddress" };
+# File path blacklist. Filesystem paths that match the regular
+# expressions here are not considered for propagation, unless they
+# appear in regWhitelist (see above). All paths are relative to the
+# instance root directory. Directories and files are separated
+# by double-escaped backslashes (\\\\).
+"fileBlacklist" = { "^\\\\psconfig\\\\.*\\.db$";
+"plugin\\\\debug\\\\.*";"design\\\\src\\\\ui.build\\\\.*";
+"design\\\\src\\\\ui\\\\node_modules\\\\.*"
+};
+}
+In the above:
+▪ Blacklisting  these entries ensures that the SENDER_EMAIL  and ServerAddres s are not ▪
+propagated from the primary to the secondaries. These two entries will be unique to each server.
+▪SENDER_EMAIL  system variable, so that each node can be given a separate "From:" field  in ▪
+outgoing emails, to be able to quickly distinguish  what node originates what email.
+▪ServerAddres s bypasses the aut omatic  computer-name de t ection  on each node (for example, ▪
+when iddb detects only the hostname in a node whose OS is not joined to a domain, and Bravura
+Privilege needs to register FQDNs instead - so that link passing between nodes, as in downloading
+recording archives, can succeed the TLS check in IIS)
+▪The entry blacklisting  the IDAPISOAP\endpoints  registry key exists by default in the ▪
+c on figur ation  file, in case each node has to provide diff er en t  SOAP endpoints (directly to the
+hostname, or for zoning purposes).
+▪Most registry changes are system variables listed in the registry section  at Manage the system ▪
+>Maintenance > System variables .
+▪psconfig\*\*.db  is where Bravura Privilege keeps list files from discovered systems in 12.0.0+: by ▪
+default, those files are useful only on the primary node and sending them to replica nodes is a waste
+of resources, especially at the end of each Auto discovery.
+▪For the same reason, check the output of updinst -showconfig  to make sure that the ▪
+psconfig\*.db  files are also blacklisted (and if not, add a blacklist rule for ^psconfig\\\
+\*.db )
+▪Filtering the logs for psupdate or updinst dur ations  can suggest what other large files can be ▪
+excluded from auto discovery if they take too long.
+▪plugin\debug \ is where (mostly c omponentiz ed)  Python scripts using IDMLib-based logging place ▪
+their input/output KVGs and like other log files,  those are usually not needed on secondaries from the
+primary.
+▪design\src\  files should never change after  patching. They are Angular app requirements and ▪
+there is no need for them to be propagated to secondary servers, let alone proxies.
+▪Whitelists trump blacklists. This means if the same item is matched both by a blacklist regex and a▪
+whitelist one, the whitelist wins and the item is propagated.
+▪If an entry is not blacklisted (or if it was by default blacklisted, but is modified  with a whitelist entry): ▪
+▪It copies any files changed on the primary inside the instance folder and subfolders, and it ▪
+overwrites any changes. In other words, it deletes any new files created on the secondary nodes
+and if files are modified  on secondaries, the changes are reverted and not backed up.
+▪It copies any registry changes made on the primary node and overwrites any changes on the▪
+secondary nodes (removes them if they were not on the primary).▪The main Bravura Security Fabric  installer only installs/checks for the 64-bit VC++ redistributables. The ▪
+Connector Pack MSI will install/check for both 32-bit and 64-bit, so do not depend on file pr opag ation
+to copy all the connector pack files over to other nodes and proxies.
+for command-line usage and c on figur ation  options.
+Notif ying  the Bravura Security Fabric  administrator
+The psupdate  program aut omatic ally  sends email notific ation  (on page 412) to the Bravura Security
+Fabric  administrator if:
+▪A command fails or produces a warning.▪
+▪A product administrator exists without a password de fined  in the Bravura Security Fabric  database. ▪
+This situation  can occur, for example, if all target system accounts are unassociated from a product
+administrator  ’s pr ofile.
+Pr e v enting  idle c onnection  shutdown during auto discovery
+Added v12.2.2
+In order to avoid an idle c onnection  shutdown during a long auto discovery process, a keep-alive timer
+for the main instance can be found in the following registry entry:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\iddiscover
+Likewise for any proxy servers:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\psproxy
+In all instances, the keep-alive time  value can be modified  in the following key:
+▪Entry name: KeepAliveTime ▪
+▪Value:  Time in seconds ▪
+▪Data type:  DWORD ▪
+▪Default:  30 ▪
+Gener ating  a c on figur ation  summary file
+At the c ompletion  of auto discovery  Bravura Security Fabric  can write a summary of c on figur ation  settings
+for an instance. The summary is written  to a file called config- <yyyy >-<mm>-<dd>.kvg  in the Logs
+directory. The file can be used by Bravura Security  support to help provide assistance.
+You can control this function  using the Maintenance > Options  > PSUPDATE INSTDUMP  setting.  When
+enabled (disabled by default), psupdate runs the instdump
+The instdump program is run at the end of the auto discovery process and writes a c on figur ation
+summary to a file named c on fig-<y y y y>-<mm>-<dd>.kv g  in the Logs directory. The file can be used by
+Bravura Security support to help provide assistance.
+The psupdate program runs the instdump program when the Maintenance > Options  > PSUPDATE
+INSTDUMP  setting  is enabled (disabled by default).

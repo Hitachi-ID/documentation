@@ -1,0 +1,349 @@
+Option Description
+ Target system group Select the target system group to which this target system belongs. Target
+systems can be grouped in Bravura Security Fabric to apply diff er en t  password
+policies, apply diff er en t  s ynchr oniz ation  rules, or to allow help-desk users to
+manage a subset of target systems.
+Allow users to change
+passwordsSelect this checkbox if you want the connector to change passwords on this
+target system.
+If not selected, the connector does not run, and success is always assumed. The
+target system is not displayed on the results page, and the Password Manager
+service (idpm) does not change passwords on this target system.
+Accounts must be included in all
+password changesSelect this checkbox if this target system must be selected for password
+oper ations.  On web pages which include target system selection,  the selection
+box for this target system is grayed out. Users cannot deselect it.
+This applies only when the target system belongs to a target system group
+where web password change r es trictions  are set to Any number of accounts
+can be selected for a password change  or All accounts are selected for
+password change . The Only one account can be selected for a password
+change  group setting  overrides this target system setting..
+Allow users to unlock accounts Select this checkbox if you want Bravura Pass to manage unlocking accounts on
+this target system. If not selected, accounts on this target system cannot be
+unlocked using Bravura Pass .
+Users must have accounts Select this checkbox if Bravura Security Fabric  users must have an account on
+this target system. This option  is specific  to the Attach  other accounts(PSL)
+module.
+Allow other users to attach
+auto-associated accountsSelect this checkbox to allow a user to attach  a login ID from another user on an
+auto-associated target system, using the Attach  other accounts(PSL) module.
+Allow enabling accounts Currently not in use. The "enabling accounts" privilege is c on figur ed  using user
+access rules  (on page 706) .
+Allow users to detach manually -
+attached  accountsBy default, allowing or disallowing users to detach manually -attached  accounts
+from their pr ofile  is controlled by the PSL ALLOW DELETE  option.  The system
+default is displayed as the “E ff ectiv e  setting ” .  You can override the default
+behavior on individual target systems by selecting  Yes or No from the drop-
+down list.Option Description
+ Pr ofile/r eques t  attribut e
+specifying container DNThe ID of a pr ofile  and request attribut e  to provide a place to prompt the user
+for the destination  container when cr eating  or moving accounts on c on t e x t -
+sensitiv e  target systems.
+Display modules
+Attach  other accounts Select this checkbox if you want users to be able to attach  accounts on this
+target system. If not selected, the target system will not appear on the self-
+service login ID r ec onciliation  page.
+View and update pr ofile By default the target system in f ormation  is listed for user management.
+Deselect to hide the target system on user management pages.
+Change passwords Select this checkbox if you want users to be able to choose to change their
+passwords on this target system. If not selected, the target system will not
+appear on the self-service Change passwords  page. Note that you can still force
+password changes on a target system via s ynchr oniz ation.
+Unlock accounts Select this checkbox if you want a user to be able to unlock their account on
+this target system. If not selected, the accounts on this target system will not
+appear on the self-service Unlock accounts  page.
+Help users > Attach  other
+accountsSelect this checkbox if you want help-desk users to be able to attach  ID on this
+target system to users’ pr ofiles.  If not selected, the target system will not
+appear on the adminis tr ativ e  login ID r ec onciliation  page.
+Help users > Change passwords Select this checkbox if you want help-desk users to be able to change users’
+passwords on this target system. If not selected, the target system will not
+appear on the assisted Password changes page.
+Help users > Unlock accounts Select this checkbox if you want a help-desk user to be able to unlock accounts
+on this target system. If not selected, accounts on this target system will not
+appear on the Help users Unlock accounts  page
+Composing target system addresses
+If you need assistance composing the target system address:
+1.Refer to the appropriate chapter in the Connector Pack Documen t ation  for in f ormation  about your 1.
+target system, including its target type, address syntax, and any additional  c onsider ations.
+2.If the documen t ation  indicates that a script or c on figur ation  file is required, ensure that the file exists 2.
+and is located in the proper directory.3.Navigate to the  Target system in f ormation  page  (on page 489). 3.
+4.Select the appropriate Type . 4.
+5.Click the Change button  next to the Address field. 5.
+6.Provide values for each field  as necessary. 6.
+7.Mandatory fields  are marked with 
+ . 7.
+8.Click Continue  to return to the Target system in f ormation  page. 8.
+If there were no errors, Bravura Security Fabric  populates the address field  with the properly
+f ormatted  target system address.
+9.Click Update to save the address changes. 9.
+Target systems composed of multiple  servers
+Some target systems are actually composed of multiple  servers. These include:
+▪ Multiple  Activ e  Directory domain controllers that comprise a single domain ▪
+▪An NIS master server and multiple  NIS secondary servers that make up an NIS domain ▪
+▪ Oper ating  system, DBMS, and applic ation  target systems that function  as a single logical applic ation ▪
+system
+It is normally desirable, and frequently mandatory, to synchronize passwords between component
+servers in such a composite environment. Implementing  password management and s ynchr oniz ation  on
+composite systems raises two technical challenges:
+If the system already synchronizes passwords between components, it may do it too slowly. In these
+cases, Bravura Security Fabric  has to take measures to replace slow, nativ e  s ynchr oniz ation  with its own,
+faster s ynchr oniz ation.  This is true of global, nativ e-mode  Activ e  Directory networks.
+If a system does not already synchronize passwords, then Bravura Pass  should enforce s ynchr oniz ation
+for it. This is true of some custom and v ertic al-mark e t  applic ations.
+Bravura Pass  supports these systems using the concept of a sub-host. A sub-host is one of multiple  target
+systems on which Bravura Pass  can manage passwords that together form a single larger target system;
+for example, while an Activ e  Directory domain is a single target system, each individual domain controller
+is considered a sub-host. Since nativ e  Activ e  Directory password changes may take hours to propagate to
+all domain controllers in a global or g aniz ation,  the sub-host mechanism can be used to ensure that the
+new password is made available to the end-user immediately.
+You can implement sub-host password management by writing  a sub-host plugin – a small program
+which Bravura Pass  runs when it needs to manage passwords on a composite target system.
+Bravura Pass  includes support for sub-hosts on the following target systems:
+Activ e  Directory
+To accelerate password changes on global Activ e  Directory domains, Bravura Pass  uses the dcselect
+and w2kranddc plugins.
+When users change their passwords in a domain▪The w2kranddc sub-host plugin randomly selects sub-hosts on which to make the change. Use this ▪
+plugin when you have a large number of domain controllers and want to limit the number of servers
+on which passwords can be changed.
+▪The dcselect sub-host plugin selects a domain controller based on its proximity to the user. It uses ▪
+site in f ormation  with IP addresses (the user’s web browser, home directory/server) to identif y  domain
+controllers where the user’s password should be changed immediately. This eliminates the latency of
+password pr opag ation  for the user.
+This plugin works on the domain format target address only; <UNPNAME> or <DOMAINNAME>
+\<USERNAME>  
+See more in f ormation  about w2kranddc  and dcselect
+The w2kranddc  and dcselect sub-host plugins are run by the Help users  (IDA) module, Change
+passwords  (PSS) module, and Password Manager service ( idpm ), when c on figur ed  by the Program to run
+to generate a list of target systems  plugin point.
+The w2kranddc  and dcselect sub-host plugins use "cached" site in f ormation  stored in the following
+files:
+▪dclist.txt  – you generate this file aut omatic ally  by running the dcdiscovery  program ▪
+▪dc.man  – (Optional)  you create this file manually to add site in f ormation  not included by ▪
+dcdiscovery in the dclist.txt  file
+In order for w2kranddc  or dcselect  to use these files,  they must be located in the \<instance>\script
+\ directory.
+See more in f ormation  about dclist.txt
+The dcdiscovery  program aut omatic ally  generates the dclist.txt  file; however, in some cases,
+you may need to manually create this file. For example, dcdiscovery  will not work if your Activ e
+Directory does not have complete site in f ormation.
+Write the dclist.txt  file in the following format:
+DOMAIN "<domain name>"
+SITENAME "<site name>" "<site description>"
+DC "<domain controller name>" "<IP address>" "<optional description>"
+SITELINK "<sitelink.com>"
+SUBNET "<IP address range>" "<site name>"
+Where each site can have zero or more domain controllers (DC), zero or more links (SITELINK), and one or
+more subnets (SUBNET). For example, write the dclist.txt  file as:
+   DOMAIN "eg.com"
+   SITENAME "RABU.eg.com" "Sydney Office - Sydney, Australia"
+   DC arbundc0.eg.com "172.25.130.252" ""
+   SITELINK "RABL.eg.com"
+   SITELINK "RAPL.eg.com"   SITELINK "RASA.eg.com"
+   SITELINK "YUMT.eg.com"
+   SITELINK "SUTC.eg.com"
+   SUBNET "172.23.204.0/23" "HTSI.eg.com"
+   SUBNET "165.28.173.0/24" "SUNP.eg.com"
+.
+See more in f ormation  about dc.man
+The dc.man  file allows users to specify additional  domain site and domain controller in f ormation  that
+the aut omatic  discovery process does not or is not able to gather. It also allows users to exclude certain
+sites or controllers from Bravura Security Fabric  oper ations  if there is a need to do so.
+Write the dc.man  file in the following format:
+   DOMAIN "<domain name>"
+   SITE "<site name>" "<domain controller name>"
+   excludeDC "<domain controller name>"
+   excludeSite "<site name>"
+The excludeDC  and excludeSite  lines are optional.  If specified,  programs like dsdisc  will ignore
+the de fined  domain controllers and sites. A site can be excluded, for example, to prevent dcselect
+from aut omatic ally  choosing the site based on a user’s pr ofile  or IP address in f ormation.  Domain
+controllers that are members of an excluded site are not aut omatic ally  hidden. You must use excludeDC
+to exclude them.
+The site name de fined  by SITE can include the wildcards ? for any single character and * for any number
+of characters. Domain controllers that are to be used as default targets can be specified  using the * site.
+Wild cards can not be used in excludeSite  de finitions.
+For example, write the dc.man  file as:
+   DOMAIN "eg.com"
+   SITE "RAPL.eg.com" "arbundc0.eg.com"
+   SITE "RASA.eg.com" "arbundc0.eg.com"
+   SITE "RASL.eg.com" "arbundc0.eg.com"
+   SITE "TAHA.eg.com" "uktcndc0.eg.com" "uktcndc1.eg.com" "uktcndc2.eg.com"
+   SITE "TAVI.eg.com" "uktcndc0.eg.com" "uktcndc1.eg.com" "uktcndc2.eg.com"
+   excludeDC "arbundc1.eg.com"
+   excludeDC "arbundc2.eg.com"
+   excludeSite "TASA.eg.com"
+.
+See requirements and usage in f ormation  for dcdiscovery
+RequirementsThe adminis tr ativ e  account for the Activ e  Directory domain must be able to enumerate domain
+controllers in the domain.
+Usage
+Bravura Security Fabric  uses the cr edentials  c on figur ed  for the target ID to retrieve in f ormation  about
+sites and domain controllers:
+dcdiscovery.exe -t <target ID> -f <filename>
+If the cr edentials  c on figur ed  for the target ID are insufficien t  to retrieve in f ormation  about sites and
+domain controllers, then a diff er en t  user ID and password can be specified:
+dcdiscovery.exe -s <domain> -u <user> -p <password> -f <filename>
+Argument Description
+-f <filename> The name of the output file generated by the program.
+By c on v ention,  this file is called dclist.txt.
+-s <domain> The domain name of the Activ e  Directory domain to
+search.
+-t <targetID> The target ID of the Activ e  Directory domain to search.
+If this argument is used, then the -s, -u and -p options  are
+not required.
+-u <user> The user ID of an adminis tr ativ e  account in the Activ e
+Directory domain.
+-p <password> The password of the user specified  by the -u option.
+Examples
+1.To search a domain, by using arguments "-s", "-u" and "-p", type on one line:1.
+  dcdiscovery.exe -s domain1 -u administrator1 -p adminpw -
+f dclist.txt
+2.To search an Activ e  Directory target system de fined  in Bravura Security Fabric , type on one line: 2.
+  dcdiscovery.exe -t W2KDOM -f dclist.txt
+.
+.
+GroupWise
+To manage multiple  secondary domains, allowing Bravura Pass  to target a single primary domain Bravura
+Pass  uses the discgrpw plugin.
+See more in f ormation  about discgrpw
+Although Bravura Security Fabric  can manage passwords on multiple  GroupWise Domains by t ar g eting
+each mail domain, this can become difficult  to manage if there are a large number of domains.Alt ernativ ely ,  Bravura Security Fabric  can target a single primary domain, and use the discgrpw  sub-
+host plugin to manage multiple  secondary domains.
+During auto discovery, the connector program creates a <targetID>.map  file in the format:
+"user dn 1" "<tree>:\\domain path"
+"user dn 2" "<tree>:\\domain path"
+...
+The discgrpw  sub-host plugin searches this file for the given GroupWise account, then returns the
+second part of the line to the GroupWise connector as the account’s server address.
+The discgrpw  sub-host plugin is run by the Help users  (IDA) module, Change passwords  (PSS) module,
+and Password Manager service ( idpm )when c on figur ed  by the Program to run to generate a list of
+target systems  plugin point.
+.
+Unix
+To replicate password changes from the main Unix target serving the Bravura Pass  server to a local client
+machine accessed by a user, Bravura Pass  uses the unixsub plugin .
+See more in f ormation  about unixsub
+Use the unixsub  sub-host plugin to replicate password changes from the main Unix target serving the
+Bravura Security Fabric  server to a local client machine accessed by a user.
+The plugin can be c on figur ed  to return a list of sub-hosts from a remote IP address, or use a file mapping
+user IDs to IP addresses. This is controlled by the following registry settings  in the
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\unixsub
+key on the Bravura Security Fabric  server:
+▪Entry name  remote_ip ▪
+▪Value  0 or 1, where 1 means this method will be used. This method can only be used for password ▪
+changes in the Change passwords  (PSS) module. It cannot be used for password changes in the Help
+users  (IDA) module.
+▪Data type  REG_DWORD ▪
+▪Entry name  file_map ▪
+▪Value  The full path and file name of the file map. The file format is: ▪
+    joeuser 10.10.10.10
+    janeuser 10.10.10.11
+▪Data type  REG_SZ ▪
+If neither registry setting  is used, the plugin defaults to the remote IP method. If both are set, the plugin
+will try the remote IP method fir s t.The unixsub  sub-host plugin is run by the Help users  (IDA) module, Change passwords  (PSS) module, and
+Password Manager service ( idpm )when c on figur ed  by the Program to run to generate a list of target
+systems  plugin point.
+To use the plugin, set up two Unix type targets (one for the master target and one t ar g eting  local
+w ork s t ations)  with an identic al  target address. On the c on figur ation  page for the local target, type
+unixsub.exe  in the Program to run to generate list of target systems  field.  Both targets retrieve the
+list of users from the master target. The local target also calls the plugin.
+.
+Configur ation
+To c on figur e  Bravura Pass  to use a sub-host plugin, add the program name to the Program to generate a
+list of target systems  option  on the Target inf ormation  page.
+See more in f ormation  on how to write a custom sub-host plugin
+You can use a sub-host plugin to convert in f ormation  about a single target system into in f ormation  about
+multiple,  subsidiary target systems.
+Using an external program to provide sub-host expansion means that you can de fine  your own target-list
+expansion rules to suit your requirements. This expanded list of target systems may be:
+▪Fixed For example, when changing a password on system F, Bravura Pass  must change passwords on ▪
+systems F-1, F-2, and F-3.
+▪User-selectable  For example the end user or help desk user desk user may choose to set passwords ▪
+on any of O-1, O-2, and O-3.
+Input
+Input to the plugin includes:
+▪trigger_host  The ID of the target system on which the user’s password is being changed. ▪
+▪trigger_user  The pr ofile  ID of the user whose password is being changed. ▪
+▪trigger_alias  The name of the account, on the trigger target system, that is owned by this user. ▪
+▪trigger_ip  The IP address of the user that requested this password change. This field  is only set for ▪
+self-service requests. For help desk password changes this field  is set to "unknown".
+▪cgi_program  The name of the CGI program that is calling the plugin. ▪
+▪host  A block of key-value pairs that de fines  a target system. More than one host block may appear, ▪
+with each one corresponding to a target system in the current password change request. Consists of
+the following:
+▪host_id  The target system ID ▪
+▪host_name  The target system description ▪
+▪host_type  The type of target system ▪
+▪host_address  The target address ▪
+▪host_adminid  The target administrator password ▪▪host_adminpass  The user’s account on the target system ▪
+The following is an example of the input received by the plugin:
+"" "" = {
+  "trigger_host" = "AD"
+  "trigger_user" = "johnd"
+  "trigger_alias" = "johnd"
+  "trigger_ip" = "192.168.9.10"
+  "cgi_program" = "pss"
+  "host" "" = {
+    "host_id" = "AD"
+    "host_name" = "AD1 Domain"
+    "host_type" = "WIN2K"
+    "host_address" = "ad1.local"
+    "host_adminid" = "Administrator"
+    "host_adminpass" = "letmein!"
+  }
+  "error" = ""
+}
+Output
+Output from the plugin includes:
+▪out_host  A block of key-value pairs similar to the host block used as input. At least one out_host block ▪
+must appear in the output. The block consists of the following key-value pairs:
+▪out_id  An identifier  for this server. ▪
+▪out_name  The full name for this server. ▪
+▪out_type  (Optional)  The type of this server. Use this key-value pair if the sub-host server type is ▪
+diff er en t  to the target system type.
+▪out_address  The address for this server. This address must use an address syntax appropriate for ▪
+the type of the trigger system.
+▪out_adminid (Optional)  The administrator login ID for this server. Use this key-value pair if the ID is ▪
+diff er en t  to the one entered in the input file.
+▪out_adminpass  (Optional)  The administrator password for this server. Use this key-value pair if the ▪
+password is diff er en t  to the one entered in the input file.
+▪out_select  If "true", this server is selected by default on help desk selection  screens. If "false", this ▪
+server is deselected by default.
+The following is an example of the output produced by the plugin:
+"" "" = {
+   "out_host" "" = {
+   "out_id" = "AD"   "out_name" = "First site"
+   "out_type" = "WIN2K"
+   "out_address" = "\\dcone.example.local"
+   "out_adminid" = "psadmin"
+   "out_adminpass" = "letmein!"
+   "out_select" = "true"
+   }
+   "out_host" "" = {
+   "out_id" = "AD"
+   "out_name" = "Second site"
+   "out_type" = "WIN2K"
+   "out_address" = "\\dctwo.example.local"
+   "out_adminid" = "psadmin"
+   "out_adminpass" = "letmein!"
+   "out_select" = "false"
+   }
+.
+Listing  accounts and other objects from target systems
+Most of the Bravura Security Fabric  connectors support auto discovery. They are able to connect to target
+systems and collect an inventory of login IDs. If supported, connectors can also collect other in f ormation
+such as account attribut es,  groups, server or w ork s t ation  computers on a domain, hardware token lists
+and extended target system in f ormation.  The c ollecting  of in f ormation  (user listing)  is normally
+performed during auto discovery . The process is initia t ed  and controlled by the psupdate  program.
+List timeout
+Connectors should be given a finit e  amount of time  to run during listing ,  before Bravura Security Fabric
+stops them. The default setting  for the List timeout  field  is -1 (in finit e),  because the product can’t tell
+how long each target can take to list. A correctly c on figur ed  target system should not use in finit e
+timeouts.
+Problem with infinit e  timeout  
+Target systems can go down for updates or maintenance or the c onnection  to them may drop
+unexpectedly while the connector is listing.  If the timeout  is -1 on a target system that runs into those
+situations,  the psupdate program will never finish  and the rogue agent process that holds it up may
+have to be killed.
+Do not kill psupdate . This can cause problems with aut omation  or lead to data loss in Bravura Security
+Fabric.

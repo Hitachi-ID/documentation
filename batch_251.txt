@@ -1,0 +1,212 @@
+▪ Activ e  Directory target, select 
+  the manager  attribut e. ▪
+Click Override .
+4.Ensure that the Map account attribut e  to pr ofile/r eques t  attribut e  option  is set to 4.
+ORGCHART_MANAGER .
+5.Select the Load attribut e  values from target system checkbox if you want Bravura Security Fabric  to 5.
+import OrgChart data from the target system.
+6.Set Action  when cr eating  account to ”Set to specified  value”. This means the value will be set by the 6.
+ORGCHART_MANAGER pr ofile  attribut e.
+7.Select an appropriate action  from the Action  when updating  account drop-down list. 7.
+If you do not want Bravura Security Fabric  to propagate OrgChart changes to the target system, select
+Do not set this attribut e .
+8.Click Add. 8.
+9.If Bravura Security Fabric  prompts you to c on firm  changes to attribut e  mappings: 9.
+a.Click Yes (recommended). a.
+b.Run auto discovery  (Maintenance > Auto discovery > Execute auto discovery ). b.
+Cr eating  an OrgChart manager
+This section  demonstrates how to set up an e xisting  Bravura Security Fabric  user as an OrgChart
+manager:
+1.Click Manage the system  > Security > Access to product features  > Individual administrators . 1.
+2.Click Add new… . 2.
+3.In the ID field,  search for, or type the pr ofile  ID of an e xisting  user. 3.
+4.Select The user has the following selected access controls then select ”Manage the OrgChart” from 4.
+the list of rights.
+5.Click Add at the bottom  of the form. 5.
+See Product administrators  (on page 672) for more detail about access controls for product
+administrators.
+Con figuring  OrgChart management options
+You can extend OrgChart management functionality  by c on figuring  options  for the following:
+1.Web modules1.
+Con figur e  the following modules as required:
+Manage the OrgChart (IDG) Product administrators use the Manage the OrgChart
+(IDG) module  (on page 1177) to build and administer
+users in an OrgChart.
+Browse the OrgChart (IDO) Managers use the Browse the OrgChart  (IDO) module
+(on page 1177) to manage their subordinates in an
+OrgChart.2.Manage the system > W orkflo w  > Options  > OrgChart options . 2.
+Con figur e  w orkflo w  options  as required.
+See Authoriz ation  w orkflo w  options  (on page 1340) for general w orkflo w  options  and OrgChart
+Management Options  (on page 2513) for Or gChart -specific  options.Managing the OrgChart
+This chapter details how to create and maintain the OrgChart as a product administrator .
+The Bravura Security Fabric  OrgChart c ons truction  process either begins with:
+▪A list of users and no data about their r elationship s. ▪
+In this case, the or g aniz ational  r elationship s  must be identified  and c on figur ed.  You must identif y  the
+top-level manager, then either manually identif y  r elationship s,  or start an Org building round.
+▪A list of users with their or g aniz ational  r elationship s  already de fined. ▪
+In this case, the or g aniz ational  in f ormation  was already de fined  on the target system and has been
+imported into Bravura Security Fabric . The process in this case will consist of verifying the
+or g aniz ational  data and adjusting  it if necessary.
+See Mapping attribut es  for or g aniz ation  chart management  (on page 2500) to learn how to import
+r elationship  data from a target system.
+The following terms are important in this chapter:
+Manager In the OrgChart, this is a user who has subordinates.
+Subordinate This is a user who reports to another user.
+Top-level manager This manager is the root of the OrgChart, and does not
+report to anyone.
+Org building round This is a server-driven process that invites managers to
+name their subordinates in a top-down sequence.
+Managers login to Bravura Security Fabric  to identif y
+their subordinates and which of them are managers
+themselves. The process cascades down until  all levels
+of management have been involved. You can start Org
+building rounds to initially  build the OrgChart, or to
+periodically verify data.
+This chapter shows you how to:
+▪ Initia t e  the Org building process if you are St arting  with no data  (on page 2504). ▪
+▪Changing the top-level manager  (on page 2506) if there has been a change at the top. ▪
+▪ Updating  the OrgChart  (on page 2508) ▪
+▪Managing Org building rounds  (on page 2510) ▪
+▪Browse the OrgChart▪St arting  with no data
+If you import initial  or g aniz ation  chart data from a target system or other source, the top manager should
+already be de fined.  If you are beginning with no r elationship  data, you must begin OrgChart c ons truction
+by identif ying  the top-level manager.
+The following security privileges control access to the Manage the OrgChart  (IDG) module:
+▪Product administrators with the ”Manage the OrgChart” adminis tr ativ e  privilege can update the ▪
+OrgChart and view the OrgChart structure.
+▪Product administrators with the ”Start Org building rounds” adminis tr ativ e  privilege can initia t e ▪
+OrgChart-building rounds and invite managers to update their list of subordinates.
+This section  shows you how to build the initial  OrgChart by:
+▪ St arting  with an Org building round  (on page 2504) ▪
+▪ St arting  by identif ying  subordinates  (on page 2505) ▪
+St arting  with an Org building round
+To identif y  the top-level manager and start an Org building round:
+1.Click Manage the OrgChart . 1.
+2.Click Update the OrgChart . 2.
+3.Browse or search the list of users, then select 
+  the user you want to make the top-level manager. 3.Bravura Security Fabric  displays the Subordinates [<User>]  page.
+4.Click Start to begin an Org building round. 4.
+The Initiat e  Org building round  page loads, and indicates that the top-level manager will be invited to
+login and identif y  his subordinates.
+5.Click Continue . 5.
+6. Optionally ,  update the values for: 6.
+▪OrgChart round description ▪
+▪Segment description ▪
+If you make changes, click Update .
+7.Click Continue . 7.
+Bravura Security Fabric  displays a summary of the descriptions.
+8.Click Submit . 8.
+Bravura Security Fabric  notifies  the top-level manager to start the process.
+St arting  by identif ying  subordinates
+1.Click Manage the OrgChart . 1.
+2.Click Update the OrgChart . 2.
+3.Browse or search the list of users, then select 
+  the user you want to make the top-level manager. 3.
+Bravura Security Fabric  displays the Subordinates[<User>]  page.
+4.Click Attach  subordinates . 4.
+5.Browse or search the list to find the users who report to the manager. 5.
+6.Select the appropriate checkbox for each user you want to add to the manager’s list.6.
+7.Click Attach  subordinates . 7.
+Bravura Security Fabric  displays the top manager’s list of subordinates.
+8.You can now attach  the next level of subordinates by clicking the display icon in the user’s 8.
+Subordinates column.9. Continue  this process until  you have built the OrgChart to the level that you want. 9.
+Next: 
+You can now: start an Org building round  (on page 2511) to c ontinue  building, or to verify data
+Changing the top-level manager
+You can change the top level manager at any time;  for example if the CEO is replaced or in the case of a
+merger.
+You must be a product administrator  with the ”Manage the OrgChart” adminis tr ativ e  privilege.
+To change the top-level manager:
+1.Click Manage the OrgChart . 1.
+Bravura Security Fabric  displays the Browse the Orgchart  page with the top level manager selected,
+with direct subordinates below. Users who have subordinates are identified  with a manager icon 
+ .
+2.To see other menu options  available to product administrator s in the Manage the OrgChart  (IDG) module, 2.
+click Manage the OrgChart in the na vig ation  bar.
+Bravura Security Fabric  displays options  to update the OrgChart or start org building rounds.
+3.Click Update the OrgChart . 3.
+4.Browse or search the list of managers, then select 
+  the current top-level manager. 4.5.Click Change top manager . 5.
+6.Click the appropriate 
+  button  to: 6.
+▪Replace the top manager with another user who is not currently in the OrgChart.▪
+▪Swap the top manager with another manager in the OrgChart.▪
+▪ Attach  the top manager to another user who is not currently in the OrgChart, and that user will ▪
+become the new top manager.
+In other words, the current top manager becomes the subordinate of the new top manager.
+▪Remove the top manager from the OrgChart.▪
+You can only do this if the top-level manager has no subordinates.
+7.Browse or search the list of users, then select 
+  the user you want to make the top-level manager. 7.
+Next: 
+You can now:
+▪ Attach  subordinates  (on page 2509) ▪
+▪Start an Org building round  (on page 2511) ▪Updating  the OrgChart
+This section  shows you how to carry out OrgChart maintenance tasks as a product administrator  .
+You must be a product administrator  with the ”Manage the OrgChart” capability.
+Getting  started
+To update the OrgChart, select the manager you want to start with:
+1.Click Manage the OrgChart . 1.
+Bravura Security Fabric  displays the Browse the Orgchart page with the top level manager selected,
+with direct subordinates below. Users who have subordinates are identified  with a manager icon 
+ .
+2.To see other menu options  available to product administrator s in the Manage the OrgChart  (IDG) module, 2.
+click Manage the OrgChart in the breadcrumb links .
+Bravura Security Fabric  displays options  to update the OrgChart or start org building rounds. See
+Updating  the OrgChart  (on page 2508) for details.
+3.Click Update the OrgChart . 3.
+4.Browse or search the list of managers, then select the manager whose portion  of the OrgChart you 4.
+want to update.
+On this page, you can select a diff er en t  manager at any time  by clicking the display icon next to a user
+in the list of subordinates, or next to the user that the selected manager reports to.Attaching  subordinates
+The process of identif ying  users as subordinates of a manager is called “ attaching ”  subordinates.
+To attach  subordinates:
+1.Select the manager  (on page 2508) whose list of subordinates you want to update. 1.
+2.Click Attach  subordinates . 2.
+3.Browse or search the list to find the users who report to the manager. 3.
+You can also click ’Show all users’ on the top right to view users that already have a manager. If those
+users are selected, a transfer request will be submitted.
+4.Select the appropriate checkbox for each user you want to add to the manager’s list.4.
+5.Click Attach  subordinates . 5.
+Detaching subordinates
+Detach a subordinate from the manager’s list if all of the following c onditions  are true:
+▪The user does not report directly to the manager.▪
+▪The user still works for the or g aniz ation. ▪
+If the user no longer works for the or g aniz ation,  you should use Bravura Identity  to remove that user’s
+access.
+▪The manager for the user is not known.▪
+If the manager for the user is known, you should transfer the user to that manager. See Transferring
+subordinates  (on page 2510) for details.
+To detach subordinates from a manager’s list:
+1.Select the subordinates, then click Detach . 1.
+If any of the subordinates that you want to detach are also managers with subordinates, Bravura
+Security Fabric  displays a list of subordinates that will be a ff ect ed  by the oper ation.
+2.Depending on module c on figur ation  you can then select: 2.
+▪Detach all a ff ect ed  subordinates . Con firm  the action.  See Con firming  your actions  (on page 360). ▪▪Find new managers . ▪
+Proceed to Transferring subordinates  (on page 2510).
+Transferring subordinates
+To transfer subordinates to a new manager:
+1.Select the subordinates on the Subordinates [ <Manager >] page, then click Transfer . 1.
+2.Type a reason for the transfer.2.
+The text is displayed in Request status and authoriz ation  pages.
+3.Click Find new managers to c ontinue. 3.
+4.Select the subordinates to transfer, and select a new manager from the drop-down list. The drop-4.
+down list contains the following users:
+▪The direct manager of the old manager▪
+▪Other subordinates of the direct manager▪
+▪Other subordinates of the old manager▪
+Alt ernativ ely ,  use the search function  to select from all users in the OrgChart; including users who
+currently do not have any subordinates.
+You can also specify a reason for transferring each subordinate.
+5.Click Assign... to view the transfers. 5.
+6.Repeat Steps 4-5 until  you’ve reassigned all the subordinates to their new managers. 6.
+7.Click Con firm  to transfer the subordinate(s). 7.
+Managing Org building rounds
+An Org building round is a server-driven process that invites managers to name their subordinates in a
+top-down sequence. You start the process by identif ying  a level of management. Org Manager  emails
+managers and invites them to to create, modify, and verify the OrgChart data. The process cascades
+down to the next level until  all levels of management have been involved. The end result is a v erified
+OrgChart that has been signed off by all the managers participating  in the process.
+After  the OrgChart has been de fined  you should c ontinue  to maintain it by periodically r e vie wing /
+v alidating  either the OrgChart itself or sections  of it. This is especially applicable for sections  of your
+or g aniz ation  that are experiencing high growth, turnover, or have been reduced by la y off s.  You can carry

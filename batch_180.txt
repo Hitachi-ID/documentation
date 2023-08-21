@@ -1,0 +1,323 @@
+3.Click Run. 3.
+See full details on the Event log report
+Purpose : To report events that have occurred in Bravura Security Fabric  within a de fined  time  period.
+Executable : operations
+Search Criteria :
+Criteria Description
+Node ID Select the r eplic ation/ shar ed  schema nodes that you
+want to include. All nodes are included by default.
+This option  is only displayed if there are multiple  nodes in
+the environment; for example, with r eplic ation  or shared
+schema c on figur ations.
+Result Select:
+(All): to include all events, regardless of their outcomes.
+Success : to only include successful events.
+Failure : to only include failed events.
+Show only help desk events Select this checkbox to only display events triggered by
+help desk users and to change the list of oper ations  into
+the list of help desk oper ations  accordingly.
+Oper ation Select the oper ations  that you want to include. By
+default, all oper ations  available with the current Bravura
+Security Fabric  license are included.
+Target system ID Type a comma-and-space-delimited list of target system
+IDs for which you want to run the report. All target
+systems are included by default. Alt ernativ ely ,  you can
+search for one or more target systems.
+Target system type Select the target types to include. All target types are
+included by default.
+This field  is not displayed if there is no data available.
+Target system group Select one or more target system groups to include in the
+report. The list includes only target system groups in use
+with the instance.
+This field  is not displayed if there is no data available.
+Template accounts Type one or more template accounts to include in the
+report.
+Roles Type one or more roles to include in the report.
+Segr eg ation  of duties  rules Type one or more SoD rules to include in the report.
+Group ID Type the ID of one or more groups to include in the
+report. Alt ernativ ely ,  you can search for one or more
+groups.
+Session log identifier Type an identifier  to include.Criteria Description
+By default, this is the IP address of the user who initia t ed
+the event. Other in f ormation  may be specified  by the
+SESSION IDENT PLUGIN .
+User ID Type a user ID that matches the user for which you want
+to report events. Alt ernativ ely ,  you can search for one or
+more pr ofile  IDs.
+Requester ID Type a pr ofile  ID that matches the users you want to
+include, where the requester is the user that initia t ed  the
+event. Alt ernativ ely ,  you can search for one or more
+pr ofile  IDs.
+Request ID Type the ID of the request for which you want to run the
+report.
+Requester is a product administrator Select this checkbox to only display events triggered by a
+product administrator.
+Choose date range Choose one of the following options  to de fine  a date
+range for the events:
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the reportCriteria Description
+Option Description
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: Events are only included in the report output if their
+start time  falls within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Events are only included in the report output if their
+start time  falls between the selected dates. The start time
+is the time  that the event was initia t ed.
+Use within the last N days : Events are only included in
+the report output if their start time  falls within the
+specified  last number of days.Criteria Description
+Use N or more days ago : Events are only included in the
+report output if their start time  was more than the
+specified  number of days ago.
+Show each detailed event Select this checkbox to display details about each event,
+rather than a count of successful events and failed
+events.
+.
+Viewing the reset logs
+To view the logs for the reset oper ation:
+1.Navigate to the Self service password changes report by clicking Manage reports > Reports > System 1.
+oper ation  > Self service password changes .
+2.Set Login method  to Telephone Password Manager . 2.
+3.Click Run. 3.
+See full details on the Self service password changes  report
+Purpose : Reports on users that have performed self-service password changes and includes in f ormation
+such as password change date and which login method was used.
+Executable : selfservicereset
+Search Criteria :
+Criteria Description
+User ID Type the pr ofile  ID of the user for whom you want to
+generate the report. Alt ernativ ely ,  you can search for one
+or more pr ofile  IDs.
+User name Type the full name of the user for whom you want to
+generate the report.
+Login method Select one or more login methods to include in the
+report.
+Password change date Choose from the drop-down list. The Date not required
+setting  is used by default.
+Date not required : This is the default setting.  Self-service
+password changes are reported regardless of the
+"Password change date".
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.Criteria Description
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.Criteria Description
+Option Description
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: Self-service password changes are only included in the
+report output if their start time  falls within the selected
+r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.Criteria Description
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Self-service password changes are only included in the
+report output if their start time  falls between the
+selected dates. The start time  is the time  that the change
+was initia t ed.
+Use within the last N days : Self-service password
+changes are only included in the report output if their
+start time  falls within the specified  last number of days.
+Use N or more days ago:  Self-service password changes
+are only included in the report output if their start time
+was more than the specified  number of days ago.
+Report type Select the report type:
+Detailed : The report output lists users and all their
+password changes, including login method and da t e/time
+of password changes.
+Summary by user and login method : The report output
+lists users and the number of self-service password
+changes for each login method they used.
+Summary by login method : The report output lists the
+number of password changes for each login method.
+Summary by target system : The report output lists users
+and the number of password changes for each target
+system.
+Summary by user per reset : The report output lists users
+and self-service password changes by time  stamp.
+Summary by user : The report output lists all self-service
+password changes by individual users.
+Graph type Select the graph type:
+(None ): No graph generated
+V ertic al  bar chart : bar chart will be generated
+Pie chart : a pie chart will be generated
+This option  is only shown when Summary by login
+method  is selected as the report type.
+.T r oubleshooting
+The following sections  contain in f ormation  about how to troubleshoot common problems, usually related
+to improper ins t allation,  encountered during Phone Password Manager deployments.
+Consult your vendor for additional  tr oubleshooting  in f ormation  regarding your voice board, associated
+drivers, System Release softw ar e,  or PBX.
+Problems with the voice board
+If you run into problems with your voice board:
+▪Check for IRQ c on flicts. ▪
+One of the most common issues encountered when using voice boards is an IRQ c on flict.  Voice boards
+work best when c on figur ed  with their own, high-priority, IRQ.
+▪Ensure that you are using the right type of phone line.▪
+Only analog lines can be used with analog boards, and only digital lines can be used with digital
+boards. Plugging in the wrong type of line can damage the voice board.
+▪Check your PBX documen t ation  to ensure that the board you purchased is c ompatible  with your PBX. ▪
+▪Ensure that the voice board is able to pick up calls.▪
+You can use the Intel � voice demo to do this.
+Problems with hangup events
+If Phone Password Manager is having problems with hangup events on a digital network system, and you
+have correctly completed all c on figur ation  steps outlined in this manual, then there is probably a
+misc on figur ation  on the Dialogic card. This problem should not happen on digital network systems. If it is
+happening, contact the support department of your Dialogic hardware supply company, or purchase
+support services from a third-party company.
+If Phone Password Manager is having problems with hangup events, and the Dialogic card is connected
+with analog CO lines or analog PBX lines:
+▪Enable the "circuit reverse" or "batter y  reverse" features on those lines. This can off er  more reliable ▪
+disconnect supervision.
+▪If "circuit reverse" is not available, use the PBXpert to detect and enable tones for the analog Dialogic▪
+card. For further details, see your Dialogic manual.
+Welcome message does not play
+If you hear dead air instead of the welcome message, then upgrade to the latest Dialogic System Release
+Softw ar e  Updates. This issue can also be caused by improper audio file c on figur ation.Some or all audio files  are not playing
+If no sound is played to users who connect, or there are certain menu options  for which the sound files
+are not being played, it is possible that your audio file c on figur ation  is incorrect. Phone Password
+Manager organizes audio files in the following directory structure:
+<Instance>\audio\
+▪en-us▪
+▪a.wav▪
+▪b.wav▪
+▪(etc)▪
+▪<Language code>▪
+▪(Other languages)▪
+If this directory structure is disturbed, or any of the audio files themselves are missing, then the system
+will not be able to locate those files for playback to the user. This error can be easily diagnosed by
+reviewing the system logs, which will include a message such as:
+Warning: Cannot open C:\Program Files (x86)\Bravura Security\Telephone Password Manag er
+\<ins t ance>\audio\en-us\<filename>. w a v ,  errno: 2
+This error indicates that Phone Password Manager was unable to locate the audio files in their usual
+directory.
+Asterisk® audio files
+When using an Asterisk®  server, Phone Password Manager needs to upload the locally-stored audio files
+onto the Asterisk®  server. Phone Password Manager will only initia t e  this file s ynchr oniz ation  if it cannot
+find the following directory on the Asterisk®  server:
+\var\lib\asterisk\sounds\HiTPM\
+To force Phone Password Manager to update the Asterisk®  server’s audio files:  delete the directory listed
+above, restart the Phone Password Manager service, and place a call to the IVR.
+The Phone Password Manager service fails to start
+In the system services menu, you should see:
+▪Dialogic®  Boardserver▪
+▪Dialogic®  SS7 Service▪
+▪Dialogic®  System Service *▪
+▪Bravura Security logging Service *▪
+▪Telephone Password Manager Module Service *, or Bravura Security VoIP Telephony Service *▪
+(Dialogic only)

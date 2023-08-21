@@ -1,0 +1,362 @@
+▪"CONTAIN" (or "CT")▪
+▪"START_WITH" (or "SW")▪
+▪"IS"▪
+▪"ON"▪
+▪"BEFORE" (or "BF")▪
+▪"BEFORE_OR_ON" (or "BFO")▪
+▪"AFTER" (or "AF")▪
+▪"AFTER_OR_ON" (or "AFO")▪
+▪value  What is compared by comparator. When comparator is "IS", <value> must be "SET" or "EMPTY". ▪
+When comparator is "CT" or "SW", <value> can contain wildcards "*" and "?". Otherwise, <value> is a
+wide string (can contain unicode characters).
+▪operator  Required when "position"  is greater than 1. Must be "OR" or "AND". The logical operator is ▪
+applied before "filt er",  in order to logically connect "filt er"s  together, in order of "position"  value. AND
+always has precedence over OR.
+▪ field  Optional  key to specify field  when the key is not sufficien t;  for example, when dealing with ▪
+attribut es,  field  = attribut e  key; when dealing with resource groups, field  = resource group id.
+▪negate  When "1", this generates the logical NOT of "filt er". ▪
+The following example of criteria instructs the search engine to find records such that the target system
+ID contains ad2:
+ "output" "member_group_filter_plugin" = {
+  "criteria" "" = {
+    "filter" "" = {
+      "position" = "1"
+      "key" = "targetid"
+      "comparator" = "CT"
+      "value" = "ad2"
+      "negate" = "0"
+    }
+  }
+  "retval" = "0"
+}
+.
+See also: 
+Filter users  (on page 1049) show you how to write and c on figur e  plugins to filt er  user pr ofiles.
+Generate managed group list
+You can control who can view and select which managed groups by using a group list generation  plugin.
+By default, end users and product administrator s can select any managed group for a user. You may want toset up a r es triction,  for example, to allow a certain requester to select from a particular  set of managed
+groups.
+The group list g ener ation  plugin is a whitelist of accepted groups to manage. The filt er  plugin excludes
+groups like a blacklist.
+If business logic can dictate an explicit list of groups that a user can select, then you can use the group list
+g ener ation  plugin. If the group list generated is signific an tly  small in comparison to the groups that would
+be filt er ed  out, this plugin is also preferred.
+To use a group list g ener ation  plugin:
+1.Click Modules > Options . 1.
+2.Type the name of the plugin program or PSLang script in the GENERATE GROUP PLUGIN  field. 2.
+3.Click Update . 3.
+There are no shipped plugins for use with this plugin point. See more in f ormation  on writing  a
+customized plugin
+You can control who can view and select which managed groups by using a group list g ener ation  plugin.
+By default, end users and product administrators can select any managed group for a user. You may want
+to set up a r es triction,  for example, to allow a certain requester to select from a particular  set of
+managed groups.
+The group list g ener ation  plugin is a whitelist of accepted groups to manage. The filt er  plugin excludes
+groups like a blacklist.
+If business logic can dictate an explicit list of groups that a user can select, then you can use the group list
+g ener ation  plugin. If the group list generated is signific an tly  small in comparison to the groups that would
+be filt er ed  out, this plugin is also preferred.
+Configur ation
+To use a group list g ener ation  plugin:
+Click Modules > Options.
+Type the name of the plugin program or PSLang script in the GENERATE GROUP PLUGIN field.
+Click Update.
+Shipped plugins
+There are no shipped plugins for use with this plugin point.
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  pointsThe plugin is called by the View and update pr ofile  (idr) module and Help users (ida) module before the
+managed group list is displayed. It is called once when a group select page is fir s t rendered. Only groups
+that are returned by the plugin are available for selection.  If the set of groups is empty, the end user is
+not able to select a group for anyone.
+Groups list g ener ation  is similar to the filt er  plugins. This plugin supports synchronous calling. There are
+two forms of synchronous calling:
+▪Standard input/output mode that processes standard filt er  plugin input/output ▪
+In standard input/output (stdio) mode, a synchronous list g ener ation  plugin works in the following
+way:
+1.An event triggers a CGI program to call the plugin program or script and sends it standard use data.1.
+2.When the CGI program is ready to receive an object, it sends an empty KVGroup ( "" "" = { }) 2.
+to the plugin program.
+3.The plugin program sends a KVGroup that includes an object ID, or is empty to indicate end of list.3.
+4.Steps 2 and 3 c ontinue  until  the plugin sends an empty KVGroup to indicate end of list, or the 4.
+objects generated reaches the limit required by the calling program.
+Input
+Input sent to the plugin is as follows:
+"" "" = {
+  "module" = "<idr|ida>"
+  "recipient" "<user|empty>" = {
+     # The "recipient" group contains standard information about the
+     # subject of the request.
+   }
+  "viewer" "<user|admin>" = {
+     # The "viewer" group contains standard information about the
+     # person using the CGI.
+   }
+ }  
+Output
+The list of managed groups is passed from the plugin on stdout. A KVGroup is sent for each user.
+The output KVGroup sent from the plugin must be as follows:
+"" "" = {
+  "groupiD" = "<group ID>"
+      # Optional; This indicates the next managed group to add to the list of managed groups.
+      # If omitted, this indicates there are no more managed groups to add.
+  "grouptarget" = "Target ID>"      # The target system on which the group membership is managed
+  "abort"  = "<true|
+false>" #If true, bypass the list generation plugin
+  "errmsg" = "<text message>" # A message sent on an error
+  "retval" = "0" # Mandatory; non-zero indicates failure
+}
+.
+▪Callback mode that uses two functions  to process the input/output ▪
+In callback mode the managed group list g ener ation  plugin uses two functions:
+OnGeneratorInit( $inkvg )  This function  retrieves the initial  in f ormation  about the request, requester
+and viewer.
+GetGenList( $list )  This function  returns an array of managed groups that the cgi will display.
+Example
+A simple example is as follows:
+  function OnGeneratorInit( input $inkvg )
+  {
+      log( "inkvg: " + kvgToString($inkvg ));
+  }
+  function GetGenList( output $list )
+  {
+      var $include_group[]
+      $include_group[ size( $include_group ) ] = "GROUP7";
+      $include_group[ size( $include_group ) ] = "GROUP1";
+      $list = $include_group;
+  }
+.
+This mode can be used to increase processing times  in environments with large numbers of users.
+.
+Generate role list
+You can control who can view and select which roles by using a role list generation  plugin. By default, end
+users and product administrator s can select any role for a user. You may want to set up a r es triction,  for
+example, to allow a certain requester to select a particular  group of roles.
+The role list g ener ation  plugin is a whitelist of accepted roles to manage. The filt er  plugin excludes roles
+like a blacklist.
+If business logic can dictate an explicit list of roles that a user can select, then you can use the role list
+g ener ation  plugin. If the role list generated is signific an tly  small in comparison to the roles that would be
+filt er ed  out, this plugin is also preferred.To use a role list g ener ation  plugin:
+1.Click Modules > Options . 1.
+2.Type the name of the plugin program or PSLang script in the GENERATE ROLE PLUGIN  field. 2.
+3.Click Update . 3.
+There are no shipped plugins for use with this plugin point. See more in f ormation  on writing  a
+customized plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The plugin is called by the View and update pr ofile  (IDR) module and Help users  (IDA) module before the
+role list is displayed. It is called once when a role select page is fir s t rendered. Only roles that are
+returned by the plugin are available for selection.  If the set of roles is empty, the end user is not able to
+select a role for anyone.
+Role list g ener ation  is similar to the filt er  plugins. This plugin supports synchronous calling. There are two
+forms of synchronous calling:
+▪Standard input/output mode that processes standard filt er  plugin input/output ▪
+In standard input/output (stdio) mode, a synchronous list g ener ation  plugin works in the following
+way:
+1.An event triggers a CGI program to call the plugin program or script and sends it standard use data.1.
+2.When the CGI program is ready to receive an object, it sends an empty KVGroup ( "" "" = { }) 2.
+to the plugin program.
+3.The plugin program sends a KVGroup that includes an object ID, or is empty to indicate end of list.3.
+4.Steps 2 and 3 c ontinue  until  the plugin sends an empty KVGroup to indicate end of list, or the 4.
+objects generated reaches the limit required by the calling program.
+Input
+Input sent to the plugin is as follows:
+"" "" = {
+  "module" = "<idr|ida>"
+  "recipient" "<user|empty>" = {
+     # The "recipient" group contains standard information about the
+     # subject of the request.
+   }
+  "viewer" "<user|admin>" = {
+     # The "viewer" group contains standard information about the
+     # person using the CGI.   }
+ }
+Output
+The list of roles is passed from the plugin on stdout. A KVGroup is sent for each user.
+The output KVGroup sent from the plugin must be as follows:
+"" "" = {
+  "roleid" = "<role ID>"
+      # Optional; This indicates the next role to add to the list of roles.
+      # If omitted, this indicates there are no more roles to add.
+  "abort"  = "<true|
+false>" #If true, bypass the list generation plugin
+  "errmsg" = "<text message>" # A message sent on an error
+  "retval" = "0" # Mandatory; non-zero indicates failure
+}
+.
+▪Callback mode that uses two functions  to process the input/output ▪
+In callback mode the role list g ener ation  plugin uses two functions:
+OnGeneratorInit( $inkvg )  This function  retrieves the initial  in f ormation  about the request, requester
+and viewer.
+GetGenList( $list )  This function  returns an array of roles that the cgi will display.  
+Example
+A simple example is as follows:
+  function OnGeneratorInit( input $inkvg )
+  {
+      log( "inkvg: " + kvgToString($inkvg ));
+  }
+  function GetGenList( output $list )
+  {
+      var $include_role[]
+      $include_role[ size( $include_role ) ] = "ROLE7";
+      $include_role[ size( $include_role ) ] = "ROLE1";
+      $list = $include_role;
+  }
+.
+This mode can be used to increase processing times  in environments with large numbers of users.
+.Assigning Pr ofile  IDs
+Every Bravura Security Fabric user must have a unique pr ofile  ID. Bravura Security Fabric can apply this ID
+as a standard user ID across systems. When a user is created using Bravura Security Fabric , their ID is
+aut omatic ally  generated. It can then be aut omatic ally  applied to all new accounts. This section  shows you
+how to c on figur e  options  for pr ofile  ID g ener ation.
+Bravura Identity  includes a plugin, plugin-id.psl , to aut omatic ally  generate a unique pr ofile  ID for a
+new account request. By default, an ID has a maximum of eight characters, composed of the fir s t six
+characters of the user’s last name, and the fir s t two characters of the user’s fir s t name (if de fined).  For
+example, the plugin generates ’RusselJa’ for user Jack Russell, and ’HillTe’ for user Terry Hill. Bravura
+Security Fabric  preserves the case of what is imported or entered, although their usage is case
+insensitiv e.
+If the plugin generates an ID already in use, it will retry by appending a numeric value or o v er writing  it.
+The number of attemp ts  it makes is c on figur ed  by the IDSYNCH ID PLUGIN RETRY option.
+The plugin is called by the IDSYNCH ID PLUGIN plugin point. You can c on figur e  the plugin to use diff er en t
+c omposition  rules using the IDSYNCH ID PLUGIN MASK  setting.  You can also modify plugin-id.psl
+to adjust c on flict  r esolution  rules.
+See more in f ormation  on customizing a plugin for use with this point
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+This plugin is run by the View and update pr ofile  (IDR) module and W orkflo w  Manager Service.
+Input
+The plugin receives all attribut es  used in a provisioning request. The fir s t time  the plugin is called, the
+input does not include a c on flict  KVGroup. If the plugin generates an ID already in use, it is called again.
+On subsequent attemp ts,  a c on flict  KVGroups are included in the input with the value and reason of the
+previous attemp t.
+"" "" = {
+   "<attribute key>" = "<value>" # An attribute is listed for each value that is
+                        # part of the request.  Multi-value attributes
+                        # are listed for each unique value.
+   "sessionid" = "<session ID>" # The session ID of the requester.
+   "request" "" = {   # Standard request data listing resources
+      "resource" "" = {}
+   }
+   "requester" "" = { # Requester's data
+   }   "conflict" "<previous id>" = {
+      "conflictReason" = "<invaliduser|validuser|account|reservation>"
+   } # 0 or more; Only present when a conflict is detected from a previous call
+  "SUGGESTED_USERID" = "<value>"
+}
+The c on flict  reason can be one the following values:
+▪invaliduser  The pr ofile  ID proposed is in c on flict  with a pr ofile  ID that has previously been a valid user ▪
+in Bravura Security Fabric . The pr ofile  IDs that are terminated in Bravura Security Fabric  are retained
+and no longer valid. Overriding this c on flict  will re-enable the pr ofile.
+▪validuser  The pr ofile  ID proposed is in c on flict  with a pr ofile  ID that is currently activ e  in Bravura ▪
+Security Fabric . Overriding the c on flict  will treat the activ e  pr ofile  as the recipient.
+▪account  The pr ofile  ID proposed is in c on flict  with a short ID on a target system is currently loaded in ▪
+Bravura Security Fabric . Overriding the c on flict  will reuse the account on the target system.
+▪ r eser v ation  The pr ofile  ID proposed is in c on flict  with an e xisting  r eser v ation  for the pr ofile  ID. ▪
+Overriding the c on flict  can cause all requests to a ff ect  the same pr ofile  ID. See Listing  13.1.9 for detail
+on r eser v ation  ID.
+Any of these c on flicts  can be overridden using the forceUseID key-value pair on the output. If the
+forceUseID key-value is not used and the generated pr ofile  ID is in c on flict,  the plugin will be called again.
+The W orkflo w  Manager Service calls the plugin until  either the plugin fails, the generated pr ofile  ID is not
+in c on flict,  or the maximum retry attemp ts  are reached (IDSYNCH ID PLUGIN RETRY).
+The following is an example of the input sent to an ID generator plugin on a retry:
+"" "" = {
+  "FIRST_NAME" = "Simon"
+  "LAST_NAME" = "Lee"
+  "RBACENFORCE" = "T"
+  "SUGGESTED_USERID" = "LeeSi"
+  "sessionid" = "S3f0234b4-f9b8-4058-a83e-42efde5fab0e"
+  "request" "" = {
+    "entryDate" = "1305125803"
+    "macroStatus" = "U"
+    "notes" = ""
+    "prequest" = ""
+    "reason" = ""
+    "recipient" = ""
+    "recipientEmail" = ""
+    "requestID" = "15F9AFCC9AC5B5FD400921D95CFC14C5"
+    "requester" = "ACOS0000"
+    "requesterEmail" = "alyce.acosta@norse.bravurasecurity.com"
+    "requesterName" = "Alyce Q Acosta"
+    "reservationid" = "00000000-0000-0000-0000-000000000000"    "segment" = ""
+    "attribute" "EMAIL" = {
+      "value" "" = {
+      }
+    }
+    "attribute" "FIRST_NAME" = {
+      "oldValue" "" = {
+      }
+      "value" "" = {
+        "value" = "Simon"
+      }
+    }
+    "attribute" "LAST_NAME" = {
+      "oldValue" "" = {
+      }
+      "value" "" = {
+        "value" = "Lee"
+      }
+    }
+    "attribute" "ORGCHART_MANAGER" = {
+      "value" "" = {
+      }
+    }
+    "attribute" "OTHER_NAME" = {
+      "value" "" = {
+      }
+    }
+    "attribute" "RBACENFORCE" = {
+      "oldValue" "" = {
+      }
+      "value" "" = {
+        "value" = "T"
+      }
+    }
+    "attribute" "VIEWABLE_BY_RECIPIENT" = {
+      "value" "" = {
+      }
+    }
+    "resource" "43C26C65DBEFDAB74E5BEE3665AB7900" = {
+      "authorizationsReceived" = "0"
+      "authorizationsRequired" = "0"      "autoselect" = "none"
+      "enact" = "true"
+      "finalized" = "false"
+      "groupApproval" = "00000000-0000-0000-0000-000000000000"
+      "implicit" = "true"
+      "itemType" = "template"
+      "notes" = ""
+      "operation" = "ACUA"
+      "parentRole" = "STANDARD_ROLE"
+      "pseudoData" = ""
+      "pseudoOp" = "false"
+      "pseudoTag" = ""
+      "reason" = ""
+      "result" = "O"
+      "targetid" = "NORSE"
+      "template" = "NORSE_TEMPLATE"
+    }
+    "resource" "964F1A51A7E777491AC767D52AC86EEF" = {
+      "authorizationsReceived" = "0"
+      "authorizationsRequired" = "0"
+      "autoselect" = "optional"
+      "enact" = "true"
+      "finalized" = "false"
+      "groupApproval" = "00000000-0000-0000-0000-000000000000"
+      "implicit" = "false"
+      "itemType" = "role"
+      "notes" = ""
+      "operation" = "RLUA"
+      "parentRole" = ""
+      "pseudoData" = ""
+      "pseudoOp" = "false"
+      "pseudoTag" = ""
+      "reason" = ""
+      "result" = "O"
+      "role" = "STANDARD_ROLE"
+    }
+    "resource" "0CC3F830AC79E5197A526853FC8FABAA" = {
+      "authorizationsReceived" = "0"
+      "authorizationsRequired" = "0"
+      "autoselect" = "none"
+      "enact" = "true"

@@ -1,0 +1,332 @@
+wstnname Managed system description
+acc ountid Account
+▪MAQPWD▪
+Advanced key Description
+wstnid Managed system ID
+wstnname Managed system description
+acc ountid Account
+▪MAQRECENTREQ▪
+Advanced key Description
+desc Account set description
+policyid Managed system policy ID
+id Account set ID
+▪MAQREQPWD▪
+Advanced key Description
+acc ountid Account
+workstnid Managed system ID
+desc Managed system description
+▪MOBILEDEVICE▪
+Advanced key Description
+info Device in f ormation
+▪MSPPARENT▪
+Advanced key Description
+id ID
+desc Description
+▪NOSGROUP▪
+Advanced key Description
+child_groups Child groups
+groupid Group ID
+groupname Group description
+grouptype Group type
+issecurity Is security group
+managed Managed
+members Accounts
+parent_groups Parent groupsparentgroupid Parent group ID
+RB A Cflag Role enforcement
+targetdesc Target system description
+t ar g etid Target system ID
+url Help URL
+used In use
+valid Valid
+Dynamic group Description
+attrk e y Resource attribut e  keys
+▪NOTIFY▪
+Advanced key Description
+compplugin Plugin
+id ID
+batplugin Plugin
+severity Severity
+desc Description
+▪ORGROUND▪
+Advanced key Description
+desc Round description
+certifierid Manager ID
+certifiername Manager name
+pendingsignoff s Pending sign-off s
+topmanagername Top manager name
+topmanagerid Top manager ID
+initia t orid Initia t or  ID
+initia t orname Initia t or  name
+▪PAACCESS▪
+▪PAMPASSWORDHISTORY▪
+Advanced key Description
+passworddate Date of password change
+▪PREQ▪
+Advanced key Description
+attr gr oup Attribut e  group ID
+certific ation Accessible from certific ationdeprecated Deprecated on
+description Pr e-de fined  request description
+enabled Enabled
+group Group ID
+id Pr e-de fined  request ID
+oper ation Oper ation
+r emediationT ype R emediation  type
+report Accessible from report
+request Accessible to requesters
+role Role ID
+target Target system ID
+template Template ID
+type Intended recipients
+▪PREQUEST▪
+Advanced key Description
+description User class description
+explicit_user Explicit user ID
+group_id Group ID
+id User class ID
+num_explicit_users Number of explicit users
+num_participan ts Number of participan ts
+num_policies Number of policies
+policy Policy
+pslang PSLang expression
+Dynamic group Description
+pr ofileattr Pr ofile  attribut e  keys
+▪RESATTRDEF▪
+Advanced key Description
+id ID
+valmin Minimum required number of values
+desc Description
+valmax Maximum allowed number of values
+type Attribut e  type
+valfxed Are there restricted values?
+▪RESATTRGRP▪Advanced key Description
+FIELD_DISPTYPE Display type
+FIELD_DESC Resource attribut e  group description
+FIELD_RESATTR Resource attribut e
+FIELD_RESTYPE Resource type
+FIELD_ID Resource attribut e  group ID
+FIELD_USRGRP User groups: Access to resource attribut es
+▪ROLE▪
+Advanced key Description
+assignable Assignable
+description Role description
+deprecated Deprecated on
+enabled Enabled
+id Role ID
+rbacenforce Role enforcement
+user User ID
+Dynamic group Description
+attrk e y Resource attribut e  keys
+entitlemen t Role entitlemen t  member keys
+▪SAVEDCERTROUND▪
+Advanced key Description
+description Certific ation  setup description
+method Certific ation  method
+certtype Certific ation  type
+role Role ID
+pas t certifier Past reviewer ID
+shared Shareable
+sod Segr eg ation  of duties  rule ID
+target Target system ID
+id Certific ation  setup ID
+lastrun Last run date
+group Group ID
+resourcetype Entitlemen t  type
+savedby Owner
+certifier Con figur ed  reviewer ID▪SCHEDULEDJOB▪
+Advanced key Description
+jobcommand Command to run
+scheduleid Job
+r epeattype Repeat type
+laststatus Last run status
+whereruns Server
+enabled Enabled
+lastfin Last finish  time
+laststart Last run time
+▪SESSION▪
+Advanced key Description
+oper ation_c ode Oper ation  code
+requestername Requester name
+result Results
+startdate Request date
+oper ation_desc Oper ation  description
+requesterid Requester ID
+▪SMONREQSESSION▪
+Advanced key Description
+desc Description
+initid Monitored user
+date Request date
+recipid Recipient ID
+▪SMONSESSION▪
+Advanced key Description
+systemid Managed system
+sessid Session ID
+initia t or Monitored user
+s t arttime Start da t e/time
+batchid Request ID
+privaccount Access
+endtime End da t e/time
+systemid Managed system
+sourceaccount User loginsourceid User device
+eventvalue Session matching contents
+state Session status
+▪SOD▪
+Advanced key Description
+description Segr eg ation  of duties  rule description
+deprecated Deprecated
+id Segr eg ation  of duties  rule ID
+e x ceptions_allow ed Allows e x ceptions
+entitlemen t Entitlemen ts
+enabled Enabled
+▪SSOINSTKEY▪
+Advanced key Description
+arch Ins t allation  type
+e xptime Expire time
+expired Expired
+expcount Remaining installs
+desc Description
+▪SUBORDINATE▪
+Advanced key Description
+directmanager Direct manager
+groupsearch Group ID
+attrk e y Account attribut e
+userid User ID
+name User name
+allmanagers Direct and indirect managers
+rolesearch Role ID
+hostsearch Target system ID
+▪SYSTEMMSP▪
+Advanced key Description
+workstnid Managed system ID
+platform type Platform  type
+desc Description
+▪TARGET▪Advanced key Description
+desc Target system description
+aut oassocia t eattr Account attribut e  to aut omatic ally  attach  accounts to
+user pr ofiles
+targetsysgrp Target system group
+platform Target system type
+url Help URL
+rbacenforce Role enforcement
+id Target system ID
+address Address
+adminid Administrator ID
+aut oassocia t e flag Aut omatic ally  attach  accounts
+hasaccount Users must have accounts
+source Source of pr ofile  IDs
+▪TARGETGROUP▪
+Advanced key Description
+description Description
+t ar g etid Target system ID
+targetgroup ID
+▪TEMPLATE▪
+Advanced key Description
+acc ountid Account to clone when cr eating  a new user
+address Address
+desc Template description
+id Template ID
+inv_type Inventory type
+loc ation Loc ation
+targetDesc Target system description
+t ar g etid Target system ID
+platform Target system type
+Dynamic group Description
+attrk e y Resource attribut e  keys
+▪UCPAUTORESVARIANCE▪
+Advanced key Descriptiondirectmanager Direct manager
+groupsearch Group ID
+attrk e y Account attribut e
+userid User ID
+inreq With open requests to resolve
+name User name
+allmanagers Direct and indirect managers
+rolesearch Role ID
+hostsearch Target system ID
+▪USER▪
+Advanced key Description
+allmanagers Direct and indirect managers
+directmanager Direct manager
+groupsearch Group ID
+hostsearch Target system ID
+name User name
+rolesearch Role ID
+userid User ID
+Dynamic group Description
+pr ofileattr Pr ofile  attribut e  keys
+▪USERCLASS▪
+Advanced key Description
+description User class description
+explicit_user Explicit user ID
+group_id Group ID
+id User class ID
+num_explicit_users Number of explicit users
+num_participan ts Number of participan ts
+num_policies Number of policies
+policy Policy
+pslang PSLang expression
+Dynamic group Description
+pr ofileattr Pr ofile  attribut e  keys
+▪USERGROUP▪Advanced key Description
+privileges Privileges
+id Rule ID
+userclass User class
+description Rule description
+▪WORKSTATION▪
+Advanced key Description
+workstnid Managed system ID
+mode Mode
+desc Managed system description
+address Address
+▪WSTNBATCH▪
+Advanced key Description
+wstnname Managed system description
+mspdesc Managed system policy description
+mspid Managed system policy ID
+status Randomiz ation  results
+wstnid Managed system ID
+acc ountid Account
+▪WSTNBATCHACCOUNT▪
+Advanced key Description
+oper ation Oper ation
+resourcetype Object type
+objectid Object ID
+retcode Results
+t ar g etid Target system ID
+▪WSTNBATCHINFO▪
+Advanced key Description
+status Status
+enddate End date
+startdate Start datedesc Initia t ed  from
+initia t or Initia t or
+▪WSTNPWD▪
+Advanced key Description
+acc ountid Account
+t ar g e t description Target system description
+targetaddress Target system address
+workstndesc Managed system description
+workstnid Managed system ID
+templateid Template ID
+platform type Platform  type
+▪WSTNPWDCICO▪
+Advanced key Description
+userid User ID
+acc ountid Account
+wstnname Managed system description
+wstnid Managed system ID
+username User name
+▪WSTNPWDTYPE▪
+▪WSTNRECENTGSETREQ▪
+Advanced key Description
+wstnid Managed system ID
+wstnname Managed system description
+gsetid Group set ID
+gsetdesc Group set description
+▪WSTNSERVICE▪
+Advanced key Description
+group group
+svcname service
+▪comparator  Must be one of: ▪
+▪"EQUAL" (or "EQ")▪
+▪"LESS_THAN" (or "LT")▪
+▪"LESS_THAN_OR_EQUAL" (or "LTE")▪
+▪"GREATER_THAN" (or "GT")▪
+▪"GREATER_THAN_OR_EQUAL" (or "GTE")▪

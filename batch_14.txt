@@ -1,0 +1,379 @@
+▪No unnecessary item is displayed in a certific ation  campaign to review groups and roles when there is ▪
+optional  entitlemen t,  required entitlemen t  or multiple  overlapping entitlemen t  in roles and the
+certific ation  campaign can be finished  successfully.
+▪ After  a manager transfers his subordinates to his manager, the certific ation  segment of his manager ▪
+can be finished  successfully.
+▪When loading a certific ation  campaign where the auto revoke r emediation  triggers wizards, triangle ▪
+icons (pending-r e v oc ation  state) will appear in the place of r e v oc ation  checkmarks.
+▪In the situation  of revoke r emediation  triggering wizards, revoke checkmarks will not be lost after ▪
+reviewing notes or going back from the summary page.
+▪If the certif y  or revoke action  on an item is changed or canceled, the notes regarding the previous ▪
+action  will be cleared up.
+▪The values of the pr ofile  attribut es  are masked with *** when ALLREVIEWERS have no read ability in ▪
+certific ation  review page.
+▪If a group involved in an activ e  certific ation  campaign is deleted, the certific ation  campaign can be ▪
+signed off successfully.
+▪In the situation  that a revoke entitlemen t  r emediation  triggers wizard, the certif y  icon will be turned ▪
+off when clicking revoke icon.
+▪When a user delegates a w orkflo w  request, then starts a certific ation  round, the delegate of the ▪
+w orkflo w  request will not receive email notific ation  about the certific ation  round.
+▪The reviewer who has finished  his segments will not receive unnecessary email notific ations  after ▪
+other reviewers finished  their segments.
+▪Crossed-out users will not appear in certific ation  campaigns started later. ▪
+▪Saved certific ation  setups are marked as valid when there are multiple  user classes in the Users tab. ▪
+▪The saved setup in which some resources are selected after  clicking All is modified  and saved ▪
+correctly.
+▪The segment description  of orgchart cert is present if the cert is started via scheduled job ▪
+▪A Help link is shown in target system description  in certific ation  campaigns. ▪
+▪All menu items are present for a certific ation  administrator who is also a manager. If a user is a ▪
+manager, there will be a link, View activ e  orgchart reviews, to review his own Orgchart manager
+certific ation  campaigns. If his subordinate is also a manager, there will be a link, View activ e
+subordinate reviews to review his sub-manager’s certific ation  campaigns.
+▪An error prompt will appear when password v erific ation  fails for sign off on an OrgChart certific ation. ▪
+▪ Certific ation  based on a big data set can be started successfully. ▪
+▪ Certific ation  has been improved to work well with a deleg ation  cycle. ▪
+▪The prompt "A value is required." is given and the certif y  action  is disabled when a required attribut e ▪
+does not have a value in a certific ation  review.
+▪Delegatees will not receive a "never mind" email until  the primary reviewer completes the ▪
+certific ation  review. Delegatees will not receive email if the primary reviewer is the authorizer of the
+request generated from a certific ation  review.
+▪An activ e  orgchart certific ation  campaign without segments will be started when Orgchart ▪
+subordinates have no selected entitlemen t.▪Selected roles will no longer be displayed in saved certific ation  setups if they are changed to auto- ▪
+assign.
+▪The owner of saved certific ation  setups will not be changed if the setup is modified  by another ▪
+certific ation  administrator or superuser.
+▪Corrected email text for certific ation  by de fined  r elationship  as: ▪
+Please review entitlemen ts  for the de fined  r elationship.
+Start the review: <LINK>
+▪ Certific ation  IDs and descriptions  with special characters are displayed as expected. ▪
+▪Disabled a hyperlink of the certific ation  description  in the review list page for reviewer. ▪
+▪When the system variable ORGCHART MODS FREEZE CERT SEGMENTS is disabled (by default), and a▪
+manager is transferred out of the current certific ation  OrgChart branch, the manager is marked with a
+transferred icon in the review detail page.
+▪Corrected an issue where the certific ation  app could not update pr ofile  attribut es  when there are ▪
+attribut es  that are required.
+▪Users can be included in the "accounts in groups" section  of a certific ation  campaign if they joined the ▪
+group via a role enforcement de ficit  r esolution.
+▪ Attribut e  columns will no longer stand out from tables in the certific ation  app. ▪
+▪The subordinate link in the Orgchart manager select page is fix ed  to lead to the correct page. ▪
+▪The email date calculate button  on submit certific ation  pages works as expected. ▪
+▪"Failed to get batch" error no longer occurs in the log during esc alation  of certific ation  segments. ▪
+▪Bravura Security Fabric shows a generic message "The c on figur ation  of the Reviewers tab is ▪
+incomplete." when the Reviewers tab has a warning during the process of s t arting  a certific ation
+campaign.
+▪The file name is properly displayed for pre-set file attribut es  in the certific ation  app. ▪
+▪Items finished  in a partially  delegated certific ation  campaign become inaccessible in a primary ▪
+certific ation  campaign.
+▪The Transfer user wizard will not spin and give error prompts when a user clicks the Submit button ▪
+without any change.
+▪The count number in progress bar is correct after  transferring or detaching a manager in an OrgChart ▪
+certific ation  campaign.
+▪If a reviewer certifies  items and signs off on a partially  delegated campaign, the items will not appear ▪
+in a later partially  delegated campaign.
+▪Search functionality  has been improved in certific ation  review pages when there are non-string ▪
+values.
+▪ Certific ation  esc alations  will not cause increasingly duplicated reminders. ▪
+▪During an OrgChart certific ation  round, transferring a user does not impact other users that have ▪
+already been transferred.
+▪The delegated OrgChart certific ation  campaign is still accessible to the reviewer after  a subordinate is ▪
+r e-attached.
+▪No error is returned in logs by report Certific ation  coverage and Certific ation  by entitlemen ts  when ▪
+various entitlemen ts  have been reviewed.▪Target systems and groups are sorted on the left hand panel during certific ation  initiation. ▪
+▪Fixed the issue when the name of certific ation  campaign was missed in an email notific ation. ▪
+▪In the process of s t arting  a certific ation  campaign, if review method is "Certific ation  by de fined ▪
+r elationship",  the selected user is displayed correctly in the selected user class t esting  page.
+▪Fixed the issue that certific ation  campaign of pr ofile  attribut es  only is empty when review method is ▪
+OrgChart Manager.
+▪Resolved the empty certific ation  issue when a role has an entitlemen t  group, a campaign is initia t ed ▪
+including the role and the group, and the review method is by entitlemen t  authorizer.
+▪ R emediations  are populated aut omatic ally  when selecting  entitlemen ts  then clicking Next. ▪
+▪ Sorting  works on reviewer when selecting  an entitlemen t  authorizer as reviewer. ▪
+▪Bravura Security Fabric no longer erroneously checks for reviewer email address for a campaign▪
+whose review method is by de fined  r elationship.
+▪ Certific ation  details report contains recipient user in f ormation  for all entitlemen t  types. ▪
+▪The certific ation  initiation  group selection  search page filt er s  out empty groups. ▪
+▪ Certific ation  managers will not lose "Saved certific ation  setups" after  they are renamed. ▪
+▪Invalid entitlemen ts  will not be shown in the selection  list when s t arting  a certific ation  campaign from ▪
+saved certific ation  setups.
+▪The c alculation  of percentage c ompletion  of unresolved Segr eg ation  of Duties  items is always correct. ▪
+▪Updated certific ation  procedure to prevent warning messages in log if there is a default certifier ▪
+assigned.
+▪Correct handling of r outing  to not aut omatic ally  jump directly to the entitlemen t  certific ation ▪
+campaign if there are also c on figur ation  certific ation  campaigns.
+▪Console-only users are prevented from being assigned as a certific ation  campaign reviewer. ▪
+Connectors
+▪Fixed an issue with loadplatform when c on flicting  templates are detected for connectors. ▪
+▪Fixed an issue where the Persistent Connector Service ( agtsvc ) allowed duplic ating  lists for the ▪
+same target.
+▪Corrected a database hosted applic ation  target issue where the address attribut e  in f ormation  de fined ▪
+under Addr essAttr s  oper ation  in the c on figur ation  file did not r e flect  on the address wizard.
+▪Updated sample database in f ormation  for agtsqlite.db sample. ▪
+▪Fixed agtsqlite failing to output an error message when e x ecuting  SQL. ▪
+▪Fixed inconsistent r eporting  of list s t atistics. ▪
+▪Updated connectors to expose the batchid/batchsig in all oper ations. ▪
+Database
+▪Added column to nosgroup: shortid_ci,  an indexed, upper-cased value for the shortid  of a group. ▪
+▪Length increased for "bbattr"  and "value" columns in the "blackboarddata" table. ▪
+▪Fixed an issue in asynch handling that would cause the Database Service (iddb) to crash. ▪▪Fixed the issue where iddiscover was allowed to add control characters to the database. ▪
+▪Fixed the issue when the stored procedure "UserMer g eInitial"  fails due to missing value passed for a ▪
+non-nullable column.
+▪Updated IDMLib and W orkflo w  Manager Service ( idwfm ) to avoid errors caused by RMS account ▪
+onboard
+▪Resolved an issue where the IDDB service stopped unexpectedly when approving a large number of▪
+w orkflo w  requests.
+▪Fixed the importdata utility  to use square brackets to delimit the ’dbname’ and ’dbschema’ names ▪
+for the target database.
+▪The debug message on the dbapi module in a Python script which runs in debug mode shows the▪
+correct number of records/rows.
+▪Fixed a pot ential  database error that could happen when doing create group oper ations  under heavy ▪
+load.
+▪Fixed the issue when the stored procedure "UserAttrAdd"  fails due to missing value passed for non- ▪
+nullable pr ofilename  field.
+▪Fixed the issue where Group Rename through stored procedure delete all the child groups and▪
+reference of that group.
+▪Updated iddb to fail gracefully if a database server is unavailable during startup.▪
+Event c on figur ation
+▪Corrected an issue where, after  the email server in f ormation  was changed, the email could not be ▪
+sent out.
+▪Added managed account in f ormation  to the RES VIEW PASSWORD HIS and RES VIEW PASSWORD exit ▪
+traps.
+External data store
+▪Corrected issue so that hitting  enter after  changing values on a table in the Manage external data ▪
+store (DBE) module updates the table successfully.
+Group management
+▪Added a check in the group wizard to see if an item has been (de)selected when displaying selection ▪
+status.
+▪Fixed counts of members of groups to take into account validity of the acc oun ts/pr ofiles  involved. ▪
+▪Fixed rename/movectx/groupupdate oper ation  to use simple ldap_rename rather then extended call. ▪
+This resolved an issue with rename oper ation  not renaming dn.
+▪Fixed the issue when a group security domain was not added to the database.▪
+▪Fixed the issue when renaming a group did not allow the user to correctly identif y  an e xisting  group. ▪
+▪The oper ation  to remove a user from a group will not be repeated if the user does not exist anymore. ▪
+▪The oper ation  to remove a user from a group on an Activ e  Directory target system will not be ▪
+repeated if the user does not exist anymore.▪Fixed the issue in the Groups app where the group change report shows updates on groups that users▪
+do not own.
+▪Fixed an issue where a group member added in the Groups app wizard by the w orkflo w  (WFReq ) ▪
+plugin caused a stored procedure to fail.
+▪Updated Bravura Groups so that groups will always be managed based on the target system’s setting. ▪
+▪Fixed the issue when the group is recreated in the target, it gets created with the same stable id▪
+instead of create a new stable id.
+Bravura P attern  / Components
+▪Fixed component upgrade scripts so that core framework upgrades and messaging service upgrades▪
+will also run on replicated nodes.
+▪call to WFPDR SubmitW orkflo w  APIs have been fix ed  to allow the use of serverid. ▪
+▪ After  upgrading from pre-11.x, pam_disclosur e_filt er_policy  external table oper ation  is now a text ▪
+field,  whereas it was previously a drop-down.
+▪Fixed hid_authchain_select scenario component so that the match key is set to "maintain" for▪
+console-only password authentic ation.
+▪ Modified  all default authentic ation  chain rules in the hid_authchain_select scenario component so ▪
+that they get evaluated fir s t.
+▪Updated the "Proceed" column description  in the external data store to better  match the behavior ▪
+when it is set to False.
+▪Updated the authmod components to add the Ma xR ejections  column. ▪
+▪The Restore Terminated User PDR has been updated to correctly blank t ermination  attribut es. ▪
+▪Fixed an issue where the export tool did not export r elations  of exported components. ▪
+▪Fixed an issue where the export tool exported components if they had dependents that no longer▪
+exist in the product.
+▪Fixed an upgrade failure by changing hid_fir s t_login  dependency to smspin_email component. ▪
+▪Fixed an issue with the hid_authchain_forgot_password component where the MAXLIFE setting  did ▪
+nothing.
+▪The hid_authchains_forgot_password validate function  works as expected. ▪
+▪Added improved error handling for the PAM_VAULT_PYTHON target, so that detailed error messages▪
+returned from the agent are included in the request details.
+▪Corrected issue so that ’Team: Update’ pr e-de fined  requests are properly processed after  a team vault ▪
+is archived.
+▪Corrected issue so that onboarded systems can be archived if their onboarded accounts are removed▪
+from the system.
+▪The Functional.im_pr ofile_risk_c or e  component’s performance has been improved. ▪
+▪The Functional.hid_nonhuman_pr ofile  component has been updated to allow correct association  of ▪
+nonhuman pr ofile  accounts.
+▪The hard-coded attribut es  "TERM-STATE-CHANGE", "SCHED-TERM-DATE" and "TERM-REASON" were ▪
+moved from the "im_c orp_aut oma t ed_t ermination"  component to the
+"hid_policy_attr v al_c alculation"  policy table.▪Renamed component from im_c orp_pr ofileid  to hid_pr ofileid.  The component is now auto installed ▪
+with Bravura Security Fabric. Fixed an issue that component auto ins t allation  did not work.
+▪Repaired the messaging service registry when running the command manage_components.py load --▪
+patch.
+▪Fixed issue where errors in message encoding could break the messaging service.▪
+▪Resolved an issue where sending GET requests containing a body or Content-Type header to the API▪
+could cause messaging worker processes to stop unexpectedly.
+▪Updated sample script hrapp-script.cfg to load the value for account attribut e  employeeNumber. ▪
+▪Refactored the string generator for the new string g ener ation  sequence. ▪
+▪Added additional  checks to ensure that at least one trustee is de fined  on a team when updating  team ▪
+group memberships.
+▪Corrected issue so that system vaults are not displayed in team vault PDRs.▪
+▪Improved the process of re-sending a PIN. A new PIN will be issued only after  maximum retry is ▪
+reached.
+▪Improved the error message displayed to the user on PROFILE-ID g ener ation  error and fix ed  the issue ▪
+where page na vig ation  is not prevented on attribut e  error
+▪Improved hid_policy_engine logging and fix ed  a typo causing log messages to not show up in the UI. ▪
+▪Fixed the upgrade script for hid_policy_wfemail to only modify the one row that has changed.▪
+▪Removed the following PAM components, which were unin t entionally  included in the release: ▪
+▪ Scenario.pam_s y s t em_offboar d▪
+▪Data.pam_ir_ms_unbind_no_disc▪
+▪Data.pam_ir_ms_unbind_no_access▪
+▪Data.pam_itsec_access▪
+▪The Functional.im_t ermination  component has been enhanced to use the WFEmail component and ▪
+policy tables.
+▪Fixed an issue where user class cache did not read explicit user class members.▪
+▪Urgent t ermination  components have been improved to allow users to complete the t ermination ▪
+process.
+▪Fixed missing dependencies in im_c orp_aut oma t ed_t ermination  component. ▪
+▪Fixed component hid_policy_attr v al_v alidation  to detect fir s t run of Requests app correctly. ▪
+▪Fixed an issue to ensure that ’provides_for’ in use won’t be removed when removing a component▪
+▪Added ability to import new modules for mako templates.▪
+▪Corrected issue so that the required Python script for csv2pdr requests is replicated to secondary▪
+nodes.
+▪Changed component hid_policy_attr v al_de f ault  to run default policy only once so that the values ▪
+entered by requester will remain.
+▪Updated risk classific ation  components so that pr ofile  risk can be calculated properly. ▪
+▪ p seudo-attribut es,  but requires an e xisting  attribut e  to overwrite the ▪
+Functional.hid_loaddb_attr_assoc  component has been enhanced to allow the cr eation  of account
+attribut es  (pseudo attribut es).▪Fixed an issue with the Bravura Workforce P attern  t ermination  component to prevent multiple ▪
+requests for single scheduled t ermination.
+▪The Corporate Reference build attribut e  c alculation  and v erific ation  fix es  fir s t and last name attribut e ▪
+to use title case.
+▪The Bravura Workforce P attern  has been improved to keep the HR_ORGCHART_MANAGER and ▪
+ORGCHART_MANAGER in sync during transfers.
+▪Corrected issue so that team vault and vault account pr e-de fined  requests only list team vaults and ▪
+vault accounts, r espectiv ely .
+▪Archived team vault systems no longer appear for selection  in team vault pr e-de fined  requests. ▪
+▪ Modified  hid_policy_rms to use the policy engine. ▪
+▪Adjusted RMS to not fail outright when looking for non-existent attribut es. ▪
+▪Target system attribut es  are now properly referenced for account-type RMS policies. ▪
+▪Password r andomiz ation  will proceed if subscriber notific ation  is disabled, regardless of whether ▪
+or ches tr ation  is enabled or not.
+▪Added an additional  ’=’ check for attribut es  for the policy engine. ▪
+▪Corrected an issue where the accounts table in the Manage external data store (DBE) module cannot▪
+be accessed for s yn thetic  targets that contain special characters in its ID.
+▪ Specified  the group membership listings  explicitly for Activ e  Directory target systems used in Bravura ▪
+Workforce P attern.
+▪Resource attribut es  of managed systems are now supported in the disclosure filt er  action  component. ▪
+Login Assistant / SKA
+▪Fixed Windows 10 flick ering  screen issue with SKA. ▪
+▪Fixed an issue with Login Assistant to show all of the columns correctly when listing  the available wifi ▪
+networks.
+▪Fixed an issue with Login Assistant to improve the time  to get to the login after  c onnecting  to wifi. ▪
+▪Added the ability for all log and debug in f ormation  to be made available both in the SKA progress ▪
+window as well as in a log text file.
+▪ Modified  the Login Assistant to ensure that the SKA timeout  matches the value in setup. ▪
+▪Fixed an issue with Login Assistant to remove the retry count for the c aptiv e  portal and only use a ▪
+timeout  value as well as issue reading the timeout  value from the registry.
+▪ Modified  the Login Assistant so that c onnections  to the c aptiv e  portal now have their own timeout ▪
+value instead of using the SKA timeout.
+▪ Modified  the Login Assistant so that it is now shut down if a network c onnection  cannot be ▪
+established with a c aptiv e  portal.
+▪Fixed an issue with Login Assistant to properly show a notific ation  message when very long ▪
+customized messages are specified  for c aptiv e  portal timeout  warnings.
+▪Fixed an issue with Login Assistant and vpn c onnection  retries when the Bravura Security Fabric server ▪
+could not be reached.▪Fixed an issue with Login Assistant where remote c onnections  such as through wifi would sometimes ▪
+indicate a c onnection  check failure.
+▪Fixed c ondition  where the SKA tile would disappear on a Windows 10 login screen. ▪
+▪Corrected display of local reset results while changing passwords using the secure kiosk account (SKA).▪
+▪Fix to prevent pslocalr from crashing if the host name of the instance server contains capitals. ▪
+▪Corrected ins t allation  of Firefox local reset extension to the proper loc ation. ▪
+▪Corrected a display and usage issue dealing with language selection  for the SKA. ▪
+▪Corrected Ctrl-Alt-Del security dialog to display username in the change password dialog of Windows▪
+10.
+▪Adjusted secure kiosk VPN dialogs to be displayed centered on-screen and in the correct order.▪
+▪Fixed an issue with hard-coded key c ombinations  into the Login Assistant applic ation. ▪
+▪Fixed an issue to use a named server-side skin during the secure kiosk account (SKA) ins t allation. ▪
+▪For proper display of debug window when Secure Kiosk Account is used to reset a password, set up▪
+ins tructions  are clarified  to include gina.z file.
+▪Ensuring that the Cr edential  Provider wrapper will still appear when the RSA A thentic ation  Agent is ▪
+also installed on the same w ork s t ation  after  entering an incorrect password to log in using the RSA
+Cr edential  Provider.
+▪Fixed an issue with Login Assistant when a w ork s t ation  is locked and typing in a userid without fir s t ▪
+moving the mouse, and to ensure that the SKA is a foreground window.
+▪Fixed an issue to allow the Cr edential  Provider to work properly when the URL of the Bravura Security ▪
+Fabric server misses a backslash at the end.
+▪To improve security, support has been withdrawn for Cr edential  Provider Wrapper password reset ▪
+link. Instead, use of the Cr edential  Provider tile is encouraged in a new message.
+▪Replaced the SKA tile with a new image so that it is no longer pixelated. ▪
+▪Fixed the pslocalr to correctly update the domain users password and allow the user to login to the▪
+w ork s t ation  after  the password has been reset using the SKA tile and/or wrapper.
+▪Fixed an issue with the SKA not working with http s. ▪
+▪Added documen t ation  for using the Firefox or apple c aptiv e  portal de t ection  for checking c onnectivity ▪
+in the SKA.
+▪Fixed the SKA ins t allation  when using an additional  language. ▪
+IDMLib
+▪Implemented ’env load –force all’ option  to reload all inherited environments. ▪
+▪Updated IDMLib to allow multi- v alued  attribut es  to be saved in loaddb . ▪
+▪Updated IDMLib to handle empty attribut es  properly. ▪
+▪Fixed an issue where a number of fields  were dropped from the wfreq plugin input. ▪
+▪The group search filt er  has been improved to allow the filt ering  of parent and child groups. ▪
+▪Fixed an issue in IDMLib implementers plugin where the plugin retrieves implementer in f ormation ▪
+from wrong section  of plugin input
+▪Fixed an issue in IDMLib where idmobject returns wrong resource type. ▪▪Pre-loaded reqid and sessionid to idmobject to avoid API errors.▪
+▪Fixed issues where is_valid would sometimes  return -2 or other unexpected values. ▪
+▪Fixed an issue in IDMLib that view values of a user type attribut e  can not be retrieved. ▪
+▪Fixed an issue where the request attribut e  value was wiped out if the request value was the same as ▪
+the recipient’s pr ofile  attribut e  value.
+▪Fixed an issue to avoid adding duplicate restricted values when loading an environment file. ▪
+▪IDMLib has been enhanced to allow multiple  accounts and associated attribut es  to be correctly ▪
+handled.
+▪Fixed an issue in IDMLib to allow API submissions for multi- v alued  attribut es  to work. ▪
+▪Fixed an issue for NULL handling in IDMLib/DBApi.▪
+▪Indirect group membership details are shown in the Request app with the wfreq plugin c on figur ed. ▪
+▪Updated IDMLib so that function  set_content() can handle UTF-8 characters properly. ▪
+▪Enhanced IDMLib so that DBCmd can handle NULL dates correctly.▪
+▪Updated IDMLib function  requestSubmit such that the requests submitted  by this function  will not ▪
+miss any reqacct field.
+▪Property pr ofile_guid  is added to Pr ofile  object in Group.user_owners instance. ▪
+▪Updated registry path for global connector in IDMLib as connector has been changed from 32-bit to▪
+64-bit.
+▪Updated dbapi function  in IDMLib to correct the behaviour where a null result query or empty ▪
+query throws an e x ception  instead of just closing.
+▪Added checks in idmconfig functions  (such as MSP , MSP Authentic ationT ype,  MSPDisclosurePlugin, ▪
+MSPGroupSet, MSPGroupSetRule) for unavailable features in a limited Bravura Privilege license.
+Ins t allation
+▪The 32-bit sqlite3.dll is correctly installed into the 32-bit Common Files Folder during ins t allation. ▪
+▪Added option  "!" to allow the MSI logger to flush  each line to the installer log. When running ▪
+msiexec.exe, the error message will be in the log file if an error message pops up on the screen.
+▪Improved the handling of c on flicting  sqlite3.dll files in the search path during ins t allation  of the ▪
+product.
+▪Changed all services from aut omatic  start up to aut omatic  delayed. ▪
+▪Changed the setup.exe to require the license file to be an absolute path rather than a r elativ e  path. ▪
+▪Fixed the Browser Extension installer to support ALLUSERS. Also improved the GUI to ensure the▪
+correct option  is selected, and the files are installed to the correct loc ation.
+▪Fix for an error that interrupts the upgrade when upgrading from 11.1.3 to 12.0.0 if the option  for ▪
+backing up files is selected.
+Logging
+▪Changed crypto log level from error to warning.▪
+▪Improved the logging when target system import rules are activ a t ed. ▪
+▪Fixed the issue where duplicate PerfExe messages were generated in logs.▪▪Enhanced the syslog collector to be able to queue messages for both TCP and UDP during times  when ▪
+c onnection  is lost.
+▪Prevented extraneous errors in the system log when changing role memberships.▪
+▪Added the exit trap success and failure in f ormation  for account unlock oper ations  to the pxnull ▪
+input log.
+Licensing
+▪Fixed an issue where aut omatic ally  discovered systems were sometimes  counted as servers instead of ▪
+w ork s t ations.
+▪Number of license counts are correctly shown after  number of license users are reduced and auto ▪
+discovery is run.
+▪Excluded NULL type target system from licensing target counts.▪
+Mobile
+▪Fixed so that wizard screens appear on mobile at an appropriate size and placement.▪
+▪Fixed so that recompiling the instance skins does not break the mobile app interface until  mobworker ▪
+is restarted.
+▪Fixed an issue with the Mobile Worker Service to provide more detailed error messages when there▪
+are certific a t e  issues from the Bravura One  proxy server.
+▪Fixed issues with QR authentic ation  and http requests for multi-node  load balanced Bravura One ▪
+proxy server environments.
+▪Fixed an issue for the Mobile Worker Service option  for "Ignore all server certific a t e  warnings" when ▪
+certific a t e  issues are encountered.
+▪Fixed an issue with the Mobile Worker Service to ensure that it is no longer disabled after  an upgrade. ▪
+▪Numerous fix es  to the iOS version of the Bravura One  app: ▪
+▪Dark mode now supported properly with appropriate text and background colors (known issue▪
+remaining in top UI bar).
+▪Launch pad icon works properly after  registering a new pr ofile ▪
+▪Screens are no longer shifted  downwards at times ▪
+▪Down swipe gesture no longer gets stuck at a black screen▪
+▪Dialog boxes are now correctly sized and positioned  for mobile displays so the submit button  is no ▪
+longer cut off .
+▪Dialog boxes are now correctly sized and positioned  for mobile displays. ▪
+▪Fixed an issue on iOS that would truncate the last pr ofile  name in the pr ofile  select if it ended in more ▪
+than three digits.
+▪ Attempting  to add a mobile pr ofile  using an expired QR code no longer renders the mobile app into an ▪
+unusable state.
+▪The language selection  menu has been fix ed  to be usable on mobile devices and views, remaining ▪
+open when tapped.

@@ -1,0 +1,318 @@
+Argument Description
+-i <pattern> Image name pattern
+-l List the available codecs on the system. smonavi prints a
++ symbol next to usable codecs.
+-r <rate> The rate of frames per second
+Example
+The default command de fined  by the SMON VIDEO CREATE COMMAND LINE is:
+smonavi.exe -r %fps% -i %pattern%_*.png -f %path% -c %codec%
+Where:
+▪%fps  is the frames per second at which the session was recorded. ▪
+▪%pattern  is the start of the file names that will be consistent for all images in a single video. ▪
+This allows smonavi to determine which images came from what display when multiple  displays
+are used.
+▪%path  is a loc ation  in the directory specified  by SMON TEMP STORAGE PATH in the Manage the ▪
+system > Modules > Recorded session management  (SMON) menu.
+▪%codec%  is replaced by the value of SMON VIDEO CREATE CODEC CODE in the Manage the system ▪
+> Modules > Recorded session management  (SMON) menu.
+The msvc codec is recommended for t esting  only. To see what other codecs you have available, run
+the smonavi utility  with the -l argument.
+See also
+▪smonprocessmeta▪
+When session monitoring is enabled, the smonprocessmeta  program processes harvested data
+and inserts the data into the database in a series of batch oper ations.  If a signific an t  amount of data
+has been collected, this could result in signific an t  work for the database. smonprocessmeta
+executes periodically while a session monitoring session is activ e.  Text-based data such as keystroke,
+clipboard and UI data will not be available to search engines or in zip packages until
+smonprocessmeta  is executed.
+See also
+▪smonsavemeta  (on page 3624) ▪
+▪smonavi  (on page 3620) ▪
+▪Scheduling maintenance  (on page 2702) to learn how to change the scheduled run time. ▪
+▪smonsavemeta▪
+smonsavemeta creates session data packages when requested from the Recorded session
+management  (SMON) module, and fir es  any additional  utilities  such as smonavi or another video
+g ener ation  utility .  It is not intended to be run manually from the command line.Recorded session events
+The following Session monitor  app events can launch interface programs and can be accessed from
+Manage the system  > Maintenance > System variables  or Manage the system  > Modules  > Session
+monitor:
+Option Description
+SMON ADMIN SESS TERM An administrator terminates the session recording
+SMON ADMIN SESS TERM REQ An administrator terminates the session recording
+request.
+SMON EVT PARSE ERR A damaged or unparsable event is received.
+SMON PKG DOWNLOAD A recorded session package is downloading.
+SMON PKG FAILED An error occurs in g ener ating  the recorded session
+package.
+SMON PKG REQ St arting  the recorded session package request.
+SMON PKG SUCCESS A recorded session package is successfully generated.
+SMON SEARCH St arting  the recorded session search.
+SMON SESSION END A session recording ends.
+SMON SESSION START A session recording starts.Part VI W orkflo wPr ofile  and request attribut es
+Pr ofile  and request attribut es  can play an important role during Bravura Security Fabric  processes. A
+pr ofile  and request attribut e  can de fine  a user object’s parameters and use. In many cases, attribut es  and
+attribut e  values represent diff er en t  roles and access privileges on target systems. Many or g aniz ations
+determine a user’s system status by the value of some attribut e.  For example, the value of an attribut e  of
+"F"  versus "T"  may determine whether the user is disabled on a given system or not.
+You can also de fine  pr ofile  and request attribut es  to gather extra in f ormation  about a user. For example,
+users may enter human resource in f ormation  such as date of birth, mobile phone provider and number,
+or social security number.
+Request-only attribut es  are used solely in the context of requests, and do not have a permanent e ff ect  on
+user pr ofiles.
+How attribut e  in f ormation  is collected
+In f ormation  can be collected by:
+▪The auto discovery  process, which loads account attribut e  in f ormation  – from target systems that ▪
+support attribut e  listing  – into mapped pr ofile  and request attribut es.
+▪A plugin that aut omatic ally  collects and/or generates or looks up in f ormation,  such as an employee ID, ▪
+from a database.
+To learn how to c on figur e  and write such a program, see V alidating  and g ener ating  attribut e  values
+(on page 1290).
+▪Users who update pr ofile  in f ormation  using the web interface. ▪
+Mapping pr ofile  and request attribut es
+You can map pr ofile  and request attribut es  to account attribut es  to load users’ in f ormation  from a target
+system. You can also c on figur e  attribut es  so that users’ accounts are updated when their pr ofile
+in f ormation  is updated.
+The type and number of values of the pr ofile  and request attribut e  must be c ompatible  with the account
+attribut e.  For example, you cannot map a required account attribut e  to an optional  pr ofile  and request
+attribut e,  or a single-valued account attribut e  to a multi- v alued  pr ofile  and request attribut e.
+See Account attribut es  (on page 566) for more in f ormation  about mapping attribut es.
+Grouping attribut es
+Attribut es  must be included in an attribut e  group in order to be used. You can organize attribut es  into
+groups to:
+▪Assign read and write privileges to users in diff er en t  stages of authoriz ation  w orkflo w . ▪
+▪Assign read and write privileges to creators of managed system policies, when Bravura Privilege ▪
+features are used.▪Determine whether attribut es  are displayed for specific  oper ations,  such as view pr ofile. ▪
+▪Determine how attribut es  are displayed to users on the request form. ▪
+See Attribut e  groups  (on page 1304) for details.
+Enforcing v alidation
+Normally, if a value is required, Bravura Security Fabric  stops a request from proceeding if the user has
+not entered a correctly f ormatted  value. You can turn off v alidation  for an attribut e  or attribut e  group if
+an incorrectly entered value should not block a request. This can be useful, for example, if a user needs to
+create or update their pr ofile  but does not have complete in f ormation.
+If used, the attribut e  v alidation  plugin overrides these settings.   
+See also: 
+Force users to update pr ofile  in f ormation  (on page 555)
+Types of pr ofile  and request attribut es
+Pr ofile  and request attribut es  can be de fined  according to the following types:
+String A short alpha-numeric value
+Integer An all-numeric value
+Boolean A true or false value.
+Memo A multi-line  alpha-numeric value
+Password A value hidden from view. Bravura Security Fabric  obscures user input with asterisk
+(*) or other characters.
+This type of pr ofile  and request attribut e  can be mapped to character or numerical
+account attribut es  only.
+Da t e/time Users select a da t e/time  in one of the three following formats:
+▪year/month/day (YYYY/MM/DD)▪
+▪year/month/day hour:minute (YYYY/MM/DD hh:mm)▪
+▪year month day (YYYY <month> DD), where <month> is spelled out ▪
+Nativ e  date attribut es  are converted to ISO date format to map to Da t e/time  type
+attribut es.  If the target system does not support conversion of nativ e  format to ISO
+format, you can use the attribut e  v alidation  plugin to mirror the attribut e  to a hidden
+attribut e  that can be mapped. See Plugins
+Note:  Attribut es  of type ”Da t e/time”  cannot accept values pr edating  1970.
+User A user pr ofile.  A valid pr ofile  ID entered into this attribut e  will be displayed as a
+clickable user object on read-only pages. This is used, for example, for searching
+recorded sessions of a particular  user.
+Link An external link to a web page or image; for example a personal web page or photo
+ID. When the link is read-only, users can click on it to open a window or tab in the
+browser. Hover your cursor over an image link for a preview of the image.File Users can attach  a file to their pr ofile  or request. Various file extensions are
+supported.
+The default maximum file size is 1000KB, which can be set using the MAX UPLOAD
+FILE SIZE system variable in the Manage the system > W orkflo w  > Options  menu.
+Target system A target system. Users can search for the ID of the target system. A valid discovered
+system ID entered into this attribut e  will be displayed as a clickable target system
+object on read-only pages.
+Managed system A managed system, for privileged access management. Users can type, or search for,
+the ID of the managed system. A valid managed system ID entered into this attribut e
+will be displayed as a clickable managed system object on read-only pages.
+Discovered system An unmanaged discovered system. Users can search for the ID of the discovered
+system. A valid discovered system ID entered into this attribut e  will be displayed as a
+clickable discovered system object on read-only pages.
+Manageable account A managed or unmanaged account. Users can search for the ID of the manageable
+account. A valid account ID entered into this attribut e  will be displayed as a clickable
+account object on read-only pages.
+Managed group A managed group. Users can search for the ID or description  of the managed group.
+A managed group entered into this attribut e  will be displayed as a clickable managed
+group object on read-only pages.
+Built-in pr ofile  and request attribut es
+There are several built-in attribut es:
+Changing the values in the built-in attribut es  can cause serious problems. Ensure you thoroughly test your
+changes.
+APIUSER_CIDR Used to de fine  a product administrator’s allowed network addresses
+for remote API access.
+It is not included in an attribut e  group by default.
+ARCH_EXTEND_CHECKOUT_REASON Used for Bravura Privilege  check-out extension requests: Reason for
+the check-out extension.
+It is included in the Check-out extension details group.
+DESC_APP Used to store the request description.
+It is included in the App built-in attribut es  group.
+EMAIL Used to store users’ email addresses.
+You can add EMAIL to an attribut e  group if you want requesters to
+de fine  an email address for new users..
+EMAIL_APP Used to store users’ email addresses.
+It is included in the App built-in attribut es  group.
+FIRST_NAME Used to store users’ fir s t names.
+It is included in the base attribut es  group.
+LAST_NAME Used to store users’ last names.
+It is included in the base attribut es  group.LUPD_AUTO_ASSOCIATE When this boolean attribut e  is set to true, the account will be auto
+associated with other accounts. If the attribut e  is set to false, the
+account will not be subjected to the auto association  process.
+MAQCMD_SCOPE Used to limit the commands that can be executed.
+It is included in the Commands for account set access attribut e
+group.
+MAQ_COMMAND Account set commands.
+It is included in the Commands for account set access attribut e
+group.
+NOTES_APP Used to store the requester notes.
+It is included in the App built-in attribut es  group.
+ORGCHART_MANAGER Used to store or to change a user’s primary manager. This attribut e
+loads OrgChart data when mapped to a manager account attribut es.
+Users can also be allowed to directly update their primary manager.
+It is not included in an attribut e  group by default.
+OTHER_NAME Used to store users’ middle names or initials.
+It is included in the base attribut es  group.
+PPM_VIEW_TIME_BEGIN In Bravura Privilege password check-out requests, this is the
+beginning of the interval in which a user has permission to check
+out an adminis tr ativ e  password.
+It is included in the Privileged Access Manager request base
+attribut e  group.
+PPM_VIEW_TIME_END In Bravura Privilege  password check-out requests, this is the end of
+the interval in which a user has permission to check out an
+adminis tr ativ e  password.
+It is included in the Privileged Access Manager request base
+attribut e  group.
+PROFILE_PIC Used to link a pr ofile  picture for each user.
+It is included in the base attribut es  group.
+RBACENFORCE When this boolean attribut e  is set to true, the user is included in the
+role enforcement jurisdiction.  When a new user is created, or an
+access change request is issued for an e xisting  user, the default
+value is true.
+It is included in the RBACENFORCEATTR group.
+SEND_RECIPIENT_EMAIL By default, recipients receive all emails addressed to them. When
+this boolean attribut e  is set to false, the recipient will no longer
+receive emails involving the request.
+It is not included in an attribut e  group by default.
+SEND_REQUESTER_EMAIL By default, requesters receive all emails addressed to them. When
+this boolean attribut e  is set to false, the requester will no longer
+receive emails involving the request.
+It is not included in an attribut e  group by default.SM_BROWSER_VIEW_TIME_END Used for requests to view recorded sessions. Allow the recipient to
+view sessions in a browser until  this time.
+It is included in the Recorded session meta data browser view limits
+group..
+SM_BROWSER_VIEW_TIME_START Used for requests to view recorded sessions: Allow the recipient to
+view sessions in a browser s t arting  at this time.
+It is included in the Recorded session meta data browser view limits
+group.
+SM_EVENT_TYPE Used for requests to download recorded sessions: Content types to
+include in package.
+It is included in the Recorded session meta data view limits group.
+SM_SEARCH_DEST_MANAGED_SYSTEM Used for requests to search recorded sessions: Managed system.
+It is included in the Recorded session meta data browse limits group.
+SM_SEARCH_INITIATOR Used for requests to search recorded sessions: Session initia t or
+pr ofile  ID.
+It is included in the Recorded session meta data browse limits group.
+SM_SEARCH_MANAGED_ACCOUNT Used for requests to search recorded sessions: Privileged access.
+It is included in the Recorded session meta data browse limits group.
+SM_SEARCH_SEARCH_TIME_END Used for requests to search recorded sessions: Allow the recipient
+to search until  this time.
+It is included in the Recorded session meta data browse limits group.
+SM_SEARCH_SEARCH_TIME_START Used for requests to search recorded sessions: Allow the recipient
+to search s t arting  at this time.
+It is included in the Recorded session meta data browse limits group.
+SM_SEARCH_SESS_TIME_END Used for requests to search recorded sessions: Search for sessions
+activ e  until  this time.
+It is included in the Recorded session meta data browse limits group.
+SM_SEARCH_SESS_TIME_START Used for requests to search recorded sessions: Search for sessions
+activ e  s t arting  at this time.
+It is included in the Recorded session meta data browse limits group.
+SM_SEARCH_SOURCE Used for requests to search recorded sessions: User device ID.
+It is included in the Recorded session meta data browse limits group.
+SM_SEARCH_SOURCE_ACCOUNT Used for requests to search recorded sessions: User login ID.
+It is included in the Recorded session meta data browse limits group.
+SM_VIEW_EXPIRY_TIME Used for requests to download recorded sessions: How long the
+package should be retained once it is generated (in days).
+It is included in the Recorded session meta data view limits group.
+SSH_AUTH_KEY In Bravura Privilege  generic check-out requests, this is the SSH
+public key to add to the managed account.
+It is included in the App SSH attribut es  group.
+SSH_PUBLIC_KEYS Used for storing users’ SSH public keys.
+It is included in the SSH public key profile  attribut es  group.UPDATE_ONLY_CHANGED_ATTRS This boolean attribut e  allows requesters to indicate whether to
+update all the account attribut es,  or only the changed ones. Its
+value is only used in context of the request, and is not saved with
+the user’s pr ofile.
+VIEWABLE_BY_RECIPIENT This boolean attribut e  allows requesters to indicate whether a
+recipient is allowed to view a request in the Requests app. Its value
+is only used in context of the request, and is not saved with the
+user’s pr ofile.
+It is included in the request-only group.
+The following request attribut es  should not be modified  as they are required in order for requests in the
+Privileged access  app and Session monitor  app to work:
+▪ACCOUNT_TARGET_LIST▪
+▪DURATION_INTERVAL▪
+▪DURATION_UNIT▪
+▪EXTENSION_DURATION_UNIT▪
+▪SM_SEARCH_MSPS▪
+▪USE_DURATION▪
+▪RECIPIENT_APP▪
+Getting  started
+Requirements 
+You require the Con figur e  w orkflo w  setup adminis tr ativ e  privilege in order to c on figur e  pr ofile  and
+request attribut es.   
+Na vig ation  
+Use the Manage the system  > W orkflo w  > Pr ofile  and request attribut es  menu to add, modify, and
+delete attribut es,  and to c on figur e  global settings.
+Bravura Security Fabric  displays a list of e xisting  pr ofile  and request attribut es.   
+Adding a new pr ofile  and request attribut e  
+To add a new pr ofile  and request attribut e:
+1.Click Manage the system  > W orkflo w  > Pr ofile  and request attribut es  > Pr ofile  and request 1.
+attribut es .
+2.Type an ID, and the Description  that users will see. 2.
+3.Select a Type . 3.
+Bravura Security Fabric  refreshes the page and displays settings  according to the type you selected. If
+JavaScript is not enabled for your browser, you must click Add to allow the page to refresh.
+4.Set parameters as described in Table Pr ofile  and request attribut e  parameters  (on page 1270). 4.
+5.Click Add, or Update . 5.You can also add profile  and request attribut es  from the account attribut e  attribut e  c onfiguration  page
+when mapping attribut es.  See Mapping account attribut es  to profile  and request attribut es  (on page
+571).
+De fining  pr ofile  and request attribut es
+Parameters for pr ofile  and request attribut es  vary depending on the attribut e’ s  type, as listed in the table
+below:
+Pr ofile  and request attribut e  parameters
+Setting Type Description
+Display type Boolean, Da t e/time,  String Determine how users select or enter
+values.
+For boolean attribut es  the options
+are "Drop-down", "Checkbox", or
+"Radio buttons".
+For da t e/time  attribut es  the options
+are "Da t e/time"  or "Date only
+(calendar)" where the date is
+selected with a popup calendar, or
+"Date only (YYYY-MM-DD)" where
+the date is selected with a drop-
+down menu.
+For string attribut es  with restricted
+values it becomes available only if
+the attribut e  allows multiple  values
+and the options  are "Drop-down" or
+"Drop-down with two-columns" to
+allow user to select values from
+either a drop-down list or a two-
+columns window..
+Validate user User Determine whether the pr ofile  ID
+entered for a user-type attribut e  is a
+valid or invalid user..
+Display as an image Link, File Display the link or file as an image
+with a size of 100 x 100 pixels
+Validate attribut e  value Link Checks whether the specified  link is
+valid before accepting  the value..
+Minimum required number of
+valuesAll A number greater than 0 means the
+attribut e  is required.
+Maximum allowed number of
+valuesAll except Boolean, Memo,
+Password, and Da t e/timeA number greater than 1 means that
+multiple  values are allowed.
+Maximum field  length String, Integer, Password Maximum length allowed for each
+value.

@@ -1,0 +1,57 @@
+We have now c on figur ed  the ENTITLEMENT_EXPIRY_DATE attribut e  so that it can be updated by users. In
+the next example, we will c on figur e  the _GROUP_CREATE_ pr e-de fined  request to include the ability to
+set an expiry date for each group member.
+Example: Create a group
+This example shows you how certain users can use the Groups  app to create a group on the Activ e
+Directory target system.
+Assumptions
+This example assumes:
+▪Bravura Workforce P attern  is installed. ▪
+▪The "AD" Activ e  Directory target system is c on figur ed  as a source of pr ofiles. ▪
+▪Group owners in AD are c on figur ed  as group managers in Bravura Identity . ▪
+Remove authorizers from the target system
+Requests to create groups requires authoriz ation  from the target system authorizers and any group
+owners involved in the request. For this demons tration , we are lowering the requirement to just the
+group owners by setting  the required authorizers on the Activ e  Directory target to zero:
+1.Log in to the Front-end (PSF) as superuser . 1.
+2.Click Manage the system > Resources > Target systems > Manually de fined  > AD . 2.
+3.Click the Authoriz ation  tab. 3.
+4.Change the following entries:4.
+▪Minimum number of authorizers  0 ▪
+▪Number of denials before a request is terminated  0 ▪
+5.Click Update . 5.
+Give a user permission to create groups
+Users must belong to the built-in user class called _GROUP_CREATE_USERS_ that allows them to access
+the Create group  request. For this example, add a single explicit user to the _GROUP_CREATE_USERS_
+user class:
+1.As superuser, click Manage the system > Policies > User classes . 1.
+2.Search for and select the _GROUP_CREATE_USERS_ user class.2.
+3.Click the Explicit users  tab. 3.
+4.Click Select… . 4.
+5.Select the checkbox for an end user; in this example it is ABBIEL.5.6.Click Add. 6.
+Add the group entitlemen t  attribut es  to the pr e-defined  request
+Now we will add the attribut e  group created in the previous example  (on page 1228) to the
+_GROUP_CREATE_ pr e-de fined  request. This will then allow an expiry date to be set for members when
+they are added to the group during group cr eation.  You could also add this new attribut e  group to other
+pr e-de fined  requests such as _GROUP_UPDATE_MEMBERS.
+1.Click Manage the system > W orkflo w  > Pr e-de fined  requests . 1.
+2.Search for and select the _GROUP_CREATE_ pr e-de fined  request. 2.
+3.Click the Attribut es  tab. 3.
+4.Click Select… 4.
+5.Select GROUP_ENTITLEMENT_ATTRS.5.
+6.Click Select . 6.Configur e  default values for the GROUP_OU attribut e
+Adding a default value for the group ou will reduce the chance of human error and ensure the group is
+created in the correct loc ation  in Activ e  Directory.
+1.On the Attribut es  tab for the _GROUP_CREATE_ pr e-de fined  request, select GROUP_INFO_CREATE. 1.
+2.In the OU field,  enter ou=Groups,ou=Demo,dc=<Exampledomain>,dc=corp  as the default 2.
+value.
+3.Click Update . 3.
+Create a group
+1.Log in to the Front-end (PSF) as abbiel. 1.
+2.Click Groups  under the RESOURCES  heading. 2.3.Click the Create  button  at the top of the Filter panel. 3.
+Note that the OU field  is filled  in for you.
+4. De fine  group in f ormation: 4.▪Group ID  ENG-TEMP ▪
+▪Group description  Temporary Engineer Hires ▪
+▪Target system  AD ▪Click Next .
+5.On the Owners  page, click Next . 5.
+6.On the Owner groups  page, search for and select the checkbox for ENG-MANAGERS-owners. 6.

@@ -1,0 +1,306 @@
+▪Depending on the chosen Type , the Description  and Address may be populated with example text. ▪
+Review these settings  before accepting  them.
+▪The Description  and Address can be set aut omatic ally  using a PSLang expression based on ▪
+<acc attr>s  discovered during auto discovery . These discovered values are stored in SQLite .db files,
+located in the <instance> \ p sc on fig  directory.
+For example, the default NT_TEMPLATE has its Address set to:
+"\\\\"+$comp["dNSHostName"][0]
+You can also target systems using the system IP address; for example:
+"\\\\"+$comp["ip"][0]  or
+"\\\\"+$comp["ip"][1]
+depending on whether detected systems have multiple  IP address, and which address is chosen.
+▪The List of proxies to run connectors on can also be set aut omatic ally  using a PSLang expression. ▪
+For example, to copy the proxy address from the source target system, use the following
+expression:
+$comp["sourceProxy"][0]
+4. Optionally ,  c on figur e  the administrator cr edentials.  This is useful if you plan to use the same password 4.
+for all subsequently discovered w ork s t ations.
+Note that the ID is set by a PSLang expression, so a literal string must be enclosed in quotes; for
+example "Administrator" . Discovered target systems that have the adminid <acc attr>  can
+also use adminid to c on figur e  the administrator cr edentials.
+See also De fining  c onnection  methods  (on page 2119) for details about how target system template
+cr edentials  are used in managing discovered resources.
+5. Optionally ,  c on figur e  the Discovery options  to select what you want to list from discovered systems. 5.
+This step is required if the discovery template is to be used with import rules  (on page 2095).
+By default, all discovery options  for a template are enabled, if the target type supports discovery
+options.
+The target system IDs of discovered systems are set using the computerUUID  attribut e  that is set for
+them. Push mode discovered systems have this attribut e  set to the objectGUID attribut e  if the
+systems are imported. Local service mode discovered systems have this attribut e  set to the system’s
+virtualdnshostname  attribut e  unless specified  during ins t allation.
+If a Local W ork s t ation  Service is discovered to be using an ID that has already been discovered, the
+c onflict  will be detected and the new service will be shut down. If you are reinstalling a Local W ork s t ation
+Service, you must specify the reinstall flag.
+Updating  a discovery template
+After  you have managed systems using a discovery template, you can still update the c on figur ation
+settings  of the discovery template and propagate the settings  to the e xisting  systems, as well as any
+systems added in the future.
+To update a discovery template:1.Click Manage the System  > Resources > Target systems > Discovery templates . . 1.
+2.Select the discovery template you want to update.2.
+3. Con figur e  the settings  in Target system in f ormation  or Discovery options  as desired. 3.
+4.Set Allow changes propagated to imported discovered system using this template to: 4.
+▪Yes - To propagate the changes to all e xisting  and future systems that uses this discovery template, ▪
+or,
+▪No - To only propagate the changes to future systems that will use this discovery template. ▪
+5.Click Update . 5.
+Managing discovered objects
+This section  shows you how to view and manually manage discovered objects.  
+Requirements 
+You require the Manage resources adminis tr ativ e  privilege in order to access the Discovered objects
+menu item.
+You require the Manage managed system policies adminis tr ativ e  privilege in order to attach  discovered
+objects to managed system policies .
+If either the description  or the address for a discovered system cannot be resolved, then it cannot be
+managed by a managed system policy as a member system.
+You must have membership in a user group that has the following access controls for the managed
+system policies to which you want to attach  discovered objects:
+▪View pr operties  for this policy ▪
+▪Modify pr operties  for this policy ▪
+Viewing discovered objects
+To view the list of all discovered objects, click Manage the system > Resources > Discovered objects ,
+then select Systems , Accounts , or Subscribers .
+Bravura Privilege  also displays system and account attribut es,  as well as any subscribers that are using
+the account cr edentials  to run; for example, services, tasks, iis, dcom objects, ODBC system DSNs. This
+in f ormation  can be accessed by clicking on the name of the discovered system or account.
+Other in f ormation  is provided when the discovered object is managed. This includes which import rules
+were used to manage the discovered object, managed system policies the object is added to, managed
+account check-out/check-ins, and manual password r andomiz ation  batches.
+Manually managing discovered systems
+To manually manage discovered systems:
+1.Click Manage the system > Resources > Discovered objects > Systems 1.2.Enable the checkboxes for the systems that you want to manage, then click Manage... 2.
+3.Select managed system policies to which you want to add the systems, then click Select . 3.
+4.Set the Template target system to use to de fine  target system in f ormation. 4.
+5.Set the New system c onnection  cr edentials  for the Bravura Privilege  server to use to connect to the 5.
+new managed systems.
+6.Click Apply , and c on firm  the settings. 6.
+Target systems are created for the new managed systems, and they are added to the selected
+managed system policies as member systems. For local service mode systems, the local service will
+need to contact the Bravura Privilege  server a few times  to verify the administrator cr edentials.
+By default, you can manually manage up to 20 systems at a time.
+Manually managing discovered accounts
+To manually manage discovered accounts:
+1.Click Manage the system > Resources > Discovered objects > Accounts . 1.
+2.Enable the checkboxes for the accounts that you want to manage, then click Manage... . 2.
+3.Select managed system policies to which you want to add the accounts, then click Select . 3.
+Accounts are only managed if they exist on the selected managed system policy member systems.
+4.Click Apply , and c on firm  the setting. 4.
+The accounts are added to the managed system policies ’ managed accounts.
+Deleting  discovered systems
+To delete a discovered system:
+1.Click Manage the system > Resources > Discovered objects > Systems . 1.
+2.Select the checkbox next to the system that you want to delete.2.
+A target system that is aut omatic ally  discovered (manually or with an import rule) must be deleted
+firs t before its discovered system can be deleted.
+3.Click Delete , and c on firm  the setting. 3.
+The discovered system is removed from the instance.
+If you delete a push mode discovered system and the system still exists on an Activ e  Directory domain, it
+will be rediscovered the next time  auto discovery is run. If you delete a local service mode discovered
+system and the Local w ork s t ation  service is still installed and running on the system, it will be
+rediscovered on the next poll interval.Displaying discovered object attribut es
+You can display discovered object attribut es  as additional  columns on c on figur ation  screens and managed
+account requests. These attribut es  can provide users with additional  in f ormation  about managed
+accounts or managed systems.
+To specify a list of attribut es  to display, set the MANAGED ACCOUNT ATTR DISPLAY LIST or MANAGED
+SYSTEM ATTR DISPLAY LIST option  at Manage the system  > Modules  > Privileged access f or account
+attribut es  and system attribut es,  r espectiv ely .Import rules
+Import rules allow you to de fine  custom criteria, referred to as “ c onditions” ,  to evaluate discovered
+objects and:
+▪Add discovered systems as target systems using a target system import rule . ▪
+▪Bind systems to managed system policies using a managed system import rule . ▪
+▪Bind accounts to managed system policies using an manged account import rule . ▪
+▪Delete systems and accounts.▪
+▪Unbind (offboar d)  managed systems and accounts. ▪
+This can happen during auto discovery , at contact between the Local W ork s t ation  Service and the Bravura
+Privilege  server, or you can evaluate objects then choose to apply the results.
+Import rule order
+The import rules are processed by the Discovery service ( iddiscover ) in this order:
+1.Target systems1.
+2.Managed systems2.
+3.Managed accounts3.
+You de fine  the order of bind vs unbind actions  on the managed system  and managed account  import rule
+c on figur ation  (on page 2097) pages. The unbind rules have to be sorted at the end of the list in order for
+them to act as intended.
+Once a rule matches an object (system or account), that object is not available for the following rules, so
+in case multiple  rules match a single object, the fir s t rule to match applies.
+Once a match is made and a target is created or an object is managed or unbound, the rules will evaluate
+again against that object only if the rule is updated, or an attribut e  relevant to the rule criteria changes
+its value. For more details, see R e-e v aluating  import rules  (on page 2127).
+See also
+Import rules are part of the infrastructure auto discovery feature. It is recommended that you read
+Implementing  Infrastructure Auto Discovery  (on page 2081) before c on figuring  these settings.
+Getting  started
+Requirements 
+You require the Manage policies adminis tr ativ e  privilege in order to access the Import rules menu item.
+Na vig ation  steps for target system import rules 
+Use the Resources tab in the Manage the system  (PSA) module to add, test, and delete import rules for
+target systems. You can also use this page to access additional  c on figur ation  settings.To navigate to the import rules page for target systems:
+1.Click Manage the System  > Resources > Target system s > Import rules  to determine which discovered 1.
+systems should become managed target systems and have corresponding target systems created for
+them.
+2.Click Add new... to add a new target system import rule  (on page 2096). 2.
+Or,
+Select an e xisting  import rule to update rule settings,  associate the rule with managed system
+policies , modify c onditions,  and evaluate c onditions.
+You can also enable, disable, delete or test rules  (on page 2125) on this page.
+Na vig ation  steps for managed system and managed account import rules 
+Use the Privileged access tab in the Manage the system  (PSA) module to add, test, and delete import rules
+for managed systems and accounts. You can also use this page to access additional  c on figur ation  settings.
+To navigate to the import rules page for managed systems and managed accounts:
+1.Click Manage the system  > Privileged access  > Import rules . 1.
+2.Select an import rule type:2.
+▪Managed systems – to determine managed system policy membership for managed systems ▪
+▪Managed accounts – to determine which accounts to manage on member systems in managed ▪
+system policies
+3.Click Add new... to add a new managed system or managed account import rule  (on page 2097). 3.
+Or,
+Select an e xisting  import rule to update rule settings,  associate the rule with managed system
+policies , modify c onditions,  and evaluate c onditions
+You can also enable, disable, delete or test rules  (on page 2125) on this page.
+Target system import rules
+Using target systems import rules
+Use target system import rules to determine which discovered systems should be managed and have
+corresponding target systems created for them.
+One of the main reasons for using target system import rules is to de fine  how the system will be
+connected. An important decision to make for target system import rules is choosing the source systems
+whose computers will be subject to the import rule.
+Local service mode target systems are not connected to source systems. They still require the local
+service mode client to contact the server. You can also use import rules to delete target systems.
+If a target system is a managed system, then deleting  it removes all managed passwords from Bravura
+Privilege. Only systems which were discovered and managed using import rules can be deleted usingimport rules.
+Manually defined  target systems cannot be deleted using import rules.
+Adding a target system import rule
+To add a target systems import rule:
+1.Click Manage the System  > Resources > Target system s > Import rules . 1.
+2.Click Add new... 2.
+3.Type an ID and Description . 3.
+4.Enable Import all discovered objects of this type if you want all evaluated objects to aut omatic ally 4.
+pass the import rule. Con firm  the dialog box.
+If enabled, the next step is not necessary.
+5. Con figur e  the import rule Combining c onditions  setting  (on page 2105) so that discovered objects: 5.
+▪Must Match all c onditions  to satis f y  the import rule, or ▪
+▪Can Match any c ondition  to satis f y  the import rule. ▪
+6. Con figur e  Action  to perform on matching objects  (on page 2096). Select whether to: 6.
+▪Manage all discovered objects that satis f y  this rule, or ▪
+▪Delete all discovered systems that satis f y  this rule. ▪
+7.Set the Managed systems e v aluation  type to the type of managed system  (on page 1815) that the 7.
+import rule will be applied to - push or local service mode.
+8.To manage target systems, set the Template target system to de fine  target system  (on page 2090) 8.
+in f ormation  for new managed systems that satis f y  this import rule.
+9.For push mode, c on figur e  the Strategy for selecting  source systems to: 9.
+▪Include all source systems, or▪
+▪Include some source systems, or▪
+▪Exclude some source systems.▪
+Click 
+  to select source systems  (on page 2119) to include or exclude.
+10. To manage target systems, set the New system c onnection  cr edentials  for the Bravura Privilege  server 10.
+to use to connect  (on page 2119) to new managed systems that satis f y  this import rule.
+If the credentials  are invalid, the system will not be imported and managed by Bravura Privilege.
+11. Click Add. 11.
+Import rules are disabled by default, and must be enabled to be applied during auto discovery . You can
+enable or disable an import rule on the Import rule s page and on each rule’s specific  page.
+It is best practic e  to carry out a test or trial run  (on page 2125) before enabling this option.
+Managed systems and managed accounts import rules
+Use managed systems import rules to determine which systems to manage and under which policies. Use
+managed accounts import rules to determine which accounts to manage and under which policies.You can also use import rules to delete managed systems and accounts.
+Using managed systems import rules
+Use managed systems import rules to determine policy membership; for example:
+1.According to computer or g aniz ation  structure (OU, department, loc ation,  purpose, and so on) 1.
+2.As a c ondition  for being put into other policies 2.
+See De fining  c onditions  (on page 2105) for examples using the attachedPolicies  attribut e.
+This could be a staging requirement to put newly discovered systems into a group, before moving
+them to other policies.
+3.Grouping systems that have issues with them, such as not being contactable in the past few days.3.
+This is known as a tombstone policy .
+See De fining  c onditions  (on page 2105) for examples using the compFailurePastThreshold
+attribut e.
+When de fining  managed systems import rule policies, consider the following:
+▪What will all the managed systems in this policy have in common?▪
+▪Will they all manage the same account ID?▪
+▪Will they all have similar services running on them (with corresponding accounts to manage them)?▪
+▪Will they have similar local privileges managed?▪
+Managed systems with checked-out passwords cannot be unbound.
+Systems can be unbound without losing managed password histories.
+You must link managed systems rules to managed systems policies  (on page 2100).
+Using managed accounts import rules
+Use managed accounts import rules to determine what accounts to manage. It is recommended that you
+set these rules only after  setting  up managed system policies and managed system import rules. That
+way, de fining  managed account import rules is simply a matter  of setting  the account ID to look for
+managed accounts.
+Windows service accounts must be listed by Bravura Privilege  (on page 2088) before they can be
+managed.
+Managed systems must be a member of at least one managed system policy for their accounts to be
+managed using import rules.
+Consider:
+▪Is an import rule needed?▪
+If an account has identic al  pr operties  and purpose for all members of a policy, for example an
+administrator or root account, then you can simply manually enter the account ID in the policy
+c on figur ation.
+▪Will the managed system join and leave the policy often? ▪If member system is removed from a policy, the managed account ID that is associated with it is
+aut omatic ally  removed.
+Managed accounts with checked-out passwords cannot be unbound.
+You must link managed accounts rules to managed system policies  (on page 2100).
+Adding managed systems import rules
+To add a managed systems import rule:
+1.Click Manage the system  > Privileged access  > Import rules > Managed systems . 1.
+2.Click Add new... 2.
+3.Type an ID and Description . 3.
+4.Enable Import all discovered objects of this type if you want all evaluated objects to aut omatic ally 4.
+pass the import rule. Con firm  the dialog box.
+If enabled, the next step is not necessary.
+5. Con figur e  the import rule Combining c onditions  setting  (on page 2105) so that discovered objects: 5.
+▪Must Match all c onditions  to satis f y  the import rule, or ▪
+▪Can Match any c ondition  to satis f y  the import rule. ▪
+6. Con figur e  Action  to perform on matching objects  (on page 2098). Select whether to: 6.
+▪Bind all discovered managed objects that satis f y  this rule, or ▪
+▪Unbind all discovered managed objects that satis f y  this rule. ▪
+7.Set the Managed systems e v aluation  type to the type of managed system  (on page 1815) that the 7.
+import rule will be applied to - push or local service mode.
+8. Con figur e  the Unbind objects if they no longer satis f y  this rule  (on page 2101)  option  to determine 8.
+whether objects that previously passed the import rule should archived when they fail the import
+rule. Check the option  to have objects unbound/archived.
+If this option  is not checked, no action  will be performed for failed objects. You will have to manually
+resolve any related issues.
+9.For push mode, c on figur e  the Strategy for selecting  source systems . 9.
+Click 
+  to select source systems  (on page 2119) to include or exclude.
+10. Click Add. 10.
+Import rules are disabled by default, and must be enabled to be applied during auto discovery . You can
+enable or disable an import rule on the Import rules  page and on each rule’s specific  page.
+It is best practic e  to carry out a test or trial run  (on page 2125) before enabling this option.
+Adding managed accounts import rules
+To add a managed accounts import rule:
+1.Click Manage the system  > Privileged access  > Import rules > Managed accounts . 1.2.Click Add new... 2.
+3.Type an ID and Description . 3.
+4.Enable Import all discovered objects of this type if you want all evaluated objects to aut omatic ally 4.
+pass the import rule. Con firm  the dialog box.
+If enabled, the next step is not necessary.
+5. Con figur e  the import rule Combining c onditions  setting  (on page 2105) so that discovered objects: 5.
+▪Must Match all c onditions  to satis f y  the import rule, or ▪
+▪Can Match any c ondition  to satis f y  the import rule. ▪
+6. Con figur e  Action  to perform on matching objects  (on page 2098). Select whether to: 6.
+▪Bind all discovered managed objects that satis f y  this rule, or ▪
+▪Unbind all discovered managed objects that satis f y  this rule. ▪
+7. Con figur e  the Unbind objects if they no longer satis f y  this rule  (on page 2101)  option  to determine 7.
+whether objects that previously passed the import rule should archived when they fail the import
+rule. Check the option  to have objects unbound/archived.
+If this option  is not checked, no action  will be performed for failed objects. You will have to manually
+resolve any related issues.
+8.Click Add. 8.
+Import rules are disabled by default, and must be enabled to be applied during auto discovery . You can
+enable or disable an import rule on the Import rules page and on each rule’s specific  page.
+It is best practic e  to carry out a test or trial run  (on page 2125) before enabling this option.
+Linking import rules to policies
+Each managed systems and managed accounts import rule must be associated with at least one managed
+system policy. To link import rules to managed system policies:
+1.Navigate to the Import rules  page 1.
+Use the Privileged access tab in the Manage the system  (PSA) module to add, test, and delete import
+rules for managed systems and accounts. You can also use this page to access additional  c on figur ation
+settings.
+To navigate to the import rules page for managed systems and managed accounts:
+1.Click Manage the system  > Privileged access  > Import rules . 1.
+2.Select an import rule type:2.
+▪Managed systems – to determine managed system policy membership for managed systems ▪
+▪Managed accounts – to determine which accounts to manage on member systems in managed ▪
+system policies
+3.Click Add new... to add a new managed system or managed account import rule  (on page 2097). 3.
+Or,

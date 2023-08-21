@@ -1,0 +1,348 @@
+▪Improved queue flush.e x e  error de t ection ▪
+Reports
+▪Fixed non-expiring scheduled reports failing due to an invalid date format in the database table.▪
+▪Fixed the issue where the Review c ertific ation  delegations  report did not properly filt er  deleg ations. ▪
+▪Fixed problem with scheduled jobs report, which would return an extra record if the scheduled job is▪
+enabled to run on all nodes of an instance.
+User interface
+▪Fix the multiple- v alue  integer pr ofile  attribut e  issue for PDR Update attribut es. ▪
+▪Fixed an issue where the selected language is lost through a SAML authentic ation. ▪
+▪Fixed the following issues with mobile device r egis tr ation  page na vig ation: ▪
+▪ After  a successful mobile device r egis tr ation,  focus on the desktop now aut omatic ally  redirects to ▪
+the Mobile devices page and the user is notified  of the mobile device activ ation  with an Info
+message.
+▪When the maximum number of allowed mobile devices have been registered as per MAX MOBILE▪
+DEVICES, the user will also therefore be unable to add more mobile devices since they are
+aut omatic ally  redirected to the Mobile devices page.
+▪On an unsuccessful mobile device r egis tr ation  such as when the qr code expires, focus redirects ▪
+back to the page to register a mobile device.
+W orkflo w
+▪Fixed an issue where current authoriz ation  phase couldn't be closed and/or next authoriz ation  phase ▪
+couldn't open up properly in some cases, which results in request hanging in a state can not be
+completed.
+▪Made changes tonsure the default value for attrtype  field  will appear in R eques tGe tAttribut e ▪
+generated sproc code.
+Utilities
+▪ Modified  utility  loadplatform  and idmconfig  to error out if the new platform  id is too long ▪
+(when adding new platform/t ar g e t).
+▪Fixed loaduccache  utility  to c ontinue  running if iddb  service goes down. ▪
+Python / IDMLib
+▪Improved idmlib's handling of IDAPI handles when the API is called using Python scripts.▪
+API
+▪ Modified  idapi  function  WFResultSet to do post processing properly when implementer successfully ▪
+completes the task.
+▪Enabled autoaddupdate when calling API function  WFPDRSubmit for appropriate PDRs. ▪
+REST API▪A user added to the _EXPLICIT_REST_API_USERS_ user class can now successfully log in to the REST▪
+API.
+▪Added support for Windows Authentic ation  to MSSQL for the REST API. ▪
+▪Fix reference to ManagedSystem resource returned when retrieving ManagedSystem attribut e. ▪
+Other
+▪Fixed a logging issue with setup.exe when installing a new instance.▪
+▪Fixed users' session security.▪
+▪Fixed a tree traversal vulnerability where the hard drive directory structure could be explored.▪
+▪ Optimiz ed  stored procedure e x ecution  during auto discovery. ▪
+▪Improved iddiscover robustness around loading list files that don't exist, have no data, or were ▪
+produced by failed listing.
+▪Fixed edge case where setting  a json value to "true" or "false" in an environment file would ▪
+occasionally fail.
+▪Fixed Database service (iddb) crash on startup when unable to connect to the SQL Server backend.▪
+▪Fixed an authentic ation  issue that could occur on environments with both mobile proxy and Azure ▪
+MFA authentic ation  c on figur ed.
+Bravura Security Fabric 12.4.2
+Features and improvements
+Bravura Privilege
+▪Added c on flict  check between pam_disclosure_view_copy and ▪
+pam_account_management_disclosure_view_copy scenario components.
+Authentic ation
+▪Added new password rules:▪
+▪MINLOWER: have at least N lowercase letter s ▪
+▪MINUPPER: have at least N uppercase letter s ▪
+Upgrade / migr ation
+▪Added the upgradetest utility  with the shipped ins t allation  files to check for pot ential  issues prior ▪
+to upgrading the database.
+Resolved issues
+Bravura Pass
+▪Fixed a security issue with the Login Assistant / Cr edential  Provider from the locked down browser ▪
+window.
+▪ Modified  Profile  and request attribut e  inf ormation  page to make c on figur ation  option  Allow duplicate ▪
+values  available under Bravura Pass-only license.▪Adjusted netvalidatepwpol plugin to be able to directly check against Azure.▪
+Bravura Privilege
+▪Fixed inconsistency between authoriz ation  of API and UI submitted  requests for ▪
+pam_vault_management.
+Reports
+▪Fixed the issue where the Review c ertific ation  delegations  report did not properly filt er  deleg ations. ▪
+Aut omation
+▪Fixed escape issue in IDTrack w orkfile. ▪
+W orkflo w
+▪Fixed an issue where a session becomes invalid when accessing a resource c on figur ation  page, where ▪
+an invalid user is c on figur ed  as an authorizer in one of the phased authorizers.
+▪Fixes request g ener ation  to include seqno's in reqinfo kvg for default attribut e  values. ▪
+Upgrade / Migr ation
+▪Improved queueflush.exe  error de t ection ▪
+▪ Modified  upgrade scripts to properly clean up invalid data from "xgrpmbr_diff"  (11.2.0) and ▪
+"ucpcache" (12.3.0) so upgrade can proceed.
+Mobile
+▪Fixed an issue pr e v enting  the UI from rendering on Android webviews (such as authentic ating  to the ▪
+Gmail app).
+Maintenance
+▪Fixed updinst  utility  to properly determine the primary node when using the requestsync option. ▪
+Components
+▪Fixed replacement of variables within environment files. ▪
+▪Fixed issue where loaddb components would fail if the stableid of an object changed only by its ▪
+case.
+▪Added hook_patch to Functional.hid_authchain_r ec ap t cha  so that authchain.m4 is correctly ▪
+regenerated on patch skin rebuild.
+Connectors (agents)
+▪Fixed idmc on fig-based  target administrator onboarding to respect the "isconnpswd" flag. ▪
+Cus t omiz ation
+▪Added default robots.txt to block webcrawlers.▪
+▪Added default X-Robots-Tag response headers.▪▪Added c on figur able  response headers by using a setupiis.cfg in the p sc on fig  directory. ▪
+API
+▪Fixed Resource* class of IDAPI functions  to be able to modify discovery flags  of targets. ▪
+Bravura Security Fabric 12.4.1
+Features and Improvements
+Bravura Privilege
+▪Added ability to `include`/`exclude` accounts in the `MANAGEABLEACCOUNTS` search engine.▪
+Logging
+▪Cleaned up the warning level log messages when unlocking mobile accounts.▪
+API
+▪Added support for Windows Authentic ation  to MSSQL for the REST API. ▪
+Discovery
+▪ Optimiz ed  stored procedure e x ecution  during auto discovery. ▪
+▪Improved iddiscover robustness around loading list files that don't exist, have no data, or were ▪
+produced by failed listing.
+Bravura Identity
+▪ Optimiz ed  the stored procedures to check for segr eg ation  of duties  rule violations  to return early ▪
+when no valid rules are c on figur ed  so that queries to prepare role memberships based on validity
+windows in order to calculate sod violations  will be skipped.
+▪Some improvements for stored procedures used by the rbacenforce utility  to return a list of variances ▪
+for all users.
+Other
+▪Added the ability for script manage-components.py to reload only the environment for component(s)▪
+specified  in the new optional  parameter --components.
+Resolved issues
+User interface
+▪Fix the multiple- v alue  integer pr ofile  attribut e  issue for PDR Update attribut es. ▪
+▪Fixed an issue where the selected language is lost through a SAML authentic ation. ▪
+Bravura Identity
+▪Fixed password page in wizards to check whether a request generated password is provided before▪
+proceeding.▪Fixed an issue to ensure that the correct record is updated in the orgchart when transferring▪
+subordinates.
+▪Changed behavior in request app so that implementer tasks section  is not aut omatic ally  expanded ▪
+when the implementer selects a request.
+▪The accounts POST endpoint no longer requires the attribut e  array when cr eating  and account on a ▪
+target.
+▪The REST API attribut es  endpoint will return the correct reference fields  for attribut es  of type 'file'. ▪
+▪Fixed an issue where request to delete multiple  roles (oper ations  added by wfreq at submission time) ▪
+failed to submit due to duplicate oper ations  (expanded from roles).
+▪Fixed an issue in wizard where segr eg ation  of duties  violations  are not listed when violations  are ▪
+triggered by r equesting  new role memberships and e xisting  indirect group membership is also
+involved.
+Bravura Privilege
+▪Fixed auto-discovery, so that import rules based on the memberOf computer attribut e  will be ▪
+correctly evaluated.
+▪Fixed race c ondition  in r eplic ation  so cr eation  of P AMUtil  API User through team management PDR ▪
+will only have one GUID in the DB.
+▪pam_account_management: Updated search filt er  for the ONBOARD_ACCOUNT pr e-de fined  request ▪
+to hide already onboarded accounts.
+▪Fixed issue where the access control page for managed system policies would not function  if any ▪
+access groups had a space in their IDs.
+▪Resolved an issue where having teams or team groups with long descriptions  could cause pr e-de fined ▪
+requests to fail.
+▪Resolved an issue where managed accounts with special characters in the username or password▪
+could not be used with secure browser/webapp disclosure.
+▪Resolved an error in website disclosure c on figur ation  scripts when disclosing managed accounts with ▪
+special characters in the name or password.
+▪Fixed an issue where the Privileged Access page took a long time  to load for help desk members on ▪
+systems with many teams.
+▪Fixed session monitor to avoid modifying the keyboard state in the keyboard hook (Windows 10 build▪
+1607 and later).
+▪Allow session monitoring to capture keystrokes where multiple  characters are produced from a single ▪
+keystroke (i.e. when typing the sequence ~x on a United St a t es-In t ernational  keyboard, nothing is
+outputted  when you press ~ but 2 characters ~x are outputted  when you press the final  x).
+▪Fixed issue in session monitor keystroke recording where the presence of diacritics  would cause issues ▪
+with buff er  lengths, r esulting  in the recorded text being cut off or the process name being null.
+▪pam_team_management.pdr.team_members: Forcing the deselection  of a group to assure that teams ▪
+with the same group name does not cause errors in member list population.
+▪Group IDs are now recalculated properly when changing teams.▪
+▪Updated the pam_personal_admin_management component to read the personal admin MSP from▪
+the global c on figur ation  table.▪idmlib: adjusted helper functions  for unmanaging/managing groups to align with stored procedure ▪
+changes.
+▪Fixed Session Monitor so that screenshots from multiple  monitors are properly captured. ▪
+▪Corrected dependencies for 2 data components:▪
+▪webappjson_aws▪
+▪pam_disclosure_sql_server▪
+Upgrades
+▪components(upgrade): correct upgrade scripts pr e v enting  successful 11.1.3 to 12.4.x upgrades. ▪
+▪Fixed issues when skipping or retrying failed SQL upgrade scripts.▪
+▪Changed the post-upgrade schema v erific ation  task to report on all errors encountered rather than ▪
+just the fir s t.
+▪Fixed installer to not prompt for REST API user password during upgrade if REST API user already▪
+exists.
+▪Fixed the installer when upgrading instances where the service administrator password contains < or >▪
+characters.
+▪Fixed two issues where proxy instances could not be upgraded.▪
+Other
+▪Fixed a logging issue with setup.exe when installing a new instance.▪
+▪Fixed users' session security.▪
+▪Corrected issue concerning the handling of report email attachmen ts  which were incorrectly escaping ▪
+HTML characters.
+▪Fixed non-expiring scheduled reports failing due to an invalid date format in the database table.▪
+▪Fixed a tree traversal vulnerability where the hard drive directory structure could be explored.▪
+▪Fixed edge case where setting  a json value to "true" or "false" in an environment file would ▪
+occasionally fail.
+▪Updated Login Assistant installer, to validate the password of the Login Assistant account against the▪
+password policy of the system.
+Bravura Security Fabric 12.4.0
+Features and improvements
+Ins t allation
+▪Added the ins t allation  options  for ska-x64.msi for "VPN test page URL" and "VPN test page search ▪
+words" to use to test for and establish a VPN c onnection  when a SaaS Pass server is used for the
+instance.
+▪Improved setup  to allow it to install successfully on Amazon Multi-AZ  environments. ▪
+Python
+▪Added support for Python 3.10.x for Bravura Security Fabric.▪▪Upgraded 3rd party libraries in idmilb/extras to newer versions in order to support python 3.10.▪
+Search
+▪Complete overhaul of SearchFilter plugin interface, components using add_expression or manually▪
+altering query will need to be r e written  using the new builder interface.
+▪This applies to components that provide for either SEARCH_FILTER_PLUGIN or▪
+SAVED_SEARCH_PLUGIN.
+▪ Augmen t ation  to SearchFilter's include/exclude interface to support better  separ ation  and ▪
+c ombination  if multiple  components are using include/exclude for the same search engine.
+▪ Optimiz ation  for stored procedure ReqBatchSearch to improve its performance when r equesting ▪
+groups memberships.
+Discovery
+▪Idmlib discovery module:▪
+▪do not read 'extra.dat' in the constructor.▪
+▪require extra data to be explicitly added instead of being implicitly appended on 'commit'.▪
+▪Added the "Copy data from these targets, separated by commas, during auto-discovery" target system▪
+option  and a sample script file to add the ability for a target system to copy the listing  data from one
+or more other targets instead of listing  data itself.
+▪ Optimiz ed  loading of discovered computers into database during discovery. ▪
+▪Improved handling of diff -based  discoveries (such as persistent listing)  for object r elationship s  when ▪
+deleting  an object as opposed to moving it out of scope.
+R eplic ation
+▪Added improved error r eporting  around cases where r eplic ation  is aut omatic ally  suspended or halted. ▪
+▪Improved database service resilience around unexpected restarts or crashes.▪
+▪Improved performance of file r eplic ation. ▪
+▪Include target list db files to default r eplic ation  blacklist. ▪
+▪Improved the error logging in the "iddb-failed-procs" logs.▪
+▪Improved replicated upgrades to not require a manual step to start idfiler ep  if leaving worker services ▪
+offline.
+Guacamole
+▪Updated Guacamole Docker container base images:▪
+▪Guacamole is now built on tomcat:9-jre8 (previously tomcat:7-jre8)▪
+▪guacd is now built on fedora:34 (previously fedora:33)▪
+User Interface
+▪Added default robots.txt to block webcrawlers.▪
+▪Added default X-Robots-Tag response headers.▪
+▪Added c on figur able  response headers by using a setupiis.cfg in the p sc on fig  directory. ▪Other
+▪Added a feature to Bravura IVR that allows it to update individual audio files on Asterisk as needed, ▪
+rather than requiring a complete r es ynchr oniz ation.
+▪Updated ajaxsvc to include the session user ID in the log where applicable. ▪
+▪Improved tr ansaction  handling in dbapi. ▪
+▪Updated default SQL provider to connect to SQL Server using Micr osoft  OLE DB Driver, allowing for ▪
+support for Amazon Multi-AZ  listener-based failover.
+▪The network resource exit traps for NR CREATE FAILURE, NR CREATE SUCCESS, NR DELETE FAILURE, NR▪
+DELETE SUCCESS, NR MOVE FAILURE, NR MOVE SUCCESS, NR UPDATE FAILURE, and NR UPDATE
+SUCCESS are now exposed in the user interface.
+▪The Red Hat Enterprise Linux package for CentOS 8.x x64 architecture has been added for idmunix-▪
+rhel-el8.x64.tar.gz.
+▪Added support for the CentOS 8.x x64 architecture for the Linux idmunix package for the mobile proxy▪
+server.
+▪Added a new system variable "Aut omation  Enabled" (defaulted to true) to control whether ▪
+aut omation  requests should be issued. This applies to all aut omation  paths, including any idapi
+submitted  requests.
+▪Updated the error message to be more meaningful when an invalid preqid is used in api call▪
+WFRequestSubmit.
+▪Fixed the s etup-mobproxy.sh  script for the Bravura One mobile proxy server when pr ompting  for ▪
+an SSL/TLS certific a t e  or to have the script generate a self-signed certific a t e.
+Identity
+▪Revised the Certific ation  App to display the shortid  instead of groupdesc for the group description. ▪
+▪Allow authorizers the same access as groups owners for the management of groups.▪
+▪If a segr eg ation  of duties  rule is deprecated or disabled after  a certific ation  campaign, which includes ▪
+violations  of this rule is initia t ed,  these violations  will aut omatic ally  be marked as complete either on
+the loading of the campaign or when the item is clicked on to trigger the r esolution  wizard.
+▪Added support for request and resource expressions in component im_policy_authorization . ▪
+▪Corrected issue with a handful of loaddb components where ACCT methods would not be called for▪
+target IDs that contain hyphen character.
+Privilege
+Components
+▪Added pam_system_type_mssql  to support MSSQL system type for team management. ▪
+▪pam_attribute_ma_name : increase the length of the MA_NAME attribut e  to 80 characters ▪
+▪hid_batch_request_submit : moved the raw SQL query into a stored procedure. ▪
+▪pam_team_management:  optimiz ed  "get_managed_systems" and "get_managed_accounts" ▪
+helper functions  in t eam_utils.p y .▪pam_team_management:  improve the user experience when submitting  pr e-de fined  requests ▪
+over API. The following improvements are included:
+▪account onboard, update, offboar d  requests aut omatic ally  expand the SELECT_MA attribut e  into ▪
+ACCOUNT and HOSTID
+▪create pam util api user request no longer requires optional  MS_ID and MS_NAME values ▪
+▪system offboar d  request now always tries to fill in REQUEST_TEAM from RESATTR_TEAM managed ▪
+system attribut e
+▪account offboar d  request now always tries to fill in REQUEST_TEAM from RESATTR_TEAM managed ▪
+account attribut e  for non-personal accounts
+▪account onboard request now fills in REQUEST_TEAM attribut e  from validated MA_TEAM for non- ▪
+personal accounts
+▪system onboard request now fills in REQUEST_TEAM attribut e  from validated MS_TEAM ▪
+▪account update request now fills in REQUEST_TEAM attribut e  from either: ▪
+▪RESATTR_TEAM managed account attribut e  if moving from non-personal into personal MSP ▪
+▪RESATTR_TEAM managed account attribut e  if the destination  is missing or identic al  to the ▪
+source
+▪MA_TEAM if moving from personal into non-personal MSP▪
+▪system update request now fills in REQUEST_TEAM attribut e  from RESATTR_TEAM managed ▪
+system attribut e  if the destination  is missing or identic al  to the source.
+Other
+▪ Modified  behavior so that administrators with specific  Bravura Privilege privileges have access to ▪
+Privileged Access  menu options  in the Manage the system module (PSA).
+▪ Modified  behavior so that only superusers can add/modify/delete managed account associated with ▪
+target system cr edentials.
+▪Added r egis tr y -de finable  global override key, DisableAllOTP , to disable OTP r andomiz ation  for all ▪
+accounts.
+▪ Optimiz ed  Privilege upgrades when upgrading from pre-11.0. ▪
+Reports
+▪Added a new report, Con figur ation  c ompletion  percentage  in the Certific ation  of c on figur ations ▪
+category. The report shows progress in c ompleting  currently activ e  c on figur ation  certific ation
+campaigns.
+▪Added new report, Con figur ation  certific ation  details  in the Certific ation  of c on figur ations  category. ▪
+This report enables the user to list the details of c on figur ation  certific ation  campaigns.
+▪Added a new report, Orgchart certific ation  progress to the Certific ation  of entitlemen ts  category. The ▪
+purpose of the report is to display the progress that reviewers have made on Orgchart based
+certific ation  campaigns.
+▪Added the following search filt er s  to the Scheduled jobs report: ▪
+▪Command to run▪
+▪Repeat type▪▪Last run status▪
+▪Filter results by last finish  date ▪
+▪Filter results by next run date▪
+▪Enhanced the Authentic ation  chains  report to add a column in detailed mode to display the IP ▪
+address.
+▪Added new report ' Resources not in saved c on figur ation  certific ation  setups ' to the Certific ation  of ▪
+c on figur ations  category.
+▪This report displays, for a given resource type (role, segr eg ation  of duties  rule), the list of resources ▪
+not included in any saved c on figur ation  certific ation  setup.
+▪ Pr ofile  attribut e  of type Managed group is now supported in r eporting. ▪
+Resolved issues
+UI
+▪Fixed loading of extra columns provided by search filt er  plugin. ▪
+▪Fixed saved search menu when extra columns is added by search filt er  plugin. ▪
+▪Fixed the broken login UI when Scenario.hid_remember_userid is enabled.▪
+▪Fixed the password reveal function  by switching the built-in reveal password feature in Edge with the ▪
+product reveal password feature.
+▪Fixed an issue where the network resource icon was sometimes  being shown too large for higher ▪
+r esolutions.
+IDM library
+▪idmlib(wfobject): improve the account module:▪
+▪properly implement the __eq__ method and improve its performance▪
+▪ fix the is_group_member method to actually work ▪
+▪ e fficien tly  implement the is_owner_of_group method ▪
+▪throw a ValueError instead of silently returning a bogus value▪
+▪add unit tests for the module▪
+▪Improved the get_groups method of the idmlib. w f object.Pr ofile  class to only return managed user ▪
+groups. Furthermore, the method would now return a correct hostid  for direct cross-target
+memberships.
+R eplic ation
+▪Fixed file r eplic ation  not working for shared schema nodes. ▪
+▪Fixed incorrect r eplic ation  behavior around bulk loads that were retried due to an error. ▪
+Group App
+▪Fixed a bug in GroupApp Update Members  wizard for resource attribut e  of type Account group ▪
+memberships and of Child group memberships, when clearing value in the input box does deselect the
+checkbox.

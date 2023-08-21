@@ -1,0 +1,295 @@
+3.Edit the exported .cfg file(.e xp  file) to globally rename SMSPIN so it sorts above PERSONAL_EMAILPIN 3.
+(for example ASMSPIN).
+4.Re-import  (on page 865) the authentic ation  chains according to the article  listed above. 4.
+5.Test the results.5.
+6.When successful, update any custom components which add authentic ation  chains, to use the new 6.
+names for the authentic ation  chain IDs.
+7.If only default components are used, override them with custom ones that add the new chain ID7.
+names.
+Now, the Available chain s field  lists chains as:
+Use PSFEXT_VALUES
+ASMSPIN
+EMAILPIN
+Bravura Security Fabric  displays:
+The method above is recommended even though manually cr eating  a copy custom authentic ation  chain
+is also possible only if the authentic ation  chain does not have any of its modules registered (and it will
+require manual changes to all other chains where this chain is referenced).
+Any other components and/or policy tables which may refer to the ID-renamed authentic ation  chains
+must be edited as well. If component changes are required, do not edit default components; make
+custom ones.
+Some other authentic ation  chain modules (for example challenge-response modules like Okta or Duo)
+also provide their options  in the order they are sent back from the API of the r espectiv e  authentic ation
+service, or follow built-in order.CAPTCHA test authentic ation
+In this example, an authentic ation  chain is set up to include a CAPTCHA test. CAPTCHA is an acronym for
+“Completely Automated Public Turing Test To Tell Computers and Humans Apart.” It is a type of
+challenge-response test used to determine whether or not the authentic ating  user is human. Publicly
+facing instances of Bravura Security Fabric  are often  c on figur ed  to include a CAPTCHA test as part of the
+authentic ation  process in order to prevent dictionar y  attack s  on passwords, by displaying distorted text
+that humans can read but current computer programs cannot.
+Bravura Security Fabric  leverages Google’s reCAPTCHA system and off er s  a scenario-based component
+called Scenario.hid_authchain_recaptcha  to help deploy this functionality .  This component
+will install a custom authentic ation  chain. As part of the c on figur ation  process, you are required to set
+the SECRET_KEY and SITE_KEY parameters (obtained from Google) in the hid_global_c on figur ation  table.
+Con figur e  the custom authentic ation  chain:
+Chain Module Control type Settings
+DEFAULT_LOGIN Authentic ation  chain
+selector (select_chain.pss)requisite Available chains :
+RECAPTCHA
+DEFAULT_LOGIN Authentic ation  chain
+selector (select_chain.pss)required Available chains :
+Use PSFEXT_VALUES
+When a user logs in:
+1.The user must use the default module, with either a password on a trusted system or by answering1.
+security questions.
+2.The user must solve the CAPTCHA test module.2.
+If the response is valid, authentic ation  proceeds. If the response is invalid, authentic ation  is
+immediately terminated.
+Both modules must be successfully completed before the user can log in.
+You can c on figur e  a similar HELPDESK_LOGIN chain for use when a helpdesk user accesses a user’s pr ofile
+in the Help users  (IDA) module.Authentic ation  chains: SAML
+Bravura Security Fabric  supports a federated authentic ation  model using the Security Assertions  Markup
+Language (SAML 2.0). Depending on requirements, Bravura Security Fabric  can be c on figur ed  to act as
+either an Identity  Provider (IdP), or as a Service Provider  (SP).
+Bravura Security Fabric  as Identity  Provider 
+As an Identity  Provider, Bravura Security Fabric  provides unified  third-party authentic ation  for a variety of
+f eder ation-c apable  applic ations  (Service Providers or SPs) using a Bravura Security Fabric  login process,
+reducing the burden of managing multiple  app-specific  cr edentials.  Once users authentic a t e  they are
+redirected back to the applic ation  along with a cryptographically signed SAML assertion  indic ating  who
+they are (identity),  and what they may access (authoriz ation).
+The Scenario.hid_saml_idp  component installs the functionality  to allow Bravura Security Fabric
+to act as an SAML Identity  Provider , enabling it to authentic a t e  end users on behalf of a variety of web
+applic ations.
+Implementing  SAML federated login redirects users attempting  to access supported web applic ations  to
+Front-end , reducing the number of accounts a user needs to manage, while allowing you to enforce your
+business’ security policies through authentic ation  chains.  
+For details see Bravura Security Fabric as identity  provider  (on page 927).
+Bravura Security Fabric  as Service Provider 
+Bravura Security Fabric  can be c on figur ed  to operate as a Service Provider, accepting  third-party
+authentic ation  assertions  from a trusted Identity  Provider. This functionality  is installed via the
+Scenario.hid_authchain_saml_sp component, and must be c on figur ed  before use.
+For details see Bravura Security Fabric as service provider  (on page 958).
+Federated login c on figur ation  options
+Several c on figur ation  options  are shared between both SP -initia t ed  and IDP -initia t ed  authentic ations  via
+SAML. To c on figur e  these variables:
+1.Click Manage the system  > Modules  > F eder ation  / Web Single Sign-on . 1.
+2. Con figur e  the options  in the table F eder ation  / Web Single Sign-on  options  (on page 923) as required. 2.
+3.If required, c on figur e  event options,  listed in the table F eder ation  / Web Single Sign-on events  (on 3.
+page 924), that trigger external programs.
+4.Click Update to submit the changes. 4.
+F eder ation  / Web Single Sign-on  options
+Option Description
+FEDIDP CERT FILE The name of the PFX certific a t e  used to sign assertions.Option Description
+FEDIDP CERT PASS The password for the signing certific a t e.
+FEDIDP CERT STORE The certific a t e  store which contains the SAML signing certific a t e.
+  PFX file store (Default): The default signing certific a t e  repository.
+  Computer account store: The local machine store for v alidation
+certific a t es.
+  My user account store: The administrator account’s store for v alidation
+certific a t es.
+FEDIDP CERT SUBJECT The subject value for the signing certific a t e.
+FEDIDP SAML PLUGIN The plugin used to generate SAML assertions.
+FEDIDP SESSION MINUTES Con figur es  the maximum dur ation  of a single sign-on session, in minutes
+(Default 8640). Expired sessions are aut omatic ally  removed by psupdate
+nightly clean up tasks.
+Bravura Security Fabric  supports a number of event options  that are specific ally  invoked by federated
+login. For more in f ormation  on event c on figur ation,  see Event actions  (exit traps)  (on page 1523).
+The following F eder ation  / Web Single Sign-On options  can be accessed from Manage the system  >
+Maintenance > System variables  or Manage the system  > Modules  > F eder ation  / Web Single Sign-on :
+F eder ation  / Web Single Sign-On events
+Option Description
+FEDIDP IDENTIFY SUCCESS The SamlRequest web parameter, passed during federated login, is
+successfully parsed by Bravura Security Fabric . This event contains the
+following data:
+▪The SAML request issuer.▪
+▪The sp_folder used by the request.▪
+▪Remote IP address details.▪
+FEDIDP IDENTIFY FAILURE The SamlRequest web parameter, passed during federated login, could not
+be parsed by Bravura Security Fabric . This can occur if the SamlRequest or
+RelayState web parameters passed by the service provider are empty or
+invalid. This event contains the following data:
+▪The sp_folder used by the request.▪
+FEDIDP AUTH SUCCESS The SAML response assertion  is successfully signed and generated by the
+fedidp_response plugin, following a successful federated authentic ation.
+This event contains the following data:
+▪The user’s pr ofile  ID. ▪
+▪The sp_folder used by the request.▪
+▪Which authentic ation  chain was used. ▪
+▪The initia t or  of the request, either _IDP_LOGIN_ or the SP name. ▪Option Description
+FEDIDP AUTH FAILURE The SAML response assertion  could not be successfully signed or generated
+by fedidp_response. The most common causes of this include:
+▪The Bravura Security Fabric ’s c on figur ation  for that service provider is ▪
+invalid.
+▪The service provider’s template file in <Instance>\idp\<SP folder> is ▪
+invalid.
+▪The user is prohibited from accessing the service provider.▪
+▪The fedidp_response plugin failed to respond.▪
+▪The SAML signing certific a t e  is invalid. ▪
+This event contains the following data:
+▪The user’s pr ofile  ID. ▪
+▪The sp_folder used by the request.▪
+▪Which authentic ation  chain was used. ▪
+▪The initia t or  of the request, either _IDP_LOGIN_ or the SP name. ▪
+The reason for failure, one of:
+▪ Authentic ation  failure. ▪
+▪Sp_access violation. ▪
+▪ Assertion  c ons truction. ▪
+▪ Assertion  signing. ▪
+FEDIDP SSO SESSION CREATE This event is triggered when a new single sign-on session is created by
+fedidp-assert following a successful federated login. The event contains the
+following data:
+▪The generated SSO session ID.▪
+▪The time  and date the session was created. ▪
+▪The ID of the web cookie created for this session.▪
+▪The full chain used to authentic a t e  this user. ▪
+▪The IP address from which the request originated▪
+▪The initia t or  of the request, either _IDP_LOGIN_ or the SP name. ▪
+FEDIDP SSO SESSION DESTROY An SSO session is terminated, and the session data is removed from the
+database. The event contains the following data:
+▪The a ff ect ed  session ID ▪
+▪The time  and date of t ermination ▪
+▪The session key for the a ff ect ed  session ▪
+▪The IP address from which the request originated.▪
+Federated login oper ation  codes
+The following sesslog events are fir ed  by federated login oper ations,  and can be tracked by the event
+reports and in the event viewer. These events are called alongside their r espectiv e  exit trap  (on page
+924):
+▪FIDT , federated identific ation  success event, launched alongside the FEDIDP IDENTIFY SUCCESS exit ▪
+trap.▪FATH , federated authentic ation  success event, launched alongside the FEDIDP AUTH SUCCESS exit ▪
+trap.
+▪SSOC , single sign-on cr eation  event, launched alongside the SSO SESSION CREATE exit trap. ▪
+▪SSOD , single sign-on cr eation  event, launched alongside the SSO SESSION DESTROY exit trap. ▪
+▪FATN , federated authentic ation  request sent to external IdP , launched alongside the FEDSP SAML ▪
+AUTH ISSUED exit trap.
+▪FASR , federated assertion  receipt, launched alongside the FEDSP SAML AUTH ASR SUCCESS and ▪
+FEDSP SAML AUTH ASR FAIL exit traps.
+For more in f ormation  on oper ation  codes in Bravura Security Fabric , see Oper ation  codes  (on page 3672).Authentic ation  chains: Bravura Security Fabric as identity  provider
+Bravura Security Fabric  can act as an IdP for any SAML compliant applic ation.  Bravura Security  currently
+ships out-of-the-box templates for the following service providers:
+▪ Micr osoft  Office  365/Azure. ▪
+▪Hitachi Content Platform  Anywhere (HCP Anywhere). ▪
+▪YouTrack.▪
+▪ Activ e  Directory Federated Services (ADFS) ▪
+▪Google Applic ations  (Mail, Calendar, etc.). ▪
+▪WebEx.▪
+▪Salesforce.▪
+As an identity  provider, Bravura Security Fabric  provides unified  third-party authentic ation  for a variety of
+f eder ation-c apable  applic ations  using the Bravura Security Fabric  login process, reducing the burden of
+managing multiple  app-specific  cr edentials.  Once users authentic a t e  they are redirected back to the
+applic ation  along with a cryptographically signed SAML assertion  indic ating  who they are (identity),  and
+what they may access (authoriz ation).
+Authentic ation  sequence
+The sequence for this externalized authentic ation  is as follows:
+1.A user accesses applic ation  at URL A. 1.
+2.URL A (the SP) redirects the user to Bravura Security Fabric  at URL B. 2.
+3.The user enters their login ID into Bravura Security Fabric . 3.
+4.Bravura Security Fabric  prompts for appropriate cr edentials.  Diff er en t  users may be asked for diff er en t 4.
+sequences of cr edentials,  based on their group memberships and/or identity  attribut es.
+5.Bravura Security Fabric  generates a SAML 2.0 assertion,  indic ating  who the user is and what they are 5.
+allowed to access.
+6.The user is redirected back to URL A, with the signed assertion. 6.
+Configur ation
+Con figuring  Bravura Security Fabric  as an identity  provider requires the following administrator rights:
+▪Manage policies to access the Authentic ation  chains menu item. ▪
+▪Manage external data store to access the Manage external data store menu item. ▪
+To c on figur e  Bravura Security Fabric  as an IdP and integrate an SP:
+1.Prepare  Bravura Security Fabric  as an IdP  (on page 928) 1.
+2.Add a service provider2.
+Bravura Security Fabric  has pre c on figur ed  templates for several SPs. If your SP has a pr e-c on figur ed
+template, follow the general procedure to add a service provider to the Bravura Security Fabric  IdP
+server  (on page 936). A sample use case is provided for a Salesforce Service Provider  (on page 936).or
+If support for your service provider  is not included in Bravura Security Fabric  by default, follow the
+procedure to add a service provider that is not pr e-c on figur ed  in Bravura Security Fabric  (on page
+948). A sample use case is provided to c on figur e  Bravura Security Fabric  as an SP and integrate with a
+Bravura Security Fabric  IdP server  (on page 949)
+Prepare Bravura Security Fabric as an IdP
+The Scenario.hid_saml_idp component installs the functionality  to allow Bravura Security Fabric  to act as
+an identity  provider, enabling it to authentic a t e  end users on behalf of a variety of web applic ations.
+1.Install Bravura Security Fabric  and connector packs. 1.
+2.Log in to the front end as superuser.2.
+3.Click Manage the system > W orkflo w  > Email c on figur ation 3.
+4.Set BASE_IDSYNCH_URL  to the servername used in the IIS TLS certific a t e,  which is the URL seen by 4.
+the end users' browsers.
+If that URL ever changes, the idp-metadata  file must be edited to global-replace the old server
+name with the new one.
+5.Click Home > Manage components . 5.
+6.Install the Scenario.hid_saml_idp component.6.
+7. Con figur e  the ” AD” target system that was added by the component: 7.
+a.Update the target system address.a.
+b.Update cr edentials. b.
+c.Test the c onnection. c.
+An e xisting  Source of Pr ofiles  target can be used.
+8.Run auto discovery to import user pr ofiles  into the Bravura Security Fabric  database. 8.
+9.Verify the rule in table hid_authchain_select:9.
+RuleNumber =120
+Comment SAML authentic ation  chain
+Proceed False
+MatchType sessdata
+MatchKey SAML_REQUEST
+Ma t chCondition set
+MatchValue <null>Action flush
+ChainId SAML
+Installing this component in stand-alone mode on a new instance will override all default authentic ation
+chains, and may prevent non-SAML and console users from logging into Bravura Security Fabric. To avoid
+this, c onfirm  that the hid_authchain_select table includes a valid chain for users authentic ating  without a
+SAML_REQUEST before c ontinuing.
+Component deployment
+Installing Scenario.hid_saml_idp aut omatic ally  installs and c on figur es  the following:
+▪Service provider directories  (on page 929) ▪
+▪Plugin - Fedidp_assert.py  (on page 930) ▪
+▪ Utility  - f edidp-util.e x e  (on page 930) ▪
+▪ Authentic ation  chains  (on page 931) ▪
+▪External database tables  (on page 933) ▪
+▪Target system  (on page 935) ▪
+Notes:
+▪Installing this component will overwrite any target system using the system ID ” AD”. Ensure that your▪
+environment is prepared before beginning ins t allation.
+▪ Additional  c on figur ation  is required to: ▪
+a.Set up appropriate login processes into Bravura Security Fabric  and; a.
+b.Establish a trust r elationship  between each applic ation  and Bravura Security Fabric . b.
+▪This component, alone, does not provide for single sign-on. Users are prompted to sign into Bravura ▪
+Security Fabric  at every applic ation  login attemp t.
+▪This component externalizes the login process from each c on figur ed  applic ation  to Bravura Security ▪
+Fabric , but does not alter applic ation  logout processes.
+Service provider directories
+Installing this component adds an idp directory inside the instance directory. The idp directory contains
+directories for the following pr e-c on figur ed  service providers:
+▪adfs▪
+▪azure▪
+▪bambooHR▪
+▪google▪
+▪hcpa▪
+▪salesforce▪
+▪webex▪
+▪youtrack▪Each directory contains a unique SAML XML template named saml-response.xml.
+If your service provider is not included, add the service provider that is not pr e-c on figur ed  in Bravura
+Security Fabric  (on page 948).
+The SAML IdP (from version 11.0.0 upwards) is c ompatible  only with version 39.1.1 and higher of the
+Webex Meetings  app. The browser version is still usable with IdP authentic ation.
+Fedidp_assert.py
+This plugin is installed by the SAML component framework to the plugin directory, and is responsible for
+g ener ating  the SAML assertion  for authentic a t ed  users. This plugin is also responsible for g ener ating  the
+single sign-on session data, in addition  to cr eating  and updating  the browser cookie to which the session
+is associated.
+f edidp-util.e x e
+This utility  is installed by the SAML component framework to the util directory. F edidp-util  is used during
+ins t allation  to generate the self-signed PFX certific a t e  used to securely sign SAML assertions,  and the IdP
+metadata files,  which are used to report Bravura Security Fabric ’s IdP c apabilities  to service providers
+that require it.
+When installing through the component, this utility  generates the following files:
+▪saml.pfx , used to sign SAML assertions,  and installed to plugin. ▪
+▪public.cer , the public certific a t e  file that can be provided to end users’ w ork s t ations  to add the ▪
+Bravura Security Fabric  instance as a trusted authority. This file is installed to the <instance> \idp\
+directory.
+▪idp-metadata , this file stores in f ormation  about the instance’s c apabilities  as an identity  provider. ▪
+This file can be sent to the administrators of SPs and allows for the import of IdP metadata to help
+c on figur e  the SP to connect to Bravura Security Fabric . This file is installed to the <instance> \idp\
+directory.
+If the value of BASE_IDSYNCH_URL is changed, replace the old server name with the new server name
+in idp-metadata .
+Read more about f edidp-util  usage
+Use the fedidp-util  program to generate certific a t e  and metadata files used for cr eating  SAML
+assertions.
+Usage
+fedidp-util.exe -makecert [-pfx <pfxfile> -pass <password> -cert-
+subject <subject> -root-subject <subject> -years <years>]
+fedidp-util.exe -metadata [-pfx <pfxfile> -pass <password> -]

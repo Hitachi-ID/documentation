@@ -1,0 +1,330 @@
+Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Command in f ormation  is only included in the report
+output if the cr eation  time  falls within the Start date
+range. Use the fir s t da t e/time  field  to select the earliest
+time  to include, and the second da t e/time  field  to select
+the latest time  to include.Criteria Description
+Use within the last N days : Command in f ormation  is only
+included in the report output if the cr eation  time  falls
+within the specified  last number of days.
+Use N or more days ago : Command in f ormation  is only
+included in the report output if the cr eation  time  was
+more than the specified  number of days ago.
+Managed account attribut es
+Purpose : Displays discovered system attribut es,  managed system resource attribut es,  managed account
+resource attribut es  and account attribut es  of a managed account.
+Executable : managedaccountattributes
+Search Criteria :
+Criteria Description
+Managed system ID Type a comma-and-space-delimited list of IDs for
+managed systems you want to include in the report.
+Alt ernativ ely ,  you can search for one or more managed
+systems.
+Managed system description Type the description  for a managed system you want to
+include in the report.
+Discovered system attribut e  to display Choose which discovered system attribut es  to display.
+Discovered system attribut e  to search Select a discovered system attribut e  on which to filt er .
+You can select up to four attribut es.  The union of all
+attribut es  c on figur ed  will be returned.
+Managed system resource attribut e  to display Choose which managed system resource attribut es  to
+display.
+Managed system resource attribut e  to search Select a managed system resource attribut e  on which to
+filt er .  You can select up to four attribut es.  The union of all
+attribut es  c on figur ed  will be returned.
+Managed account Search for one or more managed accounts you want to
+report on. Alt ernativ ely ,  you can type a managed account
+ID or a pattern  of managed account IDs using wildcard
+characters, ’*’ r epr esenting  any string of characters
+and ’?’ r epr esenting  any single character.
+Account attribut e  to display Choose which account attribut es  to display.
+Account attribut e  to search Select an account attribut e  on which to filt er .  You can
+select up to four attribut es.  The union of all attribut es
+c on figur ed  will be returned.
+Managed account resource attribut e  to display Choose which managed account resource attribut es  to
+display.Criteria Description
+Managed account resource attribut e  to search Select a managed account resource attribut e  on which to
+filt er .  You can select up to four attribut es.  The union of all
+attribut es  c on figur ed  will be returned.
+Comparison This field  is displayed if the Managed system resource
+attribut e  to search  or Managed account resource
+attribut e  to search field  is something other than
+"Attribut e  not required". Comparators available depend
+on the resource attribut e  type. Select:
+is empty  if you want Bravura Security Fabric  to search on
+empty values.
+is not empty if you want Bravura Security Fabric  to
+search on non empty values.
+is equal to  if you want Bravura Security Fabric  to search
+on values equal to a specified  string.
+is not equal to  if you want Bravura Security Fabric  to
+search on values not equal to a specified  string.
+is less than  if you want Bravura Security Fabric  to search
+on values that are less than a specific  integer.
+is less than or equal to  if you want Bravura Security
+Fabric  to search on values that are less than or equal to a
+specific  integer.
+is greater than  if you want Bravura Security Fabric  to
+search on values that are greater than a specific  integer.
+is greater than or equal to  if you want Bravura Security
+Fabric  to search on values that are greater than or equal
+to a specific  integer.
+is greater than or equal to  if you want Bravura Security
+Fabric  to search on values that are greater than or equal
+to a specific  integer.
+is later than today + N days  if you want Bravura Security
+Fabric  to search on dates that are later than N days after
+today.
+is earlier than, or equal to, today - N days  if you want
+Bravura Security Fabric  to search on dates that are earlier
+or equal to N days before today.
+Value Type or select the value to compare. Required if
+Discovered system attribut e  to search  or Account
+attribut e  to search field  is something other than
+Attribut e  not required , or Comparison field  is set to
+something other than is empty  or is not empty .
+If you do not specify any search criteria, the report output includes all managed accounts.Con figur ed  user groups in managed system policies
+Purpose : For all, or specified  managed system policies, returns any user groups c on figur ed  with at least
+one access control.
+Executable : policyusergroup
+Search Criteria :
+Criteria Description
+Managed system policy ID Type a comma-and-space-delimited list of IDs of
+managed system policies to include in the report.
+Alt ernativ ely ,  search for one or more managed system
+policies.
+User group ID Select one or more user groups to include in the report.
+Display c on figur ation  details By selecting  this option,  additional  details will be
+included in the report, including user classes, users,
+managed systems and managed accounts.
+Display access controls in single column This option  is enabled by default. If unchecked, a
+separate column for each access control will be
+displayed.
+This option  is only available if Display c on figur ation
+details  is selected.
+User class ID Select one or more user classes to include in the report.
+This option  is only available if Display c on figur ation
+details  is selected.
+User ID Type a comma-and-space-delimited list of IDs of users to
+include in the report. Alt ernativ ely ,  search for one or
+more users.
+This option  is only available if Display c on figur ation
+details  is selected.
+Managed system ID Type a comma-and-space-delimited list of IDs of
+managed systems to include in the report. Alt ernativ ely ,
+search for one or more managed systems.
+This option  is only available if Display c on figur ation
+details  is selected.
+Managed account Search for one or more managed accounts to include in
+the report. Alt ernativ ely ,  you can type a managed
+account ID or a pattern  of managed account IDs using
+wildcard characters, ’*’ r epr esenting  any string of
+characters and ’?’ r epr esenting  any single character.
+This option  is only available if Display c on figur ation
+details  is selected.PAM Team Management c on figur ation
+Purpose : Displays c on figur ation  of PAM Team Management, including teams, team members and their
+privileges, and onboarded systems and accounts.
+Executable : pamteammanagement
+Search Criteria :
+Criteria Description
+Report type Select a report type from the drop-down list:
+▪Teams▪
+▪Teams and systems▪
+▪Teams and system/accounts▪
+▪Teams and privileges▪
+▪Teams and users▪
+▪Teams, privileges, and users▪
+▪Teams, privileges, users, and systems▪
+▪Teams, privileges, users, and systems/accounts▪
+▪Users, systems, and privileges▪
+▪Users, system/accounts, and privileges▪
+Team name Type a comma-and-space-delimited list of IDs for teams
+you want to include in the report. Alt ernativ ely ,  you can
+search for one or more teams.
+This field  is only available for report types that include
+teams.
+Team description Type the description  for a team you want to include in
+the report.
+This field  is only available for report types that include
+teams.
+Privilege Select one or more privileges to include in the report.
+Privileges include:
+▪Account Trustees▪
+▪Approvers▪
+▪Auto Approved▪
+▪ Cr edential  Manager ▪
+▪LC Trustees▪
+▪OTP Trustees▪
+▪Requesters▪
+▪Subscriber Trustees▪
+▪System Trustees▪
+▪Team Trustees▪
+▪Vault Trustees▪
+This field  is only available for report types that include
+privileges.Criteria Description
+Group by privilege Enable this checkbox to group records by privilege.
+This field  is only available for report types that include
+privileges.
+System ID Type a comma-and-space-delimited list of IDs for
+onboarded systems you want to include in the report.
+Alt ernativ ely ,  you can search for one or more onboarded
+systems.
+This field  is only available for report types that include
+systems.
+System name Type the description  for a managed system you want to
+include in the report.
+This field  is only available for report types that include
+systems.
+User ID Type a comma-and-space-delimited list of IDs of team
+users to include in the report. Alt ernativ ely ,  search for
+one or more users.
+This field  is only available for report types that include
+users.
+User name Type the name for a team user you want to include in the
+report.
+This field  is only available for report types that include
+users.
+Account name Type a comma-and-space-delimited list of IDs for
+onboarded accounts you want to include in the report.
+Alt ernativ ely ,  you can search for one or more onboarded
+accounts.
+This field  is only available for report types that include
+accounts.
+Con flicting  passwords
+Purpose : List current c on flicting  passwords and their details.
+Executable : conflictingpasswords
+Search Criteria :
+Criteria Description
+Account Select or search for one or more accounts to include in
+the report.
+Managed system ID Type a comma-and-space-delimited list of IDs for
+managed systems you want to include in the report.Criteria Description
+Alt ernativ ely ,  you can search for one or more managed
+systems.
+Managed system policy ID Type a comma-and-space-delimited list of managed
+system policy IDs to include in the report. Alt ernativ ely ,
+search for one or more policies.
+Privileged access oper ations  reports
+Managed account check-outs / check-ins
+Purpose : In f ormation  about current and historical access to managed accounts (check-outs).
+Executable : passwordcico
+Search Criteria :
+Select the "Report type" firs t (bottom  of the search criteria). The search criteria changes based on the
+"Report type" you select.
+Criteria Description
+Report type There are three types of reports to select from:
+Detailed : This mode displays the full details.
+Summary : In this mode the available search criteria
+are ’Managed system ID’, ’Managed account’, ’Search
+time  by’, ’Request attribut e  to search’, ’Minimum number
+of check-outs’, ’Maximum number of rows to display’
+and ’ Oper ation  to perform for check-out and check-in’.
+Accounts that have not been checked out : In this mode,
+only accounts that have not been checked out will be
+shown in the report. The available search criteria
+are ’Managed system ID’, ’Managed account’ and ’Specify
+time’ .
+Managed system ID Type a comma-and-space-delimited list of IDs for
+managed systems you want to include in the report.
+Alt ernativ ely ,  search for one or more managed systems.
+Managed account Search for one or more managed accounts you want to
+report on. Alt ernativ ely ,  you can type a managed account
+ID or a pattern  of managed account IDs using wildcard
+characters, ’*’ r epr esenting  any string of characters
+and ’?’ r epr esenting  any single character.
+Requester ID Type the pr ofile  ID of the requester for whom you want
+to run the report. Alt ernativ ely ,  search for one or more
+pr ofile  IDs.Criteria Description
+Recipient ID Type the pr ofile  ID of the recipient for whom you want to
+run the report. Alt ernativ ely ,  search for one or more
+pr ofile  IDs.
+Search time  by Select whether to run the report based on the following:
+▪Do not search by time ▪
+▪Check-out time ▪
+▪Check-in time ▪
+▪ Expir ation  time ▪
+Specify time Specify a date range:
+Date not required : This is the default setting.  In f ormation
+is listed regardless of start date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.Criteria Description
+Option Description
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: In f ormation  is only included in the report output if the
+start date falls within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: In f ormation  is only included in the report output if the
+start date and time  falls within the Start date range . Use
+the fir s t set of date / time  controls to select the earliest
+time  to include, and the second set of date / time
+controls to select the latest time  to include.

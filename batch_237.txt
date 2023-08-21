@@ -1,0 +1,340 @@
+    ...
+  };
+  "targetid" = "OAK"
+  "groupID" = "CN=testgrp2,OU=ngrptest,DC=oak,DC=devel,DC=bravurasecurity,DC=com"
+  "membertype" = "child"
+  "sessionid" = "Sb1882a33-0984-402a-aa3b-554b32721508"
+};
+Output
+The plugin provides one to three groups of an include list, an exclude list, and/or filt er  criteria to the
+search engine; for example:
+Because groups must also be identified  by a host value (accounts and managed groups), you must also
+add default_host  and/or compound_id  pairs. In the following example, Group1 and Group2 are
+on host AD1, and Group3 is on host AD2:
+   "" ""  = {
+      "includelist" "" = {
+        "default_host" = "AD1"
+        "id" = "Group1"; #On default host AD1
+        "id" = "Group2"; #On default host AD1
+        "compound_id" "" = {
+           "host" = "AD2"
+           "id"= "Group3"
+            }
+        };
+    };
+In a "criteria" group, each filt er  includes the following key-value pairs:
+▪key Search engine advanced keys as listed here. ▪
+Search engines and advanced search keys:
+▪ACCOUNT▪
+Advanced key Description
+isLinked Is linked to a pr ofile
+t ar g etid Target system ID
+name User name
+groupid Group ID
+acc ountid Account
+▪ACCOUNTFORGROUP▪
+Advanced key Descriptiondirectmanager Direct manager
+groupsearch Group ID
+attrk e y Account attribut e
+userid User ID
+name User name
+allmanagers Direct and indirect managers
+rolesearch Role ID
+hostsearch Target system ID
+▪ADMIN▪
+Advanced key Description
+directmanager Direct manager
+groupsearch Group ID
+userid User ID
+privileges Privileges
+attrk e y Account attribut e
+name User name
+allmanagers Direct and indirect managers
+rolesearch Role ID
+hostsearch Target system ID
+▪ADMINGROUP▪
+Advanced key Description
+id ID
+userclass User class ID
+privileges Privileges
+desc Description
+▪ATTRDEF▪
+Advanced key Description
+load Load attribut e  values from target system
+attrid Account attribut e  ID
+minval Minimum number of values
+cr ea t eaction Action  when cr eating  account
+pr of attrid Mapped pr ofile  attribut e  ID
+upda t eaction Action  when updating  account
+type Account attribut e  type
+▪ATTRGRP▪Advanced key Description
+display_type Display type
+desc Attribut e  group description
+member Pr ofile  attribut e  member ID
+member_desc Pr ofile  attribut e  member description
+id Attribut e  group ID
+▪BBATTR▪
+Advanced key Description
+output_oper ation Output oper ation
+connector_key Connector key
+input_oper ation Input oper ation
+attrk e y Account attribut e
+input_target Input target system
+▪CERTATTR▪
+Advanced key Description
+type Type
+id ID
+desc Description
+▪CERTRESOURCE▪
+Advanced key Description
+cer_name Reviewer name
+roleid Role ID
+res_name Con figur ation  description  : Entitlemen t  description
+cer_id Reviewer ID
+targetname Target system description
+sodid Segr eg ation  of duties  rule ID
+soddesc Segr eg ation  of duties  rule description
+groupname Group description
+groupid Group ID
+t ar g etid Target system ID
+res_type Entitlemen t  type
+res_id Con figur ation  ID : Entitlemen t  ID
+roledesc Role description
+▪CERTROUND▪Advanced key Description
+method Certific ation  method
+datestarted Date started
+user User under review
+sa v edc on figid Certific ation  setup ID
+certtype Certific ation  type
+role Role ID
+initia t or Initia t or  ID
+description Description
+sa v edc on fig desc Certific ation  setup description
+certifier Reviewer ID
+status Campaign status
+target Target system ID
+resourcetype Entitlemen t  type
+group Group ID
+userclass User class ID
+sod Segr eg ation  of duties  rule ID
+▪CERTSEGMENT▪
+Advanced key Description
+cer_name Reviewer name
+ent_id Entitlemen t  ID
+seg_percentage % completed
+startdate Start date
+cer_id Reviewer ID
+ent_desc Entitlemen t  description
+enddate End date
+ent_type Entitlemen t  type
+userclass User class
+seg_desc Segment description
+▪CONFIGCERT▪
+Advanced key Description
+desc Con figur ation  description
+status Status
+id Con figur ation  ID
+type Con figur ation  type
+▪CONFIGCERTHISTORY▪Advanced key Description
+certifiername Reviewer name
+reason Notes
+certifier Reviewer ID
+▪FOUNDACCOUNT▪
+Advanced key Description
+acc ountid Account
+discname Discovered object name
+discsid Discovered object SID
+disctype Discovered object type
+lastpwdmod Last password change
+managed Is managed
+mode Mode
+platform type Platform  type
+policyid Managed system policy ID
+t ar g etid Target system account exists on
+usedhost Target system account discovered from
+Dynamic group Description
+acc oun t attrk e y Account attribut e  keys
+f oundc ompattrk e y Discovered computer attribut e  keys
+f oundsub scriber attrk e y Discovered subscriber keys
+ma_attrk e y Managed account resource attribut e  keys
+t a_attrk e y Target system resource attribut e  keys
+▪FOUNDCOMPATTR▪
+Advanced key Description
+tagtype Attribut e  type
+tagname Attribut e
+▪FOUNDCOMPUTER▪
+Advanced key Description
+sourcename Source system
+name Discovered system name
+adminid_status Discovered system administrator ID status
+loadtime Last discovered
+state Discovered system statustype Discovered system type
+▪GROUPFORGROUP▪
+Advanced key Description
+child_groups Child groups
+exclude_child_groups* Exclude direct and indirect child groups
+exclude_parent_groups** Exclude direct and indirect parent groups
+groupid Group ID
+groupname Group description
+grouptype Group type
+issecurity Is security group
+managed Managed
+members Accounts
+parent_groups Parent groups
+parentgroupid Parent group ID
+RB A Cflag Role enforcement
+targetdesc Target system description
+t ar g etid Target system ID
+url Help URL
+used In use
+valid Valid
+* Key exclude_child_groups is only available in parent group selection  page
+** Key exclude_parent_groups  is only available in child group selection  page
+Dynamic group Description
+attrk e y Resource attribut e  keys
+▪GROUPMEMBER▪
+Advanced key Description
+RB A Cflag Role enforcement
+longid Account
+userid User ID
+groupname Group description
+url Help URL
+used In use
+username User name
+valid Valid
+managed Managedgroupid Group ID
+▪GSETMBR▪
+Advanced key Description
+groupdesc Group description
+groupid Group ID
+▪HOST▪
+Advanced key Description
+address Address
+adminid Administrator ID
+aut oassocia t eattr Account attribut e  to aut omatic ally  attach  accounts to
+user pr ofiles
+aut oassocia t e flag Aut omatic ally  attach  accounts
+desc Target system description
+hasaccount Users must have accounts
+id Target system ID
+platform Target system type
+rbacenforce Role enforcement
+source Source of pr ofile  IDs
+targetsysgrp Target system group
+url Help URL
+Dynamic group Description
+attrk e y Resource attribut e  keys
+▪IDPMQUEUE▪
+Advanced key Description
+platform Target system type
+sourceacct Trigger account
+longid Account
+lasterr Recent errors
+reqby Requester
+numtries Total attemp ts
+userid User
+hostid Target system ID
+queued Queued
+ne xttr y Next attemp t
+sourcehost Trigger target system ID▪IMPORTRULE▪
+Advanced key Description
+autodisc Aut omatic ally  import during auto discovery
+req Condition  ID
+desc Description
+policy Managed system policy ID
+template Template target system
+cr edential New system c onnection  cr edentials
+mngsystype Dir ection  of target system in t egr ation
+ruleusage Action  to perform on matching objects
+srctype Strategy for selecting  source systems
+id ID
+reqmatch Condition  match
+▪IMPORTRULETEST▪
+Advanced key Description
+source Source system
+result Results
+name Name
+userhost Source system
+acc ountid Account
+hostid Target system ID
+▪INVMGR▪
+Advanced key Description
+directmanager Direct manager
+groupsearch Group ID
+userid User ID
+loc ation Loc ation  ID
+attrk e y Account attribut e
+type Object type ID
+name User name
+allmanagers Direct and indirect managers
+rolesearch Role ID
+hostsearch Target system ID
+▪LOCATION▪
+Advanced key Descriptioncountry Country
+id ID
+description Description
+areacode Area code
+state State/Province
+▪MANAGEDACCOUNT▪
+Advanced key Description
+acc ountid Account
+policyid Managed system policy ID
+wstnname Managed system description
+Dynamic group Description
+acc oun t attrk e y Account attribut e  keys
+f oundc ompattrk e y Discovered computer attribut e  keys
+f oundsub scriber attrk e y Discovered subscriber keys
+ma_attrk e y Managed account resource attribut e  keys
+ms_attrk e y Managed system resource attribut e  keys
+▪MANAGEDGROUP▪
+Advanced key Description
+authorizer The c on figur ed  authorizer
+groupname Group description
+groupid Group ID
+grouptype Group type
+indirectmember Indirect membership
+issecurity Is security group
+parentgroupid Parent group ID
+RB A Cflag Role enforcement
+targetdesc Target System description
+t ar g etid Target System ID
+url Help URL
+valid Valid
+Dynamic group Description
+attrk e y Resource attribut e  keys
+▪MANAGER▪
+Advanced key Descriptiondirectmanager Direct manager
+groupsearch Group ID
+userid User ID
+attrk e y Account attribut e
+name User name
+allmanagers Direct and indirect managers
+rolesearch Role ID
+hostsearch Target system ID
+▪MAQ▪
+Advanced key Description
+id ID
+creator Creator
+policyid Managed system policy ID
+desc Description
+▪MAQCMD▪
+Advanced key Description
+maqid Account set ID
+createdate Create date
+command Commands
+shared Shared
+creator Creator
+▪MAQEXECMD▪
+Advanced key Description
+r ecipientid Recipient ID
+numtries Total attemp ts
+result Command result
+acc ountid Account
+cmd Commands
+desc Managed system description
+workstnid Managed system ID
+reqdate Request date
+queued Queued
+▪MAQMBR▪
+Advanced key Description
+wstnid Managed system ID

@@ -1,0 +1,144 @@
+4.Enable SAML for your Salesforce domain:4.
+a.Within Salesforce, navigate to Settings  > Company Settings  > Domains . a.
+b.Select the domain you want to enable SAML for.b.c.In the Authentic ation  Con figur ation  section,  click Edit. c.
+d.Enable the SAML c on figur ation  option  created above. d.
+If you want to c ontinue  to allow direct user ID and password login to Salesforce then leave Login
+Page checked as well.e.Click Save e.
+5.Add the Salesforce service provider to the Bravura Security Fabric  IdP server 5.If your SP has a pre c on figur ed  templates  (on page 929) follow this process to integrate the SP with
+Bravura Security Fabric  IdP:
+1.As superuser on the IdP server navigate to Manage external data store > sp_mapping 1.
+2.Enable the sp_mapping table issuer that corresponds to your service provider:2.
+▪Rows will exist for the following SPs: bamboohr, google, webex, hcpa, adfs, youtrack, salesforce▪
+and azure.
+▪All rows have a value of 0 in the enabled column, by default. Change the value in the row for▪
+your service provider to 1.
+▪Ensure the following field  values match the values used on the service provider. In Salesforce ▪
+these values can be found in the SAML Single Sign on settings.
+▪issuer In Salesforce this is called the Entity  ID ▪
+▪sp_folder contains __non_saml__, and <sp folder name on the Bravura Security Fabric  IdP ▪
+server>
+▪acs_url  In Salesforce this is the Login URL. ▪
+▪idp_url  In Salesforce this is the issuer entry . ▪
+a.Click Update a.
+3. Optional:  As superuser on the IdP server navigate to Manage external data store > sp_access and 3.
+edit the following entries if you want to restrict access to the service provider to a more specific  set
+of users:
+▪sp_folder: contains __non_saml__, and <sp folder name> ▪
+▪userclass: _ALLUSERS_ ▪
+▪deny_acl: 0 ▪
+4.Click Update 4.
+5. Optional:  As superuser on the IdP server navigate to Manage external data store > sp_authchain 5.
+and edit the following entries if you have diff er en t  authentic ation  requirements:
+▪sp_folder: contains __non_saml__, and <sp folder name> ▪
+▪authchain: column values are set to REGUSER ▪
+6.Click Update 6.
+.
+6.Test the login process6.
+7.Log into Salesforce via Bravura Security Fabric : 7.a.On the Salesforce login page, select the new option  to login using the SAML IdP . a.
+You will be redirected to Bravura Security Fabric .
+b. Authentic a t e  into Bravura Security Fabric  as an end user that wants access to Salesforce. b.
+After  successfully authentic ating  with Bravura Security Fabric  you will be redirected back to
+Salesforce and be logged in.By default the Salesforce c onfiguration  in Bravura Security Fabric assumes that the EMAIL profile
+attribut e  is what should be sent to Salesforce as the Name Identifier  as the subject of the assertion.
+If this is not the case and a diff eren t  mapping is needed, you can edit this in the saml-response.xml
+file in the following folder: C:\Program Files\Bravura Security\Bravura
+Security Fabric\\samlhids\idp\salesforce\
+Service provider with no pr e-c on figur ed  template in Bravura Security Fabric
+If support for your service provider  is not included in Bravura Security Fabric  by default, it can be added
+manually.
+1.Create a new folder to hold the service provider’s SAML assertion  template in the <instance> \idp 1.
+\<new sp folder> directory.
+You can give this folder any name. Take note of this folder name. It will be added to the sp_access
+table in a later step.
+2.Copy the XML template file from an e xisting  sp_folder over to your new service provider folder. 2.
+3.Edit the new saml-response.xml to ensure the assertion  includes all requirements for the 3.
+service provider you are c on figuring.
+4.Follow the vendor's steps to prepare the service provider. During the setup you will be prompted for4.
+the xml file created in step 3.
+5.As superuser on the IdP server navigate to EXTDB > sp_mapping 5.
+6.Add a new entry with values:6.
+▪issuer:  "%SP server's BASE IDSYNCH URL%/SP/" ▪
+▪sp_folder:  <sp folder name on the Bravura Security Fabric  IdP server> ▪
+▪acs_url:  The endpoint login url ▪
+▪idp_url:  This must exactly match the "identity  provider issuer" value. http s://<Br a vur a  Security ▪
+Host>/instance/sso/ is most commonly used.
+▪enabled:  1 ▪
+▪ idp_initia t ed : 1 ▪
+▪disp_name : "<display name>" This value will be displayed on the end user launchpad and in ▪
+messages when r edir ecting  the users from the IdP to the SP .
+▪default_pin : 1 ▪
+▪relay_state : <value provided by the SP vendor >. The RelayState will be provided to the SP during ▪
+an IdP initia t ed  flo w  if required.
+▪sig_loc : Assert ▪
+7.Click Update 7.
+8.As superuser on the IdP server navigate to Manage external data store > sp_access and add a new 8.
+entry with the values:
+▪sp_folder: contains __non_saml__, and <sp folder name> ▪
+▪userclass: _ALLUSERS_- Optional:  Add a diff er en t  user class to restrict access to the service ▪
+provider to a more specific  set of users:▪deny_acl: 0 ▪
+9.As superuser on the IdP server navigate to Manage external data store > sp_authchain and add the 9.
+following entries:
+▪sp_folder: contains __non_saml__, and <sp folder name> ▪
+▪authchain: column values are set to REGUSER Optional:  This can be edited to use a custom ▪
+authentic ation  flo w .
+10. Click Update 10.
+Test the c onfigur ation
+Two Bravura Security Fabric  instances should now be c on figur ed  to authentic a t e  via SAML. To test this:
+1.Open the SP instance login page1.
+2.Submit the username of one of the test accounts that is a member of SAML_USERS.2.
+You should be redirected to IdP's login page
+3.Complete the authentic ation  process, using valid cr edentials. 3.
+Login uses the SAML authentic ation  chain.
+Upon successful authentic ation,  the user’s web browser is redirected back to the service provider, where
+they are logged in aut omatic ally .
+Example: Con figur e  Bravura Security Fabric as an SP and integrate with a Bravura Security Fabric IdP server
+Bravura Security Fabric  can be c on figur ed  to operate as a service provider and as an identity  provider,
+providing a federated login solution.
+As an identity  provider, Bravura Security Fabric  provides unified  third-party authentic ation  for a variety of
+f eder ation-c apable  applic ations  using the Bravura Security Fabric  login process, reducing the burden of
+managing multiple  app-specific  cr edentials.  Once users authentic a t e  they are redirected back to the
+applic ation  along with a cryptographically signed SAML assertion  indic ating  who they are (identity),  and
+what they may access (authoriz ation).
+The following example describes how to c on figur e  Bravura Security Fabric  as a SP and how integrate with
+a Bravura Security Fabric  IdP .
+In this use case:
+Set up Bravura Security Fabric as an identity  provider (IdP). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  949
+Set up Bravura Security Fabric as a service provider (SP). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  951
+Add the prepared SP to the Bravura Security Fabric IdP. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  953
+Test the c on figur ation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  954
+Set up Bravura Security Fabric as an identity  provider (IdP)
+The Scenario.hid_saml_idp component installs the functionality  to allow Bravura Security Fabric  to act as
+an identity  provider, enabling it to authentic a t e  end users on behalf of a variety of web applic ations.
+1.Install Bravura Security Fabric  and connector packs. 1.
+2.Log in to the front end as superuser.2.3.Click Manage the system > W orkflo w  > Email c on figur ation 3.
+4.Set BASE_IDSYNCH_URL  to the servername used in the IIS TLS certific a t e,  which is the URL seen by 4.
+the end users' browsers.
+If that URL ever changes, the idp-metadata  file must be edited to global-replace the old server
+name with the new one.
+5.Click Home > Manage components . 5.
+6.Install the Scenario.hid_saml_idp component.6.
+7. Con figur e  the ” AD” target system that was added by the component: 7.
+a.Update the target system address.a.
+b.Update cr edentials. b.
+c.Test the c onnection. c.
+An e xisting  Source of Pr ofiles  target can be used.
+8.Run auto discovery to import user pr ofiles  into the Bravura Security Fabric  database. 8.
+9.Verify the rule in table hid_authchain_select:9.
+RuleNumber =120
+Comment SAML authentic ation  chain
+Proceed False
+MatchType sessdata
+MatchKey SAML_REQUEST
+Ma t chCondition set
+MatchValue <null>
+Action flush
+ChainId SAML
+Installing this component in stand-alone mode on a new instance will override all default
+authentic ation  chains, and may prevent non-SAML and console users from logging into Bravura
+Security Fabric. To avoid this, c onfirm  that the hid_authchain_select table includes a valid chain for
+users authentic ating  without a SAML_REQUEST before c ontinuing.
+10. Navigate to the IdP instance's \install\idp directory and copy idp-metadata.xml  to a loc ation 10.
+where it can be accessed by the Bravura Security Fabric  IdP server in order to finish  c on figuring  the
+authentic ation  chain module.
+11. Create a new folder to hold the service provider’s SAML assertion  template in the <instance> \idp\ 11.
+directory; for example <instance>\idp\<new sp folder>.

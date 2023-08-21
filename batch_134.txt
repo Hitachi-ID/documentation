@@ -1,0 +1,266 @@
+▪ID ENABLE-ACCOUNTS ▪
+▪ Description  Enable disabled accounts ▪
+▪Enabled  Selected ▪
+▪Accessible from report  Selected ▪
+▪Intended recipients  Existing  users ▪
+2.Click Add. 2.
+You can now de fine  oper ations  and other parameters.  
+Define  oper ations  
+For this example, the request is to enable e xisting  disabled accounts:
+1.Click the Oper ations  tab, then the Existing  account sub-tab. 1.
+2.In the bottom  table select Enable account and select ”User-selectable” from the All/User-selectable 2.
+drop-down list.
+3.Click Update . 3.
+Add access controls to the request 
+For this case, use the default _REPORT_READERS_ user class to allow users who can run reports to
+submit this pr e-de fined  request. We will assume that users have been added to the user class.
+To set up access controls:
+1.Click the Access control tab. 1.
+2.Click Select… . 2.
+3.Select the _REPORT_READERS_ user class and click Select . 3.
+Bravura Security Fabric  warns that you need to complete the access control c on figur ation  by mapping
+the user class participan t  to a participan t  in the policy (requester or recipient).
+4.Set the P articipan t  mapping to REQUESTER. 4.
+This allows any user in the user class to act as requester of the request.
+5.Click Update . 5.
+The pr e-de fined  request is ready to use with report output.  
+Run the accounts report 
+To run a report and use the output to submit a request to enable disabled accounts:
+1.Log in as a member of _REPORT_READERS_.1.
+2.Click Manage reports > Reports  > Reports > Users > Account attribut es . 2.
+3.Set account attribut e  @accountEnabled to false . 3.
+4.Run the report.4.
+5.Expand Submit pr e-de fined  requests using report output at the bottom  of the report form. 5.
+6.Select the ENABLE-ACCOUNTS pr e-de fined  request. 6.7.Click on the magnifying glass icon to c on figur e  Attribut es . 7.
+a.Map the Recipient ID to a s t atic  ID, such as the user running the report. a.
+The recipient ID needs to match a Bravura Security Fabric  pr ofile  ID. If the report output has that
+in f ormation,  you can map this attribut e  to that output, otherwise, you will need to enter a s t atic  ID.
+b.Map the target ID and account attribut es  to the r espectiv e  columns. b.
+c.Click Done . c.
+8.Click Run for submission . 8.
+Bravura Security Fabric  displays a summary of the requests submitted.
+You can click on the info icon 
+  in the request status column to view the status of each request, or use
+the Requests link from the main menu.
+See the REPORTS  (on page 2891) for more in f ormation  on running reports.
+Cr eating  a pr e-de fined  request
+To create a pr e-de fined  request:
+1.Click Manage the system > W orkflo w  > Pr e-de fined  requests . 1.
+2.Click Add new... 2.
+3.Type a unique ID and Description . 3.
+4.Determine whether the pr e-de fined  request is Enabled for use by end users. 4.
+5.Enable Accessible to requesters if you want the pr e-de fined  request to be available to requesters 5.
+outside of certific ation  and reports.
+6.Enable Accessible from report if you want the pr e-de fined  request to be available in the Manage 6.
+reports (rpt) module.
+7.Enable Accessible from certific ation  if you want the pr e-de fined  request to be available for 7.
+certific ation  r emediation.  Enabling this will reveal the R emediation  type option,  allowing you to select
+which types of r emediation  the pr e-de fined  request can be used for.
+8.Type a Help URL if you want to provide a longer description  for users. 8.
+You can compose and post a web page that describes this request further, and enter its URL here.
+Users can open the URL by clicking the request description  text wherever the text appears in the user
+interface.
+9.Enable Authorizer must approve/deny each entitlemen t  if you want the assigned authorizers to 9.
+approve/deny each entitlemen t.
+10. Determine the Intended recipients . 10.
+This determines where the request can be accessed (if it is accessible to requesters) and which types
+of certific ation  r emediation  this request will be available for (if it is accessible to certific ation).
+If the request is enabled, and accessible to requesters, and the intended recipients are:
+▪ Existing  users, the request is available to users via the Requests links on the main menu or, if you ▪
+set the Subject field  to ”Managed groups”, the request is available via the Groups link on the main
+menu (see the next step).▪New users, the request is available to users via the Create a newuser pr ofile  link on the main ▪
+menu.
+▪ Existing  and new users, the request is available via any of the above. ▪
+▪ Existing  groups, the request is available to users via the Groups link on the main menu. ▪
+▪New groups,the request is available to users via the Groups link on the main menu. ▪
+▪Non-user-based, the request is available to users via the Use pr e-de fined  requests for custom ▪
+oper ations  link on the main menu.
+▪Network resources, the request is available to users via the Requestaccess to network resources ▪
+link on the main menu.
+▪ Existing  parent groups, the request is available to users via the Groups link on the main menu. ▪
+▪ Existing  child groups, the request is available to users via the Groups link on the main menu. ▪
+11. If the intended recipients are e xisting  users with Subject set to ”Managed groups”, or if the intended 11.
+recipients are e xisting  groups, determine the Applicable subject selection .
+This controls whether the request is displayed based on how many groups are selected in the Groups
+app. Assuming the user has appropriate access to the request, ”Single subject” makes the request
+available if exactly one group is selected. ”Multiple  subjects” makes the request available if two or
+more groups are selected.
+12. Enter Ins tructions  if you want to provide users with additional  in f ormation. 12.
+These ins tructions  will be presented to users after  they select the pr e-de fined  request.
+13. Click Add. 13.
+Next: 
+De fine  oper ations  that are part of the pr e-de fined  request.
+De fining  oper ations
+Select the oper ations  to be performed on resources to de fine  what will happen once a pr e-de fined
+request is approved.
+If adding a resource will cause the pre-de fined  request to be in violation  of a segregation  of duties  rule,
+adding the resource will be disallowed or its default operation  will be changed to Delete .
+To de fine  oper ations  for a pr e-de fined  request:
+1.Navigate to the Pr e-de fined  request in f ormation  page.. 1.
+2.Select the Oper ations  tab. 2.
+3.Select the sub-link for:3.▪ Existing  account to add oper ations  for e xisting  accounts. ▪
+▪New account to add oper ations  to create accounts based on a template accounts. ▪
+▪Managed group to add oper ations  to join, leave, or edit managed groups. ▪
+▪Role to add oper ations  to add or remove roles. ▪
+▪ Pr ofile  to add oper ations  to enable or disable pr ofiles. ▪
+▪Custom to add custom oper ations. ▪
+This type of oper ation  may be used, for example, in scripted solutions  for onboarding of systems
+and accounts, and c ollecting  target cr edentials  for systems being onboarded.
+4. De fine  oper ations  on specified  groups, accounts, or roles, if applicable. 4.
+5. De fine  oper ations  on either all, or user-selected groups, accounts, or roles, if applicable. 5.
+6.For pr ofile  oper ations,  determine whether the enable or disable pr ofile  oper ation  is required or 6.
+optional.
+Oper ations  on specified  entitlemen ts/r esour ces
+To de fine  oper ations  on specified  groups, accounts, or roles:
+1.Click Select... in the upper table. 1.
+2.Select one or more groups, target systems (for e xisting  accounts), template accounts (for new 2.
+accounts), or roles. Click Select .
+3.Select an oper ation  from the drop-down list next to the entitlemen t,  if options  are available. 3.
+4.Click Add oper ation  next to an entitlemen t  or resource to add more oper ations,  if applicable. 4.
+5.For oper ations  that add a group membership, account, or role, determine whether the new 5.
+entitlemen t  or resource is required or optional  by selecting  appropriate option  in the Necessity
+column.
+6.Click Update . 6.It helps to understand how the necessity column will work if you run the pr e-de fined  request from a
+report, or from the View and update pr ofile  (IDR) module. The table below shows the impact of the
+required and optional  setting  on the pr e-de fined  request:
+Necessity Submitted  via report output Submitted  by an end user
+Required Attribut es  are mapped aut omatic ally
+to the report output.The oper ation  cannot be removed
+from a request.
+Optional You will be prompted to map the
+pr e-de fined  request attribut es  to the
+report output.The oper ation  is optional.
+Oper ations  on either all or user-selected entitlemen ts
+If you select an oper ation  from the checklist in the lower table, and click Update , this has one of two
+e ff ects,  depending on whether it applies to ’ All’ or ’User-selectable’ entitlemen ts  (not all oper ations  have
+both):
+▪All means the oper ation  will be performed on all entitlemen ts  of one type. ▪
+If ’ All’ is selected for update accounts, only the accounts with an account attribut e  mapped to the
+modified  pr ofile  attribut e  will be updated.
+▪User-selectable means the oper ation  will only be performed on entitlemen ts  selected by the ▪
+requester, who can choose from all entitlemen ts  of one type.
+For example, if you select ” Assign group” for managed groups, users will be able to join or leave any
+managed group on any target system.There is no place in the user interface to c onfigure  authorizers for enable/disable profile  operations.  You
+must use the authorizer criteria modific ation  plugin to add authorizers on the request or set the number
+of authoriz ations  required. Enable/disable operations  in requests are aff ect ed  by the MIN AUTHORIZERS
+variable.
+Next: 
+Select attribut es  to be displayed on the request form.
+Selecting  attribut es  for requests
+Select attribut e  groups  (on page 1304) to determine what in f ormation  needs to be gathered for a
+request.
+To de fine  attribut es  for a pr e-de fined  request:
+1.Navigate to the Pr e-de fined  request in f ormation  page. 1.
+2.Select the Attribut es  tab. 2.
+3.Click Select... . 3.
+4.Select the attribut e  groups you want to add to the request and click Select . 4.
+De fining  default attribut e  values for requests
+To specify default attribut e  values for a request:
+1.On the Oper ations:  Attribut e  group <request>  page, search for, or select the relevant attribut e  group. 1.
+2.Enter default values for attribut es  as required. 2.3.Click Update . 3.
+The display of attribut es  is controlled by attribut e  group permissions; for example, you can set a
+default value for an attribut e  that is neither viewable nor editable to a requester.
+Next:
+Add access controls to the request.
+De fining  access controls
+You can use user classes to create controls that determine which users have access to a pr e-de fined
+request.
+To add access controls:
+1.Navigate to the Pr e-de fined  request in f ormation  page. 1.
+2.Select the Access control tab. 2.
+3.Click Select... to select e xisting  classes, or Add new... to create a new class. 3.
+4. Con figur e  P articipan t  mapping for each user class that you add. 4.
+Select and create user classes until  you have de fined  control filt er s.
+5.If your criteria includes multiple  user classes, de fine  whether users are required to match All of the 5.
+user classes or Any of the user classes .
+When the Intended recipients is set to anything other than ”Existing  users” and/or ”New users”, only
+single participan t  user classes will be available, and mapping will not be required.
+Access controls do not apply to c ertific ation  remediation.  If the c ertific ation  initiat or  allows it, all
+reviewers will be able to submit that pre-de fined  request for remediation.
+Example 
+To de fine  access control in a way that allows a manager to update the pr ofile  of his subordinate:
+▪Select the default ”MANAGER INDIRECT” user class▪
+▪ Con figur e  the participan t  mapping as follows: ▪
+MANAGER REQUESTERSUBORDINATE RECIPIENT
+Next: 
+Con figur e  the request wizard.
+De fining  the request wizard order and display
+When a user makes a request Bravura Security Fabric  will present a wizard ; a series of form pages which
+lead the user through a series of steps. This allows users to make requests without having to know the
+complex details of the pr e-de fined  request.
+The Order and display tab allows you to rearrange the order of the diff er en t  pages in the pr e-de fined
+request that require user input, and you can decide to display them or not.
+Pages are added to the wizard as you add oper ations  that require user input; for example adding
+the ” Assign group” oper ation  adds the ”Join or leave groups” page. Every attribut e  group added to the
+pr e-de fined  request will have its own page on the wizard.
+When a pr e-de fined  request is fir s t added, it will have the following pages by default in the given order
+before any oper ations,  or attribut e  groups have been added:
+▪Resolve segr eg ation  of duties  rules violations ▪
+▪Set initial  password ▪
+▪Request summary▪
+The Display column determines whether a page will be shown to the requester. All default oper ations  are
+set to ” Auto”, which means Bravura Security Fabric  will decide whether to show the page depending on
+the requested resources so far; for example, users only need to set an initial  password if the create
+account oper ation  is included. Choose ”Hide” when the values are provided by a plugin.
+Misc onfiguring  this page can cause the pre-de fined  request to not function  properly. Ensure you
+thoroughly test your changes.Depr ec ating  pr e-de fined  requests
+You can deprecate a pr e-de fined  request to render it unusable, while preserving it for auditing  purposes.
+You cannot deprecate a pr e-de fined  request if it is still in use. A deprecated pr e-de fined  request can be
+restored at a later date.
+To deprecate a pr e-de fined  request:
+1.Navigate to the Pr e-de fined  request in f ormation  page. 1.
+2.Select the checkbox next to the deprecate button  and enter a Reason for depr ec ation  if wanted. 2.
+3.Click Deprecate . 3.
+Restoring a pr e-defined  request 
+To restore a pr e-de fined  request:
+1.Click Manage the system > W orkflo w  > Pr e-de fined  requests  to see the list of e xisting  pr e-de fined 1.
+requests.
+2.Select the pr e-de fined  request you want to restore. 2.
+3.Click Restore . 3.
+Deleting  pr e-de fined  requests
+You can delete pr e-de fined  requests that are disabled and have not been used yet. Requests are
+considered “used” once they have been attemp t ed,  even if the request was not finaliz ed.  You cannot
+delete a pr e-de fined  request if it is enabled or deprecated. If you want to delete a request but cannot
+since it has been used, then deprecate the request.
+To delete a pr e-de fined  request:
+1.Click Manage the system > W orkflo w  > Pr e-de fined  requests . 1.
+2.Select the checkboxes next to the pr e-de fined  requests you want to delete. 2.
+If a checkbox is not available next to a pr e-de fined  request you want to delete, then the pr e-de fined
+request is not disabled. Select the pr e-de fined  request, and restore and/or disable the pr e-de fined
+request as necessary, then return to the Pr e-de fined  requests page.
+3.Click Delete and c on firm  the deletion. 3.
+Alternately, you can delete a disabled pr e-de fined  request from its Pr e-de fined  request in f ormation
+page.Authoriz ation  w orkflow
+Bravura Security Fabric  provides a w orkflo w  authoriz ation  engine to receive, validate, and route access
+change requests to the appropriate individuals. Within the w orkflo w  authoriz ation  process there are a
+number of actors including:
+▪The requester – who is submitting  the request. ▪
+▪The recipient – who the request is submitted  for. In many cases the requester is the same as the ▪
+recipient.
+▪The authorizer – who is responsible for reviewing the request. ▪
+Read this chapter to learn more about authoriz ation  w orkflo w  and the diff er en t  ways in which it can be
+implemented.  
+W orkflo w  logic and process
+The W orkflo w  Manager Service is responsible for implementing  authoriz ation  logic and or ches tr ating
+w orkflo w  processes. In general, the w orkflo w  process operates as follows:
+1.A user logs into the Bravura Security Fabric  web applic ation  and submits a change request. 1.
+Alt ernativ ely ,  an automated process may submit the change request.
+2.Bravura Security Fabric  validates the input and forwards the request to the W orkflo w  Manager Service 2.
+(idwfm ).
+3.The idwfm  service determines authorizers for the request using s t atic  authoriz ation  or dynamic 3.
+authoriz ation  rules, and notifies  them of their assignments by email.
+Assigning too many authorizers could aff ect  performance. When the number of authorizers assigned
+to a resource exceeds the value of MAX AUTH ALLOWED (default 20), the request is put on hold. If you
+increase this value, ensure that you test the c onfiguration  for performance issues.
+4.Authorizers log in to the Bravura Security Fabric  web applic ation,  usually after  following a URL 4.
+embedded in the email, where they log in and either approve or deny the request.
+5.If authorizers do not respond in a timely  manner, idwfm  can send reminder emails or take other 5.
+actions  like denying or esc alating  the request.
+6.The idwfm  service determines if input received from authorizers is sufficien t  to approve or deny the 6.
+request. If the request is:
+▪Denied, idwfm  closes the request. ▪
+▪Approved, idwfm  forwards the request to the T r ansaction  Monitor Service to carry out changes on ▪
+target systems.
+The fulfillmen t  engine can be c on figur ed  to run connectors directly or to use human implementers.
+The idwfm  service also updates the Bravura Security Fabric  database and informs the appropriate
+users.

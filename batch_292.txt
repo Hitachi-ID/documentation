@@ -1,0 +1,173 @@
+To specify a date range, you can choose:
+▪Use r elativ e  date ▪
+It is recommended that you use a r elativ e  date for your date range when you schedule a report. This
+ensures that the date range would be valid when the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report isOption Description
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+to use a date r elativ e  to when report executes
+▪Use selected date▪
+You can de fine  a specific  date range for your report. The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+The start time  is the time  that the report was executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the start date and hour. 1.
+2.Type a start time  in HH:MM format if you do not want to start on the hour. 2.
+3.Click the lower da t e/time  field  to specify the end date and hour. 3.
+4.Type an end time  in HH:MM format if you do not want to start on the hour. 4.
+The allowed years range from 1970 to 2038
+to de fine  a specific  date range for your report
+▪Use within the last N days to specify the last number of days for the report to search within ▪▪Use N or more days ago to specify the number of days ago for the report to begin searching from ▪
+▪ Submitted  during the last N days to specify a certain number of past days for the report to search ▪
+within
+▪Use within the next N days to specify a certain number of future days for the report to search within ▪
+Using graphs within reports
+Some reports have an option  to summarize in f ormation  in a graph format. You can choose this option  by
+selecting  the <Report name> summary  option  and then specifying a Graph type .
+JavaScript must be enabled for the graphs to be visible.
+There are four graph types in Bravura Security Fabric , two of which are alike:
+▪Horizontal and v ertic al  bar charts  (on page 2914) ▪
+▪Pie charts  (on page 2914) ▪
+▪Line charts  (on page 2915) ▪
+For all graph types, individual sets of in f ormation  are color coded. Hovering over an element of the graph
+displays its name and associated value.
+The sections  of the graph are also identified  in the label box. Hovering over a label highlights the
+corresponding section  on the graph. You can filt er  out unwanted data by clicking on the colors in the
+label box.
+If a report supports multiple  graph types, you can switch between types, without having to run the report
+again, by clicking a radio button  below the graph.
+Horizontal and v ertic al  bar charts
+The horizontal and v ertic al  bar chart types display in f ormation  in opaque bars that stretch across the
+screen.
+The chart has two axes, one of which divides the sub sections  of the report output into bars and the other
+of which displays the associated amount.
+The v ertic al  bar chart type often  represents trends on a timeline.  In this case, each individual unit of time
+has its own set of bars. If available, you can use a R eporting  time  interval  option  to set the unit of time  to
+sort the timeline.  Navigate the timeline  using the mouse.
+A horizontal bar chart may have a Number of rows for graph  setting  which limits the number of rows
+displayed within the graph. To reduce clutter  on the page, there is a hard limit of 100 rows to this setting.
+For horizontal or v ertic al  bar charts you can click on an individual bar to view detailed data in a pop-up
+window.
+Pie chart
+The pie chart graph type represents the summarized report output within a circle, with each sub section
+of data having its own sector of the circle pr oportional  to the amount it is associated with. The specific
+percentages of the sectors are displayed next to them.For pie chart graphs, you can open the drill-down window by clicking on the colored sectors of the pie
+chart.
+You can click on an individual sector to view detailed data in a pop-up window.
+Line chart
+The line chart graph type displays in f ormation  from the report using nodes, which are linked together
+using lines.
+This graph type is used to represent trends on a timeline.  Each individual unit of time  has multiple  nodes
+on the graph. If available, you can set the unit of time  to sort the timeline  using the R eporting  time
+interval  option.  Navigate the timeline  using the mouse.For line chart graphs, you can view detailed data in a pop-up window by clicking the nodes on the chart.
+Since there are often  multiple  data lines in one line chart, at times  the nodes on the lines will intersect. In
+this case, clicking on the node opens a drop-down menu that allows you to choose the line for which you
+want to view detailed data.
+View data in drill-down reports
+You can get a more in-depth r epr esen t ation  of the data in any graph by clicking on an area in the graph or
+on any row within the table below the graph. This opens a pop-up "drill-down" window that tables data
+from a specific  section  of the graph.
+Each graph type has a slightly diff er en t  way of opening the drill-down window which is covered in their
+r espectiv e  sections.A basic search box within the window allows you to filt er  data within the table.
+Unlike other Bravura Security Fabric  pop-up windows, the graph drill-down window can be resized and
+moved around the screen to your liking.
+To leave the drill-down window, either click the close icon on the top right-hand side of the window or
+press [Esc] .
+Using search pages within reports
+Some reports have fields  that allow you to access search pages for certain objects. The search pages for
+these objects are similar to the standard search pages; however, there are some diff er ences.
+Some search pages use an older style user interface. For example, the search page for target systems in
+the Users > Accounts  report uses the older style, while the search page for accounts uses the newer,
+standard style. The diff er ences  are noted in the rest of this section.
+Basic searching
+To access a search page for a particular  report field,  click the search icon 
+  in that field.
+To narrow down the list of objects on a search page, type a word or phrase to search for in the search
+field,  then click the search button,  or on older-style search pages, the search icon 
+  to submit your
+search.
+Unlike other (non-report) search pages, Bravura Security Fabric  matches on hidden fields,  not just the
+columns displayed on the page. Invalidated users are displayed with strike-through lettering.  The
+Advanced search  page lists all searchable attribut es.
+Advanced search page (older style)
+To create an advanced field  search query on older-style search pages:
+1.Click Advanced search  on the object list page. 1.
+2.Select a field  name or property from the fir s t drop-down list in the fir s t empty row. 2.
+3.Select a comparison method from the second drop-down list.3.
+4.Type a value in the text field,  or select a value from the drop-down list. 4.
+5.Repeat steps 2 through 4 in the next row if you want to add more search expressions.5.
+6.If you have multiple  search expressions, from the fir s t drop-down list in the second row, select: 6.
+▪"or" to match on either the current or previous row.▪
+▪"and" to match on both the current and previous row.▪
+Repeat this for following rows if required.When using mixed and/or search expressions, "AND" takes precedence over "OR". For example:
+Expression1 AND Expression2 OR Expression3 AND Expression4
+should be interpreted as
+( Expression1 AND Expression2 )OR ( Expression3 AND Expression4)
+7.Click Search . 7.
+See also
+Searching  (on page 362) provides more in f ormation  on standard advanced searching and saving searches.
+Viewing saved reports
+▪Users require the "Manage reports" adminis tr ativ e  right in order to access the Manage reports (RPT) ▪
+module. They can be added to the REPORT_READERS administrator group to be granted this right.
+Membership criteria is de fined  by the _REPORT_READERS_ user class.
+▪Users must be in the same user class to see each others’ saved reports.▪
+▪Superusers can view the saved reports of other users, but users who are not superusers cannot access▪
+the saved reports of superusers.
+To view saved reports:
+1.Click Manage reports > Saved reports , then select My saved reports  or Other users’ saved reports . 1.
+2.Click the view icon 
+  for the report you want to view, or use the Advanced search to narrow down 2.
+the list of saved reports.
+3. Optionally ,  click the appropriate button  in the Download column to download the report in csv, pdf, 3.
+HTML, or PNG format.
+The Download image 
+  icon only appears when the report contains graphics.
+Saved reports are not propagated to replic ation  nodes.
+Adding a custom report
+Custom reports provides means to generate reports that are not necessarily sourced from the main
+instance database.
+The custom reports are transparent within the product. Just like built-in reports, they can be saved,
+scheduled, emailed and exported for later c onsumption.
+When cr eating  custom reports, the following assumptions  apply:
+▪The custom report is being sourced from a Python script.▪
+▪The language is English. There is no support for in t ernationaliz ation  at this time. ▪
+▪There is no inherent date handling. All date inputs are valued as inputted  with no conversion for ▪
+time z one.

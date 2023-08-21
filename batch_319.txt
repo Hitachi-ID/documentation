@@ -1,0 +1,315 @@
+Criteria Description
+▪ Attached  to at least one policy ▪
+▪Not attached  to a policy ▪
+Managed system policy ID Type a comma-and-space-delimited list of managed
+system policy IDs to include in the report. Alt ernativ ely ,
+search for one or more policies.
+Manual password r andomiz ation  batches Select one of the options  from the drop-down list:
+▪All▪
+▪Show only systems where passwords have been▪
+randomized
+▪Show only systems where no passwords have been▪
+randomized
+▪Show only systems with at least one managed account▪
+whose password has not been randomized
+Attribut e Select one of the attribut es  from the drop-down list. The
+value of that attribut e  will be displayed in the report.
+Last connect time Choose one of the following options:
+Date not required : This is the default setting.  In f ormation
+is listed regardless of start date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.Criteria Description
+Option Description
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: In f ormation  is only included in the report output if the
+start date falls within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: In f ormation  is only included in the report output if the
+start date and time  falls within the Start date range . Use
+the fir s t set of date / time  controls to select the earliest
+time  to include, and the second set of date / time
+controls to select the latest time  to include.Criteria Description
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+This option  will only be present when Report Type  is set
+to View updated systems.
+Length of time  without c onnection Choose one of the following options:
+Date not required : This is the default setting.  In f ormation
+is listed regardless of start date.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.Criteria Description
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: In f ormation  is only included in the report output if the
+start date and time  falls within the Start date range. Use
+the fir s t da t e/time  field  to select the earliest time  to
+include, and the second da t e/time  field  to select the
+latest time  to include.
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+This option  will only be present when Report Type  is set
+to View systems that were not updated.
+Account / Subscriber dependencies
+Purpose : Show domain and local accounts and the objects that use them.
+Executable : discoveredaccounts
+Search Criteria :
+Criteria Description
+Report type Select the type of report to run:
+Domain account : Domain accounts running local ser v er/
+w ork s t ation  objects
+Local account : Local accounts running ser v er/w ork s t ation
+objects
+Object : Subscribers/Security groups
+Observed account ID Type the observed account ID to include in the report.
+The ID must exactly match the format that was provided
+to the object.
+Associated account ID Type the short ID of an account to include in the report.
+Associated account status Select the type of accounts to include:
+(All) : managed and unmanaged accountsCriteria Description
+Managed : managed accounts only
+Unmanaged : unmanaged accounts only
+Associated target system ID Type a comma-and-space-delimited list of IDs of target
+systems from which accounts are associated. For local
+accounts, this is also where the objects are associated
+from.
+Alt ernativ ely ,  search for target systems.
+Discovered target system ID Type a comma-and-space-delimited list of IDs of target
+systems from which objects are run by domain accounts.
+This option  is only available for the domain account
+report.
+Alt ernativ ely ,  search for target systems.
+Object name Type the name of the object.
+Object type Select one or more object types to include in the report:
+▪Used to run a service▪
+▪Used in IIS Applic ation  Pool, Virtual Directory or FTP ▪
+Site
+▪Used to run a scheduled task▪
+▪Used to run a DCOM object▪
+▪Custom account usage▪
+▪Sharepoint service account▪
+Associated target system status Select the type of target systems to include:
+(All) : managed and unmanaged target systems
+Managed : managed target systems only
+Unmanaged : unmanaged target systems only
+Associated target system in t egr ation  method Select the type of target system in t egr ation  to include:
+(All): push and local service mode target systems
+Push mode
+Local service mode
+Last load time Choose one of the following options:
+Date not required : This is the default setting.  In f ormation
+is listed regardless of start date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based onCriteria Description
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.Criteria Description
+Option Description
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: In f ormation  is only included in the report output if the
+start date falls within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.Criteria Description
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: In f ormation  is only included in the report output if the
+start date and time  falls within the Start date range . Use
+the fir s t set of date / time  controls to select the earliest
+time  to include, and the second set of date / time
+controls to select the latest time  to include.
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Account is associated Select this option  to include accounts that are associated
+with a target system.
+Associated account is valid Select this option  to include valid associated accounts.
+This field  is only visible when Account is associated  is
+selected.
+Last load time Specify a date range the object was last loaded.
+Summarize report Select this if you prefer to have a numerical summary of
+the report.
+Group set c on figur ation
+Purpose : Con figur ation  of group sets.
+Executable : managedgroupset
+Search Criteria :
+Criteria Description
+Item type to display Select the group set c on figur ation  item type to search by:
+All: Lists all of the c on figur ation  item types of group sets.
+This is the default setting.
+Target system hosting  user accounts : Lists only the target
+systems of group sets.
+Explicitly attached  groups : Lists only the explicitly
+attached  groups of group sets.Criteria Description
+Group inclusion rules : Lists only the group inclusion rules
+of group sets.
+Managed system policy ID Type a comma-and-space-delimited list of managed
+system policy IDs to include in the report. Alt ernativ ely ,
+search for one or more policies.
+Group set ID Type the ID of a group set you want to include in the
+report. Alt ernativ ely ,  search for one or more group sets.
+Target system ID Type a comma-and-space-delimited list of target system
+IDs to include in the report. Alt ernativ ely ,  search for one
+or more target systems. This field  is only visible when
+Item type to display  is set to Explicitly attached  groups ,
+Target system hosting  user accounts , or All.
+Group ID Type the ID of a group you want to include in the report.
+Alt ernativ ely ,  search for one or more groups. This field  is
+only visible when Item type to display  is set to Explicitly
+attached  groups  or All.
+Rule ID Type the ID of a group inclusion rule to include in the
+report. This field  is only visible when Item type to display
+is set to Group inclusion rules  or All.
+Group set members - Missing on managed systems
+Purpose : Groups that are de fined  in a group set but which do not exist on systems in the same managed
+system policy.
+Executable : gsetfailure
+Search Criteria :
+Criteria Description
+Managed system policy ID Type a comma-and-space-delimited list of managed
+system policy IDs you want to include in the report. This
+field  is only visible when Trend by  is set to Managed
+system policy .
+Alt ernativ ely ,  you can search for one or more policies.
+Managed system ID Type a comma-and-space-delimited list of IDs for
+managed systems you want to include in the report. This
+field  is only visible when Trend by  is set to Account or
+Managed system .
+Alt ernativ ely ,  you can search for one or more managed
+systems.
+Group set ID Type the ID of a group set you want to include in the
+report. Alt ernativ ely ,  search for one or more group sets.

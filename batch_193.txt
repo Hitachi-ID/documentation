@@ -1,0 +1,208 @@
+Account sets
+Bravura Privilege  provides a convenient way for IT s t a ff  to perform actions  on multiple  machines at one
+time.  For example, s t a ff  can apply a patch to multiple  file servers, or install a new applic ation  on a farm of
+web servers.
+To help keep manual e ff ort  to a minimum, Bravura Privilege  allows users to:
+▪Select multiple  accounts to check out across multiple  systems. ▪
+▪Check out multiple  accounts in a single oper ation. ▪
+▪Run a specified  command or script on the checked out accounts. ▪
+▪Collect program output and/or log files from multiple  systems. ▪
+This chapter shows you how to manage and monitor account sets and command e x ecution.
+Use case scenarios
+The following use cases represent a few possible scenarios.
+Use case: Automate simple maintenance tasks on multiple  servers
+Quite often  administrators must perform a simple set of maintenance tasks across multiple  servers.
+These tasks might include:
+▪ Updating  Con figur ation ▪
+▪ R es t arting  Services ▪
+▪Applying Patches▪
+Ensure the targets are c onfigured  to run the commands. For example, to run a PowerShell script on an
+NT target ensure Bravura Security Fabric can communicate to the NT systems through PowerShell. This
+may include enabling remote and running commands on the client such as:
+Set-ExecutionPolicy RemoteSigned -Force
+Set-Item wsman:\\localhost\\Client\\TrustedHosts -value *
+If they need to perform these tasks on hundreds or thousands of servers, this process could take an
+extremely long time  to perform, and is very tedious. Instead of doing the steps above over and over for
+each machine, the administrator could use an account set access  to:
+1.Search for managed accounts on the machines that need attention,  saving this as an account set . 1.
+2.Check-out adminis tr ativ e  access to the account set . 2.
+3.Once approved and checked out, specify a series of commands to run on each machine.3.
+4.Execute the oper ation  on every machine asynchronously with a single button  press. 4.
+5.View the results of the oper ation  to ensure all actions  were successful. 5.
+Under the covers, Bravura Privilege  aut omatic ally  performs the manual tasks of c onnecting ,  running and
+disc onnecting  from every selected machine.Sample commands
+Sample command to copy a file to your remote server in PowerShell:
+net use "\\[COMPUTER]\c$" "[PASSWORD]" /USER:"[USERNAME]" /
+persistent:no
+Copy-Item [PACKAGEPATH]\* \\[COMPUTER]\c$\installer
+net use "\\$ComputerName\c$" /USER:"$Username" /delete
+Sample command to deploy a script remotely in PowerShell:
+$pw = convertto-securestring -AsPlainText -Force -String "[PASSWORD]"
+$credentials = new-object -typename
+System.Management.Automation.PSCredential
+-argumentlist "[USERNAME]",$pw
+invoke-command -ComputerName [COMPUTER] -Credential $credentials -
+scriptblock
+{ [STATEMENT TO EXECUTE] }
+Sample command to restart a service remotely in PowerShell:
+$service = Get-WmiObject -Class Win32_Service -Filter "Name =
+'$ServiceName'"
+$service | restart-service -Force
+Sample command to install a utility  in PowerShell:
+[PACKAGEPATH]\package.exe
+Use case: Query Status of Multiple  Servers
+This use case is similar to Use case: Automate simple maintenance tasks on multiple  servers  (on page
+1921); however, instead of c ollecting  logs, the administrator simply collects the output of the commands
+that were run. This would allow administrators to run commands such as ”report status” and collect
+standard output data for analysis.
+Use case: Perform in t er activ e  maintenance on multiple  servers
+In this case, an administrator needs to perform the same maintenance actions  on a number of servers,
+however the action  cannot be performed without human in t er action.  The search and check-out process
+for this use case would be the same as Use case: Automate simple maintenance tasks on multiple  servers
+(on page 1921) . However, instead of specifying a list of commands to run, the administrator could
+instead launch N (where N < some c on figur able  value) in t er activ e  sessions such as:
+▪Remote Desktop Sessions▪
+▪SSH Sessions▪
+▪SQL Studio/Developer Sessions▪These would all show up as separate windows on the authorized user’s desktop. The administrator could
+then perform the required maintenance, closing the sessions as they finish;  for example:
+▪The Remote desktop/ Remote App RDP access disclosure plug-in has been c on figur ed  to allow the ▪
+user to override the domain and hostname.
+▪An administrator checks out an account set.▪
+▪The administrator selects one managed account from the account set.▪
+▪The administrator can edit the hostname and domain and run many RDP sessions, all on diff er en t ▪
+servers.
+▪The administrator then uses a diff er en t  managed account in the account set to run more RDP sessions ▪
+on diff er en t  servers again.
+If more than one account in an account set is selected, the Run command  is the only access disclosure
+plug-in available.
+See Access disclosure plugins  (on page 1957) for in f ormation  on the various access disclosure plug-ins.
+Getting  started
+ Who can manage account sets 
+▪End users who can request check-out of managed accounts in a managed system policy can create ▪
+account sets.
+▪Creators can delete their own account sets without additional  privileges. ▪
+▪End users who can request check-out of managed accounts in a managed system policy can use all ▪
+shared account sets in this managed system policy , but cannot delete the account sets that they did not
+create.
+▪Users can be assigned ”Modify all account sets in this policy” ACL in any managed system policy . This ▪
+will allow them to search and delete account sets created by others as well as themselves.
+▪Product administrators can be assigned the ”Manage account sets” privilege, and can manage account▪
+sets via the Manage the system (PSA) module.
+▪When checking out multiple  accounts in a single oper ation,  the accounts have to have the same ▪
+primary managed system policy . This is to eliminate c on flicts  with access controls or other settings.
+ Requirements 
+Before an account set can be created the following requirements must be met:
+▪ Con figur e  at least one managed system policy. ▪
+See Managed System Policies  (on page 1834) for details.
+▪Manage accounts on a managed system policy . ▪
+See Managed Accounts  (on page 1865).
+▪If users are to be able to run commands on one or more accounts in the account set, c on figur e  the ▪
+Run command control (pswcmdrun ) on the managed system policy .
+See De fining  access disclosure plugins  (on page 2011) for more in f ormation. Na vig ation  steps 
+Product administrators can manage account set access from the Manage the system  (PSA) module by
+clicking Manage the system > Privileged access > Account sets .
+From the Account sets menu you can:
+▪Adding an account set  (on page 1924) ▪
+▪Manage e xisting  account sets  (on page 1925) ▪
+▪Explicitly attaching  accounts to an account set  (on page 1925) ▪
+▪Command e x ecution  status  (on page 1928) ▪
+▪Command management  (on page 1929) ▪
+Alt ernativ ely ,  end users can manually select and request access to multiple  accounts via the Privileged
+access  app. The request is aut omatic ally  saved as an account set.
+Adding an account set
+1.Navigate to the Account sets  (on page 1923) page. 1.
+2.Click Access management . 2.
+3.Click Add new… 3.
+4.Type an ID and Description . 4.
+5.Select a Managed system policy . 5.
+6.If you do not want other users to request or use the account set, deselect the Share this account set 6.
+with all users option.
+This is enabled by default in the adminis tr ativ e  menu.
+The share option  enables the account set to be seen by all users who have the ”Request check out of
+managed accounts” privilege on the managed system policy .
+7.Click Add. 7.
+ Next: Once the account set has been created you can Explicitly attaching  accounts to an account set  (on page
+1925) and Create account inclusion rules for an account set  (on page 1926).
+Manage e xisting  account sets
+Product administrators assigned the ”manage account sets” privilege can view, modify, and delete
+account sets, regardless of whether its creator has shared them with other users or not.
+To manage account sets:
+1.Navigate to the Account sets  (on page 1923) page 1.
+2.Click Access management 2.
+3.Search to display e xisting  account sets. 3.
+Once you have found the account set you want to manage you can:
+▪Enable the checkbox to the left of the account set and press Delete to delete it. ▪
+Select the account set to make changes.
+Once the account set has been selected you can Explicitly attaching  accounts to an account set  (on page
+1925) and Create account inclusion rules for an account set  (on page 1926).
+Explicitly attaching  accounts to an account set
+Explicitly -attached  accounts are included in the account set regardless of the account inclusion rules.To explicitly select managed accounts to include in an account set:
+1.Navigate to the Account sets  (on page 1923) page 1.
+2.Click Access management . 2.
+3.Click the Explicitly attached  accounts tab. 3.
+4.Click Select… 4.
+5.Select the checkboxes for the accounts you want to include. Alt ernativ ely ,  you can <search>for 5.
+accounts.
+6.Click Select . 6.
+The accounts you selected should now be displayed on the Explicitly attached  accounts  page.
+Cr eating  account inclusion rules for an account set
+You can de fine  an account set using expressions known as inclusion rules. You can include accounts solely
+using this method, or in c onjunction  with explicitly attached  accounts. The accounts are determined at
+request time,  and are based on the accounts that are currently managed.To add a new account inclusion rule:
+1.Navigate to the Account sets  (on page 1923) page 1.
+2.Click Access management 2.
+3.Select the account set to c on figur e. 3.
+4.Click the Account inclusion rule tab. 4.
+5.Specify a unique ID and enter a description. 5.
+6.Enable Include all accounts if you want to be able to request access to all accounts managed by the 6.
+managed system policy .
+7.Select the Combining c onditions  option  to match all or any c ondition. 7.
+8.Click Add. 8.
+To de fine  the c onditions  for the rule:
+1.On the Account inclusion rule tab, click the Conditions  sub tab. 1.
+2.Click Add new… 2.
+3.Enter an ID, and optionally  a Description . 3.
+4.Select Enable to include the c onditions  in this rule. 4.
+5.Select the computer or account Attribut e  that the c onditions  will evaluate. 5.
+The attribut es  must be listed from the managed system before they can be used in an e valuation.
+6.Choose an Attribut e  type : 6.
+▪Computer : the attribut e  comes from discovered systems. ▪
+▪Account : the attribut e  comes from discovered accounts. ▪
+7.Choose a Comparison method that will be used to compare the value with the system attribut es. 7.
+8.Select the Value type . 8.
+9. Optional:  Determine whether to Perform the comparison c ase-sensitiv ely . 9.
+10. Specify the Value used to compare with the system attribut es. 10.11. Click Add. 11.
+12. Repeat this process until  you have de fined  all c onditions. 12.
+To use the account set see the Bravura Security Fabric End User Documen t ation .
+Command e x ecution  status
+You can check on command e x ecution  status and retrieve the log files generated from the command
+e x ecution  from the Account sets menu.
+To view command e x ecution  results and download log files:1.Navigate to the Account sets  (on page 1923) page 1.
+2.Click Command e x ecution  status . 2.
+3.Search to see results.3.
+4.Click Download if a log file is available. 4.
+Command management
+You can edit and delete previously used commands.
+1.Navigate to the Account sets  (on page 1923) page 1.
+2.Click Command management to see available commands. 2.
+Bravura Privilege  displays the Account set commands  page.3.Select a command to edit it.3.
+Select commands and click Delete to delete them.
+Con figur ation  options
+Command e x ecution  log files
+A log file can be generated when a command is executed with the Retrieve command output and save
+on server option  enabled on the pswcmdrun  access disclosure plugin page.
+Log files are saved in the maqcmd directory. See Controlling user access request c apabilities  (on page
+1938) to learn how to c on figur e  this plugin.
+Use the RES MAQ CMDFILE CLEANUP INTERVAL system variable ( Manage the system > Privileged access
+> Options  > General > Account access request ) to control the number of days before log files are deleted
+from the server. This excludes commands that are executed with the ”Never delete command output file
+from server” option.
+See Con figuring  account access check-out options  (on page 1940) for more account access request
+options.
+Pr ofile  and request attribut es
+There are two built-in pr ofile  and request attribut es  available for account set requests:
+MAQ_COMMAND Account set commands.
+MAQCMD_SCOPE Used to limit the commands that can be executed.
+Both of these attribut es  are members of the Commands for account set access  (MAQBASEATTR) group.
+Members of the MAQBASEATTR attribut e  group appear on the request details page when a user requests
+account set access  that includes one or more accounts that can run commands.

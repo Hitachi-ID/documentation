@@ -1,0 +1,275 @@
+Implementing  Infrastructure Auto Discovery
+You can c on figur e  Bravura Security Fabric  to aut omatic ally  discover computer systems and accounts,
+including:
+▪Systems on a domain.▪
+▪Administrator and user accounts whose cr edentials  are used to manage services, scheduled tasks, IIS ▪
+websites, or DCOM objects.
+Passwords on discovered objects are not randomized until  the objects are managed. They become
+managed by being manually selected, or by passing import rules . You can also use import rules to delete
+objects, or un-manage them so that passwords are not randomized.
+Terminology
+The following terms are used to describe the various states of computer systems:
+▪Discovered objects refers to both discovered accounts and discovered systems. ▪
+▪Discovered accounts are any administrator, service and user accounts that are listed from target ▪
+systems, depending on the c on figur ation  of their discovery options.
+▪Discovered systems are computer objects imported into the Bravura Security Fabric  database, but not ▪
+yet managed.
+They are listed from a domain, or are systems which has a Local Service installed and has connected to
+the Local W ork s t ation  Service. No corresponding target system has been created, and passwords
+cannot yet be randomized.
+▪Managed target systems are discovered systems that are imported as target systems, based on a ▪
+template, either manually or by passing the requirements of a target system import rule.
+Passwords are not randomized until  the systems are added to a managed system policy, either
+manually or by passing the requirements of an import rule.
+By default, discovered systems on Activ e  Directory domains use their GUIDs as their target system IDs.
+▪Discovery templates de fine  the c on figur ation  to apply to new target systems created from discovered ▪
+systems. They can be applied manually or using an import rule .
+▪Source systems are manually -de fined  systems from which discovered systems are listed. ▪
+These are usually domain target systems that have their discovery options  set to list computer server
+objects and computer w ork s t ation  objects on the domain.
+Overview of import rules and auto discovery process
+The general procedure for using import rules and discovered objects is as follows:
+1. Con figur e  managed system policies  (on page 1834). 1.
+2.(Push-mode only) De fine  at least one source system  (on page 2088). 2.
+Currently, computer object discovery is supported for Activ e  Directory target systems. Account
+discovery is supported for Activ e  Directory and Windows servers and w ork s t ations.3. Con figur e  discovery templates  (on page 2090) to manage discovered systems. 3.
+Discovery templates are used to specify settings  for new target systems that are created from
+discovered server and w ork s t ation  objects.
+This is not required for discovered accounts.
+4.Discover unmanaged objects.4.
+▪For push mode, run auto discovery  (on page 2716). This process may take several hours. You can ▪
+test the listing  only by running the command psupdate.exe -targetdiscovered -list
+-no-plugins  from the util directory.
+▪For local service mode, install the Privileged Access Manager Local W ork s t ation  Service  (on page ▪
+1816) ( hipamlws ) on applicable systems and allow it to contact the Bravura Security Fabric  server
+for the fir s t time.
+5.Manage discovered systems.5.
+Discovered systems require a corresponding managed system before Bravura Security Fabric  is able to
+connect to them. You can manage discovered systems manually, or by using target system import
+rules  (on page 2095).
+6.Add managed discovered systems to managed system policies.6.
+You can de fine  managed system policy members manually, or by using managed system import rules
+(on page 2097).
+7.Manage accounts.7.
+Determine which accounts to manage on the managed system. You can manage accounts within a
+managed system policy manually, using a plugin or PSLang expression, or by using managed account
+import rules  (on page 2097).
+Managed account import rules are only applied to discovered accounts that are found using target
+system discovery options  (on page 2088).
+Push mode discovery and management flo w
+The following flo w  diagram illustrates the typical discovery and management process for push mode
+systems.Planning for infrastructure auto discovery
+Consider the following before c on figuring  import rules and discovery:
+1.Managed system policies  (on page 2084) 1.
+2.Source systems  (on page 2085) 2.
+3. Cr edentials  for discovered systems  (on page 2085) 3.
+4.Discovery templates  (on page 2086) 4.
+5.Domain service accounts  (on page 2086) 5.
+6.Import rules  (on page 2086) 6.
+7.User access  (on page 2087) 7.
+Managed system policies
+The c on figur ation  of infrastructure auto discovery depends fir s tly  on the or g aniz ation  of managed system
+policies Consider:
+1.Policy or g aniz ation 1.
+Determine whether policies are organized by:
+▪Systems to which you give access▪
+▪Accounts on the member systems▪
+▪Disclosure methods▪
+▪Permissions; for example, only allow help desk users to access specific  computers ▪
+▪Usage; for example:▪
+▪A default policy for storing all systems at fir s t ▪
+▪Tombstone policy for all systems that have known issues▪
+▪Disabled policy for systems not to have passwords changed▪
+▪Load balancing; for example, policies may run specific  r eplic ation  nodes to handle randomizing ▪
+passwords for one group of systems (possibly separated via geographical loc ation)
+▪Other factors, such as▪
+▪password policies▪
+▪ r andomiz ation  schedules ▪
+▪managed system types▪
+2.Managed accounts2.
+▪Will the accounts be domain administrators?▪
+In this scenario, you would only need to manage the domain cr edentials  on the domain controller.
+This should only require one policy, unless there are diff er en t  usages, permissions, or disclosure
+methods to separate user access. Discovering computers and probing them is still required to
+detect which services are using the domain accounts.
+▪Will the accounts be local administrators?▪
+▪Will the accounts have unique IDs?▪▪Will the accounts need to be discovered and managed?▪
+3.Managed services3.
+For scenarios where r eplic ation  node loc ations  are separated geographically, it is recommended that
+the node closest to the managed systems at each loc ation  be responsible for load balancing work,
+including password r andomiz ations,  or requests for users in the area. Thus, having policies dedicated
+to systems at diff er en t  loc ations  will be bene ficial.
+Source systems (push mode)
+When implementing  push mode privileged access management, an infrastructure auto discovery plan
+can incorporate multiple  sources for computers, or may purposely target only sections  of the domain to
+list computers.
+The following use cases illustrate some ways of using sources to discover and manage systems in push
+mode:
+▪Targetable source systems such as OUs, or groups.▪
+In cases like this it may be useful to target each section  as a unique source, then apply import rules for
+each source system. This will improve e v aluation  speeds on certain scenarios where each source will
+have its own set of import rules to use.
+This should be avoided if you want to manage accounts on the actual domain controller, since
+t argeting  a single system twice has been known to cause issues.
+▪ Multiple  source systems that get added periodically. ▪
+Similar to the case above, import rules can be applied to discovered systems from each source.
+▪Manually-built list of computers▪
+This method is particularly  useful for infrastructure auto discovery since Bravura Security Fabric  can
+filt er  out computers from a manually-built list, and writing  import rules will be easier because the
+computers listed will have already been passed through a set of filt er s.
+The disadvantage to this method is that the list file provided must be managed by an external source.
+If the source management is unreliable, then this will cause issues with infrastructure auto discovery.
+Cr edentials  for discovered systems
+Determine how discovered systems will be managed:
+▪Do the accounts that you plan to use to administer the discovered systems all have a common▪
+password?
+▪Do you intend to use domain cr edentials  to manage the system? ▪
+▪Are the domain cr edentials  found on the source system? ▪
+▪Are the domain cr edentials  found on a separate system? ▪
+▪Do you intend to have Bravura Security Fabric  create local admin cr edentials  for each of the ▪
+discovered systems?Answering these questions  will help you de fine  c onnection  methods for discovered systems  (on page
+2119).
+Discovery templates
+Once you have decided on policy r esponsibilities,  source systems, and how Bravura Security Fabric  will
+connect, you can plan discovery templates to determine specific  settings  for c onnecting  to managed
+systems.
+Discovery template settings  can be unique in certain scenarios such as:
+▪Systems require access through unique proxy servers▪
+In order to c on figur e  systems to use a specific  set of proxies, you need to use templates to de fine
+which computers connect to which proxies.
+There are some performance gains from using proxy servers, specific ally  when dealing with multi-
+g eogr aphic al  loc ation  deployments.
+▪Systems include diff er en t  target system types; such as Activ eDir ect or y  or Unix. ▪
+The templates can be used to distinguish  the type of discovered system.
+▪Import rules with subsequent c onnections  determined by thetemplate setting ▪
+If discovered systems have unique naming patterns  for administrator accounts with the same
+password, multiple  templates can help make management of the systems easier. By g ener ating  a
+template for each type of administrator pattern  and/or password, you can specify what cr edentials
+each discovered system should attemp t  to connect with.
+Domain service accounts
+When loading systems in batches, ensure that you do not manage a domain account until  Bravura
+Security Fabric  has discovered all systems that may be using the account; randomizing the password
+prematurely will cause services to fail to start. It is recommended to that you let auto discovery run fir s t
+and detect all service accounts before you start randomizing passwords.
+When Bravura Security Fabric  randomizes domain accounts that are used to manage services, it only
+updates services that it knows of that are using the domain cr edentials.  Bravura Security Fabric  probes
+the systems to discover the services running on them and which accounts are managing them.
+Import rules
+The previous planning steps will help in deciding how to create the import rules, particularly  with the
+r elationship  they have with the managed system policies and discovery templates; for example:
+▪For each local service mode source system, you can set a unique target system import rule for it to▪
+evaluate attribut es  only available from this specific  source.
+▪You can c on figur e  import rules for each type of system (push mode or local service mode). ▪
+▪Each unique discovery template type requires a new target system import rule.▪
+▪For each managed system policy with unique settings,  a managed system import rule may be required ▪
+to attach  members.Another factor to consider in the planning stages for import rules is performance. Import rules can be
+applied to all discovered systems from all sources of computers. Alt ernativ ely ,  import rules can be
+c on figur ed  to only run on a set of systems, and avoid doing unnecessary c alculations  against discovered
+systems from other sources; for example, an import rule created for Windows servers would not need to
+be evaluated against Unix systems.
+User access
+Determine who should be able to access  (on page 722) what accounts, and how they will access them
+(using disclosure plugins  (on page 1957)).Discovered objects
+Discovered objects are systems and accounts that are:
+▪Registered by a Local W ork s t ation  Service when it contacts the Bravura Privilege  server ▪
+▪Found on a target system c on figur ed  as a source system ▪
+▪Listed through special account attribut es  (sid and objectSid ) ▪
+They are not managed initially  by default. You must either manage them using the Resources >
+Discovered objects  menu, or via import rules.
+For planning purposes, it is recommended that you read Implementing  Infrastructure Auto Discovery  (on
+page 2081) before c on figuring  these settings.
+Con figuring  source systems
+When aut omatic  discovery options  are enabled for a target system, Bravura Security Fabric  can extract
+additional  data for privileged access management.
+▪On Activ e  Directory target systems, you can list: ▪
+▪Server and w ork s t ation  computer objects ▪
+▪On Micr osoft  Windows NT target systems, you can list: ▪
+▪Service manager accounts (local and domain)▪
+▪Scheduled task accounts (local and domain)▪
+▪IIS manager accounts (local and domain)▪
+▪DCOM manager accounts (local and domain)▪
+▪Built-in administrator group members▪
+▪On scripted target systems, you can list all of the above. This requires additional  c on figur ation  in the ▪
+script files.  See the Connector Pack Documen t ation  for details.
+Service accounts are accounts that are used to manage services and dcom objects, authorize scheduled
+tasks, and manage iiswebsite permissions. These lists are used by Bravura Privilege  to manage systems
+and accounts according to import rules. See Enabling resource discovery  (on page 2088) to learn how to
+enable these options.
+Bravura Security Fabric  can also make listed accounts from any type of target system into discovered
+account objects. See Enabling all accounts found on system to be discovered objects  (on page 2089) to
+learn how to enable this option.
+Enabling resource discovery
+You can enable resource discovery using the Aut omatic ally  discover resources to load option  on a target
+system’s Discovery options  tab, or using manually created list files (on page 2718) that are processed
+during auto discovery . If you are loading resources manually by providing list files,  do not select the
+Aut omatic ally  discover resources to load option.Take care when c onfiguring  target systems to list computer objects that you do not attemp t  to list the
+same computer more than once. For example, when t argeting  a domain to list from specified  OUs, and a
+computer exists in more than one OU.
+On Windows target system, make sure the Remote Registry service is started (On Windows work s t ations
+it is disabled by default, on Windows servers it is enabled by default).
+To enable resource discovery options:
+1.Add a target system  (on page 480) or select an e xisting  target system. 1.
+2.On the Target system in f ormation  page, select the Discovery options  tab. 2.
+The Aut omatic ally  discover resources to load option  is enabled by default.
+3.Select the resources to load into the Bravura Security Fabric  database: 3.
+4.Select Link accounts on this target system to subscribers if accounts on the target are used to run 4.
+subscribers.
+5.Select Incrementally discover objects if you want to enable incremental listing  of computer attribut es. 5.
+This setting  prevents attribut es  from being deleted from discovered computers at load time  if no
+attribut es  at all were discovered. Attribut es  are still deleted if some attribut es  were discovered; the
+new set supersedes the old set.
+6.Click Update . 6.
+Once selected, Bravura Security Fabric  lists these additional  resources for each target system during auto
+discovery  and generates a corresponding list file (on page 2718) in the p sc on fig  directory.
+These discovered objects are saved in the database. To view and manually manage discovered server and
+w ork s t ation  computer objects, click Manage the system > Resources > Discovered objects . See
+Managing discovered objects  (on page 2092) for more in f ormation  about viewing and managing
+discovered objects.
+Before Bravura Security Fabric can update services, tasks, IIS and DCOM objects using domain accounts,
+they must be discovered during auto discovery  otherwise password changes on domain accounts could
+cause services to stop working.
+Enabling all accounts found on system to be discovered objects
+Bravura Security Fabric  can make listed accounts from managed systems of any target type into
+discovered account objects.
+To discover listed accounts:
+1.On the Target system inf ormation  page, select the Discovery options  tab. 1.
+2.Check Enable import rules for accounts on this system . 2.
+3.Run Auto discovery . 3.
+You can also use account attribut es  in import rules if they are supported and loaded (see Overriding
+default account attribut e  c on figur ation  on page 567). Only NOSGRPID , NOSGRPNAME  and
+NOSSHORTID  group attribut es  can be used for groups that have been managed  (on page 590).Con figuring  discovery templates
+Discovery templates are used to apply c on figur ation  settings  for new target systems that are created from
+discovered server and w ork s t ation  objects. The target systems are created when the servers or
+w ork s t ations  become managed systems, either manually via the Manage the system > Resources >
+Discovered objects menu, or via target system import rules  during auto discovery .
+Default templates
+Bravura Security Fabric  includes the following default discovery templates:
+▪NT_TEMPLATE – This template creates a target system using the agtnt connector for Windows ▪
+servers and w ork s t ations.  It creates a target system that is a source of pr ofile  IDs, and will
+aut omatic ally  discover adminis tr ativ e  and service accounts during auto discovery .
+You can apply this template for systems discovered on an Activ e  Directory domain.
+▪LWS_NT_TEMPLATE This template creates a target system using the agtnt connector for Windows ▪
+servers and w ork s t ations.  It creates a target system that is not a source of pr ofile  IDs and does not
+aut omatic ally  discover adminis tr ativ e  and service accounts during auto discovery .
+It is recommended that you apply this template for w ork s t ations  on which the Local W ork s t ation
+Service has been installed. Used only with a full Bravura Privilege  license.
+▪CISCO_IOS_SSH_TEMPLATE – This template creates a target system for Cisco IOS networking▪
+equipment using a PSLang script, agtcisco-ios.psl and a scripted platform  de finition  file,
+agtcisco-ios-ssh.con to call the agtssh connector. It creates a target system that is not a
+source of pr ofile  IDs and does not aut omatic ally  discover adminis tr ativ e  accounts during auto
+discovery .
+▪CISCO_IOS_TELNET_TEMPLATE – This template creates a target system for Cisco IOS networking▪
+equipment using a PSLang script, agtcisco-ios.psl and a scripted platform  de finition  file,
+agtcisco-ios-telnet.con to call the agttelnet connector. It creates a target system that
+is not a source of pr ofile  IDs and does not aut omatic ally  discover adminis tr ativ e  accounts during auto
+discovery .
+A placeholder hostname value is provided in the Cisco IOS discovery templates. This needs to be
+replaced with a valid target system internal hostname in order for a Cisco IOS discovered system to be
+properly managed.
+Adding a discovery template
+To add a discovery template:
+1.Click Manage the System > Resources > Target systems  > Discovery templates . 1.
+2.Click Add new... . 2.
+3. Con figur e  the Target system in f ormation  for the template: 3.
+▪The discovery template’s ID will be used to specify which template a discovered system will use to ▪
+specify its target system settings.

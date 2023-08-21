@@ -1,0 +1,62 @@
+Group sets
+This dashboard reports on group set s t atistics,  including the number of group sets currently checked out,
+blocked check-outs, and requests approved for check-out.
+To access this dashboard, click View dashboards > Privileged access > Group sets . This dashboard is split
+into two sections:
+▪Current s t atistics  for group sets: these s t atistics  are not based on a time  interval ▪
+▪Group sets summary: these s t atistics  are restricted to the specified  time  interval. You can select ▪
+various time  intervals from the drop-down list to calculate the s t atistics.
+Only the current s t atistics  for group sets are cached.Account sets
+This dashboard reports on account set s t atistics,  including the number of account sets currently checked
+out, blocked, and approved for check-out.
+To access this dashboard, click View dashboards > Privileged access > Account sets . This dashboard is
+split into two sections:
+▪Current s t atistics  for account sets: these s t atistics  are not based on a time  interval ▪
+▪Account set access summary: these s t atistics  are restricted to the specified  time  interval. You can ▪
+select various time  intervals from the drop-down list to calculate the s t atistics.
+Only the current s t atistics  for account sets are cached.Managed account access trend
+This dashboard reports on the trend analysis of managed account access check-outs, including the
+number of requests for access, approved requests, denied requests, and accounts checked out and
+checked in. You can select various time  intervals and user pr ofiles  from the drop-down list to calculate
+the s t atistics.
+To access this dashboard, click View dashboards > Privileged access > Managed account access trend .
+In addition,  product administrators with the "View privileged access dashboard" privilege also require the
+"View pr operties  for this policy" access control for the managed system policy the managed accounts are
+bound to.This dashboard does not use cached data.
+Group set access trend
+This dashboard reports on the trend analysis of group set access check-outs, including the number of
+requests for access, approved requests, denied requests, and group sets checked out and checked in. You
+can select various time  intervals and user pr ofiles  from the drop-down list to calculate the s t atistics.
+To access this dashboard, click View dashboards > Privileged access > Group set access trend .In addition,  product administrators with the "View privileged access dashboard" privilege also require the
+"View pr operties  for this policy" access control for the managed system policy the group sets are bound
+to.
+This dashboard does not use cached data.
+Password r andomiz ation
+This dashboard reports on password changes s t atistics  for managed accounts including successful and
+failed changes. These s t atistics  are restricted to the specified  time  interval. You can select various time
+intervals from the drop-down list to calculate the s t atistics.
+To access this dashboard, click View dashboards > Privileged access > Password r andomiz ation .
+This dashboard does not use cached data.Onboarding and offboar ding
+This dashboard reports on s t atistic  of systems and accounts that have been onboarded and offboar ded.
+These s t atistics  are restricted to the specified  time  interval. You can select various time  intervals from the
+drop-down list to calculate the s t atistics.
+To access this dashboard, click View dashboards > Privileged access > Onboarding and offboar ding .
+This dashboard does not use cached data.
+W orkflo w  dashboard
+ Applies to Bravura Identity  
+ Applies to Bravura Privilege
+Product administrators with the "View w orkflo w  dashboard" privilege can click View dashboards
+> W orkflo w  to see s t atistics  of requests that are submitted,  completed, pending authoriz ation,  and
+pending implemen t ation.
+A pie graph is included to display the following s t atistics:
+▪Total requests completed during interval▪
+▪Total requests pending approval at end of interval▪
+▪Total requests pending implemen t ation  at end of interval ▪
+The dashboard also includes s t atistics  for Top 5 most activ e  target systems, Top 5 authorizers invited to
+approve/deny changes, Top 5 implementers invited to complete changes and the 10 oldest requests that
+are pending action.
+The line graph included at the bottom  of the page displays the trend of requests submitted,  completed,
+approved and denied per day over a period of days. A circle on the line graph represents a data point
+over a specific  day. Hovering over a circle will highlight the data point.
+The pie graph is only visible if there is data during the selected time  period. All the data on this page is
+displayed based on UTC.

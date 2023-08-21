@@ -1,0 +1,378 @@
+You can disable this behavior if you want to prevent Bravura Security Fabric from displaying a list of users
+or accounts, and if you want Bravura Security Fabric to only match on exact search terms.
+To disable advanced search c apabilities  in the Requests  app, set the following variables to “Enabled”:
+▪IDP DISABLE USER SEARCH for searches on authorizers ▪
+▪IDS DISABLE USER SEARCH for searches on requesters or recipients ▪
+▪IDV DISABLE USER SEARCH for searches on implementers ▪
+Privileged access app
+The Privileged access  app allows regular users to request and temporarily check out privileged access to
+accounts and systems.  
+To c on figur e  Bravura Privilege  web management options:
+1.Click Manage the system  > Modules  > Privileged access . 1.
+2. Con figur e  the options  in Table Modules > Privileged access options  (on page 1251) as required. 2.
+3. Con figur e  event options  listed in Table Privileged access  app events that launch interface programs  (on 3.
+page 1254), Privileged access  app events that launch interface programs  (on page 1539).
+4.Click Update to submit the changes. 4.
+Modules > Privileged access options
+Options Description
+ACCESS ACCOUNTSETS USERCLASS Specify a user class that filt er s  users to access account sets
+ACCESS EXTENSIONS USERCLASS Specify the user class that filt er s  users to access their own check-out
+extensions.
+ACCESS GROUPSETS USERCLASS Specify the user class that filt er s  users to access group sets.
+ACCESS
+PERSONALADMINACCOUNTS
+USERCLASSSpecify a user class that filt er s  users who can view the personal
+adminis tr ativ e  accounts filt er .
+IDARCHIVE GSET REQUESTED By default, any user can request access for any group set. Disabling this
+means that users must be assigned to a user group with appropriate
+permission.
+IDARCHIVE MANAGEMENT GUARD By default, this value is set to 1000. It controls the maximum number of
+discovered systems that can be managed or deleted from the Bravura
+Security Fabric  on a single auto discovery run. This prevents issues where
+product administrator s accidentally c on figur e  the target system import
+rule incorrectly and unexpectedly add or remove too many managed
+systems.
+IDARCHIVE PASSWORD REQUESTED By default, any user can request access any managed account. Disabling
+this means that users must be assigned to a user group with appropriate
+permission.Options Description
+IDARCHIVE VIEW MANAGED SYSTEM
+ACCOUNT INFOBy default, any user can view managed system and account in f ormation  in
+managed account requests. Setting  this to Disabled means that this
+in f ormation  will not be disclosed when r equesting  accounts from managed
+system policies created later on.
+LWS LAST CONNECTION UPDATE
+INTERVALThe minimum interval, in minutes, to determines how often
+las tSuccessConnection  is recalculated if it is the only calculated attribut e
+requiring during a poll. By default this is set to 30.
+LWS RES VALID ADMIN CREDENTIAL Set this option  to determine what happens when a local service mode
+managed system has invalid target system administrator cr edentials
+associated with it.
+MANAGED ACCOUNT ATTR DISPLAY
+LISTSpecify a comma-limited list of attribut es  to display for managed accounts.
+These attribut es  will be shown in some privileged access c on figur ation
+pages and request pages.
+MANAGED SYSTEM ATTR DISPLAY
+LISTSpecify a comma-limited list of attribut es  to display for managed systems.
+These attribut es  will be shown in some privileged access c on figur ation
+pages and request pages.
+MAQ MAX ACCOUNTS The maximum number of managed accounts that a user can add to
+account sets. If exceeded, access will be denied. The default is 500.
+PAM USE SUGGESTED PASSWORD By default, password fields  are aut omatic ally  populated when a suggested
+password is selected to override a managed account.
+PAM WEBAPP ENFORCE SSL By default, SSL is enforced when using the Web app privileged sign-on
+disclosure.
+PSW ACL CHECK RECIPIENT Enable this option  to check the recipient’s privileges when r equesting
+access for others. By default, this is disabled, and the recipient’s privileges
+are not checked when r equesting  access for others.
+PSW CHECKIN CHECKOUT AGE ALERT
+THRESHOLDIf a user has an account that is checked out for longer than this value, they
+will receive an alert in the ‘Check-out age’ column. Default value is 120.
+PSW CHECKIN CHECKOUT AGE
+WARNING THRESHOLDIf a user has an account that is checked out for longer than this value, they
+will receive a warning in the ‘Check-out age’ column. Default value is 60.
+This value must be less than or equal to the PSW CHECKIN CHECKOUT AGE
+ALERT THRESHOLD.
+PSW CHECKIN TIME REMAINING
+ALERT THRESHOLDAn alert is given in the ‘Time remaining’ column when a user has less than
+the specified  amount of time  before they are forced to check in. Default
+value is 30.
+PSW CHECKIN TIME REMAINING
+WARNING THRESHOLDA warning is given in the ‘Time remaining’ column when a user has less
+than the specified  amount of time  before they are forced to check in.
+Default value is 60.
+This value must be greater than or equal to the PSW CHECKIN TIME
+REMAINING ALERT.Options Description
+PSW CLEAN DELETED WSTN DELAY Set the delay between when w ork s t ation  entries are flag g ed  for deletion
+and when they actually are deleted from the database tables. Default is 10
+years.
+W ork s t ations  are flag g ed  for deletion  when the:
+▪Target system is no longer c on figur ed  as a managed system ▪
+▪Target system is deleted▪
+▪Managed system is deleted from the managed system policy.▪
+▪Managed system is flag g ed  for deletion  via the IDAPI. ▪
+PSW CLEAN NEVER MANAGED LWS
+DELAYSet the delay between the last discovery time  of local service mode
+systems that were never managed and when they are deleted from the
+database tables. Default is one year.
+PAM ALLOW ONE TIME DISCLOSURE Allow one-time  disclosure option  when accessing privileged passwords.
+This is enabled by default.
+PSW DISCLOSURE PLUGIN Type the name of the plugin used to de fine  what access disclosure plugins,
+and with what settings,  are available to users when attempting  to access
+privileged passwords. The recipient may be a product administrator with
+permissions to access a managed password, or a user with an approved
+request.
+PSW DISCLOSURE PLUGIN PROVIDE
+CONFIGEnable to provide e xisting  c on figur ation  data to plugin.
+PSW MAX PARALLEL RESETS Set the maximum number of parallel password resets to get higher
+performance. The default is one for every processing core.
+PSW RECENT REQUEST GSET Set the number of days (between 1-30 days) that a group set request is
+considered recent. This setting  allows users to access their temporary
+group membership requests.
+PSW RECENT REQUEST PASSWORD Set the number of days (between 1-30 days) that a password request is
+considered recent. This setting  allows users to access their previous
+account and account set requests.
+PSW REQUEST SHOW FUTURE Include future requests for approval notific ation  to privileged access. This
+option  is disabled by default.
+RES GSET CHECKIN MAX RETRY Set the maximum number of check-in retries performed after  a failed
+managed group set check-in. The default is 3.
+RES GSET CICO VIEW DETAILS Disable this if you want to prevent regular users from seeing details about
+who has currently checked out a group set and the maximum number of
+checkouts allowed when they request a group set. This also applies to
+notific ation  emails.
+RES PWD CICO VIEW DETAILS Disable this if you want to prevent regular users from seeing details about
+who has currently checked out a password and the maximum number of
+checkouts allowed when they request a password. This also applies to
+notific ation  emails.Options Description
+RUN MSP REPORTS Disable this if you do not want the ’Run reports about privileged access for
+this policy’ access control to be granted to members of the MSP REPORT
+USERS user group whenever a new managed system policy is created.
+When disabled, you must explicitly grant the ’Run reports about privileged
+access for this policy’ access control via user groups. This option  is enabled
+by default.
+Privileged access  app events that launch interface programs
+The following Privileged access app options  can be accessed from Manage the system  > Maintenance >
+System variables  or Manage the system  > Modules  > Privileged access:
+Option Description
+PAM CHECKIN FAILURE A generic access check-in has failed.
+PAM CHECKINOPERATION FAILURE An oper ation  ran as part of a generic access check-in has failed. This event
+is pr e-c on figur ed  to run pxnull with the c on figur ation  file pxnull-pam-
+cico.cfg.
+PAM CHECKIN OPERATION SUCCESS An oper ation  ran as part of a generic access check-in is successful.
+PAM CHECKIN PARTIAL A generic access check-in is only partially  successful.
+PAM CHECKIN SUCCESS A generic access check-in is successful.
+PAM CHECKOUT EXPIRY A generic access check-out expires.
+PAM CHECKOUT FAILURE A generic access check-out has failed.
+PAM CHECKOUT LIMIT REACHED The check-out limit is exceeded for generic access check-outs.
+PAM CHECKOUT OPERATION
+FAILUREAn oper ation  ran as part of a generic access check-out has failed.
+PAM CHECKOUT OPERATION
+SUCCESSAn oper ation  ran as part of a generic access check-out is successful.
+PAM CHECKOUT PARTIAL A generic access check-out is only partially  successful.
+PAM CHECKOUT SUCCESS A generic access check-out is successful.
+PAM CONFLICTED PASSWORDS
+UPDATEDCon flicting  passwords are discovered and updated.
+PSW MSP CHANGE A managed system policy was directly modified  by a product administrator.
+RES GSET CHECKIN GRP NOT FOUND A group cannot be located during a group-set check-in.
+RES GSET CHECKIN GRP NO SUCH
+MEMBERAn account is not a member of a group during a group-set check-in.
+RES GSET CHECKIN RETRY FAILURE An overdue temporary group membership fails to be removed after
+e xhausting  all retries.
+RES GSET CHECKIN RETRY SUCCESS An overdue temporary group membership is successfully removed after
+subsequent retries.
+RES PAMLWS OGRUA The local w ork s t ation  service detects an out-of-band group membership
+addition.Session monitor app
+Regular users, with appropriate permissions, use the Session monitor app to request and download
+recorded sessions of activity  requiring privileged cr edentials.  They may be able to access recorded data
+related to their own or another users’ activity .
+Options  plugin
+You can use a plugin to activ a t e  session monitoring based on the requester, privileged account, or system,
+and override policy settings.  The input into the plugin can include the:
+▪Requester’s pr ofile  ID ▪
+▪Requester’s group memberships▪
+▪Requester’s pr ofile  attribut es ▪
+▪Requested account▪
+▪Managed system▪
+▪Managed system’s attribut es ▪
+If enabled, the plugin is called when a user checks out privileged access or a product administrator  accesses
+a password directly. This applies only to disclosure methods that support session monitoring. The output
+of the plugin contains session monitoring settings  that override managed system policy settings.
+You enable this plugin by typing the name of the program or script in the SMON OPTIONS PLUGIN field
+on the Manage the system  > Modules  > Session monitor  page.
+Some data is not input by default. You must manually enable certain registry settings  to allow the plugin
+to receive this in f ormation.
+Ensure that you are comfortable and knowledgeable in the mechanics of the registry before you attemp t
+to change any c onfiguration  settings.  Contact support@bravurasecurity.com  if in doubt.
+See more in f ormation  about the registry settings
+To enable additional  SMON OPTIONS PLUGIN input, set these entries in the following key:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\idarch
+▪Groups▪
+Entry name  plugin_smon_options_gr oup s
+Value  0—1
+Data type  DWORD
+Default  0
+▪ Pr ofile  attribut es ▪
+Entry name  plugin_smon_options_pr ofile_attr s
+Value  0—1
+Data type  DWORD
+Default  0▪Discovered system attribut es ▪
+Entry name  plugin_smon_options_f ound_c omp_attr s
+Value  0—1
+Data typ e DWORD
+Default  0
+▪Discovered system multi- v alue  attribut es ▪
+Entry name  plugin_smon_options_f ound_c omp_m v_attr s
+Value  0—1
+Data type  DWORD
+Default  0
+.
+There is a sample plugin script, plugin-smon-options.psl , located in the samples\ directory. You
+can copy the script to the \<instance>\plugin\ directory and modify it to suit your environment.
+See more in f ormation  on how to write customize this plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+When c on figur ed,  the plugin is called for each applicable access disclosure plugin when a user checks out
+privileged access or a product administrator accesses a password directly.
+Input
+The plugin will receive the following input:
+ # KVGROUP-V1.0
+  "" "" = {
+    "ead_computer_attributes" "" = {
+      "mv_attributes" "" = {
+        "<attribute key>" = "<attribute value>" # 0 or more
+      } # if plugin_smon_options_found_comp_mv_attrs is set
+      "sv_attributes" "" = {
+        "<attribute key>" = "<attribute value>" # 0 or more
+      } # if plugin_smon_options_found_comp_attrs registry entry is set
+        # See Subsection 31.5.1.
+    }
+    "groups" "" = {
+       "<targetid>" = "<groupid>"
+    } # if plugin_smon_options_groups registry entry is set    "managedaccount" "" = {
+      "accountid" = "<Managed Account>"
+      "msp" = "<Managed System Policy>"
+      "resourceid" = "<Managed System>"
+    }
+    "plugin" "" = {
+      "accessdisclosure" = "<ActiveX control name>"
+    }
+    "request" "" = {
+      "requestID" = "<Request ID>" # if applicable
+    }
+    "smonvars" "" = {
+      "<smon variable name>" = "<value>" # 1 or more
+    }
+    "viewer" "user" = {
+      "id" = "<Profile ID>"
+      "attribute" "<Profile attribute key>" = {
+        "value" "" = {
+          "value" = "<Profile value>" # 0 or more
+        }
+      } # if plugin_smon_options_profile_attrs registry entry is set
+    }
+  }
+Output
+The plugin returns:
+ "" "" = {
+    "retval" = "<#>" # 0 on success; Otherwise, failure
+    "<smon variable name>" = "<value>" # Optional; 0 or more
+         }
+.
+Recorded session file storage
+The session monitoring batch processing utility ,  smonprocessmeta , runs periodically while a session
+monitoring session is activ e  to process harvested data and insert the data into the database in a series of
+batch oper ations.  The smonsavemeta  program creates session data packages when requested.
+The following Manage the system  > Modules  > Session monitor  options  control where files are placed
+during and after  processing:Option Description
+SMON DAMAGED EVENT STORAGE
+ENABLEDIf enabled, damaged events are stored on the file system. If disabled,
+they are dropped.
+This is useful, for example, if you are debugging problems with session
+recording. It is recommended that you disable this for normal
+functioning.
+SMON DAMAGED EVENT STORAGE
+PATHDirectory to store damaged events for recorded sessions (default <install
+path>\smon\damaged).
+SMON HCP TARGET ID Specify the target system ID of the Hitachi Content Platform  object
+storage system to archive session monitoring data.
+SMON PACKAGE STORAGE PATH Directory to store packages of recorded sessions (default <install path>
+\smon\package).
+SMON SCREENSHOT STORAGE PATH Directory to store screenshot data for recorded sessions (default <install
+path>\smon\screenshot).
+SMON TEMP STORAGE PATH Directory to store temporary files while g ener ating  recorded session
+packages (default <install path>\smon\temp).
+SMON TEXT STORAGE PATH Directory to store text data w aiting  to be processed for recorded
+sessions (default <install path>\smon\text).
+SMON WEBCAM STORAGE PATH Directory to store webcam images for recorded sessions (default <install
+path>\smon\webcam).
+Recorded session search controls
+The Session monitor  app uses a powerful search engine to search recorded UI, clipboard, and keystroke
+data. You control the following options  for the search engine in the Manage the system > Modules >
+Session monitor  menu:
+Option Description
+SMON SEARCH ENGINE
+CHARACTERS TO IGNORECharacters that the SMON module search engine
+will ignore.
+SMON SEARCH ENGINE WORD
+DELIMITERSCharacters that the SMON module search engine
+will treat as word delimiters.
+SMON SEARCH ENGINE WORD MIN
+LENGTHThe minimum length of words that will be indexed
+and searchable by the SMON search engine.
+These settings  de fine  what is considered a ’word’ and loaded into the database. The settings  are used in
+the following order:
+1.SMON SEARCH ENGINE WORD DELIMITERS split the stream of in f ormation  into blocks of characters. 1.
+2.The characters in SMON SEARCH ENGINE CHARACTERS TO IGNORE are removed. 2.
+3.If the number of characters in the block is greater than or equal to SMON SEARCH ENGINE WORD 3.
+MIN LENGTH , then the block is loaded to be search.If these settings  above are changed, only new sessions will be a ff ect ed.  Existing  words that are loaded
+will need to be used to search for matching sessions.
+These settings  are also applied to the Session matching contents field  on the Search all recorded data
+page.
+The following are examples of how the settings  would be applied:
+Recorded/Search Stored/Searched words
+555-555-4445 5555554445
+cmd.exe CMDEXE
+http://br a vur asecurity .c om HTTP BRAVURASECURITY COM
+ 
+Recorded session video processing
+Bravura Security Fabric  runs the smonavi or another video g ener ation  program to create video files for
+recorded session packages. Screenshots are aggregated into hour-long video segments.
+The following Manage the system  > Modules  > Session monitor  options  control video cr eation:
+Option Description
+SMON VIDEO CREATE CODEC CODE Four character code that indicates what codec is used for video
+g ener ation.  The default is Micr osoft  Video 1 Codec (msvc).
+Note:  Use the default for t esting  only. Replace it with a codec that
+provides better  quality video. To see what other codecs you have
+available, run the smonavi utility  with the -l argument.
+SMON VIDEO CREATE COMMAND
+LINECommand line used to launch a program to create video from
+screenshots captured during a recorded session. The default command
+is smonavi.exe -r%fps% -i %pattern%_*.png  -f %path% -c %codec%.
+SMON VIDEO CREATE FILE EXT File extension to be used for created videos. By default, AVI video files
+are created.
+Note:  The smonavi utility  can only generate AVI video files.  You must
+specify a third party program in SMON VIDEO CREATE COMMAND LINE
+to generate other video file types, such as WMV, MP4, and MOV.
+The default command de fined  by the SMON VIDEO CREATE COMMAND LINE is:
+smonavi.exe -r %fps% -i %pattern%_*.png -f %path% -c %codec%
+Where:
+▪%fps  is the frames per second at which the session was recorded. ▪
+▪%pattern  is the start of the file names that will be consistent for all images in a single video. ▪
+This allows smonavi to determine which images came from what display when multiple  displays are
+used.▪%path  is a loc ation  in the directory specified  by SMON TEMP STORAGE PATH in the Manage the ▪
+system > Modules > Recorded session management  (SMON) menu.
+▪%codec%  is replaced by the value of SMON VIDEO CREATE CODEC CODE in the Manage the system ▪
+> Modules > Recorded session management  (SMON ) menu.
+The msvc codec is recommended for t esting  only. To see what other codecs you have available, run
+the smonavi utility  with the -l argument.
+Alt ernativ ely  you can specify a third party program; for example:
+ffmpeg.e x e  -r %fps% -i %pattern%_%09d.png  %path% 
+If you specify another program, you can match the argument variables with the utilities  expected
+command line. For example, the following two programs require diff er en t  input values for the images to
+be used to make the video:
+▪ ffmpeg:  %pattern%_%09d.png ▪
+The _%09.png is a special text string that ffmpeg  wants appended on the end of the input files so it
+can locate input files.
+▪smonavi: %pattern%_*.png ▪
+smonavi uses a * to indicate that it wants all files that start with %pattern% and ends with
+_*.png at the end.
+See also
+smonavi  usage in f ormation
+The smonsavemeta program triggers smonavi to create hour-long AVI video files from the re-
+generated screenshots. You can control the output, or choose to use another video cr eation  program
+such as ffmpeg ,  by changing the value of SMON VIDEO CREATE COMMAND LINE in the Manage the
+system > Modules > Recorded session management (smon)  menu.
+You can run smonavi with the -l argument from the command line to get a list of the codecs available
+on the system. The smonavi program prints a + symbol next to codecs that can be used to create
+video from screenshots captured during a recorded session; it prints a - symbol next to installed codecs
+that are not c ompatible.  If none of the e xisting  codecs can be used, it is recommended that you install
+additional  codecs.
+Usage
+smonavi.exe -l
+smonavi.exe -r <frames per second rate>  -i <image name pattern>  -
+f <output file>  -c <codec code>
+Argument Description
+-c Code of codec to use. This must be a 4-character code
+that is in the list of available codecs returned with the -l
+option.
+-f <file> Output file name

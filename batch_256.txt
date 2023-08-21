@@ -1,0 +1,60 @@
+Create a resource attribut e  group 
+1.Click Manage the system > Resources > Resource attribut e  groups . 1.
+2.Click Add new... 2.
+3.On the Resource attribut e  group de finition  page, enter the following values: 3.
+ID RISK_ATTRIBUTES
+Description Risk attributes
+Resource type Managed groups
+For this feature, only template accounts, roles, and managed group types are applicable.
+4.Click Add. 4.5.Click the Access control tab. 5.
+6.Give the ALLUSERS group read and write permission.6.
+7.Click the Members tab. 7.
+8.Click Select... 8.
+9.Click the checkbox for RISK and click Select . 9.You can repeat this process to add other types of risk attribut e  if you like. The supported types are
+integer, string, date, and boolean.
+Give the group attribut e  a value 
+1.Click Manage the system > Resources > Groups . 1.
+2.Select a group.2.
+3.Give the Risk attribut e  a value. 3.
+4.Click Update . 4.Repeat this process for other groups if you like.
+Start an entitlemen t  certific ation  campaign 
+To start an entitlemen t  certific ation  campaign:
+1.From the main menu, click Manage certific ation  process . 1.
+2.Click Start entitlemen t  certific ation  campaign . 2.
+3.Select entitlemen ts  to be reviewed. 3.4.Click the Reviewers tab to choose reviewers for the campaign. 4.
+5.Click Continue  to choose a single reviewer. 5.
+6.Click Select… . 6.
+7.Search for and select the appropriate user.7.
+8.Click the Peer groups tab to review the settings  for marking consistent entitlemen ts. 8.Note that the Enable c alculating  consistency across peers checkbox is enabled by default.
+Modify settings  to mark items for consistency as required.
+9. Con figur e  aut o-certific ation: 9.
+a.Click the Automate certific ation  by resource attribut e  checkbox. a.
+b.Click the magnifying glass icon to select ”RISK” as the Resource attribut e  to compare . b.
+c.Set the Comparison method to ”is less than”. c.
+d.Set the Resource attribut e  value to 5. d.Note that the value for Aut omatic ally  certif y  items if at least this percent of peers share the item
+and aut o-certif y  attribut e  expression is met must be greater than or equal to the value for Mark
+items as consistent if at least this percent of peers share the item .
+10. Con figur e  aut o-r e v oc ation: 10.
+a.Click the Identity  r e v oc ation  candidates by resource attribut e  checkbox. a.
+b.Click the magnifying glass icon to select ”RISK” as the Resource attribut e  to compare . b.
+c.Set the Comparison method to ”is greater than or equal to”. c.
+d.Set the Resource attribut e  value to 7. d.Note that the value for Identif y  candidates for r e v oc ation  if fewer than this percent of peers
+share the item and auto-revoke attribut e  expression is met must be less than or equal to the
+value for Mark items as inconsistent if fewer than this percent of peers share the item .
+While aut o-certific ation  is simply recorded in the Bravura Security Fabric database, aut o-r e v oc ation
+requires an action  on the a ff ect ed  target system. Depending on the type of items included in the
+campaign, you can select from available pr e-de fined  requests to revoke items.
+11. Click the Submit tab. 11.
+12. Type a Certific ation  campaign description . 12.13. Click Launch campaign . 13.
+14. Click Start new campaign . 14.
+With the above c on figur ation,  an item with a peer group consistency of above 60% and a risk integer
+value less than 5 will be aut omatic ally  certified.  An item with a peer group consistency of less than 50%
+and a risk integer value greater than or equal to 7 will be aut omatic ally  revoked. Reviewers can override
+these actions  when they review items.  
+Review in certific ation  app 
+To review items in the certific ation  app:
+1.Log into Bravura Security Fabric  as the reviewer 1.
+2.Click the notific ation  link or click Review entitlemen ts  and c on figur ations  to view the campaign 2.
+review page.In the certific ation  app:
+▪These items have been aut omatic ally  certified,  because they have a high consistency score and a low ▪
+risk attribut e  value:

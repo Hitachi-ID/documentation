@@ -1,0 +1,387 @@
+CGI DISPLAY PLUGIN Generates s t atic  HTML to include on a
+specific  page or all pages.
+See Display custom HTML  (on page 1156).None
+DIGITAL SIGN PLUGIN Specifies  a digital signing program that is
+used to sign files created by the Bravura
+Security Fabric  server.
+See Digitally sign files (on page 1047).None
+DISPLAY GROUPID PLUGIN Changes the way Bravura Group IDs are
+displayed in Bravura Security Fabric .
+See Display group IDs  (on page 1048).longid.pss, shortid.p ss  (on page 1048)
+FILTER ACCOUNT PLUGIN Filters out accounts that users are not
+allowed to manage.
+See Resource filt ering  (on page 2354).None
+FILTER ACCTGROUP
+PLUGINFilters out groups that users are not
+allowed to manage.
+See Resource filt ering  (on page 2354).None
+FILTER GROUP MEMBER
+PLUGINFilters managed groups that are available
+for group membership changes.
+See Resource filt ering  (on page 2354).None
+FILTER PREQUEST PLUGIN Filters out pr e-de fined  requests that are
+available to users.
+See Filter pr e-de fined  requests  (on page
+1060).None
+FILTER REQUEST PLUGIN Filters out requests that users are not
+allowed to view or manage.
+See Filter requests  (on page 1062).None
+FILTER RESOURCEGROUP
+PLUGINFilters out resource groups that Bravura
+Group  users are not allowed to view or
+request access to.
+See Filtering network resource groups  (on
+page 577).None
+FILTER ROLE PLUGIN Filters out roles that users are not allowed
+to manage.
+See Filter resources  (on page 2354).None
+FILTER TEMPLATE PLUGIN Filters out templates that users are not
+allowed to manage.
+See Filter resources  (on page 2354).None
+FILTER USER PLUGIN Filters out pr ofiles  that users are not
+allowed to manage.
+See Filter users  (on page 1049).NoneGENERATE GROUP PLUGIN Generates a list of managed account
+groups.
+See Generate managed group list  (on page
+2381).None
+GENERATE ROLE PLUGIN Generates a list of roles.
+See Generate role list  (on page 2384).None
+GENERATE USER PLUGIN Provides a list of users that users are
+allowed to manage.
+See Filter users  (on page 1049).None
+KEEP USER PLUGIN Keeps pr ofiles  that users are allowed to
+manage.
+See Filter users  (on page 1049).None
+SAVED SEARCH PLUGIN Add or remove saved searches for users,
+based on the type of search engine.
+See Con figur e  saved search plugin  (on page
+1123).hid_saved_search_sample  (on page
+1123)
+SEARCH DOWNLOAD
+PLUGINAllows in f ormation  from search results and
+Manage external data store (DBE) module
+tables to be available for download.
+See Download search results  (on page
+1071).plugin-download-csv.exe  (on page
+1071)
+SEARCH FILTER PLUGIN Filters search results available available to
+users.
+See Filter search results  (on page 1074)idmlib.plugins.sear ch filt er .crit eria  (on
+page 1115)
+SESSION IDENT PLUGIN Provides contents for the identifier  field  in
+session log entries. By default, it will be
+populated by the IP address of the person
+performing the oper ation.
+See Identif y  users in a session  (on page
+1067).None
+VIEW REQUEST PLUGIN Plugin to determine if users can view
+w orkflo w  requests where they are not the
+requester, recipient or authorizer.
+See View requests (IDW)  (on page 1180).None
+Manage the system > Security > Options
+API ADMIN PLUGIN Filters API function  calls made by API users.
+This overrides the default API functions
+that API users are allowed to call.
+See API adminis tr ativ e  privileges  (on page
+729). USER OPERATION FILTER
+PLUGINRestricts oper ations  available to
+authorizers, OrgChart managers,
+implementors, and requesters for security
+purposes.
+See Oper ation  filt ering  (on page 730).userOper ationFilt er .p sl  (on page 730)
+Manage the system > Maintenance > Services> T r ansaction  Monitor Service
+IDTM BATCH OPREP
+PLUGINAllows the T r ansaction  Monitor to rewrite
+change requests. For example, an update
+oper ation  may map to update and rename
+oper ations  on a specific  target system.
+See R e writing  target system oper ations  (on
+page 532).None
+Manage the system > Privileged access > Import rules
+Import rule requirement De fine  requirement as the basis for an
+import rule to manage discovered objects.None
+Manage the system > Privileged access > Options > Account access request
+RES PWD ACL PLUGIN Plugin to determine user access controls
+when viewing passwords via the API.
+See Applic ation  accounts  (on page 2049).None
+Manage the system > Privileged access > Options  > Password r andomiz ation
+RES PWDPOL GET Control which password policy to apply to
+a managed account.
+See Modify the password policy  (on page
+1846).None
+PAMSA SUBSCRIBER
+NOTIFICATIONGive notific ations  of imminent service
+account password r andomiz ation  to
+subscribers and receive or ches tr ation
+in f ormation.
+See Subscriber notific ation  (on page 1904).sub scriber -notific ation.p y
+ 
+Controlling plugin processes
+Plugins are either executables, Python scripts or PSLang scripts run by the CGI modules or in-process by
+the W orkflo w  Manager Service (IDWFM).
+The PSLang CALL DEPTH setting  can be used to troubleshoot problems that occur when running plugins,
+such as e x ceptions  or performance problems caused by idwfm  memory usage increases. It is used to
+adjust the maximum function  call depth for PSLang scripts run in-process. This can help to avoid
+problems caused by too many, or recursive, function  calls. It is located under Manage the system  >
+W orkflo w  > Options  > Plugins .Specifying a program to run plugins
+By default, plugin and external interface (exit trap) scripts are run by the built-in Python interpreter if
+they have a .py extension, or by the PSLang interpreter if they have a .psl extension. You can specify an
+external interpreter, such as PERL, in the PLUGIN PROGRAM setting  in the Manage the system  >
+W orkflo w  > Options  > Plugins  menu. For example, to specify PERL, type:
+.pl c:\perl.exe
+This will execute the script (for example, C:\perl.exe <plugin-script>.pl ) with no additional
+arguments. In f ormation  will be passed by standard I/O. All plugins scripts must be in the script directory,
+and exit trap scripts must be in the interface directory.
+Note: If you are specifying an external interpreter, ensure that the directory for
+the interpreter is included in the system path.
+ 
+Including resource and user data
+Detailed in f ormation  about users and resources in not included in plugin output by default. This detail is
+available via API calls. See the Bravura Security Fabric  Remote API ( api.pdf ) manual for details.
+You can add more detail to plugin output using the following settings  in the W orkflow  > Options  >
+Plugins :
+Plugin data detail settings
+Option Description
+PLUGIN DATA USER ATTRIBUTE
+DETAILSWhen sending in f ormation  about a user to a plugin,
+include details about those users’ pr ofile  and request
+attribut es  in the input.
+PLUGIN DATA REQUEST RESOURCE
+DETAILSInclude extended resource details in the input to any
+plugin involved in requests.
+PLUGIN DATA USER ACCOUNT
+DETAILSWhen sending in f ormation  about a user to a plugin,
+include details about those users’ accounts in the
+input
+PLUGIN DATA USER ROLE DETAILS When sending in f ormation  about a user to a plugin,
+include details about those users’ accounts in the
+input.W riting  plugins
+You can write plugin programs as a script file using Python, Bravura Security ’ PSLang scripting  language, or
+as an executable.
+There are libraries provided to help create plugin programs in Python. Run <instance>
+\instance.bat  to set the library paths required for using these libraries in Windows command line
+consoles.
+The plugin script file or executable file must be located in the plugin directory. Input/output is passed in
+as plain text, in KVGroup format.  
+See also: 
+▪For more in f ormation  about PSLang, see the PSLang Manual ( pslang.pdf ) ▪
+▪To learn how to set options  for running PSLang scripts, see Controlling plugin processes  (on page ▪
+1503)
+▪For more help in writing  a custom plugin program, see the. Plugins ▪
+KVGroups
+Bravura Security Fabric  uses Key-Value Groups (KVGroups) as a way to structure and communicate data.
+KVGroups are used extensively for inter-process c ommunic ation.  Plugins read a KVGroup on standard
+input, process the in f ormation,  and write a KVGroup on standard output.
+Unicode characters in c on figur ation  files and PSLang scripts
+There are some connectors, utilities,  and plugins that support the new KVGroup 2.0 format. This includes
+the Lotus Domino Server connector, Lotus Notes ID Files connector, Unix Listener, and the Database
+Service. PSLang files and c on figur ation  files (in KVGroup 2.0 format) support Unicode characters.
+When saving in f ormation  in a text file where Unicode characters are included, the file must include the
+byte-order mark at the beginning of the file. Text editors such as notepad hide this from the user and
+pose no problems when you modify and save c on figur ation  files.
+Bravura Security Fabric  consumes the byte-order mark and interprets the rest of the in f ormation  as
+de fined  by the byte-order mark. If no byte-order mark is present, Bravura Security Fabric  will read the
+in f ormation  as a UTF-8 format. ASCII is a subset of the UTF-8 format; hence no conversion from ASCII is
+required. If in f ormation  is generated in utf-16  or utf-32,  the byte-order mark is required for Bravura
+Security Fabric  to interpret the in f ormation  correctly.
+KVGroup syntax
+A KVGroup has a key, a name, and its contents. It contains a set of key-value pairs, as well as a set of
+“inner” KVGroups. There is no limit to the level of nested KVGroups.
+You write a KVGroup as follows:
+   "<key>" "<name>" = { 
+     <contents>      ... 
+  } 
+You write a key-value pair as follows:
+   "<key>" = "<value>" 
+The word key has a dual use. A group has a key and the items contained within a group (pairs and inner
+groups) also have keys.
+The following example illustrates how a KVGroup can contain multiple  groups and key-value pairs:
+   "capitals" "world capitals grouped by continent" = { 
+   "NA" "North America" = { 
+     "USA" = "Washington" 
+     "Canada" = "Ottawa" 
+   } 
+   "Eur" "Europe" = { 
+     "Britain" = "London" 
+   } 
+  } 
+See also: 
+There are many PSLang functions  to support the reading, cr eation,  and manipulation  of KVGroups. See
+the PSLang Manual ( pslang.pdf ) for more in f ormation.
+Request data
+Input protocol for plugins commonly includes a "request" inner KVGroup that contains details of a
+request:
+"request" "" = {
+  "certifier" = "<profile ID of reviewer>" #Certification campaign
+  "certround" "" = {
+       # If the request results from a certification campaign.
+       # Empty otherwise.
+      "certround" = "<certification campaign ID>"
+      "description" = "<certification campaign description>"
+      "endDate" = "<seconds since epoch>" # or 0
+      "startDate" = "<seconds since epoch>
+      "termby" = ""
+  }
+  "entryDate" = "<seconds since the epoch>"
+  "macroStatus" = "<status of the request>"
+       # One of the following codes:       #  N -- Request initiated
+       #  O -- Needs authorization
+       #  A -- Approved
+       #  D -- Denied
+       #  E -- Profile ID is denied
+       #  G -- Canceled
+       #  c -- Approved, performing requested operations
+       #  C -- Processed
+       #  H -- On hold pending administrator intervention
+       #  W -- Scheduled for later
+       #  U -- Request unposted
+       #  d -- Confirming delete
+  "notes" = "<notes entered by the requester in initial request>"
+  "batchauthnote" = "<authorization note for batch>"
+  "prequest" = "<pre-defined request ID>"
+      # If the request originated as a pre-defined request.
+      # Empty otherwise.
+  "reason" = "<reason filled in by idwfm service for finalization>"
+       # As this is always run before finalization, reason will always
+       # be empty.
+  "recipient" = "<recipient's Profile ID>"
+  "recipientEmail" = "<email address of the recipient>"
+  "requester" = "<requester's Profile ID>"
+  "requesterEmail" = "<requester's email>"
+  "requesterName" = "<requester's full name>"
+  "requestID" = "<request ID>"
+      # For auditing purposes.
+      # This is included in email messages and
+      # CGI web pages.
+  "requestModule" = "<report used to submit the request>"
+  "segment" = "" #Certification campaign segment
+  "reservationid" = "" #output by attribute validation and idm-
+suite id plugins
+  "authorizer" "<authorizer's current Profile ID>" = {
+    "authorizerRenamedFrom" = "<authorizer's old Profile ID>"
+    "actualAuthorizer" = "<Profile ID of authorizer who responded>"
+       # This might be empty if there is no response yet.
+    "reason" = "<reason given by authorizer who responded>"
+    "remindersSent" = "<number of reminders sent to the authorizer>"
+    "starttime" = "<hextime>"
+    "status" = "<status set by authorizer for this request>"       # Can be:
+       #  "O" -- open (no response)
+       #  "A" -- approved
+       #  "D" -- denied
+       #  "I" -- irrelevant
+         # When a request needs 1 of 3 authorizers to approve and one does,
+         # the other two are set to  "irrelevant" since their answer
+         # (approve or deny) is not required any more.
+    "resource" = "<resource that the authorizer is in charge of>" = { # 1 or more
+         # If IDP APPROVE SINGLE RESOURCE is enabled:
+         "status" = "<O|A|D|I>" # See notes below.
+         "reason" = "<reason given by authorizer>"
+         "authauthnote" = "<authorization note for authorizer>"
+    }
+  } # 0 or more authorizers
+  "implementer" "<profile ID>" = {
+    "remindersSent" = "0" # Number of email reminders sent
+    "resource" = "<resource ID>" # Resource to be implemented
+    "status" = "O" # Task status
+  }  # For each implementer/resource pair, a KVGroup is included
+  "attribute" "<attribute ID>" ={
+    # Include only profile and request attributes that have been changed in
+    # the request.
+    "oldValue" "" = { # included if the value has changed
+                      # (attribute validation / request rewrite)
+       "value" = "<old value>" # 0 or more values can be listed
+    }
+    "value" "" = {
+       "value" = "<current value>" # 0 or more values can be listed
+    }
+  } # 0 or more attributes
+  "resource" "<resource identifier>" = {
+    "authorizationsReceived" = "<number of approvals received>"
+                 #Deny actions are not counted here.
+    "authorizationsRequired" = "<number of authorizations required>"
+    "authorizer" = "<authorizers for this resource>" # 0 or more
+    "acctauthnote" = "<authorization note for resource>"
+    "autoselect" = "<none|mandatory|optional>"
+       # Auto selection can be:
+       # none       -- Selected manually by the requester
+       # mandatory  -- Forced selection by IDWFM REQUEST REWRITE PLUGIN       # optional   --
+ Optionally selected by IDWFM REQUEST REWRITE PLUGIN
+    "enact" = "true|false"
+       # When used with the WORKFLOW VIEW MODIFICATION plugin, this key
+       # can be used for displaying or hiding information about resources;
+       # for example, set to false for resources that won't actually be
+       # deleted.
+    "finalized" = "<true|false>"
+           # All attached resources are not finalized by default.  By
+           # default, resource operations wait for the request to be
+           # decided (all authorizations received) on all resources.  This
+       # can be overridden by IDSYNCH AUTH CRITERIA MOD PLUGIN
+    "groupApproval" = "00000000-0000-0000-0000-000000000000"
+                 # Used to approve a group of resources only if all
+                 # approvals are  received for the group of resources
+                 # by the IDWFM REQUEST REWRITE PLUGIN.
+    "implementer" = "<profile ID>" # a key-
+value for each implementer that can fulfill the task
+    "implicit" = "<true|
+false>" # If true, this is selected as part of role
+                                #  definition.
+                                # If false, this is selected by the
+                                #  requester.
+    "notes" = ""  # empty - only filled in upon provisioning
+    "operation" = "<opcode>"
+       # Operation requested, can be:
+       #  "CFYU"      -- Certify user
+       #  "CFYA"      -- Certify account
+       #  "CFYG"      -- Certify group membership
+       #  "CFYP"      -- Certify application
+       #  "CFYM"      -- Certify group members
+       #  "ACUA"      -- Account user add
+       #  "RLUA"      -- Role user add
+       #  "UPDT"      -- Update account
+       #  "DELU"      -- Delete user
+       #  "DELR"      -- Remove a user from a role
+       #  "RENU"      -- Rename account
+       #  "RPRO"      -- Rename profile
+       #  "MVCU"      -- Move user from one context to another
+       #  "ENAU"      -- Enable user
+       #  "DNAU"      -- Disable user       #  "GRUA"      -- Add a user to a group
+       #  "GRUD"      -- Remove a user from a group
+       #  "GROA"      -- Add an owner to a group
+       #  "GROD"      -- Remove an owner from a group
+       #  "CRTG"      -- Create group
+       #  "DELG"      -- Delete group
+       #  "LUPD"      -- Associate account with profile
+       #  "LDEL"      -- Remove account association
+       #  "ORGADDSUB" -- Attach user
+       #  "ORGDELSUB" -- Detach user
+       #  "ORGTFRSUB" -- Transfer user
+       #  "ORGADDMGR" -- Designate manager
+       #  "ORGDELMGR" -- Designate non-manager
+    "parentRole" = "<role ID for the role this resource is related to>"
+    "password" = "<new password>"
+       # Optionally set the plain text password for
+       # the resource by IDWFM REQUEST REWRITE PLUGIN
+    "pseudoData" = "<Data for replacement in pseudoTag>"
+    "pseudoOp" = "true|false" #Is this a pseudo Operation?
+         # If true, this operation is NOT handled by idtm
+    "pseudoTag" = "<m4 tag for display in the GUI>"
+    "reason" = "<reason for the resource being part of the request>"
+    "result" = "<status of the resource>"
+       # can be:
+       #  "O" -- open
+       #  "A" -- approved
+       #  "D" -- denied
+       #  "I" -- irrelevant
+    "itemType" = "<item type>"
+       # Can be:
+       #  "template"
+       #  "role"
+       #  "groupID"
+       #  "accountID"
+       #  "subordinate" for OrgChart operations
+       #  "networkResource"  for folder/shares and other resource
+    <item type KVGroups or key-values>
+       # Depending on the item type, there are key-values or KVGroups
+       # as described below.
+    "phase" "<phase number>" = {
+       "authorizer" = "<profile id>" # 1 or more authorizers

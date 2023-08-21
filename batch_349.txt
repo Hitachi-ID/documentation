@@ -1,0 +1,238 @@
+# KVGROUP-V1.0
+"language" "<LANGUAGE_LOCALE>" = {
+}
+Determining language preference
+Bravura Security Fabric  determines each user’s preferred language in the following ways:
+▪A value specified  in the Bravura Security Fabric  URL ▪
+▪The user’s browser preference▪
+▪Using the language selector in Bravura Security Fabric ▪
+Including language preference in the URL
+If the URL used to access Bravura Security Fabric  includes the <lang>-<locale> code in its path after  the
+instance name, then Bravura Security Fabric  loads the skin for the specified  language.
+For example, for Spanish enter the URL:
+http s://idm-ser v er/de f ault/ es-es
+As the user navigates through the interfaces, the path is appended to the URL, for example:
+http s://idm-ser v er/de f ault/ es-es/ g er er -le-s y s t em/r ecur sos
+If the specified  language is not installed, then Bravura Security Fabric  displays an error.
+Alt ernativ ely ,  if the URL used to access Bravura Security Fabric  includes LANG=<lang>-<locale>  in
+its query string, then Bravura Security Fabric  loads the skin for the specified  language.
+For example, for Spanish enter the URL:
+http s://idm-ser v er/de f ault/?LANG=es-es
+If the specified  language is not installed, then Bravura Security Fabric  falls back to American English (en-
+us).
+If the URL includes both a locale in the path, and a LANG query parameter, then the locale specified  in
+the path takes precedence; for example, Spanish will be loaded from the following URL:
+http s://idm-ser v er/de f ault/ es-es/?LANG=tr -tr
+Using browser preferences
+If no language is specified  in the URL, Bravura Security Fabric  checks the browser for the user’s language
+preferences. If no exact match is found among the installed languages, Bravura Security Fabric  uses the
+closest related language. For example, if the browser preferences are set to:
+▪Polish (pl-pl)▪
+▪French/Canada (fr-ca)▪
+and Bravura Security Fabric  has Portuguese/Portugal (pt-pt) and French/France (fr-fr) language skins
+installed, Bravura Security Fabric  will fir s t check for Polish language packs, then French, settling  onFrench/France (fr-fr). If a related language cannot be found, Bravura Security Fabric  defaults to American
+English (en-us).
+Using the language selector
+If multiple  languages have been installed, a language selector is available in the top right hand corner of
+the login page. Click the language selector icon to display the available languages, then select the
+language you want to use.
+To access the language selector after  you have logged in, click the user menu icon fir s t,  then scroll down
+to the language selector. The available languages will be displayed. You can then select the language you
+want to use.
+Determining date / time  display preference
+By default, Bravura Security Fabric  displays date and time  to users as follows:
+▪On request-detail pages and in emails, the date and time  are displayed based on the (Windows) ▪
+regional settings  for the psadmin user on the Bravura Security Fabric  server.
+▪In HTML da t e/time  widgets, the date and time  are displayed by default in the format: ▪
+YYYY-MM-DD HH:mm
+To add time  zone in f ormation,  so that date and time  are displayed as:YYYY-MM-DD HH:mm (UTC+/-HH:mm)
+enable the DISPLAY TIMEZONE  option  (Manage the system  > Modules  > Options ).
+Bravura Security Fabric  can also display the date and time  based on individual users’ preferences. Users
+set their preferences using the following pr ofile  and request attribut es,  which a product administrator
+must add in the Manage the system (PSA) module:
+PREFERRED_DATEFORMAT  A string r epr esenting  the date format. The character c ombinations  that you
+can use in the string and their meaning are as follows:
+Character Combination Meaning
+d Day of month as digits with no leading zero.
+dd Day of month as digits. Use a leading zero for single digit days.
+ddd Day of week as a thr ee-letter  abbr e viation.
+dddd Day of week as its full name.
+M Month as digits with no leading zero.
+MM Month as digits. Use a leading zero for single digit months.
+MMM Month as a thr ee-letter  abbr e viation.
+MMMM Month as its full name.
+y Year as last two digits with no leading zero.
+yy Year as last two digits. Use a leading zero for single digit years.
+yyy Year represented by full four or fiv e digits, depending on the calendar used.
+yyyy Same as yyyy.
+gg Period or era string.
+Character c ombinations  are c ase-sensitiv e.  Literal characters, except for white space, must be
+surrounded by single quotes. For example, If you want Bravura Security Fabric  to display the date as:
+Thu, Dec 31 09
+use the following date format:
+"ddd’,’ MMM dd yy"
+PREFERRED_TIMEFORMAT  A string r epr esenting  the date format. The character c ombinations  that you
+can use in the string and their meaning are as follows:
+Character Combination Meaning
+h Hours on a 12-hour clock, with no leading zero.
+hh Hours on a 12-hour clock. Use a leading zero for single-digit hours.
+H Hours on a 24-hour clock, with no leading zero for single-digit hours.
+HH Hours on a 24-hour clock. Use a leading zero for single-digit hours.
+m Minutes with no leading zero.
+mm Minutes with leading zero for single-digit minutes.Character Combination Meaning
+s Seconds with no leading zero.
+ss Seconds with leading zero for single-digit seconds.
+t One character time  marker string, such as A or P .
+tt Multi-char act er  time  marker string, such as AM or PM.
+Character c ombinations  are c ase-sensitiv e.  Literal characters, except for white space, must be
+surrounded by single quotes. For example, If you want Bravura Security Fabric to display the time  as:
+23:14
+use the following date format:
+HH’:’mm
+PREFERRED_TIMEZONE  The name of the user’s preferred time  zone.
+The name must match one of the time  zone keys stored in the Windows registry on the Bravura Security
+Fabric  server; for example, Central Standard Time . These keys are listed under:
+HKEY_L OCAL_MA CHINE\SOFTW ARE\Micr osoft\Window s  NT\CurrentVersion\Time Zones
+The PREFERRED_DATEFORMAT, PREFERRED_TIMEFORMAT , and pr e f err ed_time z one  pr ofile  and
+request attribut es  do not exist by default. You must create them before they can be set. It is
+recommended that you create these pr ofile  and request attribut es,  especially the preferred time  zone,
+using restricted values  to make c on figur ation  of their values easier for end users.
+See also:
+See Pr ofile  and Request Attribut es  (on page 1264) to learn how to create pr ofile  and request attribut es.
+See Altering Text  (on page 3485) to learn how to modify or add text in multiple  languages.Altering text
+The text that Bravura Security Fabric  displays to users is partially  de fined  in KVGroup files located in
+\<instance>\design\src\common\. Each installed skin or language requires its own set of KVGroup files.
+Most UI text is contained in <lang>-<locale>-language.kvg . You can edit and add language
+tags to this file. Tags in <lang>-<locale>-errmsg.kvg  are used mainly to compose email
+messages, error/warning/info messages emitted  from the Bravura Security Fabric  server. You can edit
+text in this file, but you cannot add tags.
+For American English, these files are named en-us-language.kvg  and en-us-errmsg.kvg .
+Tags in <lang>-<locale>-errmsg.kvg  cannot be used in JavaScript or TypeScript files.  As a result
+you cannot include these tags in the Angular portion  of the skin, or the portions  of the Legacy skin that
+use JavaScript. Tags in <lang>-<locale>-language.kvg  can be used everywhere.
+You can modify the text using the Bravura Security Fabric  translator interface ( transcgi ) or by editing
+the KVGroup files themselves.
+Alter text with the Bravura Security Fabric  translator interface
+The Bravura Security Fabric  translator interface (transcgi) allows you to make text changes on the GUI.
+The translator interface is disabled by default. To enable it:
+1.Click Manage the system  > Modules  > Options . 1.
+2.In the text field  for the TRANSCGI ALLOWED IP option,  enter a comma-delimited list of IP addresses 2.
+with CIDR not ation
+The purpose of the IP addresses field  is to identif y  specific  external server(s) that are allowed to
+access the Bravura Security Fabric  server within the boundaries of the specified  access rights. This is
+accomplished by using Classless Inter-Domain R outing  (CIDR) not ation  to de fine  an IP address block.
+The address block is represented by an IP address and a pr e fix  size and is written  in slash not ation
+<IP>/<pr e fix>  where:
+▪IP is the IPv4 (<0-255>.<0-255>.<0-255>.<0-255>) or IPv6 address (<0000- ff ff>:<0000- ff ff>:<0000- ▪
+ff ff>:<0000- ff ff>:<0000- ff ff>:<0000- ff ff>:<0000- ff ff>:<0000- ff ff>)
+▪ pr e fix  is the pr e fix  size for the mask and must be an integer within the range 0-32 for IPv4 or 0-128 ▪
+for IPv6
+The subnet mask determines the size of the address block (the number of IP addresses belonging to
+the block), and used in c onjunction  with the IP address, specifies  which particular  IP addresses belong
+to that block. Some planning is required. You need to determine whether the entry is going to be used
+to represent a single address or a range of c onsecutiv e  addresses.
+The size of the address block, or the number of IP addresses that the block contains is
+number of entries = 2(32- < subnetmask > )
+To determine the IP addresses of the servers that will be granted access to the Bravura Security Fabric
+server from the IP address/subnet entry do the following:1.Turn the IP address into binary not ation;  for example, 1.
+▪128.10.12.1 = 10000000.00001010.00001100.00000001▪
+2.Start at the left hand side of the binary r epr esen t ation  and mark off the number of binary digits 2.
+specified  by the subnet mask; for example, using a 30 bit subnet mask, the fir s t 30 digits are
+marked off (bolded).
+▪10000000.00001010.00001100.000000 01 ▪
+Valid or matching IP addresses must be based on these fir s t 30 digits.
+3.Calculate the valid addresses by cr eating  all possible permut ations  using the remaining binary 3.
+digits. In this case, there are only two unmasked digits, and as a result there are only 2(32 - 30)=
+22= 4 possible addresses that match.
+▪10000000.00001010.00001100.000000 00 = 128.10.12.0 ▪
+▪10000000.00001010.00001100.000000 01 = 128.10.12.1 ▪
+▪10000000.00001010.00001100.000000 10 = 128.10.12.2 ▪
+▪10000000.00001010.00001100.000000 11 = 128.10.12.3 ▪
+To restrict access to a single server use a complete pr e fix  (32 for IPv4 or 128 for IPv6). This means that
+the IP address must match exactly.
+To restrict access only to processes (servers) that reside on the Bravura Security Fabric  server, use the
+local host address with a complete pr e fix  (127.0.0.1/32 or ::1/128 for IPv4 and IPv6 r espectiv ely).
+External access will be denied.
+that are allowed to use the translator interface.
+3.Click Update . 3.
+Updates are written  to the <lang>-<locale>-language.kvg  and <lang>-<locale>-
+errmsg.kvg  files in the \<instance>\design\custom\ directory when the skins are regenerated.
+Bravura Security Fabric  is shipped with a default skin named en-us for American English.
+Once the translator interface is enabled:
+1.Open your web browser at the following address:1.
+https://<host>/<instance>/cgi/transcgi.exe?LANG=<language-locale>
+Bravura Security Fabric  displays the Language translator page listing  all text values. The page can take
+some time  to load.Grid-mode interface for fr-frGrid-mode interface for fr-fr
+2.Browse the list to locate the text you want to change, and type the new text in the blank field  below it. 2.
+Text that has not yet been translated is displayed in *pending*  status.
+To exclude the text that has already been translated, scroll to the bottom  of the form and click the
+select icon to Show only lines to be translated.
+3.Click Update . 3.
+Updates take e ff ect  the next time  the skin is generated.
+4.Generate and Install the skins4.
+To generate and install new or modified  skin files,  use the following format for the commands to run
+from the <instance>\design\ directory, where en-us  is American English:
+1.Compile the skins:1.
+make.bat default en-us
+Changes are saved in the instance's <instance>\design\skin\ directory
+2.Install the skins:2.
+make.bat install default en-us
+The compiled files are copied to the instance's skin\ directory
+3.If necessary, reload and review any changes to Bravura Security Fabric  web pages. 3.
+Do not run the second command to install the skins if they fail to compile, especially if the firs t m4
+file (links.m4) fails to compile.
+Skins can fail to compile if something in the environment is locking the skin files.  That can be a
+malware program, an automated backup tool running at the time,  but more likely the product UI itself
+being in use at the time  of the skin c ompilation
+Have a test instance where you can compile the skins when the instance is not being used. Make a
+backup copy of the files on the production  instance in case you need to quickly roll them back. Review
+changes on the test instance, then copy the skin files to the production  instance.
+.
+Alter text by editing  KVG files
+You can alter the text displayed on Bravura Security Fabric  web pages by modifying the appropriate tags
+in en-us-errmsg.kvg and en-us-language.kvg. To do this:
+1.Find the tag that corresponds to the text you want to modify1.
+2.Search for the tag name in en-us-errmsg.kvg  and en-us-language.kvg . 2.
+3.Create a custom file in custom\. 3.
+Tags in <lang>-<locale>-errmsg.kvg  cannot be used in JavaScript or TypeScript files.  As a
+result you cannot include these tags in the Angular portion  of the skin, or the portions  of the Legacy
+skin that use JavaScript. Tags in <lang>-<locale>-language.kvg  can be used everywhere.
+This file must have the same name as the original. It must also include the outer KVGroup:# KVGROUP-V1.0 
+"language" "EN_US" = { 
+}
+4.Copy the KVGroup whose key matches the tag name you determined in Step 1 from the source file to 4.
+the custom file. For example:
+# KVGROUP-V1.0 
+"language" "EN_US" = { 
+  "_CGILOGIN_ENTER_LOGIN_ID" "" = { 
+    "text" = "Please enter your network login ID:" 
+  } 
+}
+5.Modify the text value to suit your needs. For example:5.
+# KVGROUP-V1.0 
+"language" "EN_US" = { 
+  "_CGILOGIN_ENTER_LOGIN_ID" "" = { 
+    "text" = "Please enter your employee ID:" 
+  } 
+}
+6.Save and close the custom KVGroup file. 6.
+7.Generate and install the new skin files. (on page 3477) 7.
+To modify the text for other languages that you have installed, follow the above procedure but replace
+en-us in the filename  and EN_US  in the outer KVGroup with the appropriate language code.
+If your new text must include quotes, it is highly recommended that you use single quotes (') rather than
+double quotes ("). If you must use double quotes, they must be escaped properly.
+For text that appears within an HTML widget, a double quote must be preceded by three backslashes (\\
+\"). For "normal" text, a double quote must be preceded by a single backslash (\").
+Add language tags
+Anywhere you de fine  text that users can see, you can use language tags in order to have that text
+translated for the end user. For example, you can specify a tag name as a target description,  or when you
+create a pr e-de fined  question  in the Manage the system (PSA) module. Any time  custom text is f ormatted
+as a language tag, Bravura Security Fabric  will attemp t  to replace that tag with its counterpart in the
+associated KVG file.
+Tags in <lang>-<locale>-errmsg.kvg  cannot be used in JavaScript or TypeScript files.  As a result
+you cannot include these tags in the Angular portion  of the skin, or the portions  of the Legacy skin that
+use JavaScript. Tags in <lang>-<locale>-language.kvg  can be used everywhere.
+To add your own language tags:
+1.Create a custom <lang>-<locale>-language.kvg  file in the custom\ directory. This file must 1.
+include the outer KVGroup:
+# KVGROUP-V1.0 

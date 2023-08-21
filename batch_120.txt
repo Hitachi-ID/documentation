@@ -1,0 +1,316 @@
+  "" "" = {
+  retval = "0"
+    "notification" "1" = {
+      "id" = "AUP1"
+      "desc" = "AUP1"
+      "severity" = "F"
+      "maxrem" = "-1"
+      "infomsg" = "AUP1"
+      "link" = "PSNAUP"
+      "status" = "R"
+      "nreminders" = "0"
+    }
+    "notification" "3" = {
+      "id" = "AUP3"
+      "desc" = "AUP3"
+      "severity" = "F"
+      "maxrem" = "-1"
+      "infomsg" = "AUP3"
+      "link" = "PSNAUP"
+      "status" = "R"
+      "nreminders" = "0"
+    }
+    "notification" "2" = {
+      "id" = "AUP4"
+      "desc" = "AUP4"
+      "severity" = "I"
+      "maxrem" = "-1"
+      "infomsg" = "AUP4"
+      "link" = "PSNAUP"
+      "status" = "R"
+      "nreminders" = "0"
+    }
+  }
+Note that:
+▪Output has to contain a "retval" KV-pair.▪
+▪KVGroup key has to be "notific ation"  precisely and cannot be changed. ▪
+▪KVGroup names have embedded integers, r epr esenting  the order in which plugin has organized the ▪
+notices.  St arting  from 0: "0" is the fir s t notice,  "1" is the second, and so on.
+.Manage tokens (PSP)
+Bravura Pass  allows users who have RSA SecurID Authentic a t or s  (tokens) to manage their tokens from a
+web browser using the Manage tokens  (PSP) module, or a telephone using an integrated IVR system.
+Specific ally ,  you can c on figur e  Bravura Security Fabric  to allow users to do any of the following:
+▪Enable or disable their tokens▪
+▪Clear their PIN▪
+▪Set a new PIN▪
+▪Request emergency access codes▪
+▪Clear their previously-requested emergency access codes▪
+▪Re-synchronize their token clock with the RSA Authentic ation  Server ▪
+The Manage tokens  (PSP) module is disabled by default. You must enable it to allow users to access this
+feature. Enabling this module also allows help desk user s to manage user tokens via the Help users  (IDA)
+module, but you c on figur e  options  for that console separately.
+To c on figur e  self-service token management:
+1.Click Manage the system  > Modules  > Manage tokens (PSP) . 1.
+2.Turn on the PSP ENABLED setting. 2.
+3. Con figur e  the options  listed in Table SecurID token management options  (on page 1192) as required. 3.
+4.If required, c on figur e  event options,  listed in Table Manage tokens  (PSP) module events that launch 4.
+interface programs  (on page 1192), Manage tokens  (PSP) module events that launch interface programs
+(on page 1542), that trigger external programs.
+5.Click Update to submit the changes. 5.
+SecurID token management options
+Option Description
+PSP TOKEN CLEAR SET Allows users to clear or set their PINs.
+PSP TOKEN EMERGENCY Allows users toggle Emergency Access Mode for their tokens
+PSP TOKEN ENABLE DISABLE Allows users to enable or disable their own tokens.
+PSP TOKEN RESYNC Allows users to re-synchronize their tokens.
+Manage tokens  (PSP) module events that launch interface programs
+The following Manage tokens (PSP) module options  can be accessed from Manage the system  >
+Maintenance > System variables  or Manage the system  > Modules  > Manage tokens (PSP) :
+Option Description
+PSP CLEAR PIN FAILURE A user fails to clear the PIN associated with a SecurID token on the RSA
+Authentic ation  Manager database.
+PSP CLEAR PIN SUCCESS A user clears the PIN associated with a SecurID token on the RSA
+Authentic ation  Manager database.Option Description
+PSP DISABLE FAILURE A user tries to disable a token, but fails for some reason.
+PSP DISABLE SUCCESS A user successfully disables a SecurID token.
+PSP EMERGENCY OFF FAILURE A user fails to disable emergency access mode for a token.
+PSP EMERGENCY OFF SUCCESS A user disables emergency access mode for a token.
+PSP EMERGENCY ON FAILURE A user fails to activ a t e  emergency access mode.
+PSP EMERGENCY ON SUCCESS A user successfully sets a token to emergency access mode, and receives
+some emergency access numbers.
+PSP ENABLE FAILURE A user tries to (re)enables a token, but fails for some reason.
+PSP ENABLE SUCCESS A user successfully (re)enables a SecurID token.
+PSP RESYNCHRONIZE FAILURE A user fails to resynchronize a token with the RSA Authentic ation  Manager.
+PSP RESYNCHRONIZE SUCCESS A user resynchronizes a token with the RSA Authentic ation  Manager.
+PSP SETPIN FAILURE A user fails to set a new PIN for a SecurID token on the RSA Authentic ation
+Manager database.
+PSP SETPIN SUCCESS A user sets a new PIN for a SecurID token on the RSA Authentic ation
+Manager database.
+Update security questions  (PSQ)
+Regular users use the Update security questions  to de fine  their own security question  pr ofiles,  which may
+contain question  sets for which they de fine  both questions  and answers (user -de fined),  or just the
+answers (pr e-de fined).
+When users access Bravura Security Fabric  via the Front-end , they may be required to complete their
+security question  pr ofile  before other options  are available to them.
+For product licenses including Bravura Pass , Update security questions  (PSQ) module is enabled by default.
+To block access to this feature, turn off the PSQ ENABLED setting.  Depending on how you c on figur e
+question  sets, and user access rules, help desk user s may also view and edit security question  pr ofiles  on
+behalf of callers, via the Help users  (IDA) module. You can also c on figur e  user access rules so that self-
+service users cannot update their own security question  pr ofiles.
+To c on figur e  options  that apply to the Update security questions  (PSQ) module:
+1.Click Manage the system  > Modules  > Update security questions  (PSQ). 1.
+2. Con figur e  the options  in Table Modules > Update security questions  (PSQ) options  (on page 1193) as 2.
+required.
+3.If required, c on figur e  event options,  listed in Table Update security questions  (PSQ) module events that 3.
+launch interface programs  (on page 1194), Update security questions  (PSQ) module events that launch
+interface programs  (on page 1536).
+4.Click Update to submit the changes. 4.
+Modules > Update security questions  (PSQ) optionsOption Description
+MIN QA LENGTH Set a minimum length for user -de fined  answers by typing the
+required number in the adjacent field.
+PSQ A NOT IN Q Disallow question  and answer pairs in which the answer is contained
+in the question.
+PSQ CONDITIONAL DELETE Prevent users of the Update security questions  from deleting  a
+question  and answer pair if it will cause them to have less than the
+minimum requirement in a question  set.
+This c ondition  does not apply to the Help desk.
+PSQ CONFIRM ANSWER Add Con firm  fields  to require users to retype their answers.
+PSQ ENABLED Enable the security question  management feature.
+PSQ UID NOT IN A Disallow answers that contain the user’s pr ofile  ID.
+PSQ UNIQUE ANSWER Require that all answers be unique within a user’s security questions
+pr ofile.
+Update security questions  (PSQ) module events that launch interface programs
+The following Update security questions  (PSQ) module options  can be accessed from Manage the system
+> Modules  > Update security questions  (PSQ)  or Manage the system  > Maintenance > System variables :
+Option Description
+PSQ ADD FAILURE A user tries to add one or more new question/ ans w er  pairs, but fails for
+some reason.
+PSQ ADD SUCCESS A user de fines  one or more new question  / answer pairs, then submits the
+changes for the question  set.
+PSQ DELETE SUCCESS A user deletes one or more e xisting  question  / answer pairs, then submits
+the changes for the question  set.
+PSQ DONE A user successfully completes the minimum number of questions  and
+answers as specified  for each question  set.
+PSQ NOT DONE A user fails to complete the minimum number of questions  and answers as
+specified  for each question  set.
+PSQ UPDATE FAILURE A user tries to change one or more e xisting  question  / answer pairs, but fails
+for some reason.
+PSQ UPDATE SUCCESS A user changes one or more e xisting  question  / answer pairs, then submits
+the changes for the question  set.
+Password s ynchr oniz ation  r egis tr ation  (PSR)
+When transparent password s ynchr oniz ation  (on page 1651) is implemented, it is important for users to
+understand the new password c omposition  rules that Bravura Pass  enforces over nativ e  password
+changes made on individual systems. Users also need to understand that password s ynchr oniz ation  takes
+place aut omatic ally  after  they change their own password on a trigger system.Bravura Pass  incorporates a web-based r egis tr ation  module, intended to prompt users for activ e
+c on firmation  that they understand what transparent s ynchr oniz ation  does for them. When the Password
+s ynchr oniz ation  r egis tr ation  (PSR) module is activ a t ed,  users are not a ff ect ed  by transparent password
+s ynchr oniz ation  until  they activ ely  “register” for it.
+The Password s ynchr oniz ation  r egis tr ation  (PSR) module is disabled by default. You must enable it to allow
+users to access this feature.
+Bravura Security  recommends that password s ynchroniz ation  be applied to all users. R egis tration  can be
+used to implement password s ynchroniz ation  on a user-by-user basis; however, there are inc ompatibilities
+between password s ynchroniz ation  regis tration  and IVR and the Bravura Pass API. If password
+s ynchroniz ation  regis tration  is enabled, IVR and the Bravura Pass API may not be able to find users.
+It is recommended that password s ynchr oniz ation  r egis tr ation  only be used as an educ ational  tool. If this
+module is not enabled, all Bravura Pass  users are aut omatic ally  subjected to password s ynchr oniz ation
+when it is activ a t ed.  You can enforce r egis tr ation  via the PSF FORCE ENROLLMENT  setting  (on page 1183).
+To c on figur e  password s ynchr oniz ation  r egis tr ation:
+1.Click Manage the system  > Modules > Password s ynchr oniz ation  r egis tr ation  (PSR) . 1.
+2.Turn on the PSR ENABLED setting. 2.
+3.If required, c on figur e  event options,  listed below. 3.
+4.Click Update to submit the changes. 4.
+5.Restart the Password Manager service to apply your settings. 5.
+The Password Manager service must be restarted after  transparent
+s ynchr oniz ation  is enabled. If it is not restarted, users may remain aut omatic ally
+subjected to transparent s ynchr oniz ation  despite not being activ ely  registered
+for it. Password s ynchr oniz ation  r egis tr ation  (PSR) module events that launch interface
+programs
+The following Password s ynchr oniz ation  r egis tr ation  (PSR) module options  can be accessed from Manage the
+system  > Maintenance > System variables or Manage the system  > Modules > Password s ynchr oniz ation
+r egis tr ation  (PSR) :
+Option Description
+PSR CANCELLATION SUCCESS A user disables transparent password s ynchr oniz ation  for themselves.
+PSR REGISTRATION FAILURE A user tries to register for transparent password s ynchr oniz ation,  but fails
+for some reason.
+PSR REGISTRATION SUCCESS A user registers for transparent password s ynchr oniz ation.
+See also: 
+See Transparent Password S ynchr oniz ation  (on page 1651) for details on how to implement transparent
+password s ynchr oniz ation,  including how self-service users use the Password s ynchr oniz ation  r egis tr ation
+(PSR) module.Change passwords (PSS)
+The Change passwords  (PSS) module allows end-users to change their passwords on one or more target
+systems using a web-based interface. If they have f or g otten  their password, they can access Bravura
+Security Fabric  using another form of authentic ation.
+The Change passwords  (PSS) module is enabled by default. Switch PSS ENABLED off to disable it.
+To c on figur e  self-service changes, follow these steps:
+1.Click Manage the system  > Modules  > Change passwords (PSS) . 1.
+2. Con figur e  the options  listed in Table Self-service password change options  (on page 1196) as required. 2.
+3.If required, c on figur e  event options,  listed in Table Change passwords  (PSS) module events that launch 3.
+interface programs  (on page 1196), Change passwords  (PSS) module events that launch interface
+programs  (on page 1537).
+4.Click Update to submit the changes. 4.
+Self-service password change options
+Option Description
+ALL HOST Aut omatic ally  selects all accounts/target systems for a user without
+showing a list of accounts on Change passwords pages.
+HOST SELECT NONE Shows accounts-per-target lists with no accounts/target systems selected
+on Change passwords pages.
+S CHANGE EXT The name of an external plugin program or script that supplies HTML to
+the Change passwords page. See Adding new functionality  and HTML  (on
+page 1149).
+S RESET TO PUSHPASS Use the Password Manager service ( idpm ) to retry failed self-service
+password changes.
+S STATUS EXT The name of an external plugin program or script that supplies HTML to
+the password status page. See Adding new functionality  and HTML  (on
+page 1149).
+Change passwords  (PSS) module events that launch interface programs
+The following Change passwords (PSS) module options  can be accessed from Manage the system  >
+Maintenance > System variables  or Manage the system  > Modules  > Change passwords (PSS) :
+Option Description
+PSS CGI PLUGIN RUN The S CHANGE EXT or S STATUS EXT external HTML plugin is run.
+PSS RESET FAILURE Bravura Security Fabric  fails to change at least one password for a user in
+the Change passwords.
+PSS RESET START An authorized user requests one or more password changes on their own
+account.
+PSS RESET SUCCESS Bravura Security Fabric  successfully changes a set of passwords for a user in
+the Change passwords.Queuing password changes
+Bravura Pass  can extend web-based password management by using the Password Manager service
+(idpm) to queue password changes if the number of requests reaches a certain limit, or to retry the
+change later if it failed.
+Queuing failed password changes
+You can use the S RESET TO PUSHPASS and A RESET TO PUSHPASS options  to enable the aut omatic
+retrying (queuing) of failed web-based password changes.
+S RESET TO PUSHPASS controls the behavior of the Change passwords  (PSS) module and is set on the
+Change passwords (PSS) options  page. A RESET TO PUSHPASS controls the behavior of the Manage the
+system  (PSA) module and is set on the Help users (IDA) options  page.
+If your password policy enforces password history, failed password changes cannot be queued for
+aut omatic  retry on target systems that are designated as s ynchroniz ation  triggers.
+These settings  have three possible values:
+none Bravura Pass behaves normally. Failed password
+changes must then be manually retried by logging into
+Bravura Pass and attempting  the change at a later time,
+or through the use of a plugin.
+Manual Users can select the accounts to be queued. If a
+password change failure occurs, users are notified  on
+the password reset results page. The user may select
+accounts to queue by selecting  the appropriate
+checkboxes under the Queuefor aut omatic  retry?
+column, and clicking the Queuefailed changes button.
+Bravura Pass  lists the target system and account IDs
+queued for aut omatic  retry.
+Aut omatic All failed password changes are queued for aut omatic
+retry.
+A message displays notif ying  the user that ”the failed
+password changes are queued and will aut omatic ally  be
+retried”.
+Aut omatic ally  selecting  / deselecting  accounts
+Bravura Pass  displays a list of accounts per target when users change their password on Change passwords
+(PSS) module. Normally, users can select accounts on any number of accounts, and every target is
+selected.To change this behavior, enable the HOST SELECT NONE variable.
+It is sometimes  desirable to remove this fle xibility;  for example, if users need not recognize individual
+systems in the Change passwords  (PSS) module when they need to change their passwords. Instead, users
+have the illusion of a single change oper ation  that lets them regain access to multiple  systems.To remove the accounts-per-target list and aut omatic ally  select every target, enable the ALL HOST
+variable.
+The ALL HOST variable has no eff ect  when target systems belong to a target system group that uses the
+Only one account can be selected for password change rule.
+Aut o-populating  suggested passwords
+You can enable a JavaScript option  to aut omatic ally  populate password fields  when a suggested password
+is selected. To do this, enable the UseSuggestedPassword option  in the config.js script. See
+Modifying JavaScript behavior  (on page 3518) for more in f ormation.
+Manage reports (RPT)
+Product administrators use the Manage reports (RPT) module to schedule and save reports, generate
+new reports, and view previously saved reports.
+To c on figur e  options  for the Manage reports (RPT) module:
+1.Click Manage the system  > Modules  > Manage reports (RPT) . 1.
+2. Con figur e  the options  in Table Modules > Manage reports (RPT) options  (on page 1199) as required. 2.
+3.Click Update to submit changes. 3.
+Modules > Manage reports (RPT) options
+Option Description
+ALLOWED REPORTS CUSTOM For custom report plugins, enter the path, file name and extension of the
+report script r elativ e  to the <REPORTDIR>directory.
+GROUPAPP REPORT ACCESS Specify a user class to control who can view or execute group reports from
+Groups app  (on page 1204). The reports can be saved in CSV format and
+downloaded for viewing.
+Users can have access to group reports when VIEW GROUPS PLUGIN  (on
+page 1203) is set with a shipped plugin.
+MAX REPORT COLUMNS The maximum columns in a report. The value must be between 20 and
+16383. Default value is 100.Option Description
+MAX REPORT SPOOL QUOTA The maximum quota (in MB) that is available for the report spool. The
+default is all available space on the hard drive.
+MAX REPORT SPOOL QUOTA
+THRESHOLDThe percentage value of the report spool quota that is available before a
+warning is issued.
+REPORT CRITERIA PLUGIN Program to execute to control visibility and defaults for report criteria  (on
+page 1202). Users are presented with default search values, which they can
+not change, or are allowed to modify them.
+REPORT GRAPH PLUGIN Program to execute to generate report image  (on page 1200).
+REPORT TO PDR DEFAULT RECIPIENT Default recipient when submitting  requests from reports. The recipient
+specified  will be used when the recipient ID mapped to a column is empty.
+The recipient specified  is populated as the default recipient when choosing
+a s t atic  recipient.
+REPORT TO PDR REQUEST
+CANCELLATION PLUGINProgram to allow the c ancellation  of requests generated from reports  (on
+page 1201). The default value is
+r eport_t o_pdr_r eques t_c ancellation_plugin.p y .
+REPORT TO PDR WAIT TIME Wait time  between request submission in milliseconds. The value must be
+between 0 and 30000. Default value is 0. This wait time  is applied between
+requests when they are submitted  through report output.
+SAVED REPORTS EXPIRY DAYS Default expiry period for the saved reports in days. The value must be
+between 1 and 999. The default value is 60. This applies to manually run
+reports and scheduled reports. You can modify the expiry period for
+individual reports using Expiry days or Never expire settings.
+USER REPORT SPOOL QUOTA The quota (in MB) of the report spool that is available for each user. The
+default is all available space on the hard drive.
+USER REPORT SPOOL QUOTA
+THRESHOLDThe percentage value of the report spool quota that is available for each
+user before a warning is issued.
+See also: 
+▪REPORTS  (on page 2891) shows you how to run and schedule reports and includes details on ▪
+individual reports.
+Report graph plugin
+You can specify a plugin to generate and display graphs in reports. A graph can be used to give a visual
+r epr esen t ation  of the data collected from the report.
+To c on figur e  this plugin, type the plugin’s full name in the REPORT GRAPH PLUGIN field  on the Manage
+the system > Modules> Manage reports (RPT)  page.
+A built-in plugin, plugin-graph-phantomjs.exe,  is shipped with Bravura Security Fabric . No
+other options  are required to c on figur e  this plugin.
+Requirements

@@ -1,0 +1,315 @@
+▪Updated stored procedure ReqBatchSearchPlugin to return last N requests when SEARCH MAX▪
+RESULTS is exceeded.
+▪Fixed a broken feature so search filt er  plug-in will run on each search page when na vig ating  through ▪
+wizard pages.
+Utilities
+▪The iddbadm utility  now supports Micr osoft  SQL Server versions: 2005, 2008, 2012, 2014, 2016, ▪
+2017, and 2019.
+▪Corrected issue so that the migratedata utility  properly exports onboarded systems whose target ▪
+cr edentials  are associated with managed account passwords.
+▪Fixed an issue with migratedata utility  to do not throw errors if ▪
+Scenario.pam_personal_admin_management is not installed on destination  instance.
+▪Report server domain name must be specified  in utility  setupanalytics to pass the v alidation ▪
+test.
+▪ Modified  smonclean utility  to output error messages on the console, along with the instance log. ▪
+▪ Utility  adtoaddn can convert a target from using the legacy AD target type to ADDN successfully ▪
+without error.
+▪ Modified  the migratedata.exe  Bravura Security  Data Migr ation  Utility  to handle e xporting  of user ▪
+mobile device r egis tr ation  data properly for Bravura Security Fabric  versions 12.0.x and later.
+Roles
+▪Fixed an issue where requested entitlemen t  members will not be added to the role if the request is ▪
+rejected.
+▪Fixed an issue with segr eg ation  of duties  de t ection  stored procedure where r equesting  a new role ▪
+membership in the Roles app triggered segr eg ation  of duties  violations  and returned the request as a
+violation  even if an e x ception  was requested, hence request couldn’t be submitted.
+▪Fixed an issue where role member entitlemen ts  were loaded on the segr eg ation  r esolution  page when ▪
+a request for new role membership was issued through the Roles app and the newly requested role
+itself was triggering violations.
+▪ Modified  the rbacenforce utility  to return violations  and variances with approved e x ceptions, ▪
+and when g ener ating  requests to resolve rbac variances. Requests with approved e x ceptions  are
+skipped and there is log info to indicate the results.
+▪Fixed an issue to not drop oper ations  expanded from delete role when the oper ation  is approved and ▪
+processed.
+▪Fixed an issue where removing a parent role does not remove child r ole(optional)  resources. ▪
+▪ Optimiz ed  stored procedure RBACVarianceUserListDetails when calling during psupdate to get all ▪
+user variances in the case that when the system has huge number of requests already in place.
+▪Fixed an issue to approve the request where the action  is not to be enacted. ▪
+▪Fixed an issue where remove role from user using the Roles app can not expand removal oper ations  of ▪
+role’s member entitlemen ts.W orkflo w
+▪Fixed wizards to disallow clearing out da t e/time  attribut e  if the attribut e  was set to read only. ▪
+▪Add check for when a user tries to add a group on a target they do not have an account on.▪
+▪Added the ability to allow wfreq plugin to specify errmsgs at attribut e/pag e  level at request ▪
+submission time  when the request fails v alidation,  and wizard service will load the specific  page set by
+plugin.
+▪ Pr ofile  attribut e  of Da t etime  has been corrected in: ▪
+▪Request detail page,▪
+▪ Pr ofile  report and basic in f ormation  section  in enduser’s "Pr ofile  in f ormation  and entitlemen ts" ▪
+page.
+▪Fixed an issue when all requests were displayed as "Pending" in the W orkflo w:  Pending requests ▪
+dashboard.
+▪Fixed the authoriz ation  c alculation  to deal with mixed redundant and required phases for a single ▪
+oper ation.
+▪Fixed an issue where an account would be deleted from the target system but r e flect ed  in Bravura ▪
+Security Fabric until  next Auto Discovery e x ecution.
+▪Emails will not be sent to delegate after  a deleg ation  is canceled. ▪
+▪Added the in f ormation  about the reason field  in the request to the email content. ▪
+▪ Modified  idtm to properly detect how owners are now stored for GROA/GROD oper ations. ▪
+▪Fixed an issue where deleted account still displayed on user pr ofile  page when the account had been ▪
+previously deleted and restored.
+▪In the case when implementer marks a task as done while idtm is down, it will fail the implementer▪
+action  and an error message will be given on UI to inform him/her about that, so the implementer can
+try to set the status of the task again, until  he/she can successfully do so (when idtm is up).
+▪Delegate button  in the Requests app to be shown or not according to the current authorizer’s ▪
+privilege.
+▪Fixed idwfm to add proper GRUD oper ations  for auto assignment generated request to fix surplus for ▪
+users who has multiple  accounts in that group.
+PSLang
+▪Fixed pslang builtin  function  getUsersByGroup to return only user/account. ▪
+Disc ontinued
+▪Removed support for the Cr edential  Provider wrapper with link. ▪
+▪The report Database table audit has been removed.▪
+▪Removed pamutil  option  from psunix. ▪Bravura Security Fabric 12.1.11
+Resolved issues
+▪Corrected handling of date widgets' values in the search criteria text file attachmen t  generated with ▪
+emailed report results.
+▪Corrected issue concerning the handling of report email attachmen ts  which were incorrectly escaping ▪
+HTML characters.
+▪Fixed non-expiring scheduled reports failing due to an invalid date format in the database table.▪
+▪Fixed a tree traversal vulnerability where the hard drive directory structure could be explored.▪
+▪Fixed utility  rbacenforce.exe  to not return sub-roles as de ficits  and prevent endless requests to ▪
+resolve violations  in this case.
+▪Fix the multiple- v alue  integer pr ofile  attribut e  issue for PDR Update attribut es . ▪
+▪Improved iddiscover  robustness around loading list files that don't exist, have no data, or were ▪
+produced by failed listing.
+Bravura Security Fabric 12.1.10
+Features and improvements
+▪Improved database service resilience around unexpected restarts or crashes.▪
+▪Improved performance of file r eplic ation. ▪
+▪ Optimiz ed  Privilege upgrades when upgrading from pre-11.0.0. ▪
+▪ Optimiz ed  loading of discovered computers into database during discovery. ▪
+Resolved issues
+▪Enabled SocketKeepAlive registry setting  to be applied to non-proxy Bravura Security  services. ▪
+▪Fixed loading of extra columns provided by search filt er  plugin. ▪
+▪Fixed saved search menu when extra columns is added by search filt er  plugin. ▪
+▪Fixed the password reveal function  by switching the built-in reveal password feature in Edge with the ▪
+product reveal password feature.
+▪Updated the installer to verify that it successfully renamed and deleted the design/src/ui directory of▪
+the installed node when it is upgraded, allowing the user to retry or skip the installer action  or abort
+the upgrade if there is an issue either renaming or deleting  the directory. Also fix ed  the pos t -
+ins t allation  skin g ener ation  task to determine if an error occurred during the task.
+▪Fixed incorrect r eplic ation  behavior around bulk loads that were retried due to an error. ▪
+▪Fixed an issue where upgrades could behave incorrectly when retrying or skipping multiple  SQL ▪
+statements.Bravura Security Fabric 12.1.9
+Resolved issues
+▪Minor bug fix in UI display of privileged access disclosure plugins. ▪
+▪Improved the reliability of access disclosure plugins when it er ations  of the disclosure is launched. ▪
+Bravura Security Fabric 12.1.8
+Resolved issues
+API
+▪Fixed the curl provider and libidapi to respect the timeout  for pamutil  requests. ▪
+▪Fixed SoapHttp  so that no soap request/response message will be sent to log output, thus stops leak ▪
+of data (passwords, user in f ormation  etc) in soap messages.
+Reports
+▪Corrected an issue with trend reports listing  in f ormation  by week where depending on the date of the ▪
+run of the report the fir s t week displayed would not be correct.
+SAML authentic ation
+▪Fixed an issue where IdP -initia t ed  login fails on c ase-sensitivity .  Case-insensitivity  is now supported. ▪
+Bravura Security Fabric 12.1.7
+Features and improvements
+▪Added Con flicting  passwords  report to the "Privileged access: Con figur ation"  that returns current ▪
+c on flicting  password details.
+Resolved issues
+▪Corrected the nl-nl language pack day abbr e viations  for the da t e/time  widget. ▪
+▪Fixed the Security questions  module (PSQ) that was previously passing inconsistent casing for the ▪
+pr ofile  ID value to external QA plugins.
+▪Fixed an issue with external question  set authentic ation,  which previously failed to check if answers ▪
+after  the fir s t one provided by the user were correct.
+▪Fixed the PAMTeamManagement  report so that: ▪
+▪The account team is returned for onboarded accounts, and not the system team.▪
+▪Onboarded systems are not returned more than once if binded to multiple  managed system ▪
+policies.Bravura Security Fabric 12.1.6
+Resolved issues
+▪The Functional.hid_authchain_sm spin  component has been enhanced to allow the user to select the ▪
+phone number the pin will be sent to and implemented consistent masking of the phone number to
+prevent leakage of phone digits.
+▪Corrected issue so that updating  a team succeeds when the sum of all system ID and/or account name ▪
+of resources owned by a team exceeds 1500 characters.
+▪Fixed password checks to handle multi-b y t e  user names properly. ▪
+▪Fixed issues with migratedata  decr ypting  data from previous release versions. ▪
+▪Fixed the Bravura Security Fabric  installer for back-end MS-SQL 2014. ▪
+▪Updated migratedata to require using the -qac on fig  option  when using the -qadata option. ▪
+▪Fixed external question  set authentic ation,  which failed to check if answers after  the fir s t one ▪
+provided by the user were correct.
+Bravura Security Fabric 12.1.5
+Resolved issues
+▪Fixed scheduled jobs to display correct values when jobs are c on figur ed  to run on diff er en t  servers. ▪
+▪Added idapi to the default nodestat.cfg c on figur ation  file. ▪
+▪Improved managed system rendering and searching performance in Adminis tr ativ e  WEB GUI ▪
+Module(PSA).
+▪Fixed installer errors that were referring older OpenSSL in failure messages as well as changed script▪
+return code.
+▪Fixed an issue where iddiscover.exe could be stuck in an endless loop if a proxy server sends corrupted▪
+file data during discovery.
+▪Updated how the component framework checks for the availability of 3rd party dependencies with▪
+python_depends.
+▪Fixed an idapi service to be more stable when g etting  server ID during API calls. ▪
+▪Fixed an Ajax issue that was causing a crash for the Azure Activ e  Directory connector (agtazure). ▪
+▪Changed idfiler ep  to prevent write-ahead logging (WAL) file growth in SQLite databases ▪
+▪Added keep-alive support to proxy and discovery services.▪
+▪Fixed so "Run on all servers" scheduled jobs run.▪
+Bravura Security Fabric 12.1.4
+Features and improvements
+▪Added search criteria option  to the discoveredaccountstatus.exe report to include invalid accounts. ▪
+▪Added column to the discoveredaccountstatus.exe report to indicate whether the account is valid or▪
+not.▪Improved user class cache update performance when multiple  requests involving a large number of ▪
+nested groups are processed concurrently.
+▪Added a c on figur ation  option  to loaduccache.exe to improve user class r ec alculation  performance. ▪
+Resolved issues
+▪Fixed a bug where the smonclean utility  wouldn't delete screenshot folders if the ▪
+SMON_SCREENSHOT_STORAGE_PATH system variable was explicitly set and didn't end with a slash.
+▪ Modified  behavior so that if notific ation  is disabled for subscribers of a managed account, the ▪
+subscriber target will not be contacted during or ches tr ation/r andomiz ation.
+▪Corrected issue so that when systems are onboarded using a batch request on a non-primary node,▪
+the extdb modific ations  are performed on the primary node.
+▪Fixed an issue to clear session tags in order to prevent undesired redirects for web notific ation  links. ▪
+▪Added temporary directory v erific ation  prior setup launch. ▪
+▪ Modified  System: Onboard pr e-de fined  request to check c onnectivity  of the system as part of the ▪
+cr edential  check. Upon submission, if the system cannot be reached, the user will be redirected back
+to the System onboarding details screen.
+▪Fixed wizard to error out on submission if wfreq fails v alidation  on a previous page which is not the ▪
+same page as the page to submit the request, and presents that page to the user.
+Bravura Security Fabric 12.1.3
+Resolved issues
+▪Fixed post-upgrade task failure when there are attribut es  that are encrypted in piqueue ▪
+Features and improvements
+▪Updated SQLite DLL version to v3.36.0.0▪
+Bravura Security Fabric 12.1.2
+Resolved issues
+Component framework
+▪Fixed Functional.hid_policy_attr v al_c alculation  where values were not updated in request attribut es ▪
+when certain numerical portions  changed.
+▪Corrected the .mako file that is used by the im\_policy\_sidee ff ects  component to honor signature ▪
+required option  to sign off a certific ation  campaign.
+▪Changed the Functional.hid_ba t ch_r eques t_submit  component to encrypt its sensitiv e  attribut es. ▪
+Performance
+▪Fix performance issue unloading large pages from browser.▪Privilege access usability
+▪Corrected issue so that session monitoring properly captures the entir e  window of non DPI-aware ▪
+programs launched by disclosure plugins.
+Privileged access c on figur ation
+▪Fixed issue so that the Local W ork s t ation  service properly recovers after  an iddiscover outage. ▪
+▪Added ability to override values of special Guacamole attribut es  for In-Browser disclosure plugins. This ▪
+includes protocol, username, password, acc ountid,  resourceid, r equestid,  pr ofileid  and pluginctrlid.
+Reports
+▪Fixed a security hole in Analytics  app to prevent users from gaining access to SQL procedures. ▪
+User interface
+Fixed issue where the checkbox in the user interface couldn't be toggled by pressing the space bar.
+Bravura Security Fabric 12.1.1
+Features and improvements 12.1.1
+Bravura P attern  / components
+▪Added filt er  to specify a list of available PDRs when submitting  a batch request. ▪
+▪Added a new PluginOrigin enum IDTRACK for idtrack generated request.▪
+▪Updated component Functional.hid_policy_attr v al_c alculation  to handle requests with IDTRACK ▪
+originWizPlugin.
+▪Scenario.pam_sysvar_default component added for Bravura Privilege-only licenses.▪
+▪Improved the performance of the scripted agent responsible for the system onboarding process.▪
+Password policy
+▪Added Ignor eLas tp w chgtime  registry variable to enable the instance to ignore e xpir y .las tp w chgtime  to ▪
+check for password expiry.
+Privileged access usability
+▪Trustees cannot submit an update or archive request for vault accounts that are currently checked▪
+out.
+Security
+▪Enhanced site security by adding samesite=lax attribut e  to cookies and noopener / noreferrer ▪
+attribut es  to external links.
+▪Improve site security by adding the following HTTP response headers to the product:▪▪ X -Con t en t -T ype-Options:  nosniff ▪
+▪Content-Security-Policy: default-src ’self’; img-src * data:; script-src * ’unsafe-inline’ ’unsafe-eval’;▪
+style-src * ’unsafe-inline’
+▪ X -X SS -Pr ot ection:  1; mode=block ▪
+▪Strict-Transport-Security: max-age=31536000; preload▪
+▪Cache-Control: no-cache, max-age=0▪
+Utilities
+▪Added -pr e fix  and - file options  to the pswxdom2webapp utility  to pr e fix  a specified  value to ▪
+outputs and output to .json files r espectiv ely ,  instead of to the database directly.
+▪Added more details to logs.▪
+Resolved Issues 12.1.1
+API
+▪Fixed an issue that core api WFR eques tActionsGet  Function  did not return complete data for ▪
+Oper ation  LUPD.
+▪Fixed web app APIs with more in f ormation  in error messages. ▪
+Authentic ation
+▪Resolved an issue where users accessing Bravura Security Fabric  via deep links were not being ▪
+correctly redirected to certain pages.
+▪Resolved an issue where deep links were not correctly r edir ecting  users that accessed Bravura ▪
+Security Fabric  via SAML authentic ation.
+Bravura P attern  / Components
+▪Fixed Bravura Privilege P attern  cr edential  manager privilege v erific ation. ▪
+▪Web applic ation  create and update PDRs are now blacklisted from being submitted  using a batch ▪
+request or using the API.
+▪Account and account set check out extension requests must now be approved by the team’s▪
+approvers, except when the original request was auto-approved; in which case the extension will also
+be auto-approved.
+▪ Modified  UPDATE_VAULT_ACCOUNT API call to validate the MA_TEAM value upon submission. ▪
+▪Updated Bravura Workforce P attern  build to only submit MOVE-IN-ORG requests if the manager ▪
+exists.
+▪Corrected issue so that the pam_webapp_management scenario component successfully installs▪
+independent of whether Bravura Privilege P attern  is already installed.
+▪Target system import rule c on figur ations  loaded through manage components do not require the ▪
+target template field  if it is a delete rule.▪Import rules with c onditions  that have no value, such as exists/does not exist can be exported and ▪
+loaded through managed components.
+IDMLib
+▪Fixed attribut es  r eser v ation  problems in attr v al  c alculation. ▪
+Ins t allation
+▪The ALLREVIEWERS and ALLIMPLEMENTERS user groups have been added to the Bravura Privilege ▪
+license.
+▪Removed verify install directory security feature.▪
+Mobile
+▪Added "Unsupported on mobile" message when attempting  to access web apps from a mobile ▪
+browser.
+Notific ation
+▪Email notific ation  sent to the requester now contains oper ation  details in f ormation. ▪
+Performance
+▪Improved search filt er  plugin performance. ▪
+Privileged access c on figur ation
+▪Corrected issue so that discovered systems can be managed using cr edentials  de fined  from a ▪
+discovery template.
+▪ Modified  import rule test and trial run results to not display the c ondition  ID unless the evaluated ▪
+system/account do not satis f y  the rule.
+▪Corrected issue so that In-Browser RDP and In-Browser Remote App disclosure plug-ins can properly▪
+connect to NLA-enabled managed systems using domain accounts.
+▪Corrected issue so that alternate domain values are followed for In-Browser RDP and In-Browser▪
+Remote App disclosure plug-ins.
+▪Corrected issue so that Guacamole is able to redeem tokens from instances with high latency.▪
+Privileged access usability
+▪Improved managed account tab in managed system embedded links load time. ▪
+▪Removed redundant page refreshes between check-out e xpir ation  and check in. ▪
+▪Corrected issue in the http fallback code used when Guacamole does not run over websockets. ▪
+▪Vault account association  with web app privileged sign-on disclosures are cleaned up when a web app ▪
+is deleted or removed from the account.
+▪Added "Unsupported browser" message when attempting  to access web apps using Safari browser. ▪Reports and dashboards
+▪Issues fix ed  with SSRS not displaying properly when added during an upgrade. ▪
+▪Issues fix ed  where SSRS was removed when an instance is repaired. ▪
+Security
+▪Help desk managers can no longer edit other security groups that contain privileges they do not have.▪
+User interface
+▪Fix to times t amp s  in some loc ations  not being translated when on languages other than English. ▪
+▪Disable question  & answer reveal eye on browsers that already have it built-in (Edge and IE 11). ▪
+▪Added more vigorous cache pr e v ention  on root page to avoid issues after  upgrading. ▪
+▪Fixed an issue where deep links (email links) to Requests app were broken in languages other than en-▪
+us.
+▪The "Submitted"  field  on the request details page now displays the actual submission time. ▪
+Upgrade
+▪Fixed an issue where in some cases target account associations  were lost after  upgrading to 12.1.1 ▪
+from previous versions.
+▪Custom logo now shows correctly and users can log in successfully in post-upgrade.▪
+Usability
+▪Improved page load time  in the Privileged Access → Managed systems page. ▪
+▪Resolved an issue where c onnecting  to Bravura Security Fabric  using deep links would fail to redirect ▪
+users who log in via SAML.
+Utilities
+▪Fixed the psmail utility  so that it correctly obtains the mail server address and port when sending ▪
+emails from exit traps.
+▪Fixed pamutil decr yption. ▪
+Bravura Security Fabric 12.0.3
+Resolved Issues 12.0.3
+SAML
+▪Fixed pot ential  for security exploit. ▪

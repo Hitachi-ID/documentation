@@ -1,0 +1,241 @@
+▪Create new user classes: Click 
+ Add new… . See Adding user classes  (on page 738) for full details ▪
+on how to create a new user class.
+4. Con figur e  P articipan t  mapping for each user class that you add. 4.
+Select and create user classes until  you have de fined  membership.
+5.If your membership criteria includes multiple  user classes, de fine  whether users are required to match 5.
+All of the user classes or Any of the user classes .
+ Removing users from membership
+To remove users from membership, you can:
+1.Edit user classes to change the participan ts. 1.
+2.Delete user classes from the membership criteria.2.
+a.Navigate to the membership criteria  page where user classes are listed. a.
+b.Enable the checkbox next to the user classes you want to delete.b.
+3.Click Delete . 3.
+Deleting  templates
+When you delete a template in the Manage the system  (PSA) module, it is flag g ed  as disabled in the
+Bravura Security Fabric  database. It is maintained for audit purposes.
+Once a template is flag g ed  as disabled in the Bravura Security Fabric  database, you can delete objects
+associated with the template; for example, authorizers, target systems.
+Con figuring  resource attribut es
+It is possible to add resource attribut es  to this resource type; you can use resource attribut es  to create
+and set attribut e  values for individual resources. Before you can do this, you must add the resource
+attribut es  to at least one resource attribut e  group, and c on figur e  access to resource attribut es.
+Example: Con figur e  the template account
+This example shows you how to c on figur e  a template account.
+Requirements
+This example assumes that:
+▪You have installed Bravura Workforce P attern  so a basic template account on the Activ e  Directory target ▪
+system has been added by the onboarding scenario component.
+▪You have run auto-discovery successfully and listed accounts on the Activ e  Directory target system. ▪
+▪You have an account named support_template  that you want to use as the model account. ▪
+Configur e  the template accountYou can de fine  template accounts once you have run auto-discovery successfully and listed accounts on
+at least one target system.
+To c on figur e  the template account:
+1.Log in to Bravura Security Fabric  as superuser . 1.
+2.Click Manage the system > Resources > Template accounts . 2.
+There is a pre-c onfigured  template account for the Active  Directory target system. This was c onfigured
+when you installed Bravura Workforce P attern .
+3.Select AD_TEMPLATE . 3.
+4.Click the search icon 
+  to the right of Account to clone when cr eating  a new user . 4.
+5.Search and select support_template . 5.
+6.Ensure the remaining in f ormation  is filled  in. 6.
+▪ID AD_TEMPLATE ▪
+▪ Description  !!!REF_TEMPLATE_BASIC_AD ▪
+▪Target system  AD ▪
+▪Account to clone when cr eating  a new user  support_template ▪
+Leave the other settings  as default.7.Click Update . 7.
+Configur e  authoriz ation
+You must c on figur e  authoriz ation  before the template can be used. For now, make authoriz ation  not
+required.
+Set the minimum number of authorizers:
+1.Select the Authoriz ation  tab. 1.
+2.Set the minimum number of authorizers to 0.2.
+3.Set the number of denials before a change request is terminated to 0.3.4.Click Update . 4.
+You have now c on figur ed  a template account that can be used when r equesting  new accounts on the
+Activ e  Directory target system.
+Configur e  template-level resource oper ations
+You can c on figur e  target systems so that templates inherit the resource oper ation  c on figur ation  settings
+of the target system. You can also override the c on figur ation  for a template, or add implementers.
+To override resource oper ations  so that accounts are created by a human implementer:
+1.Select the Resource oper ations  tab. 1.
+2.Select Implementer oper ation . 2.
+3.Click Update . 3.
+4.Click Select … at the bottom  of the Implementers  table. 4.
+5.Search for, or select the checkboxes next to the implementers that you want to assign to the resource.5.
+6.Click Select  at the bottom  of the page. 6.
+You have now c on figur ed  the template so that a human implementer is assigned to create the account.Roles
+Roles provide a way of assigning requirements for a set of users. They are a part of a role-based access
+control system, along with segr eg ation  of duties  rules.
+In f ormation  regarding the role is de fined  in the following tabs:
+General Contains role ID, description,  status of the role, number of users who are
+c on figur ed  with the role, and segr eg ation  of duties  rules to which the role
+belongs.
+Authoriz ation De fines  the authoriz ation  requirements for the assignment of a role – how many
+authorizers, and which authorizers. You can also de fine  how many authorizers
+must deny the request for the assignment to be denied.
+Entitlemen ts De fines  which resources are considered part of the role; the entitlemen ts  can be
+mandatory or optional  and can include template accounts, managed groups, and
+sub-roles.
+Users Contains a list of users that the role has been explicitly provisioned for. There
+may be users who meet the requirements of the role but for whom the role was
+not explicitly provisioned. These users are not considered members of the role.
+The in f ormation  on this page is aut omatic ally  generated.
+Role enforcement The role enforcement engine can identif y  users who have excessive or
+insufficien t  access according to their role and issue w orkflo w  requests to correct
+the variance. This tab allows you to set role-level enforcement settings,  and
+generate reports.
+Assignment The aut omatic  assignment engine can provision or deprovision users from a role
+depending on their membership in a user class. This tab allows you set
+aut omatic  assignment setting ,  de fine  or attach  a user class and generate surplus
+and de ficiency  user reports.
+Role status 
+When cr eating  a role you must set its status. For a role to be used it must be enabled. For a role to be
+provisioned during a request to create a new user, the role must be assignable. So, if a role is:
+▪Enabled: the role is activ e,  but can only be provisioned as a sub-role of another role. ▪
+▪Enabled and assignable: the role is activ e,  can be provisioned as a sub-role of another role, and can be ▪
+assigned to a user during a ”new user create” request or ”modify user” request.
+Once created, a role can only be deleted if it has not yet been used (or assigned). Otherwise, it can
+only be deprecated.
+Role necessity 
+When de fining  a role’s resource entitlemen ts,  you must specify whether the resource entitlemen t  is:
+Required The user must have the resource. When assigning the role to the user, the user is
+aut omatic ally  provisioned with the resource.Optional The user can have the resource, and if they do, the resource is considered as part of
+the role for the user, but the user is not required to have it. When assigning the role to
+the user, the user is not aut omatic ally  given the resource; it must be selected during
+the assignment process.
+Legacy The user may have the resource, and if they do, the resource is considered as part of
+the role for the user. When assigning the role to the user, this resource entitlemen t  is
+not available for assignment and cannot be provisioned for the user. This status is most
+likely to be applied to a resource entitlemen t  that was required as part of the role at
+one point in time  but now isn’t – it provides historical context for users that were
+originally given the resource as part of the role. New role members are not assigned
+this resource.
+Sub-Roles 
+A role can also be specified  as a sub-role of another role. For example, if role A is specified  as a sub-role
+of role B, it means that role B gains role A’s resource entitlemen ts.  It also gains any specified
+authoriz ation  requirements inherent in the sub-role or in its c onstituen t  resource entitlemen ts.  Sub-role
+membership will not be granted to users; only sub-role entitlemen ts  will be provisioned.
+Getting  started
+ Requirements 
+Before you start, it is recommended that you de fine  authorizers  so that you can assign them to roles.
+Na vig ation  steps 
+You use the Role in f ormation  page to c on figur e  general role in f ormation,  and to access additional
+c on figur ation  settings.  To navigate to this page:
+1.Click Manage the system >Resources > Roles . 1.
+2.To de fine: 2.
+▪A new role – click Add new... . ▪
+▪An e xisting  role – search for, or select the role you want to view or modify. ▪
+You cannot modify a deprecated role. You must restore the role firs t.
+Cr eating  roles
+To create a role:
+1.Navigate to the Role in f ormation  page  (on page 636) for a new role. 1.
+2.Click Add new.. . 2.
+3.Type a unique ID and Description . 3.
+4.Determine whether the role is Enabled . 4.5.Click Add. 5.
+6.Specify whether the role is to be assignable.6.
+7.Click Update . 7.
+De fining  role authoriz ation
+De fine  authoriz ation  in f ormation  for roles to:
+▪Set the number of approvals or denials required for requests involving the role.▪
+▪Assign s t atic  authorizers to de fine  who can approve requests based on the role. ▪
+Users must be loaded into the Bravura Security Fabric database before you can de fine  them as
+authorizers.
+You must assign enough authorizers to meet the minimum number of authorizers requirement. If you do
+not do this, requests involving the resource are aut omatic ally  denied unless authorizers are assigned by a
+w orkflo w  plug-in.
+Con figuring  phased authoriz ation
+If phased authoriz ation  is enabled, navigate to the target system’s Authoriz ation  page, then:
+▪Click Add new… if you want to add a phase. ▪
+▪To change the order of phases, change the numbers in the Authoriz ation  phase column and click ▪
+Update .
+▪Select a phase to de fine  authorizers and settings. ▪Determining number of required approvals
+To set authoriz ation  thresholds for a role:
+1.Navigate to the Role in f ormation  page  (on page 636). 1.
+2.Select the Authoriz ation  tab. 2.
+Select a phase if phased authoriz ation  is enabled.
+3.Type a value for the:3.
+▪Minimum number of authorizers – A value of 0 means requests for the resource are auto- ▪
+approved.
+The default value is set by the MIN AUTHORIZERS  policy.
+▪Number of denials before a change request is terminated – A resource request is canceled when ▪
+this number of authorizers deny it, as long as the Minimum number of authorizers has not been
+reached.
+4.The default value is set by the MAX REJECTIONS  policy. 4.
+5.Click Update . 5.
+Assigning s t atic  authorizers
+To assign s t atic  authorizers to a role:
+1.Navigate to the Role in f ormation  page  (on page 636). 1.
+2.Select the Authoriz ation  tab. 2.
+Select a phase if phased authoriz ation  is enabled.
+3.Click Select... at the bottom  of the Authorizers table. 3.
+4.Search for, or enable the checkboxes next to the authorizers that you want to assign.4.
+5.Click Select at the bottom  of the page. 5.
+Note the following:▪When a request is submitted  to add or remove a role, the request must also be approved by each of ▪
+the authorizers c on figur ed  for each of the role’s required resource entitlemen ts.
+▪If any of the role’s required resources, such as a template or group membership request, is denied by▪
+an authorizer, the entir e  role is denied.
+▪A role is only provisioned to the user when all of the required resources have been successfully▪
+provisioned.
+▪The Denial blocks entir e  request flag should be unchecked for the authorizers if the role is only to be ▪
+denied when optional  resources are denied, otherwise the entir e  role could be denied if an authorizer
+is only intending to deny an optional  resource.
+Assigning authorizers by user class
+To assign authorizers to a role based on user class:
+1.Navigate to the Role in f ormation  page  (on page 636). 1.
+2.Select the Authoriz ation  tab. 2.
+3.To de fine  membership criteria: 3.
+▪Select e xisting  user classes: Click Select... and enable the checkboxes for the user classes you want ▪
+to add, then click Select .
+▪Create new user classes: Click 
+ Add new… . See Adding user classes  (on page 738) for full details ▪
+on how to create a new user class.
+4. Con figur e  P articipan t  mapping for each user class that you add. 4.
+Select and create user classes until  you have de fined  membership.
+5.If your membership criteria includes multiple  user classes, de fine  whether users are required to match 5.
+All of the user classes or Any of the user classes .
+ Removing users from membership
+To remove users from membership, you can:
+1.Edit user classes to change the participan ts. 1.
+2.Delete user classes from the membership criteria.2.
+a.Navigate to the membership criteria  page where user classes are listed. a.
+b.Enable the checkbox next to the user classes you want to delete.b.
+3.Click Delete . 3.
+Adding entitlemen ts  to roles
+Once you have added a role, you can add resource entitlemen ts  to it, including accounts, managed
+groups, and other roles you have already de fined.
+Note the following:
+▪A role should contain at least one account.▪▪Group memberships should be requested as part of a role that includes an account, or in addition  to a ▪
+role. Do not create a role that only contains managed groups.
+It is recommended that template accounts are not themselves members of managed groups. This
+allows you to control group membership by including the group as a member of a role.
+▪You cannot add a “closed” managed group (no membership changes allowed) to a role.▪
+▪It is recommended that a role contains at least one required entitlemen t. ▪
+▪If users are given the same resource from multiple  roles, they would only lose the resource when all ▪
+roles that give them the resource are removed from their pr ofile.
+▪You cannot add an entitlemen t  to a role if it would cause the role to be in violation  of an SoD rule. ▪
+▪You cannot add a role as an entitlemen t  to another role if it will cause a cycle. For example, ROLE1 ▪
+cannot be ROLE2 ’s entitlemen t  if ROLE2  is already ROLE1 ’s entitlemen t.
+To add resource entitlemen ts  to a role:
+1.Navigate to the Role in f ormation  page  (on page 636). 1.
+2.Click the Entitlemen ts  tab, then the sub-tab link for: 2.
+▪Account▪
+▪Managed group▪
+▪Role▪
+3.Click Select... . 3.
+4.Select the entitlemen ts  you want to include then click Select . 4.
+5.Set the Necessity  (on page 635) type. 5.
+6.Click Update . 6.
+Next: 
+Con figur e  role enforcement if required. See Con figuring  role enforcement  (on page 640).
+Con figuring  role enforcement
+The role enforcement engine can identif y  users who have excessive or insufficien t  access, and issue
+w orkflo w  requests to correct variances. Global RBAC enforcement options  must also be set before
+settings  for individual roles can take e ff ect.
+To set RBAC enforcement options  for roles:
+1.Navigate to the Role in f ormation  page  (on page 636). 1.
+2.Select the Role enforcement tab. 2.
+3.Select the Enabled checkbox. 3.
+Bravura Security Fabric  displays the r esolution  settings.  The system default is displayed as the
+“E ff ectiv e  setting ” .

@@ -1,0 +1,348 @@
+1.The user clicks View and update pr ofile . 1.
+2.The user selects the Order a new smart phone request, enters notes and submits the request. 2.
+3.Using the Requests  app, the authorizer ADAM approves the request. 3.
+4.While in the Requests  app, ADAM accepts the task of implementing  the request. He selects item 4.
+SPH1234 for the user and clicks Item is in transit to theuser .
+ADAM can also choose from the following options:
+▪Reserve the item▪
+▪Cannot Complete▪
+▪Decline▪
+▪Delegate the task▪
+ADAM ships the phone to the user.
+5.The user receives the item, logs in and acknowledges receipt using the Requests  app. 5.
+6.ADAM logs in and using the Requests  app marks the request as completed. 6.
+The user now owns an account called SPH1234 on the placeholder target system Warehouse .
+When an inventory item is returned by a user using the above c on figur ation:
+1.The user returns the item.1.
+2.ADAM logs in, clicks Manage inventory and unassigns item SPH1234. 2.
+The account is deleted from the user’s pr ofile  and the item is available for provisioning.
+Use case: Item provisioning with an implementer, no authorizer or inventory manager
+For this use case a company uses the following c on figur ation  to provision desktops to users Calgary:
+▪Inventory items DESKTOP001 and DESKTOP002 are included in a group of items classified  by ▪
+type=DESKTOP and loc ation=Calg ar y .
+▪User ADAM is assigned as the implementer.▪
+▪An inventory template account is de fined  as: ▪
+ID DESKTOP_CALGARY
+Target system Warehouse (NULL Target)
+Password required deselected
+Item type DESKTOP
+Loc ation Calgary
+Resource oper ations Implementer
+Authorizer 0 required
+Implementer ADAM
+▪A pr e-de fined  request is de fined  as: ▪
+ID PDR_DESKTOP_CALGARY
+Description Order a new desktop computerOper ations New account: Template account =
+DESKTOP_CALGARY
+Attribut es APP_BUILTIN
+Access control _EXISTING_USERS_ = REQUESTER
+When an inventory item is provisioned using the above c on figur ation:
+1.The user clicks View and update pr ofile . 1.
+2.The user selects the Order a new desktop computer request, enters notes and submits the request. 2.
+3.Using the Requests  app, ADAM accepts the task of implementing  the request. 3.
+Bravura Security Fabric  aut omatic ally  assigns an available desktop.
+4.While in the Requests  app, ADAM clicks Complete . 4.
+The user now owns an account called DESKTOP001 on the placeholder target system Warehouse .
+Note that when there is no inventory manager Bravura Security Fabric  aut omatic ally  assigns the fir s t
+available item. The implementer does not have the option  to change the state of the item.
+When an inventory item is returned by a user using the above c on figur ation:
+1.The user logs in and clicks View and update pr ofile . 1.
+2.The user then selects Change account and follows the wizard to remove the desktop account from his 2.
+pr ofile.
+The item becomes available for provisioning.
+Use case: Item provisioning with an authorizer, no implementer or inventory manager
+For this use case a company uses the following c on figur ation  to provision desktops to users in Warana:
+▪Inventory items DESKTOP003 and DESKTOP004 are included in a group of items classified  by ▪
+type=DESKTOP and loc ation=W ar ana.
+▪User ADAM is assigned the authorizer.▪
+▪An inventory template account is de fined  as: ▪
+ID DESKTOP_WARANA
+Target system Warehouse (NULL Target)
+Password required deselected
+Item type DESKTOP
+Loc ation Warana
+Resource oper ations Connector
+Authorizer ADAM
+▪A pr e-de fined  request is de fined  as: ▪
+ID PDR_DESKTOP_WARANA
+Description Order a new desktop computer
+Oper ations New account: Template account = DESKTOP_WARANAAttribut es APP_BUILTIN
+Access control _EXISTING_USERS_ = REQUESTER
+When an inventory item is provisioned using the above c on figur ation:
+1.The user clicks View and update pr ofile . 1.
+2.The user selects the Order a new desktop computer request, enters notes and submits the request. 2.
+3.Using the Requests  app, the authorizer ADAM approves the request. 3.
+Bravura Security Fabric  aut omatic ally  assigns an available desktop.
+The user now owns an account called DESKTOP004 on the placeholder target system Warehouse .
+Note that when there is no inventory manager or implementer Bravura Security Fabric  aut omatic ally
+assigns the fir s t available item and the connector completes the oper ation.
+When an inventory item is returned by a user using the above c on figur ation:
+1.The user logs in and clicks View and update pr ofile . 1.
+2.The user then selects Change account and follows the wizard to remove the desktop account from his 2.
+pr ofile.
+The item becomes available for provisioning.
+Use case: Item provisioning with an implementer who is also the inventory manager with no authoriz ation  required
+For this use case a company uses the following c on figur ation  to provision laptops to users in Calgary:
+▪Inventory items LAPTOP001 and LAPTOP002 are included in a group of items classified  by ▪
+type=LAPTOP and loc ation=Calg ar y .
+▪Item classified  by type=DESKTOP and loc ation=Calg ar y  are c on figur ed  to use ”In transit/Received by ▪
+user” states.
+▪User ADAM is assigned as an inventory manager and implementer for laptops in Calgary.▪
+▪An inventory template account is de fined  as: ▪
+ID LAPTOP_CALGARY
+Target system Warehouse (NULL Target)
+Password required deselected
+Item type LAPTOP
+Loc ation Calgary
+Resource oper ations Implementer
+Authorizer 0 required
+Implementer ADAM
+▪A pr e-de fined  request is de fined  as: ▪
+ID PDR_LAPTOP_CALGARY
+Description Order a new laptop
+Oper ations New account: Template account = LAPTOP_CALGARYAttribut es APP_BUILTIN
+Access control _EXISTING_USERS_ = REQUESTER
+When an inventory item is provisioned using the above c on figur ation:
+1.The user clicks View and update pr ofile . 1.
+2.The user selects the Order a new laptop request, enters notes and submits the request. 2.
+The request is aut omatic ally  approved.
+3.Using the the Requests  app, ADAM accepts the task of implementing  the request. He selects item 3.
+LAPTOP001 for the user and clicks Item is in transit to theuser .
+ADAM can also choose from the following options:
+▪Reserve the item▪
+▪Cannot Complete▪
+▪Decline▪
+▪Delegate the task▪
+4.ADAM ships the laptop to the user in Calgary.4.
+5.The user receives the item, logs in and acknowledges receipt using the Requests  app. 5.
+6.ADAM logs in and using the Requests  app marks the request as complete. 6.
+The user now owns an account called LAPTOP001 on the placeholder target system Warehouse .
+When an inventory item is returned by a user using the above c on figur ation:
+1.The user returns the item.1.
+2.ADAM logs in, clicks Manage inventory and unassigns item LAPTOP001 . 2.
+The account is deleted from the user’s pr ofile  and the item is available for provisioning.
+Use case: Item provisioning with an authorizer, an inventory manager and no implementer.
+For this use case a company uses the following c on figur ation  to provision laptops to users in Montreal:
+▪Inventory items LAPTOP003 and LAPTOP004 are included in a group of items classified  by ▪
+type=LAPTOP and loc ation=Mon tr eal.
+▪User ADAM is assigned as an inventory manager and authorizer for laptops in Montreal.▪
+▪An inventory template account is de fined  as: ▪
+ID LAPTOP_MONTREAL
+Target system Warehouse (NULL Target)
+Password required deselected
+Item type LAPTOP
+Loc ation Montreal
+Resource oper ations Connector
+Authorizer ADAM
+▪A pr e-de fined  request is de fined  as: ▪ID PDR_LAPTOP_MONTREAL
+Description Order a new laptop
+Oper ations New account: Template account =
+LAPTOP_MONTREAL
+Attribut es APP_BUILTIN
+Access control _EXISTING_USERS_ = REQUESTER
+When an inventory item is provisioned using the above c on figur ation:
+1.The user clicks View and update pr ofile . 1.
+2.The user selects the Order a new laptop request, enters notes and submits the request. 2.
+3.Using the Requests  app, the authorizer ADAM approves the request. 3.
+The user now owns an account called LAPTOP004 on the placeholder target system Warehouse .
+4.ADAM ships the laptop to the user.4.
+5.The user receives the item.5.
+6.ADAM logs in and clicks Manage inventory and changes the state of the assigned laptop to ” Assigned”. 6.
+Note that when there is no implementer, the inventory manager must manually change the state of the
+item to ” Assigned” using Manage inventory .
+When an inventory item is returned by a user using the above c on figur ation:
+1.The user returns the item.1.
+2.ADAM logs in, clicks Manage inventory and unassigns item LAPTOP004. 2.
+The account is deleted from the user’s pr ofile  and the item is available for provisioning.
+Use case: Item provisioning with an inventory manager, no authorizer or implementer
+For this use case a company uses the following c on figur ation  to provision smart phones to users in
+Warana:
+▪Inventory items SPH1000 and SPH1001 are included in a group of items classified  by type=SPH and ▪
+loc ation=W ar ana.
+▪User ADAM is assigned as an inventory manager for smart phones in Warana.▪
+▪An inventory template account is de fined  as: ▪
+ID SPH_WARANA
+Target system Warehouse (NULL Target)
+Password required deselected
+Item type SPH
+Loc ation Warana
+Resource oper ations Connector
+Authorizer 0 required
+▪A pr e-de fined  request is de fined  as: ▪ID PDR_SPH_WARANA
+Description Order a new smart phone
+Oper ations New account: Template account = SPH_WARANA
+Attribut es APP_BUILTIN
+Access control _EXISTING_USERS_ = REQUESTER
+When an inventory item is provisioned using the above c on figur ation:
+1.The user clicks View and update pr ofile . 1.
+2.The user selects the PDR_SPH_WARANA request, enters notes and submits the request.2.
+The request is aut omatic ally  approved and Bravura Security Fabric  aut omatic ally  assigns the fir s t
+available item..
+3.ADAM ships the phone to the user.3.
+The user now owns an account called SPH1000 on the placeholder target system Warehouse .
+4.The user receives the item.4.
+5.ADAM logs in and clicks Manage inventory and changes the state of the assigned laptop to ” Assigned”. 5.
+Note that when there is no implementer, the inventory manager must manually change the state of the
+item to ” Assigned” using Manage inventory .
+When an inventory item is returned by a user using the above c on figur ation:
+1.The user returns the item.1.
+2.ADAM logs in, clicks Manage inventory and unassigns item SPH1000 . 2.
+The account is deleted from the user’s pr ofile  and the item is available for provisioning.Inventory Target Systems
+For inventory provisioning, Bravura Identity  uses inventory target systems and templates to allow
+inventory items to be included in requests.
+You do not need to set up model accounts in order to provision tokens or other inventory; however, you
+should create model accounts for an RSA Authentic ation  Manager 7.1/8.2 target system if you want to
+set up user accounts with token extension data.
+You can add an inventory target system through the Resources menu, or the Inventory menu.
+To add an inventory target system:
+1.Click Manage the system  > Inventory >Target systems > Manually de fined . 1.
+Alt ernativ ely ,  click Manage the System > Resources > Target systems .
+2.Click Add new… 2.
+3.Enter target system parameters.3.
+The target system type can be one of:
+▪NULL target system▪
+▪RSA Authentic ation  Manager 7.1/8.x ▪
+▪Vasco IDENTIKEY Server▪
+To provision SecurID tokens, create your inventory target system with the following parameters:
+Parameter Setting
+ID For example: RSA
+Type RSA Authentic ation  Manager 7.1/8.2
+Description For example: RSA
+List accounts? True
+See Con figuring  general options
+This section  describes c on figur ation  options  available on the main Target system inf ormation  page.
+Some of the options  on this page may apply to products that you do not have installed.
+Options  marked with a 
+  in this document are required.
+Symbols in this document indicate that the marked content applies to specific  product licenses:
+ Bravura Privilege | 
+  Bravura Identity  | 
+  Bravura Pass
+For IT Service Management (Ticket) systems, only the general options  are applicable. When you select a
+tick e t  system, other options  are hidden.
+Target system optionsOption Description
+ IDA unique identifier  for the new target system. The target system ID can contain
+letter s  (A-Za-z), digits (0-9), and other ASCII characters. The target system ID
+cannot contain the following characters: \/*?<>|" .
+ TypeThe target system’s type; which is a description  of the connector. The drop-
+down list includes only licensed target system types for which you have
+installed the connector
+Ticket target systems are listed under IT Service Management Systems , and are
+labeled with (Ticket) .
+ DescriptionThis is the target system name that is displayed to users. Keep this short. If
+there is a need for a detailed description  of the target system, write a s t atic
+HTML page and de fine  its URL in the Help URL page (see below).
+ AddressThe address of this target system  (on page 502). Refer to Target Systems  in the
+Connector Pack documen t ation  for syntax and additional  c onsider ations.
+Help URL In case a longer description  would help users, you can compose and post a web
+page that describes this system further, and enter its URL here. Users can open
+the URL by clicking the target system description  text wherever the text appears
+in the user interface.
+ Managed group/Network
+resource target system typeSelect:
+▪SMB Protocol  if you will be managing access to network shares on a ▪
+Micr osoft  Activ e  Directory target system using Bravura Groups.
+▪SMB Protocol for Activ e  Directory DN  if you will be managing access to ▪
+network shares on an Activ e  Directory DN target system using Bravura
+Groups.
+▪SharePoint Resource  if you will be managing access to sites and documents ▪
+on a SharePoint target system using Bravura Groups.
+▪VMware vSphere Server  to manage access to groups on a "VMware vSphere ▪
+Server" target system.
+ 
+ Allowed in the certific ation
+processAllow this target system to be included in a certific ation  process in Access
+Certifier .
+ Aut omatic ally  create a
+Privileged Access Manager
+managed systemAllow this target system to be c on figur ed  as a managed system in Bravura
+Privilege . Deleting  this target system from the Bravura Privilege managed
+systems will remove the ability of Bravura Privilege to reset passwords on the
+target system without manual c on figur ation.
+This option  is not available for local service mode target systems. You will need
+to run target system import rules if you delete this target system from the
+Bravura Privilege managed systems and decide to re-manage it.
+P r ofile  and account association
+Source of pr ofile  IDs Use this to indicate that users of this system should, by default, also be users of
+Bravura Security Fabric . This also means that full user names are drawn from
+this system.
+See Building user pr ofiles  (on page 539) for details.Option Description
+Account attribut e  to use as
+pr ofile  IDBy default, Bravura Security Fabric  aut omatic ally  uses the short ID on a Source
+of Pr ofiles  to de fine  the pr ofile  name. If you want to use a diff er en t  account
+attribut e  to create the pr ofile  ID, type the name of the account attribut e  in the
+Account attribut e  to use as pr ofile  ID field.  Make sure the chosen attribut e  is
+loaded from the target system  (on page 571) and that it is populated for all
+accounts with a unique value. The accounts for which this attribut e  is blank or
+doesn’t exist won’t create a pr ofile.  If the attribut e  has the same value for more
+than one account, no pr ofile  will be created and an error notice  about
+"duplicate accounts" will be logged. If the attribut e  has the same value for more
+than one account, all of those accounts will be associated with the fir s t pr ofile
+to be created (usually in alphabetic al  order).
+Aut omatic ally  attach  accounts Select this checkbox if user IDs on the target system are identic al  to those on
+Bravura Security Fabric . This allows Bravura Security Fabric  to aut omatic ally
+associate accounts owned by the user with their user ID.
+See Attaching  accounts  (on page 541) for details.
+Account attribut e  to
+aut omatic ally  attach  accounts to
+user pr ofilesThe attribut e  to use to associate each account with an e xisting  pr ofile.  By
+default, Bravura Security Fabric  aut omatic ally  attaches  an account to a pr ofile  if
+the account's short ID matches the Pr ofile  ID. If you want Bravura Security
+Fabric to use a specific  account attribut e  (rather than the short ID) to determine
+auto association,  type the name of the account attribut e  in this field.  Make sure
+the chosen attribut e  is loaded from the target system and that it is populated
+for all accounts; the accounts for which this attribut e  is blank or doesn't exist
+won't be associated with any pr ofile.  If the attribut e  has the same value for
+more than one account, all of those accounts will be associated with a single
+pr ofile.
+Auto discovery
+List accounts When enabled (default) the connector generates a listing  of account login IDs
+during auto discovery.
+This option  is visible only if the target system supports account listing.
+List account attribut es When enabled (default) the connector generates a listing  of account attribut es
+during auto discovery. By default, only account attribut es  that are mapped to
+pr ofile  and request attribut es  are loaded, and all attribut es  are loaded as single-
+valued. You can override this behavior for individual attribut es.
+In order to use this option  the List accounts checkbox must also be selected.
+Bravura Security Fabric  can only list account attribut es  from supported systems.
+See Target Systems  in the Connector Pack documen t ation  for details of specific
+systems.Option Description
+List groups When enabled (default) the connector generates a listing  of groups during auto
+discovery.
+In order to use this option  the List accounts checkbox must also be selected.
+Disabling this option  does not remove any e xisting  managed groups; groups
+must be manually unmanaged or they will be shown in the interface with a red
+x (invalid) and have zero membership.
+Target system supports multiple
+owners on groupsWhen disabled (default) a single group owner is supported for a group.
+When enabled, multiple  group owners are supported for a group.
+List group attribut es When enabled the connector generates a listing  of group attribut es  during auto
+discovery.
+In order to use this option  the List groups checkbox must also be selected.
+See Target Systems  in the Connector Pack documen t ation  for details of specific
+systems.
+Create pr ofile  IDs from enabled
+accounts onlyEnable this to prevent accounts that are disabled on the target system from
+being used to create Bravura Security Fabric  pr ofile  IDs. If you use the LDAP
+filt er  option  in the target address, this option  is not considered (the LDAP filt er
+overrides it)
+Use ID filt er s  to include only
+certain users and accountsYou can use ID filt er s  to exclude or include certain users and accounts. By
+default, an ID filt er  excludes identified  users from Bravura Security Fabric .
+When you select this checkbox, all accounts are excluded except those explicitly
+included by an ID filt er .
+CAUTION: You must also select the Include in system option  when c on figuring
+the filt er .
+Track account changes Select this checkbox to capture changes on target systems that happen out-of-
+band from Bravura Security Fabric . Changes that will be tracked include:
+accounts g etting  added and deleted, accounts joining or leaving managed
+groups, account attribut e  values being changed, and account association  being
+changed.
+The tracked changes are viewable in reports as part of each user’s pr ofile
+history.
+This can also be used in automated user adminis tration .
+Track group changes Select this checkbox to capture changes to group memberships on this target
+system that happen out-of-band from Bravura Security Fabric . This option  can
+also be set for individual managed groups.
+The tracked changes are viewable in reports on group membership.
+This can also be used in automated user adminis tr ation.

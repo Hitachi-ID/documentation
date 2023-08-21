@@ -1,0 +1,357 @@
+▪Fixed issue where certific ation  campaign search engine was limited to only activ e  campaigns. It ▪
+returns all campaigns now.
+▪Updated Review certific ation  deleg ations  report to include deleg ation  of segr eg ation  of duties  rules ▪
+violation  oper ations.
+▪Corrected issues which would incorrectly escalate a certific ation  segment to the top manager in the ▪
+following situations:
+▪A manager in an activ e  orgchart certific ation  campaign was removed and subsequently an orgchart ▪
+oper ation  (Add subordinate, transfer subordinate, remove subordinate) was performed.
+▪An orgchart certific ation  campaign started from top manager and a certific ation  campaign with a ▪
+non-manager as reviewer, delete the non-manager reviewer on target, then modify the orgchart in
+some way (eg. add subordinate to the top manager).
+▪Fixed the issue where the Save  option  was unavailable after  clicking on a certific ation  c on figur ation ▪
+tab or by using the back arrow after  na vig ating  to the Save new  page.
+▪Fixed the issue where "Delegate entir e  review" button  was still enabled even if there is no item to ▪
+delegate. Now the button  is hidden.
+Database
+▪ Modified  DB table 'user classde f attr'  and 'userclassdefgroup' to make the following fields  required: ▪
+▪ user classde f attr:  actor, attrk e y ,  oper ation ▪
+▪userclassdefgroup: actor, nosgroupguid▪
+▪ Modified  idmc on fig  to validate json to update userclass attribut e/ gr oup  criteria to error out if there ▪
+are missing fields.
+▪There is no IDB service crash when pages of user IDs in Users Pr ofiles  report are scrolled back and ▪
+forth.
+▪Fixed an issue with the installer when determining the default SQL Server database and using group-▪
+based Windows authentic ation.
+idmlib
+▪The IDMlib library has been improved by preserving unknown kvg fields  when being consumed by ▪
+WFObject.
+▪Allow explicit setting  of "_in_place": false in environment files to work as expected for Dependents ▪
+lists.
+▪Fix unintended conversion of non-string values to string values, and string values to integers, in _vars▪
+block of environment files.
+Migr ation
+▪Fixed an issue with migratedata.exe  when importing  pr ofile  attribut es  that do not exist on the ▪
+target instance.
+▪Fixed an issue with the migratedata.exe  utility  when there is a failure to open the database file ▪
+used for the import or export of the user data.▪Fixed migratedata.exe  to avoid possible error from e xporting  qset records that originated from ▪
+the Oracle database backend.
+Reports
+▪Data quality report Entitlemen ts  with invalid authorizers now shows removed authorizers for diff er en t ▪
+entitlemen ts  such as Target system, Template account, Managed group, Role, and Segr eg ation  of
+duties  rules ̣(SOD).
+▪Corrected an issue with extra rows being displayed in the Certific ation  of entitlemen ts  Unviewed data ▪
+report.
+▪Fixed an issue with Memberships report and GroupApp to display groups with indirect memberships▪
+correctly.
+▪Fixed a UI issue in Analytics  dashboard to display dropdown list properly when focus changes. ▪
+▪Fixed pamonboar doffboar d.e x e  report, related dashboard, and stored procedures to correctly report ▪
+in f ormation.
+▪Fixed Onboarding and offboar ding  dashboard to not include personal vault in f ormation. ▪
+▪Eliminated extraneous rows returned for "Not reviewed" filt er  in "Entitlemen t  certific ation  coverage" ▪
+report when the review validity expire
+▪If a resource attribut e  group does not have the appropriate access control settings,  the resource ▪
+attribut es  included in the resource attribut e  group will not be accessible in report options.
+▪Updated Session activity  report to include self service password changes (oper ation  code SRES) in the ▪
+count for Password changes.
+▪Fixed Segr eg ation  of duties  rules violations  report so that it displays correctly Segr eg ation  of duties ▪
+in f ormation  with diff er en t  report types.
+▪Updated pamteammanagement.exe report to distinguish  the user's team membership type (group ▪
+member or child group) and display child group in f ormation  if applicable.
+▪Corrected time  formats for use in pr ofile  and user attribut e  report search. ▪
+▪A new column Oper ation  is added to the System audit  report (sysaudit.exe), which displays ▪
+appropriate value when a sys var is cleared or updated.
+▪The Unreviewed Data report has been modified  to include all pr ofiles  rather than just pr ofiles  of users ▪
+in the orgchart.
+▪The data type in the same report has also been changed from "Orgchart user pr ofile"  to simply ▪
+"User pr ofile".
+▪Fixed role enforcement  report to properly return invalid accounts as in de ficit. ▪
+▪ Analytic  report Request summary  displays graphically the correct number of requests and their status. ▪
+▪Correct 3 issues related to the incorrect c alculation  for Number of inherited explicit authorizers when ▪
+running Groups  report with the option  Show managed group and authoriz ation  summary:
+a.Group ID filt er  returns correct results with or without selecting  owner group a.
+b.Same authorizer derived from the target, from the moderators table and from owner groups is onlyb.
+counted once in report
+c.The c omput ations  of the explicit inherited authorizer are consistent with the authorizers displayed c.
+on the Authorizers tab of the group pages▪Corrected Review certific ation  deleg ations  report to include all deleg ation  options  specified  via ▪
+Delegate authority page.
+▪Corrected the Certific ation  applic ation  to save the initial  value of pr ofile  attribut es  of type file. Now ▪
+the initial  value will be displayed in the Certific ation  details  report.
+▪Fixed the Show/Hide Columns drop-down list in reports to stay open when it is reopened.▪
+▪Fixed the "Platform  c onsumption"  analytics  report so that it executes without any error. ▪
+▪Fixed the PAMTeamManagement  report so that: ▪
+▪The account team is returned for onboarded accounts, and not the system team.▪
+▪Onboarded systems are not returned more than once if binded to multiple  managed system ▪
+policies.
+▪Fixed the update cache action  in analytics  reports. ▪
+▪ Modified  plugine x ecution.e x e  and plugine x ecution tr end.e x e  reports to use an account search string ▪
+widget to filt er  on the account name.
+▪Fixed the filt ering  for group membership in Audit report "SOX Groups" so that only group members ▪
+and their groups are displayed in the report when report type is set to "Group memberships".
+Resolved issues
+▪When the DEFAULT_TIMZEONE variable is enabled the correct time z one  will be displayed in the UI. ▪
+▪Removed dynamic library dependencies from pslockwstn and pscredsync for the "useLockWstn"▪
+option  for the local reset extension.
+▪Fixed setup.exe so that the -errtowarn flag is respected when run in quiet or silent mode. ▪
+▪Fixed Login Assistant (SKA) when it is installed and smart cards are also enabled via the group policy to▪
+avoid an error regarding a permissions issue.
+▪Fixed auto-discovery, so that modifying the Source of Pr ofile  account's full name doesn't produce a ▪
+new account association  history.
+▪The nightly processing, loaddb process, has been optimiz ed. ▪
+▪System oper ation  Event log  report displays now displays the following oper ations: ▪
+▪GOOD (Remove unknown owner from a group)▪
+▪GRBD (Remove unknown object from a group)▪
+▪ Multiple  literal values of pr ofile  attribut es  are now sent out to system agent. ▪
+▪pslang e xpr ession/function  getUsersByTarget  no longer returns deleted users/accounts. ▪
+▪Auto-assignment now runs before enforcement process in discovery.▪
+▪Race c ondition  for auto-assignment requests is resolved. ▪
+▪Fixed stored procedure UCPUserTest to properly test user membership against a userclasspoint for▪
+specific  phase, as well as handle invalid userclasspoint c on figur ation  data.
+▪Fixed IDMCon fig ,  which could produce database errors due to the "guid" field  exposed by the ▪
+TemplateAccount object type.
+▪Fixed an issue with dcdiscovery and to ensure that the default value from reqinfo_viewval will appear▪
+in the R eques tGe tAttribut e  generated stored procedure.▪Fixed an issue and with authentic ation  when upgrading from pre-12.0.x instances and the user ▪
+account records had duplicates in the database tables.
+▪ Modified  database fields  to hold target administrator's password to maximum length as backend can ▪
+support.
+▪Fixed file r eplic ation  not working for shared schema nodes. ▪
+▪Fixed the Security questions  module (psq) that was previously passing inconsistent casing for the ▪
+pr ofile  ID value to external QA plugins.
+▪Fixed an issue with external question  set authentic ation,  which previously failed to check if answers ▪
+after  the fir s t one provided by the user were correct.
+▪ W orkflo w  search requests report fix ed  to display the correct results when t esting  pr ofile  attribut es  of ▪
+diff er en t  types.
+▪Added the v alidation  of the account to avoid the failure in reserving the account attribut es. ▪
+▪Fixed a case where the acting  server for a node's services could be o v er written  when modifying ▪
+r eplic ation  c on figur ation.
+▪Fixed a crash that may occur when shutting  down a service that is in the middle of processing a ▪
+request.
+▪Fixed idmemail to handle e x ceptions  and return a warning when MAIL AUTH options  are specified  for ▪
+an SMTP server that does not support authentic ation.
+▪Corrected issue in pamutil so that large cr edential  files can only be downloaded by authorized OTP ▪
+API user accounts.
+▪Fixed re-running diff se ts  with IDTrack CLI so that it properly locates accounts when account and target ▪
+arguments are specified.
+▪Fixed psa.exe binary to be more stable when modifying authentic ation  chains in certain scenario. ▪
+▪Fixed an issue to clear session tags in order to prevent undesired redirects for web notific ation  links. ▪
+▪Fixed an issue where shell extension will direct user to the front end page instead of group request▪
+page when the share is not c on figur ed  as a network resource.
+▪Fixed IDMCon fig  R esour ceAttrGr oup  type, which contained diff er en t  field  values when the instances ▪
+of it are listed, in contrast to when specific  instances are retrieved.
+▪idapi: Fixed UserGe tB yR eqAttr  to search value range properly. ▪
+▪Fixed display issues in Groups app in Mobile app:▪
+▪Card/Table view icon▪
+▪Show/Hide columns button ▪
+▪Column name/icon alignment▪
+▪Controls Alignment▪
+▪Fixed the ability to allow deleg ation  manager to be able to select invalid user as the primary of the ▪
+deleg ation
+▪Fixed the scheduler so that default jobs c ontinue  to execute after  an upgrade. ▪
+▪Fixed wrong c alculation  of perflog  dur ation  in updinst utility . ▪
+▪Fixed focus movement from View and Update Pr ofile  page to Update Attribut es  popup and back. ▪▪ Modified  all services that send out emails so recipients will have emails sent to all of their email ▪
+addresses if the EMAIL pr ofile  attribut e  is c on figur ed  to be multi- v alued.
+▪Fix export_data_components error caused by export script occasionally attempting  to export objects ▪
+that no longer exist.
+▪Fixed IDAPI function  OTPAPIUserCreate so that it sets the OTP IDAPI caller user's 'otpcaller' attribut e ▪
+to true.
+▪Added IDAPI function  OTPAPIUserPasswordUpdate for updating  an e xisting  OTP caller user's ▪
+password.
+▪Fixed a runtime  error in stored procedure UserGrpMembershipStatusList when @batchsig is specified. ▪
+Disc ontinued
+▪Removed the context tr anslation  plugin from front and backend for the translator context mode. ▪
+Bravura Security Fabric 12.2.7
+Resolved issues
+Bravura Privilege
+▪Updated 'Team: Manage Group Membership' pr e-de fined  request to deselect team groups when ▪
+toggling between teams to ensure the correct team members are populated
+▪Group IDs are now recalculated properly when changing teams.▪
+Reports
+▪Corrected handling of date widgets' values in the search criteria text file attachmen t  generated with ▪
+emailed report results.
+▪Corrected issue concerning the handling of report email attachmen ts  which were incorrectly escaping ▪
+HTML characters.
+▪Fixed non-expiring scheduled reports failing due to an invalid date format in the database table.▪
+Bravura Identity
+▪Fixed password page in wizards to check whether a request generated password is provided before▪
+proceeding.
+▪ Optimiz ed  the stored procedures to check for segr eg ation  of duties  rule violations  to return early ▪
+when no valid rules are c on figur ed  so that queries to prepare role memberships based on validity
+windows in order to calculate sod violations  will be skipped.
+▪Some improvements for stored procedures used by the rbacenforce  utility  to return a list of ▪
+variances for all users.
+General
+▪Fixed a tree traversal vulnerability where the hard drive directory structure could be explored.▪
+▪Fixed utility  rbacenforce  to not return sub-roles as de ficits  and prevent endless requests to ▪
+resolve violations  in this case.▪Fixed the multiple- v alue  integer pr ofile  attribut e  issue for the pr e-de fined  request Update attribut es . ▪
+▪ Optimiz ed  stored procedure e x ecution  during auto discovery. ▪
+▪Fixed an issue where the selected language is lost through a SAML authentic ation. ▪
+▪Improved iddiscover  robustness around loading list files that don't exist, have no data, or were ▪
+produced by failed listing.
+▪Changed pre-upgrade queue size check to be more forgiving in scenarios where there are multiple ▪
+language packs.
+Bravura Security Fabric 12.2.6
+Enhancements
+▪Improved database service resilience around unexpected restarts or crashes.▪
+▪Improved performance of file r eplic ation. ▪
+▪ Optimiz ed  Privilege upgrades when upgrading from pre-11.0.0. ▪
+▪ Optimiz ed  loading of discovered computers into database during discovery. ▪
+Resolved issues
+▪Fixed a series of 12.2.0 upgrade scripts which used invalid component names which lead to duplicated▪
+data in some tables. Data is fix ed  aut omatic ally  when upgrading to 12.3, however must be fix ed
+manually in 12.2.x.
+▪Fixed stage numbering of pam_t eam_authoriz ation  rules so that Auto-Approve and Auto-Deny rules ▪
+don't interfere.
+▪Fixed setup.exe so that the -errtowarn flag is respected when run in quiet or silent mode. ▪
+▪Enabled SocketKeepAlive registry setting  to be applied to non-proxy Bravura Security  services. ▪
+▪Fixed loading of extra columns provided by search filt er  plugin. ▪
+▪Fixed saved search menu when extra columns is added by search filt er  plugin. ▪
+▪Fixed the password reveal function  by switching the built-in reveal password feature in Edge with the ▪
+product reveal password feature.
+▪Updated the installer to verify that it successfully renamed and deleted the design/src/ui directory of▪
+the installed node when it is upgraded, allowing the user to retry or skip the installer action  or abort
+the upgrade if there is an issue either renaming or deleting  the directory. Also fix ed  the pos t -
+ins t allation  skin g ener ation  task to determine if an error occurred during the task.
+▪Fixed incorrect r eplic ation  behavior around bulk loads that were retried due to an error. ▪
+▪Fixed an issue where upgrades could behave incorrectly when retrying or skipping multiple  SQL ▪
+statements.
+Bravura Security Fabric 12.2.5
+Resolved issues
+▪Improved language parsing and restoring during the SAML authentic ation. ▪▪Improved the reliability of access disclosure plugins when it er ations  of the disclosure is launched. ▪
+▪Fixed an issue where the network resource icon was sometimes  being shown too large for higher ▪
+r esolutions.
+▪Made "Reason for extension" box visible when r equesting  an extension to check-out an account. ▪
+▪Fixed IDMConfigObjectSetTest  to properly detect dependent changes. ▪
+▪Updated the help desk authentic ation  chain pages to include user interface style updates. ▪
+Bravura Identity
+▪ Certific ation  with consistency c alculations  now display correct progress in f ormation  on certific ation ▪
+review and summary pages.
+▪Minor bug fix in UI display of privileged access disclosure plugins. ▪
+Bravura Security Fabric 12.2.4
+Resolved issues
+R eplic ation
+▪Fixed queueflush .exe  erroneously r eporting  success when unable to contact remote nodes. ▪
+▪Changed r eplic ation  to not go into db commit suspend if versions diff er ,  to instead log a warning and ▪
+to c ontinue  r eplic ation.
+Components
+▪Removed dependency to pam_system_management from▪
+Scenario.pam_personal_admin_management.manifest.
+▪Removed dependency to pam_system_management from▪
+Scenario.pam_account_management.manifest.
+Bravura Security Fabric 12.2.3
+Enhancements
+▪Added a warning to the database r eplic ation  page when attempting  to start a r es ynchr oniz ation  if the ▪
+database is large enough that the process may take a long time.
+▪Adjusted disclosure filt er  to display web app/secure browser disclosure when the disclosure method is ▪
+set for accounts but no website disclosure c on figur ations.
+▪Added Con flicting  passwords  report that returns the details of current c on flicting  password. ▪
+Resolved Issues
+▪The attr_actions_populate  attribut e's  default value has been changed to 'True' for new PDRs ▪
+submitted  to allow for UPDT oper ations.
+▪Fixed file r eplic ation  which not working for shared schema nodes. ▪▪Fixed the Security questions  module (PSQ) which was previously passing inconsistent casing for the ▪
+pr ofile  ID value to external QA plugins.
+▪Fixed an issue with external question  set authentic ation,  which previously failed to check if answers ▪
+after  the fir s t one provided by the user were correct.
+▪Fixed a case where the acting  server for a node's services could be o v er written  when modifying ▪
+r eplic ation  c on figur ation.
+▪Fixed issues with migratedata decr ypting  data from previous release versions. ▪
+▪Corrected issue so that updating  between a team and a personal admin owner for an onboarded ▪
+account properly removes the previous team/owner value.
+▪Fixed c ondition  matching in the hid_policy_request_chain table to properly interpret false matches as ▪
+false and run accordingly.
+▪Fixed the archive-user script in the im_t ermination  component to update user group memberships ▪
+properly.
+▪Fixed the PAMTeamManagement  report so that: ▪
+▪The account team is returned for onboarded accounts, and not the system team.▪
+▪Onboarded systems are not returned more than once if binded to multiple  managed system ▪
+policies.
+▪Fix export_data_components error caused by export script occasionally attempting  to export objects ▪
+that no longer exist.
+▪Fixed 1_5to1_6.py  upgrade script for Scenario.hid_saml_idp to point to the correct csv file. ▪
+Bravura Security Fabric 12.2.2
+Features and improvements
+▪Added keep-alive support to proxy and discovery services in order to prevent idle c onnection ▪
+shutdown.
+▪Added the Database table audit  report to show database table change history. ▪
+Resolved issues
+▪Fixed the scheduler so that default jobs c ontinue  to execute after  an upgrade. ▪
+▪Fixed an issue where label was stacking over dialogs in the requests details panel.▪
+▪Fixed an issue where receive queues could deadlock when the primary runs loaduccache.exe ▪
+with more than 1 thread.
+▪Adjusted updinst  to unc onditionally  synchronize the extdb table for all actions  and to synchronize ▪
+the component folder when loading components.
+Bravura Security Fabric 12.2.1
+Features and improvements
+▪ Modified  the T r ansaction  Monitor Service to be able to retry with returned data. ▪▪An agent can return a ACTryAgainLater code and send a data "cookie" to be returned on the next▪
+try and an amount of time  to wait before being called again.
+▪Added the ability to restrict the targets whose child groups are selectable in the 'Team: Manage group▪
+membership' (TEAM-MEMBERS) pr e-de fined  request.
+▪Added search criteria option  to the discoveredaccountstatus.exe report to include invalid accounts. ▪
+▪Added column to the discoveredaccountstatus.exe report to indicate whether the account is valid or▪
+not.
+▪ Functional.hid_policy_w f email  component performance has been improved when sending bulk email. ▪
+▪Improved user class cache update performance when multiple  requests involving a large number of ▪
+nested groups are processed concurrently.
+▪Added a c on figur ation  option  to loaduccache.exe to improve user class r ec alculation  performance. ▪
+▪Added ability to specify maximum concurrent checkout value in the Vault Account: Create and Vault▪
+Account: Update pr e-de fined  requests.
+▪Added new optional  c on figur ation  for hid_email_notific ation  in Global c on figur ation  to block sending ▪
+emails to specific  addresses.
+▪MAIL_MAX_RECIPIENTS registry value to c on figur e  the maximum number of recipients that will be ▪
+sent an email in a single call to the smtp server.
+▪Updated default value of system variable USERCLASS CACHE EXPIRY from 25 to 72.▪
+▪Check for a 'component-skins-debug' registry value, and if found, enable debug mode when building▪
+skins from manage components.
+▪Added the excludeall flag to the discovery API to allow script authors to create discoveries that may ▪
+not be batched.
+Installer
+▪Added a pr e-ins t allation  check to verify that an instance ins t allation  will not start inside a directory ▪
+where the user only has read-only access.
+▪Updated the product installer to check for the following during the pr e-ins t allation  checks when ▪
+patching or upgrading a r eplic ation  node:
+▪Auto discovery, updinst, and/or persistent listing  is still running ▪
+▪ R eplic ation  queue contains too much data ▪
+▪ R eplic ation  queue delay is too long ▪
+▪Updated product installer to check for the following during upgrades:▪
+▪The Instance upgrade check during Pr e-Ins t allation  Check will verify that no management tools are ▪
+currently opened by the Micr osoft  Management Console.
+▪The installer will verify that no management tools are currently opened by the Micr osoft ▪
+Management Console while uninstalling the old services.
+▪The installer will verify that the messaging service is stopped before the messaging service gets▪
+upgraded.
+▪Changed upgrades to not start secondary services until  user clicks Next  on the post-upgrade tasks ▪
+dialog.R eplic ation
+▪Improved usability when pr opag ating  r eplic ation  c on figur ation  to other servers ▪
+▪Removed the "Disabled" mode option  for r eplic ation. ▪
+▪Updated the product installer to check whether r eplic ation  nodes are in a 'Disabled' mode before ▪
+proceeding.
+▪Improved usability when adding new replicas by cloning the c on figur ation  of e xisting  nodes. ▪
+Resolved issues
+▪Fixed re-running diff se ts  with IDTrack CLI so that it properly locates accounts when account and target ▪
+arguments are specified.
+▪Changed default behavior to consider empty strings and None values as equal for appropriate▪
+attribut es,  leading the product to correctly view two network resources as the same.
+▪Fixed UserclassUserFound to return correct value.▪
+▪Fixed a bug where the smonclean utility  wouldn't delete screenshot folders if the ▪
+SMON_SCREENSHOT_STORAGE_PATH system variable was explicitly set and didn't end with a slash.
+▪Fixed an issue to clear session tags in order to prevent undesired redirects for web notific ation  links. ▪
+▪Fixed idmlib to drop a user atribute if the user attribut e  does not have a value instead of setting  it to ▪
+blank.
+▪Fixed an upgrade issue for Time Based Roles so DB defaults which are used by the feature can be▪
+populated when upgrading from 12.0.x or 12.1.x to 12.2.1.
+▪Fixed IDMCon fig  R esour ceAttrGr oup  type, which contained diff er en t  field  values when the instances ▪
+of it are listed, in contrast to when specific  instances are retrieved.
+▪idapi: Fixed UserGe tB yR eqAttr  to search value range properly. ▪
+▪Fixed display issues in Groups app in Mobile app:▪
+▪Card/Table view icon▪
+▪Show/Hide columns button ▪
+▪Column name/icon alignment▪
+▪Controls Alignment▪
+▪Fixed a crash that may occur when shutting  down a service that is in the middle of processing a ▪
+request.
+▪WFRequestImplementerOpenFind IDAPI function  has been fix ed  to return the correct requests the ▪
+implementer has been assigned to.
+▪Fixed the ability to allow deleg ation  manager to be able to select invalid user as the primary of the ▪
+deleg ation.
+▪Improved performance when checking for duplicate account association  entries in the database. ▪
+▪ Optimiz ed  ACLs checking when loading the main task menu page as well as Privilege App where the ▪
+user is a member of large number of user groups.

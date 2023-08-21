@@ -1,0 +1,358 @@
+Usage trend
+Storage required is strongly related to activity  within a session. Activity  can range from being idle (0%),
+that is, nothing on screen changes, to constant changes (100%), such as watching a video or running a
+living screen-saver.
+The average user will likely use no more than 10-20%. However, since it is difficult  to guess what is
+changing on a user’s screen, a sample of r outine  sessions should be measured.
+Case studies
+Assuming the following:
+▪Default frame rate of 1/second▪
+▪Frame width x height of 1280 x 960▪
+▪Video capture▪
+▪RDP disclosure▪
+▪ Activ eX▪
+The following formula can be used to estima t e  the storage required for raw video:
+S = N ⋆ (0.5 ⋆ A + 2.2)
+where
+S = Storage in MB/min
+N = total sessions
+A = percentage of screen activity
+ Forensic audits 
+In the event that an IT user is under suspicion or has been found to act unethically or illegally, it is helpful
+to be able to play back all of that user’s activity ,  to see what inappropriate actions  they may have taken.
+This data may be required as supporting  evidence if the user must be terminated and may be needed in
+the course of legal proceedings ther eafter .  This data may also be needed to find and reverse any harmful
+changes the user has made to systems or data.
+In this case, you may consider capturing video data for all IT s t a ff  only.
+Assuming there are 100 s t a ff  in the IT department, and each runs one 8-hour session per day, with 10%
+screen activity ,  use the equation  above to determine the storage required for 1 year:
+   S = N ⋆ (0.5 ⋆ A + 2.2) MB/min
+   = 100 ⋆ (0.5 ⋆ 0.1 + 2.2) MB/min
+   = 225 MB/min
+   = 225 MB/min ⋆ 60 min/hr ⋆ 8 hr/day ⋆ 220 work days/year
+   = 23760000 MB/year   = 23760 GB/year
+Load balancing c onsider ations
+It is recommended that you provision several load balancing replicated servers accessible by a single URL.
+Multiple  replicated servers are required to carry the data load created by the monitored sessions and
+ensure a quality service. A single URL simplifies  c on figur ation  and failover situations  if a monitoring
+server needs to be taken down for maintenance or replaced.
+Note that an end user needs to be able to access both the direct URL of the server and the load balanced
+URL in order to download packages containing video data. When the user attemp ts  to download a
+session, Bravura Privilege  uses the direct URL (not the load balancing one) to trigger the downloading of
+the package to the user’s w ork s t ation.  This means that the user must be able to connect to the direct
+Bravura Privilege  URL using their browser without it being blocked by a fir e w all.
+Getting  started
+Con figur ation  requirements
+Before c on figuring  session monitoring options,  you should:
+1.Set up Managed Systems  (on page 1815) and Managed System Policies  (on page 1834). 1.
+If you want users’ requests for searching recorded session data to be authorized, assign authorizers to
+managed system policies.
+2. Con figur e  Access Disclosure Plugins  (on page 1957). 2.
+The command prompt ( pswxcmd ), remote desktop ( pswxtsvc ), secure browser
+(securebrowser ), and all Guacamole controls are c ompatible  with session monitoring.
+3. Con figur e  user access rules to allow users to access recorded data related to their own or another 3.
+users’ activity .
+The following privileges are available:
+▪Manage recorded sessions. In order to have access to the Session monitor app, users must be ▪
+granted this privilege. The Session monitor app allows users to submit requests to search, view and
+download recorded sessions. In addition,  users can be granted the following:
+▪Pre-approved search of my recorded sessions▪
+▪Pre-approved search of all recorded sessions▪
+▪Pre-approved download of recorded sessions▪
+▪Pre-approved view of recorded sessions▪
+4. Optional:  Con figur e  additional  access controls. 4.
+▪Pre-approved search recorded sessions▪
+▪Pre-approved download recorded sessions▪
+▪Pre-approved view of recorded sessions▪
+It is recommended that you plan how you will implement session monitoring  (on page 2027).Na vig ation
+To c on figur e  session monitoring options  click Manage the system > Privileged access > Options  to
+c on figur e  global options,  or click Manage the system  > Privileged access  > Managed system policies >
+<Policy> > Options  to c on figur e  policy-level options
+▪Select the Recorded sessions tab to set options  for c on figuring: ▪
+▪Scope and display of monitoring  (on page 2034) ▪
+▪Session monitor c onnectivity  (on page 2035) ▪
+▪Recorded session data c ollection  modules  (on page 2038) ▪
+▪Select the Recorded session access request tab to set options  for c on figuring  recorded session access ▪
+request options  (on page 2042).
+To c on figur e  web module options  click Manage the system  > Modules  > Recorded session management
+management (smon) for:
+▪Session monitoring activ ation  plugin  (on page 1255) ▪
+▪File storage  (on page 1257) ▪
+▪Search controls  (on page 1258) ▪
+▪Video processing  (on page 1259) ▪
+▪Event triggers  (on page 1262), Event triggers  (on page 1540) ▪
+Initial  c on figur ation
+As long as you have prepared your system to meet the requirements listed on on the current page, you
+can get started with t esting  the session monitoring feature by setting  the following on the Recorded
+sessions tab:
+▪SMON HTTP URL – The session monitor client connects using this fully qualified  URL to the smonc ▪
+CGI program on a Bravura Security Fabric  server.
+▪At least one of the following:▪
+▪SMON KEYSTROKE ENABLE to capture keystrokes ▪
+▪SMON SCREENSHOT ENABLE to take periodic screenshots ▪
+▪SMON WEBCAM ENABLE to record webcam images ▪
+▪SMON UI ENABLE to capture user interface in f ormation ▪
+▪SMON CLIPBOARD ENABLE to capture clipboard data ▪
+The default SMON HTTP URL is <BASE IDSYNCH URL >/<virtualdirectory >/smonc.exe . The
+BASE IDSYNCH URL  (on page 420) is set at Manage the system > W orkflo w  > Email c on figur ation .
+If this is incorrect the Activ eX  controls will not be able to connect to the server, and as a result will not
+allow the remote c onnection  to the managed resource to proceed. For tr oubleshooting  tip s see .
+The following sections  describe these options  and more in detail.Scope and display of monitoring
+Bravura Security Fabric , by default, restricts the screen-shot and keystroke data monitoring scope to the
+terminal only, to protect the privacy of the user; for example when remote users or contractors are
+accessing monitored systems from public or personal computers, personal data and applic ations  could
+also be activ e.  This behavior is controlled by the SMON RESTRICT SCOPE setting ,  which can be applied
+globally or per managed system policy.
+For disclosure options  that allow session recording, having SMON RESTRICT SCOPE enabled would mean:
+▪Child processes of the process that receives disclosed access are not recorded▪
+▪Local w ork s t ation  tools opened via pswxcmd  which open new sessions in the same process as ▪
+additional  tabs will record all tabs only in the fir s t open session on a w ork s t ation;  additional
+simultaneous sessions open to the same tool will record black rectangles.
+Disabling this setting  allows you to monitor the user’s display and keystrokes on their whole system both
+inside and outside the terminal when they initia t e  a privileged session. This provides better  security; for
+example if a user starts remote desktop, they may be able to copy sensitiv e  data from the remote
+terminal to an email or another applic ation  outside the terminal.
+Clipboard data is not restricted when SMON RESTRICT SCOPE is enabled. Bravura Security Fabric will
+c ontinue  to collect clipboard data inside and outside the terminal for the user's whole system.
+The following options  on the Recorded session  tab
+To c on figur e  session monitoring options  click Manage the system > Privileged access > Options  to
+c on figur e  global options,  or click Manage the system  > Privileged access  > Managed system policies >
+<Policy> > Options  to c on figur e  policy-level options
+▪Select the Recorded sessions tab to set options  for c on figuring: ▪
+▪Scope and display of monitoring  (on page 2034) ▪
+▪Session monitor c onnectivity  (on page 2035) ▪
+▪Recorded session data c ollection  modules  (on page 2038) ▪
+▪Select the Recorded session access request tab to set options  for c on figuring  recorded session access ▪
+request options  (on page 2042).
+To c on figur e  web module options  click Manage the system  > Modules  > Recorded session management
+management (smon) for:
+▪Session monitoring activ ation  plugin  (on page 1255) ▪
+▪File storage  (on page 1257) ▪
+▪Search controls  (on page 1258) ▪
+▪Video processing  (on page 1259) ▪
+▪Event triggers  (on page 1262), Event triggers  (on page 1540) ▪
+control the scope of what is monitored:Option Description
+SMON RESTRICT SCOPE When disabled, the user’s entir e  system is monitored
+when the user starts a privileged session.
+When enabled, monitoring is restricted to the process
+created by the access disclosure plugin; for example,
+when the command prompt control (pswxcmd)
+launches PuTTY .exe, monitoring is restricted to the
+terminal session.
+This should always be disabled when recording user
+interface meta data.
+When a user initia t es  a monitored session, an 
+  icon is displayed in the user’s task bar with a
+customizable message to notif y  the user that he or she is being monitored. You can disable this if your
+security policy requires covert monitoring. It is recommended that you review security and user
+monitoring policies before enabling covert monitoring.
+The following options  on the Recorded session  tab control how users know their session is being
+recorded:
+Option Description
+SMON DISPLAY RECORDING ACTIVE
+TASK BAR ICONWhen enabled, an icon is displayed in the user’s
+desktop task bar to indicate that their session is
+being recorded.
+SMON DISPLAY RECORDING ACTIVE
+TASK BAR MESSAGEThe message that is displayed when the user
+hovers the cursor over the session recording task
+bar icon.
+Session monitor c onnectivity
+The following options  on the Recorded session  tab
+To c on figur e  session monitoring options  click Manage the system > Privileged access > Options  to
+c on figur e  global options,  or click Manage the system  > Privileged access  > Managed system policies >
+<Policy> > Options  to c on figur e  policy-level options
+▪Select the Recorded sessions tab to set options  for c on figuring: ▪
+▪Scope and display of monitoring  (on page 2034) ▪
+▪Session monitor c onnectivity  (on page 2035) ▪
+▪Recorded session data c ollection  modules  (on page 2038) ▪
+▪Select the Recorded session access request tab to set options  for c on figuring  recorded session access ▪
+request options  (on page 2042).
+To c on figur e  web module options  click Manage the system  > Modules  > Recorded session management
+management (smon) for:
+▪Session monitoring activ ation  plugin  (on page 1255) ▪▪File storage  (on page 1257) ▪
+▪Search controls  (on page 1258) ▪
+▪Video processing  (on page 1259) ▪
+▪Event triggers  (on page 1262), Event triggers  (on page 1540) ▪
+control how the session monitoring clients connects with the Bravura Security Fabric  server.
+Option Description
+SMON HTTP CERT VALIDATION When enabled, the session monitoring client will
+validate the certific a t e  from the Bravura Security
+Fabric  server when c onnecting  over an SSL
+c onnection.
+SMON HTTP HEART BEAT
+FREQUENCYFrequency in seconds that the client will send a signal
+to the server to indicate that it is still running. The
+default is 30 seconds.
+SMON HTTP POST SIZE LIMIT The limit on data sent from the Activ eX  control or
+persistent client to smonc . The smonc program is
+the high performance CGI program that receives
+in f ormation  from w ork s t ations.
+SMON HTTPP ROXY SERVER The proxy server used by the session monitor client
+when trying to connect to the server.
+SMON HTTP TIMEOUT The time  in seconds that the session monitor client
+will try to establish a c onnection  with the server
+before giving up. The default is 30 seconds.
+SMON HTTP URL The session monitor client connects using this fully
+qualified  URL to smonc on a Bravura Security Fabric
+server. The smonc program is the high performance
+CGI program that receives in f ormation  from
+w ork s t ations.
+The default SMON HTTP URL  is <BASE IDSYNCH
+URL>/<virtual directory>/smonc.exe .
+The BASE IDSYNCH URL is set at Manage the system >
+W orkflo w  > Email c on figur ation .
+If this is incorrect the Activ eX  controls will not be able
+to connect to the server, and as a result will not allow
+the remote c onnection  to the managed resource to
+proceed. For tr oubleshooting  tip s see T r oubleshooting
+(on page 2037).
+SMON NETWORK FAILURE RETRY
+LIMITThe number of failed c onnection  attemp ts  that a
+session monitor client can make before Bravura
+Security Fabric  determines there is a network failure.
+The default is 2 attemp ts.Option Description
+SMON NETWORK FAILURE
+TERMINATEWhen enabled, terminates the remote c onnection  if
+the network fails; that is, collected data can no longer
+be sent to Bravura Security Fabric  server. This is
+disabled by default.
+SMON STALE SESSION TIMEOUT Mark sessions as stale if they have not contacted the
+server in this many seconds. The default is 120
+seconds.
+Connectivity  messages
+The following settings  a ff ect  messages displayed to users when certain events occur when session
+monitoring is initia t ed:
+Option Description
+SMON NETWORK FAILURE
+TERMINATE MSGMessage to display to users when their c onnection  is
+terminated due to a network failure. The message is
+controlled by the !!!
+SMON_NETWORK_FAILURE_TERMINATE_DEFAULT_MSG
+M4 tag, which by default displays in English: “Connectivity  to
+Bravura Security Fabric  server was los t. Connection
+terminated.”
+SMON NETWORK NO
+CONNECTION MSGMessage to display to users when the client cannot contact
+the Bravura Security Fabric  server, and access is not granted.
+The message is controlled by the !!!
+SMON_NETWORK_NO_CONNECTION_DEFAULT_MSG  M4
+tag, which by default displays in English: “Failed to connect to
+Bravura Security Fabric .Please contact the Bravura Security
+Fabric  administrator.”
+SMON TERMINATE BY
+ADMINISTRATOR MSGMessage to display to users when their c onnection  is
+terminated by an administrator. The message is controlled by
+the !!!
+SMON_TERMINATE_BY_ADMINISTRATOR_DEFAULT_MSG
+M4 tag, which by default displays in English: “Connection  was
+terminated by an administrator.”
+T r oubleshooting
+ Connectivity  to monitoring service could not be established 
+If you have trouble c onnecting  to the monitoring server when initiating  a session, try using the process
+explorer program, procexp.exe, to analyze processes on the system. You can download this program from
+live.sysinternals.com .If you have trouble c onnecting  to the monitoring server when initiating  a session, try using the logutil
+program to collect logging in f ormation  from the Activ eX  controls. To do this, run the following command
+on the system where the Activ eX  controls are being run from:
+ logutil.exe -instance "PPM Client ActiveX Controls" -level 6 -
+maxdelay 2 -makekey 
+Con firm  the URL used in the c onnection.  Most c onnection  failures are the result of a misc on figur ation  in
+the URL, SSL, certific a t e  v alidation,  or proxy settings.
+If SMON HTTP URL is incorrect the Activ eX  controls will not be able to connect to the server, and as a
+result will not allow the remote c onnection  to the managed resource to proceed.
+When a client using pswxcmd or pswxtsvc cannot communicate with the server via the SMON HTTP
+URL, the following message is displayed on the client:
+ Failed to connect to Bravura Security Fabric server.  Please contact 
+ the Bravura Security Fabric administrator. 
+Fix the URL so that it resolves for all client w ork s t ations.  You can test it by copying and pasting  the value
+into the web browser loc ation  field  in the web browser. If a page loads with an encrypted blob then it
+worked (encrypted blobs start with {AES} ). Typical errors would be: server not found , or 404
+Page NotFound .
+The server not found error means the fir s t part of the SMON HTTP URL  does not resolve
+correctly; the hostname or IP of the server is not accessible from client.
+The 404 Page Not Found error typically means that the wrong hostname or IP was used (it went
+to a web server other than the one with the Bravura Security Fabric  instance installed). It could also hint
+that the virtual directory is incorrect, or that HTTP/HTTPS is incorrectly specified.  The virtual directory is
+set during setup.
+Cannot download session package for auditing  
+In order to download a session package, the client w ork s t ation  must be able to resolve the URL of the
+server on which the package was created. If clients connect to the server using a load balancer, the client
+may not be able to download the package.
+Alt ernativ ely ,  you can provide a separate, externally addressable name of the server.
+Recorded session data c ollection  modules
+This section  shows you how to c on figur e  the Bravura Privilege  recorded session data c ollection  modules.
+Navigate to the Recorded session tab
+To c on figur e  session monitoring options  click Manage the system > Privileged access > Options  to
+c on figur e  global options,  or click Manage the system  > Privileged access  > Managed system policies >
+<Policy> > Options  to c on figur e  policy-level options
+▪Select the Recorded sessions tab to set options  for c on figuring: ▪
+▪Scope and display of monitoring  (on page 2034) ▪▪Session monitor c onnectivity  (on page 2035) ▪
+▪Recorded session data c ollection  modules  (on page 2038) ▪
+▪Select the Recorded session access request tab to set options  for c on figuring  recorded session access ▪
+request options  (on page 2042).
+To c on figur e  web module options  click Manage the system  > Modules  > Recorded session management
+management (smon) for:
+▪Session monitoring activ ation  plugin  (on page 1255) ▪
+▪File storage  (on page 1257) ▪
+▪Search controls  (on page 1258) ▪
+▪Video processing  (on page 1259) ▪
+▪Event triggers  (on page 1262), Event triggers  (on page 1540) ▪
+to c on figur e  data capture methods including:
+▪Key stroke capture  (on page 2039) ▪
+▪Screen capture  (on page 2040) ▪
+▪User interface meta data recording  (on page 2040) ▪
+▪Clipboard capture  (on page 2041) ▪
+▪Webcam capture  (on page 2041) ▪
+Key stroke capture
+The key stroke capture module records keys pressed during a session. When pr ocess-specific  monitoring
+(on page 2034) is enabled, only the keys pressed in the target process window are recorded. When full
+system monitoring is enabled, all key strokes are captured.
+To enable Bravura Privilege  to record keys that were pressed during a session, c on figur e  the following in
+the Recorded sessions  (on page 2033) options  tab:
+Option Description
+SMON KEYSTROKE ENABLE Enables Bravura Privilege  to capture key
+strokes during recorded sessions.
+The in f ormation  is compiled into a keystroke-data.xml  file in the directory set by Manage the
+system  > Modules  > Recorded session management  (smon ) > SMON TEXT STORAGE PATH .
+The following options  on the Recorded sessions  (on page 2033) tab control which keystroke types
+generate new events:
+Option Description
+SMON KEYSTROKE SPLIT ENTER Generate a new keystroke event when the user
+presses the enter key.
+This is enabled by default.Option Description
+SMON KEYSTROKE SPLIT ESC Generate a new keystroke event when the user
+presses the escape key.
+This is disabled by default.
+SMON KEYSTROKE SPLIT LMB Generate a new keystroke event when the user clicks
+their left mouse button.
+This is disabled by default.
+SMON KEYSTROKE SPLIT TAB Generate a new keystroke event when the user
+presses the tab key.
+This is disabled by default.
+Screen capture
+The screen capture module can take periodic screenshots of either the target process, in the case of
+pr ocess-specific  monitoring  (on page 2034), or the entir e  desktop, in the case of full system monitoring.
+The module is able to handle multiple  monitors, the removal and addition  of monitors during recording,
+and screen savers.
+To enable Bravura Privilege  to periodically capture screenshots during a session, c on figur e  the following
+in the Recorded sessions  (on page 2033) options  tab:
+Option Description
+SMON SCREENSHOT COLOR
+QUALITYThe colour quality at which screenshots will be
+captured and stored. The value can be either 16
+or 32 bits. The default is 32 bits.
+SMON SCREENSHOT ENABLE Enables Bravura Privilege  to periodically capture
+screenshots during a recorded session.
+SMON SCREENSHOT FRAME RATE Interval, in milliseconds, at which screenshots are
+taken during a recorded session. The default is
+1000 milliseconds, or 1 second.
+SMONS CREENSHOT MAX COUNT
+PER ARCHIVEMaximum number of screenshots per archived
+file. This must be a number between 1 and 65535.
+To help limit storage and network bandwidth requirements, screenshots are aggregated into hour-long
+videos, which are stored in the path set by Manage the system  > Modules  > Recorded session
+management  (smon ) > SMON SCREENSHOT STORAGE PATH .
+User interface meta data recording
+This is not c ompatible  with Guacamole access disclosure plugins.
+The user interface meta data recording module provides meta data that you can use to enhance the data
+c ollection  abilities  of other modules.

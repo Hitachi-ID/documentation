@@ -1,0 +1,377 @@
+▪webappjson_search  By default, the user checking out the managed account has the ability to search ▪
+and select a desired website applic ation.
+The logutil utility  cannot capture pswxwebapp plugin activity
+Con figuring  global access disclosure options
+You c on figur e  access disclosure plugins globally, and then override settings  and behavior for diff er en t
+managed system policies if necessary. Attribut es  control the behavior of the access disclosure plugins.
+Getting  started
+To c on figur e  system-wide access disclosure options:
+1.Click Manage the system > Privileged access > Access disclosure plugins . 1.
+2.To de fine  a: 2.
+▪New access disclosure plugin– click Add new… . ▪
+▪ Existing  access disclosure plugin– select the plugin you want to view or modify. ▪
+You can now:
+▪ De fine  common access disclosure parameters. ▪
+▪Modify attribut es  that control disclosure ▪
+▪Add attribut es  that control disclosure ▪
+De fining  access disclosure plugins
+You can add custom access disclosure plugins to make them available to managed system policies. For
+each access disclosure plugin, you can c on figur e  one or more attribut es  that modify the behavior of the
+plugin.
+To de fine  common parameters for an access disclosure plugin:
+1.Navigate to the access disclosure plugin c on figur ation  (on page 2011) page 1.
+2.Set the access disclosure plugin options  as described in Table De fining  access disclosure plugins  (on 2.
+page 2011).
+For e xisting  plugins, it is recommended that you only modify Description  or the options  to
+aut omatic ally  add this plugin to new managed system policies.
+3.Click Update to modify an e xisting  plugin, or Add new… to add a new plugin. 3.
+Access disclosure plugin global options
+Option Description
+ID Aut omatic ally  generated ID
+Filename The filename  of the access disclosure plugin. The file must either be deployed
+to client w ork s t ations  or located in the \<instance>\wwwdocs\ directory on the
+Bravura Security Fabric serverOption Description
+Class ID The GUID of the access disclosure plugin. This is not applicable for Guacamole
+access disclosure plugins.
+Activ eX  server/type The server name of the access disclosure plugin. This is not applicable for
+Guacamole access disclosure plugins
+Version The version of the access disclosure plugin
+Description The plugin description  presented to users
+Notes Additional  details about this plugin to be displayed under the description
+Allow this as a selectable option
+for group set setsCheck to make group sets selectable during managed system policy
+c on figur ation
+Allow this as a selectable option
+for current passwordsCheck to make current passwords selectable during managed system policy
+c on figur ation
+Allow this as a selectable option
+for old passwordsCheck to make old passwords selectable during managed system policy
+c on figur ation
+Allow this as a selectable option
+for SSHkeysCheck to make SSH keys selectable during managed system policy c on figur ation
+Aut omatic ally  enable for group
+set sets on new managed
+system policiesNew managed system policies created will include this plugin to access the
+current group sets
+Aut omatic ally  enable for
+current passwords on new
+managed system policiesNew managed system policies created will include this plugin to access the
+current privileged password
+Aut omatic ally  enable for old
+passwords on new managed
+system policiesNew managed system policies created will include this plugin to access old
+privileged passwords
+Aut omatic ally  enable for SSH
+keys on new managed system
+policiesNew managed system policies created will include this plugin to access
+privileged accounts using SSH keys
+De fining  access disclosure attribut es
+You can add or modify attribut es  to customize the plugin behavior.
+To de fine  access disclosure plugin attribut es:
+1.Navigate to the access disclosure plugin c on figur ation  (on page 2011) page 1.
+2.Select to update and modify an e xisting  plugin, or Add new... to add a new plugin 2.
+access disclosure plugin attribut e  options
+Option Description
+Name The name of the plugin attribut e. Cannot  be modified  after  attribut e  has been
+added.
+Description The description  of the plugin attribut e.Option Description
+Type Choose the plugin attribut e  type:
+▪Binary▪
+▪Boolean▪
+▪GUID▪
+▪Integer▪
+▪String▪
+Cannot be modified  after  attribut e  has been added.
+User access Sets the options  that a user has for the attribut e:
+Locked The user can see the control but not modify it
+Override allowed The user can modify the value
+Hidden The control is hidden from the user
+When at least one attribut e  for a plugin allows override, end users can save
+sessions with their preferred values.
+Allowing override for an attribut e  pot entially  allows users to modify options
+in such away to exploit and expose the password in f ormation.  The option
+should be used with c aution  and only when absolutely required.
+If the Override allowed user access was set but revoked later on, any
+previous changes made to the attribut e  by the user will be removed in favor
+of the global attribut e  value. If this user access is re-enabled, the user -
+de fined  attribut e  value will be regained.
+Default value Use only if the user does not override the value, or it is not overridden at the
+managed system policy level.
+Allowed values (comma-delimited
+list)A restricted list of values that the attribut e  value can take. This option  is only
+displayed for type integer and strings.
+Value must match this regular
+expressionA value must be validated with this regular expression in order for the plugin
+to be enabled. This option  is only displayed for type integer and strings.
+Minimum If set, no value can be less than the value set. This option  is only displayed for
+type integer.
+Maximum IIf set, no value can be more than the value set. This option  is only displayed
+for type integer.
+Value is required If checked, a value must be set in order for the plugin to be enabled. This
+option  is only displayed for type integer and strings.
+You can override these default settings  on the managed system policy level. See Overriding global
+settings  in managed system policies  (on page 1852).
+Con figuring  string plugin attribut e  values
+All access disclosure plugin attribut es  of type String  can be de fined  with variables. You can de fine
+discovered system attribut e  values in this manner.
+To use the discovered system attribut e  as-is, simply enter the following in the attribut e’ s  Default value
+field:         % <attribute name> % 
+For example, the default domain value for a remote desktop plugin is:
+         %netBIOSDomainName% 
+String attribut es  can be manipulated by using the following syntax:
+         %k:(start position):(end position):<attribute name>% 
+For example:
+        %netBIOSDomainName% = corporate.domain 
+ 
+        %k:3:12:netBIOSDomainName% = porate.dom 
+ 
+        %username% = CORP\account00 
+ 
+        %k:5:username% = account00 
+Cloning access disclosure plugins
+In some scenarios, it may be desirable to have multiple  instances of the same access disclosure plugin but
+with diff er en t  settings;  for example:
+1.Some end users like to use a PuTTY terminal; others prefer Tera Term.1.
+2.A product administrator de fines  two disclosure plugins; one for PuTTY , one for Tera Term. 2.
+3.The PSW disclosure plugin dynamically selects which disclosure plugin to display to an end user using3.
+a request or pr ofile  attribut e.
+Product administrators can create new instances of the same access disclosure plugin by cloning.
+To clone an access disclosure plugin:
+1.Navigate to the access disclosure plugin c on figur ation  (on page 2011) page 1.
+2.Select to update and modify an e xisting  plugin. 2.
+3.Click Clone . 3.
+4.Specify a description  and modify other options  as needed. 4.
+5.Click Add. 5.
+When using the pswdisclosure script, you will need to know the new disclosure plugin’s ID in order for
+it to be available to the plugin.
+▪You can also clone access disclosure plugins in managed system policies. See Cloning access disclosure ▪
+plugins  (on page 1853).
+▪You can set up access disclosure plugins to allow end users to save sessions with their preferred▪
+settings.  See Enabling saved sessions  (on page 2015).Enabling saved sessions
+In scenarios where end users can override disclosure plugin attribut es,  they may want to save their
+modified  values as a saved session ; for example if they want to:
+▪Specify a webpage to log into with a directory account▪
+▪Specify an RDP destination  to log into with a directory account ▪
+▪Choose a s yn thetic  attribut e  that expresses a common set of values that will be used to gain access to ▪
+a system
+This allows end users to save their preferences, improves usability and reduces the likelihood of error. It
+also requires less adminis tr ativ e  work than cloning.
+To enable users to save sessions for a disclosure plugin, at least one attribut e  must be set to allow
+overrides  (on page 2012), on either the global or managed-system-policy level.
+This capability is not available for Copy, Display, or Run command plugins.
+The Functional.pam_sa v ed_session_policy  component allows administrators to c on figur e  global saved
+sessions that are available for all end users.
+To learn how to save sessions as an end user, see Saving sessions in the end user documen t ation .
+Con figuring  pam_saved_session_policy
+To c on figur e  saved session policies:
+1.Install the Functional.pam_sa v ed_session_policy  component. 1.
+2.Click Manage external data store  to edit the following tables in the external data store ( extdb ): 2.
+▪pam_saved_session_policy▪
+De fine  the policy to apply the saved session.
+▪ pam_sa v ed_session_action▪
+De fine  the saved session to apply to the selected policy.
+If the saved session overrides multiple  disclosure attribut es,  then an entry needs to be created for
+each disclosure attribut e  that will be modified.
+If there are multiple  entries with the same SavedSessionName value, those entries will be treated as the
+same saved session.
+If there are multiple  entries with the same SavedSessionName value but diff er en t  SavedSessionCategory
+and SavedSessionNotes values, the value from the latest entry will be used (unless the value is empty).
+If any entries are modified  or added to an e xisting  saved session, end-users will need to remove the
+e xisting  saved session from the Privileged Access App in order to use the saved session with the updated
+settings.Filter policy and action  tables
+Disclosure filt er  logic is stored within two external data store (extdb) tables; pam_disclosur e_filt er_policy
+and pam_disclosur e_filt er_action.  The action  table stores each type of disclosure method installed and
+the plugin that they activ a t e.  The policy table is where rules determine which disclosure methods are
+available to a user when they request a password. These disclosure methods can be restricted based on
+the platform  type of the managed account, the recipient’s user class or group membership or on a
+variety of other attribut es.
+Disclosure Filter Policy and Action  Tables
+The policy and action  tables are in a linked design and rely on each other to deliver disclosure options  to
+requesters. The disclosure filt er  policy table is used to provide access to disclosure options,  whereas the
+associated disclosure filt er  action  table is used to set specific  attribut es  of the disclosure options
+(timeouts  and so on)
+Bravura Privilege  executes all actions  that reference (via a foreign key) a policy that passes. This design
+allows a user to c on figur e  a single policy that activ a t es  one or more disclosure plugins.
+Not all columns in a policy or action  table rule have to be populated, only the ones the rule purpose
+requires. If multiple  columns are populated for the rule, the c ondition  is an AND, whereby all c onditions
+of the rules must be true for the rule to trigger its action.  If OR logic is needed, add separate rules for
+each c ondition  requirement.
+Like all policy tables, the last policy that passes wins. If you have c on flicting  actions,  the last one
+overwrites any previous c on flicting  actions.
+Policy Engine Glossary
+▪Wildcard Field▪
+A text field  that supports wildcard matching uses Unix filename  pattern  matching . The field  tests if the
+variable and field  match. The following oper ations  can be used:
+▪* - Match everything▪
+▪? - Match a single character▪
+▪[seq] - Matches any character in seq▪
+▪[!seq] - Matches any character not in seq▪
+▪Expression Field▪
+An expression that will determine the value of the field  when Bravura Privilege  evaluates the field.
+The Mako  t emplating  language is used and all data is stored in the obj_data variable.
+These expressions are commonly used for building group names, for example, “ applic ation_$
+{obj_da t a.acc oun t.acctid}_vie w ” .
+Disclosure Filter Policy Table
+Each table in the external data store ( extdb ) has c onfiguration  options  that only product administrators
+with all adminis trative  privileges (superuser) can modify. Superusers can access the c onfiguration  optionsby clicking on the plus (+) symbol located below the table. See External data store Table c onfiguration
+options  (on page 1171)for details.
+The following table outlines the supported options  and usage of the fields  in the
+pam_disclosur e_filt er_policy  <estdb> table.
+Field Supports Description Input
+StageNumber Integer The grouping stage number used to determine
+the ordering of sets of rules.required,
+not NULL
+RuleNumber Integer The rule number used to determine the
+e v aluation  order of rules within a stage.required,
+not NULL
+SkipRemaining Combo Box Use this column to skip e v aluation  of some of
+the remaining rules. One of:
+▪‘Stage’: When this rule matches, skip▪
+e v aluation  of all remaining rules in the
+current stage. Rules in other stages will
+c ontinue  to be evaluated.
+▪‘All’: When this rule matches, skip▪
+e v aluation  of all remaining rules in all
+remaining stages.optional
+Comment Text Rule description. optional
+FilterID Text The ID for the filt er  that is used by the action
+table.required,
+not NULL
+Oper ation Text,
+ExpressionOper ation  of request, or an expression to
+evaluate.optional
+PlatformT ype Text,
+Wildcard,
+ExpressionThe platform  type of the target. For example,
+Windows Server, Linux, Oracle.optional
+optionalMSPID Text,
+Wildcard,
+ExpressionThe managed system policy ID that the
+requested privileged access is managed
+under..
+To future-proof policies avoid using this
+column.optional
+ClientIPCIDR Text,
+ExpressionThe CIDR mask to test against the user’s IP
+address.optional
+AccountID Text,
+Wildcard,
+ExpressionThe account ID.
+Only usable for account checkouts.optional
+AccountTargetID Text,
+Wildcard,
+ExpressionThe Target ID associated with the account.
+Only usable for account checkouts.optional
+RecipientUserclass Text,
+ExpressionSingle-participan t  user class to evaluate for
+recipient membership.optionalField Supports Description Input
+RequesterUserclass Text,
+ExpressionSingle-participan t  user class to evaluate for
+requester membership.
+Note:  The recipient generally is tested for
+disclosure filt er  policies, not the requester.optional
+GroupFQNrecipientMembershipTargetID Text,
+ExpressionThe Target ID of the managed account group
+de fined  in GroupFQNrecipientMembership.optional
+GroupFQNrecipientMembership Text,
+ExpressionThe Group ID to which the recipient belongs.
+Requires
+GroupFQNrecipientMembershipTargetID to be
+de fined.
+Group short ids are also accepted.optional
+GroupFQNrequesterMembershipTargetID Text,
+ExpressionThe Target ID associated with the managed
+group de fined  in
+GroupFQNrequesterMembership.optional
+GroupFQNrequesterMembership Text,
+ExpressionThe group ID of the requester. Requires
+GroupFQNrequesterMembershipTargetID to
+be de fined.
+Only usable for account checkouts.
+To future-proof policies avoid using this
+columnoptional
+R eques tAttribut eBoolT rue Text,
+ExpressionThe Pr ofile  or Request Attribut e  ID which
+should have its truth value evaluated. If
+de fined,  this will match if the attribut e  is set
+to True. If the attribut e  is False or unde fined,
+the rule will not apply.optional
+R eques tAttribut eBoolF alse Text,
+ExpressionThe Pr ofile  or Request Attribut e  ID which
+should have its truth value evaluated. If
+de fined,  this will match if the attribut e  is set
+to False. If the attribut e  is True or unde fined,
+the rule will not apply.optionalField Supports Description Input
+Attribut eT ype Combo Box De fines  what the attribut e  de fined  by
+Attribut eID  is associated with. One of:
+▪‘Account’: check against the Account ID▪
+being requested
+▪‘Discovered System’: check against▪
+Discovered System attribut es
+▪‘Target’: check against the Target ID on▪
+which the account is being managed
+▪‘Request’: check against the Request▪
+Attribut e  ID
+▪‘Viewer’: check against a viewers pr ofile  or ▪
+request attribut es
+▪‘Resource Managed Account’: check▪
+against a managed account
+▪‘Resource Managed System’: check against▪
+a managed systemoptional
+Attribut eID Text,
+ExpressionThe Attribut e  ID. Requires Attribut e  Type to be
+de fined.optional
+Attribut eV alue Text,
+Wildcard,
+ExpressionThe value of attribut e  de fined  in Attribut eID .
+Requires Attribut eT ype  and Attribut eID  to be
+de fined.optional
+UTCStartTime Text,
+ExpressionThe start time  that a rule should be applied.
+Requires UTCFinishedTime to be de fined.optional
+UTCFinishedTime Text,
+ExpressionThe end time  that a rule should be applied.
+Requires UTCStartTime to be de fined.optional
+The ComponentOwnerFQN  field,  included in all external data store tables, shows the name of the
+component providing specific  rows to a table.Disclosure Filter Action  Table
+Each table in the external data store ( extdb ) has c onfiguration  options  that only product administrators
+with all adminis trative  privileges (superuser) can modify. Superusers can access the c onfiguration  options
+by clicking on the plus (+) symbol located below the table. See External data store Table c onfiguration
+options  (on page 1171)for details.
+The following table outlines the supported options  and usage of the fields  in the
+pam_disclosur e_filt er_action  extdb  table.
+Field Supports Description Input
+ActionID Text Unique number used to determine the e v aluation
+order of actions.required, not
+NULL
+FilterID Foreign Key The corresponding disclosure filt er  policy FilterID
+to link this action  to.required, not
+NULL
+DisclosureID Text,
+ExpressionThe GUID for the access disclosure plugin that
+corresponds to the one this action  uses. The list
+can be found under Manage the system >
+Privileged access > Access disclosure plugins.required, not
+NULL
+Attribut eName Text,
+ExpressionThe disclosure plugin attribut e  name. optional
+Attribut eV alue Text,
+ExpressionThe attribut e  value to set the disclosure plugin
+attribut e  specified  in Attribut eName.optional
+Attribut eCalculationFunction Text The callback function  to execute.
+Callback functions  are small scripts used to
+modify the disclosure attribut es  directly.
+(Callback functions  may be removed in a future
+release, use only if necessary)
+A Python function,  contained in a script file, that
+provides additional  plugin attribut es  and values.
+The script file must be de fined  in the
+<instance>componentCallbacks directory.optional
+Attribut eR equir ed Boolean Set to True to make Attribut eName  and
+Attribut eV alue  required.optional
+Ne wDescription Text Override for the disclosure description. optional
+Comment Text Rule description. optional
+The ComponentOwnerFQN  field,  included in all external data store tables, shows the name of the
+component providing specific  rows to a table.
+Disclosure Filter Policy Examples
+Adding a new disclosure to a checkout:

@@ -1,0 +1,252 @@
+▪U: Uncertain. The connector was launched but stopped responding or timed  out. The password may ▪
+or may not have been successfully set on the target. The presence of a password with this status
+always causes accounts to be marked c on flict ed,  even if the r andomiz ation  tree is otherwise c on flict -
+fr ee.  These types of c on flicts  are called incomplete r andomiz ation  c on flicts.
+▪F: Failed. The connector attemp t ed  to set this password and was rejected by the target system. ▪
+Each node’s r andomiz ation  tree is rooted at the sigkey specified  in wstnpwdcur, which marks the current
+password for the account. This is the password that will be disclosed when checked out.
+Randomiz ation  proceeds through a four-stage process:
+1.A random password is generated and placed in wstnpwd_working with its parent set to the current1.
+password and its status set to P . The generated password is provided to the connector, which attemp ts
+to set it on the target system.
+2.The password’s status is changed depending on the outcome of the connector e x ecution.  If the 2.
+connector timed  out or stopped responding, its status is updated to U. If the connector reports that it
+successfully changed the password, its status is updated to C. If the connector reports that it failed to
+change the password, its status is updated to F.
+3.The r esulting  r andomiz ation  tree is examined for c on flicts.  If there are c on flicts,  the account is marked 3.
+c on flict ed.  If not, the tree is walked from root to tip. Every c on firmed  password along the path is
+moved to wstnpwdhis, and the sigkey of the password at the tip is stored in wstnpwdcur, becoming
+the new root. Failed passwords encountered are moved to wstnpwd_working_his.
+4. Con flict  r esolution  is initia t ed  for accounts in c on flict.  See Con flict  r esolution  (on page 1891) for more 4.
+details of this process.
+Implemen t ation  of the fourth stage diff er s  depending on the node. On the node where r andomiz ation
+was initia t ed,  the idarch service is signalled to begin r esolution  immediately. On other nodes it is not
+possible to signal any services because the tree v alidation  takes place within a stored procedure in the
+context of the database service processing the incoming r eplic ation  queue. Instead, the idarch service
+periodically polls the database to find accounts that have been marked c on flict ed  by incoming r eplic ation
+messages. Note that c on flicts  are detected immediately when replicated, and the account marked
+appropriately; database polling is only required to initia t e  c on flict  r esolution.
+Con flict  r esolution
+Viewing c on flicts
+The pwdconflicts  program is scheduled to run nightly and saves the list of c on flicts  it finds  in the
+product database. You can view the results of the last pwdconflicts  run at Manage the system
+> Privileged access > Con flicting  passwords . On this page, you can click Discover c on flicts  to run
+pwdconflicts  and refresh the results at any time.
+The password c on flicts  page shows a list of accounts in c on flict  on the system, their managed system
+policy, and the reason why the account failed aut omatic  r esolution  (on page 1892). If aut omatic
+r esolution  has not yet completed, the accounts will be shown but r esolution  actions  will be disabled until
+aut omatic  r esolution  finishes.Aut omatic  r esolution
+When the Privileged Access Manager Service ( idarch) detects an account in c on flict,  it connects to
+each node and retrieves that node’s copy of the account’s r andomiz ation  tree. It searches for any missing
+entries or inconsistencies such as diff ering  statuses that might indicate the c on flict  will be resolved by
+allowing r eplic ation  to complete. If any are found, it will wait for r eplic ation  to flush , up to a c on figur able
+maximum set by the system variable VERIFICATION_WAIT_FOR_NODE_TIMEOUT. If the timeout  is
+reached without the nodes reaching consistency, manual r esolution  (on page 1893) is required.
+Conflict  resolution  will only be performed by the idarch  service running on the managing node for an
+account.
+The tree of r andomiz ations  is searched for passwords whose statuses are either c on firmed  or uncertain,
+and which have no c on firmed  children (these are called candidate passwords). For example, if a single
+node attemp ts  a r andomiz ation  and the agent stops responding, the password it attemp t ed  (whose
+status is U) is a candidate as well as the root password (whose status is C) because its child is not
+c on firmed.  Candidate passwords are passed to the appropriate connector which attemp ts  to
+authentic a t e  against the target system with each one using the adminverify oper ation.  The connector is
+not invoked for accounts that have been used as target administrator cr edentials,  and will only be
+invoked for pull-mode systems if the ALLOW_AGENT_VERIFICATION_OF_LWS system variable is enabled.
+The adminverify operation  does not lock out accounts.
+The account’s r andomiz ation  tree is only modified  if exactly one candidate password successfully
+authentic a t es.  Some systems allow old passwords to c ontinue  to work for a short period after  a change;this case is treated as though all passwords were rejected. When exactly one candidate password
+authentic a t es  successfully, the passwords tested by the connector are removed from the tree according
+to the following rules:
+1.If the password authentic a t ed  successfully, it is moved to wstnpwdhis and becomes the new root 1.
+password.
+2.If the password did not authentic a t e  successfully and its status was C, it is moved to wstnpwdhis with 2.
+no impact on the current root password
+3.If the password did not authentic a t e  successfully and its status was U, it is moved to 3.
+wstnpwd_working_his. While it’s possible that this password was in fact set on the target system and
+simply o v er written,  because Bravura Privilege  cannot c on firm  whether it was ever valid, it is not
+moved to wstnpwdhis.
+Aut omatic  r esolution  options
+Use options  available in the Manage the system > Privileged access > Options  > Managed system
+policies menu to:
+▪Control the size of batches of c on flict ed  accounts on which the idarch  service operates. The ▪
+maximum size is controlled by the PASSWORD VERIFICATION BATCH LIMIT system variable. Default is
+50.
+▪Disable aut omatic  r esolution  entir ely  by disabling the PASSWORD CONFLICT ATTEMPT VERIFICATION ▪
+system variable.
+Manual r esolution
+If aut omatic  r esolution  cannot resolve the password for any reason, it falls to an administrator to
+manually correct the issue.
+Basic manual r esolution
+From the Conflicting  passwords  page  (on page 1891), you can attemp t  generalized c on flict  r esolution  by
+selecting  the accounts you want to resolve and clicking either  Force r andomiz ation  or Aut omatic ally
+resolve .
+R esolution  options  described here, as well as displaying a current list of c onflicts,  can be accomplished
+with the pwdconflicts  program from the command line. See p wdc onflicts  usage details
+Use the pwdconflicts program to list accounts with passwords in c onflict.  You can then choose to
+aut omatic ally  resolve these c onflicts  or force a randomiz ation  for the aff ect ed  accounts.
+Usage
+pwdconflicts.exe
+        [-list | -randomize | -resolve] [-force][-save]
+    [-policyid <policy ID>] [-account <account ID>] [-batchsize
+    <batch size>] [-sleeptime <sleep time>] [-wstnid <workstation ID>]
+[-blank]Argument Description
+-account <account ID> Only act on accounts with a specific  ID.
+-batchsize <batch size> The maximum amount of accounts to act on. The default
+is 5.
+-force Allow resolution  or randomiz ation  to proceed without
+further c onfirmation.  Requires one of -randomize or -
+resolve.
+-list List all accounts with passwords in c onflict.
+-policyid <policy ID> The managed system policy ID. When used in
+c ombination  with -list, -randomize, or -resolve, only
+accounts in this policy will be acted on.
+-randomize Force randomize accounts with passwords in c onflict.
+Forced randomiz ation  will not occur if password
+randomiz ation  is disabled on the managed system policy
+to which the managed account is bound.
+-resolve Attemp t  to resolve accounts with passwords in c onflict
+aut omatic ally .
+-save Save the list of c onflict ed  accounts to the database.
+Requires one of -list, -randomize, or -resolve.
+-sleeptime  <sleep time> The duration  (in milliseconds) to wait between batches.
+-wstnid <system ID> Only act on accounts from this managed system.
+-blank Completely delete the password tree of account specified.
+Requires both -wstnid and -account. WARNING!: This
+action  will permanently clear the password history tree
+and cannot be recovered.
+Examples
+1.To list all accounts with passwords in c onflict  and save them to the database, type: 1.
+pwdconflicts.exe -list -save
+2.To aut omatic ally  resolve c onflicts  for accounts of a specific  managed system policy, type: 2.
+pwdconflicts.exe -resolve -policyid <policyID>
+3.To aut omatic ally  resolve c onflicts  for accounts with a specific  ID, type: 3.
+pwdconflicts.exe -resolve -account <accountID>
+4.To aut omatic ally  resolve c onflicts  for all accounts on a specific  system, type: 4.
+pwdconflicts.exe -resolve -wstnid <systemid>
+5.To aut omatic ally  resolve a c onflict  for a specific  account on a specific  system, type: 5.
+pwdconflicts.exe -resolve -wstnid <systemid> -account <accountID>
+6.To force randomiz ation  for all accounts with passwords in c onflict,  type: 6.
+pwdconflicts.exe -randomize
+7.To aut omatic ally  resolve c onflicts  without further c onfirmation,  type: 7.
+pwdconflicts.exe -resolve -force8.To aut omatic ally  resolve c onflicts  for a batch of 10 accounts, with subsequent batches worked on 8.
+every minute, type:
+pwdconflicts.exe -resolve -batchsize 10 -sleeptime 60000
+9.To delete the password tree of a specific  account on a specific  system, type: 9.
+pwdconflicts.exe -blank -wstnid <systemid> -account <accountID>
+.
+If you are resolving more than a handful of c onflicts  at a time,  you should use the pwdconflicts
+program.
+Aut omatic ally  resolve
+Clicking Aut omatic ally  resolve  will simply re-issue a request to the Privileged Access Manager Service
+(idarch)  to attemp t  aut omatic  r esolution  again. This is appropriate for cases such as a Micr osoft  Activ e
+Directory server c on figur ed  to allow old passwords to work for a short time  after  a r andomiz ation.
+This must be done on the same node as the Privileged Access Manager Service ( idarch ) that is
+managing the managed system policy that includes the account.
+Force r andomiz ation
+In most cases, Force r andomiz ation  is the simplest solution  to password c on flicts  requiring manual
+r esolution.  Forcing r andomiz ation  does not make any attemp t  to determine the correct password, and
+thus is not suitable for use with accounts where unscheduled r andomiz ations  are unacceptable such as
+target administrators or other sensitiv e  accounts. Instead, the password c on flict  is cleared as follows:
+1.Every password whose status is U is presumed to have failed and is moved to wstnpwd_working_his. 1.
+2.Every password whose status is C is moved to wstnpwdhis. The one with the latest times t amp  is 2.
+presumed to be the most recent and selected as the current root.
+A password’s times t amp  is the time  when the password was randomly generated by Bravura Privilege
+and does not reliably indicate when it was set on a target system. There is no guarantee that this
+password was the correct one to choose.
+3.A password r andomiz ation  is immediately initia t ed. 3.
+Both forced randomiz ation  and aut omatic  resolution  bypass replic ation  and modify remote nodes
+directly.
+Generally, if you do not care about the outcome of password r esolution,  you should choose forced
+r andomiz ation.
+Forced r andomiz ation  will not occur if password r andomiz ation  is disabled on the managed system policy
+to which the managed account is bound. See Disabling password r andomiz ation  (on page 1876) for more
+in f ormation.
+BlankingThere is one more generalized r esolution  strategy that is intended to be used as a last resort, but it is not
+available from the web interface. The -blank  option  of the pwdconflicts  program allows you to
+erase all ancestry linkages in an account’s r andomiz ation  tree and start from scratch. This r esolution
+strategy follows the same basic steps as forced r andomiz ation  with the following e x ceptions:
+▪No root node is set. The account reverts to the No password recorded yet status.▪
+While all known passwords will be retained, the account will not be usable as a target administrator
+until  it is randomized or overridden again. Check-outs will not disclose a password unless the checking-
+out user has access to historical passwords.
+▪No r andomiz ation  is issued. ▪
+▪Normal r eplic ation  is used to inform other nodes of the change. ▪
+Blanking the password is designed to be a failsafe and should work reliably (to the extent that r eplic ation
+is working properly) for all cases. It can be successfully used even if some replicas are permanently or
+semipermanently offline,  unlike forced r andomiz ation  and aut omatic  r esolution  retries which require a
+direct c onnection  to all nodes. To reduce the risk of error, blanking may not be applied to more than one
+account at a time,  and can only be invoked through pwdconflicts .
+Because it is a failsafe, blanking performs no validation  whatsoever. You should not use password
+blanking on an account that is being operated on by aut omatic  resolution  or by another user using the
+web interface unless it is unavoidable in an emergency.
+Advanced manual r esolution
+You can click on accounts from the c on flicting  passwords page to see more details about the c on flict.
+There is an example of this page in Incomplete r andomiz ation  c on flicts  (on page 1896). Every password in
+wstnpwd_working  on each node is displayed here with various metadata like its status, sigkey, the
+node that created it, and the node that created its parent. If you have sufficien t  access, a disclosure
+plugin is rendered with the actual value of the password.
+You must have the "Pre-approved check-out of managed accounts" permission on the account’s managed
+system policy to view passwords on this screen. Being a superuser is neither sufficien t  nor necessary.
+Incomplete r andomiz ation  c on flicts
+Details of the r andomiz ation  tree for a specific  account for a c on flict  caused by an incomplete
+r andomiz ation.The screenshot above shows a scenario in which the connector attemp t ed  to randomize a password but
+stopped responding. Bravura Privilege  marked the password it was supposed to set as uncertain and
+generated a c on flict.  Both nodes agree completely about this r andomiz ation  tree, but neither knows
+whether the password passed to the connector was successfully put in place.
+On this page, the displayed status string Multiple passwords have been set on this
+account, but it is unknown which is valid  means the password has status U. In the
+context of an overall account, that string can indicate either a tree c onflict  or an incomplete
+randomiz ation  c onflict.  In the context of a single password, as in this case, that string always marks an
+incomplete randomiz ation.
+To resolve an incomplete r andomiz ation  c on flict,  you must decide for each uncertain password whether
+it was successfully set on the target system. You may need to engage the owners of this target system to
+check its logs in order to decide which r andomiz ations  were successfully applied. You may also wish to
+manually test passwords to determine which is correct if you have access to them. Since lockouts are a
+concern, it would be a good idea to start with the password with the latest times t amp  for this approach.
+Also, you should keep in mind that some systems such as Activ e  Directory may allow old passwords to
+work for a short time  after  r andomiz ation.
+When you have decided whether a password was successfully set, select the radio button  for that
+password and click either Con firm  selected password  or Reject selected password  to set its status to C
+or F, r espectiv ely .  Clicking either button  will cause the tree to be rechecked for c on flicts.  Repeat the
+process for each uncertain sigkey.
+Although the page will display radio buttons  for all uncertain passwords (one per node), you only need to
+perform this operation  once for each distinct  sigkey. Bravura Privilege will aut omatic ally  correct all
+matching passwords on all nodes.
+Tree c on flicts
+Details of the r andomiz ation  tree for a specific  account for a tree c on flict.If there are both tree and incomplete randomiz ation  c onflicts,  you must resolve the incomplete
+randomiz ation  c onflicts  before you can resolve the tree c onflicts.
+The screenshot above shows a very common scenario where two nodes randomized the same account at
+the same time.  Each node has the same set of passwords, but disagrees about which is current. One
+node, claytonv-2k8-4_conflicts  created E6AB2BA4387DFBCD4C75772BB173C9BC  at
+5/4/2018 4:27 PM and then attemp t ed  to set it. The other node, claytonv-2k8-r2.2k3-
+domain.claytonv_conflicts  created 4EAE01004E15B09591825A322972FF7E  at
+5/4/2018 4:29 PM and attemp t ed  to set it. Both nodes successfully set their passwords. There was a
+slight r eplic ation  backlog between 4:27 PM and 4:29 PM which caused these two r andomiz ations  to
+occur with the same parent.
+When there are tree c on flicts,  as in this case, manual r esolution  entails choosing a single candidate
+password and making it the new root on all nodes by clicking Set as current password . Once again, you
+may need to engage the owners of this target system to check its logs, or manually test passwords, in
+order to decide which password is correct. For example, if the target system shows the latest password
+change as having come from claytonv-2k8-4 , then E6AB2BA4387DFBCD4C75772BB173C9BC
+should be set as the current password.
+Audit logging
+Whenever an action  is taken to resolve a c on flict,  whether aut omatic  or manual, the action  is recorded in
+the w s tnp w dv erific ation  table. Currently there are no reports to retrieve data from this table but it can
+be viewed manually via standard database tools.
+Each row in w s tnp w dv erific ation  corresponds to the modific ation  of a single password. The table contains
+the following columns:
+▪svcid : The unique identifier  of the node on which the action  was taken. ▪
+▪accountname : The name of the account the password belongs to at the time  of the action. ▪
+▪accountguid : The unique identifier  of the account the password belongs to. ▪
+▪type : The status of the password at the time  that the action  was taken. ▪
+▪requestername : The name of the person or process that initia t ed  the action,  at the time  the ▪
+acttion  was taken.
+▪requesterguid : The unique identifier  of the person or process that initia t ed  the action. ▪
+▪retcode : A code indic ating  what the validity of the password was determined to be. If aut omatic ▪
+r esolution  was performed, this column contains the actual agent code returned by the agent when it
+attemp t ed  to verify the password. If r esolution  was manual, it contains either ACSuccess or
+ACVerifyFailed, depending on whether the password was chosen as the current one.
+▪agentmessage : If aut omatic  r esolution  was performed, the message returned by the agent when it ▪
+attemp t ed  to verify the password. If manual r esolution  was performed, an arbitrary but
+r epr esen t ativ e  value such as "Forced c on firmation."
+▪sigkey : The sigkey of the password a ff ect ed. ▪

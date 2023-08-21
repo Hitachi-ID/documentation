@@ -1,0 +1,321 @@
+Criteria Description
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: In f ormation  is only included in the report output if the
+start date falls within the selected r elativ e  date range.
+Use selected dateCriteria Description
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: In f ormation  is only included in the report output if the
+start date and time  falls within the Start date range . Use
+the fir s t set of date / time  controls to select the earliestCriteria Description
+time  to include, and the second set of date / time
+controls to select the latest time  to include.
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Last check-out time Choose one of the following options:
+Date not required : This is the default setting.  In f ormation
+is listed regardless of start date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.Criteria Description
+Option Description
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: In f ormation  is only included in the report output if the
+start date falls within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: In f ormation  is only included in the report output if the
+start date and time  falls within the Start date range . Use
+the fir s t set of date / time  controls to select the earliest
+time  to include, and the second set of date / time
+controls to select the latest time  to include.Criteria Description
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Oper ation  to perform for check-out and check-in Select one or more oper ations:
+▪Password▪
+▪SSH key▪
+Group set check-in failures
+Purpose : Group set check-ins that could not be completed, for example because of unreachable
+managed systems or cr edential  problems.
+Executable : managedgroupsetcifailures
+Search Criteria :
+Criteria Description
+Group set ID Type the ID of a group set you want to include in the
+report. Alt ernativ ely ,  search for one or more group sets.
+Managed system policy ID Type a comma-and-space-delimited list of managed
+system policy IDs you want to include in the report.
+Alt ernativ ely ,  search for one or more policies.
+Target system with group Type a comma-and-space-delimited list of managed
+systems you want to include in the report. Alt ernativ ely ,
+search for one or more managed systems.
+Group ID Type the ID of a group you want to include in the report.
+Alt ernativ ely ,  search for one or more groups.
+Requester ID Type the pr ofile  ID of the requester for whom you want
+to run the report. Alt ernativ ely ,  you can search for one or
+more pr ofile  IDs.
+Recipient ID Type the pr ofile  ID of the recipient for whom you want to
+run the report. Alt ernativ ely ,  you can search for one or
+more pr ofile  IDs.
+Target system with account Type a comma-and-space-delimited list of target systems
+you want to run the report. Alt ernativ ely ,  search for one
+or more target systems.
+Account Type an account in the field  you want to include in the
+report
+Search time  by Select whether to run the report based on the following:
+▪Do not search by time ▪Criteria Description
+▪Failure time ▪
+▪Check-out time ▪
+▪ Expir ation  time ▪
+Managed system accounts status
+Purpose : Managed systems accounts and their status.
+Executable : managedsystemsaccounts
+Search Criteria :
+Criteria Description
+Status Select a status from the drop-down list:
+▪All▪
+▪Managed▪
+▪Unmanaged▪
+Managed system ID Type a comma-and-space-delimited list of IDs for
+managed systems you want to include in the report.
+Alt ernativ ely ,  you can search for one or more managed
+systems.
+Managed system description Type the description  of a managed system to include in
+the report.
+Managed account Type the ID of a managed account to include in the
+report.
+Oper ation  to perform for check-out and check-in Select one or more oper ations:
+▪Password▪
+▪SSH key▪
+Session recording summary
+Administrators must belong to a user group with permission to run reports on particular  managed system
+polices.
+Purpose : Provides summary in f ormation  on recorded sessions
+Executable : smonstats
+Search Criteria :
+Criteria Description
+Access Type the ID of an account to include in the report.
+Managed system ID Type a comma-and-space-delimited list of IDs for
+managed systems you want to include in the report.Criteria Description
+Alt ernativ ely ,  you can search for one or more managed
+systems.
+Managed system description Type the description  of a managed system to include in
+the report.
+Monitored user Type the pr ofile  ID to include in the report. Alt ernativ ely ,
+you can search for one or more pr ofile  IDs.
+User login Type the ID of the user who was logged on to the
+w ork s t ation  from which the session started.
+User device Type the ID of the w ork s t ation  from which the session
+started.
+Choose date range Specify a date range  (on page 2910) for data c ollection.
+Session status Select the status of sessions to include in the report:
+▪ Activ e▪
+▪Closed▪
+▪Stale▪
+▪Terminated▪
+Session recording details
+Administrators must belong to a user group with permission to run reports on particular  managed system
+policys.
+Purpose : Quantity  and type of data captured in recorded sessions.
+Executable : smondata
+Search Criteria :
+Criteria Description
+Access Type the ID of an account to include in the report.
+Managed system ID Type a comma-and-space-delimited list of IDs for
+managed systems you want to include in the report.
+Alt ernativ ely ,  you can search for one or more managed
+systems.
+Managed system description Type the description  of a managed system to include in
+the report.
+Monitored user Type the pr ofile  ID to include in the report. Alt ernativ ely ,
+you can search for one or more pr ofile  IDs.
+User device Type the ID of the w ork s t ation  from which the session
+started.
+Choose date range Specify a date range for data c ollection.Recorded session package in f ormation
+Administrators must belong to a user group with permission to run reports on particular  managed system
+policys.
+Purpose : Details of recorded session packages.
+Executable : smonpackageinfo
+Search Criteria :
+Criteria Description
+Managed system ID Type a comma-and-space-delimited list of IDs for
+managed systems you want to include in the report.
+Alt ernativ ely ,  you can search for one or more managed
+systems.
+User device Type the name of the w ork s t ation  from which the
+package request was sent.
+User device IP address Type the IP address of the w ork s t ation  from which the
+package request was sent.
+Requester ID Type a comma-and-space-delimited list of Pr ofile  IDs of
+requesters to include in the report. Alt ernativ ely ,  search
+for one or more requesters.
+Status Select the status of packages to include in the report.
+Requested time Specify a date range for requests for packages.
+Sessmon sessions
+Purpose : Current and historical usage and t ermination  of sessmon sessions.
+Executable : passworddisclosure
+Search Criteria :
+Criteria Description
+Recipient ID Type the ID of the user checking out a managed account.
+Alt ernativ ely ,  you can search for one or more pr ofile  IDs.
+Managed system ID Type a comma-and-space-delimited list of IDs for
+managed systems you want to include in the report.
+Alt ernativ ely ,  you can search for one or more managed
+systems.
+Account Search for one or more accounts you want to report on.
+Alt ernativ ely ,  you can type an account ID or a pattern  of
+account IDs using wildcard characters, ’*’ r epr esenting
+any string of characters and ’?’ r epr esenting  any single
+character.Criteria Description
+Oper ation  to perform for check-out and check-in Select one or more oper ations:
+▪Group set▪
+▪Password▪
+▪SSH key▪
+User device Type a comma-and-space-delimited list of IDs of
+w ork s t ation  computers or other devices from which a
+session was started.
+User login Type a comma-and-space-delimited list of IDs of device
+users that started a session.
+Start time Specify a date range  (on page 2910) from when sessions
+started.
+Dur ation  minimum Type a minimum session dur ation  in the format
+HH:mm:ss.
+Dur ation  maximum Type a maximum session dur ation  in the format
+HH:mm:ss.
+Session status Select a session status to include in the report. By
+default, all are included.
+▪Any▪
+▪ Activ e▪
+▪Terminated by administrator request▪
+▪Terminated by aut omatic  check-in ▪
+▪Terminated because tampering was detected▪
+▪Shutdown by user▪
+▪Stranded from session monitoring▪
+Plugin file name Select one or more access disclosure plugins:
+▪guacamole-rdp▪
+▪guacamole-remote-app▪
+▪guacamole-ssh▪
+▪guacamole-telnet▪
+▪guacamole-vnc▪
+▪pswxcmd.cab▪
+▪pswxdom.cab▪
+▪pswxtsvc.cab▪
+▪<any custom disclosure plugins>▪
+Sessions disconnected
+Administrators must belong to a user group with permission to run reports on particular  managed system
+policys.
+Purpose : Report Bravura Security Fabric  sessions that disconnected either by users or by administrators.
+Executable : smondisconnected

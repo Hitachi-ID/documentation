@@ -1,0 +1,308 @@
+155      CheckStrengthOnly = 0;
+157      Bypass "Any" = {# Bypass strength check to HiPM
+            "Any" "userAccountControl" = {
+159                # Disabled accounts are Bypassing HiPM strength check.
+                # Disabled accounts control numer is 2 (binary -> 10).
+161
+                # convert userAccountControl number from decimal to bit
+163                # string. Then use regular expression for comparison.
+                match:b = "([0-1]) ⋆10";
+165            };
+167          "Any" "logonHours" = {
+                Match:B = "([1]) ⋆";
+169          };
+171          "Any" "pwdLastSet" = {
+                match:t = "1290538([0-9]) ⋆";
+173          };
+175          "Any" "lastLogon" = {
+                Less:I = 128539593944756250;
+177          };
+179          "Any" "_AccountName_" = {
+                # put the computer accounts below that are bypassing HiPM
+181                Equal:i = "Guest";
+                Equal:i = "krbtgt";
+183                Equal:i = "LethBridgeUser1";
+           };
+185
+          "Any" "distinguishedName" = {
+187                Like:i = " ⋆OU=Calgary ⋆";
+          };
+189
+          "Any" "memberOf" = {
+191                # The accounts have membership in the following groups are
+                # bypassing HiPM
+193
+                Like:i = "CN=Administrators,CN=Builtin ⋆";
+195                Like:i = "CN=Domain Admins ⋆";
+                Like:i = "CN=Enterprise Admins ⋆";
+197          };
+       };
+199
+201      BypassNotify "Any" = {  # Bypass password synchronization to HiPM          "Any" "_AccountName_" = {
+203                Equal = "LethbridgeUser2";
+          };
+205       }; #End of BypassNotify
+      }; #End of 'End_Users' Target
+207
+209    Admin_Users = {
+      CheckStrengthFailIfIDPMReturn = { 100; };
+211      CheckStrengthOnly = 0;
+      # If the target longid isn't the default sAMAccountName, define the longid as:
+213      # LongID = "%sAMAccountName%";
+      # LongID = "DomainName\\%sAMAccountName%";
+215      # LongID = "%distinguishedName%";
+      LongID = "LongIDMatchesPMTarget";
+217
+      Bypass "Any" = {# Bypassing Strength Check to HiPM
+219            "Any" "userAccountControl" = {
+                # Disabled accuonts are Bypassing HiPM strength check
+221                match:b = "([0-1]) ⋆10";
+            };
+223
+          "Any" "_AccountName_" = {
+225                # put the computer accounts below that are BYPASSING HiPM
+                Equal:i = "Guest";
+227                Equal:i = "krbtgt";
+           };
+229
+          "NotAny" "memberOf" = {
+231                # The accounts have membership in the following groups are           # SENDING to HiPM
+233                Like = "CN=Administrators,CN=Builtin ⋆";
+                Like = "CN=Domain Admins ⋆";
+235                Like = "CN=Enterprise Admins ⋆";
+          };
+237       };
+239
+      BypassNotify "Any" = {  # Bypassing Password Synchronization to HiPM
+241            "Any" "memberOf" = {
+                Like = "CN=Domain Admins ⋆";
+243            };
+245       }; #End of BypassNotify
+      }; #End of 'Admin_Users' Target247
+249
+251
+    };
+253  };
+▪
+See also:  
+Use the following utilities,  shipped with the Password Change Notific ation  Module, to help write the
+c on figur ation  file:
+user attr s
+Use the userattrs program to query account attribut es  in Micr osoft  Activ e  Directory; to find specific
+useful attribut es  that may be used as search criteria in designing the intcptsvc c on figur ation  file.
+This program is installed by intcpt.msi  or intcpt-64.msi  on a Windows transparent password
+s ynchr oniz ation  trigger system and can be found in the following directory:
+<Program Files path>\Bravura Security\\Password Filt er\util\
+See userattrs usage in f ormation.
+userattrs.exe [-p <ADsPath> ] [-a <attributes>] [-
+c <admin account> <admin password>] [ -f <ADsSearchFilter>] -
+u <accounts>
+Argument Description
+-p, --adspath <ADsPath> Specify the domain path (ADsPath). Available macros are
+%PDC%, %DC%, %DN%. The default is LDAP://%DC
+%/%DN%.
+-a, --attribut es  <attribut es> Specify the attribut es  to query, separated by a space. If
+none are specified,  all attribut es  are queried.
+-c, --cr edential  <admin account> <admin password> Specify administrator account and password separated
+by space. If no cr edentials  are specified,  the security
+context of the current process is used to bind the object.
+-p, -- filt er  <filt er> Specify the account searching criteria (ADsSearchFilter).
+The default is sAMAccountName=%USER%.
+-u, --users Specify the users’ accounts to query, separated by a
+space.
+Examples
+For example:
+userattrs.exe -a DisplayName distinguishedName -u brownwireturns:
+Open an ADs object: LDAP://%DC%/%DN%...succeeded.
+Retrieving user [brownwi]'s attributes...
+Attribute: [DisplayName]:
+  Brown, William
+Attribute: [_AccountName_]:
+  brownwi
+Attribute: [distinguishedName]:
+  CN=brownwi qa,CN=CertCo,DC=example,DC=local
+Cost : 437 (ms)
+verifycfg
+Use the verifycfg program to verify that a given account will be bypassed by password strength
+checking and/or s ynchr oniz ation,  according to per-target criteria set in the specified  intcptsvc
+c on figur ation  file. Neither actual account strength checking, nor s ynchr oniz ation,  is performed by this
+utility .  This tool is useful for verifying whether the c on figur ation  file is designed properly before putting
+the interceptor online.
+This program is installed by intcpt.msi  or intcpt-64.msi  on a Windows transparent password
+s ynchr oniz ation  trigger system and can be found in the following directory:
+<Program Files path>\Bravura Security\\Password Filt er\util\
+See verifycfg usage in f ormation.
+ verifycfg.exe  [-c <file>] [-l <level>] -u <user>
+Argument Description
+-c, --cfg <cfg> Specify the intcptsvc c on figur ation  file. The default is
+intcptsvc.cfg
+-l, --level <N> The debug level 1-6. The default is 4.
+-u, --user The user to be v erified  (required).
+Examples
+For example:
+verifycfg.exe -c ..\service\intcptsvc.cfg -u qa1000 -l 4
+returns:
+Loading service configuration file:[..\service
+\intcptsvc.cfg]...succeeded.
+Retrieve user:[qa1000]'s attributes and evaluate settings...
+User: qa1000
+Session has been created successfullyTarget: End_Users --
+ None bypass      <<== It means this account will be strength checked and synchronized against 'End_Users' target
+Retrieve target: [End_Users], user: [qa1000]'s status...( FindUser )
+If return code belongs set [( 100 )] will be treated as strength check failed
+Target: [End_Users], user: [qa1000]'s status = 200, message = userid=qa1000 username=qa 1000
+Returned [200] [userid=qa1000 username=qa 1000], strength check will be successful    <<== The account was found in Pass through idpm.
+Target: Admin_Users --
+ Bypass both strength check and synchronization <<== It means this account will be NOT strength checked and synchronized against 'Admin_Users' target
+If the debug level is greater than 4 (default), verifycfg returns more detail on how the account falls
+into which categories.
+.Unix trigger
+This chapter shows you how to set up transparent s ynchr oniz ation  with a Unix-based trigger system.
+Bravura Pass  can intercept in t er activ e  password changes on a Unix server using one of two methods:
+▪Replacing the nativ e  password program (/usr/bin/passwd) with pspasswd to intercept password ▪
+changes made using the standard password command ( passwd ).
+This method is considered more robust and is less likely to cause side e ff ects  due to non-standard
+c on figur ations.
+▪ Con figuring  the Bravura Pass  pluggable authentic ation  module (PAM) on Solaris, HP-UX, and Linux ▪
+systems to intercept password changes made by any authentic ation  program. Normally, all
+authentic ation  goes through the PAM, including passwd.
+This method allows Bravura Pass  to intercept any password change, including password changes
+where the regular password program is not used.
+These PAM modules are not shipped with Connector Pack 4.6 or newer. Support can be provided at
+additional  cost.
+Before you begin, ensure that you have researched and carried out the steps outlined in Implementing
+Transparent Password S ynchr oniz ation  (on page 1659).
+To set up transparent password s ynchr oniz ation  with a Unix-based system:
+1. Con figur e  the API SOAP Service. 1.
+2.If you are using SSL, ensure that a c ompatible  version of OpenSSL (1.1.x) is installed on the Unix 2.
+system.
+3.If you did not select the Unix Ins t allation  Packages when you installed the Connector Pack, install the 3.
+psunix ins t allation  package.
+4. Con figur e  transparent s ynchr oniz ation  by: 4.
+▪Replacing the nativ e  password program (/usr/bin/passwd) ▪
+or
+▪ Con figuring  the Bravura Pass  PAM ▪
+These steps are detailed in the following sections.
+Con figur e  the API SOAP service
+The psunix pspasswd and pspam interceptors installed with Connector Pack 2.1 or later use the
+API SOAP Service. These interceptors require Bravura Security Fabric  8.1 or higher.
+To use the API SOAP Service:
+1.Ensure the API SOAP Service is set to aut omatic  and started. See the API SOAP Service chapter in the 1.
+"Reference Manual" for more in f ormation.
+2. Optional : Ensure the messages are encrypted, by c on figuring  the API SOAP service and IIS server to 2.
+listen and communicate over SSL.3.Recommended : Create a new administrator with adminis tr ativ e  privileges to connect to the Bravura 3.
+Security Fabric  API for the remote c onnections  used by the UNIX trigger.
+By default, Bravura Security Fabric  includes the _API_USER user. By default, this administrator is only
+available for shared memory c onnections  to the API that do not require a password.
+The new IDAPI caller must be assigned a password before it can be used for remote c onnections.
+a.Click Manage the system > Security > Access to product features > Individual administrators . a.
+b.Click Add new... . b.
+c.Enter a value for the ID (for example: UNIXAPI) and Name.c.
+d.Enter a password and c on firm  the password. d.
+e.Add the IP Address of the trigger system in the CIDR not ation  to the Allowed network addresses e.
+for remote API access field .
+f.Click Update . f.
+4.Add the newly created administrator for the remote c onnections  to the API to the 4.
+_EXPLICIT_API_USERS_ user class.
+a.Click Manage the system > Policies > User classes > _EXPLICIT_API_USERS _. a.
+b.Click the Explicit users  tab. b.
+c.Click Select... . c.
+d.Search for the newly added adminstrator’s ID.d.
+e.Click on the administrator and then Add. e.
+5.Assign the product administrator "Change passwords" global help desk privileges to complete5.
+transparent s ynchr oniz ation.
+Install the psunix ins t allation  package
+The psunix archive package contains the Unix Listener and other tools and files used to perform
+Bravura Security Fabric  oper ations  on Unix systems. There are versions for each type of supported Unix
+system. The packages are installed in the unix directory when you choose a complete Connector Pack
+ins t allation,  or select them as part of a custom ins t allation.
+To install the package on a Unix system:
+1.If you did not select the Unix Ins t allation  Packages  when you installed Connector Pack, run the 1.
+setup from the main softw ar e  ins t allation  to modify your instance.
+The setup program displays the Select an instance to c on figur e  page.
+a.Click Connector Pack 64-Bit . a.
+b.Click Modify . b.
+c.Choose Change. c.
+Ensure that the select 
+  icon is selected for Unix Ins t allation  Packages , and the appropriate
+packages, on the component selection  page.Click Change , then complete the ins t allation  procedure.
+2.Copy the psunix-<os>.<cpu>.tar.gz  file from the unix directory to a scratch directory, such 2.
+as /tmp/, on the Unix server.
+3.Log into the Unix server with adminis tr ativ e  privileges, and extract the files from the psunix 3.
+archive. For example, type:
+     cd /tmp 
+     tar -zxvf psunix-solaris10.sparc64.tar.gz
+See Connector Pack Documen t ation  for more in f ormation  about installing psunix .
+Replace the nativ e  password program
+To e ff ectiv ely  intercept all password changes made using the regular password program on Unix
+(/usr/bin/passwd), you can install a replacement password program and a matching c on figur ation  file
+(psunix.cfg ) on every Unix server where users might change their local or NIS/NIS+ passwords. See
+notes about s ynchr oniz ation  in an NIS / NIS+ environment  (on page 1718).
+The Bravura Security password replacement program (pspasswd) applies password strength rules de fined
+on the Bravura Pass  server to all new password selections.  It uses the old, renamed, password program
+to implement the password change locally on the Unix server, and then forwards a request for
+s ynchr oniz ation  to the Bravura Pass  server.
+Alternately, you can c on figur e  the Bravura Pass  PAM  (on page 1711) to intercept password changes made
+by any authentic ation  program, including passwd.
+Install pspasswd on the Unix trigger system
+To install Bravura Security password replacement program:
+1.Note the c ommunic ation  key (or Master Key). 1.The CommKey value is encrypted in Bravura Security Fabric . If you did not record the key in a secure
+loc ation,  copy the idmsetup.inf file from <instance> \ p sc on fig \ on the Bravura Security Fabric
+server to the same loc ation  as the installer. The installer will extract the Communic ation  Key value
+from the file.
+2.Note the product administrator and password to connect to the API SOAP Service.2.
+3.Note the URL of the API SOAP Service.3.
+4.If you did not select the Unix Ins t allation  Packages  when you installed the Connector Pack, install the 4.
+psunix ins t allation  package  (on page 1707).
+5.Run the ins t allation  shell script in: 5.
+▪ In t er activ e  mode  (on page 1709) ▪
+or
+▪ Non-in t er activ e  mode  (on page 1710) ▪
+Install pspasswd in t er activ ely
+Installing in t er activ ely  takes less pr epar ation  and allows you to specify settings  during ins t allation.  You
+can use the idmsetup.inf c on figur ation  to pass through some of the in f ormation  as defaults.
+To in t er activ ely  install pspasswd on the Unix system:
+1.Run the shell script install.sh from the root of the ins t allation  package: 1.
+sudo sh install.sh  [ -inf <path>/idmsetup.inf ] [ -
+inst <instancename> ]
+where:
+Option Description
+-inf Specifies  the path to the idmsetup.inf file. If omitted,
+you must enter c ommunic ation  key (or Master Key)
+and other in f ormation  when prompted.
+-inst Specifies  the instance name for loc ation  of the psunix
+files.  If omitted,  files are copied to the /usr/local/
+psunix/default instance  (on page 1711).
+2.Follow the ins tructions  displayed by the installer script. 2.
+In the ins t allation  process:
+a.Allow system files to be backed up. a.
+b.Select the "Passwd Transparent Synch" ins t allation  option. b.
+c.If you want to use the c on figur ation  options  that exist in /etc/psunix.cfg, type Y when asked. If you c.
+want to change the values, type n.See the Connector Pack Documen t ation  or more in f ormation  about the Unix listener.
+d.Enter the target ID of the target used to target this system.d.
+e.Enter the URL of the API SOAP Service.e.
+f.Enter a proxy URL if you are using a proxy. Press [Enter]  if you are not using a Proxy. f.
+g.Enter the proxy user name if you are using a proxy. Press [Enter]  if you are not using a Proxy. g.
+h.Enter the proxy user name’s password if you are using a proxy. Press [Enter]  if you are not using a h.
+Proxy.
+i.If you are using SSL, enter the path holding the CA certific a t e(s).  Press [Enter] if you are not using i.
+SSL.
+j.If you are using SSL, enter the certific a t e  details. Press Enter if you are not using SSL. j.
+k. De fine  the [libcurl] path or press Enter to use the system default libcurl library. k.
+l. De fine  the [ignore] or press Enterto use the default value. l.
+m. De fine  the user name for login to the IDAPI service. m.
+n. De fine  the password for the IDAPI user. n.
+The installer renames the old password program to <program name>.bin and replaces it with
+pspasswd .
+Install pspasswd non-in t er activ ely
+The installer’s non-in t er activ e  mode allows you to perform unattended  ins t allations.  This would be
+advantageous where you want to install on many systems over SSH, for example. This mode requires you
+to write a response file that is used with a command line option.
+To install pspasswd non-in t er activ ely:
+1.Edit the following sections  of the psunix-responsefile.cfg in the root of the ins t allation 1.
+package:  
+###################################################################### 
+## general options 
+# Prior to installing PSUNIX, the installer allows the option to 
+# backup files affected by the installation process. 
+  pre-backup = "Y"; 

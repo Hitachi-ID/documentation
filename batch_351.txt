@@ -1,0 +1,256 @@
+5.Click Install component(s) . 5.
+This installs the component files into the \<instance>\design\  directory and recompiles the
+skins. This may take several minutes. You should see "Completed install for component" messages in
+the Details section  of the Actions  panel.
+6.Test the result by refreshing the Bravura Security Fabric  page, using the browser’s refresh button. 6.
+You should see your logo now displayed in the top of your browser page.
+Cus t omiz ation  tasks
+The following topics explain additional  ways that you can customize the Bravura Security Fabric  user
+interface by modifying the skins:
+▪Add background image to login sequence  (on page 3503) ▪
+▪Using custom input fields  (on page 3505) ▪
+▪Modifying the pr ofile  ID prompt  (on page 3506) ▪
+▪Adding to the authentic ation  menu  (on page 3507) ▪
+▪Adding custom links to the Front-end  (on page 3509) ▪
+▪Modifying the display of embedded links  (on page 3510) ▪
+▪Modifying external link attribut es  (on page 3511) ▪
+▪Modifying Login Assistant Cr edential  Provider  (on page 3513) ▪
+▪Adding account attribut es  to Change password pages  (on page 3515) ▪
+▪Modifying JavaScript behavior  (on page 3518) ▪
+▪Modifying the display of connector return messages  (on page 3520) ▪
+▪ E diting  email content  (on page 3521) ▪
+▪ E diting  text for password rule names and descriptions  (on page 3524) ▪
+▪Making report columns hidden by default  (on page 3526) ▪
+For conciseness, unless otherwise noted, the following procedures assume that your current working
+directory is the \<instance>\design\ directory.
+Unless otherwise instructed, do not change any code that begins and ends in percent (%) signs. These
+codes are replaced by session-specific  text when Bravura Security Fabric builds each page.
+Add background image to login sequence
+You can add a custom background image to the Front-end (PSF) that will display behind the login
+sequence.
+For example:
+1.Open <instance>/design/custom/_common-custom.scss1.
+2.Add the following:2.
+$auth-use-image: true;
+$auth-bg: '<filename of image>';
+3.Add the background image into the <instance>/design/src/ui/src/assets/images 3.
+directory
+4.Generate the new skins4.
+To generate and install new or modified  skin files,  use the following format for the commands to run
+from the <instance>\design\ directory, where en-us  is American English:
+1.Compile the skins:1.make.bat default en-us
+Changes are saved in the instance's <instance>\design\skin\ directory
+2.Install the skins:2.
+make.bat install default en-us
+The compiled files are copied to the instance's skin\ directory
+3.If necessary, reload and review any changes to Bravura Security Fabric  web pages. 3.
+Do not run the second command to install the skins if they fail to compile, especially if the firs t m4
+file (links.m4) fails to compile.
+Skins can fail to compile if something in the environment is locking the skin files.  That can be a
+malware program, an automated backup tool running at the time,  but more likely the product UI itself
+being in use at the time  of the skin c ompilation
+Have a test instance where you can compile the skins when the instance is not being used. Make a
+backup copy of the files on the production  instance in case you need to quickly roll them back. Review
+changes on the test instance, then copy the skin files to the production  instance.
+Steps to disable the image:
+To disable the image:
+1.Open <instance>/design/custom/_common-custom.scss1.
+2.Set $auth-use-image: to false2.
+$auth-use-image: false;
+3.Generate the new skins3.
+To generate and install new or modified  skin files,  use the following format for the commands to run
+from the <instance>\design\ directory, where en-us  is American English:
+1.Compile the skins:1.make.bat default en-us
+Changes are saved in the instance's <instance>\design\skin\ directory
+2.Install the skins:2.
+make.bat install default en-us
+The compiled files are copied to the instance's skin\ directory
+3.If necessary, reload and review any changes to Bravura Security Fabric  web pages. 3.
+Do not run the second command to install the skins if they fail to compile, especially if the firs t m4
+file (links.m4) fails to compile.
+Skins can fail to compile if something in the environment is locking the skin files.  That can be a
+malware program, an automated backup tool running at the time,  but more likely the product UI itself
+being in use at the time  of the skin c ompilation
+Have a test instance where you can compile the skins when the instance is not being used. Make a
+backup copy of the files on the production  instance in case you need to quickly roll them back. Review
+changes on the test instance, then copy the skin files to the production  instance.
+The files stored in the ‘ui/src/assets/images’ are removed during upgrade causing the pos t -ins t allation
+task ‘build skin’ to fail because the image file cannot be found. The workaround is to copy the image
+back to the ‘ui/src/assets/images’ directory after  upgrade and rebuild skin
+Use custom input fields
+You can add custom fields  to form-input tags. These fields  are used to capture additional  session
+in f ormation  from the GUI. The in f ormation  can then be used by interface programs and external systems
+for auditing  and internal purposes.
+Bravura Security Fabric  provides four custom fields,  CUSTOM[1-4]. Each field  is associated with an
+OPC[1-4] event in Bravura Security Fabric . When a user submits a form that includes a custom field,  the
+corresponding event code is written  to the session log and the value of the custom field  is stored as the
+event result. The custom field  and its value are also passed to any listening exit traps.
+To implement custom fields  that are accessible to the web-modules, follow the procedure described in
+Change the layout  (on page 3496), and add the fields  to the form-input tag in the appropriate m4 file.
+Examples
+The following example is the general format for using custom fields  in form-input tags:
+ <form name="theform" method="post" action="%PR OGRAM%"  aut oc omple t e="off">
+   <INPUT type="hidden" name="CUSTOM1" value="value1">
+   <INPUT type="hidden" name="CUSTOM2" value="value2">
+   <INPUT type="hidden" name="CUSTOM3" value="value3">
+   <INPUT type="hidden" name="CUSTOM4" value="value4">
+ </form>A pr actic al  applic ation  of this feature is to prompt the user to enter additional  in f ormation  that may be
+needed for company purposes. For example, if a user were to lock themselves out of Bravura Security
+Fabric , they can be prompted to enter their phone number to receive a call back from the help desk. In
+this case, you can modify the m4 files to include the following:
+Please enter your phone number:
+<input type="text" name="CUSTOM1">
+You can c on figur e  an interface program to dump the session in f ormation  to a tick e t,  which can be used
+by the help desk to conduct an appropriate follow up for the locked out user.
+Modify the pr ofile  ID prompt
+When the PROFILE ID TAG option  is enabled ( Manage the system  > Modules  > Front-end  (psf) ), users
+enter their pr ofile  ID as the login ID, instead of, or as an additional  option  to selecting  a target system on
+which to identif y  themselves. For example:
+You can use text other than Bravura Security Fabric  by changing the value of PROFILE_ID_TAG .
+For example, to change the tag to your company name:
+1.Create the file: \<instance>\design\custom\en-us-language.kvg 1.
+Edit the file to replace the _SUITE string with your company name; for example:
+# KVGROUP-V1.0 
+"language" "EN_US" = { 
+  "PROFILE_ID_TAG" "" = { 
+     "text" = "Example Company"   } 
+}
+2.Open a command prompt and go to \<instance>\design\.2.
+Run the following two commands:
+make.bat default en-us 
+make.bat install default en-us
+3.Test the result by opening a browser to the Front-end (psf) login page.3.
+You can also customize and in t ernationaliz e  the product name by modifying the _SUITE tag.
+Add to the authentic ation  menu
+You can add authentic ation  methods to the Front-end (PSF) and customize the design of the
+authentic ation  menu. To do this:
+1. Con figur e  and enable the authentic ation  method using the Manage the system  (PSA) module.. 1.
+2.Review the procedures in Changing the layout  (on page 3496) and Altering text by editing  KVG files 2.
+(on page 3489) to learn how to edit the m4 and KVGroup files.
+3.Modify the design of the authentic ation  menu by cr eating  psf.m4  in the custom\ directory with the 3.
+following tag:
+!!!F_AUTH_<plugin name> 
+<tr> 
+  TABLE_TDB 
+    _<PLUGIN DESCRIPTION TAG> 
+  TABLE_TDE 
+  TABLE_TDB 
+    <input type="image" alt="_<PLUGIN BUTTON TAG>" title="_<PLUGIN BUTTON TAG>" name="<plugin name>" src="_PICSDIR/
+select.png" style="height: 15px; width: 16px;" class="image" /> 
+  TABLE_TDE 
+</tr>
+To avoid typing the above text, you can copy any of the e xisting  !!!F_AUTH_<plugin name>  tags
+from the source psf.m4 file to the custom file. Modify the custom file accordingly.
+4.Add text for the authentic ation  method by cr eating  en-us-language.kvg  in the custom\ 4.
+directory with the following inner KVGroups:
+  "_<PLUGIN DESCRIPTION TAG>" "" = { 
+    "text" = "<text to prompt the user with>" 
+  } 
+  "_<PLUGIN BUTTON TAG>" "" = { 
+    "text" = "<alternate text for the select button>" 
+  }
+5.Save and close the custom files. 5.
+6.Generate and install the new skin files 6.To generate and install new or modified  skin files,  use the following format for the commands to run
+from the <instance>\design\ directory, where en-us  is American English:
+1.Compile the skins:1.
+make.bat default en-us
+Changes are saved in the instance's <instance>\design\skin\ directory
+2.Install the skins:2.
+make.bat install default en-us
+The compiled files are copied to the instance's skin\ directory
+3.If necessary, reload and review any changes to Bravura Security Fabric  web pages. 3.
+Do not run the second command to install the skins if they fail to compile, especially if the firs t m4
+file (links.m4) fails to compile.
+Skins can fail to compile if something in the environment is locking the skin files.  That can be a
+malware program, an automated backup tool running at the time,  but more likely the product UI itself
+being in use at the time  of the skin c ompilation
+Have a test instance where you can compile the skins when the instance is not being used. Make a
+backup copy of the files on the production  instance in case you need to quickly roll them back. Review
+changes on the test instance, then copy the skin files to the production  instance.
+.
+To modify the text for other languages that you have installed, follow the above procedure but replace
+en-us  in the filename  and EN_US  in the outer KVGroup with the appropriate language code.
+Example: Add a custom authentic ation  method
+To add the custom authentic ation  method valifake.exe to the authentic ation  menu:
+▪Create your custom psf.m4  file like this: ▪
+!!!F_AUTH_valifake.exe 
+<tr> 
+  TABLE_TDB 
+    _VALIFAKE_DESC 
+  TABLE_TDE 
+  TABLE_TDB 
+    <input type="image" alt="_BUTTON_VALIFAKE" title="_BUTTON_VALIFAKE" name="valifake.exe" src="_PICSDIR/
+select.png" style="height: 15px; width: 16px;" class="image" /> 
+  TABLE_TDE 
+</tr>
+▪Create your custom en-us-language.kv g file like this: ▪
+# KVGROUP-V1.0 
+"language" "EN_US" = { 
+  "_VALIFAKE_DESC" "" = {     "text" = "Use valifake to enter today's secret phrase" 
+  } 
+  "_BUTTON_VALIFAKE" "" = { 
+    "text" = "Use valifake.exe" 
+  } 
+}
+See also
+Write a customized authentic ation  plugin  (on page 1032).
+Add custom links to the Front-end (PSF)
+You can add custom links in the Front-end (PSF) that will open product pages or external sites in a new
+tab.
+The format for the link is:
+<UNIQUE_ID>|<custom/site/path>|<custom link description>|<USER CLASS_ID>|<ADMINA CL>|
+<TYPE>
+You can add multiple  links to a menu group by adding multiple  entries separated by a semicolon.
+A link is displayed on the Front-end (PSF) if the user is a member of the specified  user class, or has the
+specified  access control. The user class ID must be a single-participan t  class. The user class and ACL
+values can be empty.
+The TYPE must be either:
+▪EXTERNAL linking to a site outside of Bravura Security Fabric ▪
+▪ABSOLUTE linking to an absolute path within Bravura Security Fabric ▪
+For example:
+1.Review the procedures in Change the layout  (on page 3496) and Alter text by editing  KVG files (on 1.
+page 3489) to learn how to edit the m4 files.
+2.Add a psf.m4  file in \<instance>\design\custom\, if one does not exist already. 2.
+3.Edit the file to include: 3.
+ !!!F_CUSTOM_LINK_MYPROFILE_GROUP 
+ HIDSITE|https://bravurasecurity.com|Bravura Security Website|
+_ALLUSERS_|maintain|EXTERNAL; 
+ UACC|manage-reports/reports/r~REPORT_CATEGORY_USERS|User accounts|
+_REPORT_READERS_|REPORT_READERS|ABSOLUTE
+4.Generate and install the new skin files 4.
+To generate and install new or modified  skin files,  use the following format for the commands to run
+from the <instance>\design\ directory, where en-us  is American English:
+1.Compile the skins:1.make.bat default en-us
+Changes are saved in the instance's <instance>\design\skin\ directory
+2.Install the skins:2.
+make.bat install default en-us
+The compiled files are copied to the instance's skin\ directory
+3.If necessary, reload and review any changes to Bravura Security Fabric  web pages. 3.
+Do not run the second command to install the skins if they fail to compile, especially if the firs t m4
+file (links.m4) fails to compile.
+Skins can fail to compile if something in the environment is locking the skin files.  That can be a
+malware program, an automated backup tool running at the time,  but more likely the product UI itself
+being in use at the time  of the skin c ompilation
+Have a test instance where you can compile the skins when the instance is not being used. Make a
+backup copy of the files on the production  instance in case you need to quickly roll them back. Review
+changes on the test instance, then copy the skin files to the production  instance.
+.
+The entries in the example above add a link to the Bravura Security website and a product report link to
+the My pr ofile  menu group.
+Modify the display of embedded links
+You can modify the appearance of embedded links by editing:
+▪common.m4 tags  (on page 3510) ▪
+▪component templates  (on page 3511) ▪
+Modify embedded links through common.m4
+You can modify the appearance of specific  embedded links throughout the product.
+For example, to modify how managed system embedded links are displayed:
+1.Go to \<instance>\design\src\common.1.
+2.Open common.m4 . 2.
+3.Modify the text  argument for C_DISPLAY_MANAGED_SYSTEM. 3.
+4.Generate the skin files;  for example: 4.
+make.bat default en-us 
+make.bat install default en-us
+For example, to modify how e xisting  and newly-created managed group in f ormation  embedded links are
+displayed:
+1.Go to \<instance>\design\src\common.1.
+2.Open common.m4 . 2.

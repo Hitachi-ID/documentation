@@ -1,0 +1,229 @@
+"" "" = {
+"filter" = "true|false"
+       # If false, the user is displayed
+       # If true, the user is not displayed
+"retval" = "<#>"
+       # Optional, if non-zero returned, abort the plugin
+}
+A plugin that encounters errors in its processing can add standard output pairs for individual items,
+which should cause the plugin e x ecution  to be aborted.
+The aut omatic  assignment filt er  can optionally  add and remove resources that will be requested in an
+additional  request.
+Returning the "User" "" = {} KVGroup with the desired modific ations  will alter the pot ential  request.
+When this option  is used any calculated variances will be discarded and the returned KVGroup will be
+used.
+"" "" = {
+  "User" "" = {
+    "userid" = "AWaygood"
+    "Variance" "" = {
+      "type" = "group"
+      "id" = "f1192163-80cc-47e3-9fc7-775af4173002"
+      "hostid" = "AD"
+      "longid" = ""
+      "surplus" = "true"
+      "throttle" = "true"
+    }
+    "Variance" "" = {
+      "type" = "role"
+      "id" = "ROLE1"
+      "surplus" = "false"
+      "throttle" = "false"
+    }
+  }
+}
+▪Callback mode that uses two functions  to process the input/output. ▪
+In callback mode the resource filt er  plugin uses two functions:
+▪OnFilterInit(const $inkvg, output $detail)  This function  is called once to retrieve initial  in f ormation ▪
+about the request, requester, and viewer.
+$inkvg – the viewer
+$detail – if 0, no detail provided on input kvg for each user– if 1, detail is provided on input kvg for each user
+– can also be expressed as a KVGroup
+▪OnItemFilter(const $inkvg, output $msg, output $allow) This function  is called once per item to ▪
+determine what resource the user can view or manage.
+$inkvg – the resource to filt er  (each item is as found in Listing  8.4.4.1)
+$msg – error message
+$allow – if 1, this user is displayed and available
+– if 0, this user is not displayed and is unavailable
+Example
+A simple example is as follows:
+ function OnFilterInit( const $inkvg, output $detail )
+ {
+     log ( kvgToString( $inkvg ))
+     $detail = 0;
+     return 0;
+ }
+ function OnItemFilter(const $inkvg, output $msg, output $allow )
+ {
+     log ( "OnItemFilter:" );
+     log ( kvgToString( $inkvg ))
+     $msg = ""; # Error message
+     $allow = 0; # not allowed
+     # $allow = 1; # allowed
+     return 0;
+ }
+This mode can be used to reduce processing time  in environments with large numbers of users.
+Use cases
+This section  provides use cases to illustrate how automated assignment can be implemented with
+Bravura Security Fabric .
+Aut omatic  provisioning of groups
+Existing  process 
+A company currently has manual processes for assigning department employees to their r espectiv e
+resources. Over time,  users that have tr ansitioned  from department to department have not had their
+resources cleaned up properly.  
+Requirements To ensure that employees are assigned to the correct departmental resources, the company needs to:
+▪Do an initial  bulk group assignment and removal of users that currently exist in an Activ e  Directory ▪
+group depending on the user’s department attribut e
+▪Monitor new account cr eation  in Activ e  Directory and add users to the appropriate department group ▪
+▪Monitor account updates in Activ e  Directory and add or remove users from the r espectiv e  groups. ▪
+Solution  design 
+To resolve the requirements using Bravura Security Fabric  auto assignment, all users must have their
+department attribut e  set. Bravura Security Fabric  is then c on figur ed  to:
+1.Map the Activ e  Directory department attribut e  to a department pr ofile  attribut e. 1.
+2.Create user classes which use the department attribut e  for membership criteria. 2.
+3.Manage all the department groups on Activ e  Directory. 3.
+4. Aut omatic ally  assign users to groups, based on the above. 4.
+Users with the department attribut e  set will be aut omatic ally  added to their r espectiv e  resource groups.
+When the removal option  is set these users are aut omatic ally  removed from the department resources
+when they no longer belong to the department.
+Aut omatic  provisioning of roles
+Existing  process 
+A company currently has manual processes for assigning help desk users to help desk applic ations  and
+resources.
+Requirements 
+To ease the assignment for e xisting  users and new users, the company needs to:
+▪Do a bulk role assignment for users that currently exist in an Activ e  Directory user group called ▪
+Support.
+▪Monitor new account cr eation  in Activ e  Directory and add users to the help desk role when r equesting ▪
+access to the Support group.
+▪Remove users from the help desk role if they have been removed from the Support group.▪
+Solution  design 
+To resolve the requirements using Bravura Security Fabric  auto assignment, all help desk users must be a
+member of the Support group on Activ e  Directory. Bravura Security Fabric  is then c on figur ed  to:
+1.Manage the Support group on Activ e  Directory. 1.
+2.Create a user class with a group membership criteria of the help desk group on Activ e  Directory. 2.
+3.Create a role that includes all the entitlemen ts  that a help desk user will require. 3.
+4. Aut omatic ally  assign users to the help desk role, based on the above. 4.Users that are members of the Support group will be aut omatic ally  assigned the Support role. When a
+new user requests access to the Support group, they will be aut omatic ally  assigned the role. And
+conversely if they are removed from the group, they are removed from the role.Part VI Bravura Workforce P atternBravura Workforce P attern
+Bravura Workforce P attern  is a rapid deployment feature that can reduce implemen t ation  time  by up to
+75% by aut omating  typical identity  life cycle management requirements. Bravura Workforce P attern
+reduces scripting  for complex business logic such as SoR (system of record) onboarding. Initial  and
+ongoing c on figur ation  of Identity  Management is greatly minimized to lower costs and deployment time.
+Example onboarding scenarios available include:
+▪SoR-driven onboarding▪
+▪Request-driven onboarding▪
+▪ De t ecting  and blocking rehires ▪
+▪Return from leave of absence▪
+Example offboar ding  scenarios available include:
+▪Scheduled deactiv ation ▪
+▪Immediate user deactiv ation ▪
+▪Leave of absence – e ff ectiv e ▪
+Example maintenance scenarios available include:
+▪ Pr ofile  updating ▪
+▪Password initializ ation  and pr ofile  c ompletion ▪
+▪Update contact in f ormation ▪
+▪Enroll security questions ▪
+▪Approvals w orkflo w ▪
+▪Transfer department, loc ation  or manager ▪
+▪Request entitlemen ts  using model user ▪
+▪Leave of absence▪
+▪Name change▪
+▪Assign entitlemen ts  based on role ▪
+▪Resolve Access Denied errors▪
+▪Invite users to read/accept new policy documents▪
+▪ R e-certif y  users, r elationship s  and entitlemen ts ▪
+▪Passwords▪
+▪Password expiry early warning▪
+▪Transparent password s ynchr oniz ation ▪
+▪Self-service password reset▪
+Advantages of Bravura P attern
+Replacing legacy IAM processes with Bravura P attern  has the following advantages over custom IAM
+implemen t ations:▪ Optimiz ed  IAM processes: The business processes c odified  in Bravura P attern  have been optimiz ed  for ▪
+fast service and robust internal controls, improving on the legacy processes in most or g aniz ations.
+▪Complete functionality:  When implementing  a custom IAM system, or g aniz ations  can only automate ▪
+one or two processes at a time.  Most start with onboarding, deactiv ation  or access reviews and only
+later automate transfers, leaves of absence, name changes, rehire de t ection,  etc. In contrast, Bravura
+P attern  allows or g aniz ations  to automate a comprehensive set of identity  lifecycle processes up front.
+▪ E fficien t  implemen t ation:  By adopting  a pr e-c on figur ed  set of processes and policies, or g aniz ations ▪
+minimize deployment risk, reduce implemen t ation  cost and shorten time  to value.
+Bravura Workforce P attern  feature components
+The Bravura Workforce P attern  is implemented through the ins t allation  of the R efbuild.im_c orpor a t e
+component. This reference implemen t ation  installs and c on figur es  the components used to implement
+common corporate user management scenarios. The R efbuild.im_c orpor a t e  component is divided into
+two main components: R efbuild.im_c orpor a t e_functional,  which includes functional  components; and
+R efbuild.im_c orpor a t e_scenario ,  which includes scenario components.
+Bravura Identity  Workforce user classes
+Additional  user classes are added when Bravura Workforce P attern  is installed:
+CATCHALL-AUTH  Members of this user class will be added to a request if there are insufficien t
+authorizers.
+CONTRACT-HIRE-APPROVAL  Contract hire authorizers
+HR HR group
+IDTRACK  Contains user names acting  as requesters for aut omatic  request submission. This class is mainly
+used to detect aut omatic ally  submitted  requests and apply distinct  authoriz ation  requirements.
+LOA-AUTHORIZERS  Leave of absence authorizers
+LOA-SCHEDULER  Leave of absence scheduler
+MOBILEUSERS  Users with Mobile settings
+NOTONLEAVE  Users who are not on leave
+PIIUSERS  Users with personal in f ormation  for authentic ation
+REHIRE-ALLOWED  Users who can be rehired
+SCHEDULE-TERM-ALLOWED  This r elational  user class determines whether scheduled t ermination  can be
+performed
+TEMP-RES-REQUESTERS  Requesters for temporary entitlemen ts
+TEMP-RESOURCE-AUTO-APPROVAL  Users who have aut omatic  approval for temporary entitlemen ts
+TERMINATED  Terminated users
+URGENT-TERM-ALLOWED  Users who can be urgently terminatedWORKFLOW-MANAGERS  This user class membership provides access to the w orkflo w  manager section
+of the Requests app, allowing for tracking of all submitted  requests and acting  on behalf of other people.Installing Bravura Workforce P attern  components
+You can either customize your reference implemen t ation  by installing Bravura Identity -related scenario
+components or install the complete Bravura Workforce P attern .
+Install Bravura Identity  scenario components
+To install individual Bravura Identity  scenario components:
+1.Log into Bravura Security Fabric  as a superuser. 1.
+2.Click Manage Components . 2.
+3.In the Search  field  above the list of components, type Scenario.im , then click the Search  button. 3.
+4.Select the appropriate components.4.
+5.Click Install component(s)  from the Actions  panel  on the right. 5.
+The component management program installs the components along with any dependencies. This
+may take some time.  You should see a "Completed install for component" message for the selected
+component in the TASK STATUS  section  of the Actions  panel .
+When you install a component, the component management program creates the database tables and
+c on figur ations  that are necessary for the plugin points to function.  Additional  post-install
+c on figur ation  may still be required for some use cases to run properly.
+Install complete Bravura Workforce P attern
+Alt ernativ ely ,  to install the complete Bravura Workforce P attern  and all its dependencies:
+1.Log into Bravura Security Fabric  as a superuser. 1.
+2.Click Manage Components . 2.
+3.In the Search  field  above the list of components, type Ref , then click the Search  button. 3.
+4.Select R efbuild.im_corpor a t e . 4.
+5.Click Install component(s)  from the Actions  panel  on the right. 5.The component management program installs the components along with any dependencies. This
+may take some time.  You should see a "Completed install for component" message for the selected
+component in the TASK STATUS  section  of the Actions  panel .
+When you install a component, the component management program creates the database tables and
+c on figur ations  that are necessary for the plugin points to function.  Additional  post-install
+c on figur ation  may still be required for some use cases to run properly.
+See also
+See Managing components  (on page 315) for detail about installing and managing components from the
+web interface or command line.
+Onboarding
+Bravura Workforce P attern  includes scenario components to manage the onboarding of users into the
+Bravura Security Fabric  system. This can include aut omatic  onboarding triggered by new users added to a
+System of Record (SoR), and manually-requested onboarding.
+Aut omation
+Bravura Identity  can be c on figur ed  to automate the onboarding process of new users by monitoring an
+SoR target system for changes. Bravura P attern  includes a scenario dedicated to this particular  process, as
+described below.
+im_corp_automated_onboard
+Purpose:
+Implements an automated onboarding process, triggered by new users added to a monitored system of
+record (SoR).
+Configur ation:
+This scenario relies on c on figur ation  data located in the following external data store (extdb) tables:
+▪ hid_global_c on figur ation:  Adds ONBOARD_* settings  under the AUTOMATION namespace, to de fine ▪
+parameters such as the target ID for the SoR or the pr e-de fined  request to be used for automated
+onboarding requests.
+▪ im_policy_authoriz ation:  Adds an authoriz ation  rule to allow idtrack (aut omation)  requests to be ▪
+auto-approved so they can be fulfilled  immediately, without any manual in t er v ention.
+You will notic e,  for example, that there are two rules in this table for PDRId = NEW-EMPLOYEE. One of
+them has RequesterUserclass = IDTRACK. This rule uses the NEW-EMPLOYEE PDR when an automated
+request is made.
+▪ hid_policy_attr v al_*:  Adds rules involving pr ofile  and request attribut es,  so automated onboarding ▪
+requests can be processed successfully by the w orkflo w  engine.

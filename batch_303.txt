@@ -1,0 +1,346 @@
+Criteria Description
+Use N or more days ago : Requests are only included in
+the report output if their last authoriz ation  time  occurred
+more than the specified  number of days ago.
+Loc ation Select one or more loc ations  from the drop-down list to
+display in f ormation  related to specific  loc ations  in the
+report output.
+This search field  will only be shown in the report search
+criteria when at least one loc ation  is de fined  in the
+inventory.
+Item type Select one or more item types from the drop-down list to
+display in f ormation  related to specific  item types in the
+report output.
+This search field  will only be shown in the report search
+criteria when at least one item type is de fined  in the
+inventory.
+Request status Select one or more statuses to include in the report. The
+request status is the state of the overall request.
+Roles Type an ID that matches the role for which you want to
+run the report.
+Template ID Select one or more template IDs from the drop-down list
+to display in f ormation  related to specific  templates in the
+report output.
+This search field  will only be shown in the report search
+criteria when at least one template is de fined.
+Group ID Search for one or more managed groups. Alt ernativ ely ,
+you can type the long ID of a managed group. Only
+requests that a ff ect  the specified  groups are included in
+the report.
+Target system ID Type a comma-and-space-delimited list of target system
+IDs to only include requests that a ff ect  the specified
+target systems. Alt ernativ ely ,  you can search for one or
+more target systems.
+Resource ID Type a resource ID that matches the resource for which
+you want to run the report.
+Oper ation Select one or more oper ations  to include in the report.
+Requests open for a minimum of days Type a number in this field  to only include requests that
+are older than the specified  number of days.
+Display s t atistics  for Select the category for which you want to display
+s t atistics:  requesters, authorizers, implementers,
+oper ations,  target systems, groups, roles, templates,
+(request) status.Criteria Description
+In this mode, the report output includes the number
+involved requests for each item. The default is No
+summary .
+Display subtotals Select one of the Subtotal by  <period> options  to sort
+the report and show the number of total requests
+created by the time  period selected. The time  period is
+one of: week, month, quarter, or year.
+The default is No subtotals .
+Graph type Select a type of graph to generate for the summarized
+report. This option  is hidden when selecting  No summary
+for Display s t atistics  for field.
+None:  no graph will be generated.
+Horizontal bar chart:  a horizontal bar chart will be
+generated for the summarized report.
+Line chart:  a line chart to connect each request. This
+option  only shows when Operation  is selected for the
+Display s t atistics  for field,  or any option  other than No
+subtotals is selected for the Display subtotals  field.
+Number of rows for graph The maximum rows for graph to display. The selected
+rows will be displayed with the number of requests in
+descending order.
+Request attribut e  to search Select a request attribut e  on which to filt er  requests.
+Test Select the comparator to apply on selected request
+attribut e.
+is equal to  if you want Bravura Security Fabric  to search
+on values equal to a specified  string.
+is not equal to  if you want Bravura Security Fabric  to
+search on values not equal to a specified  string.
+contains if you want Bravura Security Fabric  to search on
+values that contain a specified  string.
+does not contain  if you want Bravura Security Fabric  to
+search on values that do not contain a specified  string.
+starts with  if you want Bravura Security Fabric  to search
+on values that start with a specified  string.
+does not start with  if you want Bravura Security Fabric  to
+search on values that do not start with a specified  string.
+ends with  if you want Bravura Security Fabric  to search
+on values that end with a specified  string.
+does not end with  if you want Bravura Security Fabric  to
+search on values that do not end with a specified  string.
+is greater than  if you want Bravura Security Fabric  to
+search on values that are greater than a specific  string.Criteria Description
+is greater than or equal to  if you want Bravura Security
+Fabric  to search on values that are greater than or equal
+to a specific  string.
+is less than  if you want Bravura Security Fabric  to search
+on values that are less than a specific  string.
+is less than or equal to  if you want Bravura Security
+Fabric  to search on values that are less than or equal to a
+specific  string.
+Value for request attribut es Type the value to compare with.
+Request attribut es  to display Select one or more request attribut es  to include in the
+report.
+Show detailed report The default is to have this option  checked to display
+additional  report details.
+If you do not specify any search criteria, the report output contains details about all requests.
+Requester and recipient a ffinity
+Purpose:  Frequency analysis of requester or recipient by pr ofile  attribut e.
+Executable : requestfrequency
+Search Criteria:
+Criteria Description
+Check entry date Choose one of the following options  to de fine  the date
+when the request was submitted:
+Date not required : This is the default setting.  Requests
+are reported regardless of their entry date.
+Use r elativ e  date :
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date optionsCriteria Description
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+Requests are only included in the report output if their
+entry date falls within the selected r elativ e  date range.
+Use selected date :Criteria Description
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+Requests are only included in the report output if their
+entry date falls between the Earliest request entry start
+date  and Latest request entry start date .Criteria Description
+Use within the last N days : Requests are only included in
+the report output if their entry date falls within the
+specified  last number of days.
+Use N or more days ago : Requests are only included in
+the report output if their entry date was more than the
+specified  number of days ago.
+Pr e-de fined  request ID Select one or more pr e-de fined  request IDs from the
+drop-down list to display in f ormation  related to specific
+pr e-de fined  requests in the report output.
+Requester or recipient Select requester or recipient for analysis
+Pr ofile  attribut e Select one to three pr ofile  attribut es  that you want to
+add to the report output.
+Value type This field  is displayed if a Pr ofile  attribut e  field  is other
+than Attribut e  not required . Select the value type of
+comparator to apply on the pr ofile  attribut e.
+is empty  if you want Bravura Security Fabric  to search on
+empty values.
+is not empty  if you want Bravura Security Fabric  to
+search on non empty values.
+is equal to  if you want Bravura Security Fabric  to search
+on values equal to a specified  string.
+is not equal  to if you want Bravura Security Fabric  to
+search on values not equal to a specified  string.
+Value This field  is displayed and required if a Value type  field  is
+set to is equal to  or is not equal to . Type the value of the
+string to compare with.
+This searches against the attribut e’ s  stored string
+value in the database, regardless of attribut e  type.
+Maximum number of requests Type a positiv e  integer to only display pr ofile  attribut es
+that have total requests less than or equal to this integer.
+It must be greater than or equal to "Minimum number of
+distinct  values" and is set to in finit e  (-1) by default.
+Minimum number of requests Type a positiv e  integer to only display pr ofile  attribut es
+that have total requests greater than or equal to this
+integer. It is set to 1 by default.
+Graph type Select a type of graph to generate for the report.
+None : no graph will be generated.
+Horizontal bar chart : a horizontal bar chart will be
+generated for the report.
+Number of rows for graph The maximum rows for graph to display. The selected
+rows will be displayed with the number of requests in
+descending order.P articipan t  response time
+Purpose:  Lists in f ormation  about the responsiveness of participan ts  in w orkflo w  processes based on the
+selected participan t,  date inputs, and request status.
+Executable : requestresponse
+Search Criteria:
+Criteria Description
+Search by Select which type or responses to report:
+Authorizers  responding to authoriz ation  requests
+Implementers  responding to implemen t ation  tasks
+Reviewers responding to certific ation  campaigns
+<P articipan t>  ID The title of this option  changes depending on how Search
+by is c on figur ed.  Type a comma-and-space-delimited list
+of pr ofile  IDs that match the participan ts  for whom you
+want to generate the report. Alt ernativ ely ,  you can search
+for one or more pr ofile  IDs.
+Submit date Select the da t e/time  that the request was submitted:
+Date not required:  This is the default setting.  Requests
+are reported regardless of when they were submitted.
+Use r elativ e  date :
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.Criteria Description
+Option Description
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+The report output only includes requests that were
+submitted  within the selected r elativ e  date range.
+Use selected date :
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+The report output only includes requests that were
+submitted  between the Earliest request submit date and
+Latest request submit date.
+Use within the last N days : The report output only
+includes requests that were submitted  within the
+specified  last number of days.Criteria Description
+Use N or more days ago : The report output only includes
+requests that were submitted  more than the specified
+number of days ago.
+Request status by <P articipan t> The title of this option  changes depending on how Search
+by is c on figur ed.  Select one or more statuses by which to
+filt er  requests, tasks, or campaigns.
+Inactiv e  requests
+Purpose:  Analysis of requests which have had no activity  in N days. Lists all implementer tasks, and
+certific ation  campaigns, and requests.
+Executable:  inactiverequests
+Search Criteria:
+Criteria Description
+Requester ID Type a comma-and-space-delimited list of pr ofile  IDs that
+match the requesters for whom you want to generate the
+report. Alt ernativ ely ,  you can search for one or more
+requester pr ofile  IDs.
+Search by Select the participan t  to search by:
+Authorizers:  report returns all requests that have been
+submitted  but have not yet been handled by the
+authorizers.
+Implementers:  report returns all tasks that have not yet
+been handled by implementers.
+Reviewers:  report returns all certific ation  campaigns that
+have not yet been handled by reviewers. All reviewers
+are displayed as single entries.
+Authorizer ID Type a comma-and-space-delimited list of pr ofile  IDs that
+match the authorizers to include in the report output.
+Alt ernativ ely ,  you can search for one or more pr ofile  IDs.
+Only shown when Search by  is set to Authorizers .
+Implementer Type a comma-and-space-delimited list of pr ofile  IDs that
+match the implementers to include in the report output.
+Alt ernativ ely ,  you can search for one or more pr ofile  IDs.
+Only shown when Search by  is set to Implementers .
+Reviewer ID Type a comma-and-space-delimited list of pr ofile  IDs that
+match the reviewers to include in the report output.
+Alt ernativ ely ,  you can search for one or more pr ofile  IDs.
+Con figur e  whether the certific ation  campaign is inactiv e
+because it is W aiting  on:

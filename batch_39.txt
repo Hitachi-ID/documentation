@@ -1,0 +1,328 @@
+Click this link To access this functionality
+Roles Set up roles that can be used assign requirements for a set of users.
+Details Roles  (on page 556)
+Groups Enable Bravura Security Fabric  to manage group membership for certain target systems.
+Details Groups  (on page 585)
+Network resources Enable users to request access to network resources such as Activ e  Directory network shares and printers.
+Details Network Resources  (on page 575)
+Oper ation  dependencies Set up dependencies that control how data is exchanged between connectors; for example, the cr eation  of an Exchange mailbox can be made
+dependent on an Activ e  Directory account.
+Details Oper ation  Dependencies  (on page 645)
+Resource attribut es De fine  common and reusable attribut es  for resources.
+Details Resource Attribut es  (on page 651)
+Resource attribut e  groups De fine  c ollections  of resource attribut es.
+Details Resource Attribut e  Groups  (on page 667)
+Options Options  for role-based access control enforcement.
+Details Setting  global role enforcement options  (on page 2412)
+Policies
+You must have the "Manage policies"  right to access the full Policies menu.
+Click this link To access this functionality
+User classes Set up user classes that can be used to segment the user population.
+Details User classes  (on page 158)
+Segr eg ation  of duties  rules Set up rules that provide a way of identif ying  e x ceptions  to roles or possible access c on flicts.
+Details Segr eg ation  of duties  rules  (on page 826)
+Authentic ation  priority Prioritiz e  target systems used to authentic a t e  users when accessing Bravura Security Fabric .
+Details Setting  the target system authentic ation  order  (on page 826)
+Identific ation  priority Prioritiz e  target systems that users can select to identif y  themselves when accessing Bravura Security Fabric .
+Details Identif ying  users  (on page 821)
+Password policies Modify and apply strength rules to Bravura Security Fabric ’s global, centrally-managed password policy.
+Details Password policy  (on page 84)
+Question  sets Con figur e  question  sets that are used to authentic a t e  users.
+Details Question  Sets  (on page 1024)
+Login options Con figur e  options  for login.
+Details Login options  (on page 830)
+User notific ations Con figur e  notific ation  of users of compliance requirements, password expiry, and other events.
+You must have the "Manage notific ations"  adminis tr ativ e  privilege to access the User notific ations  sub-menu item.
+Details Batch and web notific ation  (on page 431)Click this link To access this functionality
+Authentic ation  chains Customize authentic ation  to Bravura Security Fabric  using multiple  methods.
+Details Authentic ation  chains  (on page 836)
+System interfaces Con figur e  interfaces with external systems.
+Details Keeping passwords secret from product administrators  (on page 836)
+REST API authoriz ation  policies Search, download, or reset REST API authoriz ation  policies to default.
+Details REST API Authoriz ation  policies.  (on page 3469).
+Options Con figur e  general login and authentic ation  policy options.
+Details Authentic ation  policy options  (on page 833)
+Privileged access
+Some of the options  in this menu are only available with a full Bravura Privilege license 
+ .
+Click this link To access this functionality
+Managed systems Add, delete and c on figur e  managed systems.
+Details Managed Systems  (on page 1815)
+Managed systems policies Add, delete and modify managed systems policies.
+Details Managed system policies  (on page 1807)
+Import rules Add, delete and modify import rules.
+Details Import rules  (on page 2095)
+Access disclosure plugins Add, delete and modify access disclosure plugins.
+Details Access disclosure plugins  (on page 242)
+Manual password r andomiz ation  batches View the manual password r andomiz ation  results.
+Details Reviewing r andomiz ation  results  (on page 1876)
+Local w ork s t ation  service ins t allation
+packageGenerate ins t allation  key and download local w ork s t ation  service ins t allation  package.
+Details Downloading the ins t allation  package  (on page 1816)
+Node assignments Change the service linked to a managed system policy.
+Details Changing a managed system policy’s service ID  (on page 1932)
+Options Con figur e  general privileged access options.
+Details Privileged access management options  (on page 1932)
+W orkflo w
+The options  on the W orkflo w  menu enable you to c on figur e  common w orkflo w  objects and w orkflo w
+logic. The table below details the available menu options.  You must have the "Con figur e  w orkflo w  setup"
+right to access this menu.Click this link To access this functionality
+Pr e-de fined  requests Con figur e  pr e-de fined  requests to de fine  requests in terms that users understand, and reduce the number and complexity of steps.
+Details Pr e-de fined  Requests  (on page 1930)
+Pr ofile  and request attribut es Set up pr ofile  and request attribut es  that can be used to collect and display in f ormation  about users.
+Details Pr ofile  and request attribut es  (on page 1930)
+Attribut e  groups Group attribut es  to control user access and display, and apply attribut es  to certain oper ations.
+Details Attribut e  groups
+Authorizers Set up users as authorizers.
+Details St atic  authorizers  (on page 705)
+Email c on figur ation Set up e-mail notific ation.
+Details Modifying global mail settings
+Email cus t omiz ation Customize language macros for email messages.
+Details Customizing w orkflo w  email using the Manage the system (PSA) module  (on page 423)
+Options Con figur e  the various w orkflo w  options  and features. This includes options  for:
+▪ Deleg ation▪
+▪ Esc alation▪
+▪ Or g aniz ation  chart management ▪
+▪General w orkflo w  behavior ▪
+▪Plugins▪
+Inventory
+This menu is available with an Bravura Identity  license 
+ .
+The options  on the Inventory menu enable you to c on figur e  items and processes for inventory
+management. The table below details the available menu options.  You must have the "Con figur e
+w orkflo w"  setup  right to access this menu.
+Cllick this link To access this functionality
+Target systems Add, update or delete target systems used for inventory management.
+Details Target Systems  (on page 480)
+Loc ations Set up loc ation  pr operties  to help you de fine,  search for, and manage inventory items.
+Details Inventory Loc ations  and Types  (on page 2667)
+Item types Set up item type pr operties  to help you de fine,  search for, and manage inventory items.
+Inventory managers Set up users as inventory managers. You must have at least one item type, and one loc ation  set up before you can do this.
+Details Inventory managers  (on page 2695)
+Template accounts Set up templates that can be used to request inventory items.
+Details Template accounts  (on page 622)
+Inventory states Update inventory states.
+Details Inventory Objects and States  (on page 2678)Cllick this link To access this functionality
+Inventory items Add individual inventory items.
+Options Enable plugins to manage inventory.
+Details Inventory Management Options  (on page 2696)
+Modules
+The options  on the Modules menu enable you to c on figur e  the Bravura Security Fabric  graphical user
+interface. The table below details the available menu options.  You must have the "Con figur e  modules"
+right to access this menu.
+Click this link To access this functionality
+Manage certific ation  process ( CERT ) Manage the access certific ation  process and initia t e  certific ation  campaigns.
+Details Manage certific ati  (on page 1163) on process  (on page 387)
+View dashboards ( DASH ) View graphical summary reports.
+Details View dashboards  (on page 388)
+Manage external data store ( DBE) Con figur e  events and options  for the External data store.
+Details External Data Store (DBE)  (on page 1163)
+Digital ID ( DID) Enable event actions  for this module, which is used by Bravura Security Fabric  to update a Lotus Notes ID file repository.
+Details Digital ID  (on page 1171)
+Help users ( IDA) Con figur e  event actions  and options  for help desk users to assist users.
+Details Help users  (on page 1174)
+Manage the OrgChart ( IDG) Con figur e  event actions  and options  for administrators to manage the or g aniz ation  chart.
+Details Manage the OrgChart  (on page 387)
+Browse the OrgChart ( IDO) Con figur e  event actions,  plugins, and options  for end users to browse or update the or g aniz ation  chart.
+View and update pr ofile  (IDR) Con figur e  plugins and options  for end users to request security changes.
+Details View and update pr ofile  (IDR)  (on page 1178)
+Manage deleg ations  (IDS) Con figur e  options  for users to manage deleg ation  requests.
+Details Manage deleg ations  (on page 1180)
+Manage the system ( PSA) Set event actions  and options  for product administrator s to c on figur e  and manage Bravura Security Fabric .
+Details Manage the system (PSA)  (on page 1181)
+Front-end ( PSF) Con figur e  plugins and options  for front-end access and authentic ation.
+Details Front-End (on page 1182)
+Generate voice print enrollment PIN ( PSI) Set event actions  and options  for voice print r egis tr ation.
+Details Generate voice print enrollment PIN (PSI)  (on page 1180)
+Unlock accounts ( PSK) Set event actions  and options  for self-service account unlocks.
+Details Unlock accounts (PSK)  (on page 1184)
+Attach  other accounts ( PSL) Set event actions  and options  for alternate login ID management.
+Details Manage tokens (on page 1185)User notific ations  (PSN) Enable the user notific ation  system.
+Details User notific ations  (PSN)  (on page 433)
+Manage tokens ( PSP) Set event actions  and options  for self-service token management.
+Details Manage tokens  (on page 1192)
+Update security questions  (PSQ) Set event actions  and options  for security question  pr ofile  management.
+Details Update security questions  (PSQ)  (on page 1193)
+Password s ynchr oniz ation  r egis tr ation
+(PSR)Set event actions  and options  for password s ynchr oniz ation  r egis tr ation.
+Details Enable password s ynchr oniz ation  (PSR)  (on page 1194)
+Change passwords ( PSS) Set event actions  and options  for self-service password changes.
+Details Change passwords (PSS)  (on page 1196)
+Manage reports ( RPT) Con figur e  options  for the Manage reports (RPT) module.
+Details Manage reports (RPT)  (on page 1199)
+Requests Con figur e  event actions  and options  for users to view and act on requests.
+Details Requests app  (on page 1249)
+Privileged access Con figur e  Bravura Privilege  managed systems and policies, service IDs, event actions,  plugins, and options.
+Details Privileged access app  (on page 1251)
+Session monitor Con figur e  Bravura Privilege  recorded sessions.
+Details Session monitor app  (on page 1255)
+Options Con figur e  plugins and options  that apply to web modules in general.
+See also:
+For details about module c on figur ation  options  see Modifying general behavior  (on page 1045).
+Security
+The options  on the Security menu enable you to set up and maintain the security of your Bravura
+Security Fabric  environment. The table below details the available menu options.  You must have at least
+one of the following rights to access this menu:
+▪Manage security▪
+▪Manage product administrator s ▪
+▪Manage user groups▪
+▪Manage certific ation ▪
+Click this link To access this functionality
+Access to pr ofile  and request attribut es De fine  user groups  to control permissions for attribut e  groups .
+You must have the "Manage user groups" right to access this option.
+Details Access to attribut es  and privileged accounts  (on page 722)
+Access to resource attribut es De fine  user groups  to control permissions for resource attribut es.
+Details Access to attribut es  and privileged accounts  (on page 722)Click this link To access this functionality
+Access to product features Add, update, delete, or enable / disable other users who log into the adminis tr ativ e  consoles. You must have the "Manage product administrators"
+right to access this option.
+Details Product administrators  (on page 672)
+Access to user pr ofiles Add, update, delete, or enable / disable groups of users who log into the self-service modules, or the Help users (IDA) module. You can also specify
+a requester and view a list of their privileges. You must have the "Manage security" right to access this option.
+Details Access to user pr ofiles  (on page 706)
+Privileged access to systems De fine  user groups  to control permissions for managed system policies .
+You must have the "Manage user groups " right to access this option.
+Details Access to attribut es  and privileged accounts  (on page 722)
+Options Con figur e  general security options.  You must have the "Manage security" right to access this option.
+Details Security plugin options  (on page 729)
+Maintenance
+The options  on the Maintenance menu enable you to set up and maintain your Bravura Security Fabric
+service programs, schedule jobs, update the system, c on figur e  mail, and c on figur e  general settings.  The
+table below details the available menu options.  You must have at least one of the following rights to
+access this menu:
+▪Maintain servers▪
+▪ Con figur e  r eplic ation ▪
+Click this link To access this functionality
+Auto discovery Manage ID filt er s  (on page 557) set connector order, or run auto discovery. You must have the "Maintain servers" right to access this option.
+System logs View and search the current Bravura Security Fabric  log. You must have the "Maintain servers" right to access this option.
+Details Viewing Bravura Security Fabric system logs
+Services Install and monitor the Bravura Security Fabric  services through the Web interface. You must have the "Maintain servers" right to access this
+option.
+Scheduled jobs Schedule jobs. You must have the "Maintain servers" right to access this option.
+Details Scheduling Maintenance  (on page 2702)
+Connector concurrency rules Con figur e  extra locking for connector oper ations,  pr e v enting  concurrent e x ecution.  You must have the "Maintain servers" right to access this
+option.
+Details Customizing connector behavior  (on page 528)
+File s ynchr oniz ation Synchronize files between the main server and proxy servers, or between servers in a replicated environment. You must have the "Maintain
+servers" right to access this option.
+Details Managing Proxy Servers  (on page 260) and R eplic ation  and Recovery .
+Connector behavior Change default options  for various connectors . You must have the "Maintain servers" right to access this option.
+See Customizing connector behavior  (on page 528) for details about options  for each connector.
+Database r eplic ation Con figur e  and control database r eplic ation.  You must have the "Con figur e  r eplic ation"  right to access this option.
+System variables Con figur e  all system variables within Bravura Security Fabric  from one page. This is helpful if you know the name of the system variable you want
+to modify, but cannot remember where it is located.Click this link To access this functionality
+Environment variables Display the current system environment in which Bravura Security Fabric  is running. This is not the same environment as the currently logged-in
+user. You must have the "Maintain servers" right to access this option.
+Options Con figur e  general maintenance options.  You must have the "Maintain servers" right to access this option.
+Manage certific ation  process
+The following security privileges control access to the Manage c ertific ation  process  (cert) module:
+▪Product administrator s with the ”Manage certific ation  process” adminis tr ativ e  privilege can initia t e ▪
+certific ation  campaigns with multiple  reviewers.
+▪Product administrator with the ”Initia t e  entitlemen t  certific ation  campaigns” adminis tr ativ e  privilege ▪
+can initia t e  entitlemen t  certific ation  campaigns with a single reviewer.
+Users with the ”Initia t e  a review of all entitlemen ts”  privilege can initia t e  a quick certific ation  of a single
+user via the View and update profile  (IDR) module.
+The Manage certific ation  process  (CERT) module includes tabs:
+▪ Activ e  campaigns to view in f ormation  about campaigns that are in progress ▪
+▪Start entitlemen t  certific ation  campaign to add a new entitlemen t  certific ation  campaign ▪
+▪Start c on figur ation  certific ation  campaign to add a new c on figur ation  certific ation  campaign ▪
+▪Saved certific ation  setups to select a saved c on figur ation ▪
+▪Scheduled campaigns to view in f ormation  about campaigns that are scheduled ▪
+See:
+▪Managing the Certific ation  Process  (on page 2567) to learn how to use the Manage certific ation  process ▪
+(CERT) module
+▪ Certific ation  Options  (on page 2639) to learn how to c on figur e  the Manage certific ation  process  (CERT) ▪
+module
+Manage the OrgChart
+The following security privileges control access to the Manage the OrgChart  (IDG) module:
+▪Product administrators with the ”Manage the OrgChart” adminis tr ativ e  privilege can update the ▪
+OrgChart and view the OrgChart structure.
+▪Product administrators with the ”Start Org building rounds” adminis tr ativ e  privilege can initia t e ▪
+OrgChart-building rounds and invite managers to update their list of subordinates.
+The Manage the OrgChart  (IDG) module allows product administrators to:
+▪ Identif y  managers and their subordinates ▪
+An Org Manager administrator could simply identif y  the top-level manager, then initia t e  an OrgChart
+building round whereby managers identif y  their own subordinates. In other cases, product
+administrators could build parts or all of the OrgChart, then initia t e  the process to have managers
+verify the in f ormation.▪ Identif y  users who no longer report to a certain manager ▪
+▪Transfer users from one manager to another▪
+See:
+▪Managing the OrgChart  (on page 2503) to learn how to use the Manage the OrgChart  (IDG) module. ▪
+▪Manage the OrgChart (IDG)  (on page 1177) to learn how to c on figur e  the Manage the OrgChart  (IDG) ▪
+module.
+View dashboards
+The following security privileges control access to the View dashboards  (dash) module:
+▪View certific ation  dashboard ▪
+▪View w orkflo w  dashboard ▪
+▪View privileged access dashboard▪
+▪View OrgChart dashboard▪
+▪View enrollment dashboard▪
+▪Recompute dashboard cache▪
+The View dashboards (DASH)  console includes dashboards for graphical summaries of Bravura Security
+Fabric  oper ations  and usage.
+See:
+▪Viewing dashboards  (on page 2922) to learn how to use the View dashboards (DASH) module ▪▪View dashboards (DASH)  (on page 1161) to learn how to c on figur e  the View dashboards (DASH) ▪
+module
+▪The Health check monitor  dashboard is also displayed on the Front-end  if it is installed and the user has ▪
+the required privileges. See Maintenance  Health check  (on page 2795) for more in f ormation.
+Manage reports
+The Manage reports  menu enables you to use the Manage reports (RPT) module to run reports based on
+the in f ormation  stored in the Bravura Security Fabric  database You must have the " Manage reports
+reports" adminis tr ativ e  privilege to access this menu.
+See:
+▪REPORTS  (on page 2891) for in f ormation  about managing reports ▪
+▪Manage reports (RPT)  (on page 1199) for in f ormation  about c on figuring  the module ▪
+Analytics
+Analytics  is an optional  Bravura Security report feature that organizes and displays Micr osoft’ s  SQL Server
+R eporting  Services (SSRS) reports.
+When analytics  is c on figur ed,  an Analytics  link is available on the Bravura Security Fabric  adminis tr ativ e
+menu.
+Reports that exist on a SQL Server R eporting  Service server are displayed on the Analytics  user interface
+and can then be saved in diff er en t  formats such as DOC, CSV, PDF and HTML.
+The analytics  feature requires SQL Server R eporting  Service (SSRS). The version of SSRS must be the same
+version as the SQL Server for the instance; for example, SQL Server 2016 and SSRS 2016.
+In order to use the Analytics  app, the feature must be c on figur ed:
+▪During Bravura Security Fabric  ins t allation  (on page 196). ▪
+or;
+▪ After  Bravura Security Fabric  ins t allation,  using the setupanalytics program. ▪
+Use setupanalytics to
+▪Add the Analytics  app if it was not installed when Bravura Security Fabric  was initially  installed. ▪
+▪Modify the Bravura Security Fabric 's current Analytics  app c on figur ation: ▪
+▪Change the SQL Server R eporting  Services (SSRS) server web service URL. ▪
+▪Change the SSRS server administrator username.▪
+▪Change the SSRS server administrator password.▪
+▪Change up a SSRS database, a database login username and password.▪
+▪Change the report users login username.▪
+▪Change the report users login password.▪
+RequirementsIf you are using setupanalytics to add the Analytics  app to the product if it was not initially
+installed when Bravura Security Fabric  was installed, the following extra steps are required:
+1.Install SQL Server R eporting  Services - Nativ e  feature. 1.
+2.Create a dedicated report database user and schema.2.
+3. Con figur e  SSRS. 3.
+Usage
+setupanalytics.exe [option]
+Argument Description
+–admin <username> Report server administrator
+–adminpwd <password> Report server administrator password.
+–db <database> Fully -qualified  domain name of the database server.
+–password <password> Database report user password.
+–url <url> Report server URL.
+–username <username> Database report username.
+Examples
+1.Change analytics  to use a diff er en t  database to report data from: 1.
+setupanalytics.exe --db SERVER01\database1 --
+username  reportuser  --password reportuserpassword
+2.Add the Analytics  app after  the Bravura Security Fabric  ins t allation: 2.
+setupanalytics.exe --admin sa --adminpwd password --
+db SERVER01\database1 --url http://SERVER01:80/ReportServer --
+username  reportuser  --password reportuserpassword
+If you do not  see Analytics  on the main menu, it has not been installed.
+In order to access the Analytics  app users require the "Analytics"  adminis tr ativ e  right or have
+membership criteria which is de fined  by the _ANALYTICS_READERS_ user class.
+To create new reports, Micr osoft’ s  Report Builder must be installed on the user’s computer.
+See Analytics  (on page 3432) for more in f ormation.
+Requests
+The Requests  app is accessible via the Requests link to product administrators who have the ”Manage
+reports” user access rule. Users with this right can view requests they have submitted  via reports.
+See:
+▪ Submitting  pr e-de fined  requests using report output  (on page 2904) ▪
+▪Requests app  (on page 1249) for more in f ormation  about c on figuring  this module ▪

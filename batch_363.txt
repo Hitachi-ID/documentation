@@ -1,0 +1,341 @@
+such as ffmpeg ,  by changing the value of SMON VIDEO CREATE COMMAND LINE in the Manage the
+system > Modules > Recorded session management (smon)  menu.
+You can run smonavi with the -l argument from the command line to get a list of the codecs available
+on the system. The smonavi program prints a + symbol next to codecs that can be used to create
+video from screenshots captured during a recorded session; it prints a - symbol next to installed codecs
+that are not c ompatible.  If none of the e xisting  codecs can be used, it is recommended that you install
+additional  codecs.
+Usage
+smonavi.exe -l
+smonavi.exe -r <frames per second rate>  -i <image name pattern>  -
+f <output file>  -c <codec code>
+Argument Description
+-c Code of codec to use. This must be a 4-character code
+that is in the list of available codecs returned with the -l
+option.
+-f <file> Output file name
+-i <pattern> Image name pattern
+-l List the available codecs on the system. smonavi prints a
++ symbol next to usable codecs.
+-r <rate> The rate of frames per second
+Example
+The default command de fined  by the SMON VIDEO CREATE COMMAND LINE is:
+smonavi.exe -r %fps% -i %pattern%_*.png -f %path% -c %codec%
+Where:
+▪%fps  is the frames per second at which the session was recorded. ▪
+▪%pattern  is the start of the file names that will be consistent for all images in a single video. ▪
+This allows smonavi to determine which images came from what display when multiple  displays are
+used.
+▪%path  is a loc ation  in the directory specified  by SMON TEMP STORAGE PATH in the Manage the ▪
+system > Modules > Recorded session management  (SMON) menu.
+▪%codec%  is replaced by the value of SMON VIDEO CREATE CODEC CODE in the Manage the system ▪
+> Modules > Recorded session management  (SMON ) menu.
+The msvc codec is recommended for t esting  only. To see what other codecs you have available, run
+the smonavi utility  with the -l argument.smonc
+The smonc program receives session monitoring data from user w ork s t ations.  It provides support for:
+▪ Collecting  monitored session data ▪
+▪ V alidation  of w orkflo w  requests to ensure users are still allowed to have privileged access ▪
+▪Remote t ermination  if a user’s access is checked in ▪
+The session monitoring client on the user’s w ork s t ation  connects to smonc on the Bravura Security
+Fabric  server. You can specify the c onnection  URL in Manage the system > Privileged access > Options
+> General > SMON HTTP URL .
+smonclean
+The smonclean program permanently deletes session monitoring packages that meet a given age
+threshold. This applies to both the database and files on the files y s t em.  When sessions are older than x
+number of days, any single and multi-session  packages that contain the session are removed, and the
+session itself will no longer be available to be viewed or downloaded.
+Multi-session  packages will be removed if at least one of its sessions meet the age threshold, regardless
+of whether it contains other sessions that do not meet the age threshold. Sessions will not be removed if
+there are activ e  packages still retained. They can be forcibly removed by passing in an additional  flag
+argument.
+Usage
+smonclean.exe -d <number of days old>
+Argument Description
+-d <number of days old> Sessions at least this many days old will be permanently
+deleted. Accepts values between 1-24855.
+-f Proceed with session removal even if there are activ e
+packages still retained. If flag is not set, the process will
+abort and record the details in the instance log.
+Examples
+1.To delete sessions and its packages older than 30 days:1.
+smonclean.exe -d 30
+2.To force delete sessions and its packages older than 5 days, regardless of whether there are activ e 2.
+packages retained:
+smonclean.exe -d 5 -fsmonmove
+The smonmove program changes the loc ation  of the session monitoring data in the database from one
+node to another. You might need to do this in a recovery scenario where a r eplic ation  node containing
+session monitoring data gets decommissioned and needs to be copied to an activ e  r eplic ation  node.
+In addition  to running this program, the following directories need to be manually copied from the old
+node to the new node:
+▪smon\screenshot▪
+▪smon\webcam▪
+Packages that were already generated will not be copied over. These will need to be requested again by
+the end-user.
+Usage
+smonavi.exe -list
+smonavi.exe -sourcenode <node ID of source managing node> -
+destnode <node ID of destination managing node> -move
+Argument Description
+-destnode <nodeID> The node ID to move session monitoring data to.
+-force Move session monitoring data even if it is incomplete (ie.
+session is currently activ e  or stale). Moving incomplete
+data may cause issues with package g ener ation.
+-list Display a list of valid source and destination  node IDs.
+-move Move session monitoring data.
+-sourcenode <nodeID> The node ID to move session monitoring data from.
+Examples
+1.To list the IDs of the source and destination  nodes: 1.
+smonmove.exe -list
+2.To move session monitoring data from one node to another:2.
+smonmove.exe -sourcenode <nodeID> -destnode <nodeID> -move
+3.To force all session monitoring data to be moved from one node to another, regardless of the session3.
+status:
+ smonmove.exe -sourcenode <nodeID> -destnode <nodeID> -move -force
+smonprocessmeta
+When session monitoring is enabled, the smonprocessmeta  program processes harvested data and
+inserts the data into the database in a series of batch oper ations.  If a signific an t  amount of data has beencollected, this could result in signific an t  work for the database. smonprocessmeta  executes
+periodically while a session monitoring session is activ e.  Text-based data such as keystroke, clipboard and
+UI data will not be available to search engines or in zip packages until  smonprocessmeta  is executed.
+See also
+▪smonsavemeta  (on page 3624) ▪
+▪smonavi  (on page 3620) ▪
+▪Scheduling maintenance  (on page 2702) to learn how to change the scheduled run time. ▪
+smonsavemeta
+smonsavemeta creates session data packages when requested from the Recorded session management
+(SMON) module, and fir es  any additional  utilities  such as smonavi or another video g ener ation  utility .
+It is not intended to be run manually from the command line.
+User management utilities
+acctena
+Use the acctena program to immediately unlock users that have locked themselves out of Bravura
+Security Fabric  (intruder lockout). You can also use this program to disable a specified  user’s pr ofile  ID.
+The acctena program does not enable users that have been disabled explicitly by the help desk or by
+this program.
+Usage
+acctena.exe -all [-check] [-time <minutes>]
+acctena.exe -user <loginID> [-check] [-time <minutes>]
+acctena.exe -user <loginID>
+Option Description
+Option  / Argument
+-user <loginID>Unlock the user specified  by <loginID>.
+-all Unlock all users that have locked themselves out of
+Bravura Security Fabric .
+-check Print a list of users that would be enabled by the
+program. When the -check option  is specified,  the
+program only lists the users, it does not enable them.
+This option  requires the use of -all or -user.
+-time  <minutes> Specify the lockout dur ation.  When the -time  option  is
+specified,  a user must be locked out for at least
+<minutes> minutes before they can be unlocked.
+Examples
+1.To see a list of users who have been locked out of Bravura Security Fabric  for at least 10 minutes, type: 1.acctena.exe -all -check -time 10
+2.To unlock all users who have been locked out out of Bravura Security Fabric  for at least 10 minutes, 2.
+type:
+acctena.exe -all -time 10
+3.To immediately unlock the user SMITHJO, type:3.
+acctena.exe -user smithjo
+adm_set
+Use the adm_set  program to manage product administrator access from the command line.
+For example, you can use this program to grant product administrator rights to e xisting  users, to create
+new console-only users, or to re-enable locked-out product administrators.
+Usage
+adm_set.exe -user <profile ID> [-name "<full name>"]
+        [-pass <password> [-noexpire ] | -nopass]
+        [-type A | -acl <rights list> ]
+        [-delete | -enable | -disable | -unlock]
+        [-ipmask <IP/CIDRmask>]
+        [-nooverwrite]
+Argument Description
+-acl <rights list> Grant the rights specified  in the <rights list> to the user.
+The <rights list> consists of a sequence of keywords
+separated by spaces. See Adminis tr ativ e  privileges
+The following table describes all available
+adminis tr ativ e  privileges. It also includes the
+internal keyword – used in c on figur ation  files,  plugin
+input/output, and by the adm_set program – for
+each privilege.
+Adminis tr ativ e  privileges
+Right Keyword Description
+General system c onfigur ation
+Manage
+resourcesresource The product administrator can manage target systems, auto-discovered objects,
+and other resources.
+Manage
+policiespolicy The product administrator can manage user classes, segr eg ation  of duties  (SoD),
+authentic ation  and identific ation  policies, authentic ation  chains, question  sets,
+import rules, login options.Argument Description
+Right Keyword Description
+Manage
+notific ationsmngnotif s The product administrator can manage notific ations  and notific ation-r ela t ed
+scheduled jobs.
+Con figur e
+w orkflo w
+setupw orkflo w The product administrator can c on figur e  w orkflo w .
+Con figur e
+modulesmodule The product administrator can modify web modules c on figur ation.
+Maintain
+serversmaintain The product administrator can manage services, schedule jobs, and c on figur e
+auto discovery.
+Manage
+reportsrunreport The product administrator can run or schedule reports from the Manage reports
+app.
+Analytics analytics The product administrator can run, save or read reports from the Analytics  app.
+Recompute
+Analytics
+cacher ec analyticsc asch The product administrator can update the cached data on dashboards from the
+Analytics  app.
+Con figur e
+Login Managermanagesso The product administrator can c on figur e  Login Manager
+Manage
+external data
+storeextdb The product administrator can Manage external data store.
+DashboardsArgument Description
+Right Keyword Description
+View
+certific ation
+dashboardviewcertdash The product administrator can use the View dashboards to view the certific ation
+dashboard.
+View
+privileged
+access
+dashboardviewpswdash The product administrator can use the View dashboards to view the privileged
+access dashboard.
+View w orkflo w
+dashboardviewworkdash The product administrator can use the View dashboards to view the w orkflo w
+dashboard.
+View
+enrollment
+dashboardviewpsadash The product administrator can use the View dashboards to view the enrollment
+dashboard.
+View OrgChart
+dashboardvieworgdash The product administrator can use the View dashboards to view the OrgChart
+dashboard.
+View helpdesk
+dashboardviewhelpdeskdash The product administrator can use the View dashboards to view the help desk
+dashboard.
+Recompute
+dashboard
+cacherecdashcache The product administrator can use the View dashboards to update the cached
+data on dashboards.
+Security adminis tr ation
+Manage
+securitysecurity The product administrator can manage User access rules and Options  in the
+Manage the system Security menu.
+Manage
+product
+administratorconsole The product administrator can create and manage other product administrators.
+A product administrator may only manage or create new product administrators
+with equal or lesser rights assigned to them. A product administrator cannot
+manage his or her own rights.Argument Description
+Right Keyword Description
+Manage user
+groupsmngacl The product administrator can manage user access controls in the Manage the
+system module.
+Privileged access management
+Create
+managed
+system policiescreategroup The product administrator can create managed system policies in the Manage
+the system. As owner of the managed system policy, the product administrator
+has access to the policy but not the passwords managed by the policy - that
+permission must be specific ally  assigned via user group access controls.
+Manage
+orphan
+managed
+systemsmngorphanres The product administrator can manage orphaned systems (not a member of a
+managed system policy) in the Manage the system.
+Create
+managed
+systemscreateres The product administrator can add a user-managed system in the Manage the
+system.
+Manage
+managed
+system policiesgroupmgmt The product administrator can be granted access to modify or remove e xisting
+managed system policies in the Manage the system. Access to managed system
+policies must also be granted in the Manage the system > Security > Privileged
+access to systems  menu. The product administrator cannot update user groups
+of which they are a member. This right does not give the product administrator
+access to orphan managed systems, nor access groups of which they are an
+e xisting  member.
+Recover last
+managed
+passwordrecoverpwd The product administrator can recover the last stored managed password for a
+managed account, regardless of the state of the target (whether it is managed,
+unmanaged or remanaged) using the RecoverKeyByAccount function  call and
+OTP caller and LogonEx to connect to the API service.
+Access certific ation
+Manage
+certific ation
+processcertif y The product administrator can manage the access certific ation  process, by which
+one or more reviewers c on firm  or remove access privileges of users, and remove
+stale users.Argument Description
+Right Keyword Description
+Initia t e
+entitlemen t
+certific ation
+campaignssingleuser certif y The product administrator can initia t e  a access certific ation  process, by which a
+single reviewer can c on firm  or remove access privileges of users, and remove
+stale users.
+OrgChart management
+Start Org
+building
+roundscreateorg The product administrator can use the Manage the OrgChart to initia t e  OrgChart
+building rounds.
+Manage the
+OrgChartupdateorg The product administrator can use the Manage the OrgChart to manually change
+the OrgChart structure.
+Remote API
+IDAPI caller apicaller The product administrator can access the API Service (idapi) Login function  from
+the IP addresses specified  in the IP address with CIDR bitmask field.
+This right can only be combined with other rights by adding an individual
+administrator with the IDAP caller right to an administrator group with other
+rights.
+OTP IDAPI
+callerotpcaller The product administrator can access the API Service LoginEx function  from the
+IP addresses specified  in the IP address with CIDR bitmask field.  The LoginEx
+function  gains access to the KMKeyGetByAccount function,  which is used to
+retrieve passwords that Bravura Privilege  manages.
+This right can only be combined with other rights by adding an individual
+administrator with the OTP IDAP caller right to an administrator group with other
+rights.
+Guacamole
+IDAPI callerguacamolecaller The product administrator can access the API Service Login function  from the IP
+addresses specified  in the IP address with CIDR bitmask field.  The Login function
+gains access to the CheckoutParamsGet and CheckoutStatusGet functions,  which
+is used for a Guacamole gateway to periodically check whether a managed
+account checkout is still valid during an activ e  Guacamole access disclosure
+session.
+This right can only be combined with other rights by adding an individual
+administrator with the Guacamole IDAPI caller right to an administrator group
+with other rights.Argument Description
+Right Keyword Description
+R eplic ation
+Con figur e
+r eplic ationr eplic ation The product administrator can c on figur e  database r eplic ation  (Manage the
+system > Maintenance > Database r eplic ation )
+View in f ormation
+View
+in f ormation:T ar g e t
+systemsviewhost The product administrator can view additional  in f ormation  about target systems
+via embedded links.
+View
+in f ormation:Manag ed
+groupsviewmgrp The product administrator can view additional  in f ormation  about managed
+groups via embedded links.
+View
+in f ormation:R olesviewrole The product administrator can view additional  in f ormation  about roles via
+embedded links.
+View
+in f ormation:Segr eg ation
+of duties  rulesviewsod The product administrator can view additional  in f ormation  about segr eg ation  of
+duties  rules via embedded links.
+View
+in f ormation:User
+classesviewuc The product administrator can view additional  in f ormation  about user classes via
+embedded links.
+View
+in f ormation:Acc oun tsviewacct The product administrator can view additional  in f ormation  about accounts via
+embedded links.
+View
+in f ormation:Pr e-
+de fined
+requestsviewpdr The product administrator can view additional  in f ormation  about pr e-de fined
+requests via embedded links.

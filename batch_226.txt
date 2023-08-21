@@ -1,0 +1,151 @@
+Privilege P attern:  OTP API users
+Users with the OTP Trustees privilege can create OTP API users who have the permission to retrieve
+managed account passwords from the Bravura Security Fabric  vault and use them to execute scripts and
+command-line programs using runwithpass/pamutil .
+OTP trustees have access to the P AMUtil:  Create OTP API User pr e-de fined  request:
+In order to create an OTP API user,.at least one account is onboarded by an account trustee , or a vault
+account is created by a vault trustee
+See Applic ation  accounts  (on page 2049) for more in f ormation  about runwithpass/pamutil .
+Create an OTP API user
+1.Log in to Front-end (PSF) as a user from a OTP API Trustee group1.
+2.Click the P AMUtil:  Create OTP API User PDR. 2.
+3.Select a team.3.
+Click Next .
+4.Enter a PAM OTP Account Description . 4.
+5.Select one or more managed accounts.5.
+6.Click Submit . 6.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+7.Click the View request link at the top of the page to view the status of the request. 7.
+Once created, OTP trustees would be able to request access to the OTP API user account.
+See Example: Create an OTP API user  (on page 2279) for a detailed example.
+API aut omation  for cr eating  an OTP API user
+Once the API has been c on figur ed  (See ”SOAP API” in Bravura Security Fabric  Remote API ( api.pdf )), and
+your script has been authentic a t ed  to the API (Login or LoginEx API calls), the WF API calls can be used to
+create an API request to update an account.
+Use the WFPDRSubmit function  to create a w orkflo w  request and submit the request for publishing.
+When submitting  a request, use ”CREATE_PAMUTIL_API_USER” as the PDR ID. At a minimum, the request
+requires the following attribut es:
+attrk e y value
+MS_TEAM The team the OTP API user account will be assigned to.
+OTP_ACCOUNT_DESCRIPTION The description  of the OTP API user account.
+SELECT_MULTI_MA The GUID(s) of the managed account(s) the OTP API user will
+have access to.
+MS_ID This is an arbitrary value attribut e.MS_NAME This is an arbitrary value attribut e.
+MS_NAME and MS_ID attribut es  are required but their values are not important. In the future versions of
+the product, those attribut es  will not be required.
+CREATE_PAMUTIL_API_USER batch request sample
+"MS_TEAM","OTP_ACCOUNT_DESCRIPTION","SELECT_MULTI_MA","MS_ID","MS_NAME" 
+"TEAM-000000","sample otp api user","AA3AC9A7-6CAB-48A2-
+B1B7-1B804A256539,30F91A85-6C36-4C6F-90A1-81C60D692575","x","x"Privilege P attern:  Help desk users
+A user can be designated as the help desk trustee, who can make requests on behalf of any team.
+Help desk trustees have access to the following pr e-de fined  requests:
+▪Account: Offboar d ▪
+▪Account: Onboard▪
+▪Account: Update▪
+▪System: Offboar d ▪
+▪System: Onboard▪
+▪System: Update▪
+▪Team: Manage Group Membership▪
+▪Team: Update▪
+▪Team Vault: Archive▪
+▪Team Vault: Create▪
+▪Team Vault: Update▪
+▪Vault Account: Archive▪
+▪Vaulted File: Upload▪
+▪Vault Account: Create▪
+▪Vaulted File: Update▪
+▪Vault Account: Update▪
+▪ P AMUtil:  Create OTP API User ▪
+Help desk trustees have the ability to submit these requests, but the appropriate associated trustee must
+approve. For example, a help desk trustee can submit a request to onboard account for Team A, but the
+account trustee(s) of Team A must authorize the request. Also, if a request made by the help desk trustee
+involves multiple  teams, such as in the case where a system is migrated from Team A to Team B, the
+system trustees from Team A and Team B must authorize the request.
+In order to de fine  help desk trustees, users need to be added to the PAM_TRUSTEE_HELP_DESK user
+class:
+1.Click Manage the system > Policies > User classes . 1.
+2.Select the PAM_TRUSTEE_HELP_DESK.2.
+3.Click the Explicit users tab. 3.
+4.Click Select . 4.
+5.Search and select a user.5.
+6.Click Add. 6.
+This user can now log in and view the pr e-de fined  requests.Privilege P attern:  W orkflo w  examples
+The following are some common scenarios for Bravura Privilege P attern  setups.
+Example: Install Bravura Privilege P attern  and onboard a system vault
+This procedure describes how to install a Bravura Privilege P attern  component, a scenario component,
+create a team, onboard a system vault and add users to that vault.
+A System vault represents systems in the environment and allows you to store account in f ormation
+without a connector or technical in t egr ation.
+Install the components
+Install the components
+1.Log in to Front-end (PSF) as a superuser.1.
+2.From the main menu click Manage components. 2.
+3.Search and select the checkbox for required components.3.
+4.Click Install component(s) . 4.
+The panel on the right will indicate when the ins t allation  is complete.
+for this example:
+▪RefBuild.pam_team_management.▪
+▪Scenario.pam_system_type_vault.▪
+Con figur e  the Corporate AD target system
+1.Click Manage the system > Resources > Target systems > Manually de fined . 1.
+2.Select the Corporate AD target system.2.
+3.Click Change next to the Address field  and enter the domain for your environment. 3.
+4.Click Continue . 4.
+5.Click Update . 5.
+6.Click the Cr edentials  tab. 6.
+7.Enter your target’s cr edentials. 7.
+8.Click Update . 8.
+9.Click Maintenance > Auto discovery Execute auto discovery . 9.
+10. Click Continue . 10.
+Create and set up a team
+Create a team administrator:
+1.Click Manage the system > Policies > User classes . 1.2.Select the PAM_TEAM_ADMINS.2.
+3.Click the Explicit users tab. 3.
+4.Click Select . 4.
+5.Search and select a user.5.
+6.Click Add. 6.
+This user can now log in and create, delete and manage teams.
+1.Log into Front-end (PSF) as the team administrator.1.
+2.Click Manage Resources . 2.
+The Pr e-de fined  requests page is displayed.
+The team administrator can create, delete and manage teams using these pr e-de fined  requests.
+3.Click Team: Create . 3.
+Bravura Security Fabric  displays the team cr eation  wizard
+4.Enter the following in f ormation: 4.
+▪Team Nme : Vault-Management-Team ▪
+▪Team Description : Team to manage system vault ▪
+Click Next .
+5.Add seven groups. Use the ”More” icon to add more team name fields  to the list. 5.
+▪Team Trustees Users who can make team management requests. ▪
+▪Account Trustees  Users who can make account management requests (onboard accounts). ▪▪Approvers  Users who allow or disallow access requests. ▪
+▪Auto Approved  Users who can check-out access to systems and accounts without making an access ▪
+request.
+▪Requesters Users who can make access requests. ▪
+▪ Cr edential_Manag er s  Users who can override or randomize the stored password on a checked-out ▪
+account.
+▪System Trustee Users who can make system management requests (onboard systems). ▪
+▪Vault Trustees  Users who can make vault management requests. ▪6.Click Next and add team descriptions. 6.
+Click Next .7.Assign privileges to the team groups:7.
+▪Team Trustees  Team trustees ▪
+▪Account Trustees  Account trustees ▪
+▪Approvers  Approvers ▪
+▪Auto Approved  Auto_Approved and requesters ▪
+▪Requesters  Requesters ▪
+▪ Cr edential  Managers  Requesters and Cr edential_manag er ▪
+▪System Trustees  System trustees ▪
+▪Vault Trustees  Vault trustees ▪
+The Cr edential_Manag er  privilege allows a user to override or randomize the stored password on a
+checked-out account.Click Next .8.Set the initial  team trustees for the new team. There must be at least one team trustee to create a 8.
+team.
+9.Click Submit . 9.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+10. Click the View request link at the top of the page to view the status of the request. 10.
+Once the request has been approved, the team will be c on figur ed.
+Add users to the additional  groups in the team.
+1.Log into Front-end (PSF) as a team trustee.1.
+2.From the home page, click Manage resources . 2.
+3.Click Team: Manage Group Membership . 3.
+4.Select the Vault-Team.4.
+Click Next .
+5.Select the Account Trustees, Approvers, Auto Approved, Requesters, System Trustees, Vault Trustees,5.
+Cr edential  Managers and Team Trustees groups.

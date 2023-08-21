@@ -1,0 +1,326 @@
+Criteria Description
+Assignment by role (data set 1) Select:
+(All) : Select this option  to count all group memberships.
+Consistent with assigned roles : Select this option  to only
+count group memberships consistent with a role.
+Not consistent with assigned roles : Select this option  to
+only count group memberships not predicted by assigned
+roles.
+Assignment by policy (data set 1) Select:
+(All) : Select this option  to count all group memberships.
+Consistent with auto-assignment via user class
+membership : Select this option  to only count group
+memberships consistent with auto-assignment policy for
+a group or a role with group entitlemen t.
+Consistent with auto-assignment via user class
+membership : Select this option  to only count group
+memberships not consistent with auto-assignment policy.
+Assignment source (data set 1) Select:
+(All) : Select this option  to count all group memberships.
+Aut omatic ally  assigned via user class : Select this option
+to only count group memberships aut omatic ally  assigned
+directly or via role.
+Requested via w orkflo w ,  excluding auto-assignment :
+Select this option  to only count group memberships that
+were requested, but not by auto-assignment policy.
+Discovered on target system : Select this option  to only
+count group memberships that were discovered on the
+target system.
+Date (data set 1) This is the date when the group membership was added.
+Choose one of the following options  to de fine  a date
+range:
+Date not required : This is the default setting.  Group
+memberships are counted regardless of the time  they are
+added.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based onCriteria Description
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.Criteria Description
+Option Description
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: Group memberships are only included in the report
+output if they are added within the selected r elativ e  date
+range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.Criteria Description
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Group memberships are only included in the report
+output if they are added within the selected date range.
+Use the:fir s t  set of date / time  controls to select the
+earliest time  to include, and the second set of date / time
+controls to select the latest time  to include.
+Use within the last N days : Group memberships are only
+included in the report output if the date they are added
+falls within the specified  last number of days.
+Data set 2 label Type a label for data set 2.
+Assignment by role (data set 2) Select:
+(All) : Select this option  to count all group memberships.
+Consistent with assigned roles : Select this option  to only
+count group memberships consistent with a role.
+Not consistent with assigned roles : Select this option  to
+only count group memberships not predicted by assigned
+roles.
+Assignment by policy (data set 2) Select:
+(All) : Select this option  to count all group memberships.
+Consistent with auto-assignment via user class
+membership : Select this option  to only count group
+memberships consistent with auto-assignment policy for
+a group or a role with group entitlemen t.
+Consistent with auto-assignment via user class
+membership : Select this option  to only count group
+memberships not consistent with auto-assignment policy.
+Assignment source (data set 2) Select:
+(All) : Select this option  to count all group memberships.
+Aut omatic ally  assigned via user class : Select this option
+to only count group memberships aut omatic ally  assigned
+directly or via role.
+Requested via w orkflo w ,  excluding auto-assignment :
+Select this option  to only count group memberships that
+were requested, but not by auto-assignment policy.
+Discovered on target system : Select this option  to only
+count group memberships that were discovered on the
+target system.Criteria Description
+Date (data set 2) This is the date when the group membership was added.
+Choose one of the following options  to de fine  a date
+range:
+Date not required : This is the default setting.  Group
+memberships are counted regardless of the time  they are
+added.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.Criteria Description
+Option Description
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: Group memberships are only included in the report
+output if they are added within the selected r elativ e  date
+range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Group memberships are only included in the report
+output if they are added within the selected date range.
+Use the fir s t set of date / time  controls to select the
+earliest time  to include, and the second set of date / time
+controls to select the latest time  to include.Criteria Description
+Use within the last N days : Group memberships are only
+included in the report output if the date they are added
+falls within the specified  last number of days.
+Graph type Select a type of graph to generate for the report.
+(None):  no graph will be generated.
+Horizontal bar chart:  a horizontal bar chart will be
+generated for the report.
+Pie chart : a pie chart will be generated for the report
+Segr eg ation  of duties  reports
+Approved e x ceptions  to rules violations
+Purpose : Report on users with approved e x ceptions  to SoD rules violations.
+Executable : sodexceptions
+Search Criteria :
+Criteria Description
+Report type Select the type of report:
+List of segr eg ation  of duties  rule e x ceptions  The regular
+report mode for the segr eg ation  of duties  rule
+e x ceptions.
+Detailed list of segr eg ation  of duties  rule e x ceptions  The
+detailed report mode to list the segr eg ation  of duties  rule
+e x ceptions.
+Summary of segr eg ation  of duties  rule e x ceptions  The
+report output contains the rules with e x ceptions.
+Segr eg ation  of duties  rules Enter one or more SoD rules to include in the report. All
+SoD rules are included by default.
+User ID Type a user’s pr ofile  ID to only list e x ceptions  that apply
+to that user. Alt ernativ ely ,  you can search for one or more
+pr ofile  IDs.
+Summarize report Select this checkbox to summarize the report details.
+In this mode, the report output contains approved
+e x ceptions  for each user. St atistics  will show the SoD rule
+that the user is has been approved for.
+Segr eg ation  of duties  rules
+Purpose : Lists member entitlemen ts  and authorizers for e x ceptions  to SoD policy.
+Executable : sodrulesSearch Criteria :
+Criteria Description
+Segr eg ation  of duties  rules Select one or more SoD rules to include in the report. All
+SoD rules are included by default.
+Template accounts Select one or more template accounts. Only SoD rules
+that contain the specified  template accounts are included
+in the report.
+Managed groups Type the long ID of one or more managed groups for
+which you want to run the report. Only SoD rules that
+contain the specified  groups are included in the report.
+Alt ernativ ely ,  you can search for one or more target
+systems.
+Roles Select one or more roles. Only SoD rules that contain the
+specified  roles are included in the report.
+Show authorizer Select this checkbox if you want generate a report listing
+the authorizers for each matching SoD rule.
+Show deprecated Select this checkbox to include only deprecated SoD rules
+in the report.
+Segr eg ation  of duties  rules violations
+Purpose : Users in violation  of SoD rules policy, and the rules that they have violated.
+Executable : sodviolator
+Search Criteria :
+Criteria Description
+Report type Select the type of report:
+List of segr eg ation  of duties  policy violators  The regular
+report mode for the segr eg ation  of duties  rules violation.
+List of segr eg ation  of duties  policy violators with
+insufficien t  approved e x ceptions  Displays the violators
+who either have insufficien t  or no approved e x ceptions.
+List of segr eg ation  of duties  policy violators with no
+approved e x ceptions  Displays the violators who have no
+approved e x ceptions.
+Detailed list of segr eg ation  of duties  policy violators  The
+detailed report mode to list the segr eg ation  of duties
+rules violations.
+Summary of segr eg ation  of duties  policy violations  The
+report output contains the rules in violation  for each
+user. St atistics  will show each SoD rule that the user is in
+violation  of.Criteria Description
+Segr eg ation  of duties  rules Select one or more SoD rules to include in the report. All
+SoD rules are included by default.
+User ID Type a user’s pr ofile  ID to only list violations  that apply to
+that user. Alt ernativ ely ,  you can search for one or more
+pr ofile  IDs.
+Show deprecated Select this checkbox to include deprecated SoD rules in
+the report.
+Certific ation  of entitlemen ts  reports
+Review certific ation  details
+Purpose : Provides details about the oper ations  and access change requests submitted  through
+certific ation  campaigns.
+Executable : certfullda t a
+Search Criteria :
+Criteria Description
+Campaign status Select a value to only include campaigns with a matching
+status. The possible values are:
+▪All campaigns▪
+▪ Activ e  campaigns ▪
+▪Completed campaigns▪
+▪Canceled campaigns▪
+Campaign description Type the description  of one or more certific ation
+campaigns to only include those campaigns in the report.
+Alt ernativ ely ,  you can search for one or more certific ation
+campaigns.
+Reviewer ID Type a user’s pr ofile  ID to only display campaigns for
+which the user is assigned as a reviewer. Alt ernativ ely ,
+you can search for one or more pr ofile  IDs.
+Primary reviewer attribut es  to display Choose which primary reviewer attribut es  to display.
+Reviewed by Type a pr ofile  ID that matches the "actual reviewer" for
+whom you want to run the report. Alt ernativ ely ,  you can
+search for one or more pr ofile  IDs.
+The "actual reviewer" is the user who certified  the data
+or submitted  an access change request, and is not
+necessarily a user who is assigned as a reviewer for the
+campaign (the user can be a delegate).
+Actual reviewer attribut es  to display Choose which actual reviewer attribut es  to display.

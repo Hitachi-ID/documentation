@@ -1,0 +1,300 @@
+In the event that multiple  users share the same pr ofile  attribut e  value, Bravura Security Fabric  will
+prompt the user to select their user pr ofile  from a list.
+R edir ecting  users on logout
+The Bravura Security Fabric  front-end includes a plugin architecture. You can use a plugin de fined  by the
+LOGOUT REDIRECT PLUGIN setting  to redirect users on log out from Bravura Security Fabric . This is useful
+if you want to pass parameters that are used for users’ subsequent login to Bravura Security Fabric .
+To c on figur e  the logout r edir ection  plugin to run every time  a user logs out:
+1.Click Manage the system  > Policies  > Login options . 1.
+2.Type the name of the plugin in LOGOUT REDIRECT PLUGIN . 2.
+3.Click Update . 3.
+The logouturl.psl  sample script, found in the samples directory, provides a simple demons tr ation
+of a logout r edir ection  plugin. After  logging out, the plugin passes the user’s ID. Depending on whether
+the user is a superuser or not, the next login will take the user to the PSA or PSF module.
+See details for writing  a custom redirect plugin
+Requirements
+This plugin is run on the Bravura Security Fabric  server. See W riting  plugins  for general requirements.
+Ex ecution  points
+When c on figur ed,  the plugin is run when a user attemp ts  to log out from any Bravura Security Fabric
+module.
+Input
+The input includes:
+▪The address of the instance▪
+▪The name of the CGI module from which the user logs out▪
+▪Encoded error message which causes the logout▪
+▪The current session id of the user▪
+▪The pr ofile  ID of the end user who is logging out ▪
+The input is passed as plain text, in KVGroup format.
+For example, if the log out was done by superuser from the following URL:
+http s://mer cur y/de f ault/manag e_the_s y s t em
+the plugin would receive input in the format:
+"" "" = {
+  "address" = "https://mercury/default"
+  "module" = "psa"  "sessionid" = "S6542aa5d-ab83-422a-bda4-870a5376dd15"
+  "userid" = "superuser"
+}
+Output
+The output includes:
+▪The address to which a user will be redirected▪
+▪Parameters to be appended to end of the redirect address. For instance, this may be the <userID>▪
+parameter.
+For example, if the log out was done by superuser from the following URL:
+https://mercury/default/manage_the_system
+the following would be an expected output from a log out redirection
+plugin:
+"" "" = {
+  "redirect_url" = "https://mercury/default/cgi/psa.exe"
+  "parameters" "" = {
+    "USERID" = "superuser"
+  }
+  "retval" = "0"
+}
+The input address and output address must have identic al  base addresses. The plugin cannot be used to
+redirect between a URL containing a DNS name and a URL containing an IP address even if they are
+equivalent, since most browsers prevent this as a security measure.
+.
+Login events (exit traps)
+The following identific ation  and authentic ation  events apply to all modules and can be accessed from the
+Con figur e  event  (ITSM) module or Manage the system  > Policies  > Login options :
+Option Description
+USER IDENTIFY SUCCESS A user is successfully identified  by Bravura Security Fabric .
+USER IDENTIFY FAILURE A user could not be identified  by Bravura Security Fabric .
+FEDIDP IDENTIFY SUCCESS A federated login attemp t  had its SAML request successfully parsed by
+Bravura Security Fabric .
+FEDIDP IDENTIFY FAILURE A federated login attemp t  SAML request could not be parsed by Bravura
+Security Fabric .
+AUTH MODULE FAILURE A user fails authentic ation  for a module c on figur ed  as part of an
+authentic ation  chain.Option Description
+AUTH CHAIN SUCCESS An authentic ation  chain step successfully authentic a t es  a user.
+AUTH CHAIN FAILURE A user fails an authentic ation  chain step.
+USER LOGIN CHANGED The user was successfully changed to another pr ofile  via an authentic ation
+chain.
+IDAPI LOGIN FAILURE A script fails to authentic a t e  via API Service (idapi).
+IDAPI LOGIN SUCCESS A script successfully authentic a t es  via API Service.
+USER LOGIN SUCCESS A user is successfully authentic a t ed  by Bravura Security Fabric .
+USER LOGIN FAILURE A user fails authentic ation.
+USER LOGIN LOCKOUT Too many invalid login attemp ts  to the end module causes the account to be
+locked out.
+FEDIDP AUTH SUCCESS A user attempting  federated login was successfully authentic a t ed,  and the
+outgoing SAML assertion  was successfully signed and issued.
+FEDIDP AUTH FAILURE A user attempting  federated login was successfully authentic a t ed,  but the
+outgoing SAML assertion  could not be signed and issued.
+FEDIDP SSO SESSION CREATE A single sign-on session was successfully initia t ed  as part of a federated login.
+FEDIDP SSO SESSION DESTROY A single sign-on session was successfully terminated.
+FEDSP SAMLAUTH ISSUED A SAML authentic ation  request has been submitted  by Bravura Security Fabric
+to an external identity  provider.
+FEDSP SAMLAUTH ASR SUCCESS A SAML assertion  from a trusted identity  provider was successfully received
+and parsed.
+FEDSP SAMLAUTH ASR FAILURE A SAML assertion  from a trusted identity  provider could not be parsed.
+Authentic ation  policy options
+This section  describes the general authentic ation  options  on the Manage the system > Policies > Options
+menu.
+Option Description
+ACL DENY ENABLE Enable this to allow product administrator s to deny users access to certain
+objects.
+ADMIN PASSWORD EXPIRE Set the number of days until  product administrator s’ passwords expire. If
+this is not set, then the product administrator ’s password is checked against
+the default password policy’s expiry interval.Option Description
+CHECK LOCKED ACCOUNTS Tests the intruder lockout status of user accounts before giving the user the
+option  to sign into Bravura Security Fabric. If enabled, each account a user
+has on systems in the authentic ation  priority list is tested before giving the
+user the option  of signing in with the password for that account.
+DISABLED ACCOUNT DENY Enable this to not list a user’s disabled accounts in account searches.
+Disabled accounts will not be shown in modules and they will also not be
+included in transparent s ynchr oniz ation  requests
+EXPIRY FOR EXCEPTIONS TO SOD
+RULESThe default expiry of e x ceptions  to segr eg ation  of duties  (SoD) rules. After  60
+days, a user who is granted an e x ception  will be in violation  again. This value
+can be overridden in the c on figur ation  of individual rules. Requesters can
+change the value when submitting  a request for e x ception.
+GENERIC LOGIN FAILURE Enable this to provide a generic message upon login failure, to make it more
+difficult  for an attack er  to deduce valid login IDs.
+GLF ALLOWED PROXIES Specify a comma-delimited list of CIDR bitmasks of allowed upstream HTTP
+proxies. This controls which remote IP addresses are allowed to set the X-
+Forwarded-For HTTP request header.
+IP LOCKOUT DURATION Set the dur ation  (in seconds) that an IP address will be locked-out of the
+Front-end (PSF). If left blank, the default value is 60 seconds. You can also
+use the ipunlock program to immediately unlock an IP address.
+IP LOCKOUT INTERVAL Set the number of seconds that must pass between failed login attemp ts  in
+order to reset the lockout counter for an IP address. The lockout counter
+increases if another failed login attemp t  occurs within this interval period.
+The lockout counter is reset once the specified  number of seconds has
+elapsed. If left blank, the default value for this option  is 5 seconds.
+LOCKOUT DURATION Set this to re-enable accounts, after  they have been disabled because of
+authentic ation  failure, aut omatic ally  after  the de fined  number of minutes.
+LOCKOUT INTERVAL This option  is only applicable when authentic ation  chains are enabled .
+Set the number of minutes between failed login attemp ts  that would a ff ect
+the lockout counter. If the number of minutes between failed login attemp ts
+is greater than this interval, then the lockout counter is reset.Option Description
+MAX IP FAILURE Set the maximum number of failed login attemp ts  that are allowed before
+the IP address is locked-out of the Front-end (PSF). A value must be set for
+this option  in order to enable the ability to lock out IP addresses. This option
+is disabled if left blank.
+MAX REJECTIONS Set the default maximum number of denials by an authorizer required to
+deny a access change request. When this number is reached, the request is
+canceled even if approval from the minimum number of authorizers is
+reached.
+You can set a maximum number of denials for requests based on templates,
+roles, segr eg ation  of duties  rules, managed groups and target systems.
+MAX USERAUTH FAILURE To prevent security violations,  you can disable a user after  a pr e-de fined
+number of authentic ation  failures. Enable this option  and type your required
+maximum number of failures in the adjacent field.  If unde fined,  the user is
+locked out as soon as authentic ation  fails.
+MIN AUTHORIZERS Set the default number of authorizers required to approve a access change
+request before it is implemented.
+If you do not assign enough authorizers to a resource to meet the minimum
+requirement, requests based on the resource will be aut omatic ally  denied
+unless authorizers are assigned by a w orkflo w  plugin.
+You can set a minimum number of authorizers for requests based on
+templates, roles, segr eg ation  of duties  rules, managed groups and target
+systems.
+MIN DICTWORD LENGTH Sets the minimum length of dictionar y  words loaded for password strength
+rule checks. Changing this value can speed up password checks by
+eliminating  small words from the dictionar y .  It can be used in c onjunction
+with the Minimum length of dictionar y  word to check against strength rule.
+NUM HOSTS VERIFY Set the number of systems from the authentic ation  priority list that Bravura
+Security Fabric should contact and ask for authentic ation,  before concluding
+that the user simply entered an incorrect password value.
+PASSWORD HISTORY IGNORE Skip the checking of password history when cr eating  a new account. The
+initial  password for a new account will not enforce the password history
+when enabled. The default setting  for this value is Enabled.
+SOD VIOLATIONS LIST LIMIT Set the maximum number of segr eg ation  of duties  rules violations  to show
+when issuing a request. 0 means in finit e.  Default is 10.
+USERCLASS CACHE EXPIRY This sets the amount of hours before the user class cache expires  (on page
+804). Default is 72 hours.
+.Keeping passwords secret from product administrators
+You can use a plugin to retrieve a pr e-de fined  password value when a password change is performed by
+the help desk.
+The plugin point is set by the GET PASSWORD EXT plugin point on the Manage the system  >
+Maintenance > System variables  c on figur ation  page.
+To keep the user’s password secure, the help desk user  sees only the description  of the new password on
+the Change passwords  page. The help desk user  can then provide this password description  to the caller.
+The actual password is kept secret from the help desk user , but is known to the caller from its description.
+For example, “the new password is the fir s t 6 characters of the user’s social security number.”
+The caller should be instructed to change their password to a diff er en t  value as soon as possible, using
+one of the Bravura Pass  self-service modules, or transparent password s ynchr oniz ation.
+There are no shipped programs for this plugin point. See more in f ormation  on writing  a custom plugin
+Requirements
+See W riting  plugins  for general requirements.
+Input
+Input to the plugin includes only the following:
+"" "" = {
+  "sessionid" = "<session ID>" # The session ID of the logged in viewer/
+requester
+  "recipient" "user" = {} # The user being assisted
+  "viewer" "user" = {} # The help desk user providing assistance
+}
+Output
+The plugin should provide the following output:
+"" "" = {
+  "password" = "<the new password>" # The password used in the password reset
+  "description" = "<description>" # The notice to display to the help desk user
+}
+for this.
+Denying access
+In some cases it may be easier to prevent certain users from accessing specific  objects, rather than trying
+to find a way to grant limited user access. Use the ACLDENY ENABLE setting  on the Manage the system >
+Policies > Options  page to allow product administrator  s to deny read and write permissions to objects by
+selecting  appropriate checkboxes under the Access control tab.It is possible for users to belong to more than one group with c on figur ed  access controls for the same
+object. Set ACL DENY ENABLE to:
+Allow permissions to take precedence to allow a user’s allowed access to override denied
+access.
+Deny permissions to take precedence to allow a user’s denied access to override allowed
+access.
+For example, a user belongs to group A with permission to read object C, and also belongs to group B
+which is denied all access to object C. The Allow permissions to take precedence setting  means the user
+does have read permission for object C.
+Expiring product administrators’ passwords
+You can use the ADMIN PASSWORD EXPIRE setting  (Manage the system > Policies > Options ) to
+c on figur e  a global value for the number of days until  product administrator  s’ passwords expire. If this
+setting  is not c on figur ed,  then the product administrator  ’s password uses the default password policy’s
+expiry interval. You can override both of these settings  for individual product administrator  s by setting  the
+Password never expires option  on the user’s c on figur ation  page.
+ADMIN PASSWORD EXPIRE only applies to product administrator  s whose passwords are stored in the
+Bravura Security Fabric database. It does not apply to product administrator  s whose passwords are
+verified  against a target system.
+Failing invalid login IDs
+Normally, when an invalid user or account ID is entered in the login screen Bravura Security Fabric
+displays a message informing the user that the account could not be found.
+This behavior can be modified  to make it more difficult  for an attack er  to deduce valid IDs from the login
+process, by enabling the GENERIC LOGINFAILURE option  (Manage the system > Policies > Options ). If
+enabled, users are allowed to proceed to the Verify password screen and enter a password, despite
+having entered an invalid ID. Bravura Security Fabric  simulates an attemp t  to verify the password, w aiting
+10 seconds before returning with the message:
+Please verify that you entered your password correctly, otherwise contact your administrator.
+This feature is scheduled to be removed in a future release.
+Triggering IP lockout
+You can c on figur e  a lockout of an IP address for authentic ation  attemp ts  using the IPLOCKOUT
+DURATION , IP LOCKOUT INTERVAL , and MAX IP FAILURE system variables at Manage the system >
+Policies > Options .
+The IP lockout applies to all failed authentic ation  attemp ts.
+To set up an IP lockout, you must set a value for MAX IP FAILURE to indicate the maximum number of
+failed login attemp ts.You can enter a custom value for the IP LOCKOUT DURATION to determine the number of seconds for
+which the IP will be locked out. The default value is 60 seconds. After  the c on figur ed  amount of time  has
+elapsed, authentic ation  attemp ts  can resume once again for any account from this IP address.
+You can also use the ipunlock  program to immediately unlock an IP address.
+You can set IP LOCKOUT INTERVAL to change the number of seconds to wait between a failed login
+attemp t  and the next login attemp t.  The default value is 5 seconds. The lockout counter is increased for
+each failed authentic ation  attemp t  during this interval period and then reset once the c on figur ed  number
+of seconds has been reached.
+When disabling the IP lockout functionality ,  disabling MAX IP FAILURE alone does not aut omatic ally  clear
+any outstanding IP locks. The c on figur ed  IP lockout dur ation  as de fined  by IP LOCKOUT DURATION must
+be reached, or you must run ipunlock to allow authentic ation  attemp ts  once again for an IP address.
+See usage in f ormation  for ipunlock
+Use the ipunlock  program to immediately unlock IP addresses that have been locked out by MAX IP
+FAILURE as a result of too many failed authentic ation  attemp ts  using the same IP .
+Usage
+ipunlock.exe [(-U|--unlock) <IPv4 address>] | [-L|--list]
+Argument Description
+-U <IPv4 address> | --unlock <IPv4 address> Unlock the specified  IPv4 address
+-L | --list Display a list of locked IP addresses
+Examples
+1.To unlock an IP address that has been locked out by generic login failure, type:1.
+ipunlock.exe -U <IPv4 address>
+Or,
+ipunlock.exe --unlock <IPv4 address>
+2.To list IP addresses that have been locked out by generic login failure, type:2.
+ipunlock.exe -L
+Or,
+ipunlock.exe --list
+.
+You can c on figur e  the following event actions  for IP lockout events:
+IP Lockout events that launch interface programs
+Option Description
+REMOTE IP LOCKED Program to execute when an IP
+address is locked out.Option Description
+REMOTE IP UNLOCKED Program to execute when an IP
+address is unlocked.
+Controlling IP addresses from setting  X-Forwarded-For
+You can restrict which source IP addresses are allowed to set the ’X-Forwarded-For’ HTTP request header.
+The GLF ALLOWED PROXIES variable ( Manage the system > Policies > Options ) uses a comma-delimited
+list of CIDR bitmasks of c onnection  source IP addresses and ranges from which an ’X-Forwarded-For’
+HTTP request header is to be trusted. This prevents any HTTP client from avoiding IP lockout by
+pretending to forward to random IP addresses.
+If a c onnecting  peer does not specify the HTTP request header, its IP address is considered the true
+source address for IP-lockout c onsider ations.
+If a c onnecting  peer specifies  the HTTP request header, and its IP address is specified  in GLF ALLOWED
+PROXIES , then the HTTP request header value is considered the true source IP address, rather than the
+c onnecting  peer’s IP address.
+If a c onnecting  peer specifies  the HTTP request header, but its IP address is not specified  in GLF
+ALLOWED PROXIES , then the c onnecting  peer’s IP address is considered the true source address for IP-
+based lockout policy, and a warning is written  to the Logging Service regarding a possible spoofing  attack.
+Con figuring  lockout interval
+This option  is only used when authentic ation  chains are enabled.
+The LOCKOUT INTERVAL variable ( Manage the system > Policies > Options ) allows you to specify a
+number of minutes between failed login attemp ts  that would a ff ect  the lockout counter.
+If the number of minutes between failed login attemp ts  is greater than the lockout interval, then the
+lockout counter is reset.
+If the number of minutes between failed login attemp ts  is less than the lockout interval, then the lockout
+counter increases.
+If the lockout interval is unspecified,  then the lockout counter increases with each authentic ation  failure
+and is not reset until  authentic ation  is successful, or the user’s pr ofile  has been re-enabled after  a
+lockout.
+Aut omatic ally  unlocking users
+By default, when attempting  to authentic a t e  a user, there is a maximum number of authentic ation
+failures allowed before the user is locked-out from Bravura Security Fabric . This is controlled by the the
+MAX USERAUTH FAILURE setting  (Manage the system > Policies > Options ).
+To enable a user pr ofile,  locked-out users can contact the help desk and request r e-activ ation,  or if the
+LOCKOUT DURATION has been set, Bravura Security Fabric  aut omatic ally  re-enables the account after  N
+minutes.Users that are manually disabled by a product administrator  will not be aut omatic ally  re-enabled. These
+users must be re-enabled by a product administrator  .

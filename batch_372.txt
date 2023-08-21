@@ -1,0 +1,349 @@
+Name Version License
+postcss@7.0.17 see name http s:// github.c om/pos t css/pos t css/blob/main/LICENSE
+primeng@7.1.3 see name http s:// github.c om/prime f aces/primeng /blob/mas t er/LICENSE.md
+pr ocess-ne xtick -ar gs@2.0.1 see name http s:// github.c om/ c alvinme t c alf/pr ocess-ne xtick -ar gs/blob/mas t er/license.md
+process@0.11.10 see name http s:// github.c om/de functz ombie/node-pr ocess/blob/mas t er/LICENSE
+pr omise-in fligh t@1.0.1 see name http s:// github.c om/iarna/pr omise-in fligh t/blob/la t es t/LICENSE
+proxy-addr@2.0.5 see name http s:// github.c om/jshttp/pr o xy -addr/blob/mas t er/LICENSE
+prr@1.0.1 see name http s:// github.c om/r v ag g / ar chiv ed-prr/blob/mas t er/LICENSE.md
+psl@1.7.0 see name http s:// github.c om/lupomon t er o/p sl/blob/mas t er/LICENSE
+pump@3.0.0 see name http s:// github.c om/ma fin t osh/pump/blob/mas t er/LICENSE
+pumpify@1.5.1 see name http s:// github.c om/ma fin t osh/pumpif y/blob/mas t er/LICENSE
+punycode@1.4.1 see name http s:// github.c om/ma thiasb ynens/pun y c ode.js/blob/mas t er/LICENSE -MIT . tx t
+qs@6.7.0 see name http s:// github.c om/ljharb/qs/blob/mas t er/LICENSE.md
+querystring-es3@0.2.1 see name http s:// github.c om/mik e-spainho w er/quer y s tring /blob/mas t er/License.md
+range-parser@1.2.1 see name http s:// github.c om/jshttp/r ang e-par ser/blob/mas t er/LICENSE
+raw-body@2.4.0 see name http s:// github.c om/ s tr eam-utils/r a w -body/blob/mas t er/LICENSE
+raw-loader@3.1.0 see name http s:// github.c om/w ebpack -c on trib/r a w -loader/blob/mas t er/LICENSE
+read-cache@1.0.0 see name http s:// github.c om/T r ySound/r ead-c ache/blob/mas t er/LICENSE
+readable-stream@2.3.7 see name http s:// github.c om/nodejs/r eadable-s tr eam/blob/main/LICENSE
+readdirp@2.2.1 see name http s:// github.c om/paulmillr/r eaddirp/blob/mas t er/LICENSE
+r eg ener a t or -runtime@0.13.3 see name http s:// github.c om/f acebook/r eg ener a t or/blob/main/LICENSE
+regex-not@1.0.2 see name http s:// github.c om/jonschlink ert/r eg e x -not/blob/mas t er/LICENSE
+remove-trailing-separator@1.1.0 see name http s:// github.c om/dar sain/r emo v e-tr ailing-separ a t or/blob/mas t er/license
+repeat-element@1.1.3 see name http s:// github.c om/jonschlink ert/r epea t -elemen t
+repeat-string@1.6.1 see name http s:// github.c om/jonschlink ert/r epea t -s tring /blob/mas t er/LICENSE
+request@2.88.0 see name http s:// github.c om/r eques t/r eques t/blob/mas t er/LICENSE
+requires-port@1.0.0 see name http s:// github.c om/unshiftio/r equir es-port/blob/mas t er/LICENSE
+resolve-from@3.0.0 see name http s:// github.c om/ sindr esorhus/r esolv e- fr om/blob/main/license
+resolve@1.15.1 see name http s:// github.c om/br o w serif y/r esolv e/blob/mas t er/LICENSE
+restore-cursor@3.1.0 see name http s:// github.c om/ sindr esorhus/r es t or e-cur sor/blob/main/license
+ret@0.1.15 see name http s:// github.c om/f en t/r e t.js/blob/mas t er/LICENSE
+rimraf@2.7.1 see name http s:// github.c om/isaacs/rimr a f/blob/main/LICENSE
+run-async@2.3.0 see name http s:// github.c om/SBoudrias/run-as ync/blob/mas t er/LICENSE
+rxjs-tslint@0.1.7 see name http s:// github.c om/R eactiv eX/rxjs-tslin t/blob/mas t er/LICENSE
+rxjs@6.5.4 see name http s:// github.c om/R eactiv eX/rxjs/blob/mas t er/LICENSE. tx t
+sa f e-buff er@5.1.2 see name http s:// github.c om/f er oss/ sa f e-buff er/blob/mas t er/LICENSE
+safe-regex@1.1.0 see name http s:// github.c om/ sub s t ack/ sa f e-r eg e x/blob/mas t er/LICENSEName Version License
+sa f er -buff er@2.1.2 see name http s:// github.c om/ChALk eR/ sa f er -buff er/blob/mas t er/LICENSE
+sass-loader@7.2.0 see name http s:// github.c om/w ebpack -c on trib/ sass-loader/blob/mas t er/LICENSE
+sass@1.22.9 see name http s:// github.c om/ sass/dart -sass/blob/main/LICENSE
+schema-utils@1.0.0 see name http s:// github.c om/w ebpack/ schema-utils/blob/mas t er/LICENSE
+schema-utils@2.6.4 see name http s:// github.c om/w ebpack/ schema-utils/blob/mas t er/LICENSE
+selfsigned@1.10.7 see name http s:// github.c om/jfr omaniello/ self signed/blob/mas t er/LICENSE
+semver-dsl@1.0.1 see name http s:// github.c om/mg eche v/ sem v er -dsl/blob/mas t er/LICENSE
+semver@5.7.1 see name http s:// github.c om/npm/node-sem v er/blob/main/LICENSE
+send@0.17.1 see name http s:// github.c om/pillarjs/ send/blob/mas t er/LICENSE
+serialize-javascript@2.1.2 see name http s:// github.c om/y ahoo/ serializ e-ja v ascrip t/blob/main/LICENSE
+serve-index@1.9.1 see name http s:// github.c om/ e xpr essjs/ ser v e-inde x/blob/mas t er/LICENSE
+ser v e-s t atic@1.14.1 see name http s:// github.c om/ e xpr essjs/ ser v e-s t atic/blob/mas t er/LICENSE
+set-value@2.0.1 see name http s:// github.c om/jonschlink ert/ se t - v alue/blob/mas t er/LICENSE
+setprototypeof@1.1.1 see name http s:// github.c om/w esle y t odd/ se tpr ot otypeof/blob/mas t er/LICENSE
+shallow-clone@3.0.1 see name http s:// github.c om/jonschlink ert/ shallo w -clone/blob/mas t er/LICENSE
+shebang-command@1.2.0 see name http s:// github.c om/k e v v a/ shebang-c ommand/blob/mas t er/license
+shebang-regex@1.0.0 see name http s:// github.c om/ sindr esorhus/ shebang-r eg e x/blob/main/license
+signal-exit@3.0.2 see name http s:// github.c om/t apjs/ signal-e xit/blob/mas t er/LICENSE. tx t
+slash@1.0.0 see name http s:// github.c om/ sindr esorhus/ slash/blob/main/license
+snapdragon-node@2.1.1 see name http s:// github.c om/her e-be/ snapdr ag on-node/blob/mas t er/LICENSE
+snapdr ag on-util@3.0.1 see name http s:// github.c om/her e-be/ snapdr ag on-util/blob/mas t er/LICENSE
+snapdragon@0.8.2 see name http s:// github.c om/her e-be/ snapdr ag on/blob/mas t er/LICENSE
+source-list-map@2.0.1 see name http s:// github.c om/w ebpack/ sour ce-lis t -map/blob/mas t er/LICENSE
+source-map-resolve@0.5.3 see name http s:// github.c om/ly dell/ sour ce-map-r esolv e/blob/mas t er/LICENSE
+source-map-url@0.4.0 see name http s:// github.c om/ly dell/ sour ce-map-url/blob/mas t er/LICENSE
+source-map@0.5.7 see name http s:// github.c om/mo zilla/ sour ce-map/blob/mas t er/LICENSE
+sourcemap-codec@1.4.8 see name http s:// github.c om/Rich-Harris/ sour cemap-c odec/blob/mas t er/LICENSE
+speed-measure-webpack-plugin@1.3.1 see namehttp s:// github.c om/ s t ephenc ook de v/ speed-measur e-w ebpack -plugin/blob/
+mas t er/LICENSE
+split-string@3.1.0 see name http s:// github.c om/jonschlink ert/ split -s tring /blob/mas t er/LICENSE
+sprintf-js@1.1.2 see name http s:// github.c om/ ale x ei/ sprintf.js/blob/mas t er/LICENSE
+sshpk@1.16.1 see name http s:// github.c om/jo y en t/node-sshpk/blob/mas t er/LICENSE
+ssri@6.0.1 see name http s:// github.c om/zk a t/ ssri/blob/la t es t/LICENSE.md
+s t atic-e x t end@0.1.2 see name http s:// github.c om/jonschlink ert/ s t atic-e x t end/blob/mas t er/LICENSE
+statuses@1.5.0 see name http s:// github.c om/jshttp/ s t a tuses/blob/mas t er/LICENSE
+stream-browserify@2.0.2 see name http s:// github.c om/br o w serif y/ s tr eam-br o w serif y/blob/mas t er/LICENSEName Version License
+stream-each@1.2.3 see name http s:// github.c om/ma fin t osh/ s tr eam-each/blob/mas t er/LICENSE
+s tr eam-http@2.8.3 see name http s:// github.c om/jhiese y/ s tr eam-http/blob/mas t er/LICENSE
+s tr eam-shift@1.0.1 see name http s:// github.c om/ma fin t osh/ s tr eam-shift/blob/mas t er/LICENSE
+string-width@4.2.0 see name http s:// github.c om/ sindr esorhus/ s tring-width/blob/main /license
+string_decoder@1.1.1 see name http s:// github.c om/nodejs/ s tring_dec oder/blob/main/LICENSE
+strip-ansi@5.2.0 see name http s:// github.c om/ chalk/ s trip-ansi/blob/main/lice nse
+strip-ansi@6.0.0 see name http s:// github.c om/ chalk/ s trip-ansi/blob/main/lice nse
+strip-eof@1.0.0 see name http s:// github.c om/ sindr esorhus/ s trip- final-ne wline/blob/main/license
+style-loader@1.0.0 see name http s:// github.c om/w ebpack -c on trib/ s tyle-loader/blob/mas t er/LICENSE
+supports-color@5.5.0 see name http s:// github.c om/ chalk/ supports-c olor/blob/main/license
+supports-color@6.1.0 see name http s:// github.c om/ chalk/ supports-c olor/blob/main/license
+symbol-observable@1.2.0 see name http s:// github.c om/benlesh/ s ymbol-ob ser v able/blob/mas t er/license
+tapable@1.1.3 see name http s:// github.c om/w ebpack/t apable/blob/mas t er/LICENSE
+terser-webpack-plugin@1.4.3 see name http s:// github.c om/w ebpack -c on trib/t er ser -w ebpack -plugin/blob/mas t er/LICENSE
+terser@4.6.3 see name http s:// github.c om/t er ser/t er ser/blob/mas t er/LICENSE
+through2@2.0.5 see name http s:// github.c om/r v ag g /thr ough2/blob/mas t er/LICENSE.md
+through@2.3.8 see namehttp s:// github.c om/dominict arr/thr ough/blob/mas t er/LICENSE.MIT  http s://
+github.c om/dominict arr/thr ough/blob/mas t er/LICENSE. AP A CHE2
+timer s-br o w serif y@2.0.11 see name http s:// github.c om/br o w serif y/timer s-br o w serif y/blob/mas t er/LICENSE.md
+tmp@0.0.33 see name http s:// github.c om/r as zi/node-tmp/blob/mas t er/LICENSE
+to-object-path@0.3.0 see name http s:// github.c om/jonschlink ert/t o-object -pa th/blob/mas t er/LICENSE
+to-regex-range@2.1.1 see name http s:// github.c om/micr oma t ch/t o-r eg e x -r ang e/blob/mas t er/LICENSEName Version License
+to-regex@3.0.2 see name http s:// github.c om/jonschlink ert/t o-r eg e x/blob/mas t er/LICENSE
+t oidentifier@1.0.0 see name http s:// github.c om/ c omponen t/t oidentifier/blob/mas t er/LICENSE
+tough-cookie@2.4.3 see name http s:// github.c om/ sales f or ce/t ough-c ookie/blob/mas t er/LICENSE
+tree-kill@1.2.2 see name http s:// github.c om/pkrumins/node-tr ee-kill/blob/mas t er/LICENSE
+ts-debug@1.3.0 see name http s:// github.c om/ clebert/ts-c on fig /blob/mas t er/LICENSE
+tslib@1.10.0 see name http s:// github.c om/micr osoft/tslib/blob/main/LICE NSE. tx t
+tslint@5.20.1 see name http s:// github.c om/palantir/tslin t/blob/mas t er/LICENSE
+tsutils@2.29.0 see name http s:// github.c om/ aja ff f/tsutils/blob/mas t er/LICENSE
+tty -br o w serif y@0.0.0 see name http s:// github.c om/br o w serif y/tty -br o w serif y/blob/mas t er/LICENSE
+tunnel-agent@0.6.0 see name http s:// github.c om/r eques t/tunnel-ag en t/blob/mas t er/LICENSEName Version License
+tweetnacl@0.14.5 see name http s:// github.c om/dches t/tw ee tnacl-js/blob/mas t er/LICENSE
+type-is@1.6.18 see name http s:// github.c om/jshttp/type-is/blob/mas t er/LICENSE
+typescript@3.5.3 see name http s:// github.c om/micr osoft/T ypeScript/blob/main/LICENSE. tx t
+unicode-9.0.0@0.7.5 see name http s:// github.c om/node-unic ode/unic ode-9.0.0#license
+union-value@1.0.1 see name http s:// github.c om/jonschlink ert/union- v alue/blob/mas t er/LICENSE
+unique- filename@1.1.1 see name http s:// github.c om/npm/unique- filename/blob/main/LICENSE
+unique-slug@2.0.2 see name http s:// github.c om/npm/unique-slug /blob/main/LICENSE
+univ er sal-analytics@0.4.20 see name http s:// github.c om/peak sandpies/univ er sal-analytics#license
+unpipe@1.0.0 see name http s:// github.c om/ s tr eam-utils/unpipe/blob/mas t er/LICENSE
+unset-value@1.0.0 see name http s:// github.c om/jonschlink ert/unse t - v alue/blob/mas t er/LICENSEName Version License
+upath@1.2.0 see name http s:// github.c om/ anodynos/upa th/blob/mas t er/LICENSE
+uri-js@4.2.2 see name http s:// github.c om/ g ar y c ourt/uri-js/blob/mas t er/LICENSE
+urix@0.1.0 see name http s:// github.c om/ly dell/urix/blob/mas t er/LICENSE
+url@0.11.0 see name http s:// github.c om/de functz ombie/node-url/blob/mas t er/LICENSE
+use@3.1.1 see name http s:// github.c om/jonschlink ert/use/blob/mas t er/LICENSE
+util-depr ec a t e@1.0.2 see name http s:// github.c om/T ooT allNa t e/util-depr ec a t e/blob/mas t er/LICENSE
+util@0.11.1 see name http s:// github.c om/br o w serif y/node-util/blob/mas t er/LICENSE
+utils-mer g e@1.0.1 see name http s:// github.c om/jar edhanson/utils-mer g e/blob/mas t er/LICENSE
+uuid@3.4.0 see name http s:// github.c om/uuidjs/uuid/blob/main/LI CENSE.md
+vary@1.1.2 see name http s:// github.c om/jshttp/v ar y/blob/mas t er/LICENSEName Version License
+verror@1.10.0 see name http s:// github.c om/jo y en t/node- v err or/blob/mas t er/LICENSE
+vm-browserify@1.1.2 see name http s:// github.c om/br o w serif y/vm-br o w serif y/blob/mas t er/LICENSE
+watchpack@1.6.0 see name http s:// github.c om/w ebpack/w a t chpack/blob/mas t er/LICENSE
+webpack-core@0.6.9 see name http s:// github.c om/w ebpack/ c or e#license
+webpack-dev-middleware@3.7.2 see name http s:// github.c om/w ebpack/w ebpack -de v -middle w ar e/blob/mas t er/LICENSE
+webpack-dev-server@3.9.0 see name http s:// github.c om/w ebpack/w ebpack -de v -ser v er/blob/mas t er/LICENSE
+webpack-log@2.0.0 see name http s:// github.c om/w ebpack -c on trib/w ebpack -log /blob/mas t er/LICENSE
+webpack-merge@4.2.2 see name http s:// github.c om/ sur viv ejs/w ebpack -mer g e/blob/de v elop/LICENSE
+webpack-sources@1.4.3 see name http s:// github.c om/w ebpack/w ebpack -sour ces/blob/main/LICENSE
+webpack-subresource-integrity@1.1.0-rc.6 see name http s:// github.c om/w a y sact/w ebpack -subr esour ce-in t egrity/blob/main/LICEN SEName Version License
+webpack@4.39.2 see name http s:// github.c om/w ebpack/w ebpack/blob/main/LICENSE
+which@1.3.1 see name http s:// github.c om/npm/node-which/blob/ main/LICENSE
+worker-farm@1.7.0 see name http s:// github.c om/r v ag g /node-w ork er - f arm/blob/mas t er/LICENSE.md
+worker-plugin@3.2.0 see name http s:// github.c om/GoogleChr omeLab s/w ork er -plugin/blob/mas t er/LICENSE
+wrappy@1.0.2 see name http s:// github.c om/npm/wr app y/blob/main/LICENSE
+xtend@4.0.2 see name http s:// github.c om/Ra ynos/x t end/blob/mas t er/LICENSE
+y18n@4.0.0 see name http s:// github.c om/y ar gs/y18n/blob/mas t er/LICENSE
+yallist@3.1.1 see name http s:// github.c om/isaacs/y allis t/blob/mas t er/LICENSE
+zone.js@0.9.1 see name http s:// github.c om/ angular/z one.js/blob/mas t er/LICENSEIndex
+•im_corp_manual_transfer  2468
+A
+•A RESET EXT  1174
+•A_RESET_TO_PUSHPASS  1174 , 1197
+•ABOUT  13
+•About add-on softw ar e  240
+•About deleg ation  1382
+•About esc alation  1386
+•About event actions  (exit traps)  1524
+•About late binding  2637
+•About load balancer c on figur ation  and session
+persistance  295
+•About managed groups  585
+•About notific ations  431
+•About the auto discovery process  2716
+•About the Bravura Security Fabric Log  2776
+•About the component framework  313
+•About the default scheduled jobs  2702
+•About the Password Change Notific ation
+Module  1662
+•About the UI files 3472
+•About the user interface  3472
+•About this site  14
+•About web modules  1042
+•access certific ation  
+•Access Certific ation  2515
+•Access certific ation  features  2516
+•access control  
+•access control list  
+•Access controls  555
+•access disclosure  
+•Access disclosure  1809 , 115
+•Access disclosure plugins  1957 , 242, 249
+•Access disclosure plugins e x ecution  3304
+•Access disclosure plugins e x ecution  trend
+3420
+•Access request  1809
+•Access the Bravura One app from a mobile
+device  1478
+•Access to attribut es  and privileged accounts
+722
+•Access to product features  2966
+•Access to user pr ofiles  706
+•access.m4  2495
+•ACCESS_ACCOUNTSETS_USERCLASS  1939
+•ACCESS_GROUPSETS_USERCLASS  1939
+•accessibility
+◦screen readers  3694
+◦ section  508  3694
+•Accessibility  112, 3694 , 126•Accessing adminis tr ativ e  passwords  1867
+•Accessing Bravura Security Fabric via a mobile
+browser  1492
+•Account / Subscriber dependencies  3185
+•Account access check-out external program
+triggers  1943
+•Account access check-out options  1940
+•Account access check-out trend  3415
+•Account access request behavior  1941
+•Account access request notific ation  events
+1953
+•Account attribut e  on the secondary target
+matches an account attribut e  value on source
+of pr ofiles  544
+•account attribut es  , 566, 572, 619
+◦ attribut e  priority  1298
+◦ deleting  attribut e  values  573
+◦ deleting  overrides  574
+◦specifying attribut e  values  572
+◦synchronizing  2430
+◦tracking changes  572
+•Account attribut es  2974 , 553, 566
+•Account audit  3391
+•Account changes history  3387
+•Account cr eation  2340
+•Account existence  3382
+•Account group audit  3391
+•account history  560
+•Account name on secondary target matches
+account attribut e  on source of pr ofiles  543
+•Account name on the secondary target
+matches the user pr ofile  ID 543
+•account set  
+•Account set access and commands usage  3287
+•Account set access check-out trend  3430
+•Account set access command e x ecution  log
+3291
+•Account set access log  3216
+•Account set check-outs/check-ins  3282
+•Account set c on figur ation  3220
+•Account set saved commands  3221
+•Account sets  1921 , 2933
+•Account s ynchr oniz ation  2430
+•account t ermination  date  
+•account trustee  
+•account unlock  1575
+•ACCOUNT_GROUP_CHANGES  1534 , 2446
+•ACCOUNT_TARGET_LIST  1266
+• acc oun tAttribut eGe t  798
+•Accounts  2950•acctena  3624
+•ACL 
+•ACLs  89
+• Activ ating  event action  options  1556
+• Activ e  Directory 2008R2 group policy settings
+1619
+• Activ e  Directory 2012, 2016, 2019, and 2022
+group policy settings  1617
+• Activ e  Directory requirements  1631
+•Add a custom SMS/PIN scenario  875
+•Add a customized message to users  1022
+•Add a password policy  1002
+•Add a service provider to the Bravura Security
+Fabric IdP  935
+•Add account attribut es  to Change password
+pages  3515
+•Add background image to login sequence
+3503
+•Add custom links to the Front-end (PSF)  3509
+•Add DUO Authentic ation  to Bravura Security
+Fabric  879
+•Add language tags  3490
+•Add new rules using regular expressions  1016
+•Add new rules with a plugin  1011
+•Add RADIUS authentic ation  to Bravura
+Security Fabric  877
+•Add role membership attribut es  to w orkflo w
+658
+•Add RSA Authentic ation  to Bravura Security
+Fabric  878
+•Add SSH key target system  1913
+•Add the Mobile authentic ation  module for an
+authentic ation  chain  1471
+•Add the prepared SP to the Bravura Security
+Fabric IdP  953
+•Add to the authentic ation  menu  3507
+•Adding a box  376
+•Adding a custom authentic ation  chain  844
+•Adding a custom report  2920
+•Adding a discovery template  2090
+•Adding a group set  1841
+•Adding a managed system policy  1836
+•Adding a new group to a group set  1842
+•Adding a new participan t  specific ation  739
+•Adding a node  274
+•Adding a node steps in detail  275
+•Adding a target system as a managed system
+1815
+•Adding a target system group  562
+•Adding a target system import rule  2097
+•Adding a target system to managed system
+policies  521
+•Adding account attribut es  573
+•Adding additional  languages  1770•Adding all pr ofiles  to the or g aniz ation  chart
+2513
+•Adding an account set  1924
+•Adding and modifying in f ormation  360
+•Adding attribut e  criteria  794
+•Adding attribut e  group members  1308 , 668
+•Adding authentic ation  modules to a chain  845
+•Adding custom authentic ation  questions  1768
+•Adding custom tags  1564 , 477
+•Adding email support  1562
+•Adding entitlemen ts  to roles  639
+•Adding entitlemen ts  to segr eg ation  of duties
+rules  816
+•Adding event action  variable strings in email
+messages  1563
+•Adding group attribut es  620
+•Adding group membership criteria  794
+•Adding groups  1842
+•Adding inventory items  2688
+•Adding item types  2667
+•Adding local service mode managed systems
+1816
+•Adding loc ations  2667
+•Adding macros to email messages  1564
+•Adding macros to messages  476
+•Adding managed accounts import rules  2099
+•Adding managed systems import rules  2099
+•Adding network resources  576
+•Adding new functionality  and HTML  1149
+•Adding new jobs  2713
+•Adding options  to the authentic ation  menu
+829
+•Adding programs to run  1566
+•Adding PSLang criteria  795
+•Adding push mode managed systems  1815
+•Adding question  sets  1024 , 1774
+•Adding target system administrators  517
+•Adding target systems  490
+•Adding templates  2669 , 622
+•Adding user classes  738
+•Adding user in f ormation  to the database  447
+•Adding user -specific  variables in notific ation
+messages  475
+•Adding vault-only managed systems  1825
+• Additional  c on figur ation  for Bravura One  1471
+• Additional  in f ormation  323
+• Additional  languages  3477
+• Additional  target system administrators  518
+•addon directory  
+•addon idarchive directory  
+•Add-on ins t allation  command-line options  245
+•ADD-ONS  3527
+•Adjust the mobile activ ation  timeout  1471
+•adm_set  3625 , 690

@@ -1,0 +1,317 @@
+193
+                Like:i = "CN=Administrators,CN=Builtin ⋆";195                Like:i = "CN=Domain Admins ⋆";
+                Like:i = "CN=Enterprise Admins ⋆";
+197          };
+       };
+199
+201      BypassNotify "Any" = {  # Bypass password synchronization to HiPM
+          "Any" "_AccountName_" = {
+203                Equal = "LethbridgeUser2";
+          };
+205       }; #End of BypassNotify
+      }; #End of 'End_Users' Target
+207
+209    Admin_Users = {
+      CheckStrengthFailIfIDPMReturn = { 100; };
+211      CheckStrengthOnly = 0;
+      # If the target longid isn't the default sAMAccountName, define the longid as:
+213      # LongID = "%sAMAccountName%";
+      # LongID = "DomainName\\%sAMAccountName%";
+215      # LongID = "%distinguishedName%";
+      LongID = "LongIDMatchesPMTarget";
+217
+      Bypass "Any" = {# Bypassing Strength Check to HiPM
+219            "Any" "userAccountControl" = {
+                # Disabled accuonts are Bypassing HiPM strength check
+221                match:b = "([0-1]) ⋆10";
+            };
+223
+          "Any" "_AccountName_" = {
+225                # put the computer accounts below that are BYPASSING HiPM
+                Equal:i = "Guest";
+227                Equal:i = "krbtgt";
+           };
+229
+          "NotAny" "memberOf" = {
+231                # The accounts have membership in the following groups are           # SENDING to HiPM
+233                Like = "CN=Administrators,CN=Builtin ⋆";
+                Like = "CN=Domain Admins ⋆";
+235                Like = "CN=Enterprise Admins ⋆";
+          };
+237       };
+239      BypassNotify "Any" = {  # Bypassing Password Synchronization to HiPM
+241            "Any" "memberOf" = {
+                Like = "CN=Domain Admins ⋆";
+243            };
+245       }; #End of BypassNotify
+      }; #End of 'Admin_Users' Target
+247
+249
+251
+    };
+253  };
+▪
+See also:  
+Use the following utilities,  shipped with the Password Change Notific ation  Module, to help write the
+c on figur ation  file:
+user attr s
+Use the userattrs program to query account attribut es  in Micr osoft  Activ e  Directory; to find specific
+useful attribut es  that may be used as search criteria in designing the intcptsvc c on figur ation  file.
+This program is installed by intcpt.msi  or intcpt-64.msi  on a Windows transparent password
+s ynchr oniz ation  trigger system and can be found in the following directory:
+<Program Files path>\Bravura Security\\Password Filt er\util\
+See userattrs usage in f ormation.
+userattrs.exe [-p <ADsPath> ] [-a <attributes>] [-
+c <admin account> <admin password>] [ -f <ADsSearchFilter>] -
+u <accounts>
+Argument Description
+-p, --adspath <ADsPath> Specify the domain path (ADsPath). Available macros are
+%PDC%, %DC%, %DN%. The default is LDAP://%DC
+%/%DN%.
+-a, --attribut es  <attribut es> Specify the attribut es  to query, separated by a space. If
+none are specified,  all attribut es  are queried.
+-c, --cr edential  <admin account> <admin password> Specify administrator account and password separated
+by space. If no cr edentials  are specified,  the security
+context of the current process is used to bind the object.
+-p, -- filt er  <filt er> Specify the account searching criteria (ADsSearchFilter).
+The default is sAMAccountName=%USER%.Argument Description
+-u, --users Specify the users’ accounts to query, separated by a
+space.
+Examples
+For example:
+userattrs.exe -a DisplayName distinguishedName -u brownwi
+returns:
+Open an ADs object: LDAP://%DC%/%DN%...succeeded.
+Retrieving user [brownwi]'s attributes...
+Attribute: [DisplayName]:
+  Brown, William
+Attribute: [_AccountName_]:
+  brownwi
+Attribute: [distinguishedName]:
+  CN=brownwi qa,CN=CertCo,DC=example,DC=local
+Cost : 437 (ms)
+verifycfg
+Use the verifycfg program to verify that a given account will be bypassed by password strength
+checking and/or s ynchr oniz ation,  according to per-target criteria set in the specified  intcptsvc
+c on figur ation  file. Neither actual account strength checking, nor s ynchr oniz ation,  is performed by this
+utility .  This tool is useful for verifying whether the c on figur ation  file is designed properly before putting
+the interceptor online.
+This program is installed by intcpt.msi  or intcpt-64.msi  on a Windows transparent password
+s ynchr oniz ation  trigger system and can be found in the following directory:
+<Program Files path>\Bravura Security\\Password Filt er\util\
+See verifycfg usage in f ormation.
+ verifycfg.exe  [-c <file>] [-l <level>] -u <user>
+Argument Description
+-c, --cfg <cfg> Specify the intcptsvc c on figur ation  file. The default is
+intcptsvc.cfg
+-l, --level <N> The debug level 1-6. The default is 4.
+-u, --user The user to be v erified  (required).
+Examples
+For example:verifycfg.exe -c ..\service\intcptsvc.cfg -u qa1000 -l 4
+returns:
+Loading service configuration file:[..\service
+\intcptsvc.cfg]...succeeded.
+Retrieve user:[qa1000]'s attributes and evaluate settings...
+User: qa1000
+Session has been created successfully
+Target: End_Users --
+ None bypass      <<== It means this account will be strength checked and synchronized against 'End_Users' target
+Retrieve target: [End_Users], user: [qa1000]'s status...( FindUser )
+If return code belongs set [( 100 )] will be treated as strength check failed
+Target: [End_Users], user: [qa1000]'s status = 200, message = userid=qa1000 username=qa 1000
+Returned [200] [userid=qa1000 username=qa 1000], strength check will be successful    <<== The account was found in Pass through idpm.
+Target: Admin_Users --
+ Bypass both strength check and synchronization <<== It means this account will be NOT strength checked and synchronized against 'Admin_Users' target
+If the debug level is greater than 4 (default), verifycfg returns more detail on how the account falls
+into which categories.
+for more in f ormation.
+It is strongly recommended that you edit intcptsvc.cfg only under the direction  of a Bravura
+Security  support technician.
+Notific ation  Service (p sntfs v c)
+The Notific ation  Service ( psntfsvc ) updates the database with in f ormation  about notific ation  events
+and compliance rules, and runs plugins that:
+▪Check if a user is in compliance for a particular  event ▪
+▪Send reminders to non-compliant users, either by web or email▪
+▪Take action  if the reminder limit for a user is exceeded ▪
+▪Generate a list of non-compliant users for batch notific ation ▪
+The service is aut omatic ally  installed on the Bravura Security Fabric  server, but not started, during setup.
+You can modify the following parameters related to this service on the Service in f ormation  page:
+p sntfs v c  service options
+Option Description
+Timeout for c onnections  in seconds The amount of time  the Notific ation  Service (p sntfs v c)  will wait, once it
+has made a socket c onnection  and sent a request, before killing the
+c onnection.
+Command-line options  for psntfsvc are listed below:p sntfs v c  command-line options
+Argument Description
+-h Displays usage in f ormation.
+-v Displays version number only.
+-c on fig Displays service c on figur ation  in f ormation.
+-server Run the service in server mode.
+-start Starts the service.
+-stop Stops the server/service
+See also: 
+Usage in f ormation  for the psntfclient program
+The Notific ation  Client ( psntfclient ) is required only if users will receive notific ation  via their web
+browser. The client is installed on a network share and is responsible for c on t acting  the Notific ation
+Service ( psntfsvc ) to determine if users have any pending notific ations.  If they do, the
+psntfclient program opens a browser on the user’s w ork s t ation  for the user to fir s t log in and then
+to display the notific ation  message in Bravura Security Fabric . If any of those notific ations  are force-level,
+the psntfclient opens the browser in kiosk mode, pr e v enting  the user from accessing na vig ation  or
+other functionality  until  the user becomes compliant.
+Use the ntfclient.msi from the addon directory to install the Notific ation  Client ( psntfclient ).
+It is recommended that you install and run the client from a shared folder and include it in a login script.
+Requirement
+The psntfsvc service  (on page 2835) must be installed and started on the Bravura Security Fabric
+server.
+The psntfclient program is intended to be run from a public share. The webbrowser.dll , which
+is used to open a browser to the User notific ations  (PSN) module if notific ations  exist, must also be
+located in the same share.
+Bravura Security recommends that the Notific ation  Client communicates with the Bravura Security Fabric
+server using SSL (HTTPS).
+Ins t allation
+The Notific ation  Client can be installed by launching the MSI manually or aut omatic ally  using a group
+policy.
+Usage
+psntfclient -userid <user ID>[-url http[s]://<server>[:<port>]/
+<path>/cgi/psn.exe ] [-targetid <target ID> ] [-width <width> -
+height <height>] [-skin <skinID>] [-lang <lang-locale>]Option  / Argument Description
+-userid <userid> Use %USERNAME% to use the currently logged in user, or
+specify a user ID.
+-url <URL> The path to the User notific ations  (psn) module on the
+Bravura Security Fabric  server. If used, this value
+overrides the URL set during ins t allation.
+-t ar g etid  <target ID> Specify a target system if the user ID is not a Bravura
+Security Fabric  pr ofile  ID. The url can optionally  specify a
+port and security.
+-width <width> Specify the notific ation  window width.
+-height <height> Specify the notific ation  window height.
+-skin <skinID> Specify a skin ID. If used, this value overrides the one that
+is specified  for the user in the LASTSKIN tag in the
+userstat table.
+-lang <lang-locale> Specify a language code for the language-locale. If used,
+this value overrides the one that is specified  for the user
+in the LASTLANG tag in the userstat table.
+The Notific ation  Client has a minimum width and height of 913 x 338 pixels. If the specified  -width or -
+height is less than the minimum required dimensions, or if there are any force-type notific ations,  then the
+browser opens at 913 x 338 pixels.
+Examples
+1.To launch the notific ation  page for user JOHNS: 1.
+psntfclient.exe -userid JOHNS
+2.To launch the notific ation  page for user JOHNS with specified  width and height: 2.
+psntfclient.exe -userid JOHNS -width 913 -height 338
+3.To launch the notific ation  page with the secure kiosk account (SKA) skin for user JOHNS: 3.
+psntfclient.exe -userid JOHNS -ska 1
+4.To launch the notific ation  page for the user aduser1 de fined  on target system AD1, overriding the 4.
+default URL set during ins t allation,  and using SSL and port 8080:
+psntfclient.exe -userid aduser1 -target AD1 -url https://
+10.0.51.26:8080/idmsuite/cgi/psn.exe
+5.To launch the notific ation  page for the user JOHNS and specifying a skin named myskin and specifying 5.
+the fr-fr language and locale, overriding the values in the userstat table for LASTSKIN and LASTLANG:
+p sntfclien t.e x e  -userid JOHNS -skin myskin -lang fr-fr
+Usagepsntfclient -userid <user ID>[-url http[s]://<server>[:<port>]/
+<path>/cgi/psn.exe ] [-targetid <target ID> ] [-width <width> -
+height <height>] [-skin <skinID>] [-lang <lang-locale>]
+Option  / Argument Description
+-userid <userid> Use %USERNAME% to use the currently logged in user,
+or specify a user ID.
+-url <URL> The path to the User notific ations  (psn) module on the
+Bravura Security Fabric  server. If used, this value
+overrides the URL set during ins t allation.
+-t ar g etid  <target ID> Specify a target system if the user ID is not a Bravura
+Security Fabric  pr ofile  ID. The url can optionally  specify
+a port and security.
+-width <width> Specify the notific ation  window width.
+-height <height> Specify the notific ation  window height.
+-skin <skinID> Specify a skin ID. If used, this value overrides the one
+that is specified  for the user in the LASTSKIN tag in the
+userstat table.
+-lang <lang-locale> Specify a language code for the language-locale. If used,
+this value overrides the one that is specified  for the user
+in the LASTLANG tag in the userstat table.
+The Notific ation  Client has a minimum width and height of 913 x 338 pixels. If the specified  -width or -
+height is less than the minimum required dimensions, or if there are any force-type notific ations,  then
+the browser opens at 913 x 338 pixels.
+Examples
+1.To launch the notific ation  page for user JOHNS: 1.
+psntfclient.exe -userid JOHNS
+2.To launch the notific ation  page for user JOHNS with specified  width and height: 2.
+psntfclient.exe -userid JOHNS -width 913 -height 338
+3.To launch the notific ation  page with the secure kiosk account (SKA) skin for user JOHNS: 3.
+psntfclient.exe -userid JOHNS -ska 1
+4.To launch the notific ation  page for the user aduser1 de fined  on target system AD1, overriding the 4.
+default URL set during ins t allation,  and using SSL and port 8080:
+psntfclient.exe -userid aduser1 -target AD1 -url https://
+10.0.51.26:8080/idmsuite/cgi/psn.exe
+5.To launch the notific ation  page for the user JOHNS and specifying a skin named myskin and 5.
+specifying the fr-fr language and locale, overriding the values in the userstat table for LASTSKIN and
+LASTLANG:
+psntfclient.exe -userid JOHNS -skin myskin -lang fr-fr.
+Privileged Access Manager Service (idarch)
+The Privileged Access Manager Service is installed on each Bravura Privilege  replicated server and is
+responsible for:
+▪Controlling remote password resets for push-mode managed system policies.▪
+▪Monitoring the status of checked out passwords on both push and local service mode managed▪
+system policies.
+The service is aut omatic ally  installed on the Bravura Security Fabric  server, but not started, during setup.
+Note the service ID listed on the Privileged Access Manager Service c on figur ation  page. You use this to
+identif y  the service to use when c on figuring  push-mode resources groups.
+Configur ation
+You can modify the following parameters related to this service on the Service in f ormation  page:
+idarch service options
+Option Description
+Minutes to wait to re-check
+databaseThis is the polling period used by the service to check the database for
+c on figur ation  changes, and determines when failed password
+r andomiz ations  should be retried.
+This value is also used to bound the time  interval that the service waits
+before it connects to the database after  it is started or restarted. The wait
+time  is a random period of time  between 0 and this value.
+Avoid setting  a poll time  that would leave a long interval between the password expiry time,  as set by the
+RESOURCE PASSWORD CHANGE INTERVAL  (on page 1877), and the poll time.  This could lead to an
+expired password not being changed in a timely  fashion.
+Command-line options  for idarch are listed below:
+idarch service command-line options
+Argument Description
+-h Displays usage in f ormation.
+-v Displays version number only.
+-Poll <polltime> Sets the polling period, as described in Table idarch service options.
+-SvcID <serviceID> Unique ID used to map managed system policies to the service.
+-c on fig Displays service c on figur ation  in f ormation.
+-server Run the service in server mode.
+-start Starts the service.
+-stop Stops the server/serviceGroup set checkin/checkout behavior
+This section  outlines the behavior of the Privileged Access Manager Service when a group set check-out/
+check-in tr ansaction  between the server and local w ork s t ation  is interrupted.
+A group set check-out/check-in tr ansaction  is considered interrupted when the server has given
+ins tructions  to the w ork s t ation,  but does not receive a reply. An in t erruption  can be caused by a failed
+network c onnection,  for example:
+1.The w ork s t ation  polls the server for ins tructions. 1.
+2.The server sends group set check-out/check-in ins tructions  and locks the groups that are part of that 2.
+set within the database, which are unlocked when a reply from the w ork s t ation  is received.
+3.If no reply is received from the w ork s t ation,  the server will consider the set of ins tructions  as lost, and 3.
+the groups from the set will remain locked until  the idarch service unlocks them after  fiv e minutes.
+The server will also resend the ins tructions  at a later poll (see following steps for more in f ormation).
+4.As long as the w ork s t ation  received the set of ins tructions  fully, it will perform the check-out/check-in 4.
+actions  regardless of whether the server received the w ork s t ation’ s  reply and issued a reply back. The
+w ork s t ation  also saves a record of the ins tructions,  so it will not execute the same set of ins tructions
+twice if the server resends them.
+5.For group set check-outs the end user will see the group set in Checking out status. For group set5.
+check-in the end user will see the group set as Checked in.
+6.Within 10 minutes of the groups unlocking, the idarch service will determine if any local service mode6.
+ins tructions  have been sent. The interrupted group set check-out/check-in ins tructions  will be
+prepared for resending.
+7.During the w ork s t ation’ s  next poll the group set check-out/check-in ins tructions  will be re-sent. The 7.
+w ork s t ation  will recognize that the ins tructions  have been performed and resend its reply.
+8.Once the server receives the reply from the w ork s t ation,  it will be updated. For group set check-outs 8.
+the end user will see the group set as checked out with the Check in button  available to them. For
+group set check-in the end user should already be seeing the group set as checked in.
+W orkflo w  Manager Service (idwfm)
+The W orkflo w  Manager Service ( idwfm ) carries out automated w orkflo w  tasks, and is responsible for
+notif ying  the actors in a request (requesters, recipients, authorizers).
+For example, when a user makes a request using the View and update pr ofile  (IDR) module, the CGI
+program contacts the W orkflo w  Manager Service, which then processes the request and sends out
+emails to authorizers. The W orkflo w  Manager Service uses the T r ansaction  Monitor Service ( idtm ) to
+run connectors for approved requests.
+The W orkflo w  Manager Service is dependent on the Database Service  (on page 2844). If you restart the
+database service, you must restart the W orkflo w  Manager Service.
+Configur ation

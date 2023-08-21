@@ -1,0 +1,233 @@
+6.Click Submit . 6.
+The request will be auto-approved and the systems will be onboarded.
+7.Click Manage the system  > Privileged access  > Managed systems . 7.
+You should be able to see the new onboarded target systems.T r oubleshooting
+When a file is opened in Python it may have a bad/unexpected name for the fir s t column See
+Workaround for dealing with UTF-8 BOM encoding  (on page 324).Privilege P attern:  Personal privileged access
+This chapter shows you how to c on figur e  and use the personal privileged access feature.
+Terminology 
+The following terms are used in this chapter:
+Personal adminis tr ativ e  account An account with elevated privileges that is owned by a
+single user.
+Account trustee A user who can onboard, offboar d,  and update
+privileged accounts.
+Help desk trustee Any user that is a member of the help desk trustee user
+class, and so can submit a request to assign an owner at
+account onboard or update.
+Objectiv e
+Technical s t a ff  in many companies have their normal employee account as well as an administrator
+account that contains elevated privileges. These accounts are checked out at the start of almost everyday
+in order to connect to various systems to complete their tasks. It is tedious to request, check out, and
+disclose over and over again for something so critic al  to their day-to-day duties.
+Or g aniz ations  require administrators to streamline their w orkflo w  by aut omatic ally  checking out personal
+administrator accounts that they have ownership of at login when launching the privileged access app>.
+Solution
+The personal privileged access feature automates the request process, allowing specific  account access to
+be assigned to a single owner. The act of signing into Bravura Privilege  triggers an aut omatic  check-out of
+all the owner’s personal privileged access accounts.
+Initial  c onsider ations
+Determine which accounts should be personal administrator accounts and who should own them by
+considering the following:
+▪How often  is this account accessed? ▪
+▪Is the same person always accessing this account?▪
+If an account is accessed frequently, such as part of daily tasks, and is always accessed by the same
+person, it is a good candidate to make it a personal admin account and assign it single ownership.
+Example: Onboard an account and assign a single owner
+This example shows you how to c on figur e  Bravura Privilege  to onboard an account and assign an owner.  
+Requirements This example assumes that:
+▪Bravura Security Fabric  and Connector Pack  are installed. ▪
+▪An Activ e  Directory target has been c on figur ed  and is a source of pr ofiles. ▪
+▪Bravura Privilege P atternis  installed. ▪
+▪Scenario.pam_personal_admin_management is installed.▪
+▪Teams have been c on figur ed  with account trustees. ▪
+▪Systems have been discovered and onboarded.▪
+RefBuild.pam_team_management is installed when Bravura Privilege P attern  is installed.
+Systems onboarded before this component is installed will need to be manually added to the "Personal
+administrator access" MSP .
+Onboard an account and assign owner as an account trustee 
+1.Log in to Bravura Security Fabric  as an account trustee. 1.
+2.In the Requests section  of the main menu, click Manage Resources . 2.
+3.Click the Account: Onboard PDR. 3.
+4.Select a managed account.4.
+5.Click Next . 5.
+6.Select Personal administrator access policy. 6.
+7. Con figur e  other settings  as appropriate. 7.
+8.Click Next . 8.
+9.Select a privileged access owner.9.
+10. Click Next . 10.
+11. Con figur e  session monitoring options  as appropriate. 11.
+12. Click Submit . 12.
+Help desk trustees can also submit requests, but task will not be implemented until  an account trustee
+approves the request.
+Example: Transfer ownership from a team to a single owner
+This example shows you how to c on figur e  Bravura Privilege  to transfer an account from a team and
+assign an owner.  
+Requirements 
+This example assumes that:
+▪Bravura Security Fabric  and Connector Pack  are installed. ▪
+▪An Activ e  Directory target has been c on figur ed  and is a source of pr ofiles. ▪
+▪Bravura Privilege P atternis  installed. ▪
+▪Scenario.pam_personal_admin_management is installed.▪▪Teams have been c on figur ed  with account trustees. ▪
+▪Systems have been discovered and onboarded.▪
+▪There is at least one account managed by a team.▪
+Transfer owner of an account from a team to a single owner 
+1.Log in to Bravura Security Fabric  as an account trustee. 1.
+2.In the Requests section  of the main menu, click Manage Resources . 2.
+3.Click the Account: Update PDR. 3.
+4.Select a managed account.4.
+5.Click Next . 5.
+6.Select the Personal administrator access policy. 6.
+7. Con figur e  other settings  as appropriate. 7.
+8.Click Next . 8.
+9.Select a privileged access owner.9.
+10. Click Next . 10.
+11. Con figur e  session monitoring options  as appropriate. 11.
+12. Click Submit . 12.
+Example: Check out personal admin access
+This example shows you how to assess the personal admin account as the owner.  
+Requirements 
+This example assumes that:
+▪Bravura Security Fabric  and Connector Pack  are installed. ▪
+▪An Activ e  Directory target has been c on figur ed  and is a source of pr ofiles. ▪
+▪Bravura Privilege P attern  is installed. ▪
+▪Scenario.pam_personal_admin_management is installed.▪
+▪Teams have been c on figur ed  with account trustees. ▪
+▪Systems have been discovered and onboarded.▪
+▪At least one personal admin account exists.▪
+Add the Personal admin accounts filt er  to the Privileged access  app
+1.Log in to the front-end as superuser.1.
+2.Click  Manage the system > Policies > User classes . 2.
+3.Create a user class to be used to filt er  which users can see the Personal admin accounts  filt er . 3.
+4.Add the requesters' accounts to the user class you created. These requesters will see the Personal 4.
+admin accounts  filt er .
+5.Click  Manage the system  > Modules > Privileged access . 5.6.Add the new user class to the ACCESS PERSONALADMINACCOUNTS USERCLASS setting. 6.
+Check out personal admin account access 
+1.Log in to Bravura Security Fabric  as a requester. 1.
+2.In the Requests section  of the main menu, click Privileged access . 2.
+3.Click Personal admin accounts filt er . 3.
+4.4.
+5.Select the personal adminis tr ativ e  account to check out. 5.
+6.Click Request  Check-out . 6.Privilege P attern:  Aut omation
+Import rules versus Resource Management Service
+The aut omation  of privileged access management requests can be handled by the use of import rules,
+which is outlined in Infrastructure Auto Discovery  (on page 2080). The use of import rules requires a
+product administrator to c on figur e  managed system policies and discovery templates.
+Alt ernativ ely ,  aut omation  can be handled by c on figuring  post discovery scripts for psupdate  (on page
+2742), or the Resource Management Service (RMS). As of 12.2.0, RMS should only be used with the help
+of professional services. Contact your Bravura Security account manager to discuss professional services
+assistance with RMS.Privilege P attern:  Website disclosure c on figur ations
+Users need to access pot entially  hundreds and thousands of websites from any browser without having
+to provide administrator cr edentials.  When accessing these websites, session monitoring, via secure
+browser disclosure, can enhance the or g aniz ation’ s  ability to audit access.
+This chapter shows you how to c on figur e  website disclosure c on figur ations.  Once the website disclosure
+c on figur ations  are created, managed accounts and vault accounts can be c on figur ed  to use one or both
+of the following access disclosure methods:
+▪Web app privileged sign-on  This disclosure plugin launches a new web page tab within the same ▪
+browser and provides aut omatic  login to the website without need to enter administrator cr edentials
+for the managed account. This is currently supported on Chrome and Firefox browsers only. This
+disclosure method does not support session monitoring.
+▪Secure browser  The secure browser method allows users to aut omatic ally  login to a website as a ▪
+managed account without the need to enter administrator cr edentials,  and includes recording
+screenshots using session monitor.
+Only the Screenshots c ollection  module is available in session monitor for secure browser.
+Terminology
+Web applic ation  administrator User who has access to web applic ation  PDRs (pr e-de fined
+requests).  This person needs to be a member of the
+PAM_TEAM_ADMINS user class, and needs to be
+c on figur ed  by a product administrator.
+Secure browser disclosure plugin A disclosure plugin, which provides a method that brokers
+access to websites using a dedicated browser window with
+added session monitoring.
+Web app privileged sign-on disclosure plugin A disclosure plugin, which provides a method that brokers
+access to websites launched through a Chrome browser
+tab.
+Bravura Security browser extension An extension that allows the web app privileged sign-on
+disclosure to broker access to the c on figur ed  website.
+Secure browser client Bravura Security Secure Browser trusted app that brokers
+access to a c on figur ed  website with added session
+recording.
+Website disclosure c on figur ation Disclosure c on figur ation  created in Bravura Security Fabric
+using JSON c on figur ation  files to provide single sign-on
+access to a website.
+Requirements
+▪Install components and scenarios  (on page 2309) ▪
+▪Web app privileged sign-on disclosure method:▪
+▪Google Chrome or Micr osoft  Edge (Chromium) or Mozilla Firefox browser ▪Chrome and Edge browsers only: Bravura Security browser extension 1.1.4 or newer needs to be
+installed. This extension can be obtained from the Chrome Web Store. Alt ernativ ely ,  this will be
+prompted upon initial  launch of the web app disclosure.
+Firefox browsers only: Bravura Security browser add-on needs to be installed. This will be
+prompted upon initial  launch of the web app disclosure.
+▪Secure browser disclosure method:▪
+▪Install the Secure browser client  (on page 2317) ▪
+Deployment
+To allow the secure browser or web app privileged sign-on method to  be used, install the following
+components
+1.Log in to Front-end (PSF) as a superuser.1.
+2.From the main menu click Manage components. 2.
+3.Search and select the checkbox for required components.3.
+4.Click Install component(s) . 4.
+The panel on the right will indicate when the ins t allation  is complete.
+in addition  to the Bravura Privilege P attern  c on figur ation:
+▪Scenario.pam_webapp_management▪
+▪Scenario.pam_webapp_social (optional) ▪
+This optional  component includes website disclosure c on figur ations  for GMail, Facebook, and T witter .
+▪Scenario.pam_webapp_cloud_service (optional) ▪
+This optional  component includes website disclosure c on figur ations  for Micr osoft  Azure and AWS
+IAM/root accounts.
+▪ Scenario.pam_w ebapp_cloud_c omputing  (optional) ▪
+This optional  component includes a website disclosure c on figur ation  for ServiceNow accounts.
+You can manually create a c on figur ation  file (JSON)
+The c on figur ation  file for the web app privileged sign-on disclosure requires a JSON file with the following
+structure:
+{
+    "info": {
+        "url": "http s://w ebpag e/"
+        },
+    "username": {
+        "order": 1,
+        "type": "CSS",
+        "value": "input[name='session[username_or_email]']",
+        "input_value": "%username%",
+        "keypress_event": true,
+        "click": false,        "settle_time_be f or e":  5,
+        "settle_time_after":  0,
+      "stop_on_fail": false
+    },
+    "password": {
+        "order": 2,
+        "type": "CSS",
+        "value": "input[name='session[password]']",
+        "input_value": "%password%" ,
+        "keypress_event": true,
+        "click": false,
+        "settle_time_be f or e":  0,
+        "settle_time_after":  0,
+        "stop_on_fail": false
+    },
+    "submit": {
+        "order": 3,
+        "type": "CSS",
+        "value": "[r ole='button'][type='sub mit']",
+        "input_value": "" ,
+        "keypress_event": false,
+        "click": true,
+        "settle_time_be f or e":  0,
+        "settle_time_after":  0,
+        "stop_on_fail": false
+    }
+Where:
+▪"Info"["url"]  is the url the web app will open the webpage on. ▪
+▪"username"  , "password ", and "submit"  action  keys with a structure which determines how the ▪
+browser will interact with the webpage.
+You can have as many action  keys as needed to interact with the webpage tab
+▪"order"  order number the browser extension will act on. ▪
+▪"type"  the search method the browser extension will use to find an element that matches "value" on ▪
+the webpage. The supported types are:
+▪"XPATH": find an element using XPATH that matches the "value" ▪
+▪"CSS": find an element using CSS that matches the "value" ▪
+▪"ID": find an element with "id" that matches the "value" ▪
+▪"NAME": find the fir s t element with "name" that matches the "value" ▪
+▪"CLASS": find the fir s t element with the class that matches the "value" ▪
+▪"value"  browser extension will use to look the webpage by "type". ▪
+▪"input_value"  the value we will look for in the search to identif y  the input field. ▪
+▪"keypress_event"  a flag that is required, but not yet used. ▪

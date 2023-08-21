@@ -1,0 +1,334 @@
+    }
+}5 Aut omatic  Assignment
+In addition  to role enforcement  (on page 2409), Bravura Security Fabric  supports role-based access
+control with aut omatic  assignment. Aut omatic  assignment is controlled by user class. Users who are
+members of a c on figur ed  user class can be assigned a resource (role or managed group) aut omatic ally  if
+they do not already have it. The resource can be removed from non-members. This aut omation  is
+triggered during a scheduled job, and in real time  when a user’s user class membership changes.
+Aut omatic  assignment works with the following:
+Components Purpose
+View and update pr ofile  (IDR) module Allows users to request changes to pr ofile  attribut es  or
+group membership.
+W orkflo w  Manager Service Handles requests to add or remove resources. The
+requests can be auto-approved or reviewed by
+authorizers.
+autores Determines de ficits  and surpluses and issues requests
+to assign role and group membership.
+You cannot enable role enforcement and aut omatic  assignment at the same time  for managed groups.
+Typical aut omatic  assignments may proceed in the following way:  
+User requests a change in department 
+1.The user submits a request to update pr ofile  in f ormation  that is linked to an account attribut e  on a 1.
+target system.
+2.When the request for the attribut e  update is approved, Bravura Security Fabric aut omatic ally  submits 2.
+additional  requests:
+▪Remove the user from the original department group (auto-approved change).▪
+▪Add the user to the new department group (requires approval).▪
+User added to the Support group on an Activ e  Directory domain 
+1.The group membership change is detected during auto discovery . 1.
+2.Bravura Security Fabric aut omatic ally  submits a request: 2.
+▪Add the user to the help desk role (requires approval).▪
+How aut omatic  assignment works
+Bravura Security Fabric  uses user classes and the autores  program to communicate with the W orkflo w
+Manager Service to aut omatic ally  assign roles and groups:
+▪ Aut omatic  assignment options  are set in the resource’s Assignment tab. ▪
+▪During auto discovery , the autores program compares a list of users who are members of a user ▪
+class with a list of users who are assigned the resource.▪The program submits a request to add the resource if a user class member is found to be in de ficit. ▪
+The program can be c on figur ed  to submit a request to remove the resource from a user if they are
+found to be in surplus.
+▪When a user submits a request that a ff ects  user class membership (an attribut e  or group membership ▪
+is changed), pot ential  aut omatic  assignments are detected and submitted  once the initial  request has
+been approved and processed.
+Only direct group memberships are counted when c alculating  deficits  and surpluses. The autores
+program will not submit requests to remove indirect group memberships.
+Setting  up aut omatic  assignment
+To set up aut omatic  assignment:
+1.Determine what resources (managed groups or roles) you want to aut omatic ally  provision. 1.
+Do this by c on figuring  group auto assignment  (on page 606) or  role auto assignment  (on page 641)
+options.
+2.Determine who should have the resources.2.
+Con figur e  user classes  (on page 733) to determine if a user is allowed to be assigned the resource.
+3.Set the AUTO ASSIGNMENT PROPAGATE REQUESTER variable in W orkflo w  > Options  > Aut omation 3.
+to de fine  the pr ofile  ID to use for automated requests. Con figur e  other aut omation  options  if
+required.
+4.Set up authoriz ation  for aut omatic  assignment by assigning authorizers at the resource level, or 4.
+determine authoriz ation  dynamically with a plugin program or user class.
+Automated w orkflo w  request options
+Bravura Security Fabric  can aut omatic ally  assign roles and groups to users on the basis of user class. The
+autores program, run in a scheduled job as part of PSUPDATE, compares members of a class with a
+list of users who have a resource. The program can be c on figur ed  to submit requests to assign or remove
+resources. When a user initia t es  a request, pot ential  aut omatic  assignments will be detected and
+submitted  once the initial  request has been approved and processed.
+See usage in f ormation  for autores
+Use the autores program to determine the aut omatic  role and group de ficits  and surpluses and issue
+requests. When aut omatic  assignment is c on figur ed,  the program is run aut omatic ally  at the end of the
+auto discovery process.
+Usage
+autores.exe -all [-submit | [-limitsubmit <max submissions> | -
+outfile <outfile> ] | -listfile <listfile> ] [-threshold <N>]
+autores.exe -group <targetid> <groupid> [-submit | [-
+limitsubmit <max submissions> | -outfile <outfile> ] | -
+listfile <listfile> ] [-threshold <N>]autores.exe -role <role id> [-deleteonly | -submit | [-
+limitsubmit <max submissions> | -outfile <outfile> ] | -
+listfile <listfile> ] [-threshold <N>]
+autores.exe -inputfile <inputfile> [-submit | [-
+limitsubmit <max submissions> | -outfile <outfile> ] | -
+listfile <listfile> ] [-threshold <N>]
+Option Description
+-all Act on all resources.
+-group <t ar g etid>  <groupid> Act on the specified  target system group.
+-role <role id> Act on the specified  role.
+-deleteonly Aut omatic  unassignment to a specified  role.
+-inputfile  <inputfile> File containing changes to submit.
+-submit Submit the requests for changes.
+-limitsubmit <max submissions> Limit the number of requests generated. Will override
+AUTO ASSIGNMENT MAXSUBMIT DEFAULT setting.
+-listfile  <listfile> File to output violations  to (default is autores.kvg).
+-outfile  <outfile> Output file for printing  all violations  that did not get
+submitted  along with the error message returned.
+(default is aut or es-unsubmitted.kv g)
+-threshold <N> Do not submit any request if number of requests to be
+submitted  exceeds <N>. If N= 0, no threshold. Using this
+setting  overrides the AUTO ASSIGNMENT THRESHOLD
+system variable.
+Examples
+1.To evaluate all the resources with aut omatic  assignment c on figur ed  and submit requests 1.
+autores.exe -all -submit
+2.To evaluate all the resources with aut omatic  assignment c on figur ed,  output to a dryrun.kvg file 2.
+without submitting  requests
+autores.exe -all -listfile dryrun.kvg
+3.To submit the dryrun.kvg file 3.
+autores.exe -submit -inputfile dryrun.kvg
+4.To evaluate the role with aut omatic  assignment c on figur ed  and submit requests 4.
+autores.exe -role GENERAL -submit
+5.To evaluate the role with aut omatic  unassignment c on figur ed  and submit requests 5.
+autores.exe -role GENERAL -deleteonly -submit
+6.To evaluated a group with aut omatic  assignment c on figur ed  and submit requests 6.
+autores.exe -group AD FINANCE -submit7.To evaluate multiple  groups and roles with aut omatic  assignment c on figur ed  and submit requests 7.
+autores.exe -group AD FINANCE -group AD HR -role GENERAL -
+role HELPDESK -submit
+.
+To c on figur e  automated w orkflo w  settings:
+1.Click W orkflo w  > Options  > Aut omation . 1.
+2.Enable options  and type values for the fields  listed in Table Automated w orkflo w  options  (on page 2.
+2445).
+3.If required, c on figur e  event options  listed in Table Automated w orkflo w  events that launch interface 3.
+programs  (on page 1534), Automated w orkflo w  events that launch interface programs  (on page 2446).
+4.Click Update . 4.
+Automated w orkflo w  options
+Option Description
+ATTR AUTO PROPAGATE EXECUTE Enable this to aut omatic ally  execute the pr opag ation  of changes to pr ofile/
+r eques t  attribut es  to account attribut es  on subordinate systems.
+ATTR AUTO PROPAGATE
+REQUESTERThe pr ofile  ID of the user that will submit change requests to the Bravura
+Security Fabric  w orkflo w  system to synchronize account attribut es  to new
+pr ofile  attribut e  values.
+ATTR AUTO PROPAGATE WRITE Enable this to aut omatic ally  write the pr opag ation  of changes to pr ofile/
+r eques t  attribut es  to a work file. You can set this one alone to make changes
+manually, or combined with ATTR AUTO PROPAGATE EXECUTE for logging
+purposes.
+ATTR AUTO PROPAGATE
+THRESHOLDControl the number of requests to be submitted  due to changes to pr ofile
+attribut es,  unless overridden on the command line. If the threshold is
+exceeded, no requests will be submitted  aut omatic ally  by idtrack .
+Bravura Security Fabric  sends an email to the product administrator (de fined
+by RECIPIENT EMAIL ) who can decide whether to run idtrack  manually
+to submit those requests.
+AUTO ASSIGNMENT MAX SUBMIT
+DEFAULTMaximum number of submissions in a single run of the aut omatic
+assignment utility ,  unless overridden on the command line.
+You can override this for individual groups or roles by selecting  Ignore
+submission limit during auto discovery.
+AUTO ASSIGNMENT GROUP DELETE
+ORPHAN ACCOUNTEnable this to aut omatic ally  remove orphaned accounts from a group. An
+orphaned account is currently not associated to an e xisting  pr ofile.
+AUTO ASSIGNMENT GROUPDELETE
+ORPHAN ACCOUNT RECIPIENTA valid pr ofile  ID of the user that will be the recipient of the request to
+remove the orphaned account.
+AUTO ASSIGNMENT PROPAGATE
+REQUESTERThe pr ofile  ID of the user that will submit change requests to the Bravura
+Security Fabric  w orkflo w  system to assign resources to users based on user
+classes.
+AUTO ASSIGNMENT REQUEST SPLIT The name of the plugin script to split an aut omatic  assignment request into
+separate requests.Option Description
+AUTO ASSIGNMENT THRESHOLD A threshold number of requests to be submitted  in a single run of the
+aut omatic  assignment utility  (autores ), unless overridden on the
+command line. If the threshold is exceeded, no requests will be submitted
+by autores .
+AUTO ASSIGNMENT VARIANCE
+FILTERThe name of the plugin script to filt er  aut omatic  assignment variance
+de t ections  before aut omatic  submission.
+OOB REQ GROUP JOIN REQUESTER The requester’s pr ofile  ID when aut omatic ally  submitting  requests to add a
+user or a group to a group, if the user or group’s membership was changed
+outside of Bravura Security Fabric ’s control.
+OOB REQ GROUPLEAVE REQUESTER The requester’s pr ofile  ID when aut omatic ally  submitting  requests to
+remove a user or a group from a group, if the user or group’s membership
+was changed outside of Bravura Security Fabric ’s control.
+Automated w orkflo w  events that launch interface programs
+The following w orkflo w  options  can be accessed from Manage the system > W orkflo w  > Options  > Aut omation  or
+Manage the system  > Maintenance > System variables :
+Option Description
+ACCOUNT GROUP CHANGES The auto discovery process discovers that groups have been added to or
+removed from a target system since the previous auto discovery run.
+AUTO ASSIGNMENT INVALID CACHE The aut omatic  assignment c alculation  was skipped due to an invalid cache
+of the dynamic members.
+AUTO ASSIGNMENT INVALID
+CONFIGThe aut omatic  assignment c alculation  was skipped due to an invalid
+c on figur ation  of the dynamic members.
+OOB REQ GROUPJOIN FAILURE An attemp t  to submit an automated w orkflo w  request to add a user or a
+group to a group, where the request is to undo or redo an out-of-band
+change, failed.
+OOB REQ GROUPJOIN SUCCESS An automated w orkflo w  request to add a user or a group to a group, where
+the request is to undo or redo an out-of-band change, failed.
+OOB REQ GROUPLEAVE FAILURE An attemp t  to submit an automated w orkflo w  request to remove a user or
+a group from a group, where the request is to undo or redo an out-of-band
+change, failed.
+OOB REQ GROUPLEAVE SUCCESS An automated w orkflo w  request to remove a user or a group from a group,
+where the request is to undo or redo an out-of-band change, failed.
+Aut omatic  assignment request splitting
+You can use a plugin to break up aut omatic  assignment requests into separate requests; for example to
+make alloc ations  take place immediately, and de-alloc ations  take place later.
+To use an aut omatic  assignment request splitting  plugin:
+1.Click Manage the system > W orkflo w  > Options  > Aut omation . 1.2.Type the name of the plugin program or PSLang script in the AUTO ASSIGNMENT REQUEST SPLIT 2.
+field.
+3.Click Update . 3.
+There are no shipped plugins for the aut omatic  assignment request splitting  plugin point. See more
+in f ormation  on writing  a customized plugin
+Requirements
+The plugin must be placed in the \<instance>\plugin\ directory and runs on the Bravura Security Fabric
+server. See W riting  plugins  for general requirements.
+Ex ecution  points
+The aut omatic  assignment request splitting  plugin is run when end users view requests in the View and
+update pr ofile  (idr) module and Requests app, and when the autores program executes.
+Input
+The aut omatic  assignment request splitting  plugin receives in f ormation  about oper ations  to be
+performed on resources, for example:
+  "" "" = {
+    "request" "" = {
+      // All actions generated to resolve variances from this run
+      "resource" "" = {
+      ...
+      }
+      "resource" "" = {
+      ...
+      }
+      ...
+    }
+    // Existing generated auto assignment requests
+    "request" "" = {
+      "autoressig" = "..."
+      "requestID" = "..."
+      // Existing resources in this request
+      "resource" "" = {
+      ...
+      }
+      "resource" "" = {
+      ...
+      }
+    }    ...
+    "request" "" = {
+      ...
+    }
+  }
+Output
+The aut omatic  assignment request splitting  plugin returns changes to the original request:
+  "" "" = {
+   // Changes are made for existing requests
+    "request" "" = {
+      "autoressig" = "..."
+      "requestID" = "..."
+      // Resources should be in this request
+      "resource" "" = {
+      ...
+      }
+      "resource" "" = {
+      ...
+      }
+    }
+    ...
+    // New requests
+    "request" "" = {
+      "resource" "" = {
+      ...
+      }
+      "resource" "" = {
+      ...
+      }
+    }
+    "changed" = "true"/"false"
+    // If the requests that are not returned should be retained or removed
+    "retainResources" = "true"/"false"
+    "retval" = "0"
+    "errmsg" = ""
+  }
+.Aut omatic  assignment filt ering
+You can use a plugin to filt er  aut omatic  resource assignment requests on a per-user basis.
+To use an aut omatic  assignment filt er  plugin:
+1.Click Manage the system > W orkflo w  > Options  > Aut omation . 1.
+2.Type the name of the plugin program or PSLang script in the AUTO ASSIGNMENT VARIANCE FILTER 2.
+field.
+3.Click Update . 3.
+There are no shipped plugins for the aut omatic  assignment filt er  plugin point. See more in f ormation  on
+writing  a customized plugin.
+Ex ecution  points
+The aut omatic  assignment filt er  plugin is run when the user attemp ts  to view aut omatic ally  assigned
+resources. The plugin is also run when the autores program executes.
+Filter plugins operate diff er en tly  from most plugins, which are synchronous. All filt er  plugins support
+asynchronous calling. There are two forms of asynchronous calling:
+▪Standard input/output mode that processes standard filt er  plugin input/output. ▪
+In standard input/output (stdio) mode, filt er  plugins work in the following way:
+1.An event triggers a CGI program to call the plugin program or script and sends it standard user data 1.
+(on page 1514).
+2.The calling program c ontinues  to stream input from stdin, one item at a time  until  there are no 2.
+more items.
+3.For each item, the plugin returns the filt er  result to stdout. 3.
+4.The calling program receives the final  standard output and c ontinues. 4.
+Input
+Input is similar for all resource filt er  plugins. The plugin fir s t receives standard data in the format:
+"" "" = {
+  "sessionid" = "<session ID>" # The session ID of the request.
+  "module" = "<idr|ids|idp|idwfm>"
+  "accountID" = "<account ID>" # The account ID of the recipient.
+  "template = "<template ID>" # The selected template ID.
+  "targetid" = "<target ID>" # The target ID for the recipient.
+  "navigation" "" = { ... } # User navigation data
+                            # See Navigation data  (on page 1521).
+  "recipient" "<user|empty>" = {
+     # The "recipient" group contains standard information about the
+     # subject of the request.     # See Request data  (on page 1506) for details.
+   }
+  "viewer" "user" = {
+     # The "viewer" group contains standard information about the
+     # person using the CGI.
+     # See User data  (on page 1514) for details.
+   }
+  "request" "" = {
+     # The "request" group contains standard information about the
+     # the request.
+     # See Request data  (on page 1506) for details.
+   }
+ }
+Some of the values above may be empty, due to the stage and type of the request.
+The plugin then receives a series of KVGroups; one for each item. The aut omatic  assignment filt er
+plugin receives, for example:
+"User" "" = {
+  "userid" = "AWaygood"
+  "Variance" "" = {
+    "type" = "group"
+    "id" = "1d05cb04-b2b7-4f09-9af9-e1b6733a98dc"
+    "hostid" = "AD"
+    "longid" = ""
+    "surplus" = "false"
+    "throttle" = "true"
+  }
+  "Variance" "" = {
+    "type" = "group"
+    "id" = "f1192163-80cc-47e3-9fc7-775af4173002"
+    "hostid" = "AD"
+    "longid" = ""
+    "surplus" = "true"
+    "throttle" = "true"
+  }
+}
+Output
+For each item, one output KVGroup is expected on stdout, with an optional  "filt er"  = "true" pair to
+indicate that the item should not be displayed:

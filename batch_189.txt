@@ -1,0 +1,239 @@
+Option Description
+RES PASSWORD
+SYNCHRONIZATION FAILUREA password fails to be
+synchronized based on the
+s ynchr oniz ation  scope of the
+managed system policy. If the
+s ynchr oniz ation  scope is set to
+“Synchronize all accounts in
+policy”, then this triggers when at
+least one account in the policy
+fails to synchronize. If the
+s ynchr oniz ation  scope is set to
+“Synchronize accounts with same
+ID”, then it triggers once for each
+unique account ID when at least
+one of the managed systems with
+that account ID fails to
+randomize.
+This event also triggers action  for
+all subsequent retries to update
+the password until  all passwords
+in a group are synchronized
+again. Data provided here include
+the ResGroup, acc ountid  (if
+s ynchr oniz ation  scope is set to
+“Synchronize accounts with same
+ID"), password used, and when
+the s ynchr oniz ation  was
+attemp t ed.
+To learn which accounts failed to
+be reset, use the RES CONFIRM
+PASSWORD FAILURE event action.Option Description
+RES PASSWORD
+SYNCHRONIZATION SUCCESSA password is successfully
+synchronized on all managed
+systems in a managed systems
+policy.
+Data provided here include the
+ResGroup, acc ountid  (if
+s ynchr oniz ation  scope is set to
+“Synchronize accounts with same
+ID"), password used, and when
+the s ynchr oniz ation  was
+attemp t ed.
+RES RESET PASSWORD FAILURE A product administrator fails to
+override a managed system
+password.
+RES RESET PASSWORD SUCCESS A product administrator
+overrides a managed system
+password.
+RES WRITE PASSWORD FAILURE A managed system user password
+fails to be c ommitted  to the
+database
+RES WRITE PASSWORD SUCCESS A managed system user password
+is c ommitted  to the database.
+SERVER INFO FAILURE A T r ansaction  Monitor Service
+(idtm) server in f ormation
+oper ation  fails.
+This trap is used for the Bravura
+Privilege P attern  (on page 2129).
+SERVER INFO SUCCESS An T r ansaction  Monitor Service
+(idtm) server in f ormation
+oper ation  succeeds.
+This trap is used for the Bravura
+Privilege P attern  (on page 2129).Option Description
+UPDATE RESOURCE FAILURE An T r ansaction  Monitor Service
+(idtm) server update resource
+oper ation  fails.
+This trap is used for the Bravura
+Privilege P attern  (on page 2129).
+UPDATE RESOURCE SUCCESS An T r ansaction  Monitor Service
+(idtm) server update resource
+oper ation  succeeds.
+This trap is used for the Bravura
+Privilege P attern  (on page 2129).
+See Event c on figur ation  (exit traps)  (on page 1523) for more in f ormation  about c on figuring  event actions.Password c on flict  de t ection  and r esolution
+Sometimes  a managed account may inadvertently store more than one candidate password. This could
+be due to the agent returning an unexpected result after  a password reset; two r eplic ation  nodes
+randomizing the same managed account's password simultaneously; or when the Privileged Access
+Manager Service ( idarch ) halts during a password reset. As a result, it is uncertain whether the
+password was successfully randomized on the managed system, so it is considered a working password in
+the interim.
+Bravura Security always recommends deploying Bravura Privilege  servers in a replicated environment for
+redundancy. Given the multi-mas t er  design of Bravura Privilege  r eplic ation,  it’s becoming increasingly
+common to deploy these redundant nodes behind a load balancer as well. When end user c onnections
+are distributed across multiple  Bravura Privilege  nodes, there is a risk that an end user’s r andomiz ation  of
+an account on one node will coincide with a scheduled r andomiz ation  of that same account on another
+node. Bravura Privilege  includes technology for aut omatic ally  de t ecting  coincident r andomiz ations  and
+resolving the c on flicts  that arise from them.
+This article  describes the methods used for de t ecting  and resolving c on flicts  and give examples of how to
+troubleshoot issues. In all examples used, unless otherwise specified,  there are assumed to be only two
+nodes using classic (non-shared schema) r eplic ation.
+Randomiz ation  and r eplic ation
+Bravura Privilege  r eplic ation  is implemented at the stored procedure level. When a stored procedure is
+run on any Bravura Privilege  node, the name of the procedure and all of its arguments are serialized into
+a r eplic ation  message which is placed in an outgoing queue file. An outgoing queue file is maintained for
+each replica and the database service on each node is responsible for periodically sending messages in its
+outgoing queue files to the database services running on its replicas. Simultaneously, each database
+service receives r eplic ation  messages from its replicas and places them in its incoming queue file. The
+database service processes each message in its incoming queue file one by one by unpacking the name
+and arguments of the stored procedure and e x ecuting  them against its backend database. In this manner,
+every node executes the same set of stored procedures, and should maintain s ynchr oniz ation.  It’s
+important to note that, because the incoming queue is processed one message at a time,  it takes an
+unpredictable amount of time  for two nodes to be synchronized with respect to any particular  message.
+If the queue is empty, the message will be processed nearly instantaneously. If there’s a signific an t  queue
+backlog because of long-running stored procedures, the message must wait and the nodes will remain
+desynchronized until  it is processed.
+Randomiz ation  is implemented on top of r eplic ation.  A provisional password is generated within the
+Privileged Access Manager Service ( idarch) , encrypted, and inserted into the database using a stored
+procedure (thus cr eating  r eplic ation  messages for replicas). Once stored in the database, a connector is
+launched to set the password on the target system. The status of the provisional password in the
+database is then updated via a second stored procedure run depending on the return code from the
+connector. The mechanics of this process are discussed more in Schema - tables used for r andomiz ation
+(on page 1890).Con flict  de t ection
+Randomiz ations  with uncertain outcomes
+R eplic ation  works extremely well in most cases without any additional  complexity. When it comes to
+password r andomiz ation,  however, merely maintaining s ynchr oniz ation  is not good enough. Not only
+must all nodes record the same password for an account but it must be the correct password for the
+account on its target system as well. The delayed nature of r eplic ation  means that if two nodes perform a
+r andomiz ation  simultaneously, the value recorded for the password on each node is unpredictable
+because incoming r eplic ation  messages from a replica will overwrite the current stored value. Depending
+on the account, if the wrong password is set in a node’s database, the impact can range from completely
+inc onsequential  to a catastrophic outage. Bravura Privilege  is now capable of de t ecting  cases where the
+passwords stored in its database may be incorrect or out of s ynchr oniz ation  with its replicas and has a
+c on flict  r esolution  module to correct them.
+Consider a replicated environment with only two nodes: A and B. When A randomizes an account’s
+password, it immediately writes to its database the password it intends to set and replicates that same
+value to B. B follows exactly the same process when it performs a r andomiz ation.  If B begins a
+r andomiz ation  near the same time  as A’s r andomiz ation,  the password that is stored in the database
+depends on how its c onstituen t  oper ations  interact with A’s r andomiz ation.  In the following three
+scenarios, involving two nodes randomizing the same account, diff er en t  r eplic ation  timing  leads to
+diff er en t,  sometimes  incorrect, results.
+Case 1: Serialized r andomiz ation
+1.A writes provisional password #1 into its database1.
+2.A launches its connector2.
+3.A’s connector completes successfully3.
+4.A records the c ompletion  of r andomiz ation  #1 4.
+5.B receives provisional password #1 from A5.
+6.B receives the c ompletion  of r andomiz ation  #1 from A 6.
+7.B writes provisional password #2 into its database7.
+8.B launches its connector8.
+9.B’s connector completes successfully9.
+10. B records the c ompletion  of r andomiz ation  #2 10.
+11. A receives provisional password #2 from B 11.
+12. A receives the c ompletion  of r andomiz ation  #2 from B 12.
+First A records password #1, then B records password #1, then B records password #2, then A records
+password #2. Ignoring any r eplic ation  delay, both nodes correctly agree (that is, they have stored the
+same password in their databases) at all times  as to the current password. Ideally, all r andomiz ations
+follow this flo w:  each node is allowed to complete and fully replicate each r andomiz ation  before any
+other node begins a new one.Case 2: Perfectly parallel r andomiz ation
+Suppose now that node B initia t es  its r andomiz ation  earlier:
+1.A writes provisional password #1 into its database1.
+2.B writes provisional password #2 into its database2.
+3.A launches its connector3.
+4.B launches its connector4.
+5.A’s connector completes successfully5.
+6.B’s connector completes successfully6.
+7.A records the c ompletion  of r andomiz ation  #1 7.
+8.B records the c ompletion  of r andomiz ation  #2 8.
+9.A receives provisional password #2 from B9.
+10. A receives the c ompletion  of r andomiz ation  #2 from B 10.
+11. B receives provisional password #1 from A 11.
+12. B receives the c ompletion  of r andomiz ation  #1 from A 12.
+In this case, password #2 is the last password that was stored at A while password #1 is the last password
+that was stored at B. The nodes disagree and the instance is desynchronized. Because these are two
+completely independent nodes, each corresponding pair of steps may occur at exactly the same time  on
+each node. By the time  A learns that B is in the process of randomizing, its r andomiz ation  is already
+complete, and vice versa.
+Case 3: Interleaved parallel r andomiz ation
+1.A writes provisional password #1 into its database1.
+2.B writes provisional password #2 into its database2.
+3.A launches its connector3.
+4.B launches its connector4.
+5.A’s connector completes successfully5.
+6.B’s connector completes successfully6.
+7.B records the c ompletion  of r andomiz ation  #2 7.
+8.A receives provisional password #2 from B8.
+9.A receives the c ompletion  of r andomiz ation  #2 from B 9.
+10. A records the c ompletion  of r andomiz ation  #1 10.
+11. B receives provisional password #1 from A 11.
+12. B receives the c ompletion  of r andomiz ation  #1 from A 12.
+In this variant, A and B are at fir s t in disagreement about the provisional password. Then, because A is a
+little  slower than B, both nodes fir s t store B’s password #2 and are in agreement, and then A’s password
+#1. But A’s connector completed before B’s connector. Although both nodes agree on password #1, the
+current password on the target system is password #2.Case 4: Incomplete r andomiz ation
+This is another case that is handled by Bravura Security Fabric 's password c on flict  de t ection  technology,
+though it is unrelated to r eplic ation.  If a node launches a connector to perform a r andomiz ation  and the
+connector stops responding or times  out, there is no way to know whether the connector was actually
+able to set the password on the target. It may be that the connector stopped responding immediately
+after  startup and wasn't even able to connect to the target, or it may be that the target accepted the
+password r andomiz ation  and network latency caused its acknowledgment to the connector to be
+dropped, leading to a timeout.
+Ancestry trees
+An ancestry tree is used to detect and correct simultaneous r andomiz ations.  In an ancestry tree, each
+r andomiz ation  is linked to the last successful r andomiz ation  that came before it (this r andomiz ation  is
+called its parent), according to the node that issued it. This linkage creates a tree of r andomiz ations.  The
+root of the tree is the earliest r andomiz ation,  and the tip is the latest r andomiz ation.
+In the ideal case of a single node with no c on flicts,  each r andomiz ation  has at most one child and at most
+one parent, and the tree is entir ely  v ertic al,  as in Figure 1. With multiple  nodes, each node maintains its
+own copy of the r andomiz ation  tree, as in Figure 2. When a node receives a r eplic ation  message
+informing it of a r andomiz ation,  it incorporates that r andomiz ation  into its tree, as in Figure 3. A
+r eplic ation  message that creates a new r andomiz ation  includes in f ormation  about its parent and the
+node that initia t ed  the r andomiz ation.
+Figure 1: A simple r andomiz ation  tree with no c on flicts.  Randomiz ation  1 is the root and
+Randomiz ation  3 is the tip
+Figure 2: Node B performs a r andomiz ation  and Node A has not yet processed its r eplic ation  message.
+The r eplic ation  message for Randomiz ation  2 records that it was performed by Node B (in green), and
+that its parent is Randomiz ation  1
+Figure 3: Node A incorporates Node B’s r andomiz ation  into its tree
+Simultaneous r andomiz ations  are de fined  as two r andomiz ations  with the same parent. Such
+r andomiz ations  trigger a c on flict  called a tree c on flict.  In Figure 4, both nodes have performed diff er en t
+r andomiz ations  with the same parent. When their r eplic ation  messages to each other are processed,
+they create a complex tree, shown in Figure 5. Each node checks its r andomiz ation  tree with each
+addition  and searches for such c on flicts.
+Figure 4: Nodes A (in red) and B (in green) randomize the same account simultaneously and replicate to
+each other
+Figure 5: Nodes A (in red) and B (in green) incorporate their r eplic ation  messages into their r espectiv e
+trees and detect a c on flictSchema - tables used for r andomiz ation
+There are four primary tables used for r andomiz ation:
+▪wstnpwdhis: This table contains all passwords that are known to have been successfully set on an▪
+account. Each password is identified  by its sigkey, a globally unique string, and a reference to the
+account the password belongs to.
+▪wstnpwdcur: This table has one row for each account. It tracks account-level metadata like the fir s t ▪
+time  the account’s password was randomized, and has a reference to the sigkey of the current
+password for each account (located in wstnpwdhis).
+▪wstnpwd_working: This table contains each account’s r andomiz ation  tree. ▪
+▪wstnpwd_working_his: This table holds all passwords that are known to have been unsuccessfully set▪
+on an account. When a r andomiz ation  fails, passwords are moved to this table. If a password with a
+status of U (see below) is rejected during password c on flict  r esolution  (on page 1891), it is also moved
+to this table.
+All passwords that have ever been generated are always retained in one of these tables. They are only
+discarded using the rmidarchivehis  program or a similar administrator-controlled process.
+All passwords have a status, regardless of table loc ation  (though some tables imply some subsets of these
+statuses). The important statuses for c on flict  r esolution  are:
+▪P: Pending. The password has been generated and a connector launch is imminent or in progress, but▪
+de finit ely  not complete. Passwords in this status will be periodically timed  out by a poll loop in the
+idarch  service. Timed out pending passwords have their status set to U.
+▪C: Con firmed.  The connector attemp t ed  to set this password and was met with a successful ▪
+acknowledgment from the target system. All passwords in wstnpwdhis implicitly have this status.

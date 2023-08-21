@@ -1,0 +1,359 @@
+User types and access rules
+This chapter de fines  the types of Bravura Security Fabric  users, and shows you how to control users’
+permissions and c apabilities.
+Overview of user types
+Access controls assigned to users’ pr ofiles  (on page 539) determine the features and functions  that they
+can access in Bravura Security Fabric ; for example, only certain users can access the Manage the system
+(PSA) module. Depending on their c apabilities,  users are categorized as one or more of the user types
+listed in the table below.
+Symbols in this document indicate that the marked content applies to specific  product licenses:
+ Bravura Privilege  | 
+  Bravura Identity  | 
+  Bravura Pass
+Regular user A user who has an account on a target system, and can log into Bravura
+Security Fabric .
+Generally, you create regular users by cr eating  a source of pr ofiles  in Bravura
+Security Fabric  (on page 539).
+Requester A user who can request access changes.
+In general, all regular users can be requesters; however, a user’s ability to
+submit requests may be limited by his access rules, policy rules, authoriz ation
+w orkflo w  logic, or Bravura Security Fabric  c on figur ation.
+Help desk user A regular user who can log into Bravura Security Fabric  and act on the behalf
+of other users. Help desk users are participan ts  in a user class that has been
+granted user access rules, such as the HELP_DESK_MANAGER or the
+GLOBAL_HELP_DESK user classes.
+ 
+Authorizer A user who can review and act on security change requests. Any regular user
+can be assigned as an authorizer.
+ 
+W orkflo w
+managerAn authorizer who can approve, modify, deny, or cancel any authoriz ation
+request.
+You can grant this capability by assigning a user the ”Manage w orkflo w
+requests” user access rule. This capability can also be delegated.
+ 
+Deleg ation
+managerA user who can delegate the r esponsibilities  of a user to another user.
+You can grant this capability by assigning a user the ”Delegate w orkflo w
+requests” user access rule. This capability can also be delegated.Implementer A “human agent” that manually fulfills  requests. An implementer can accept
+or decline tasks, and mark them as completed or cannot be completed.
+For example, instead of running a connector program, Bravura Security Fabric
+can notif y  an implementer that an access change request has been approved.
+The implementer then uses the Requests app to accept the task, completes
+the change using tools available on the target system, then uses the Requests
+app to mark the task as completed.
+You can grant this capability by adding any user as an implementer for
+resource oper ations  on a per-resource basis. If a user is also an inventory
+manager, then they can also assign inventory items. This capability can be
+delegated.
+Inventory
+managerA user who can manage inventory items by loc ation  and type.
+You can grant this capability by adding a user to the list of inventory
+managers ( Manage the system > Inventory > Inventory managers ), and
+designating  the user as an inventory manager for a specific  inventory loc ation
+and type. If a user is also an implementer, then they can also assign inventory
+items. This capability can be delegated.
+Trustee A user who can modify team settings,  group memberships and privileges.
+They can also onboard and offboar d  systems and accounts to their teams.
+ 
+Reviewer A user with the responsibility for certif ying  users’ access rights.
+You can grant this capability by selecting  the user as a reviewer for a
+certific ation  campaign.
+Product
+administratorA user who has been granted adminis tr ativ e  privileges. These privileges
+control access to the adminis tr ativ e  web modules and the Bravura Security
+Fabric  API. Product administrators may or may not have an account on a
+target system.
+There are several types of product administrators. These are described in
+Product administrator types  (on page 672).
+Product administrators
+The tasks that product administrator s can perform depend on their adminis tr ativ e  privileges.
+These privileges control access to the adminis tr ativ e  web modules and the Bravura Security Fabric  API.
+Product administrators may or may not have an account on a target system.
+Topics in this section  show you how to add product administrator s using the:
+▪Web interface  (on page 674) using the Manage the system > Security  menu. ▪
+▪Command-line  (on page 690) using the adm_set  program ▪
+This section  also describes the meaning of each product administrator privilege  (on page 699).
+Product administrator types
+Product administrators are categorized into the following subtypes:Console-only user These product administrators:
+▪Do not have any accounts on target systems.▪
+▪Have access to the Manage the system (PSA) module and/or the reports menu.▪
+▪Have adminis tr ativ e  privileges that determine which parts of the PSA they can ▪
+access. If they are granted All adminis tr ativ e  privileges , then they become
+superusers.
+▪Do not have access to self-service or help desk modules.▪
+Superuser These product administrators:
+▪Are product administrators with All adminis tr ativ e  privileges enabled. ▪
+▪Have full access to all Bravura Security Fabric  adminis tr ativ e  functions. ▪
+Note: The user that you created during ins t allation  (named superuser by default) is
+a superuser.
+Superuser  does not have adminis tr ativ e  privileges to call an API. This privilege is
+specific ally  assigned to the IDAPI caller product administrator.
+Console user with help
+desk/self-service accessThese product administrators:
+▪Have at least one account on a target system.▪
+▪Can access the self-service and help desk modules, as determined by the user▪
+access rules for their user class.
+▪Can access the adminis tr ativ e  consoles, as determined by their adminis tr ativ e ▪
+privileges. Privileges are granted if:
+▪They are an administrator ( Manage the system  > Security > Access to product ▪
+features  > Individual administrators ).
+▪They are part of an administrator group ( Manage the system  > Security > Access to ▪
+product features  > Administrator groups ).
+▪Do not have All adminis tr ativ e  privileges . ▪
+CAUTION: If they are granted All adminis tr ativ e  privileges , then they become
+superusers, and they lose access to the self-service modules as well as the Help
+users(IDA) module.
+Report reader/creator These product administrators:
+▪Can access the Manage reports (RPT) module to read reports.▪
+▪May be able to create and schedule reports.▪
+▪May also be self-service users.▪IDAPI caller A product administrator who has adminis tr ativ e  privileges ( IDAPI caller , OTP IDAPI
+caller , and Guacamole IDAPI caller ) to connect to the Bravura Security Fabric  API. This
+product administrator cannot have any other adminis tr ativ e  privileges.
+Bravura Security Fabric  includes these built-in users:
+▪_API_USER – An IDAPI caller that is shipped with Bravura Security Fabric . To run an ▪
+API call requiring extra privileges, add _API_USER  to a user class.  For example, add
+_API_USER to the _REPORT_READERS user class to run the run report API.
+This IDAPI caller must be assigned a password before it can be used for remote
+c onnections.  By default however, shared memory c onnections  to the API do not
+require a password for _API_USER. If this is the case and _API_USER is not required
+to use a password, it is recommended that a separate administrator be created with
+this privilege specific ally  for remote c onnections  and added to the
+_EXPLICIT_API_USERS_ user class.
+For request w orkflo w  including automated adminis tr ation,  it is recommended that
+you not use the default _API_USER, and instead create dedicated administrators
+with appropriate privileges.
+▪_API_USER_TPM – An IDAPI caller that is used to provide API access for Phone ▪
+Password Manager. This IDAPI caller is disabled by default and must be assigned a
+password and enabled before it can be used.
+▪_API_USER_GUACAMOLE – An IDAPI caller that is used to provide API access for ▪
+Guacamole. This IDAPI caller must be assigned a password before it can be used.
+Anonymous user Bravura Security Fabric  includes the built-in _IDMSUITE_USER_ANONYMOUS user that
+is used to provide anonymous API access for any Ajax plugin endpoint de fined  in the
+hid_ajax_routing  table. This user is disabled by default.
+When this caller is enabled, any Ajax plugin endpoint de fined  in the
+hid_ajax_routing  table with Authentic a t ed  = false will aut omatic ally  log in as
+_IDMSUITE_USER_ANONYMOUS and does not require a session to call.
+The CIDR for the anonymous user should be respected (via X-Forwarded-For if the
+TRUSTED_REVERSE_PROXY variable is enabled and not if disabled).
+De fining  product administrators from the web interface
+Individual product administrator privileges can be assigned by na vig ating  to Manage the system  > Security
+> Access to product features > Individual administrators .
+Product administrators can be assigned privileges based on an administrator user group. These are
+accessed by na vig ating  to Manage the system > Security > Access to product features > Administrator
+groups . By using administrator user groups, you assign privileges based on their user class membership.
+You cannot grant any adminis tr ativ e  privileges that you do not have.
+Individual administrators
+To de fine  a product administrator  :1.Click Manage the system  > Security > Access to product features  > Individual administrators . 1.
+2.Click Add new... . 2.
+3.In the ID field,  do one of the following: 3.
+▪Search for, or type the pr ofile  ID of an e xisting  user. ▪
+This allows you to grant adminis tr ativ e  privileges to a user who may also have access to self-service
+and help desk menus (depending on user access rules).
+▪Type a new pr ofile  ID to create a new Bravura Security Fabric  user who only performs ▪
+adminis tr ativ e  tasks (console-only access).
+Users created this way are not mapped to accounts on target systems, and cannot access the self-
+service or help desk menus.
+4. Optional:  type the user’s full name in the Name field. 4.
+If the user is an e xisting  user whose full name is stored in Bravura Security Fabric , you do not need to
+type a full name. The Name value is populated aut omatic ally  after  you submit the form.
+5.Type the product administrator ’s password in the Password and Con firm  password fields  if you want the 5.
+user to authentic a t e  using a password stored in Bravura Security Fabric .
+This is only required if the user is not an account-holder; that is, if you are cr eating  a console-only
+user.
+6.Enable the Password never expires checkbox if you do not want the product administrator s password to 6.
+expire.
+This option  applies only to product administrator s whose passwords are stored in the Bravura Security
+Fabric  database. It overrides the ADMIN PASSWORD EXPIRE setting ,  which you can set by clicking
+Manage the system > Policies > Options .
+7.Assign Allowed privileges  by choosing: 7.
+▪All privileges to give the user the same access rights as the superuser you created during setup. ▪
+▪Selected privileges ▪
+The following table describes all available adminis tr ativ e  privileges. It also includes the internal
+keyword – used in c on figur ation  files,  plugin input/output, and by the adm_set program – for
+each privilege.
+Adminis tr ativ e  privileges
+Right Keyword Description
+General system c onfigur ation
+Manage
+resourcesresource The product administrator can manage target systems, auto-discovered objects,
+and other resources.
+Manage
+policiespolicy The product administrator can manage user classes, segr eg ation  of duties  (SoD),
+authentic ation  and identific ation  policies, authentic ation  chains, question  sets,
+import rules, login options.Right Keyword Description
+Manage
+notific ationsmngnotif s The product administrator can manage notific ations  and notific ation-r ela t ed
+scheduled jobs.
+Con figur e
+w orkflo w
+setupw orkflo w The product administrator can c on figur e  w orkflo w .
+Con figur e
+modulesmodule The product administrator can modify web modules c on figur ation.
+Maintain
+serversmaintain The product administrator can manage services, schedule jobs, and c on figur e
+auto discovery.
+Manage
+reportsrunreport The product administrator can run or schedule reports from the Manage reports
+app.
+Analytics analytics The product administrator can run, save or read reports from the Analytics  app.
+Recompute
+Analytics
+cacher ec analyticsc asch The product administrator can update the cached data on dashboards from the
+Analytics  app.
+Con figur e
+Login Managermanagesso The product administrator can c on figur e  Login Manager
+Manage
+external data
+storeextdb The product administrator can Manage external data store.
+DashboardsRight Keyword Description
+View
+certific ation
+dashboardviewcertdash The product administrator can use the View dashboards to view the certific ation
+dashboard.
+View
+privileged
+access
+dashboardviewpswdash The product administrator can use the View dashboards to view the privileged
+access dashboard.
+View w orkflo w
+dashboardviewworkdash The product administrator can use the View dashboards to view the w orkflo w
+dashboard.
+View
+enrollment
+dashboardviewpsadash The product administrator can use the View dashboards to view the enrollment
+dashboard.
+View OrgChart
+dashboardvieworgdash The product administrator can use the View dashboards to view the OrgChart
+dashboard.
+View helpdesk
+dashboardviewhelpdeskdash The product administrator can use the View dashboards to view the help desk
+dashboard.
+Recompute
+dashboard
+cacherecdashcache The product administrator can use the View dashboards to update the cached
+data on dashboards.
+Security adminis tr ation
+Manage
+securitysecurity The product administrator can manage User access rules and Options  in the
+Manage the system Security menu.
+Manage
+product
+administratorconsole The product administrator can create and manage other product administrators.
+A product administrator may only manage or create new product administrators
+with equal or lesser rights assigned to them. A product administrator cannot
+manage his or her own rights.Right Keyword Description
+Manage user
+groupsmngacl The product administrator can manage user access controls in the Manage the
+system module.
+Privileged access management
+Create
+managed
+system policiescreategroup The product administrator can create managed system policies in the Manage
+the system. As owner of the managed system policy, the product administrator
+has access to the policy but not the passwords managed by the policy - that
+permission must be specific ally  assigned via user group access controls.
+Manage
+orphan
+managed
+systemsmngorphanres The product administrator can manage orphaned systems (not a member of a
+managed system policy) in the Manage the system.
+Create
+managed
+systemscreateres The product administrator can add a user-managed system in the Manage the
+system.
+Manage
+managed
+system policiesgroupmgmt The product administrator can be granted access to modify or remove e xisting
+managed system policies in the Manage the system. Access to managed system
+policies must also be granted in the Manage the system > Security > Privileged
+access to systems  menu. The product administrator cannot update user groups
+of which they are a member. This right does not give the product administrator
+access to orphan managed systems, nor access groups of which they are an
+e xisting  member.
+Recover last
+managed
+passwordrecoverpwd The product administrator can recover the last stored managed password for a
+managed account, regardless of the state of the target (whether it is managed,
+unmanaged or remanaged) using the RecoverKeyByAccount function  call and
+OTP caller and LogonEx to connect to the API service.
+Access certific ation
+Manage
+certific ation
+processcertif y The product administrator can manage the access certific ation  process, by which
+one or more reviewers c on firm  or remove access privileges of users, and remove
+stale users.
+Initia t e
+entitlemen t
+certific ation
+campaignssingleuser certif y The product administrator can initia t e  a access certific ation  process, by which a
+single reviewer can c on firm  or remove access privileges of users, and remove
+stale users.Right Keyword Description
+OrgChart management
+Start Org
+building
+roundscreateorg The product administrator can use the Manage the OrgChart to initia t e  OrgChart
+building rounds.
+Manage the
+OrgChartupdateorg The product administrator can use the Manage the OrgChart to manually change
+the OrgChart structure.
+Remote API
+IDAPI caller apicaller The product administrator can access the API Service (idapi) Login function  from
+the IP addresses specified  in the IP address with CIDR bitmask field.
+This right can only be combined with other rights by adding an individual
+administrator with the IDAP caller right to an administrator group with other
+rights.
+OTP IDAPI
+callerotpcaller The product administrator can access the API Service LoginEx function  from the
+IP addresses specified  in the IP address with CIDR bitmask field.  The LoginEx
+function  gains access to the KMKeyGetByAccount function,  which is used to
+retrieve passwords that Bravura Privilege  manages.
+This right can only be combined with other rights by adding an individual
+administrator with the OTP IDAP caller right to an administrator group with other
+rights.
+Guacamole
+IDAPI callerguacamolecaller The product administrator can access the API Service Login function  from the IP
+addresses specified  in the IP address with CIDR bitmask field.  The Login function
+gains access to the CheckoutParamsGet and CheckoutStatusGet functions,  which
+is used for a Guacamole gateway to periodically check whether a managed
+account checkout is still valid during an activ e  Guacamole access disclosure
+session.
+This right can only be combined with other rights by adding an individual
+administrator with the Guacamole IDAPI caller right to an administrator group
+with other rights.
+R eplic ation
+Con figur e
+r eplic ationr eplic ation The product administrator can c on figur e  database r eplic ation  (Manage the
+system > Maintenance > Database r eplic ation )Right Keyword Description
+View in f ormation
+View
+in f ormation:T ar g e t
+systemsviewhost The product administrator can view additional  in f ormation  about target systems
+via embedded links.
+View
+in f ormation:Manag ed
+groupsviewmgrp The product administrator can view additional  in f ormation  about managed
+groups via embedded links.
+View
+in f ormation:R olesviewrole The product administrator can view additional  in f ormation  about roles via
+embedded links.
+View
+in f ormation:Segr eg ation
+of duties  rulesviewsod The product administrator can view additional  in f ormation  about segr eg ation  of
+duties  rules via embedded links.
+View
+in f ormation:User
+classesviewuc The product administrator can view additional  in f ormation  about user classes via
+embedded links.
+View
+in f ormation:Acc oun tsviewacct The product administrator can view additional  in f ormation  about accounts via
+embedded links.
+View
+in f ormation:Pr e-
+de fined
+requestsviewpdr The product administrator can view additional  in f ormation  about pr e-de fined
+requests via embedded links.
+View
+in f ormation:T empla t e
+accountsviewtpl The product administrator can view additional  in f ormation  about template
+accounts via embedded links.

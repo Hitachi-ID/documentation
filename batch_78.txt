@@ -1,0 +1,371 @@
+List expression example
+The list expression should be a PSLang
+PSLang scripts are broken down into functions.  Each function  must include a name, function  parameters
+(if applicable), and a sequence of statements to execute:
+ function <FunctionName>( <p1>, <p2>, … )
+   {
+   <statement>
+   <statement>
+   …
+   }
+The scripts can contain a mix of user -de fined  functions , and built-in functions  which are used to pass
+in f ormation  to the agent.
+Remember to remove all debugging statements and to review all statements that will create logs before
+using the script in a production  environment. Ensure that no sensitive  inf ormation  is being captured in the
+logs.
+User -de fined  functions
+In order for agtdos , agttelnet , or agtssh to perform an agent oper ation,  you must implement
+the corresponding function  in your script. Write these functions  to provide in t er action  details between
+Bravura Security Fabric  and the target.
+The agents use the following functions:
+▪list( const $wantGroups, const $wantAttributes )  Lists accounts on the target ▪
+system, and the attribut es  for each account.
+The parameters passed to the function  are as follows:
+▪$wantGroups  – determines if this function  should retrieve group membership. ▪
+If the value of $wantGroups  is a non-zero value, write your function  to retrieve the group(s) to
+which each account belongs while listing  accounts.
+▪$wantAttributes – determines if this function  should retrieve attribut es  for each account. ▪
+If the value of $wantAttributes  is a non-zero value, write your function  to list the attribut es
+for each account.
+If both $wantGroups  and $wantAttributes  are 0, write your function  to list accounts on
+the target system only.
+See listmembermethod below for more in f ormation  about listing  group membership.
+▪listgroups( const $wantMembers )  Lists groups. ▪
+The parameters passed to the function  are as follows:
+▪$wantMembers – determines if this function  should retrieve group membership. ▪
+If the value of $wantMembers  is non-zero, write your function  to retrieve the account(s) that
+belong to each group while listing  groups.
+If this value of $wantMembers  is 0, write your function  to list groups only.See listmembermethod  below for more in f ormation  about listing  group membership.
+▪listresource( const $resourceType )  Lists resources for Bravura Privilege ’s ▪
+infrastructure auto discovery feature. The parameters passed to the function  are as follows:
+▪$resourceType  de fines  which type of resource to list. ▪
+Depending on target system c on figur ation,  listresource() will be called multiple  times  each with a
+diff er en t  resourceType value. The values that resourceType can take on are:
+▪ls_compwkstn – list w ork s t ation  computer objects. ▪
+▪ls_compsvr – list server computer objects. ▪
+▪ls_admmember – list members of adminis tr ativ e  groups. ▪
+▪ls_taskacct – list scheduled task accounts. ▪
+▪ls_comacct  – list COM object accounts. ▪
+▪ls_iisacct  – list IIS virtual directory accounts. ▪
+▪ls_scmacct  – list Service Control Manager accounts. ▪
+▪movecontext( const $info )  Moves an account to a new context or loc ation  on a c on t e x t - ▪
+sensitiv e  target. Supported in Bravura Identity  and Bravura Privilege .
+▪isenabled( const $info ) Checks if an account is enabled. Supported in Bravura Pass  and ▪
+Bravura Privilege .
+▪islocked( const $info )  Checks if an account is locked. Supported in Bravura Pass  and ▪
+Bravura Privilege .
+▪ispwexpired( const $info )  Checks if an account’s password is expired. Supported in ▪
+Bravura Pass  and Bravura Privilege .
+▪isacctexpired( const $info )  Checks if an account is expired. Supported in Bravura Pass ▪
+and Bravura Privilege .
+▪disable( const $info )  Disables an account. Supported in Bravura Identity  and Bravura ▪
+Privilege .
+Most systems diff er entia t e  between disabled and intruder-locked accounts.
+▪enable( const $info )  Enables an account. Supported in Bravura Identity  and Bravura ▪
+Privilege .
+▪lock( const $info )  Locks an account (sets the intruder lockout). Supported in Bravura Pass ▪
+and Bravura Privilege .
+Most system diff er entia t e  between intruder-locked and disabled accounts.
+▪unlock( const $info )  Unlocks an account (clears the intruder lockout). Supported in Bravura ▪
+Pass  and Bravura Privilege .
+▪expirepw( const $info )  Expires an account’s password. Supported in Bravura Pass  and ▪
+Bravura Privilege .
+▪unexpirepw( const $info )  Unexpires an account’s password. Supported in Bravura Pass ▪
+and Bravura Privilege .
+▪expireacct( const $info )  Expires an account. Supported in Bravura Pass  and Bravura ▪
+Privilege .▪unexpireacct( const $info )  Unexpires an account. Supported in Bravura Pass  and ▪
+Bravura Privilege .
+▪create( const $info )  Creates a new account on the target system. This oper ation  creates ▪
+the account (possibly using a template for some attribut e  values), then sets other attribut e  values –
+including the password for the new account. Supported in Bravura Identity  and Bravura Privilege .
+This function  should make use of the target system administrator cr edentials.
+▪delete( const $info )  Deletes an e xisting  account on the target system. The typical behavior ▪
+is to fir s t ensure that the account being deleted exists. Supported in Bravura Identity  and Bravura
+Privilege .
+You may also wish to include ins tructions  to delete any files or objects associated with the account.
+▪verify( const $info )  Checks if a given password is the correct, current password for an ▪
+account. If the applic ation  supports the concept of intruder lockout and the v erific ation  fails, the
+intruder lockout counter is incremented. Supported in Bravura Identity  and Bravura Privilege .
+▪admin_verify( const $info )  Checks if a given password is the correct, current password ▪
+for an account without triggering an intruder lockout if the password is not correct. Supported in
+Bravura Pass  and Bravura Privilege .
+▪verifyreset( const $info )  V erifies  if the account’s password matches the new password, ▪
+and if the v erific ation  fails, adminis tr ativ ely  sets it to the new password. If the v erific ation  succeeds,
+then the reset is not necessary, and the oper ation  returns success. Supported in Bravura Pass  and
+Bravura Privilege .
+▪reset( const $info )  Adminis tr ativ ely  resets an account’s password to a new value. If the ▪
+applic ation  supports the concept of intruder lockout, then the intruder lockout counter is cleared and
+the account unlocked. If the applic ation  supports the concept of password expiry, then the expiry date
+is set according to the expiry policy of the applic ation.  Disabled accounts will remain disabled.
+Supported in Bravura Pass  and Bravura Privilege .
+▪change( const $info )  Changes the password for an account, from a known current value to a ▪
+desired new value. If the applic ation  supports the concept of intruder lockout, then the intruder
+lockout counter is cleared and the account unlocked. If the applic ation  supports the concept of
+password expiry, then the expiry date is set according to the expiry policy of the applic ation.
+Supported in Bravura Pass  and Bravura Privilege .
+▪resetexpirepw( const $info )  Adminis tr ativ ely  resets an account’s password to a new ▪
+value and expires the account’s new password, so that the user is forced to change his password the
+next time  he logs in. Supported in Bravura Pass  and Bravura Privilege .
+▪groupuseradd( const $info )  Adds an account to a group. Supported in Bravura Identity ▪
+and Bravura Privilege .
+▪groupuserdelete( const $info )  Removes an account from a group. Supported in Bravura ▪
+Identity  and Bravura Privilege .
+▪groupgroupadd( const $info )  Adds a group to a group. Supported in Bravura Identity  and ▪
+Bravura Privilege .
+▪groupgroupdelete( const $info )  Removes a group from a group. Supported in Bravura ▪
+Identity  and Bravura Privilege .▪update( const $info )  Updates attribut es  for an e xisting  account. Supported in Bravura ▪
+Identity  and Bravura Privilege .
+▪userattributes( const $info )  Lists attribut es  for a specified  account. Supported in ▪
+Bravura Identity  and Bravura Privilege .
+All functions  are optional.  To indicate success your function  must return 0. To indicate failure your
+function  must return 1.
+WARNING! Functions  which reset or verify passwords in scripts used by Bravura
+Privilege  for password r andomiz ation  must always report the result of the
+reset or v erific ation  accurately. Inaccurate status in f ormation  may result
+in checked out passwords not working; additionally ,  if the cr edential  used
+to manage the target system is being randomized, Bravura Privilege  may
+invalidate its own managed system cr edential  when an erroneous status
+is returned. Do not assume scripted password changes are always
+successful; always check return codes.
+If your target does not support a particular  oper ation  (for example, if there is no intruder lockout
+mechanism), then omit the corresponding function  from the script. If the agent cannot find a particular
+function  in the script, the agent returns a message saying "Function  [<oper ation>]  not found in script".
+The following additional  functions  (optional)  do not represent actual agent oper ations,  however they are
+also called directly by the agent:
+▪connecttarget( const $cinfo )  called before the fir s t oper ation  is performed. ▪
+This function  must return 0 on success, or 1 on failure.
+▪disconnecttarget( const $cinfo )  called after  the last oper ation  is performed. ▪
+This function  must return 0 on success, or 1 on failure.
+▪listmembermethod()  used to determine the supported method for listing  group membership on ▪
+the target system.
+If both methods are supported, select the method that is the most e fficien t.  This function  must return:
+▪0 - if the script cannot list group membership ▪
+▪1 - if the script list accounts in a group while listing  groups ▪
+▪2 - if the script lists groups while listing  accounts ▪
+The calling program uses the result of listmembermethod , along with your t ar g e t -c on figur ation
+settings,  to determine the value of $wantGroups  and $wantMembers .
+For example, if the calling program is executed with the option  to list group membership, and the
+result of listmembermethod is 1, the calling program executes the function:
+   listgroups(1)
+▪addressattrs ()  used to extend the address wizard by adding additional  address line elements. ▪
+It is only possible to add new address line elements, not remove or change e xisting  ones. This is useful
+when cr eating  a scripted target system with a scripted platform  de finition  file.
+▪If not de fined,  the address wizard behaves as normal. ▪▪From within this function  the addAddressElement callback function  adds a single address line ▪
+element. The callback function  can be called multiple  times  and takes the following form:
+addAddressElement(name, type, defaultValue, isRequired,
+restrictedValuesList, description, advanced);
+Where:
+▪name: is the string name of the of the address line component.▪
+▪type: is one of ($AddressTypeInt $AddressTypeString $AddressTypeBoolean▪
+$AddressTypeKvgroup $AddressTypeRestricted $AddressTypeScript $AddressTypeDir
+$AddressTypeFile).
+▪defaultValue: string default value or empty if no default value.▪
+▪isRequired: boolean, where 1=required and 0=optional. ▪
+▪restrictedValuesList: array of display/actual values for each restricted value.▪
+▪ description:  Textual description  of the element. ▪
+▪advanced: boolean, 1=display attribut e  in advanced section  and 0=default ▪
+An example is included in the sample agttelnet-racf.psl .
+The following function  is available to agtssh:
+▪ cr edentialo v erride(  inout $cinfo ) called before all other functions  and used to override the adminid ▪
+and adminpw cr edentials  on the c onnection  to the SSH target.
+▪The function  is optional,  and is not called if it is not de fined. ▪
+▪The function  is called before all other functions. ▪
+▪The adminid, adminpw, host, and address elements are readable in the function. ▪
+▪The adminid and adminpw elements are settable  within the cr edentialo v erride  function  to other ▪
+values. The return value for the function  does not a ff ect  the commitment of the override values -
+agtssh always uses the returned values for adminid and adminpw for the c onnection.
+▪The host, address, sysid, and syspw elements do not commit overridden values.▪
+▪The adminid and adminpw elements are accessible via a tr ansitional  variable to other functions. ▪
+▪The variable $COMMON_SHELL  can be set in the function  to specify a custom shell. ▪
+Input parameters ($cinfo and $info)
+The c onnecttar g e t()  and disc onnecttar g e t()  functions  each take one parameter, an associativ e  array
+($cinfo). Each element is a string. Elements of the array are:
+▪address the target address. ▪
+▪adminid the target system administrator’s ID. ▪
+▪adminpw the target system administrator’s password. ▪
+▪sysid the target system administrator’s ID if the Is this an additional  system password? checkbox is ▪
+selected.
+▪syspw the target system administrator’s password if the Is this an additional  system password? ▪
+checkbox is selected.Most of the functions  that relate to Bravura Security Fabric  oper ations  (for example, create(),
+enable()reset(), change() ) also take one parameter, an associativ e  array ($info). Each element is a string
+unless otherwise indicated. Elements of the array are:
+▪userid the pr ofile  ID of the user. ▪
+▪ shortid  the short ID of the user. ▪
+▪fullname the full name of the user. ▪
+▪ acctid  the ID for the account that the user has on this system. ▪
+▪newpw the new password (for password reset and create oper ations). ▪
+▪oldpw the old password (for verify oper ations). ▪
+▪modeluid the template ID (for create oper ations). ▪
+▪groupid the group ID (for group* oper ations). ▪
+▪groupname the group description  (for group* oper ations). ▪
+▪ attribut es  a KVGroup containing in f ormation  about attribut es  to set (for create and update ▪
+oper ations)
+The general format of the KVGroup is as follows:
+"attributes" "" = {
+  "DEFAULT-ACTION" = "COPY"
+  "attribute" "givenName" = {
+    "SEQUENCE" = "0"
+    "GROUP"    = "0"
+    "ACTION"   = "VALUE"
+    "VALUE"    = "John"
+   }
+  "attribute" "sn" = {
+    "SEQUENCE" = "0"
+    "GROUP"    = "0"
+    "ACTION"   = "VALUE"
+    "VALUE"    = "Doe"
+   }
+ }
+▪ ConnectionCr edential  a KVGroup containing in f ormation  about target administrator cr edentials  and ▪
+system cr edentials  (for reset oper ations).
+The general format of the KVGroup is as follows:
+"ConnectionCredential" "" = {
+  "AdminCredential" "" = {
+    "admin1" = "{AES}@KK|dE]=GqX=zqJyTIgqL]XCyECV?AsAJ[O?
+vBJGpAaEGgfK"
+    "admin2" = "{AES}e[LkiHEv?=iAGTD|ZA^cKCYJCb?
+[tByFDp_=e]EhWDkgHzmD"
+   }  "SysCredential" "" = {
+    "sysadm1" = "{AES}fN=>rLOB?^gDICJfc@fYLB@@COGlv=H@IFc@EW?
+XBJTwFEXB"
+   }
+ }
+Return codes
+The return codes for user -de fined  functions  (with the e x ception  of listmembermethod() ) for agtdos ,
+agttelnet , and agtssh are as follows:
+Code Value Description
+ACSuccess 0 The oper ation  was successful.
+ACUnknownError 1 The oper ation  failed with an unknown error.
+A C Oper ationNotSupport ed 2 The oper ation  is not supported by the target system.
+ACNotConnected 3 Can be used in the c onnecttar g e t()  function  if a
+c onnection  could not be established.
+ACAlreadyConnected 4 Can be used in the c onnecttar g e t()  function  if an attemp t
+is made to connect to a target that already has a
+c onnection.
+ACInvalidServer 5 Can be used in the c onnecttar g e t()  function  if the target
+address is invalid.
+ACObjectAlreadyExists 6 The object to create (for example, user or group) already
+exists.
+ACInvalidUser 7 The user account is invalid or does not exist.
+ACInvalidModelUser 8 The template account is invalid or does not exist.
+ACUserNotInGroup 9 The user is not in the specified  group.
+ACTimeout 10 The oper ation  timed  out.
+ACAccessDenied 11 The target system administrator could not logon due to a
+bad ID/password pair, account r es trictions,  and so on.
+ACInvalidGroup 12 The group is invalid or does not exist.
+ACUserAlreadyGroupMember 13 The user is already a member of the specified  group.
+ACVerifyFailed 14 The password could not be v erified.  Use this code ONLY
+when the specified  password is not correct.
+ACInitFailed 15 The oper ation  failed to initializ e.
+ACLockFailed 16 The oper ation  failed to get a lock on a file while reading
+or writing.
+ACScriptError 17 The oper ation  encountered an error in the script.
+ACNotLicensed 18 The oper ation  is not licensed.
+ACLogFileFailure 19 Failed to write to the log file.Code Value Description
+ACImplementerFailure 20 The implementor failed to perform the oper ation.
+ACAdminLocked 21 The target system administrator account is locked.
+ACInvalidPasswd 22 The password is invalid.
+ACDelayLoadError 23 The oper ation  encountered an error loading a dll or
+function  point.
+ACReadOnlyResource 24 The oper ation  could not write to a resource because it
+was read only.
+ACPluginAborted 25 The plugin failed.
+ACPasswordLocked 26 The password is locked.
+ACPasswordExpired 27 The password has expired.
+ACAccountExpired 28 The account has expired.
+ACAccountDisabled 29 The account is disabled.
+A C Oper ationR olledback 30 The oper ation  was rolled back.
+A C Oper ationAbort ed 31 The oper ation  was aborted.
+A C Oper ationR ollbackF ailed 32 The rollback oper ation  has failed.
+ACEndOfFile 33 The oper ation  has reached the end of file.
+ACGroupAlreadyGroupMember 34 The group is already a group member.
+ACGroupNotInGroup 35 Group is not a member of group.
+ACNull 0xff ff A null code.
+Built-in Functions
+Apart from the standard PSLang built-in functions,  there are several built-in agent functions  available to
+the agents.
+You call the following built-ins from within functions  r epr esenting  agent oper ations  in order to
+communicate the results of the oper ation  back to the agent:
+▪agentError reports an error message. ▪
+▪agentWarning reports a warning message. ▪
+▪agentInfo reports an in f ormation  message. ▪
+▪agentListUser is called once for each user during the list oper ation. ▪
+▪agentListGroup (or agentListGroupSID ) is called once for each group during the list oper ation. ▪
+▪ ag en tLis tAttribut e  is called once for each attribut e  during the list attribut e,  create, and update ▪
+oper ations.
+▪agentListResourceComputer is called once for each computer object during the list resource ▪
+oper ation.
+▪agentListResourceAccount is called once for each account object during the list resource oper ation. ▪
+▪agentIsEnabled tells the agent whether or not the given user is enabled. ▪
+▪agentIsLocked tells the agent whether or not the given user is locked out. ▪▪agentIsPassExpired tells the agent whether or not the given user’s password has expired. ▪
+▪agentIsAcctExpired tells the agent whether or not the given user’s account has expired. ▪
+▪agentLongId provides the long ID of the user during create, update, rename, or move context ▪
+oper ations.
+▪agentShortID provides the short ID of the user during create, update, rename, or move context ▪
+oper ations.
+▪agentGroups provides the list of groups to which a user belongs. ▪
+▪agentOutput can return IP in f ormation  on reset using agentOutput. The keys are ip-address and dns- ▪
+host-name. This in f ormation  is used by Bravura Privilege  to load current in f ormation  when the reset
+occurs. This is included in the agtssh-simple.psl sample. By default it is disabled. It can be enabled with
+the $emit_info at the top of the script by setting  it to non-zero.
+See the PSLang Manual ( pslang.pdf ) for more in f ormation  about these built-in functions.
+Global variables
+In any agent script, input passed to the agent is stored in the $_inVars  "hidden" global variable. You
+can declare and de fine  additional  global variables for use throughout the script.
+Following is an example of the contents of the $_inVars KVGroup when performing a list oper ation:
+   "" "" = {
+     "address" = "agtdos.psl"
+     "adminid" = "null"
+     "adminpw" = "<encrypted password value>"
+     "hostid" = "DOS"
+     "listdbfilename" = "C:\\Program Files\\Hitachi ID\\IDM Suite\
+\default\\psconfig\\AGTDOS.db"
+     "operation" = "listobj"
+     "platformname" = "Win32 Console Script"
+     "timeout" = "-1"
+    "listattributes" "" = {
+     }
+   }
+Built-in variables
+The following built-in variables are available for use with PSLang scripts:
+▪$KeyAccounts▪
+Value: "accounts" Description:  List of accounts.
+▪$KeyAcctID▪
+Value: "acctid"  Description:  Name of the target account to operate on.
+▪ $K e yAction▪
+Value: "ACTION" Description:  Action  to do to the attribut e.▪ $K e yActionCopy▪
+Value: "COPY" Description:  Action  to do to the attribut e.
+▪ $K e yActionIgnor e▪
+Value: "IGNORE" Description:  Action  to do to the attribut e.
+▪ $K e yActionR eplace▪
+Value: "REPLACE" Description:  Action  to do to the attribut e.
+▪ $K e yActionV alue▪
+Value: "VALUE" Description:  Value of the attribut e.
+▪$KeyAddress▪
+Value: "address" Description:  The address line to use to connect to the target.
+▪$KeyAddrComps▪
+Value: "addresscomponents" Description:  Key to the sub-array containing the address elements
+already split.
+▪$KeyAdminID▪
+Value: "adminid" Description:  Name of the account to connect to target as.
+▪$KeyAdminPW▪
+Value: "adminpw" Description:  Password of the account to connect to the target with.
+▪ $K e yAttribut e▪
+Value: "attribut e"  Description:  Single account attribut e  details.
+▪ $K e yAttribut es▪
+Value: "attribut es"  Description:  List of account details.
+▪$KeyAuthKey▪
+Value: "authkey" Description:  SSH Authentic ation  key attribut e.
+▪$KeyBoolean▪
+Value: "boolean" Description:  true/false address attribut e  type
+▪$KeyCAPath▪
+Value: "CApath" Description:  Path to certific a t e  file.
+▪$KeyCAFile▪
+Value: "CAfile"  Description:  Certific a t e  file name.
+▪$KeyChildGroupID▪
+Value: "childgroupid" Description:
+▪$KeyCheckCert▪
+Value: "checkCert" Description:  Should the agent check the SSL certific a t e.
+▪$KeyCommand▪
+Value: "command" Description:  Command to run during runcommand() oper ation.
+▪$KeyCommandFile▪

@@ -1,0 +1,407 @@
+Login Assistant: Setting  up on a domain
+You can set up a domain-level SKA if you do not want to install softw ar e  on users’ w ork s t ations.
+A domain-level secure kiosk account is a network login account de fined  in an Activ e  Directory domain. It
+typically has a help login ID. A security policy is applied to the help account that restricts access to the
+oper ating  system and network resources when using the SKA.
+1.Create the help user  (on page 1611) . 1.
+2. Con figur e  the runurl program  (on page 1611). 2.
+3.Create a policy  (on page 1616) to lock down Windows w ork s t ations. 3.
+4.Remove the help account from the Bravura Security Fabric  account list, to prevent users from 4.
+changing the help account password or attaching  the ID.
+5. Adv ertise  the help account  (on page 1622) to Bravura Security Fabric  users. 5.
+These steps are explained in detail in the following sections.
+Unless otherwise stated, all steps are performed on an Active  Directory DC (domain controller), and must
+be performed using administrator credentials.  Details vary depending on your version of Windows.
+Create a help user
+To create a help user to serve as an SKA:
+1.Open Activ e  Directory Users and Computers . 1.
+2.Create a new user with the User logon name  help and a hard-to-guess password that complies with 2.
+your password complexity rules. Ensure that you:
+a.Select the following checkboxes:a.
+▪User cannot change password▪
+▪Password never expires▪
+b.Deselect the following boxes:b.
+▪User must change password at next logon▪
+▪Account is disabled▪
+3.Create a new global security group named Help SKA.3.
+4.Add the help user to the Help SKA group. Set this group as the user’s primary group.4.
+5.Close Activ e  Directory Users and Computers . 5.
+See Micr osoft’ s  documen t ation  for detailed steps on how to create an account.
+Con figur e  the runurl program
+If you do not install Cr edential  Provider softw ar e  on users’ w ork s t ations  to allow them to access the
+domain help account, the runurl program, which is used to launch a web browser in kiosk mode, must
+be installed on a public share accessible to computers in the domain. You can then add runurl to the
+group policy for the help user, and it will be executed when the help user logs into the domain.To c on figur e  the runurl program:
+1.Copy the files from the addon\Domain Login Assistant\ directory in your Bravura Security Fabric 1.
+ins t allation  to the SYSVOL share on each domain controller.
+You can determine the loc ation  of your SYSVOL share by typing net share  from the command
+prompt on your DC.
+2.Locate the gina.z  file from the skin\default\en-us\ directory and make a copy of that file to the 2.
+sysvol share as well.
+3.Create a text file called runurl.cfg  that contains arguments (separated by whitespace) for the 3.
+runurl program. Place this file with the other runurl files on the SYSVOL share.
+4.Test runurl from a command prompt on the Activ e  Directory DC by typing: 4.
+  %LOGONSERVER%\sysvol\runurl.exe -cfg %LOGONSERVER%\sysvol
+\runurl.cfg
+Ensure that a web browser opens to the specified  URL, and that the w ork s t ation  is locked down
+according to the options  you specified.
+5.Test runurl from the command prompt of a w ork s t ation  logged into the domain by typing: 5.
+  %LOGONSERVER%\sysvol\runurl.exe -cfg %LOGONSERVER%\sysvol
+\runurl.cfg
+Ensure that a browser window opens to the specified  URL, and that the w ork s t ation  is locked down
+according to the options  you specified.
+See runurl argument description  and example syntax.
+The runurl program launches a web browser on a Windows w ork s t ation  and opens it to a specified
+URL. When c on figur ed  to launch in kiosk mode the browser window fills the screen, removes all window
+borders and dec or ations,  disables na vig ation,  and disables all function  keys, the [Alt]  and [Ctrl]  keys, the
+Windows logo key, and any c ombination  of keys that you specify.
+A major use for the runurl program is to enable users to reset their own passwords using a secure
+kiosk account (SKA).
+Requirements
+When invoked by a local SKA or Cr edential  Provider, runurl is launched from the Login Assistant\
+directory on the user’s w ork s t ation.
+The following files must be located in the share or directory from which runurl is launched:
+▪msgmap .txt – used to disable Windows message events on Windows w ork s t ations. ▪
+▪webbrowser.dll  – used to block the [Ctrl], [Alt], and the right mouse button,  and to run the web ▪
+browser. It is also used by the Cr edential  Provider.
+▪pscredprov.dll  – used to block the [Ctrl], [Alt], and the right mouse button,  and to run the web ▪
+browser. It is used by the Cr edential  Provider.
+▪launch_ska.exe  – used to launch the SKA and invoke the runurl command. ▪Ensure that Internet Explorer 9 or higher is installed on the domain controller and all w ork s t ations  that
+will access the help account. The runurl program relies on some components that are part of Internet
+Explorer 9 or higher.
+Usage
+runurl.exe -url <URL> [<options>]
+runurl.exe -cfg <filename>
+The runurl program works with the following command-line arguments:
+Argument Description
+-url <URL> Specify the URL that will be displayed in the web browser.
+-userid <userID> Bravura Security Fabric  user ID to pass through the URL.
+-ntkeymap <args> Enable or disable a key or c ombinations  of keys on a
+Windows w ork s t ation .
+-msgmap <filename> Specify a file containing Windows message events to
+block. Do not modify this file unless you are sure of what
+you are doing.
+-reg <filename>.r eg Load the named registry file into the registry before
+t erminating  runurl. This is used to restore standard
+registry entries in case runurl was launched during the
+fir s t login of the help account, using a r es trictiv e  security
+policy, and the user elected to not save settings  – which
+means that registry changes were applied to the default
+user rather than help.
+-kiosk Start the web browser in kiosk mode.
+-keylock Disable [ Ctrl] , [Alt] , and the right mouse button.  This is
+implied by -kiosk.
+-no_icw Do not pop up Internet Connection  Wizard when the user
+starts up the browser the fir s t time.
+-log off Log off from the w ork s t ation  after  the web browser
+closes.
+-run "<programname>, <args>" Run this program with these parameters before e xiting ,
+and before logging off . The run option  requires quotes
+around the external program name and param
+arguments. If you need quotes inside of this then use a \
+to escape them.
+If both run and logoff are specified,  run will
+execute fir s t.
+-cfg <filename> If the command line is too long, use this option  to read all
+arguments from this file. Write the file with the
+arguments separated by white space.
+-trapsesslock Trap the Windows w ork s t ation  lock notific ation  to ensure
+that runurl handles locked w ork s t ations  correctly; for
+example a browser displaying a User notific ations  (PSN)module notific ation  is returned to the state it was in
+before the lock.
+Enabling or disabling key c ombinations
+You can run runurl with the -ntkeymap  option  to enable or disable keys and c ombinations  of keys
+on a Windows w ork s t ation  (XP or higher). Write the arguments for -ntkeymap  using the following
+syntax:
+  [-] [(] [<MOD>+] <KEY> [)] [, ...]
+Where:
+▪- enables the keys that follow▪
+▪( )  are optional  brackets (these are for f ormatting  only, they do not modify the meaning of the text) ▪
+▪<MOD> specifies  one of [Alt] , [Shift] , [Ctrl] , or the Windows key <KEY > specifies  the name of the key ▪
+to enable/disable
+▪<KEY> can be any of the following:▪’
+,
+-
+.
+/
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+;
+=A
+Alt
+B
+Backspace
+C
+CapsLock
+Ctrl
+D
+E
+Enter
+Esc
+F
+F1
+F10
+F11
+F12
+F13
+F15
+F2
+F20
+F21
+F22
+F23
+F24
+F3
+F4
+F5
+F6
+F7
+F8
+F9A
+G
+H
+I
+J
+K
+L
+M
+N
+Num*
+Num+
+Num-
+Num0
+Num1
+Num2
+Num3
+Num4
+Num5
+Num6
+Num7
+Num8
+Num9
+NumDelO
+P
+Pause
+Q
+R
+Righ tShift
+S
+ScrollLock
+Shift
+Space
+SysReq
+T
+Tab
+U
+V
+W
+Win
+X
+Y
+Z
+[
+\
+]
+‘
+Examples
+1.To launch a web browser in kiosk mode and open it to the Change passwords  (PSS) module, open a 1.
+command prompt, and type on one line:
+runurl.exe -kiosk -logoff -no_icw -trapsesslock 
+-url https://<server>/<instance>/change-passwords
+2.If runurl is run from a public share rather than your current w ork s t ation,  specify the UNC path to 2.
+runurl in your command. If the share is located on an Activ e  Directory domain controller, open a
+command prompt, and type on one line:
+\\MyADDC\SYSVOL\runurl.exe -kiosk -logoff -no_icw -trapsesslock 
+-url https://<server>/<instance>/change-passwords3.To disable keys on a Windows w ork s t ation  using the -ntkeymap option,  open a command prompt, and 3.
+type on one line:
+runurl.exe -kiosk -logoff -no_icw -trapsesslock 
+-url https://<server>/<instance>/change-passwords -ntkeymap Win+F1,-
+Shift+F1,Alt+Shift+F1,F1
+This is the same as:
+runurl.exe -kiosk  -logoff -no_icw -trapsesslock 
+-url https://<server>/<instance>/change-passwords 
+-ntkeymap (Win+F1),(-Shift+F1),(Alt+Shift+F1),(F1)
+4.To print a list of available key names for the -ntkeymap option  on the command line, type the 4.
+following in the Login Assistant\ directory:
+runurl -ntkeymap ?
+5.An example of a runurl.cfg  file: 5.
+ -kiosk -logoff -no_icw -trapsesslock  -url http://<server>/
+<instance>/?
+6.To run commands from a c on figur ation  file, type: 6.
+runurl -cfg runurl.cfg
+Create the group policy
+If you do not install Cr edential  Provider softw ar e  on users’ w ork s t ations  to allow them to access the
+domain help account, you must set up a group policy to determine the c on figur ation  of a user’s desktop
+environment.
+To create a group policy for use with an SKA:
+1.Create the help account policy. Name the group policy Help SKA.1.
+For example, on Windows 2022:
+a.Open Group Policy Management . a.
+b.Under the forest domain sub-section,  right-click the domain object, then select Create a GPO in b.
+this domain, and Link it here … .
+The New GPO  dialog appears.
+c.Name the group policy Help SKA . c.
+d.Right click on the Help SKA policy you just created, then select Edit. d.
+The Group Policy Management Editor  snap-in appears.
+2.Ensure the help account policy is applied only to the Help SKA group.2.
+Failure to perform this step will result in the Help Account Policy being applied to every user – making
+it almost impossible to log back into the domain.
+a.In the Group Policy Object Editor  snap-in, while the Policy is selected, navigate to Actions a.
+> Pr operties .b.Select the Security tab. b.
+c.Click Add, type Help SKA , then click OK to add the Help SKA group. c.
+d.Select the Help SKA group. Under the permissions for this group, ensure that the Allow checkbox is d.
+selected in the Apply Group Policy row.
+e.Select the Authentic a t ed  Users group. Under the permissions for this group, clear the Allow e.
+checkbox in the Apply Group Policy  row.
+f.Click OK to apply the policy. f.
+3.Restrict the help user’s rights by c on figuring  the group policy settings  as described in: 3.
+▪ Activ e  Directory 2012, 2016, 2019, and 2022 group policy settings  (on page 1617) ▪
+▪ Activ e  Directory 2008R2 group policy settings  (on page 1619) ▪
+All other settings  should be left in the "Not c on figur ed"  state.
+See Micr osoft’ s  documen t ation  for detailed steps on how to create a group policy.
+This group policy is now in e ff ect  every time  the help user logs into the domain. Should it appear that the
+group policy is not applying properly, check to ensure that your w ork s t ations  are using a primary DNS
+server that supports dynamic updates.
+Activ e  Directory 2012, 2016, 2019, and 2022 group policy settings
+Policy Setting
+Windows Components
+> Internet Explorer
+Disable AutoComplete for forms Enabled
+> AutoPlay Policies
+Turn off Autoplay Enabled
+Turn off Autoplay on: All drives
+Start Menu and Taskbar
+Remove user’s folders from the Start
+MenuEnabled
+Remove links and access to Windows
+UpdateEnabled
+Remove common program groups
+from Start MenuEnabled
+Remove Documents icon from Start
+MenuEnabled
+Remove programs on Settings  menu Enabled
+Remove Network Connections  from
+Start MenuEnabled
+Remove Favorites menu from Start
+MenuEnabledPolicy Setting
+Remove Search link from Start Menu Enabled
+Remove Help menu from Start Menu Enabled
+Remove Run menu from Start Menu Enabled
+Remove Pictures icon from Start
+MenuEnabled
+Remove Music icon from Start Menu Enabled
+Remove Network icon from the Start
+MenuEnabled
+Add Log off  to the Start Menu Enabled
+Remove and prevent access to the
+Shut Down, Restart, Sleep, and
+Hibernate commandEnabled
+Prevent changes to Taskbar and Start
+Menu SettingsEnabled
+Remove access to the context menus
+for the taskbarEnabled
+Do not keep history of recently
+opened documentsEnabled
+Turn off personalized menus Enabled
+Force classic Start Menu Enabled
+Remove Balloon Tips on Start Menu
+itemsEnabled
+Remove pinned programs list from
+the Start MenuEnabled
+Remove frequent programs list from
+the Start MenuEnabled
+Remove All Programs list from the
+Start MenuEnabled
+Remove the "Undock PC" button  from
+the Start MenuEnabled
+Hide the notific ation  area Enabled
+Do not display any custom toolbars in
+the taskbarEnabled
+Desktop
+Hide and disable all items on desktop Enabled
+Remove My Documents icon on the
+desktopEnabled
+Remove Computer icon on the
+desktopEnabledPolicy Setting
+Remove Recycle Bin icon from
+desktopEnabled
+Don’t save settings  at exit Enabled
+> Desktop
+Disable Activ e  Desktop Enabled
+Control Panel
+Prohibit access to the Control Panel
+and PC settingsEnabled
+> P er sonaliz ation
+Enable screen saver Disabled
+System
+Don’t display Getting  Started welcome
+screen at logonEnabled
+Custom user interface Enabled
+ Interface filename:  %logonserver%\sysvol\runurl.exe -cfg %logonserver%
+\sysvol\runurl.cfg
+Run only specified  Windows
+applic ationsEnabled
+  List of allowed applic ations:  runurl.exe
+> Ctrl+Alt+Del Options
+Remove Task Manager Enabled
+Remove Lock Computer Enabled
+Remove Change Password Enabled
+Activ e  Directory 2008R2 group policy settings
+Policy Setting
+Windows Components
+> Internet Explorer
+Disable AutoComplete for forms Enabled
+Turn off Managing Phishing filt er Enabled
+Select phishing filt er  mode: Off
+> AutoPlay Policies
+Turn off Autoplay Enabled
+  Turn off Autoplay on: All drives
+Start Menu and TaskbarPolicy Setting
+Remove user’s folders from the Start
+MenuEnabled
+Remove links and access to Windows
+UpdateEnabled
+Remove common program groups
+from Start MenuEnabled
+Remove Documents icon from Start
+MenuEnabled
+Remove programs on Settings  menu Enabled
+Remove Network Connections  from
+Start MenuEnabled
+Remove Favorites menu from Start
+MenuEnabled
+Remove Search link from Start Menu Enabled
+Remove Help menu from Start Menu Enabled
+Remove Run menu from Start Menu Enabled
+Remove Pictures icon from Start
+MenuEnabled
+Remove My Music icon from Start
+MenuEnabled
+Remove Network icon from the Start
+MenuEnabled
+Add Log off  to the Start Menu Enabled
+Remove and prevent access to the
+Shut Down, Restart, Sleep, and
+Hibernate commandEnabled
+Prevent changes to Taskbar and Start
+Menu SettingsEnabled
+Remove access to the context menus
+for the taskbarEnabled
+Do not keep history of recently
+opened documentsEnabled
+Turn off personalized menus Enabled
+Force classic Start Menu Enabled
+Remove Balloon Tips on Start Menu
+itemsEnabled
+Remove pinned programs list from
+the Start MenuEnabled
+Remove frequent programs list from
+the Start MenuEnabled

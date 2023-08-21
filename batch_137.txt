@@ -1,0 +1,230 @@
+Add an authoriz ation  phase
+To add a second authoriz ation  phase to enable the direct manager to authorize all requests using the
+template:
+1.Navigate back to Manage the system > Resources > Template accounts . 1.
+2.Select AD_TEMPLATE . 2.
+3.Click the Authoriz ation  tab. 3.
+4.Click Add new… . 4.
+A second phase is added to the Authoriz ation  table.
+5.Select the second phase to edit it.5.
+6.Leave the Minimum number of authorizers  as 1. 6.
+7.Leave the Number of denials before a change request is terminated  as 1. 7.
+8.In the user classes table at the bottom  of the form, click Select… . 8.
+9.Select the checkbox next to the _MANAGER_DIRECT_  user class. 9.
+Ensure you select _MANAGER_DIRECT, not _MANAGER_INDIRECT.
+10. Click Select . 10.
+Bravura Security Fabric  displays an error because you have not mapped the participan ts  in the user
+class yet.
+11. Under P articipan t  mapping  for MANAGER, select AUTHORIZER . 11.12. Under P articipan t  mapping  for SUBORDINATE, select REQUESTER . 12.
+13. Click Update . 13.
+14. Click the Authoriz ation  tab to see the c on figur ed  phases. 14.
+Here, you could re-order phases, by changing the numbers in the Authoriz ation  phase  column and
+clicking Update . Leave the order as is for this lab.
+You have now set up dynamic phased authoriz ation  for requests for new accounts. In the next
+example, we will use our new phased authoriz ation  to approve a request for a new hire.
+Selecting  authorizers using a plugin
+When a user submits a request, Bravura Security Fabric  can use a plugin to dynamically assign authorizers
+in addition  to, or instead of, those assigned to a w orkflo w  object or resource.
+Bravura Security Fabric  allows for fle xibility  as the authoriz ation  process progresses. You can implement a
+sequential  approval process that allows authorizers or other criteria to be added or removed at each
+step, or for responses to be overruled.
+For example, an or g aniz ation  may have 'weighted authorizers', where a request could move to the next
+stage if enough high-ranked authorizers approved it; overriding the minimum required authorizers.Higher-ranked authorizers could also overrule the response of lower-ranked authorizers. The w eighting
+would be determined by business logic, such as OrgChart data, and built into the plugin.
+The plugin is run after  each authoriz ation  step, accepting  all in f ormation  about the:
+▪Current authorizers▪
+▪Requester/Recipient▪
+▪Requested resources and attribut es ▪
+The plugin can override and update:
+▪Request approval criteria (minimum authorizers)▪
+▪Authorizers assigned to the request▪
+▪ Authoriz ation  response (approved, denied) for each authorizer ▪
+▪The number of authoriz ation  phases (add, remove) ▪
+▪The authorizers within each phase (add, remove)▪
+Bravura Security Fabric  sends email to a ff ect ed  authorizers and their delegates when the plugin is run.
+The plugin is not run during certific ation  campaigns. Authoriz ation  is completed by the reviewer only.
+To set the plugin point, type the name of the plugin in the IDSYNCH AUTH CRITERIA MOD PLUGIN field  in
+the W orkflo w  > Options  > Plugins  menu.
+There is no shipped plugin in use with this plugin point. A basic sample plugin script, plugin-
+authmod.psl , is located in the samples\ directory. An advanced sample plugin script,
+idsynch_auth_criteria_mod.psl , is located in the samples\plugin directory.
+See more in f ormation  on writing  a custom plugin
+Planning and t esting
+The plugin for the Authorizer modific ation  plugin point must be carefully cr afted  because it is being
+executed multiple  times  during the authoriz ation  process.
+Proper t esting  is considered best pr actice  while developing these plugins.
+The Bravura Security Fabric  administrator should document the expected authoriz ation  w orkflo w
+behavior prior to the cr eation  of the plugin. The documented behavior should then be used as a guidance
+tool while developing and t esting  the authoriz ation  plugin.
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+This plugin is run by idwfm for every new request and then every time  there is an action  on the
+request. It is not run when the requester or recipient cancels a request.
+If the plugin causes any changes to a request, those changes are written  to the database and the plugin is
+executed again. The process repeats until  the plugin no longer causes any changes.Input
+Input to the plugin includes:
+"" "" = {
+  "sessionid" = "<session ID>" # The session ID
+  "extras" "" = {
+    "actor" = "<Profile ID>" # The user causing the event
+    "event" = "<EVENT_POST_BATCH|EVENT_AUTH_REJECTED|
+EVENT_AUTH_APPROVED|
+EVENT_BATCH_ATTRS_UPDATE>" # The event causing the plugin to be called
+    "numrerun" = "<#>" # The number of times the plugin has run in the event
+    "primary" = "<Profile ID>" # The user that is involved with the event
+    "firstrun" = "<true|
+false>" # True if the plugin is run for the first time for the request.
+                                # Otherwise, false or the key is not prsent.
+  } # Extra information about when it is executed
+  "event" = "<EVENT ID>" # The chain of events being evaluated.  1 or more keys are present.
+  "request" "" = { # Standard request data listing resources
+                   # See ??
+    "resource" "" = {} # 0 or more
+  }
+}
+Output
+Output to the plugin includes:
+ "" "" = {
+    "errmsg" = "<text>"
+    "infomsg" = "<text>" # Optional; Appends message to the request notes.
+    "retval" = "<N>" # Mandatory; zero is success and non-
+zero is failure
+    "runWizardPlugin" = "true|
+false" # true means wizard plugin will run after
+                                     # authmod plugin is completed
+                                     # false or missing this flag in kvg file
+                                     # means that wizard plugin will not run
+                                     # after authmod plugin is completed
+    "request" = "<Batch ID>" = {
+        "batchauthnote" = "<authorization note for the batch>"
+    }
+    "authorizer" "<authorizer's profile ID>" = { # 0 or more to add or reset                                                 # authorization status.
+       # Authorizer KVGroups as detailed below in
+       # Subsubsection 6.3.7.1 .
+   }
+    "resource" "<Resource ID from the request>" = {
+       "finalized" = <true|false>
+               # All attached resources are not finalized by default.  By
+               # default, resource operations wait for the request to be
+               # decided (all authorizations received) on all resources.  If
+               # the plugin sets a resource to be finalized (true) and the
+               # approvals are received for the resource, the operations are
+               # executed before other resource approvals are received.
+               #
+               # When finalizing roles, all role member/
+entitlements must be
+               # finalized, and all authorizations for the role must be
+               # received before processing role members/entitlements.
+       "authorizationsRequired" = "<N>" #Optional, no change if omitted
+               # If 0, the resource is auto-approved.
+               # If greater than the number of resource authorizers,
+               # insufficient approval will deny the request
+               # immediately.
+       "acctauthnote" = "<authorization note for resource>"
+       "phase" "<phase number>" = { #Required; 1 or more phases
+         "authorizationsReceived" = "<N>"
+         "authorizationsRequired" = "<N>"
+         "authorizer" = "<profile id>" #
+               # One entry per authorizer is required.
+               # If an authorizer is attached in the input and
+               # not listed here, then they will be removed from the list
+               # of authorizers.
+               # If a new authorizer is listed here and not on the resource input,
+               # they will be attached to the resource for authorization.
+         "rejectionsReceived" = "<N>"
+         "rejectionsRequired" = "<N>"
+       }
+    }
+}
+Authorizer KVGroups
+On output, the following authorizer KVGroups format is expected:   "authorizer" "<authorizer id>" = {
+      "resource" "<resource id>" = {
+          "reason" = "<reason for being assigned>"
+          "status" = "<resource authorization status>"
+          "authauthnote" = "<authorization note for authorizer>"
+      } # one or more
+  } # one per authorizer
+Status can be:
+▪"O" – open▪
+▪"A" – approved▪
+▪"D" – denied▪
+▪"I" – irrelevant▪
+▪"P" – pending phase▪
+When a resource needs 1 of 3 authorizers to approve, and one does, the other two are set to "irrelevant"
+since their answer (approve or reject) is not required any more. "P" is similar to "I" (irrelevant) in that
+they are not notified  or expected to provide their approval. Once a phase is satis fied  by the required
+authoriz ations,  the status of the next phase of authorizers changes from "P" to "O".
+Examples
+The following are examples of KVGroup plugin output:
+1.To leave a request unchanged, simply return success:  1.
+"" "" = { 
+  "errmsg" = "" 
+  "retval" = "0" 
+}  
+2.To reset an approval to open, and add a second authorizer, and increase the minimum number of2.
+approvals to 2:
+"" "" = { 
+  "errmsg" = "" 
+  "retval" = "0" 
+  "authorizer" "fredrick.rahardja" = { 
+    "resource" "4F12FA11531BCBC574BC4C4295D4872E" = {        "reason" = "Approval required" 
+       "status" = "O" 
+     } 
+ 
+  } 
+  "authorizer" "crysta.soria" = { 
+    "resource" "4F12FA11531BCBC574BC4C4295D4872E" = { 
+       "reason" = "Approval required" 
+       "status" = "O" 
+    } 
+  } 
+  "resource" "4F12FA11531BCBC574BC4C4295D4872E" = { 
+    "finalized" = "false" 
+    "phase" "1" = { 
+      "authorizationsRequired" = "2" 
+      "authorizer" = "crysta.soria" 
+      "authorizer" = "fredrick.rahardja" 
+    } 
+  } 
+}  
+3.To finaliz e  the update portion  of the request while group approval is still pending:  3."" "" = { 
+  "errmsg" = "" 
+  "retval" = "0" 
+  "authorizer" "alyce.costa" = { 
+     "resource" "5A32EZ11531AB34574AB4B42953421AE" = { 
+        "status" = "O" 
+      } 
+  } 
+  "authorizer" "fredrick.rahardja" = { 
+     "resource" "4E12EZ11531ABAB574AB4B4295C4872D" = { 
+        "status" = "A" 
+     } 
+  } 
+  "authorizer" "crysta.soria" = { 
+     "resource" "4E12EZ11531ABAB574AB4B4295C4872D" = { 
+        "status" = "A" 
+     } 
+  } 
+  "resource" "4E12EZ11531ABAB574AB4B4295C4872D" = { 
+    "phase" "1" = { 
+      "authorizationsReceived" = "2"       "authorizationsRequired" = "2" 
+      "authorizer" = "crysta.soria" 
+      "authorizer" = "fredrick.rahardja" 
+    } 
+    "finalized" = "true" 
+    "implicit" = "false" 
+    "itemType" = "accountID" 
+    "notes" = "" 
+    "operation" = "UPDT" 
+    "parentRole" = "" 
+    "pseudoData" = "" 
+    "pseudoOp" = "false" 
+    "pseudoTag" = "" 
+    "reason" = "" 
+    "result" = "O" 
+    "accountID" = "steve.benes" 
+    "targetid" = "NORSE" 
+  } 
+  "resource" "5A32EZ11531AB34574AB4B42953421AE" = { 
+    "phase" "1" = { 

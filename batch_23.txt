@@ -1,0 +1,268 @@
+Click Next .
+.
+▪If you chose to use a pr ec on figur ed  database user, setup displays Micr osoft  SQL Server ▪
+c onnection  settings
+If you chose to use a pr ec on figur ed  database user at the beginning of the ins t allation  process,
+choose an authentic ation  mode that the SQL Server ID should use. You can choose either SQL
+Server authentic ation  or Windows authentic ation.  If you choose Windows authentic ation,  ensure
+that the login exists on the SQL Server database server for the account ID that the Bravura Security
+Fabric  services will run as.
+Click Next .
+Enter c onnection  in f ormation  as follows:
+Database server name: Type the name of the server hosting  the database:
+<dbserver>  
+If the database is installed on your Bravura Security Fabric  server, use . (period), localhost , or
+the server name.
+If you installed SQL Server  with the non-default instance name, you must include a backslash
+followed by the instance name:
+<dbserver> \<instance>  
+For the express edition,  the instance is normally SQLEXPRESS .
+If SQL Server  is using a custom port, the syntax is:
+<dbserver> ,<port> [\<instance> ] 
+Database name: Type the name of the database hosting  the schema.
+Database server user ID: If using SQL Server authentic ation,  type the ID of the dedicated user that
+you created for Bravura Security Fabric . This field  is not visible for Windows authentic ation.
+You must use a diff er en t  dedicated user for each Bravura Security Fabric  instance.
+Database server user password: If applicable, type the password for the above user.
+If a change has been made to the database server cr edentials,  use the iddbadm program to
+update the database in f ormation.
+See usage in f ormation  for iddbadm
+Use the iddbadm program to modify and c on figur e  the cr edentials  used by iddb to connect to
+the database backend.
+Usage
+Run iddbadm with the following arguments:
+  iddbadm.exe -instance <bravura_instance> -dbtype MSSQL
+   [-database <database>] [-dbserver <dbserver>]
+   -dbuser <bravura_dbuser>  -password <password>   [-iddbport <iddbport>] 
+   [-integrated]
+Argument Description
+-database <database> The MSSQL database name
+-dbserver <dbserver> The MSSQL database server or instance c onnection  string
+-iddbport <iddbport> The database service TCP port
+-dbtype <dbtype> The database type (MSSQL)
+-dbuser <dbuser> The ID of the user that connects to the database
+-instance <instance> The Bravura Security Fabric  instance name
+-password <password> The database server user password
+-integrated Use Windows Integrated Authentic ation  instead of a
+password
+-sho w c on fig  <sho w c on fig> Show current DBMS backend c on figur ation
+Example
+1.To change the dbms cr edentials  for a MSSQL server: 1.
+iddbadm -dbtype MSSQL -dbuser mssqluser -instance idminstance -
+password 
+dbuserpassword -database dbname -dbserver dbserver.com 
+2.To change the authentic ation  mode for a MSSQL server from SQL Server authentic ation  to 2.
+windows authentic ation:
+iddbadm -integrated
+.
+Advanced c onfigur ation
+If you want to modify how Bravura Security Fabric  installs the database schema, click Advanced on
+the Database Server c on figur ation  page  and c on figur e  the following:
+Install schema: Clear this checkbox if you do not want Bravura Security Fabric  to install the schema
+because it has already been installed by your database administrator, or you are using a shared
+schema  (on page 229).
+Populate default data: Clear this checkbox if you do not want Bravura Security Fabric  to populate
+default data; for example where you want to install to a shared schema.
+Schema install user ID: (Optional)  If using SQL Server authentic ation,  type the ID of the user to
+install the schema as. This field  is not visible for Windows authentic ation.
+This user must be able to create schema objects. If not specified,  Bravura Security Fabric  uses the
+Database server user ID.
+Schema install password: If applicable, type the password for the above user.
+The password is only required if Install schema  is selected and Schema install user ID  is specified..
+▪If you want to install the Analytics  app now, c on figur e  options  to connect with SQL Server R eporting ▪
+Services (SSRS)
+If you are installing SQL Server R eporting  Service (SSRS) to use the Analytics  ensure the server is not
+a Domain Controller.
+You must have access to SQL Server R eporting  Services to use this component. See in f ormation  required
+If you are installing the Analytics  app, gather the following in f ormation:
+▪The server name where SQL Server R eporting  Services (SSRS) resides ▪
+▪Report Server Web Service URL▪
+▪Name and password of service account▪
+▪If you are using an e xisting  report server database you will need that database name ▪
+▪If you are using an e xisting  report server user you will need that username and password ▪
+.
+To c on figur e  the Analytics  app c onnection  to SSRS:
+1.Enter the Report Servers web service URL.1.
+2.Enter the SSRS service username and password.2.
+3.Click Next . 3.
+The SQL Server R eporting  Service Con figur ation  - Database User  page is displayed.
+4.Enter the name of server where your instance database resides.4.
+5.Choose your report database user option. 5.
+a.If you want setup to create and c on figur e  a new dedicated database user that can query a.
+the instance database, enable the Create a dedicated database user? option.
+Enter the database administrator name and password so the installer can create the new
+dedicated database user.
+b.If you already have a dedicated database user created and c on figur ed,  enter those details. b.
+Click Next .
+Click Skip if you do not want to install the Analytics  app now. You can set it up after  installing
+Bravura Security Fabric  softw ar e,  as documented in REPORTS  (on page 2891).
+23. Type the login ID and password for the Bravura Security Fabric  applic ation  administrator. The default 23.
+login ID is superuser. The password can be up to 64 characters long.Be sure to remember this login ID and password. You will need them to log into Bravura Security
+Fabric.
+Click Next .
+24. Type and c on firm  a password for the REST API endpoints. 24.
+Click Next .
+25. Click Install  to start the ins t allation. 25.
+The installer begins copying files to your computer. The Completed Bravura Security Fabric  <instance>
+Setup Wizard page appears after  the Bravura Security Fabric  features have been successfully installed.
+26. Click Finish  to exit. 26.
+The pos t -ins t allation  tasks begin.Do not stop the pos t -ins t allation  tasks. The installer is attempting  to load connectors from the
+Connector Pack, language tags, and reports.
+If you install the Bravura Security Fabric  before a Connector Pack  has been installed, a warning
+appears at this stage that no connectors could be found. It is safe to proceed.
+If any of the pos t -ins t allation  tasks produce warnings or errors, click:
+▪Report for details on all pos t -ins t allation  tasks ▪
+or
+▪Messages.. . for details on a specific  pos t -ins t allation  task ▪
+Otherwise, wait until  the status changes to success, then click Finish .
+If connectors (agents) were not installed successfully, see "T r oubleshooting"  in the Connector Pack
+Documen t ation .
+If the server is going to be used for replic ation,  it is important that the server is c onfigured  for
+replic ation  before any modific ation  or c onfiguration  of the Bravura Security Fabric software  occurs.
+R eplic ation  c onfiguration  must be completed firs t.  Refer to the R eplic ation  and Recovery Guide . This
+only applies to servers being used for replic ation.
+See also: 
+▪File Loc ations ▪
+When you install any Bravura Security product, the default path for program files is <Program
+files path>\Bravura Security\  as of 12.5.0.
+Prior to 12.5.0, the path is <Program files path>\Hitachi ID\ .
+The directory name is not changed when upgrading.
+Bravura Security Fabric directories and files
+Connector pack directories and files
+for in f ormation  about file loc ations.
+▪See Installing Bravura Security Fabric  from the command line  (on page 231) for additional  in f ormation ▪
+about setup and idm.msi .
+Using setup to manage ins t allations
+You can use the setup  program to:
+▪Repair an instance▪
+▪Upgrade an instance▪
+▪Uninstall an instance▪
+▪Install a new instance▪
+You can only upgrade the software  if your Bravura Security Fabric release supports those actions.The setup program requires Windows Installer version 3.0.1 or later. This program should be run by a
+member of the Windows Administrators group.
+When you run setup , it gathers initial  c on figur ation  in f ormation  then launches the Bravura Security
+Fabric  installer package file (idm.msi by default).  
+See also: 
+See Installing Bravura Security Fabric  from the command line  (on page 231) for usage in f ormation.
+Repairing an installed instance
+Repairing an instance replaces any missing or outdated files in the instance with files from the Bravura
+Security Fabric  dis tribution  folder. It does not a ff ect  or overwrite any database entries.
+If some files are accidentally deleted from the instance, or if they become corrupt, then repairing the
+instance is the simplest way to replace the missing files.
+Additionally ,  if any files have an older version number than the dis tribution  folder from which you are
+running setup , those files are replaced.
+To repair a Bravura Security Fabric  instance:
+1.Log in to the host Windows server as member of the Administrators group.1.
+2.If required, download and unzip the Bravura Security Fabric  dis tribution  folder. 2.
+Contact your Bravura Security account r epr esen t ativ e  for details.
+3.Launch the setup program located at the root of the dis tribution  folder. 3.
+The setup program displays the Select an instance to c on figur e  page.
+4.Click Repair for the appropriate instance. 4.
+A dialog window appears to enable backup.
+5.Click Yes to c on firm  that you want to repair the selected instance. 5.
+When repairs are complete, the installer exits.
+Uninstalling the softw ar e
+WARNING!: Bravura Security strongly recommends that you back up your ins t allation
+and registry before uninstalling the softw ar e.
+Remember to note and backup the administrator passwords for all managed resources before
+uninstalling Bravura Privilege . Remember that Bravura Privilege  randomizes these passwords.
+To uninstall Bravura Security Fabric :
+1.Click Start > Control Panel > Programs and Features . 1.
+2.Select Hitachi ID Management Suite <instance >, then click Remove . 2.
+3.When prompted to remove Bravura Security Fabric  from your computer, click Yes. 3.
+The uninstaller gathers the required in f ormation.
+4.When prompted whether you want to remove the .\psadmin account from your computer, click: 4.▪No if there are other instances of any Bravura Security Fabric  sub-system on the server. ▪
+▪Yes if you are sure you want to remove the account. ▪
+The uninstaller finishes  removing the Bravura Security Fabric  softw ar e,  then closes aut omatic ally .
+5.Close Programs and Features 5.
+Note the following:
+▪The database schema objects are not removed when you uninstall Bravura Security Fabric . You must ▪
+remove them manually before you can reinstall Bravura Security Fabric  using the same schema.
+▪Files added after  ins t allation  are not removed. This includes: ▪
+▪List files in the p sc on fig  directory, ▪
+▪Log files and mail messages in the log  directory ▪
+▪The DLL files in the Common Files\Bravura Security\Bravura Security Fabric\ ▪
+directory are removed if the last instance of Bravura Security Fabric  is uninstalled.
+▪The Common Files\Bravura Security\Bravura Security Fabric\  entry is removed from ▪
+the path system variable if the last instance of Bravura Security Fabric  is removed. This path allows
+Bravura Security Fabric  to use the DLL files.
+▪The .\psadmin account is not removed during silent unins t allation. ▪
+If the Analytics  app was installed, the following is also true:
+▪If custom reports are in the \<instance>\analytics\ folder the analytics  folder structure and ▪
+the custom reports will remain.
+▪If custom reports are in the \<report_id>  folder on the SSRS server, the report folder and the ▪
+custom reports will remain.
+▪If custom reports are in the \<instance>\analytics  and the \<reports_id>  folder on the ▪
+SSRS server, only custom reports in the <instance>\analytics  folder are kept.
+T r oubleshooting
+Security policy pr e-ins t allation  check fails
+The pr e-ins t allation  check reports that the "Security Policy check” fails if the Windows option  Default
+owner for objects created by members of the Administrators group is not set to Administrators groups .
+This setting  is located in Adminis tr ativ e  Tools > Local Security Policy > Security Settings  > Local policies
+> Security options .
+To work around this issue:
+1.Create a user called psadmin  as part of the Administrators group, with the Password never expires 1.
+setting.
+2.Log in to the Windows server and install Bravura Security Fabric  as the psadmin user. 2.Database c onnectivity  pr e-ins t allation  check fails
+The pr e-ins t allation  check reports that “Database c onnectivity ”  fails if it cannot detect the appropriate
+Micr osoft  SQL Server client softw ar e.  To correct this issue, see Installing Database and Database Client
+Softw ar e  (on page 172) to learn how to set up your back end database and client softw ar e.
+If the pr e-ins t allation  check still fails, check your path environment variable. For example, if you have
+installed the Micr osoft  SQL Server Express E dition  client the path should contain:
+C:\Program Files\Microsoft SQL Server\90\Tools\binn\
+Setup detects orphaned instances
+If the setup program detects that there are registry entries for improperly installed or uninstalled
+instances on the current server, it displays a message something like:
+The following instance-related registry key(s) under [HKLM\SOFTWARE\Bravura Security\Bravura
+Security Fabric\ have been orphaned,
+and may not be needed any longer:
+<instance>
+Perform a clean-up?
+Click Yes if you want to remove the registry entries for the orphaned instance.  
+Connector Pack check fails 
+Bravura Security Fabric  needs a valid Connector Pack  before it can manage any systems. If the setup
+program does not detect an installed Connector Pack , then a warning 
+  appears next to the Connector
+Pack  check during the pr e-ins t allation  check.
+Click Messages... to view the details of the warning, which includes the minimum Connector Pack  version
+required for the product you are installing.
+After  you finish  installing all instances of Bravura Security Fabric , you should install the Connector Pack .
+See the Connector Pack Documen t ation  for details on global and ins t ance-specific  Connector Pack s.4 Installing with a shared schema
+Con figuring  a shared schema environment for Bravura Security Fabric  off er s  several advantages:
+▪ Better  utiliz ation  of a single backend, as long as the backend is running on a dedicated database ▪
+server.
+▪Cheaper solution  for load balancing, because the Bravura Security Fabric  servers don’t need to be as ▪
+robust.
+▪Shared schema servers can be added without the need to synchronize databases fir s t. ▪
+Bravura Security  strongly recommends that you create at least two or three replicated Bravura Security
+Fabric  servers for fault tolerance and backup. When Bravura Privilege  is installed, the recommended
+minimum is three. See Calculating  the number of servers required to learn how to calculate the number
+of servers required.
+To c on figur e  a shared schema environment, ensure that:
+▪All server clocks are synchronized.▪
+▪All servers have the proper database client softw ar e  installed and c on figur ed  to connect to the same ▪
+backend.
+▪All servers have the same Bravura Security Fabric  instance name. ▪
+▪All servers have the same c ommunic ation  key (or Master Key) , database encr yption  key, w ork s t ation ▪
+authentic ation  encr yption  key, Connector encr yption  key, and IDMLib encr yption  key.
+It is recommended that all servers have Bravura Security Fabric  installed in the same directory on each
+local server.
+There are two methods of c on figuring  a shared schema:
+1.Complete a regular install of Bravura Security Fabric  using a new database. After  the ins t allation, 1.
+redirect the Database Service using the iddbadmin utility  to use an e xisting  database schema.
+Contact support@bravurasecurity.com  for assistance.
+2.During Fabric ins t allation : 2.
+a.Select ”Use a pr ec on figur ed  dedicated database user to install the new instance” when prompted. a.
+b.At the Database Server c on figur ation  page enter the login cr edentials  for the login account you b.
+used for the backend c onnection  on the fir s t server.
+c.Click Advanced to load the Advanced Database Con figur ation  Options  page. c.
+d.Deselect the Install schema checkbox. This causes the installer to check if the specified  database d.
+schema already has the required tables installed. If the tables do not exist, a warning message is
+displayed.
+e.Deselect the Populate default data checkbox. e.
+f.Click OK to close the Advanced Database Con figur ation  Options  page. f.
+g.Click Next to c ontinue  with ins t allation.  Once ins t allation  is complete, the new instance starts g.
+sharing a schema with the instance you specified  c onnection  details for. See also: 
+▪For details on the Database Server c on figur ation  page, see Micr osoft  SQL Server. ▪
+▪Shared-schema servers can be used in a r eplic ation  environment. See the R eplic ation  and Recovery ▪
+Guide  for more in f ormation.

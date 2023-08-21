@@ -1,0 +1,352 @@
+Two new methods were added, one for inclusion, and another for exclusion, but both function  the same.
+These methods are designed for the use case where one component wants to reduce/further restrict the
+list criteria added by another, but does not want to have to re-do the same c alculations  as the other
+component in order to do so.
+The _and  methods are basically a set in t er section  (the criteria in the tag is reduced to the criteria in the
+input and in the tag).
+Example:
+▪plugin.include(criteria_a, criteria_b)▪
+▪plugin.include_and(criteria_b, criteria_c)▪
+▪The r esulting  plugin output will contain only criteria_b  as include criteria. ▪
+If add_if_empty  is True, and you call an _and  method on an empty tag, then instead of r esulting  in
+the tag remaining empty (since it’s a set in t er section),  the criteria is instead added to the tag as though
+you had just called include/exclude  themselves. In the above example, provided we always knew
+that both involved components would always add some number of list criteria, both could instead call
+include_and  with add_if_empty set to True, allowing the component priorities  to be re-ordered
+without any logic needing to be changed.
+Example: (equivalent to previous example)
+▪plugin.include_and(criteria_a, criteria_b, add_if_empty=True)▪
+▪plugin.include_and(criteria_b, criteria_c, add_if_empty=True)▪
+▪The r esulting  plugin output will contain only criteria_b as include criteria ▪
+▪Without add_if_empty=True  the plugin would output no include criteria, since the ▪
+DEFAULT_TAG  would initially  contain nothing.
+This is why tagging is useful, as without it it would quickly be very difficult  for multiple  components
+(oper ating  on the same search) to take advantage of this feature if they could not adequately separate
+what criteria they cared about.
+Internal implemen t ation  details: SearchCriteria, SearchKeys, SearchExpressions, and Filters
+A SearchExpression is a Python dataclass r epr esen t ation  of a single filt er  group in the KVG, minus the
+position  and operator. It is read only, and cannot be altered once created. It has a single public method:
+negate() which returns a new expression with the negated value flipped,  it is equivalent to doing
+~SearchExpression, since it also implements the invert operator. The value of
+SearchExpression().comparator must be a value from the SearchExpression.Comparator enum, however
+you should never create expressions directly outside of t esting.
+A SearchKey can be thought of as a generator class for SearchExpressions. It will generate the expected
+SearchExpression when used with a comparison operator and a value, the SearchKey should always be
+the left side of the comparison. SearchKeys can be initializ ed  a few ways:
+▪SearchKey('criteria_key')  - Generates SearchExpressions for 'criteria_key'  only ▪
+▪SearchKey('criteria_key', field='criteria_field')  - Generates ▪
+SearchExpressions for 'criteria_key'  with the field  'criteria_field'  only▪SearchKey(’criteria_key’, complex=True)  - Generates SearchExpressions for ▪
+'criteria_key'  but will also generate SearchExpressions for fields  if operated on with
+SearchKey('criteria_key, complex=True).criteria_field etc. This is done by
+dynamically returning SearchKey('criteria_key', field='criteria_field')  when
+you access the attribut e.
+To access nested attribut es  of complex SearchKeys that contain @ or - use _AT_ and _DASH_ instead.
+Example: S earchKey(’accountattr’, complex=True)._AT_accountEnabled
+SearchKeys support the following operators/methods:
+▪Equals / ==▪
+▪On / ==▪
+▪Only valid for da t etime.da t e  objects ▪
+▪Less than / <▪
+▪Before / <▪
+▪Only valid for da t etime.da t e  objects ▪
+▪Less than or equals / <=▪
+▪Before or on / <=▪
+▪Only valid for da t etime.da t e  objects ▪
+▪Greater than / >▪
+▪ After  / > ▪
+▪Only valid for da t etime.da t e  objects ▪
+▪Greater than or equals / >=▪
+▪ After  or on / >= ▪
+▪Only valid for da t etime.da t e  objects ▪
+▪Is / >>▪
+▪Due to reserved keywords, the method version is called is_▪
+▪Contains /▪
+▪Accepts * and ? wildcards▪
+▪Starts with / ^▪
+▪Accepts * and ? wildcards▪
+SearchCriteria is the base class for capturing the available SearchKeys for a given engine. Commonly used
+Criteria classes can be found in idmlib.plugins.sear ch filt er .crit eria.  A SearchCriteria class is a c ollection  of
+SearchKeys, r epr esenting  a single search type. However, it has a few in t er esting  pr operties  in order to
+support the use of list criteria:
+▪If you want to use a SearchCriteria class with include/exclude you need to get a modifiable  CriteriaDict ▪
+instance specialized for that particular  SearchCriteria subclass, this can be done by calling
+SearchCritera.instance()
+▪You can set values on attribut es  of this returned object to specify the values to include/exclude, ▪
+then pass them to the applicable function.▪You can also provide values directly on ins t antiation  by passing them as keyword arguments to ▪
+instance .
+▪In order to support include/exclude a SearchCriteria subclass must:▪
+▪Set the _search_type  class attribut e  to a valid search type ▪
+▪Set _supports_lists  to True ▪
+▪Provide a dictionar y  to _k e y_fields  mapping the Python name of the class attribut e  to the KVG ▪
+name in the list output.
+Additionally ,  the following property helps in cases where some keys may be de fined  in the plugin input,
+but the class has not yet been updated with the new keys:
+▪If the class does not explicitly specify a SearchKey class attribut e  for a given attribut e,  one will be ▪
+created for you on access, it will aut omatic ally  set complex to True, and have the same name as the
+accessed attribut e,  but _AT_ will be replaced by @, and _DASH_ with -, similar to nested members of
+complex SearchKeys. Example: Accessing S earchCriteria.some_DASH_criteria  would
+generate SearchKey('some-criteria', complex=True)  for you.
+Con figur e  saved search plugin
+You can use a plugin program to add or remove saved searches for users, based on the type of search
+engine. Saved searches created by plugin are known as Searches , and can be shared for all users.
+Users can create saved searches for themselves from the user interface. My Searches cannot be shared
+across users. See Saved searches  (on page 365) for more in f ormation  about My Searches.
+To enable this plugin:
+1.Navigate to Manage the system  > Modules  > Options . 1.
+2.Type the name of the plugin in the SAVED SEARCH PLUGIN field. 2.
+Allowable engines
+The plugin can be used with any search engine that supports advanced search, except for the old style
+advanced search pages in the Manage reports (RPT) module.
+A sample component, hid_saved_search_sample , is shipped with Bravura Security Fabric  for use
+with this plugin point.
+See more in f ormation  about writing  a custom plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The plugin is called by all allowable search engines when users selects the saved search drop-down
+menu.Input
+The input presented to the plugin is a KVGroup that includes the viewer in f ormation,  module, clientIp,
+proxyIp, searchName, search type, cginame, a list of advanced search keys and session ID.
+" " " " = {
+ "viewer" "user" = { ... }
+ "module" = "ajaxsvc"
+# Where the plugin is being run from
+ "clientIp" = "<Client IP address>"
+# The requester's client IP address
+ "proxyIp" = "<Proxy IP address>"
+# The requester's proxy IP address (empty if there is no proxy)
+ "searchName" = "<App search name>"
+# The app search name where the search engine is being run (optional,
+# used only in apps)
+ "searchType" = "<ROLE|NOSGROUP|MANAGER|USER|ACCOUNT|HOST|...>";
+# The search engine calling the saved search plugin
+ "cginame" = "<psa|ajax|idr|rpt|...>"
+ "ValidKeys" "" = {
+ "<advance search key>" = "" # 1 or more keys to filter on
+}
+ "sessionid" = "<Session ID>"
+# The session ID for the viewer
+}
+Example
+The following is an example of the input KVG file:
+# KVGROUP-V1.0
+"" "" = {
+"viewer" "user" = {
+"id" = "superuser"
+"name" = "superuser"
+}
+"module" = "ajaxsvc"
+"clientIp" = "::1"
+"proxyIp" = ""
+"searchName" = "IDC_C_SELECT_ROLE"
+"searchType" = "ROLE"
+"cginame" = "psa"
+"ValidKeys" "" = {"assignable" = ""
+"deprecated" = ""
+"description" = ""
+"enabled" = ""
+"entitlement" "" = {
+"groupid" = ""
+"groupname" = ""
+"roleid" = ""
+"rolename" = ""
+"tplid" = ""
+"tplname" = ""
+}
+"id" = ""
+"rbacenforce" = ""
+"user" = ""
+}
+"sessionid" = "S56d72485-354c-4ea5-a084-de52560cc6bd"
+}
+Output
+The plugin provides a criteria KVGroup to the search engine.
+# KVGROUP-V1.0
+" "  " " = {
+"savedSearches" "" = {
+ "savedSearch" "" = {
+"id" = "<saved search id>" # Characters <, >, /, &, " and ' are forbidden in plugin saved search IDs as they are significant characters in XML and/
+or HTML.
+"label" = "<saved search label>" # Any characters can be used in plugin saved search label, just "backslash" and "quotation" characters used in Python need to be escaped.
+"isDefault" = "0|1";# When set to '1', the saved search is auto-
+selected when corresponding engine page is open from UI. Note, there can be only one 'isDefault'='1' returned by plugin (per engine).
+"criteria" "" = {
+"filter" "" = {
+"position" = "<N>"; # Mandatory and must be an increasing sequence of filter items beginning at 1.
+"key" = "<search engine advance key>";
+"comparator" = "<comparator value>"; # See below for more detail
+"value" = "<value>"; # Mandatory; Includes the value used in the comparison.
+"negate" = "0|1"; # "1" generates the logical NOT of "filter"
+} # Must include one or more filter groups.There is a hard limit of 5 filters for each saved search criteria.
+}
+}}
+"retval" = "0"
+}
+In a "criteria" group, each filt er  includes the following key-value pairs:
+▪key Search engine advanced keys as listed here. ▪
+Search engines and advanced search keys:
+▪ACCOUNT▪
+Advanced key Description
+isLinked Is linked to a pr ofile
+t ar g etid Target system ID
+name User name
+groupid Group ID
+acc ountid Account
+▪ACCOUNTFORGROUP▪
+Advanced key Description
+directmanager Direct manager
+groupsearch Group ID
+attrk e y Account attribut e
+userid User ID
+name User name
+allmanagers Direct and indirect managers
+rolesearch Role ID
+hostsearch Target system ID
+▪ADMIN▪
+Advanced key Description
+directmanager Direct manager
+groupsearch Group ID
+userid User ID
+privileges Privileges
+attrk e y Account attribut e
+name User name
+allmanagers Direct and indirect managers
+rolesearch Role ID
+hostsearch Target system ID
+▪ADMINGROUP▪Advanced key Description
+id ID
+userclass User class ID
+privileges Privileges
+desc Description
+▪ATTRDEF▪
+Advanced key Description
+load Load attribut e  values from target system
+attrid Account attribut e  ID
+minval Minimum number of values
+cr ea t eaction Action  when cr eating  account
+pr of attrid Mapped pr ofile  attribut e  ID
+upda t eaction Action  when updating  account
+type Account attribut e  type
+▪ATTRGRP▪
+Advanced key Description
+display_type Display type
+desc Attribut e  group description
+member Pr ofile  attribut e  member ID
+member_desc Pr ofile  attribut e  member description
+id Attribut e  group ID
+▪BBATTR▪
+Advanced key Description
+output_oper ation Output oper ation
+connector_key Connector key
+input_oper ation Input oper ation
+attrk e y Account attribut e
+input_target Input target system
+▪CERTATTR▪
+Advanced key Description
+type Type
+id ID
+desc Description
+▪CERTRESOURCE▪Advanced key Description
+cer_name Reviewer name
+roleid Role ID
+res_name Con figur ation  description  : Entitlemen t  description
+cer_id Reviewer ID
+targetname Target system description
+sodid Segr eg ation  of duties  rule ID
+soddesc Segr eg ation  of duties  rule description
+groupname Group description
+groupid Group ID
+t ar g etid Target system ID
+res_type Entitlemen t  type
+res_id Con figur ation  ID : Entitlemen t  ID
+roledesc Role description
+▪CERTROUND▪
+Advanced key Description
+method Certific ation  method
+datestarted Date started
+user User under review
+sa v edc on figid Certific ation  setup ID
+certtype Certific ation  type
+role Role ID
+initia t or Initia t or  ID
+description Description
+sa v edc on fig desc Certific ation  setup description
+certifier Reviewer ID
+status Campaign status
+target Target system ID
+resourcetype Entitlemen t  type
+group Group ID
+userclass User class ID
+sod Segr eg ation  of duties  rule ID
+▪CERTSEGMENT▪
+Advanced key Description
+cer_name Reviewer name
+ent_id Entitlemen t  IDseg_percentage % completed
+startdate Start date
+cer_id Reviewer ID
+ent_desc Entitlemen t  description
+enddate End date
+ent_type Entitlemen t  type
+userclass User class
+seg_desc Segment description
+▪CONFIGCERT▪
+Advanced key Description
+desc Con figur ation  description
+status Status
+id Con figur ation  ID
+type Con figur ation  type
+▪CONFIGCERTHISTORY▪
+Advanced key Description
+certifiername Reviewer name
+reason Notes
+certifier Reviewer ID
+▪FOUNDACCOUNT▪
+Advanced key Description
+acc ountid Account
+discname Discovered object name
+discsid Discovered object SID
+disctype Discovered object type
+lastpwdmod Last password change
+managed Is managed
+mode Mode
+platform type Platform  type
+policyid Managed system policy ID
+t ar g etid Target system account exists on
+usedhost Target system account discovered from
+Dynamic group Description
+acc oun t attrk e y Account attribut e  keys
+f oundc ompattrk e y Discovered computer attribut e  keysf oundsub scriber attrk e y Discovered subscriber keys
+ma_attrk e y Managed account resource attribut e  keys
+t a_attrk e y Target system resource attribut e  keys
+▪FOUNDCOMPATTR▪
+Advanced key Description
+tagtype Attribut e  type
+tagname Attribut e
+▪FOUNDCOMPUTER▪
+Advanced key Description
+sourcename Source system
+name Discovered system name
+adminid_status Discovered system administrator ID status
+loadtime Last discovered
+state Discovered system status
+type Discovered system type
+▪GROUPFORGROUP▪
+Advanced key Description
+child_groups Child groups
+exclude_child_groups* Exclude direct and indirect child groups
+exclude_parent_groups** Exclude direct and indirect parent groups
+groupid Group ID
+groupname Group description
+grouptype Group type
+issecurity Is security group
+managed Managed
+members Accounts
+parent_groups Parent groups
+parentgroupid Parent group ID
+RB A Cflag Role enforcement
+targetdesc Target system description
+t ar g etid Target system ID
+url Help URL
+used In use
+valid Valid
+* Key exclude_child_groups is only available in parent group selection  page

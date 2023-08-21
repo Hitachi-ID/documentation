@@ -1,0 +1,310 @@
+▪Create endpoint▪
+▪Create server role▪
+▪Create trace event notific ation ▪
+▪External access assembly▪
+▪View any de finition ▪
+▪View server state▪
+e.Click OK. e.
+Advanced c onfigur ation  
+If you require that the dedicated user works with fewer permissions, you can do one of the following:
+▪Modify ins t allation  options  so that Bravura Security Fabric  installs to a named schema owned by a ▪
+diff er en t  user.
+The ”schema install user” requires all of the roles described in the above procedure.
+▪Modify ins t allation  options  so that Bravura Security Fabric  does not install the schema, and instead ▪
+uses a schema already set up by your database administrator.
+▪Remove extra permissions from the dedicated user after  Bravura Security Fabric  is installed. ▪
+In the above cases, the dedicated user requires at least the db_datareader and db_datawriter database
+roles, as well as permissions to the schema objects. This includes: EXECUTE permission on the stored
+procedures, VIEW DEFINITION permission on the stored procedures and views. To learn how to grant
+permissions to schema objects, contact your database administrator or refer to your database
+documen t ation.
+See Micr osoft  SQL Server c onnection  details for more in f ormation  about advanced ins t allation  options.
+Working with multiple  ins t allations
+Instances 
+If you are installing multiple  Bravura Security Fabric  instances, ensure that you create and use a separate
+database and user for each instance.  
+Database r eplic ation  
+If you will be using Bravura Security Fabric  database r eplic ation,  ensure that you create and use a
+separate database and user for each replicated server ins t allation.   
+Schema 
+During ins t allation,  you can modify options  so that Bravura Security Fabric  does not install the schema, if:
+▪The schema is set up by your database administrator ahead of time. ▪
+In this c on figur ation,  you must set up database r eplic ation  between instances. See the R eplic ation  and
+Recovery Guide  for more in f ormation.
+▪The schema is shared from a previous ins t allation. ▪This means both instances work against the same schema and no database r eplic ation  is required
+between them.
+See Installing with a Shared Schema  (on page 229) for details on shared schema server setup.
+Modifying database c onnection  details
+If a change has been made to the database server cr edentials,  (database server name, database name,
+database server user ID, or database server user password) use the iddbadm program to update the
+database in f ormation.
+See the iddbadm usage
+Use the iddbadm program to modify and c on figur e  the cr edentials  used by iddb to connect to the
+database backend.
+Usage
+Run iddbadm with the following arguments:
+  iddbadm.exe -instance <bravura_instance> -dbtype MSSQL
+   [-database <database>] [-dbserver <dbserver>]
+   -dbuser <bravura_dbuser>  -password <password>
+   [-iddbport <iddbport>] 
+   [-integrated]
+Argument Description
+-database <database> The MSSQL database name
+-dbserver <dbserver> The MSSQL database server or instance c onnection  string
+-iddbport <iddbport> The database service TCP port
+-dbtype <dbtype> The database type (MSSQL)
+-dbuser <dbuser> The ID of the user that connects to the database
+-instance <instance> The Bravura Security Fabric  instance name
+-password <password> The database server user password
+-integrated Use Windows Integrated Authentic ation  instead of a
+password
+-sho w c on fig  <sho w c on fig> Show current DBMS backend c on figur ation
+Example
+1.To change the dbms cr edentials  for a MSSQL server: 1.
+iddbadm -dbtype MSSQL -dbuser mssqluser -instance idminstance -
+password 
+dbuserpassword -database dbname -dbserver dbserver.com 
+2.To change the authentic ation  mode for a MSSQL server from SQL Server authentic ation  to windows 2.
+authentic ation:iddbadm -integrated
+for more in f ormation.
+Required database maintenance
+The Auto Discovery  (on page 2716) process replaces the entir e  data in some large tables whenever it is
+scheduled; that can lead to very large tr ansaction  and/or temp files showing up overnight.
+The data, tr ansaction  and log file loc ations  of every Bravura Security Fabric  node’s backend database
+have to be monitored so they don’t run out of space:
+▪If the database engine is c on figur ed  to clean up, the files could be much smaller when inspected after ▪
+the clean-up.
+▪Ensure that you have at least 50% free space on the drives, shares or SAN’s that host those files.  This ▪
+ensures that the database always has enough space to function  as expected. Bravura
+Security recommends at least 500gb of hard drive storage for a Bravura Security Fabric  server.
+Do not schedule database maintenance, clean-up procedures or table reindexing at the time  auto
+discovery , Automated User Adminis tr ation  (on page 2424), Aut omatic  Assignment  (on page 2442) or other
+long, database-intensive Bravura Security Fabric  processes are scheduled.
+▪If database maintenance lasts more than a few minutes, schedule the Bravura Security Fabric  nodes ▪
+that use that database to be taken out of the load balancer.
+▪It is a good idea to perform maintenance (for example OS upgrades) on the Bravura Security Fabric ▪
+node itself at the same time  as it is done on its database (if so, take down the Bravura Security Fabric
+node before the database one, and bring up the database before the Bravura Security Fabric )
+In case Bravura Security Fabric ’s stored procedures fail for any reason, the da t e/time  stamp, sproc name,
+its arguments, and the failure reason will be recorded in the Bravura Security Fabric  instance’s db \iddb-
+failed-procs-*.log files;  for example:
+▪These log files are created whenever a new node is added. The failure logs for receive and send ▪
+queues are created as empty (0 bytes) files.  They are created by the Database Service ( iddb ) and
+data is appended to them by the Database Service.
+▪These log files are not rotated with the rest of the Bravura Security Fabric  logs: they are there for ▪
+maintenance, and if non-empty, they must be read by an administrator who will decide if c orr ectiv e
+action  is needed. When an unfamiliar sproc fails, open an issue with support@bravurasecurity.com  to
+determine if action  is needed.
+▪Some sproc failures are benign; for example, an error in updating  an account during auto discovery ▪
+could well be made obsolete by the next auto discovery .▪Bravura Security  recommends that the content of those files be emptied  as soon as the reason for ▪
+failure is solved, but that content should be kept elsewhere, outside the Bravura Security Fabric
+instance folder, in case later tr oubleshooting  sessions require them.
+T r oubleshooting
+Errors 
+If you experience errors, verify that:
+▪You can connect to SQL Server  using the login that you created. ▪
+You can verify the c onnection  using the SQL Server Command Line Tool.
+If the login uses SQL Server authentic ation:
+sqlcmd.exe -S <server name>\<instance> -U <login ID> -P <password>
+If the login uses Windows authentic ation,  and the current Windows user is the same as the SQL Server
+login:
+sqlcmd.exe -S <server name>\<instance> 
+▪Your system meets the recommended ins t allation  requirements. ▪
+For example, 1 GB RAM is recommended (512 MB is the minimum) for Micr osoft  SQL Server  .
+If you c ontinue  to experience errors with Micr osoft  SQL Server  :
+▪Ensure that the server is set up to allow remote c onnections. ▪
+▪If you are c onnecting  to a named instance, try specifying the TCP port number along with the server ▪
+and instance name: <servername >\<instance >,<port >.
+For example, using sqlcmd.exe:
+sqlcmd.exe -S sqlserver\mycorp2,1433 -U sa -P letmein! 
+If you c ontinue  to experience errors with Micr osoft  SQL Server , try the following:
+1.Start the SQL Server Con figur ation  Manager ( Start > All Programs > Micr osoft  SQL Server 2008 > 1.
+Con figur ation  Tools )
+2.Select SQL Server Network Con figur ation  > Protocols for <SQLServer instance > and enable Shared 2.
+Memory, TCP/IP , and Named Pipes protocols.
+3.Select SQL Nativ e  Client Con figur ation  > Client Protocols and enable protocols with the following 3.
+order:
+▪Shared Memory  1 ▪
+▪TCP/IP 2 ▪
+▪Named Pipes 3 ▪
+4.Restart the server to apply your settings. 4.
+Services 
+Under certain circumstances, Bravura Security Fabric  services may fail to start after  a server reboot. This
+problem may occur if the database is unavailable, or the database services and/or other dependentservices have not started completely when the Bravura Security Fabric  services attemp t  to start. There
+are two methods for resolving this problem.  
+Method 1: 
+Manually start the services
+If Bravura Security Fabric  services fail to start, you can manually start all required services. To do this:
+1.Before you begin, ensure the database is available.1.
+2.Log on to the a ff ect ed  server. 2.
+3.On the Start menu, click Run, type services.msc , Click OK. 3.
+4.In the results pane, find the Bravura Security Logging Service . 4.
+5.Right-click the service, then select Restart . 5.
+6.In the results pane, find the Bravura Security Database Service . 6.
+7.Right-click the Service , then select Start . 7.
+8.Repeat steps 6 and 7 for all Bravura Security services that did not start.8.
+Method 2: 
+Set Bravura Security Fabric  services to Aut omatic  (Delayed Start)
+To ensure that the database and all required services have started completely before the Bravura Security
+Fabric  services have started, you can set them to Aut omatic  (Delayed Start) . To do this:
+1.Log on to the a ff ect ed  server. 1.
+2.On the Start menu, click Run, type services.msc , Click OK. 2.
+3.In the results pane, find the Bravura Security services. 3.
+4.Right-click the service, then select Pr operties… . 4.
+5.Change the Startup Type to Aut omatic  (Delayed Start) . 5.
+6.Click Apply , then click OK. 6.
+7.Repeat steps 4-6 for all Bravura Security services that are installed.7.
+8.Restart the server.8.3 Installing the Bravura Security Fabric  server softw ar e
+This chapter describes system requirements and provides ins tructions  for installing softw ar e  on Bravura
+Security Fabric  servers.
+Server requirements
+The Bravura Security Fabric  server and any replicated servers must be installed on a Windows Server
+oper ating  system. Windows 2016, Windows Server 2019, or Windows Server 2022 is recommended at
+the current release level of Bravura Security Fabric .
+Installing on Windows Server enables Bravura Security Fabric  to leverage client softw ar e  that is available
+only on the "Wintel” platform.  In turn, this makes it possible for Bravura Security Fabric  to manage
+passwords and accounts on target systems without installing a server-side agent.
+Bravura Security Fabric  stores all of its data in an external database. Micr osoft  SQL Server 2019
+(recommended), Micr osoft  SQL Server 2017 , Micr osoft  SQL Server 2016 SP2 , or Micr osoft  SQL Server 2014 SP3
+must be installed and c on figur ed  before the Bravura Security Fabric  server softw ar e  can be installed. See
+Installing and c on figuring  Micr osoft  SQL Server  (on page 173) for more in f ormation.  Oracle database was
+supported on versions up to 9.0.x and is not supported on 10.0 or later releases.
+If you are installing the Bravura Security Fabric  on the same server as the database, ensure you take into
+c onsider ation  the server requirements for the database softw ar e  when c alculating  the requirements for
+the Bravura Security Fabric  server.
+Each Bravura Security Fabric  applic ation  server must also be c on figur ed  with a web server. The Bravura
+Security Fabric  installer is aware of and can aut omatic ally  c on figur e  IIS web servers for use with Bravura
+Security Fabric .
+The Bravura Security Fabric  server is a security server, and should be locked down accordingly. See
+Locking down a Bravura Security Fabric  server  (on page 302) for details. In short, most of the nativ e
+Windows services can and should be removed, leaving a very small attack  surface, with exactly one
+inbound TCP/IP port (443):
+▪No ASP , JSP or PHP are used, so such code interpreters should be disabled.▪
+▪Web-facing .NET is not used and should be disabled (some connectors require it, due to .NET API▪
+bindings).
+▪No ODBC or DCOM are required inbound, so these services should be filt er ed  or disabled at the web ▪
+server. As with .NET, ODBC is sometimes  needed to connect to target systems.
+▪Inbound file sharing should be disabled. ▪
+▪Remote registry services should be disabled.▪
+▪Inbound TCP/IP c onnections  should be fir e w alled,  allowing only port 443, remote desktop services (to ▪
+c on figur e  the softw ar e)  and a handful of ports between Bravura Security Fabric  servers, mainly for
+data r eplic ation.Each Bravura Security Fabric  server requires a database instance. Micr osoft  SQL Server 2019 is the
+recommended choice. Micr osoft  SQL Server 2017, 2016 SP2 and 2014 SP3 are also supported. Oracle
+database was supported on versions up to 9.0.x and is not supported on 10.0 or later releases.
+Bravura Security Fabric  is c ompatible  with 64-bit Windows Servers:
+▪The core softw ar e  is compiled as 64-bit binaries. ▪
+▪Programs that execute in the context of the core oper ating  system, such as password s ynchr oniz ation ▪
+triggers, event hooks, etc. are available in both 64- and 32-bit versions for c ompatibility .
+Primary server requirements
+Each Bravura Security Fabric  server is c on figur ed  as follows:
+▪Hardware requirements:▪
+▪Intel Xeon or similar CPU. Multi-c or e  CPUs are supported and leveraged. Dual core is a minimum. ▪
+▪At least 16GB RAM – 32GB or more is leveraged and is typical for a server.▪
+▪At least 600GB of HD storage, preferably in an enterprise RAID c on figur ation  for reliability and ▪
+preferably larger for r e t ention  of more historical and log data.
+More space is always better ,  to increase log r e t ention.
+▪At least one Gigabit Ethernet NIC.▪
+Ensure you take into c onsider ation  the hardware requirements of any other softw ar e  that may
+share the Bravura Security Fabric  server; for example, database storage requirements.
+See Support for virtual machines  for more in f ormation  about support for virtual machines.
+▪ Oper ating  system: ▪
+▪Windows Server 2022.▪
+▪Windows Server 2019.▪
+▪Windows Server 2016.▪
+It is recommended that the server is not a domain controller.
+▪Networking:▪
+▪TCP/IP networking, with a s t atic  IP address and DNS name entry ▪
+▪Cryptographic certific a t e ▪
+▪ Micr osoft  .NET Framework 3.5 and 4.5+ ▪
+▪ASP .NET Core Hosting  Bundle 6.0.4 ▪
+▪NET Desktop Runtime  6.0.4 ▪
+▪Web Service Enhancements (WSE) 2.0 SP3 for Micr osoft  .NET or greater ▪
+▪Web server (IIS) with the following:▪
+▪HTTP r edir ection ▪
+▪The IIS URL Rewrite module from:▪
+http://w w w .iis.ne t/do wnloads/micr osoft/url-r e writ e
+▪CGI▪
+▪Dynamic Compression▪▪ St atic  Compression ▪
+▪WebSocket Protocol▪
+▪Database / c onnectivity  softw ar e: ▪
+▪A Micr osoft  SQL Server 2019  (recommended), Micr osoft  SQL Server 2017 , Micr osoft  SQL Server 2016 SP2 , ▪
+or Micr osoft  SQL Server 2014 SP3  instance is required to host the Bravura Security Fabric  schema:
+▪Normally one database instance per applic ation  server. ▪
+▪The SQL Server database softw ar e  can be deployed on the same server as the Bravura Security ▪
+Fabric  applic ation,  as this reduces hardware cost and allows applic ation  administrators full DBA
+access for tr oubleshooting  and performance tuning purposes.
+See Where to install the softw ar e  for more in f ormation.
+▪If the database softw ar e  is deployed on a separate server, it is recommended that you install the ▪
+client softw ar e  (on page 172) that corresponds to the database backend.
+See Installing Database and Database Client Softw ar e  (on page 172) for details.
+▪Connector Pack : ▪
+▪The Connector Pack  contains connectors which integrate Bravura Security Fabric  with target ▪
+systems.
+▪It is recommended, but not required, that you install the Connector Pack  after  the Bravura Security ▪
+Fabric . This allows you to select ins t ance-specific  or global ins t allation.
+See the Connector Pack Documen t ation  for details.
+▪Installed and tested softw ar e: ▪
+▪ Nativ e  clients for the systems that Bravura Security Fabric  will interface with. Refer to the ▪
+Connector Pack Documen t ation  for in f ormation  specific  to each type of target system.
+▪Python 3.11.2+▪
+Python 3.11.2+ must be installed before installing Bravura Security Fabric. It is required for certain
+Bravura Security Fabric components, including the Python IDMLib library used to help create plugin
+programs, Health check monitor , and reference builds.
+Ensure that Python is installed for all users to allow the Bravura Security Fabric service user
+(psadmin) account to have appropriate access to the Python ins t allation.
+It is recommended to add Python to the system PATH. This may also be added by selecting  the
+option  for ” Add Python 3.11 to PATH” during the Python ins t allation.
+Python 3.11.2+ is optional  for Connector Pack ins t allations.  It is however required for the
+agtpython  and pxpython  connectors.
+For older versions of Bravura Security Fabric, there are alternate versions of the agtpython
+connector located in the agent\alt directory and alternate versions of the pxpython  connector
+located in the interface\alt directory that are c ompatible  with specific  versions.
+See Installing Python  (on page 200) to learn how to install Python to meet these requirements.
+Python c ompatibilityInstance version Python version
+ 3.3.x 3.4.1 3.4.3 3.5.3 3.7.x 3.8.x 3.9.x 3.10.x 3.11.x
+12.6.x
+CP 4.5.xY
+12.4.x - 12.5.x
+CP 4.3.x - 4.4.x       Y
+12.0 - 12.3.x
+CP 4.0.x - 4.2.x    Y    
+10.0.4 - 11.1.3
+CP 3.1.4 - 3.3.2   Y     
+9.0.3 - 10.0.3
+CP 3.1.0 - 3.1.3  Y      
+9.0.0 - 9.0.2
+CP 3.0.0 - 3.0.2 Y       
+8.2.8
+CP 2.4.0 - 2.5.2Y        
+▪ Micr osoft  Visual C++ 2015 Redistributable (x64 and x86) ▪
+Micr osoft  Visual C++ 2015 Redistributable Package is required for Bravura Security Fabric  10.0 and
+higher. It is required for certain Bravura Security Fabric  run-time  components that use Visual C++
+libraries. This is aut omatic ally  installed during setup , if prerequisites are met.
+The installer checks prerequisites for C++ runtime  and universal CRT. Before these two can be
+installed, the system requires the KB2919355 update (this is a set of patches, which has to be
+installed in order by clearc ompressionflag.e x e,  KB2932046, KB2959977, KB2937592, KB2938439,
+KB2934018). KB2938439 must be patched before KB2919355 can be patched. During the
+ins t allation  of patches, if a Windows dialog box displays the message: ”The update is not applicable
+to your computer” and you are sure that you installed the patch that matches your operating
+system, it is likely that there are other prerequisites that need to be installed before the current
+patch.
+▪At least one web browser (such as Chrome), and PDF viewer (to read the documen t ation) ▪
+▪A Git client (for revision control)▪
+Anti- virus  software  may impact Bravura Security Fabric functionality  and performance.Disable WebDAVModule
+During the instance pr e-ins t allation  check the installer checks if IIS module "Web Distributed Authoring
+and Versioning" (WebDAVModule) is installed. If so, the installer warns that this module may interfere
+with REST API usage and that it should be disabled. This can be done after  the instance is installed.
+To disabling WebDAVModule for an already installed instance (named "myinstance" in this example), run
+the command:
+%SYSTEMROOT%\system32\inetsrv\appcmd.exe delete module /
+module.name:"WebDAVModule" /app.name:"Default Web Site/myinstance"
+Installing Python
+Python 3.11.2+ must be installed before installing Bravura Security Fabric  or Connector Pack . It is
+required  (on page 197) for certain Bravura Security Fabric  sub-systems, including the Python IDMLib
+library used to help create plugin programs, Health check monitor , and reference builds.
+Ensure that you install the 64-bit version of Python.
+Ensure that Python is installed for all users  to allow the Bravura Security Fabric  service user (psadmin)
+account to have appropriate access to the Python ins t allation.
+To install Python 3.11.2+:
+1.Download and run the 64-bit installer from python.org . 1.
+2.On the fir s t screen, check the Add Python 3.11 to PATH option. 2.

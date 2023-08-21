@@ -1,0 +1,262 @@
+Argument Description
+-e x cludepr ofileattrk e y s  <Pr ofile  attribut e  keys to exclude> Censor the values of pr ofile  attribut es  not including
+these. This argument requires pr ofileattr s  argument.
+-e x cludepr ofileattrk e y s file  <file> File containing a newline-delimited list of pr ofile  attribut e
+keys to exclude. This argument requires pr ofileattr s
+argument.
+-ignorecase Perform censorship c ase-insensitiv ely .
+-log <file> Log file or directory to process. Defaults to instance log
+directory if unspecified.  Supports wildcards (requires the
+out argument).
+-manual <file> Manually specify replacements via a comma-separated-
+values file.
+-minlen <minlength> Strings this many characters or less will only be censored
+if wrapped in square brackets. The default is 5.
+-out <file> Output file or directory. The default is
+<logfile>_replaced
+-pr ofileattrk e y s  <pr ofile  attribut e  keys> Only censor the values of these pr ofile  attribut es.  This
+argument requires profileattrs argument.
+-pr ofileattr s Censor pr ofile  attribut e  values.
+-pr ofiles Censor pr ofile  in f ormation.
+-q Do not output progress messages or warnings about
+pot entially  uncensored in f ormation  due to minimum
+length c on figur ation.
+-replacementlog <r eplacemen t - file> Output a log file that shows the replacements done.
+-strict Use completely random replacement values.
+-targets <mode> Censor target system in f ormation  – desc — addr —
+full
+-warnings <file> Output attribut e  length warnings to this file instead of
+stdout.
+Examples
+The following examples assume that the utility  is in the same directory as the log file to be censored. If
+not, simply include the path to the utility  or file as appropriate.
+1.To censor all account in f ormation  from idmsuite.log: 1.
+  logcensor.exe -log idmsuite.log -out outlog -accounts
+2.To censor all account and pr ofile  in f ormation  with minimum length: 2.
+  logcensor.exe -log idmsuite.log -out outlog -accounts -profiles -
+minlen 4
+3.To censor all target in f ormation  with replacement log: 3.  logcensor.exe -log idmsuite.log -out outlog -targets full  -
+replacementlog
+4.To censor specific  pr ofile  attribut es: 4.
+  logcensor.exe -log idmsuite.log -out outlog -
+replacementlog replacelog.log -profileattrs -
+profileattrkeys OTHER_NAME FIRST_NAME -minlen 4
+5.To censor a specific  account attribut e: 5.
+  logcensor.exe -log  c685ceab-18c3-4522-80e5-
+abfd7f1313eb_1523567367_214_rcv.txt -out outlog  -acctattrs -
+acctattrkeys fn -minlen 4
+6.To dump warning messages to a file: 6.
+  logcensor.exe -log idmsuite.log -out output.log -accounts -
+warnings warn.log
+7.To run in "easy" mode:7.
+  logcensor.exe -auto
+8.To censor all account attribut es  excluding the "mail" account attribut e: 8.
+  logcensor.exe -log idmsuite.log -excludeacctattrkeys mail -
+acctattrs -out out2.log
+9.To censor all pr ofile  attribut es  excluding those listed in a newline-delimited file: 9.
+  logcensor.exe -log idmsuite.log -profileattrs -
+excludeprofileattrkeysfile logcensor_ignoreprofileattrkeys.txt
+10. To use anonymous GUIDs when censoring accounts and pr ofiles: 10.
+  logcensor.exe -log idmsuite.log -out outlog -accounts -profiles -
+strict
+11. To censor data using an input file containing the replacements to perform: 11.
+  logcensor.exe -log idmsuite.log -out outlog -manual <file>
+12. To censor all log files in a specific  directory: 12.
+  logcensor.exe -log "C:\path\to\directory" -out outlog -accounts
+13. To censor all log files s t arting  with "plugin" in the current directory: 13.
+  logcensor.exe -log ".\plugin*" -out outlog -accounts
+logsum
+The logsum.py  script collects all the Windows system logs, the instance logs, and any crash dump files
+into a summary.zip file to be sent to Bravura Security support team. The summary.zip will be located in
+the <Program Files path>\Bravura Security\Bravura Security Fabric\Logs\<instance>  directory. R eplic ation  node
+and proxy server logs are also collected.
+The script requires Python 3.3 or higher.Usage
+ logsum.py -h | [--minspace <N>]
+Argument Description
+-h, –help Displays the help message and exits
+–minspace <N> The minimum amount of space that must remain on the
+system in MB.
+When generating  crash dump files,  refer to the Microsoft  documen t ation  regarding crash dump c ollection
+at:
+http://msdn.microsoft.c om/ en-us/librar y/windo ws/desk t op/bb787181(v=v s.85).asp x
+It is recommended that the DumpFolder is set to an explicit path, C:\temp\CrashDumps for example.
+Examples
+To gather all the instance log files,  and crash dumps.
+ logsum.py
+To ensure that the system has roughly 10 GB remaining on the drive.
+ logsum.py --minspace 10000logutil
+You can use the logutil  program to manually capture log data. The logutil  program logs the data
+to a specified  log file. This can be used to troubleshoot issues on target systems where client or server
+tools have been installed.
+The logutil program could be used for t esting  purposes on the Bravura Security Fabric  server instead
+of the Logging Service. In this scenario, you would turn off the Logging Service and turn on logutil
+prior to e x ecuting  specific  actions  to capture the log output for those actions.
+Do not run logutil and Logging Service at the same time  on the same server – they could interfere
+with each other.
+If you terminate logutil by using [Ctrl] -[C], [Ctrl] -[Break] or by closing the window, then the logging
+session is also terminated.
+In addition  to being available on the Bravura Security Fabric  server, logutil can be copied to other
+servers to test client tools or the Password Change Notific ation  Module. The 64-bit logutil program
+is located in the util directory, and the 32-bit version is located in <instance> \ util\x86\. The program is
+installed with Bravura Privilege  client softw ar e  in:
+<Program Files path\>Bravura Security\hipamlws\util\
+The Logging Service is not required on client w ork s t ations.
+Requirements
+You must run the logutil  command as an administrator with sufficien t  privileges.
+Usage
+logutil.e x e  [options]  -instance <instance> | -cleanup [-instance <instance> ]
+Argument Description
+-bufmax <count> Maximum number of buff er s.  The default value is the
+Windows Events MinimumBuff er s  + 20.
+-bufmin <count> Minimum number of buff er s.  The default value is the
+number of CPUs + 2.
+-bufsize <size> Size of the session buff er s  in multiples  of 4 kb. The
+default is 64 kb.
+-instance <instance> Instance to watch events for. For Bravura Privilege local
+service mode instances, the value is "Privileged Access
+Manager Client".
+-cleanup Terminate any logging sessions which are not connected
+to any activ e  client. If the instance name is specified,  only
+the logging session for this particular  instance is cleaned
+up.Argument Description
+-level <level> Debug level 1-5. Default is 5.
+-list List all enabled Event Tracing for Windows sessions.
+-logfile  <filename> File to write events to. You must specify an absolute path.
+-makekey Generate an instance name and its log GUID in the
+registry.
+Note:  This option  needs to be run once only.
+-maxdelay <maxdelay> The maximum seconds to allow the sorting  buff er  to keep
+items before flushing  out into the log file. The default
+value is 300.
+-maxsorted <count> The maximum number of events that can be sorted in
+memory. The default value is 100,000.
+-outdbg Write events with an output debug string.
+When logutil  runs, a new registry entry is created to record the session. The entry is stored under:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\LogSession
+The name of the entry is the instance name. When you press [enter]  to stop a session, the key will be
+gone with the session; however, if you kill the session by typing [Ctrl] +[C], the registry entry will remain.
+Use the -cleanup option  to remove remaining registry entries.
+Note that various tools also have hardcoded instance names:
+▪browser-extension-win: "Browser Extension" ▪
+▪ fir e f o x -br o w ser -e xt ension:  "Firefox Browser Extension" ▪
+▪hidshext: "Shell Extension" ▪
+▪hipamlws-win: "Hipamlws" ▪
+▪hippm-sm: "Session Monitor" ▪
+▪intcpt: "Password Filter" ▪
+▪ ntfclien t:  "Notific ation  Client" ▪
+▪ ppm-activ e-c on tr ols:  "PPM Client Activ eX  Controls" ▪
+▪pslocalr: "Local Reset Extension" ▪
+▪psns: "Notes Extension" ▪
+▪ sc ar d-activ e x -c on tr ols:  "SmartCard PIN Management Activ eX  Controls" ▪
+▪ska/runurl: " Login Assistant" ▪
+▪ pamutil : "pamutil" ▪
+Examples
+▪To start logging data for client softw ar e  with a debug level of 4, type: ▪
+logutil.e x e  -makekey -instance Bravura_client -level 4 -logfile  c:\idarchive.log ▪To start logging data on a local service mode managed system with a debug level of 4, to a log file ▪
+named local_service.log, type:
+logutil.e x e  -instance "hipamlws" -level 4 -logfile  local_service.log 
+▪To start logging data on pamutil and runwithpass with a debug level of 4, to a log file named ▪
+pamutil.log ,  type:
+logutil.e x e  -instance "pamutil"  -level 4 -logfile  pamutil.log  
+▪To start logging data on Activ eX  password disclosure plugins at level 4 to log file activ e x.log ,  type: ▪
+logutil.e x e  -instance "PPM Client Activ eX  Controls" -level 4 -logfile  activ e x.log  
+You must run logutil with the -makekey argument firs t for the instance "PPM Client ActiveX
+Controls".
+▪To start logging data for the default Login Manager instance with a debug level of 4, type:▪
+logutil.e x e  -instance "Login Manager" -level 4 -logfile  c:\logfile.log  psdebug
+Use the psdebug program on an applic ation  server to c on figur e  logging output from various Bravura
+Security Fabric  softw ar e  components. It is helpful when tr oubleshooting  ins t allation  or functionality
+problems.
+Usage
+ psdebug -prog <program> -level <0-5|99> -maxwait <seconds>
+ psdebug -prog <program> -submodule <module> -level <0-5|99>
+ psdebug -remove
+ psdebug -remove <program>
+ psdebug -prog <program> -extlevel <level names>
+Argument Description
+-prog <program> Identif y  the program to change the logging level for.
+-submodule <module> For programs or scripts that use IDMLib, identif y  the
+submodule to change the logging level for.
+-level <N> Set the logging level for programs or scripts, or turn
+debugging on or off .
+See Setting  the logging level  (on page 2789) for details.
+-extlevel <level names> Set extended performance logging levels.
+See Setting  the logging level  (on page 2789) for details.
+-remove Remove custom debug settings.  Individual programs/
+submodules can be specified.
+-maxwait <seconds> Set the maxwait parameter to ignore all Perf log events
+that are slower than the specified  dur ation.  If the
+maxwait argument is not specified  explicitly, then the
+default value is set to 15 seconds.
+Maintenance utilities
+agtsvccli
+The agtsvccli program controls the Persistent Connector Service (agtsvc)  (on page 2874).
+Usage
+agtsvccli.exe <option>
+Argument Description
+-c --cookie Cookie value to send to connector. This argument is for
+developer use only.
+-debug Debug logging is enabled for additional  diagnostics.Argument Description
+-full When s t arting  a list, do not c ontinue  the previous list.
+This will result in a full list and load of all data.
+-h --help Print out help/usage message and exit
+-hid --host <host> Agent service host.
+-infolist Shows s t atistic al  in f ormation  in kvgroup format for the
+currently running persistent list target.
+-i --listid  <ID> ID of the oper ation.
+--loopcount Set a limit on list processing for the number of
+incremental in t er ations  up to the specified  loop count
+after  which persistent list will be terminated. Each
+it er ation  is determined by the ’Persistent list search wait
+time’  target address option.  If not specified,  the default
+is ’0’ to run inde finit ely .
+-p --port <port> Agent service port
+-showlists Show currently running lists.
+-startlist Start a list.
+-stoplist Stop a list.
+-t --t ar g etid  <target> Target system.
+-v --version Print out version and exit
+Examples
+1.To stop listing  on Activ e  Directory target system corpdirectory : 1.
+agtsvccli.exe  -endlist -t corpdirectory
+2.To make a new full list on corpdirectory : 2.
+agtsvccli.exe -startlist -t corpdirectory -fullcleansessdata
+The cleansessdata program is run nightly by the Scheduler Service ( psscheduler ) to removed
+session files older than the greater of DEFAULT_EXPIRY_SECONDS or
+DEFAULT_API_SESS_EXPIRY_SECONDS. If neither system variable is set, it will use the
+DEFAULT_EXPIRY_SECONDS default, which is 600.
+You can modify the scheduled job at Manage the system > Maintenance > Scheduled jobs .
+Usage
+cleansessdata.exe [-h] [-v] [-debug]dashboardstats
+Use the dashboardstats program to recalculate the cached data for dashboards regardless of the
+Manage the system  > Maintenance > System variables  > DASHBOARD CACHE VALIDITY INTERVAL  or
+DASHBOARD CACHE MAX DELAY system variables.
+The following dashboards have cached data and will be a ff ect ed  by the dashboardstats program:
+▪Manage the system▪
+▪Privileged access▪
+▪Manage certific ation  process ▪
+▪View w orkflo w  dashboard ▪
+This does not a ff ect  Bravura Group .
+Usage
+dashboardstats.exe [-forcerun]
+Examples
+1.To recalculate the dashboard caches:1.
+dashboardstats.exe
+2.To recalculate the dashboard caches on a node other than the primary server:2.
+dashboardstats.exe -forcerun
+g etfilein f o
+Use the getfileinfo program to return the build in f ormation  for Bravura Security-created binary
+files.  This in f ormation  is useful during support calls, or when diagnosing problems.
+The program returns in f ormation  about whether the file has been customized or upgraded, or contains
+debugging in f ormation.
+Usage
+ getfileinfo.exe <binary file name>
+Examples
+The following is an example of the return for a regular build:
+FileName:             <file path>\<filename>
+MajorVersion:         4
+MinorVersion:         0
+BuildNumber:          1
+RevisionNumber (QFE): 6552
+FileFlags: 0x0
+FileVersion:          4.0.1.06552

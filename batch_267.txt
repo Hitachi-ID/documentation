@@ -1,0 +1,322 @@
+Option Description
+Aut omatic ally  manage groups Con figur e  this option  if you want Bravura Security Fabric  to aut omatic ally
+manage groups listed on the target system. This option  applies to Activ e
+Directory, Oracle Database, or Domino Server Script target system types. Some
+systems have thousands of groups; this option  may slow down the listing
+dr amatic ally  and require a lot of space in the backend database; best pr actice  is
+to manage only the groups whose membership matter s  for the purposes
+Bravura Security Fabric  is used. Select one of the following:
+(Disabled) : No groups will be aut omatic ally  managed; this is the default setting.
+Only groups with owners, moderated by owners:  Only manage groups that
+have an owner. Assign the owner as the group authorizer.
+All groups, approval required:  Manage all groups on the target system. If a
+group has an owner, then the owner is assigned as the group authorizer. If a
+group has no owner, then authorizers must be manually assigned.
+Groups whose membership will
+be listedIf group listing  is enabled, use this option  to determine the groups whose
+membership will be listed. Bravura Security Fabric  generates the group
+membership lists during auto discovery. Select one of the following:
+Managed groups: Only accounts immediately in the managed group will be
+listed (nested group members are not listed), and only for groups that are
+managed by Bravura Security Fabric .
+Managed groups and child groups (if supported):  Group membership will be
+listed for managed groups and any nested group of a managed group, if the
+target system’s groups can be c on figur ed  hierarchically.
+All groups:  Group membership will be listed for all groups, regardless of
+whether Bravura Security Fabric  manages their membership.
+Note: This option  only controls what is written  to the membership list files
+during auto discovery.
+To enable membership of non-managed groups to be displayed on Bravura
+Security Fabric  module pages, enable all accounts to be discovered objects for
+targets c on figur ed  to list group membership.
+Allow child resources, including
+templates and managed
+account groups, to inherit
+implemen t ation  c on figur ationEnable this option  to aut omatic ally  c on figur e  implementers for resources based
+on the host target system’s resource oper ation  c on figur ation.  You can override
+this setting  on the managed group and template in f ormation  pages.
+Check password expiry For some target systems (Novell Directory Services (NDS), Micr osoft  Windows
+server, Activ e  Directory, SQL Server), Bravura Pass can also extract a list of users
+whose passwords will expire soon, or have already expired. This setting  is
+enabled by default if the account attribut es  are listed, otherwise it’s
+unavailable.
+The list can be used by the Bravura Security Fabric  notific ation  system to warn
+users of pending expiry.Option Description
+Program to generate a list of
+target systemsSome target system entries may actually represent c ollections  of actual target
+systems; for example, an Activ e  Directory domain can be managed as a
+c ollection  of domain controllers. The sub-host plug-in is used in these cases,
+and this field  is where you enter the name of the plug-in. Sub-host plug-ins are
+subject to the same timeout  interval as password connectors.
+Connector time  out Connectors are given a finit e  amount of time  to perform oper ations,  before
+Bravura Security Fabric  stops them. Use this field  to set that timeout  (in
+seconds). A setting  of -1 will give the connector in finit e  time.
+The default is 300  (fiv e  minutes). If oper ations  take longer than this time,  they
+will be retried according to the c on figur ation  of the Password Manager service
+(idpm) or the T r ansaction  Monitor Service (idtm): Comma-delimited list of
+intervals (in minutes) to wait before retrying failed requests.
+List time  out Connectors should be given a finit e  amount of time  to run during listing  before
+Bravura Security Fabric  stops them. Use this field  to set that timeout.  The
+default is -1 (in finit e),  because the product can’t tell how long each target can
+take to list. A correctly c on figur ed  target system should not use in finit e
+timeouts.
+Minimum list file size (bytes) List files must be at least this large (in bytes). Smaller files are discarded, and
+replaced by their backups.
+List of proxies to run connectors
+onProxy servers which can run connectors on behalf of the main Bravura Security
+Fabric  server. List servers, separated by a semicolon, in the format:
+<server name>/<port number>;<server name>/<port
+number> .
+The default behavior is to attemp t  to connect to proxies in the order in which
+they are listed. The fir s t successful c onnection  is used as the proxy to run the
+connector. To c on figur e  Bravura Security Fabric  to attemp t  to connect to proxies
+in random order, enable the AGENT PROXY RANDOM  setting  on the Manage
+the system > Maintenance > Connector behavior > Options  page.
+Allow incremental listing Attribut e  lists can be very large. Bravura Security Fabric  supports incremental
+listing  of account attribut es  on some target system types, such as LDAP and
+Activ e  Directory. For these targets, once the initial  discovery has been run,
+Bravura Security Fabric  will only list attribut es  for an account if it detects that
+the user has changed on subsequent runs of auto discovery. This setting  is
+enabled by default for target systems that support it. You can generate a full list
+of account attribut es  during the next auto discovery by clicking Generate full
+list on the Target system in f ormation  page. You must c on firm  your request
+before the change takes e ff ect.Option Description
+Enable persistent listing This feature allows Bravura Security Fabric  to receive changes from Activ e
+Directory and AD LDS LDAP as they happen on the domain controller. This
+feature is only present on Activ e  Directory DN and LDAP Directory Service
+target systems. It is disabled by default
+Copy data from these targets,
+separated by commas, during
+auto-discoveryThis is used along with the "Connector e x ecution  order" auto-discovery list as
+well as a post psupdate script for this target to copy the listing  data from one or
+more other targets and to use for the list file for this target. For more
+in f ormation  see Cr eating  a list file and copying data from other targets  (on page
+516).
+ 
+ The phase to which group
+owner should be added when
+being aut omatic ally  added as
+authorizerThis option  is available if phased authoriz ation  is enabled and if the target
+system supports it. This is useful, for example, in cases where a user’s manager
+must approve a request before it is sent to the group owner. The default is to
+add group owners to phase one.
+Account Policy
+Allow users to verify passwords Select this checkbox if you want the connector to verify passwords on this
+target system. If not selected, users will not be able to select the target system
+for authentic ation.
+ Check accounts for
+uniqueness when cr eating  new
+pr ofile  IDsSelect this checkbox if you want to ensure that new pr ofile  IDs do not c on flict
+with IDs on this system.
+ Program to set the case of
+new IDsWhen a new ID for this target system is created, use this program to set the
+case. Bravura Security Fabric  provides 2 built-in programs: upper.pss  uses all
+uppercase characters; lower.pss  uses all lowercase characters. Bravura
+Security Fabric  uses lower.pss  by default.
+ Policy for new account
+requests when the user has an
+e xisting  account on the target
+systemSet this option  to determine whether you want template requests to use the
+e xisting  account (do nothing) or create a new account.Option Description
+ Target system group Select the target system group to which this target system belongs. Target
+systems can be grouped in Bravura Security Fabric to apply diff er en t  password
+policies, apply diff er en t  s ynchr oniz ation  rules, or to allow help-desk users to
+manage a subset of target systems.
+Allow users to change
+passwordsSelect this checkbox if you want the connector to change passwords on this
+target system.
+If not selected, the connector does not run, and success is always assumed. The
+target system is not displayed on the results page, and the Password Manager
+service (idpm) does not change passwords on this target system.
+Accounts must be included in all
+password changesSelect this checkbox if this target system must be selected for password
+oper ations.  On web pages which include target system selection,  the selection
+box for this target system is grayed out. Users cannot deselect it.
+This applies only when the target system belongs to a target system group
+where web password change r es trictions  are set to Any number of accounts
+can be selected for a password change  or All accounts are selected for
+password change . The Only one account can be selected for a password
+change  group setting  overrides this target system setting..
+Allow users to unlock accounts Select this checkbox if you want Bravura Pass to manage unlocking accounts on
+this target system. If not selected, accounts on this target system cannot be
+unlocked using Bravura Pass .
+Users must have accounts Select this checkbox if Bravura Security Fabric  users must have an account on
+this target system. This option  is specific  to the Attach  other accounts(PSL)
+module.
+Allow other users to attach
+auto-associated accountsSelect this checkbox to allow a user to attach  a login ID from another user on an
+auto-associated target system, using the Attach  other accounts(PSL) module.
+Allow enabling accounts Currently not in use. The "enabling accounts" privilege is c on figur ed  using user
+access rules  (on page 706) .
+Allow users to detach manually -
+attached  accountsBy default, allowing or disallowing users to detach manually -attached  accounts
+from their pr ofile  is controlled by the PSL ALLOW DELETE  option.  The system
+default is displayed as the “E ff ectiv e  setting ” .  You can override the default
+behavior on individual target systems by selecting  Yes or No from the drop-
+down list.Option Description
+ Pr ofile/r eques t  attribut e
+specifying container DNThe ID of a pr ofile  and request attribut e  to provide a place to prompt the user
+for the destination  container when cr eating  or moving accounts on c on t e x t -
+sensitiv e  target systems.
+Display modules
+Attach  other accounts Select this checkbox if you want users to be able to attach  accounts on this
+target system. If not selected, the target system will not appear on the self-
+service login ID r ec onciliation  page.
+View and update pr ofile By default the target system in f ormation  is listed for user management.
+Deselect to hide the target system on user management pages.
+Change passwords Select this checkbox if you want users to be able to choose to change their
+passwords on this target system. If not selected, the target system will not
+appear on the self-service Change passwords  page. Note that you can still force
+password changes on a target system via s ynchr oniz ation.
+Unlock accounts Select this checkbox if you want a user to be able to unlock their account on
+this target system. If not selected, the accounts on this target system will not
+appear on the self-service Unlock accounts  page.
+Help users > Attach  other
+accountsSelect this checkbox if you want help-desk users to be able to attach  ID on this
+target system to users’ pr ofiles.  If not selected, the target system will not
+appear on the adminis tr ativ e  login ID r ec onciliation  page.
+Help users > Change passwords Select this checkbox if you want help-desk users to be able to change users’
+passwords on this target system. If not selected, the target system will not
+appear on the assisted Password changes page.
+Help users > Unlock accounts Select this checkbox if you want a help-desk user to be able to unlock accounts
+on this target system. If not selected, accounts on this target system will not
+appear on the Help users Unlock accounts  page
+for in f ormation  about other general options.
+To provision other items, such as office  equipment, create your inventory target with the following
+parameters:
+Parameter Setting
+ID For example: Warehouse
+Type NULL target
+Description For example: WarehouseAddress For example: N.A. (required but not used)
+Other parameters DefaultInventory Loc ations  and Types
+Set up loc ation  and type values to help you de fine,  search for, and manage inventory. For example, you
+may want to assign inventory items to users based on:
+▪Physical loc ation ▪
+▪Territory▪
+▪Rights allowed▪
+▪Seniority▪
+▪Term of employment▪
+Inventory loc ations  and types are required for managing inventory items. Bravura Security Fabric  uses
+loc ation  and type values to de fine  and manage inventory. Inventory managers are responsible for
+inventory items based on loc ation  and type.
+Adding loc ations
+To add a loc ation:
+1.Click Inventory > Loc ations . 1.
+2.Click Add new… 2.
+3.Type a unique ID and Description  to display to users. 3.
+4.If required, type the State/province , Country , and Area code . 4.
+This in f ormation  is only displayed on this page.
+5.Click Add. 5.
+Adding item types
+To add an item type:
+1.Click Inventory > Item types . 1.
+2.Click Add new… 2.
+3.Type a unique ID and a Description  to display to users. 3.
+4.Click Add. 4.
+Deleting  loc ations  and item types
+You can delete loc ations  and types provided that they are not used to de fine  any inventory items,
+templates, roles, or Bravura Groups.
+From the Loc ations  or Item types page, enable the checkbox next to the loc ation  or item type that you
+want to delete, then click Delete . If required c on firm  your actions  (on page 360).Inventory Templates
+Bravura Identity  uses inventory templates to attach  inventory items to user pr ofiles.  This chapter shows
+you how to use the Manage the system  module to:
+▪Add inventory templates▪
+▪ Con figur e  template-level authoriz ation ▪
+▪ Con figur e  template-level resource oper ations ▪
+Getting  started
+Requirements for inventory templates 
+Before you add templates for inventory management:
+1.If you will be using Bravura Identity to provision SecurID tokens, read the Connector Pack 1.
+Documen t ation  for requirements.
+2.Add a target system for inventory provisioning  (on page 2657). 2.
+You can add target system from the Resources > Target systems or the Inventory > Target systems
+menu. For the provisioning of:
+▪Items such as computers and other equipment, set up a NULL type target system.▪
+▪SecurID tokens, set up an RSA Authentic ation  Manager 7.1/8.2 type target system. ▪
+▪Vasco IDENTIKEY tokens, set up an Vasco IDENTIKEY Server type target system.▪
+3. Optional:  Set up model accounts to use as templates. 3.
+You do not need to set up model accounts in order to provision tokens or other inventory. Inventory
+templates are used to attach  inventory items to user profiles  rather than create new accounts.
+4. Optional:  De fine  s t atic  authorizers  (on page 705) in the  Manage the system > W orkflo w  > Authorizers 4.
+menu so that you can assign them to templates as approvers or implementers.
+Na vig ation  steps
+Use the Inventory template inf ormation  page to c on figur e  general inventory template in f ormation  and to
+access additional  c on figur ation  settings.  To navigate to this page:
+1.Click .1.
+2.To de fine  Manage the system > Inventory > Template accounts : 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab (on page 2669) or the
+Resource oper ations  tab (on page 2673). To return to the template in f ormation  page, click the General
+tab.Adding templates
+To add an inventory template:
+1.Navigate to the  Inventory template inf ormation  page. 1.
+Use the Inventory template inf ormation  page to c on figur e  general inventory template in f ormation  and
+to access additional  c on figur ation  settings.  To navigate to this page:
+1.Click .1.
+2.To de fine  Manage the system > Inventory > Template accounts : 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab (on page 2669) or
+the Resource oper ations  tab (on page 2673). To return to the template in f ormation  page, click the
+General tab.
+2. Con figur e  the options  in Table Inventory Template options  (on page 2669) as required. 2.
+3.Click Add. 3.
+If you are implementing  a role-based access control system  (on page 2409), it is recommended that
+inventory templates are not themselves members of managed groups. This allows you to control
+group membership by including the group as a member of a role.
+Inventory Template options
+Option Description
+ID A unique identifier  for the template.
+Description The description  to display to users.
+Target system Search for, or type the ID of the target system you want.
+For inventory templates, the list of systems is limited to those on which a
+user does not require an account to be provisioned inventory.
+Password required Deselect this checkbox if accounts created from this template do not require
+a password.
+Loc ation Select a loc ation  (on page 2667) for the template
+Item Type Select a type  (on page 2667) for the template
+Override implemen t ation
+c on figur ationDetermine whether to inherit implemen t ation  c on figur ation  from the target
+system, specify t empla t e-specific  implementers, or a c ombination  of both.
+Account to clone when cr eating  a
+new userSearch for, or type the login ID of the account you want to use as a model or
+blueprint.
+This is optional  for inventory templates.
+Con figuring  template-level authoriz ation
+De fine  authoriz ation  in f ormation  for templates to:▪Set the number of approvals or denials required for requests involving the template.▪
+▪Assign s t atic  authorizers to de fine  who can approve account requests based on the template. ▪
+Users must be loaded into the Bravura Security Fabric database before you can de fine  them as
+authorizers.
+You must assign enough authorizers to meet the minimum number of authorizers requirement. If you do
+not do this, requests involving the resource are aut omatic ally  denied unless authorizers are assigned by a
+w orkflo w  plug-in.
+Inheriting  authoriz ation  c on figur ation  from the target system
+You can c on figur e  target systems so that templates inherit the authoriz ation  c on figur ation  settings  of the
+target system. You can also override the c on figur ation  for a template, or add authorizers.
+Enable inheritance by selecting  the Default authoriz ation  for child resources,including templates and
+managed groups, will be inherited from the target system option  on the relevant Target system
+in f ormation  page  (on page 494).
+To override or add to the c on figur ation  for a template:
+1.Navigate to the Inventory template inf ormation  page 1.
+Use the Inventory template inf ormation  page to c on figur e  general inventory template in f ormation  and
+to access additional  c on figur ation  settings.  To navigate to this page:
+1.Click .1.
+2.To de fine  Manage the system > Inventory > Template accounts : 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab (on page 2669) or
+the Resource oper ations  tab (on page 2673). To return to the template in f ormation  page, click the
+General tab.
+.
+2.Set Override authoriz ation  c on figur ation  to: 2.
+▪Only use inherited c on figur ation ▪
+▪Do not inherit any c on figur ation ▪
+▪Add to inherited c on figur ation  (default) ▪
+3.Click the Authoriz ation  tab. 3.
+▪If you chose to not inherit authoriz ation,  then the page shows authoriz ation  explicitly setup for the ▪
+template; no authoriz ation  from the target system should display.
+▪If you chose to add to inherited authoriz ation,  then the page displays settings  that are both ▪
+inherited and explicitly set for the template.
+When you choose to add to inherited authoriz ation,  the minimum number of required authorizers
+will be determined by the larger value set for the template or target system.

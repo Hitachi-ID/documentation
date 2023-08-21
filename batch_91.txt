@@ -1,0 +1,100 @@
+To allow the new registry value to take e ff ect,  you can either restart the computer, or the NPS service by
+itself.
+If you c onfigured  a custom public domain name in Azure, you can avoid needing to c onfigure  custom
+authentic ation  attribut es  by having users under the same domain name on both local AD and Azure AD.
+See Azure AD documen t ation  for how to sync users using custom domain: http s://docs.microsoft.c om/ en-
+us/az ure/active-direct or y/fundamen t als/add-cus t om-domain .Next
+You can integrate Azure MFA with Bravura Security Fabric  (on page 880) by adding a RADIUS target
+system and a custom authentic ation  chain.
+T r oubleshooting
+If you have Activ e  Directory connect sync issues, see:
+http s://docs.micr osoft.c om/ en-us/ az ur e/ activ e-dir ect or y/ cloud-s ync/ho w -t o-tr oubleshoot#r epairing-the-
+the-cloud-s ync-ser vice-acc oun t .
+If you have NPS extension issues, you can download Azure MFA NPS extension health check script:
+http s://docs.micr osoft.c om/ en-us/ samples/ az ur e-samples/ az ur e-m f a-np s-e x t ension-health-check/ az ur e-
+m f a-np s-e x t ension-health-check/
+The report of test errors on Azure URLs (i.e. http s://login.microsoftonline.com  or http s://
+adnotific ations. windo wsaz ure.c om)  is inaccurate. It may still report those errors even when Azure MFA is
+actually working without issue.
+The most useful applic ation  for tr oubleshooting  of RADIUS request errors is the Event Viewer on the NPS
+server.By looking into the events recorded in Event Viewer, you may be able to find the cause of common errors
+like request not received, incorrect attribut e  in the request, request timed  out and , request rejected
+among others.In t egr ating  Azure MFA with Bravura Security Fabric
+Once you have set up Azure MFA using RADIUS NPS  (on page 881), you must do the following to integrate
+Azure MFA with Bravura Security Fabric :
+1. Con figur e  the RADIUS Authentic ation  target system  (on page 904). 1.
+2. Con figur e  the Azure MFA authentic ation  chain  (on page 906). 2.
+These steps are detailed below.
+Con figur e  the RADIUS Authentic ation  target system
+To c on figur e  the RADIUS Authentic ation  target to support Azure MFA in t egr ation  using RADIUS NPS:
+1.Create a new RADIUS Authentic ation  target system  that will communicate with the Network Policy 1.
+Server that is hosting  the Azure MFA NPS extension.
+2.In the target address page c on figur e  the following parameters: 2.
+▪Server:  Set this to the DNS hostname or IP address of your NPS server that contains the Azure MFA ▪
+NPS extension.
+▪Port: Port on which the RADIUS server will accept c onnections  by default is port 1812. ▪
+▪Skip password authentic ation?  Select this option..  This will skip the primary authentic ation  step ▪
+when c ommunic ating  with the NPS server so that only the MFA step is required.
+▪Placeholder password to use when skipping password authentic ation:  Set this to any value. For ▪
+example; ignoreme . This value will be used in place of asking for the password. Since the NPS
+server will also ignore this any value can be used.
+▪ Additional  RADIUS attribut es  Set this with at least an "NAS -identifier"  attribut e.  Each RADIUS ▪
+request must contain this attribut e  otherwise the request will be rejected by the NPS server. The
+value of this attribut e  can be any identifier  you like.
+▪In the Advanced section  c on figur e  another target system to use for a list of users when performing ▪
+RADIUS authentic ation.  Since the radius protocol does not support listing ,  the set of user ID’s is
+copied from another target system. Typically this would be the Activ e  Directory target system.
+List Override:  set to: {action=copy;srcTargetId=<TARGETID OF AD>;}As described in Cr eating  a list file to support challenge-response authentic ation  in the Connector
+Pack  documen t ation,  when you need to copy a list from an Activ e  Directory target, you should set
+the list override to something like
+"{action=copy;srcTargetId=ADDN;script=listoverride.py;postHook=replaceLongIdWithShortId;}" .
+If you used an alt ernativ e  attribut e  for NPS extension, you can set the list override to something
+like "{action=copy;srcTargetId=ADDN;}" without needing postHook .
+3. Con figur e  the adminis tr ativ e  cr edentials  for the target. For RADIUS in t egr ations  Bravura Security 3.
+Fabric  leverages the shared secret that is c on figur ed  on the NPS server side. This shared secret is used
+as the Administrator Password for the target system. The Administrator ID is ignored.
+▪Administrator ID:  Set this to “shared_secret” or similar the value itself is ignored. ▪
+▪Password : Set this to the value of the shared secret that is c on figur ed  on the NPS server. ▪
+4.Ensure that you c on figur e  the target order using Maintenance > Auto discovery > Connector 4.
+e x ecution.  Ensure the Activ e  Directory target system is listed before the RADIUS target system, so that
+the RADIUS target system can copy the list file successfully.
+There is no need to add the Azure AD target to the Bravura Security Fabric  instance.
+Once both Activ e  Directory and Radius target systems added to the Bravura Security Fabric  instance and
+users are loaded into the Bravura Security Fabric  instance using auto discovery  (on page 2716) or
+psupdate , you can log on to the Bravura Security Fabric  instance using the loaded users.
+Next
+Con figur e  the Azure MFA authentic ation  chain.
+Con figur e  the Azure MFA authentic ation  chain
+To c on figur e  the Azure MFA authentic ation  chain:
+1.Click Manage the system > Policies > Authentic ation  chains > Custom. 1.
+2.Click Add New..  to create a new authentic ation  chain. 2.
+3.Give the authentic ation  chain a name and description: 3.
+▪Name:  AZURE_MFA ▪
+▪ Description:  Azure MFA ▪4. After  cr eating  the chain in the modules section  click Add new… 4.
+▪In the module drop-down select Connector pack agent. ▪
+▪For control type select required. ▪
+▪For description  enter a description  for this module; for example, Azure MFA. ▪
+▪Click Update. ▪
+5. After  clicking update c on figur e  the rest of the module settings: 5.
+▪Target system to use for address and cr edentials:  select the RADIUS target that was c on figur ed  in ▪
+the previous step.
+▪Password v erific ation  oper ation:  Select "Challenge response authentic ation". ▪
+▪Click Update. ▪6.Click Enable  to enable the authentic ation  chain and make it available. 6.
+7.Add the new custom authentic ation  chain to the front-end login authentic ation  chain  (on page 861). 7.
+This front-end login authentic ation  chain allows users to use Azure MFA through RADIUS for
+passwordless login, thus users can receive the push notific ation  on the mobile phone to approve the
+login request.End users should now be able to log into Bravura Security Fabric  by selecting  Azure MFA  (on page 910) as
+one of the authentic ation  methods.
+You can also c on figur e  the authentic ation  chain diff er en tly  to use Azure MFA as part of two-factor
+authentic ation:Before Azure MFA can be available to use at Bravura Security Fabric instance login, the NPS server must
+be running, and auto discovery or psupdate should have successfully processed the NPS server target.
+If the NPS server is shut down, or cannot be contacted by the Bravura Security Fabric  instance, the
+pr ofiles  of the NPS server target will be disabled at the next auto discovery. At that time,  Azure MFA will
+not be listed on the Choose an authentic ation  method  page.
+Logging in using Azure MFA
+Before using Azure MFA for Bravura Security Fabric  instance login, ensure the user has already completed
+Azure portal login at least once using Azure MFA, and user has registered on the Micr osoft  Authentic a t or
+app to receive Azure MFA push notific ations.
+If authentic ation  chains are c on figur ed  as described above  (on page 906), end users can log into Bravura
+Security Fabric  login using Azure MFA:
+1.Enter the user name on the instance login page.1.

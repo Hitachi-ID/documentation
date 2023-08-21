@@ -1,0 +1,339 @@
+# By default, if pre-existing configuration file(s) contains all the 
+# required options, do not replace them. 
+  use-preexisting-cfg = "Y";  
+2.Edit < psunix-root>/conf/psunix.cfg  to de fine  the c ommunic ation  key (or Master Key) that 2.
+matches the one set during ins t allation  on the Bravura Security Fabric  server; for example:  
+     commkey = "<encrypted commkey value>";  
+Optionally ,  you can pr e-c on figur e  other options  in this file if you want diff er en t  behavior from the
+default. See the Connector Pack Documen t ation  for details.
+3.Edit the pspasswd and pushpass c on figur ation  files.  (on page 1719) 3.
+4.Run the shell script install.sh from the root of the ins t allation  package: 4.
+  sh install.sh  -c 2 -ni  [ -inst <instancename> ]  
+where:
+Option Description
+-inst Specifies  the instance name for loc ation  of the psunix
+files.  If omitted,  files are copied to the /usr/local/
+psunix/default instance  (on page 1711).
+pspasswd and non-default instances
+The psunix local instance name, de fined  by the -inst option  when running the install.sh  script, is
+not connected to the main Bravura Security Fabric  instance name. If specified,  it designates a sub-target.
+During install/setup, if the instance name is the default, the installer symbolically creates a link from:
+▪/usr/local/psunix/<instance>/psunix.d to /etc/psunix.d, and▪
+▪/usr/local/psunix/<instance>/psunix.cfg to /etc/psunix.cfg▪
+The pspasswd binary (due to the fact that only one version can be installed in /usr/bin or /bin) always
+looks for /etc/psunix.cfg.
+If you want to install pspasswd to run in a non-default instance, you must manually create the
+symbolic links to /etc/psunix.d and /etc/psunix.cfg.
+Con figur e  the Bravura Pass  PAM
+To e ff ectiv ely  intercept all password changes made using PAM-enabled applic ations,  you can install the
+Bravura Pass  PAM ( pspam.so ) on every Unix server where users might change their local or NIS/NIS+
+passwords. The Bravura Pass  PAM, pspam.so, is currently available for Solaris, HP-UX, and Linux systems.
+See notes about s ynchr oniz ation  in an NIS / NIS+ environment  (on page 1718).
+The Bravura Pass  PAM applies password strength rules de fined  on the Bravura Pass  server to all new
+password selections.  It intercepts the password change event on the Unix server, and forwards a request
+for s ynchr oniz ation  to the Bravura Pass  server.Alternately, you can replace the nativ e  password program  (on page 1708) with pspasswd to intercept
+password changes made using the standard password command ( passwd ).
+The password replacement program ( pspasswd ) is inc ompatible  with pspam.so . Installing both can
+cause undesirable side e ff ects,  unless the pspam.so  is c onfigured  to be used on login only.
+Install the Bravura Pass  PAM
+Before you begin, note the c ommunic ation  key (or Master Key). The CommKey value is encrypted in
+Bravura Security Fabric . If you did not record the key in a secure loc ation,  copy the idmsetup.inf file
+from <instance> \ p sc on fig \ on the Bravura Security Fabric server to the same loc ation  as the installer.
+The installer will extract the Communic ation  Key value from the file.
+To install pspam.so  on a Unix server:
+1.If you did not select the Unix Ins t allation  Packages when you installed the Connector Pack, install the 1.
+psunix ins t allation  package  (on page 1707).
+2.Run the shell script install.sh , in in t er activ e  mode, from the root of the ins t allation  package: 2.
+ sh install.sh 3 [ -inf <path>/idmsetup.inf ]  
+3.Follow the ins tructions  displayed by the installer script. 3.
+In the c on figur ation  process:
+a.Allow a ff ect ed  files to be backed up. a.
+b.Select the "Pam Transparent Synch" ins t allation  option. b.
+c.If you want to use the c on figur ation  options  that exist in /etc/psunix.cfg, type Y when asked. If you c.
+want to change the values (for example, the idpm server name and port number), type n.
+d.Enter the target ID of the target used to target this system.d.
+e.Enter the URL of the API SOAP Service.e.
+f.Enter a proxy URL if you are using a proxy. Press [Enter] if you are not using a proxy. f.
+g.Enter the proxy user name if you are using a proxy. Press [Enter] if you are not using a proxy. g.
+h.Enter the proxy user name’s password if you are using a proxy. Press [Enter] if you are not using a h.
+proxy.
+i.If you are using SSL, enter the path holding the CA certific a t e(s).  Press [Enter] if you are not using i.
+SSL.j.If you are using SSL, enter the certific a t e  details. Press [Enter] if you are not using SSL. j.
+k. De fine  the [libcurl] path or press [Enter] to use the system default libcurl library. k.
+l. De fine  the [ignore] or press [Enter] to use the default value. l.
+m. De fine  the user name for login to the IDAPI service. m.
+n. De fine  the password for the IDAPI user. n.
+Note: This install option  does not put the module into the PAM stack. You must copy the file to the
+proper loc ation  and correctly declare it in the corresponding PAM c on figur ation  files.
+4.Check the /etc/pam.conf file on your Unix server to determine if your system uses PME (password 4.
+management extensions).
+A machine without PME normally uses only one PAM module, pam_unix.so. A machine with PME
+splits the functions  of pam_unix.so into several diff er en t  modules:
+▪pam_dhkeys.so,▪
+▪pam_authtok_get.so,▪
+▪pam_authtok_check.so, and▪
+▪pam_authtok_store.so.▪
+5.Copy the appropriate PAM file from the psunix directory to the /usr/lib/security/ directory and 5.
+rename it to pspam.so:
+▪If your Solaris system uses PME, copy:▪
+psunix/pspam/pspam_pme.so.<OS>.<ARCH>
+▪If your Solaris, HP-UX, or Linux system does not use PME, copy:▪
+psunix/pspam/pspam.so.<OS>.<ARCH>
+Next:
+Edit the /etc/pam.conf file.
+Edit pam.conf
+The following sections  describe how to c on figur e  HP-UX and Solaris (with and without PME (password
+management extensions)) systems, to use the Bravura Pass  PAM.
+Be very careful when editing  /etc/pam.conf, as a misc onfiguration  can result in your system becoming
+inaccessible. Always keep a login shell open while editing  this and test the login mechanism before
+closing the shell.
+These modules are not shipped with Connector Pack 4.6 or newer. Support can be provided at additional
+cost.
+Con figur ation  for HP-UX
+The password management section  of /etc/pam.conf on HP-UX systems is normally written  as follows:
+login    password required  /usr/lib/security/libpam_unix.1
+passwd   password required  /usr/lib/security/libpam_unix.1dtlogin  password required  /usr/lib/security/libpam_unix.1
+dtaction password required  /usr/lib/security/libpam_unix.1
+OTHER    password required  /usr/lib/security/libpam_unix.1
+For each applic ation  (login, passwd, dtlogin, dt action,  other) that should use pspam.so,  edit /etc/
+pam.conf as follows:
+1.Append use_first_pass  to the end of each line. 1.
+2.Type a new line above each e xisting  line in the format:  2.
+<app> password required /usr/lib/security/pspam.so <option>  
+If the applic ation  is a login applic ation,  include the get_old_pass option  as follows. 
+login password required /usr/lib/security/pspam.so get_old_pass  
+See Module options
+The pspam.so  module supports the following command line options:
+Option Description
+use_fir s t_pass Do not prompt for passwords. Instead, The module relies
+upon passwords obtained by prior modules in the
+module stack. Do not use this option  if pspam.so  is the
+fir s t module in an applic ation’ s  stack.
+debug Write all debug-level logging to syslog.
+The pspam.so  module logs to syslog using the
+LOG_AUTH or LOG_AUTHPRIV facility (see the Unix man
+page for more in f ormation  about syslog).
+get_old_pass Always prompt the user for his or her old password. This
+option  is only necessary for login applic ations.
+When login requests a password change it runs as
+root. Normally, if this option  is not specified,  the PAM
+module allows root to change a user’s password without
+pr ompting  for the user’s old password.
+Non-root users are always prompted to enter their
+current passwords.
+-conf <c on ffile> Use the specified  c on figur ation  file. If this option  is not
+specified,  /etc/psunix.cfg is used.
+that can be specified  in the c on figur ation  file.
+3.Save the file. 3.
+4.Ensure that you successfully test the login mechanism before closing the open shell.4.
+For example, a complete password management section  of /etc/pam.conf appears as follows:
+login    password required  /usr/lib/security/pspam.so get_old_pass
+login    password required  /usr/lib/security/
+libpam_unix.1 use_first_passpasswd   password required  /usr/lib/security/pspam.so
+passwd   password required  /usr/lib/security/
+libpam_unix.1 use_first_pass
+dtlogin  password required  /usr/lib/security/pspam.so get_old_pass
+dtlogin  password required  /usr/lib/security/
+libpam_unix.1 use_first_pass
+dtaction password required  /usr/lib/security/pspam.so
+dtaction password required  /usr/lib/security/
+libpam_unix.1 use_first_pass
+OTHER    password required  /usr/lib/security/pspam.so
+OTHER    password required  /usr/lib/security/
+libpam_unix.1 use_first_pass
+Con figur ation  for Solaris 8/9 without PME
+The password management section  of /etc/pam.conf on Solaris systems without PME is normally written
+as follows:
+other   password required  /usr/lib/security/pam_unix.so.1
+To customize /etc/pam.conf to work with the Bravura Pass  PAM for Solaris without PME:
+1.Append  use_first_pass  to the end of the "other" line as follows: 1.
+other   password required /usr/lib/security/
+pam_unix.so.1 use_first_pass
+2.Add a new "other" line for the pspam.so  module above the fir s t one as follows: 2.
+other   password required /usr/lib/security/pspam.so get_old_pass
+3.See Module options 3.
+The pspam.so  module supports the following command line options:
+Option Description
+use_fir s t_pass Do not prompt for passwords. Instead, The module relies
+upon passwords obtained by prior modules in the
+module stack. Do not use this option  if pspam.so  is the
+fir s t module in an applic ation’ s  stack.
+debug Write all debug-level logging to syslog.
+The pspam.so  module logs to syslog using the
+LOG_AUTH or LOG_AUTHPRIV facility (see the Unix man
+page for more in f ormation  about syslog).
+get_old_pass Always prompt the user for his or her old password. This
+option  is only necessary for login applic ations.
+When login requests a password change it runs as
+root. Normally, if this option  is not specified,  the PAMmodule allows root to change a user’s password without
+pr ompting  for the user’s old password.
+Non-root users are always prompted to enter their
+current passwords.
+-conf <c on ffile> Use the specified  c on figur ation  file. If this option  is not
+specified,  /etc/psunix.cfg is used.
+that can be specified  in the c on figur ation  file.
+4.Create a new section  for the passwd program by inserting  the following lines above the "other" 4.
+lines:
+passwd  password required /usr/lib/security/pspam.so 
+passwd  password required /usr/lib/security/
+pam_unix.so.1 use_first_pass
+5.Save the file. 5.
+6.Ensure that you successfully test the login mechanism before closing the open shell.6.
+For example, a complete password management section  of /etc/pam.conf appears as follows:
+passwd  password required       /usr/lib/security/pspam.so
+passwd  password required       /usr/lib/security/
+pam_unix.so.1 use_first_pass
+other   password required       /usr/lib/security/pspam.so get_old_pass
+other   password required       /usr/lib/security/
+pam_unix.so.1 use_first_pass
+Con figur ation  for Solaris 8/9 with PME
+The password management section  of /etc/pam.conf on Solaris systems with PME is normally written  as
+follows:
+other   password required    pam_dhkeys.so.1
+other   password requisite   pam_authtok_get.so.1
+other   password requisite   pam_authtok_check.so.1
+other   password required    pam_authtok_store.so.1
+For each applic ation  that should use pspam_pme.so :
+1.Replace the line:  1.
+<app> password requisite  pam_authtok_get.so.1  
+with: 
+<app> password requisite  pspam.so <options>  
+See Module options
+The pspam.so  module supports the following command line options:Option Description
+use_fir s t_pass Do not prompt for passwords. Instead, The module relies
+upon passwords obtained by prior modules in the
+module stack. Do not use this option  if pspam.so  is the
+fir s t module in an applic ation’ s  stack.
+debug Write all debug-level logging to syslog.
+The pspam.so  module logs to syslog using the
+LOG_AUTH or LOG_AUTHPRIV facility (see the Unix man
+page for more in f ormation  about syslog).
+get_old_pass Always prompt the user for his or her old password. This
+option  is only necessary for login applic ations.
+When login requests a password change it runs as
+root. Normally, if this option  is not specified,  the PAM
+module allows root to change a user’s password without
+pr ompting  for the user’s old password.
+Non-root users are always prompted to enter their
+current passwords.
+-conf <c on ffile> Use the specified  c on figur ation  file. If this option  is not
+specified,  /etc/psunix.cfg is used.
+that can be specified  in the c on figur ation  file.
+2.Save the file. 2.
+3.Ensure that you successfully test the login mechanism before closing the open shell.3.
+For example, a complete password management section  of /etc/pam.conf appears as follows:
+other   password required    pam_dhkeys.so.1
+other   password requisite   pspam_pme.so
+other   password requisite   pam_authtok_check.so.1
+other   password required    pam_authtok_store.so.1
+Con figur ation  for Linux
+For systems using /etc/pam.d/*
+To replace the use of pam_unix.so for strength checking, and enable transparent s ynchr oniz ation  with all
+applic ations  that use PAM, edit the /etc/pam.d/ c on figur ation  file. For RHEL-based system this is
+usually /etc/pam.d/system-auth-ac. For Debian-based systems, this is usually /etc/pam.d/common-
+password. The c on figur ation  file normally contains a line similar to the following:
+  password required pam_unix.so nullok obscure min=4 max=8 md5
+Add the following below the e xisting  pam_unix.so line:
+  password required pspam.so
+If you only want to a ff ect  a particular  applic ation,  add the pspam.so line to the appropriate /etc/pam.d/
+<app> file.If using a RHEL based system with SELinux, you must ensure that pspam.so is labeled with the correct
+SELinux security context. To relabel the file and then change its default label, run the following
+commands as root:
+ chcon textrel_shlib_t /lib/security/pspam.so
+ semanage fcontext -a -t textrel_shlib_t -f -- \
+        /lib/security/pspam.so
+For systems using /etc/pam.conf
+For Linux systems using /etc/pam.conf follow the c on figur ation  ins tructions  for Solaris 2.6/7 and Solaris
+8/9 without PME.  (on page 1715)
+Unix with NIS or NIS+
+Normally, in an NIS or NIS+ environment:
+1.There is a single, master password for every user.1.
+2.Password changes made on an NIS client are aut omatic ally  propagated to the NIS master server. When 2.
+this happens, only the password hash, and not the plaintext password, is sent to the NIS master
+server.
+3.Password resets are only possible on the master server.3.
+4.In NIS, password resets must be made by manually editing  the passwd map file. 4.
+Bravura Pass  allows you to extend the reach of the single NIS password:
+1.Password changes made in the NIS environment can be aut omatic ally  propagated to other, non-NIS 1.
+systems.
+2.Password changes made outside of NIS can be aut omatic ally  propagated to the NIS environment. 2.
+3.Password resets can be made from the command-line of the NIS master, or from a web browser,3.
+replacing the manual editing  process.
+4. Pr opag ation  of new passwords between an NIS master and its secondaries can be replaced by Bravura 4.
+Pass  password pr opag ation,  which is much faster.
+The ins t allation  process is the same as for individual Unix servers, with the following e x ceptions:
+1.The Bravura Pass  Unix server / listener is only installed on the NIS master server. 1.
+2.You need to edit additional  scripts for an NIS connector. See the Connector Pack Documen t ation . 2.
+3.A replacement passwd program ( pspasswd ) must be installed on all NIS client machines, and not 3.
+just on the master. This is required because Bravura Pass  needs access to plaintext password values to
+synchronize with other systems, but the NIS master only receives password hashes, and not plaintext
+passwords.
+Alternately, you can replace passwd on the NIS clients with a shell script that can:
+▪Invoke a web browser, pr ompting  users to change their passwords using a Bravura Pass  web interface. ▪
+▪Use a program such as SSH to run the passwd program on the NIS master server.▪E diting  psunix c on figur ation  files
+Bravura Security Fabric  add-ons that you install on a Unix-based server use a c on figur ation  file to de fine
+in t er action  between the add-on, the Unix server, and the Bravura Security Fabric  server. By default, this
+file is /etc/psunix.cfg ; however, most add-ons allow you to specify an alternate file.
+When you install  Bravura Security Fabric  add-on on Unix using an installer script (for example, install.sh),
+the installer creates a psunix.cfg  file and c on figur es  the required values. You can later edit this file to
+c on figur e  additional  options  or change your settings.
+The psunix.d c on figur ation  directory contains several c on figur ation  files that contain the settings  for the
+various psunix add-ons, including the pushpass file, which contains settings  for transparent
+password s ynchr oniz ation.
+See also
+Connector Pack Documen t ation  for more in f ormation  about psunix  scripts.
+passwd utility  c on figur ation
+The pspasswd file specifies  the passwd utility  used to perform an oper ation  on a non- Bravura Security
+Fabric  users password. Usually, this option  specifies  oper ating  system’s passwd command. The nativ e
+password oper ation  is executed if the user is contained in the [restricted-user-list] option,  or is contained
+in the ignore list on the Bravura Security Fabric  server. The options  are as follows:
+passwd-cmd-reset  A reset oper ation  is less strict than a change oper ation  since it does not validate
+the users old password fir s t.  Most nativ e  passwd commands do both change and reset oper ations
+depending on who is running the command and the arguments passed on the command line. Generally,
+running the passwd command as superuser is considered a password reset oper ation.
+This option  accepts psunix textual replacement strings, notably the "%u" keyword indic ating  the
+username.
+Example:
+        passwd-cmd-reset = "/bin/passwd.bin %u";
+passwd-cmd-change A change oper ation  is more strict than a reset oper ation  since it validates the users
+old password fir s t.  Most nativ e  passwd commands do both change and reset oper ations  depending on
+who is running the command and the arguments passed on the command line. Generally, running the
+passwd command as a non-privledged user is considered a password change oper ation.
+This option  accepts psunix textual replacement strings, notably the "%u" keyword indic ating  the
+username.
+Example:
+        passwd-cmd-change = "/usr/bin/yppasswd %u";Exit status codes
+The following table outlines the pspasswd exit status codes:
+Error code Description
+0 Success.
+1 Syntax error in PSLang override script.
+2 Failed to acquire password policy from remote idpm/
+pushpass service (using legacy protocol).
+3 Failed to reset password using nativ e  command line tool.
+4 Failed to reset password.
+API SOAP Service c on figur ation
+The idapi file is used to c on figur e  the c onnection  to API SOAP Service ( idapisoap ). The options  are
+as follows:
+▪ t ar g etid  If you are using aliasing, this option  is used to specify the ID of the target. ▪
+Example:
+        targetid = "UNIXSERVER";
+▪url The url that API SOAP Service is listening on. ▪
+Example:
+        url = "http://hipmserver/default/idapi";
+▪user The product administrator used to connect to the API SOAP Service. ▪
+Example:
+        user = "_API_USER";
+▪psw The product administrator password used to connect to the API SOAP Service. idaptool can ▪
+be used to provide an encyrpted form of the password.
+Example:
+        psw = "{AES}xdWShI2f
++fM7Bd0SRhIi9kHvdhM9Y0fVxvKjpIbHfp4T47X2IAjLakoNitoSfu4Z" ;
+▪libcurl In order to communicate to the API SOAP Service over SSL, the libcurl is required. If the full ▪
+path is specified,  then the library can be loaded when c onnecting  over SSL. If no libcurl is avalable and
+plain HTTP is used, the value can be set to ’0’. If empty, the system default is used.
+Example:
+        libcurl = "0";
+▪capath When c ommunic ating  to the API SOAP Service over SSL, a certific a t e  check will be made unless ▪
+ignore is set to "1". If the CA certific a t e  is not installed on the system default paths, a path can be
+specified.
+Example:

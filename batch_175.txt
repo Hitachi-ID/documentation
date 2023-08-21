@@ -1,0 +1,247 @@
+Registering for password s ynchr oniz ation  as a self-service user
+When you change your password on certain systems, Bravura Security Fabric  can:
+▪Subject the password to an or g aniz ation’ s  password policy and reject it if it does not meet security ▪
+requirements.
+▪Trigger transparent password s ynchr oniz ation  for other accounts on other systems that belong to you. ▪
+This means you may have the same password for a group of accounts, or possibly all of your accounts.
+Aut omatic  (or transparent) password s ynchr oniz ation  is currently available for the following types of
+trigger systems:
+▪Windows servers and Activ e  Directory domains ▪
+▪OS/390 with RACF, ACF2 or TopSecret security▪
+▪Unix/Linux servers▪
+▪Sun/Oracle and IBM LDAP servers▪
+▪OS/400 servers▪
+If transparent password s ynchr oniz ation  has been set up for a system that you use, and the Password
+s ynchr oniz ation  r egis tr ation  module has been enabled, you must register before it is activ a t ed.
+To register for transparent password s ynchr oniz ation:
+1.From the main menu , click Password s ynchr oniz ation  r egis tr ation . 1.
+2.Read the in f ormation  on the Password s ynchr oniz ation  r egis tr ation  page and ensure that you understand 2.
+it.
+3.Click Register . 3.
+To disable transparent password s ynchr oniz ation,  click Remove me  on the Password s ynchroniz ation
+regis tration  page.
+Disabling password s ynchroniz ation  only takes aff ect  after  the transparent password s ynchroniz ation
+service is stopped and restarted, which usually takes place during auto discovery. Password changes
+c ontinue  to trigger s ynchroniz ation  until  the update.
+Once you are registered for transparent password s ynchr oniz ation,  you should expect the following
+changes:
+▪When you change your own password on a supported system, the new password must meet the▪
+security requirements de fined  on the Bravura Security Fabric  server. To see these requirements,
+access the  Password s ynchroniz ation  regis tration  page.
+If you try to change your password to a new value that violates the security policy, the password
+change fails. Depending on the type of system that you change your password on, you may or may not
+get an in f ormativ e  error message.
+▪ After  successfully changing your password on the targeted system, Bravura Security Fabric ▪
+aut omatic ally  changes your password on every other system that it supports to the same new value.
+This s ynchr oniz ation  process is intended to simplify your passwords, by eliminating  the need to
+remember a diff er en t  password for every system.Part III Phone Password ManagerOverview of Phone Password Manager
+Phone Password Manager™ is a turn-key telephony-enabled password reset solution.  It allows users to:
+▪Reset their own f or g otten  or expired passwords on one or more systems ▪
+▪Clear intruder lockouts on one or more of their own accounts▪
+▪Manage their own RSA SecurID tokens▪
+Phone Password Manager is useful for mobile and remote users who cannot readily access a web user
+interface for self service or who may be accustomed to g etting  service from the IT or g aniz ation  via
+telephone.
+Architecture
+At minimum, a typical Phone Password Manager deployment consists of the following servers:
+▪A Bravura Pass  server running the API SOAP Service ( idapisoap ) ▪
+This service allows applic ations  to access Bravura Pass  functionality  using the Password Manager
+Remote API.
+▪A separate In t er activ e  Voice Response (IVR) server with Phone Password Manager installed, and ▪
+running either the Phone Password Manager module service, and/or the VoIP Telephony Service
+The Phone Password Manager service is an IVR applic ation  that interacts with either hardware voice
+boards, the Asterisk®  framework, or host media processing softw ar e  installed on the system to
+receive incoming calls and provide responses to the user. It uses the pspushpass.dll library to
+communicate with the API SOAP Service ( idapisoap ) on the Bravura Pass  server.
+It is recommended that your Bravura Pass and Phone Password Manager servers are hosted on
+separate hardware, as this c onfiguration  has several advantages over a single server setup. Installing
+both of these products on the same hardware means that both servers need to be shut down in the
+event maintenance is required.
+The diagram below shows a typical Phone Password Manager ins t allation.  The physical layout of the
+Phone Password Manager solution  varies depending on the needs of your or g aniz ation.
+In t er activ e  Voice Response in t egr ation  architectureExample process
+The following example illustrates how end-users can use their telephones to authentic a t e  to Phone
+Password Manager using Bravura Pass  challenge-response, and reset their password to a new, random
+value:1.User : forgets password or triggers intruder lockout. 1.
+2.User : dials the support number, and is connected to the Phone Password Manager server. 2.
+3.Phone Password Manager server : prompts the user to key in numeric ID. 3.
+4.User : keys in the ID. 4.
+5.Phone Password Manager server : sends a request to the Bravura Pass  server. 5.
+6.Bravura Pass  server : looks up the user’s pr ofile. 6.
+7.Bravura Pass  server : returns a random subset of the user’s fix ed-leng th  numeric pr e-de fined 7.
+questions  to Phone Password Manager.
+8.Phone Password Manager server : prompts the user to answer the selected questions. 8.
+9.User : keys in (numeric) answers to the selected questions,  or answers questions  verbally, depending 9.
+on c on figur ation.
+10. Phone Password Manager server : forwards answers to the Bravura Pass  server. 10.
+11. Bravura Pass  server : evaluates the validity of the user’s cr edentials,  and either allows them access, 11.
+repeats the login process, or pot entially  triggers a lockout.
+12. Phone Password Manager server : prompts the user to select reset password or unlock account. 12.
+13. User : navigates the audio menu, and requests a password reset. 13.
+14. Phone Password Manager server : prompts the user to select on target systems. 14.
+15. User : selects an individual target system or all target systems. 15.
+16. Phone Password Manager server : invokes secure API/RPC to request a random password for this user, 16.
+on the target or target systems the user selected.
+17. Bravura Pass  server : generates a random, policy-compliant password value. 17.
+18. Bravura Pass  server : implements the password reset on the target system or target systems the user 18.
+selected.
+19. Phone Password Manager server : enunciates the password, and prompts the user if to reset another 19.
+password.
+20. Bravura Pass  server : if c on figur ed,  writes a tick e t  to a call tracking system. 20.
+21. Bravura Pass  server : if c on figur ed,  sends the user a c on firmation  email. 21.Setup Task Checklist for Phone Password Manager
+You can set up Phone Password Manager using either voice boards or VoIP softw ar e  depending on the
+structure of your phone system.
+Depending on your chosen setup, you must c on figur e  either:
+▪The Dialogic®  card, Dialogic®  driver, Bravura Pass  softw ar e,  and Phone Password Manager softw ar e ▪
+to all work together.
+Or
+▪The Phone Password Manager softw ar e,  Bravura Pass  softw ar e,  and Dialogic®  PowerMedia Host ▪
+Media Processing softw ar e  to all work together.
+Or
+▪The Phone Password Manager softw ar e,  Bravura Pass  softw ar e,  and an Asterisk®  server to work ▪
+together.
+Support for use of the Dialogic® voice board with Phone Password Manager™ is being deprecated. It is
+recommended to use the Asterisk® server and framework for in t egration  with Phone Password
+Manager™ and Bravura Pass.
+This is a simple process, but it can become complicated if steps are skipped or performed incorrectly.
+The success of your Phone Password Manager project depends largely on the proper set up and
+c onfiguration  of your PBX system. Bravura Security strongly recommends that you involve an in house
+expert, or hire an outside consultant, to set up your system.
+Use this checklist as a guide to ensure that you complete each step:
+1. Con figur e  the in t er activ e  voice response (IVR) backend: 1.
+▪If using voice boards:▪
+a.Review the IVR server requirements and designate a machine  (on page 1749). a.
+b.Calculate the number and size of voice boards that you will require  (on page 1749). b.
+c.Select and purchase the voice board that best suits your needs  (on page 1751). c.
+It is important to select a board that has voice c apabilities  and is c ompatible  with your e xisting
+telephony infrastructure.
+d.Have a phone technician assign additional  phone lines if required  (on page 1751). d.
+It is important that the phone lines match the type of voice board that you will be using (analog vs.
+digital).
+e.Install the voice boards, drivers, and System Release softw ar e  (on page 1752). e.
+f.Test your system to ensure that it is functioning  correctly and that the boards are responding to f.
+external calls.
+▪If using VoIP Softw ar e: ▪
+a.Review the IVR server requirements and designate a machine  (on page 1752). a.
+b.Install the Dialogic® PowerMedia Host Media Processing (HMP) Softw ar e.  (on page 1752) b.▪If using Asterisk® :▪
+a.Determine which Asterisk® dis tribution  is right for your or g aniz ation,  and install  (on page 1753). a.
+b.Integrate Asterisk® and Phone Password Manager  (on page 1754). b.
+c. Con figur e  any VoIP softphones  you may require  (on page 1755). c.
+▪If deploying biometric voice print v erific ation  on the Phone Password Manager server: ▪
+a.Install the VoiceVantage softw ar e  (on page 1777). a.
+2. Con figur e  the Bravura Pass  server. 2.
+a.Use setup to install Bravura Pass . a.
+During ins t allation  and c on figur ation,  ensure that you keep a record of the following in f ormation  in
+a safe loc ation,  as it will be required when installing and c on figuring  Phone Password Manager:
+▪Host name or IP address of the Bravura Pass  server. ▪
+▪Name and password of the API caller.▪
+▪Web address and Port that the API SOAP Service is listening on.▪
+▪ Communic ation  encr yption  key. ▪
+b. Con figur e  the API caller  (on page 1757). b.
+c. Optional:  Con figur e  custom authentic ation  questions  (on page 1773). c.
+d.If you have not already done so, c on figur e  target systems, and run auto discovery to list users. d.
+e.Ensure that the password policy on the Bravura Pass  server matches the password policies of any e.
+target system where Phone Password Manager users have accounts. If they do not match, then
+password changes will eventually fail on the target systems.
+3.Install Phone Password Manager, and c on figur e  Bravura Pass  in t egr ation: 3.
+a.Install Phone Password Manager  (on page 1759). a.
+b. Optional:  Edit the c on figur ation  files (on page 1764). b.
+Do this if your board c on figur ation  diff er s  from what the Phone Password Manager installer auto-
+detected, or if you want to modify the default settings.
+c.Determine how user IDs will map to telephone keypads  (on page 1771). c.
+d.Supply additional  vocals as required  (on page 1768). d.
+e. Optional:  Con figur e  Phone Password Manager to support multiple  languages  (on page 1770). e.
+Do this if you intend the Phone Password Manager system to off er  support for languages other
+than English.
+f. Optional:  Write new scripts, or modify the e xisting  call logic script  (on page 1767). f.
+The default script allows users to log in, authentic a t e  using challenge-response questions  stored in
+Bravura Pass , and perform the following oper ations:  reset passwords, unlock accounts, or manage
+tokens (If c on figur ed).
+g.If required, modify \<Instance>\service\pspushpass.cfg to c on figur e: g.
+▪Bravura Pass  server address. ▪
+▪API Service (idapi) address, port, and authentic ation  settings. ▪
+▪SSL Settings  (on page 1790). ▪4. Con figur e  Phone Password Manager security and call handling: 4.
+▪If you want Phone Password Manager to authentic a t e  users by pr ompting  them with questions ▪
+from their Bravura Pass  security question  pr ofiles,  c on figur e  Phone Password Manager question
+sets (on page 1773).
+Question  sets and questions  must be enabled specific ally  for Phone Password Manager in t egr ation.
+To do this, navigate to the Question  set in f ormation  page and enable the "Ask telephone users to
+answer questions  from this set" option.
+▪To set up voiceprint authentic ation,  c on figur e  the Generate voice print enrollment PIN (PSI) ▪
+module  (on page 1777).
+▪If you want Phone Password Manager to be able to recognize spoken words and playback text as▪
+audible speech, c on figur e  speech r ec ognition  and text-to-speech  (on page 1780).
+▪If you want Phone Password Manager to selectiv ely  answer calls, or to make outbound calls, ▪
+c on figur e  call modes  (on page 1784).
+▪If you are using VoIP , and you want to be able to transfer IVR calls, c on figur e  the TransferCall ▪
+function  (on page 1786).
+▪If you want Phone Password Manager to use HTTPS encr yption,  c on figur e  the Bravura Security ▪
+Fabric server  (on page 1790).
+5.Test your system to ensure that users can log in to the IVR system and perform the supported5.
+oper ations  using a telephone.Con figuring  the IVR Server
+This chapter describes how to set up your IVR server. Do not install any softw ar e  or hardware until  you
+have read and understood all of the in f ormation  in this chapter.
+The c on figur ation  requirements diff er  depending on your phone system:
+▪Dialogic® voice boards  (on page 1749) ▪
+▪Dialogic® PowerMedia Host Media Processing Softw ar e  (on page 1752) ▪
+▪ As t erisk®Softw ar e  (on page 1753) ▪
+Support for use of the Dialogic® voice board with Phone Password Manager™ is being deprecated. It is
+recommended to use the Asterisk® server and framework for in t egration  with Phone Password
+Manager™ and Bravura Pass.
+Con figuring  Dialogic® voice boards
+IVR server requirements
+In order to work with Phone Password Manager, your IVR server must be c on figur ed  as follows:
+Oper ating  system
+Phone Password Manager requires Micr osoft  Windows Server 2012 at current service packs.
+System Release softw ar e
+You must install both the hardware and the Dialogic® System Release 6.0+ PCI for Windows, including the
+latest service update. This System Release softw ar e  is available from your vendor, though an e v aluation
+version is also available.
+For more in f ormation  about the System Release contact your vendor or visit:
+http://w w w .dialogic.c om/ en/pr oducts/media/ s y s t em-r elease-softw ar e/
+Additional  softw ar e
+If you will be deploying biometric voice print v erific ation  on the IVR server, you must also purchase and
+install VoiceVantage softw ar e.
+For more in f ormation  about VoiceVantage contact sales@bravurasecurity.com .
+Calculating  the number and size of voice boards
+The number of boards to install and the size of each board depends on the following factors:
+▪On average, how long does each call take to complete?▪
+▪How many calls must be processed at one time? ▪
+▪How many users are in your or g aniz ation? ▪
+▪What features will be provided?▪▪What is the expiry interval for passwords?▪
+▪How many calls per day does the help desk currently receive for f or g otten  passwords? ▪
+▪What percentage of those calls are expected to be offloaded  to Phone Password Manager? ▪
+We can calculate the number of phone lines needed by taking the average call dur ation,  which we
+determined to be two and a half minutes, and determining how many calls a single line can handle in an
+hour:
+calls per line per hour (CALLSPERLINE) = 3600 sec/hr X 1 call/150 sec = 24 calls/hr
+We can then calculate the minimum number of required lines:
+number of lines needed (NLINES) = number of calls received per hour / CALLSPERLINE
+This formula is illustrated in the following example.
+Example
+Global Enterprises has 80,000 users. Users are required to change their passwords every 30 days. We can
+estima t e  the number of calls received per hour based on the following assumptions:
+▪If 10,000 users a month forget their passwords, and if the Phone Password Manager service handles▪
+all password change requests, a total of 90,000 calls will go through the Phone Password Manager
+service every month.
+▪If there are 20 work days in the average month, there will be 4,500 password change requests every▪
+day.
+▪If password change requests are distributed evenly throughout the 24-hour period, the Phone▪
+Password Manager service will receive approximately 188 password change requests every hour.
+Using this example:
+NLINES = 188 / 24 = 7.8 (round up to 8)
+An 8-port board (or two 4-port boards) is the absolute minimum required to support 188 calls / hr. Keep
+in mind that this is the minimum requirement. To allow for growth within your or g aniz ation,  we
+recommend in this case that a 12-port board be used.
+To make the example more applicable to the real world, the following facts must be taken into
+c onsider ation:
+▪Calls will not be evenly distributed throughout the day.▪
+▪Users will also be performing other tasks (like unlocking accounts) at the same time. ▪
+▪Your or g aniz ation  will grow over time. ▪
+Your c alculations  can be made more r ealistic  by changing the numbers in the formula to account for peak
+call times  and adding in other requests that might have to be processed. For example, you might expect
+50% of the calls in a single day to occur between 8:00 am and 10:00 am. That means you could receive up
+to 1,125 calls per hour. You might also receive 200 account unlock requests within an hour, thus bringing
+the number of pot ential  calls in an hour to 1,325. In this case, you need to decide whether to buy the
+necessary hardware to support that volume of calls, or to allow users to be put on hold for a short time
+until  a line becomes available.

@@ -1,0 +1,155 @@
+f.Edit the value for Include this note for r e v oc ation  candidates to suit your needs. f.
+Use the question  mark icon to view available variables.
+g.Depending on the items selected, select the pr e-de fined  request to aut omatic ally  revoke the g.
+item, if the option  is available.
+Next: 
+Start, save, or schedule the c on figur ation  (on page 2627).For c on figur ation  certific ation  campaigns:
+▪Select c on figur ations  to review ▪
+Con figur ations  that can be certified  include:
+▪Roles▪
+▪ Segr eg ation  of duties  rules ▪
+To select a c on figur ation  to certif y:
+1.Navigate to the c on figur ation  page for a new or saved campaign. 1.
+2.Click the Items to review tab, then select the c on figur ation  you want to certif y . 2.
+If you select All, a question  mark is displayed next to the entitlemen t  to indicate that ?? (p??) is in
+e ff ect.3.Click Next: Reviewers or another certific ation  tab to proceed. 3.
+Next:
+Select reviewers for c on figur ation  certific ation  campaigns to determine the certific ation  method.
+▪Select reviewers for c on figur ation  certific ation  campaigns ▪
+To determine who will certif y  c on figur ations:
+1.Navigate to the config ur ation  page for a new or saved campaign. 1.
+2.Click the Reviewers tab, then select a sub-tab to select: 2.
+▪Single reviewer▪
+Use the single reviewer method when one person is easily able to review all the c on figur ations
+included in the campaign.
+Search or browse the list to select the reviewer.  
+Next: 
+Submit the c on figur ation  review to launch, save, or schedule it.  (on page 2627)▪ Con figur ation  authorizers ▪
+When you use the c on figur ation  authorizers method, you c on figur e  reviewers based on
+authoriz ation  settings  for selected c on figur ation  items. This allows you to divide the work
+among multiple  reviewers.
+If a c on figur ation  does not have an authorizer, you can manually select a user to be the
+reviewer.
+Manually assigning c onfigur ation  authorizers
+To manually assign c on figur ation  authorizers:
+1.Select a c on figur ation  row to select the reviewer for the c on figur ation. 1.
+2.Search or browse the list to select the reviewer.2.3.Click Next: Submit 3.
+Next: 
+Submit the c on figur ation  review to launch, save, or schedule it.  (on page 2627)
+If you don't need to make any changes you can submit the campaign to launch or schedule i  (on page
+2627)t.
+CAUTION: Unsaved changes are lost if you navigate away from the certific ation
+menu.
+Scheduled campaigns
+Product administrators with the Manage certific ation  process privilege can view and update all
+scheduled campaigns.
+Product administrators with the Initia t e  entitlemen t  certific ation  campaigns privilege can view and
+update only those campaigns that they have scheduled.
+To view or update scheduled certific ation  campaigns:
+1.Navigate to the Manage certific ation  process (CERT) module  (on page 2567) and select Scheduled 1.
+campaigns .2.If necessary use the search facility to narrow down the list of scheduled campaigns.2.
+3.Select the campaign you want to view.3.
+Use saved searches
+You may find it useful to save search filt er s  and re-use them to easily de fine  entitlemen ts,  users,
+reviewers.
+If you use a saved search in a saved c ertific ation  setup, the saved setup cannot be shared with other
+administrators
+To save an advanced search query:
+1.On the object list page, click the advanced search icon 
+ next to the Search button. 1.
+2.Enter your search criteria.2.
+3.Click the "Save search" icon.3.
+4.Enter a name for the new search.4.
+5.Click Create . 5.
+Once it is saved, you will see it from the saved search drop-down list in the My Searches  section.
+When you use a saved search, the list of items will be recalculated. If the items you select do not match
+what is presented by the search, two new buttons  appear in the certific ation  page, as illustrated below.Click Use saved search  to select all items returned by the search, or click Use selected items  to c on firm
+that you want to use only the items you selected.
+Submitting  a certific ation  campaign
+Once you have determined what to certif y  and by whom, select the Submit  tab to review changes and
+de fine  notific ation  details. The details vary for:
+▪ Submitting  entitlemen t  reviews ▪
+On the Start c ertific ation  campaign  page for an entitlemen t  review:
+1.Click the Submit tab on the c on figur ation  page for a new or saved campaign. 1.
+2.In the Notific ation  details section: 2.
+a.Type the Certific ation  campaign description , to be displayed to reviewers. a.
+b.Review the Segment description , if applicable (for certific ation  by entitlemen t  reviewers). b.c.Review the Email . c.
+If you want to edit the notific ation  details for this campaign, select the ”Other” radio button  and
+type the message. Hover your cursor over the question  mark to see variables you can include.
+The values will be inserted in the actual notific ation  message.
+d.Type Ins tructions  for reviewers, if needed. d.
+The ins truction  pop-up will be displayed when the reviewer fir s t opens the certific ation  app.
+Ther eafter  the reviewer can click on the help icon 
+  to view the ins tructions.
+e.Select or deselect the Disable review of own entitlemen ts  checkbox to determine whether e.
+reviewers can certif y  or revoke their own entitlemen ts.  If enabled, the certif y  and revoke
+actions  are blocked for their own entitlemen ts.  The reviewer can delegate review of these items
+to another user.
+If a reviewer delegates an item to the owner of the item it will be blocked unless the deleg ation
+allows further deleg ations.
+The message that is displayed when a deleg ation  is performed to the owner of the item and
+further deleg ation  is not allowed and self review is disabled is:
+With Self review disabled - cannot delegate an item to the owner
+[Full name of delegate] of that item unless further delegation
+is permitted.
+A reviewer may perform a partial  sign off after  deleg ating  their items to another reviewer and
+c ompleting  the rest of the items in their segment."
+f.Select or deselect the Sign-off  password required checkbox to determine whether reviewers f.
+must enter their password to sign off on a campaign.
+The default setting  is determined by the CERT PROMPT PASSWORD system variable.
+g.If you selected Entitlemen t  authorizers  in the Reviewers tab, select the Late binding g.
+authorizers  checkbox if you want authorizers to be updated when a saved or scheduled
+campaign is started. This means, for example, if a group's owner has changed since the
+campaign was set up, the new owner will be uses as authorizer. This option  is disabled by
+default.
+h.Select or deselect the Comments required checkbox to determine whether reviewers must h.
+enter comments for all items before sign off on a campaign.
+If this option  is selected then the reviewer must add a comment to any item that was certified
+or revoked. If the item was previously certified  and is still within the CERT VALIDITY INTERVAL
+then no comment is required.
+This option  is intended to be used to provide control at the campaign level whether comments
+should be enforced. If comments are always mandatory then the system variables CERT
+REQUIRES COMMENT TO CERTIFY and CERT REQUIRES COMMENT TO REVOKE should be used.
+The option  will only override the settings  of the system variables if it is checked. It will not act to
+disable the need for comments if the system variables are Enabled.
+i.Review Certific ation  validity interval . i.The value is aut omatic ally  set by the CERT VALIDITY INTERVAL  system variable, which by default
+is set to 30 days.
+It allows the certific ation  initia t or  to specify the number of days until  the certific ation  expires.
+The value cannot be neg ativ e,  but it can be 0 which means that the certific ation  is no longer
+valid directly after  sign-off .
+3.Review Resources to be certified. 3.
+You can go back and make changes if necessary; changes made on this page are saved.
+If managed groups are being certified,  you can select which type of members to review:
+▪Accounts to only review accounts with group membership. ▪
+▪Child groups to only review child groups. ▪
+▪Accounts and child groups to review both. ▪
+Child groups can only be c ertified  by single reviewers or entitlemen t  authorizers. If any other
+c ertific ation  method is selected, only accounts can be c ertified  and this option  will not be
+available.
+4.Review the User summary section,  including the: 4.
+▪ Selection  method for users to be reviewed ▪
+▪Review method▪
+If the review method is Certific ation  by entitlemen t  authorizers , there is an option  to
+Consolidate reviews for same reviewer . It is selected by default, so that all segments that have
+the same reviewer will be combined into one segment.
+5.Click:5.
+▪Save to save the c on figur ation  before s t arting  or scheduling a campaign. ▪
+Continue  to Saving a certific ation  setup  (on page 2633).
+▪Schedule to schedule a previously saved c on figur ation. ▪
+▪Launch campaign to start a campaign without saving. ▪
+i.If you selected OrgChart reviewers, schedule OrgChart manager notific ation  emails i.
+If you chose OrgChart managers, c on figur e  the Number of days to wait between sending
+out in vit ation  emails to each level of the OrgChart before s t arting  a campaign.
+Bravura Security Fabric  uses notific ation  campaigns to stagger the emails it sends to
+managers based on their level in the OrgChart . The default interval is determined by the
+CERT EMAIL INTERVAL .1.Click 
+ to see the notific ation  schedule. 1.
+2.Select a date in at least one date field.  To select a date click on the date field  and type a 2.
+date or choose a date with the calendar.
+3.If you have left fields  blank, click Calculate to aut omatic ally  populate other date fields 3.
+based on the Number of days to wait between sending out in vit ation  emails to each
+level of the OrgChart .
+In the notific ation  list, the level 0 represents the top level manager for the campaign, not
+necessarily the CEO or top-level manager in your organiz ation.
+.
+ii.Click Start new campaign . ii.

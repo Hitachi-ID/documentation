@@ -1,0 +1,374 @@
+Authentic ation  chains: Plugins
+This chapter shows you how to write authentic ation  chain plugins, or adapt sample plugins for your
+requirements. There are two types of authentic ation  chain plugin:
+▪Chain selector plugins▪
+These plugins are specific  for the Authentic ation  chain selector ( select_chain.pss ) module and
+they are c on figur ed  via the Run this plugin to aut omatic ally  select a sub-chain option  of the
+select_chain module. These type of plugins can decide:
+▪What chain to use to authentic a t e  the user ▪
+▪What chains are available for users to authentic a t e  themselves ▪
+Bravura Security  provides samples listed in Table Authentic ation  chain selector plugin samples  (on
+page 981).
+▪External authentic ation  plugins ▪
+These plugins can be used to implement new authentic ation  methods or processes and they are
+c on figur ed  and launched via the External program  setting  for the external.pss  authentic ation
+module.
+These type of plugins can decide:
+▪What tokens are required to complete the authentic ation  process and what kind of dialog to ▪
+present to the user for acquiring those required tokens.
+▪What authentic ation  chain to use to c ontinue  the authentic ation  process. ▪
+▪Whether the tokens provided are valid or invalid and whether the authentic ation  should consider ▪
+success or failed accordingly.
+Bravura Security  provides samples listed in Table External authentic ation  plugin samples  (on page
+981).
+Authentic ation  chain selector plugin samples
+Sample script Description
+chainselect.psl A generic sample to demonstrate IP based chain selection.
+authselect.psl and
+authselect.m4Can be used to direct users to a single-page login page  (on page 919)
+that includes ID and password fields.
+External authentic ation  plugin samples
+Sample script Description
+authplugin.psl A simple demons tr ation  of this kind of plugin.
+httpauth.psl and httpauth.exe Generic tools for web server(NTLM, SmartCard) authentic ation
+in t egr ation.
+authanonreg.psl Provides authentic ation  to anonymous users who do not have pr e-
+e xisting  cr edentials,  allowing them to submit pr e-de fined  requests for
+new users.Sample script Description
+authuserattr.psl Allows authentic ation  using pr ofile  attribut es,  such as date of birth
+and email address.
+Chain selector
+An authentic ation  chain selector plugin either selects a chain using a status update of
+SERVICE_CHANGED, or removes selectable chains on a NEED_TOKENS status with the r espectiv e  chains
+returned. If only one chain is returned in the chain’s KVGroup, then the authentic ation  chain is executed
+without a selection  available to the user.
+Input
+ 
+"" "" = { 
+      "can_use_response.pss" = "true" 
+      "cfgid" = "DEFAULT_LOGIN:1" 
+      "chain" = "DEFAULT_LOGIN" 
+      "module" = "psf" 
+      "cgi" "" = { # HTTP HEADER information 
+            ... 
+      } 
+      "chain" "" = { # Supported chains 
+          "<chain id>" = "1" 
+          "<chain id>" = "1" 
+          "<chain id>" = "1" 
+            ... 
+      } 
+      "evaluation_status" "<chain path>" = { 
+          "<chain id>:<sequence>" = "<status>" 
+      } 
+      "parameters" "" = { # HTTP Post information 
+      } 
+      "viewer" "user" = { 
+            # User account/profile and request attribute information 
+      } 
+} 
+Output
+ 
+"" "" = { 
+   "retval" = "0" # 0 on success; non-zero on failure 
+   "status" = "<NEED_TOKENS|SERVICE_CHANGED>"    "chains" "" = { # required only for NEED_TOKENS status 
+       "<chain id>" = "1" 
+       "<chain id>" = "1" 
+       "<chain id>" = "1" 
+       ... 
+    } 
+    "parameters" "" = { # required only for SERVICE_CHANGED status 
+       "NEW_SERVICE_NAME" = "<chain id>" 
+    } 
+} 
+chainselect
+The chainselect.psl  sample script, found in the samples , provides a simple demons tr ation  of an
+authentic ation  chain selector plugin. The script implements an IP-based chain selecting  logic.
+authselect
+You can write a plugin to aut omatic ally  choose an authentic ation  method, allowing users to log in using a
+pr e-de fined  authentic ation  chain.
+A sample PSLang script for performing this c on figur ation  (authselect.psl ) can be found in the
+samples directory. The plugin and associated m4 file demonstrate how a chain selector plugin can be
+used to enable a single-page sign-on c on figur ation.
+To c on figur e  Bravura Security Fabric  to aut omatic ally  choose an authentic ation  method:
+1.Ensure the DEFAULT_LOGIN authentic ation  chain is enabled and has Use PSFEXT_VALUES 1.
+selected as an Available chain .
+2.Copy authselect.psl from the samples directory to the plugin directory. 2.
+3.Copy or append the contents of samples \authselect.m4 to design \custom \authchain.m4. 3.
+4.Generate and install a new set of skins. ( make default en-us and make install default 4.
+en-us for English).
+5.Disable the DEFAULT_LOGIN authentic ation  chain so that you can c on figur e  it. 5.
+6. Con figur e  the DEFAULT_LOGIN authentic ation  chain by setting  Run this plugin to aut omatic ally  select 6.
+a sub-chain to authselect.psl .
+The script is c on figur ed  to use the internal password.pss module.
+7.Re-enable the DEFAULT_LOGIN authentic ation  chain. 7.
+fedidp-cs
+The fedidp-cs.exe chain selector is capable of selecting  authentic ation  chains for SAML federated
+authentic ation  requests based on the contents of the sp_authchain  table, and is used by the
+Scenario.hid_saml_idp component.Input
+ 
+"" "" = { 
+  "module" = "psf" 
+  "chain" = "SAML" 
+  "cfgid" = "SAML:1" 
+  "evaluation_status" "\$INTERNAL\\DEFAULT_LOGIN\\SAML\\" = { 
+    "SAML:1" = "UNKNOWN" 
+    "SAML:2" = "UNKNOWN" 
+  } 
+  "can_use_response.pss" = "false" 
+  "viewer" "user" = { 
+    "id" = # User ID 
+    "name" = # User name 
+    "acl" "" = { # User ACL information 
+          ... 
+    } 
+  } 
+  "cgi" "" = { # HTTP HEADER information. 
+       # HTTP_REFERER may or may not include SAMLRequest and RelayState parameters. 
+    "HTTP_REFERER" = "https://<server>/<instance>/sso/psf.exe?baseurl=/
+<instance>/sso&SAMLRequest=<Request data>&RelayState=<State data>" 
+    "REQUEST_METHOD" = "POST" 
+  } 
+  "parameters" "" = { 
+    "HOSTID" = "PSYNCH" 
+    "IDENT_HOSTID" = "PSYNCH" 
+    "LANG" = "en-US" 
+    "NEW_SERVICE_NAME" = # Auth chain calling this selector 
+    "SETTABLEFIELDSCOOKIE" = "" 
+    "SETTABLEFIELDSDB" = "" 
+    "SKIN" = "default" 
+    "SUBMIT-TOKENS.x" = "Continue" 
+    "TRANSACTION" = "C_AUTHCHAIN_LOGIN" 
+    "USER_IDENT" = # User ID 
+  } 
+  "SESSDATA" "" = { # Session data information, including: 
+    "NEW_SERVICE_NAME" = # Auth chain calling this selector 
+    "SAML_ISSUER" = # The SP that issued the request 
+    "SAML_RELAY_STATE" = # Request state data 
+    "SAML_REQUEST" = # XML request data 
+  }   "chains" "" = { # Supported chains 
+  } 
+  "sessionid" = # Session ID 
+} 
+Output
+ 
+"" "" = { 
+  "errmsg" = "" 
+  "retval" = "0" 
+  "status" = "SERVICE_CHANGED" # If status = SERVICE_CONTINUE, then no chains are returned, and the user continues with the chain that called this plugin. 
+  "parameters" "" = { 
+    "NEW_SERVICE_NAME" = # Chains available to the user 
+  } 
+} 
+External program
+An external program plugin can generate customized authentic ation  chain modules, based on available
+chains, CGI parameters, and user in f ormation.
+Input
+Input parameters can be used to determine the modules that are presented to the user if c on figur ed  to
+do so. The input parameters can be the chains that are available for the user (”chains” KVGroup), CGI
+parameters passed in from the browser (”cgi” KVGroup), parameters received from the user
+(”parameters” KVGroup), or user acc oun t/pr ofile/r eques t  attribut es  for the current user (”viewer” ”user”
+KVGroup).
+ 
+   "" "" = { 
+        "can_use_response.pss" = "true" 
+        "cfgid" = "DEFAULT_LOGIN:1" 
+        "chain" = "DEFAULT_LOGIN" 
+        "module" = "psf" 
+        "sessionid" = "<session ID>" # The session ID of the viewer 
+ 
+        "chains" "" = { # Supported chains 
+             "<chain id>" = "1" 
+             "<chain id>" = "1" 
+             "<chain id>" = "1" 
+             ... 
+        } 
+         "cgi" "" = { # HTTP HEADER information 
+             ... 
+        } 
+ 
+        "parameters" "" = { # HTTP Post information 
+        } 
+ 
+        "viewer" "user" = { 
+             # User account/profile/request attribute information 
+        } 
+   } 
+Output
+The output KVGroup can be constructed within the script to determine the specific  authentic ation
+modules that may be presented for the user logging in. One or more dialogs can be generated.
+ 
+"" "" = { 
+    "errmsg" = "" # error message, if any 
+    "retval" = "0" # 0 on success; non-zero on failure 
+    "status" = "<SUCCESS|FAILED|NEED_TOKENS|FAILED_NEED_TOKENS|
+IGNORE_STATUS|SERVICE_CHANGED|SYSTEM_ERROR>" 
+    "parameters" "" = { 
+        <name> = <value> 
+        "NEW_SERVICE_NAME" = "<chain id>" # Required only for SERVICE_CHANGED status 
+    } 
+    "dialog" "" = { 
+        "id" = "<id>" # unique dialog id 
+        "subtitle" = "<subtitle" # subtitle of the dialog 
+        "title" = "<title>" # title of the dialog 
+        "entry" "" = { 
+            "description" = "<description" # entry prompt description 
+            "name" = "<field_name>" # entry field name in html 
+            "type"= "<PASSWORD|TEXT|DATE|DROPDOWN|HIDDEN|RADIO|
+CHECKBOX|IMAGE|BUTTON|SUBMIT|LABEL>" 
+            "value" "" { 
+                description = "<description>" # value description 
+                value = "<value>" 
+            } 
+        } 
+        # additional entry KVGroups may also be added here 
+    }     "redirect_url" = "<URL>" # redirect to specified url 
+} 
+Status
+The status key must be set to one of the following values:
+SUCCESS The cr edential  has been successfully validated. Authentic ation  chain e x ecution
+will resume according to its c on figur ation  under this case.
+FAILED The cr edential  was found to be incorrect. Authentic ation  chain e x ecution  will
+resume according to its c on figur ation  under this case.
+NEED_TOKENS More in f ormation  is required from the user to validate their cr edential.  The
+dialog described in the dialog KVGroup will be displayed, and the results will
+be passed back into this plugin. The dialog KVGroup is mandatory if this status
+is returned.
+FAILED_NEED_TOKENS The cr edential  was found to be incorrect. If the user is authentic a t ed  via this
+plugin again, a new dialog should be displayed to the user. This status has the
+same e ff ect  as NEED_TOKENS except that the lockout counter (if applicable) is
+incremented.
+IGNORE_STATUS This authentic ation  module is not relevant and should be ignored.
+Authentic ation  chain e x ecution  will resume with the next service. If there are
+no more services in the chain and the authentic ation  has not yet succeeded or
+failed conclusively from another service, this status will be treated the same
+way as SYSTEM_ERROR.
+SERVICE_CHANGED This authentic ation  module is not relevant, but authentic ation  should resume
+with the authentic ation  chain specified  in the NEW_SERVICE_NAME
+parameter. The specified  authentic ation  chain must be enabled and selectable
+in the current authentic ation  chain. If the service specified  in
+NEW_SERVICE_NAME would directly cause a cycle in the chain e x ecution  flo w
+by dir ecting  authentic ation  to a module that has already executed, this status
+is treated the same way as SYSTEM_ERROR.
+SYSTEM_ERROR There was a fatal error during the authentic ation  process. Authentic ation
+chain e x ecution  will stop immediately as though it had failed, but the lockout
+counter will not be incremented. The value of the errmsg key will be displayed
+to the user as an error.
+Parameters KVGroups
+The parameters KVGroup can be used to determine the modules that are presented to the user after
+successful authentic ation.
+JUMPTOCGI Jump the user to specified  module
+LINK Specify a link on the CGI page
+PREQID Specify a pr e-de fined  request
+SESS_ANON Create an anonymous session when set to 1
+USERID Used to change the initial  login user to a diff er en t  userThe following example will send the authentic a t ed  user to the IDR page and allow them to enter a new
+user pr e-de fined  request.
+ "parameters" "" = { 
+    "JUMPTOCGI" = "IDR" 
+    "LINK" = "NEWUSER" 
+    "PREQID" = "NEWUSER" 
+    "SESS_ANON" = "1" 
+} 
+ See also: 
+▪authanonreg  (on page 996) ▪
+Redirect to URL
+The external authentic ation  chain can redirect the user to specific  URL. parameters can be de fined  in the
+URL address or within the parameters section.
+The following example will redirect a user to the specified  site.
+ 
+"" "" = { 
+    "parameters" "" = { 
+        "user" = "someuser" 
+    } 
+    "redirect_url" = "http://site/cgi.exe?ok=true" 
+    "retval" = "0" 
+    "errmsg" = "SUCCESS" 
+} 
+This example will redirect the user to http:// sit e/ cgi.e x e?ok=true&user=someuser
+Dialog KVGroups
+The dialog KVGroup will allow the cr eation  of a custom dialog box for the user to enter in f ormation.
+The entry types for custom dialogs can be specified  as one of the following:
+PASSWORD A password field
+TEXT A plain text field
+DATE A date selection  field
+DROPDOWN A dropdown list of items
+HIDDEN A hidden field
+RADIO A list of radio buttons
+CHECKBOX A list of checkboxes
+IMAGE An image shown on the pageBUTTON A button  with customized text for the button  label
+SUBMIT A standard submit button  for the current page
+LABEL A simple label to be added on the page
+The “value” KVGroup, outlined in the Output  (on page 986) section,  is c on figur ed  diff er en tly  depending
+on the type of dialog:
+▪The following entry types only require one “value” KVGroup to be included: PASSWORD, TEXT,▪
+HIDDEN, IMAGE, BUTTON, SUBMIT, LABEL
+The “ description”  field  for the BUTTON entry type adds custom text to the button.
+▪The DROPDOWN, CHECKBOX, and RADIO entry types require one “value” KVGroup for each checkbox▪
+or drop-down item that you want to include; for example:  
+"value" "" = { 
+  "value" = "val1" 
+  "description" = "desc1" 
+} 
+"value" "" = { 
+  "value" = "val2" 
+  "description" = "desc2" 
+} 
+"value" "" = { 
+  "value" = "val3" 
+  "description" = "desc3" 
+} 
+In the example above, the “ description”  fields  for desc1, desc2, and desc3 are displayed as either drop-
+down list items, checkboxes, or radio button  options.
+▪The “value” field  of the IMAGE entry type contains a path to an image file; “ description”  is for the ▪
+hover text. For example:  
+"entry" "" = { 
+  "name" = "image_field" 
+  "description" = "Image Field" 
+  "type" = "IMAGE" 
+  "value" "" = { 
+    "value" = "assets/images/company_logo.png" 
+    "description" = "test image" 
+  } 
+} 
+You can customize the user interface for these views by modifying the !!!AUTH_VIEW_* tags in the
+authchain.m4 file, then recompiling the skins. For example:
+▪Use the !!!AUTH_VIEW_INPUT_ <entrytype> _VALUE_ <dialogid> tag to make modific ations  to the ▪
+image entry type, where <entrytype> refers to "type" = "IMAGE" and <dialogid> is represented
+by the “id” field  in the “dialog” KVGroup (authplugin in the sample authplugin.psl script).▪Add the following to !!!AUTH_VIEW_INPUT_IMAGE_VALUE_auth plugin to change the height and▪
+width:  
+<!--@container()-->  
+  <!--@image(text="%ENTRY_VALUE_DESC%" src="%ENTRY_VALUE
+%" height="50%" width="50%")--><!--@endimage()-->  
+<!--@endcontainer()-->  
+The above tag is specific  to the auth plugin dialog ID. If this tag is only specified  as
+!!!AUTH_VIEW_INPUT_IMAGE_VALUE, then it only applies to the plugins that use this tag.
+ See also: 
+▪CUSTOMIZATION  (on page 3471) ▪
+▪The authchain.m4 file for additional  authentic ation  chain tag modific ations ▪
+authplugin
+The authplugin.psl  sample script, found in the samples directory, provides a simple demons tr ation
+of a customized authentic ation  chain. The script generates a dialog for password authentic ation  to the
+Front-end . The output KVGroup will include a status that is set to NEED_TOKENS to indicate that a
+response is required for the dialog. The sample script will then verify the password that is entered against
+a value de fined  within the script.
+Output KVGroup for the sample authplugin.psl :
+ 
+   "" "" = { 
+     "errmsg" = "" 
+     "retval" = "0" 
+     "status" = "NEED_TOKENS" 
+     "dialog" "" = { 
+       "id" = "authplugin" 
+       "subtitle" = "Please provide a valid password" 
+       "title" = "Verifying password" 
+       "entry" "" = { 
+         "description" = "Password" 
+         "name" = "response_field" 
+         "type" = "PASSWORD" 
+         "value" "" = { 
+           "description" = "" 
+           "value" = "<your password>" 
+         } 
+       } 
+     } 
+   } 

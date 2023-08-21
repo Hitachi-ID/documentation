@@ -1,0 +1,336 @@
+This topic covers Windows Server Operating  System patching only and does not cover Bravura Security
+Fabric patching. For all Bravura Security Fabric patching see upgrading and migration .
+Best pr actices
+▪Prepare a company patch strategy that includes:▪
+▪A schedule.▪
+▪A list of servers to be included and excluded.▪
+▪A c ommunic ation  plan to ensure all stakeholders are aware of the upcoming changes to the ▪
+environment and any pot ential  outages.
+▪ Identif y  servers that cannot be rebooted aut omatic ally  and organize for a manual restart if required. ▪
+▪ Micr osoft  typically releases their patches on the second Tuesday of the month. Schedule patching the ▪
+development and test environments after  the patches are released to ensure no issues before
+proceeding to patch the pr oduction  environment.
+▪Perform t esting  after  the patching to ensure Bravura Security Fabric  performs as expected. ▪
+▪Consider using a centralized patch management solution. ▪
+Do wntime
+Do wntime  is a crucial factor when patching. It is recommended that you create a do wntime  plan that is
+agreed upon by all stakeholders to reduce the e ff ort  of repeatedly re-organizing each time  you want to
+apply patches. Below are a few examples:
+▪Follow the standard maintenance window; for example, a r outine  maintenance window for the ▪
+development and test environment might be at 11 pm to 4 am on a particular  weekday, and 11 pm to
+4 am on the weekend for the pr oduction  environment.
+▪A particular  patching window that is only approved to perform patching, and only for a single ▪
+deployment environment. For example, a pre-set time  on the second Friday of the month to patch the
+development environment, and another time  on the second Saturday for the test environment, and
+the third Saturday to patch pr oduction.
+When devising your plan also consider:
+▪If the pr oduction  environment cannot have a complete outage, group the nodes, with each group ▪
+being patched at diff er en t  times.
+▪Coordinate each node's database server patching with the node itself; otherwise, you get two outages▪
+per node instead of just one. This may include c oor dination  with the OS and database administrators.
+Backup
+Before applying patches, ensure you have a successful backup in a known state with the non-log services
+stopped.
+Before applying OS patches
+To ensure Bravura Security Fabric  is not adversely a ff ect ed  during the patching process, the following is
+recommended before applying oper ating  system patches:1.Turn off auto-discovery. 1.
+2.For Bravura Privilege disable r andomiz ation. 2.
+3.Disable any windows scheduled tasks that are related to the Bravura instance.3.
+4.Disable Bravura Security Fabric  scheduled tasks, including auto-discovery. 4.
+5.Stop the Web Server (IIS) or remove the server from the load balance list.5.
+6.Shutdown the database service (iddb) service. If the server is in a replicated environment, flush  the 6.
+queues fir s t:
+a.Stop all Bravura Security  services, except the logging service (logging) and database service (iddb) on a.
+all r eplic ation  nodes and allow the r eplic ation  queues to empty.
+b.Once all queues are empty, stop the database service on each node.b.
+After  applying OS patches
+1.Check server logs for any new errors.1.
+2.Add the node back to the load balancer if it was removed before patching.2.
+3.If the server is a replicated instance, wait until  the queues have decreased or close to empty before 3.
+turning the <HID services back on.
+4.Enable all OS and Bravura tasks that were disabled for patching.4.
+5.For Bravura Privilege, re-enable r andomiz ation. 5.
+6.Run tests to ensure Bravura Security Fabric  is oper ating  as expected. 6.6 Performance
+After  using Bravura Security Fabric  for several years, the database can grow considerably and can a ff ect
+performance and some important functions  of the product.
+Many performance improvement tasks require analysis of the data sets and stored procedures. It is highly
+recommended to purchase Bravura Security Professional Services.
+Best pr actices:
+▪Ensure your server meets the minimum requirements:▪
+▪ Calculating  the number of servers required ▪
+Bravura Security  strongly recommends that you create at least two or three replicated Bravura
+Security Fabric  database nodes for fault tolerance and backup, depending on which products are
+licensed and which features are implemented. When Bravura Privilege  is installed, or when close to
+100% uptime  is required from the instance, the recommended minimum is three. This is because
+when backend database r eplic ation  is performed, at least two database nodes have to go down at
+the same time.
+On the other hand, avoid setting  up too many replicated database nodes. It is likely that the
+additional  overhead of any more than six fully replicated nodes would outweigh the advantage of
+having multiple  nodes to do work. If you implement transparent password s ynchr oniz ation,  it is
+recommended that you avoid having more than fiv e concurrently activ e  database nodes.
+Calculate the number of database nodes you require with the following formula:
+N = ceil(1 + [ U∕P * 7∕5∕Z * A]∕[60  * 60 * C∕T])
+Where:
+▪U = # of users▪
+▪P = days between password expiry▪
+▪Z = time  zones ▪
+▪A = accounts/user▪
+▪C = # of concurrently running connectors▪
+▪T = seconds on average to change a password▪
+For example, when:
+▪U = 10000 people▪
+▪P = 45 days▪
+▪Z = 1 time  zone ▪
+▪A = 10 accounts/user▪
+▪C = 30 connectors at a time ▪
+▪T = 2 seconds▪
+then:▪N = ceil(1 + [10000∕45 * 7∕5∕1 * 10]∕[60 * 60 * 30∕2]) ▪
+▪N = ceil(1 + [3111]∕[54000]) ▪
+▪N = ceil(1.0576) ▪
+▪N = 2 ▪
+ See also: 
+▪Installing with a Shared Schema  (on page 229) ▪
+▪Recovery▪
+▪Server requirements▪
+The Bravura Security Fabric  server and any replicated servers must be installed on a Windows
+Server oper ating  system. Windows 2016, Windows Server 2019, or Windows Server 2022 is
+recommended at the current release level of Bravura Security Fabric .
+Installing on Windows Server enables Bravura Security Fabric  to leverage client softw ar e  that is
+available only on the "Wintel” platform.  In turn, this makes it possible for Bravura Security Fabric  to
+manage passwords and accounts on target systems without installing a server-side agent.
+Bravura Security Fabric  stores all of its data in an external database. Micr osoft  SQL Server 2019
+(recommended), Micr osoft  SQL Server 2017 , Micr osoft  SQL Server 2016 SP2 , or Micr osoft  SQL Server 2014
+SP3 must be installed and c on figur ed  before the Bravura Security Fabric  server softw ar e  can be
+installed. See Installing and c on figuring  Micr osoft  SQL Server  (on page 173) for more in f ormation.
+Oracle database was supported on versions up to 9.0.x and is not supported on 10.0 or later
+releases.
+If you are installing the Bravura Security Fabric  on the same server as the database, ensure you
+take into c onsider ation  the server requirements for the database softw ar e  when c alculating  the
+requirements for the Bravura Security Fabric  server.
+Each Bravura Security Fabric  applic ation  server must also be c on figur ed  with a web server. The
+Bravura Security Fabric  installer is aware of and can aut omatic ally  c on figur e  IIS web servers for use
+with Bravura Security Fabric .
+The Bravura Security Fabric  server is a security server, and should be locked down accordingly. See
+Locking down a Bravura Security Fabric  server  (on page 302) for details. In short, most of the nativ e
+Windows services can and should be removed, leaving a very small attack  surface, with exactly one
+inbound TCP/IP port (443):
+▪No ASP , JSP or PHP are used, so such code interpreters should be disabled.▪
+▪Web-facing .NET is not used and should be disabled (some connectors require it, due to .NET▪
+API bindings).
+▪No ODBC or DCOM are required inbound, so these services should be filt er ed  or disabled at the ▪
+web server. As with .NET, ODBC is sometimes  needed to connect to target systems.
+▪Inbound file sharing should be disabled. ▪
+▪Remote registry services should be disabled.▪▪Inbound TCP/IP c onnections  should be fir e w alled,  allowing only port 443, remote desktop ▪
+services (to c on figur e  the softw ar e)  and a handful of ports between Bravura Security Fabric
+servers, mainly for data r eplic ation.
+Each Bravura Security Fabric  server requires a database instance. Micr osoft  SQL Server 2019 is the
+recommended choice. Micr osoft  SQL Server 2017, 2016 SP2 and 2014 SP3 are also supported.
+Oracle database was supported on versions up to 9.0.x and is not supported on 10.0 or later
+releases.
+Bravura Security Fabric  is c ompatible  with 64-bit Windows Servers:
+▪The core softw ar e  is compiled as 64-bit binaries. ▪
+▪Programs that execute in the context of the core oper ating  system, such as password ▪
+s ynchr oniz ation  triggers, event hooks, etc. are available in both 64- and 32-bit versions for
+c ompatibility .
+▪Primary server requirements▪
+Each Bravura Security Fabric  server is c on figur ed  as follows:
+▪Hardware requirements:▪
+▪Intel Xeon or similar CPU. Multi-c or e  CPUs are supported and leveraged. Dual core is a ▪
+minimum.
+▪At least 16GB RAM – 32GB or more is leveraged and is typical for a server.▪
+▪At least 600GB of HD storage, preferably in an enterprise RAID c on figur ation  for reliability ▪
+and preferably larger for r e t ention  of more historical and log data.
+More space is always better ,  to increase log r e t ention.
+▪At least one Gigabit Ethernet NIC.▪
+Ensure you take into c onsider ation  the hardware requirements of any other softw ar e  that
+may share the Bravura Security Fabric  server; for example, database storage requirements.
+See Support for virtual machines  for more in f ormation  about support for virtual machines.
+▪ Oper ating  system: ▪
+▪Windows Server 2022.▪
+▪Windows Server 2019.▪
+▪Windows Server 2016.▪
+It is recommended that the server is not a domain controller.
+▪Networking:▪
+▪TCP/IP networking, with a s t atic  IP address and DNS name entry ▪
+▪Cryptographic certific a t e ▪
+▪ Micr osoft  .NET Framework 3.5 and 4.5+ ▪
+▪ASP .NET Core Hosting  Bundle 6.0.4 ▪
+▪NET Desktop Runtime  6.0.4 ▪
+▪Web Service Enhancements (WSE) 2.0 SP3 for Micr osoft  .NET or greater ▪
+▪Web server (IIS) with the following:▪▪HTTP r edir ection ▪
+▪The IIS URL Rewrite module from:▪
+http://w w w .iis.ne t/do wnloads/micr osoft/url-r e writ e
+▪CGI▪
+▪Dynamic Compression▪
+▪ St atic  Compression ▪
+▪WebSocket Protocol▪
+▪Database / c onnectivity  softw ar e: ▪
+▪A Micr osoft  SQL Server 2019  (recommended), Micr osoft  SQL Server 2017 , Micr osoft  SQL Server ▪
+2016 SP2 , or Micr osoft  SQL Server 2014 SP3  instance is required to host the Bravura Security
+Fabric  schema:
+▪Normally one database instance per applic ation  server. ▪
+▪The SQL Server database softw ar e  can be deployed on the same server as the Bravura ▪
+Security Fabric  applic ation,  as this reduces hardware cost and allows applic ation
+administrators full DBA access for tr oubleshooting  and performance tuning purposes.
+See Where to install the softw ar e  for more in f ormation.
+▪If the database softw ar e  is deployed on a separate server, it is recommended that you install ▪
+the client softw ar e  (on page 172) that corresponds to the database backend.
+See Installing Database and Database Client Softw ar e  (on page 172) for details.
+▪Connector Pack : ▪
+▪The Connector Pack  contains connectors which integrate Bravura Security Fabric  with target ▪
+systems.
+▪It is recommended, but not required, that you install the Connector Pack  after  the Bravura ▪
+Security Fabric . This allows you to select ins t ance-specific  or global ins t allation.
+See the Connector Pack Documen t ation  for details.
+▪Installed and tested softw ar e: ▪
+▪ Nativ e  clients for the systems that Bravura Security Fabric  will interface with. Refer to the ▪
+Connector Pack Documen t ation  for in f ormation  specific  to each type of target system.
+▪Python 3.11.2+▪
+Python 3.11.2+ must be installed before installing Bravura Security Fabric. It is required for
+certain Bravura Security Fabric components, including the Python IDMLib library used to help
+create plugin programs, Health check monitor , and reference builds.
+Ensure that Python is installed for all users to allow the Bravura Security Fabric service user
+(psadmin) account to have appropriate access to the Python ins t allation.
+It is recommended to add Python to the system PATH. This may also be added by selecting
+the option  for ” Add Python 3.11 to PATH” during the Python ins t allation.
+Python 3.11.2+ is optional  for Connector Pack ins t allations.  It is however required for the
+agtpython  and pxpython  connectors.
+For older versions of Bravura Security Fabric, there are alternate versions of the agtpythonconnector located in the agent\alt directory and alternate versions of the pxpython
+connector located in the interface\alt directory that are c ompatible  with specific  versions.
+See Installing Python  (on page 200) to learn how to install Python to meet these
+requirements.
+Python c ompatibility
+Instance version Python version
+ 3.3.x 3.4.1 3.4.3 3.5.3 3.7.x 3.8.x 3.9.x 3.10.x 3.11.x
+12.6.x
+CP 4.5.xY
+12.4.x - 12.5.x
+CP 4.3.x - 4.4.x       Y
+12.0 - 12.3.x
+CP 4.0.x - 4.2.x    Y    
+10.0.4 - 11.1.3
+CP 3.1.4 - 3.3.2   Y     
+9.0.3 - 10.0.3
+CP 3.1.0 - 3.1.3  Y      
+9.0.0 - 9.0.2
+CP 3.0.0 - 3.0.2 Y       
+8.2.8
+CP 2.4.0 - 2.5.2Y        
+▪ Micr osoft  Visual C++ 2015 Redistributable (x64 and x86) ▪
+Micr osoft  Visual C++ 2015 Redistributable Package is required for Bravura Security Fabric
+10.0 and higher. It is required for certain Bravura Security Fabric  run-time  components that
+use Visual C++ libraries. This is aut omatic ally  installed during setup , if prerequisites are
+met.
+The installer checks prerequisites for C++ runtime  and universal CRT. Before these two can be
+installed, the system requires the KB2919355 update (this is a set of patches, which has to be
+installed in order by clearc ompressionflag.e x e,  KB2932046, KB2959977, KB2937592,
+KB2938439, KB2934018). KB2938439 must be patched before KB2919355 can be patched.
+During the ins t allation  of patches, if a Windows dialog box displays the message: ”Theupdate is not applicable to your computer” and you are sure that you installed the patch that
+matches your operating  system, it is likely that there are other prerequisites that need to be
+installed before the current patch.
+▪At least one web browser (such as Chrome), and PDF viewer (to read the documen t ation) ▪
+▪A Git client (for revision control)▪
+Anti- virus  software  may impact Bravura Security Fabric functionality  and performance.
+Disable WebDAVModule
+During the instance pr e-ins t allation  check the installer checks if IIS module "Web Distributed
+Authoring and Versioning" (WebDAVModule) is installed. If so, the installer warns that this module
+may interfere with REST API usage and that it should be disabled. This can be done after  the
+instance is installed.
+To disabling WebDAVModule for an already installed instance (named "myinstance" in this
+example), run the command:
+%SYSTEMROOT%\system32\inetsrv\appcmd.exe delete module /
+module.name:"WebDAVModule" /app.name:"Default Web Site/myinstance"
+▪Supported database management systems▪
+Bravura Security Fabric  works with any of the following database management systems:
+▪ Micr osoft  SQL Server 2019 ▪
+▪ Micr osoft  SQL Server 2017 ▪
+▪ Micr osoft  SQL Server 2016 SP2 ▪
+▪ Micr osoft  SQL Server 2014 SP3 ▪
+Both 32-bit and 64-bit versions of these databases will work.
+The Compatibility  level on the Microsoft  SQL Server database must be set to a minimum value of
+SQL Server 2014 (120) .
+If you are installing SQL Server R eporting  Service (SSRS) to use the Analytics  ensure the server is not
+a Domain Controller.
+Express editions  should only be used for e v aluation  purposes. Bravura Security  strongly recommends
+that, whenever possible, you use an enterprise or standard edition,  rather than the express
+database edition.
+Database I/O performance on a virtualized file system; for example, VMDK or equivalent, is slow. If
+the database server softw ar e  runs on a VM, please use a fast, nearby NAS or SAN to store the
+actual data files.
+Clustered backend databases can lose data during or after  cluster failover. Bravura Security
+recommends using Bravura Security Fabric’s applic ation-le vel  replic ation  rather than clustered
+databases whenever possible. If your company policy requires the use of clustered databases, have
+database cluster nodes available as close as possible on the network to the Bravura Security Fabricnodes to target directly. See Installing with a shared schema  (on page 229) for setting  up the
+Bravura Security Fabric nodes in shared schema.
+▪Where to install the softw ar e ▪
+Bravura Security Fabric  can be installed on the same server as the database, or on a separate
+server.
+If Bravura Security Fabric  is installed on physical hardware, deploying the database on the same
+server can have the following advantages:
+▪Reduce total hardware cost.▪
+▪The same performance will be achieved, assuming the database server meets the minimum▪
+requirements for the database product.
+By default, the Microsoft  database engine will only use one CPU core, due to license res trictions
+– the ability to use more CPU cores costs more money.
+▪Network latency between Bravura Security Fabric  and the Database Management Server ▪
+(DBMS) is reduced to zero.
+▪The backup process can be simplified  by taking a snapshot of the complete server, as opposed ▪
+to making separate backups of multiple  servers. This makes the restore process much simpler.
+▪Both Micr osoft  SQL Server and Bravura Security Fabric  require a Windows server as their host ▪
+oper ating  system.
+If Bravura Security Fabric  and the DBMS are installed on a virtual machine, ensure the database is
+deployed on a disk with high-speed I/0 (not a vmdk file).
+Note that two or more Bravura Security Fabric  instance nodes may share database schema. See
+Installing with a Shared Schema  (on page 229) for more in f ormation.
+▪Recommended database c on figur ation: ▪
+▪Recovery mode  - Simple ▪
+▪Snapshot Isolation  - On ▪
+▪Create s t atistics  - True ▪
+▪Update s t atistics  - True ▪
+▪Update s t atistics  asynch . - False ▪
+▪Store files: ▪
+▪On SSDs - only 50% of free space is required for performance e x ecution  without decreasing disk ▪
+I/O.
+▪On ext file systems - 40% free space is required. An ext3 file system is recommended over ext4 for ▪
+not losing data during power failures; zfs is recommended for maximum security, at a minor speed
+r eduction  but increase in number of disks required.
+If files are stored on a Windows NTFS partition  on a hard disk rather than an SSD, and if there is
+less than 2.5x (250%) the size of the files available in c ontiguous  free space, that could lead to
+physical file fragmen t ation  and increase disk I/O for the database.▪Set up monitoring on all servers for available physical resources such as RAM, CPU cycles, disk space,▪
+and on very busy servers, sockets and handles.
+When any of these resources are close to depletion,  especially at their peaks of load, provision more.
+▪Do not schedule index rebuilding when large stored procedures like some of the psupdate  ones are ▪
+know to run, because it can lock/stall each other, leading to long-running stored procedures.
+Schedule index rebuilding after  bulk processes like psupdate are completed.
+▪For finit e  resources like sockets and handles, reduce the load on the server by adding more servers in ▪
+r eplic ation  and behind load balancers.
+▪If the database server waits a long time  for Network I/O and Buff er  I/O, check with the owners of the ▪
+hypervisor where the Bravura Security Fabric  database node runs. Tweak those settings  so that virtual
+machine gets more priority on those channels.
+▪Monitor long-running stored procedures so you can detect ahead of time  when some stored ▪
+procedures are taking longer than they normally do; they tend to cause r eplic ation  delays.
+▪Navigate to Manage the system > Maintenance> Database r eplic ation  on each node to monitor the ▪
+queues.
+▪To check what is using up resources in MSSQL, use the server's Activity  Monitor in SSMS, or an ▪
+alt ernativ e  solution  your DBA suggests to monitor the server's resources.
+See Also
+▪Monitoring hardware resources  (on page 2774) ▪
+▪Viewing Bravura Security Fabric system logs  (on page 2777) ▪
+▪ Con figuring  program and script logging levels  (on page 2789) ▪
+▪Health check  (on page 2795) ▪
+▪Scheduling maintenance  (on page 2702) ▪
+▪Auto Discovery  (on page 2716) ▪
+Hardware performance
+The easiest method to gain performance is to add resources to the database server. Ensure you verify
+that the allocated resources are actually usable by the database service; for example, ensure the
+hypervisor is not sharing them with other VMs.
+▪Free space is very important:▪
+▪If there is no space to write changes, both the MSSQL database and our product will stop working.▪
+▪The database needs at least 40% free space, because the tempdb  can grow dr amatic ally  during ▪
+auto discovery and other bulk upda t es/ aut omation,  the database files tend to get fragmented, and
+indexes on very large tables grow fast and can get fragmented as well.
+▪Bravura Security Fabric  will stop functioning  when there's more than 90% space used (that's the ▪
+Default, but is c on figur able:  can be reduced for very large drives.
+▪When the available RAM is exhausted, the Windows OS will proceed to swap to disk, which can make▪
+an instance grind to a halt.
+Monitoring

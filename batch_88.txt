@@ -1,0 +1,310 @@
+You will be directed to the main menu.
+If during t esting  you were prompted to enter in the password followed by the user's security questions
+and had to answer both correctly to gain entry, then you have completed the c on figur ation  correctly.
+PIN sent via SMS or email
+For this use case, authentic ation  chains are used in c onjunction  with the View and update pr ofile  (IDR)
+module to utiliz e  mobile phones as part of the authentic ation  process.
+There are several Scenario components for sending one-time  PINs, depending on the e xisting
+infrastructure the customer has, and the expected delivery method for the PIN.
+▪If you have one or more email-to-SMS gateways, like the ones provided by various phone providers,▪
+use Scenario.hid_authchain_smspin_email
+▪If you purchase a specific  API-based SMS provider sub scription,  there are two other Scenario ▪
+components provided with the base product install: hid_authchain_smspin_twilio and
+hid_authchain_smspin_celltrust
+By default, a single SMS PIN method can be used in a specific  in t egr ation,  so the three Scenarios listed
+above are mutually exclusive, as noted in their manifest files.
+There are two stages in the process: enrollment and authentic ation.
+▪For enrollment, users provide their contact in f ormation  by logging into the View and update pr ofile  (IDR) ▪
+module and populating  pr ofile  and request attribut es  for mobile phone provider and mobile phone
+number, and/or email address. Enrollment can be enforced by r edir ecting  users to the View and update
+pr ofile  (IDR) module when they login.
+▪For authentic ation,  Bravura Security Fabric  generates a random PIN and can either email it to the user ▪
+via an email-to-SMS gateway or use an SMS Messaging Gateway such as the CellTrust SMS Gateway to
+send the SMS message. The user receives the SMS containing the PIN and types it into the Front-end  to
+log in.
+This case can be implemented in the following way:
+1.The Email/SMS PIN module is c on figur ed  as follows: 1.
+▪PIN delivery method : Email/SMS Gateway ▪
+▪ Pr ofile  attribut e  specifying email/mobile phone number : A required, restricted-value pr ofile  and ▪
+request attribut e  must be added for the users mobile phone number.
+▪ Pr ofile  attribut e  specifying mobile phone service provider : A required, restricted-value pr ofile  and ▪
+request attribut e  must be added for the users mobile phone service provider.
+The attribut es  must be c on figur ed  with the Allow in authentic ation  chains option  enabled.
+2.The Front-end  is c on figur ed  to enforce enrollment for the View and update pr ofile  (IDR) module. 2.
+3.User notific ation  is c on figur ed  to direct users to login and fill in their details. 3.
+When a user logs in:
+1.The user is aut omatic ally  directed to the View and update pr ofile  (IDR) module to fill in their details. 1.
+Other authentic ation  options  must be available.2.The next time  the user logs in, they can use the SMS/email PIN authentic ation  module, which sends a 2.
+PIN to their mobile phone or email address. They are required to enter the PIN before authentic ation
+can be granted.
+Alt ernatively ,  users’ phone details could be populated from a data source such as an Active  Directory
+account attribut e.
+For most implemen t ations  the email address is auto-populated from the source of pr ofiles;  users are not
+allowed to update the email value.
+There is more than one way to implement this functionality .  It can be deployed using the
+authchain_emailpin scenario component shipped with Bravura Security Fabric , as illustrated
+below.
+Lab: Authentic ation  via Email PIN
+In this example, installing the hid_authchain_emailpin  component modifies  the Front-end login
+authentic ation  chain to include a custom chain  (on page 844). This allows you to send a temporary PIN to
+a user’s email address as part of the authentic ation  process. The user must enter the PIN within ten
+minutes of it being sent to authentic a t e.  
+The Front-end login authentic ation  chain is c on figur ed  with these settings:
+Module Control type
+select_chain required
+Security questions  (response.pss) binding
+Install the hid_authchain_emailpin component 
+1.Log into Bravura Security Fabric as superuser . 1.
+2.Click Manage components > Scenario . 2.
+3.Select the checkbox for Scenario.hid_authchain_emailpin . 3.
+4.Click Install component(s) from the Actions  panel  on the right. 4.
+The component management program installs the components along with any dependencies. This
+may take some time  depending on c on figur ation  requirements and dependencies. You should
+see ”Completed install for component” messages for each selected component in the Details section
+of the Actions  panel .
+When you install a component, the component management program creates the database tables,
+framework, and c on figur ations  that are necessary for the plugin points to function.
+5.Review the settings  by clicking Manage the system > Policies > Authentic ation  chains >  Front-end 5.
+login .
+6.Select the select_chain  module to see that an EMAILPIN custom chain has been added to the 6.
+available chains.
+Test the authentic ation  process To test the Email PIN authentic ation  chain:
+1.Log in to Bravura Security Fabric  as an end-user. 1.
+2.Click Email PIN authentic ation . 2.
+The Verify email PIN  page will load.
+The body of the message contains the text ”The new PIN: <NNNNN> ”.
+3.In Bravura Security Fabric , enter the requested in f ormation  and click Continue . 3.
+This module is a required control type. If you enter the incorrect response you will receive an error
+saying ”Invalid PIN”.
+Once you have entered a correct PIN, you are then presented with one of the user’s security
+questions.  Answering the question  correctly will take you to the user’s home page.
+If you are directed to the user's home page, you have completed the c on figur ation  correctly.
+Con figur e  authentic ation  via SMS PIN
+In this example, installing the hid_authchain_smspin_email  component modifies  the Front-end
+login authentic ation  chain to include a custom chain  (on page 844). This allows you to send a temporary
+PIN via SMS text message as part of the authentic ation  process. The component uses the mobile
+providers’ email-to-text gateways to send SMS texts to registered cell phones. Major US and Canadian
+providers are aut omatic ally  onboarded; other providers must be added before users register the phone
+to be available.
+This component is installed by default with Bravura Workforce P attern . This example shows you how to
+modify external data settings  to customize the component.
+Install the Scenario.hid_authchain_smspin_email component
+1.Log into Bravura Security Fabric  as superuser. 1.
+2.Click Manage components > R efbuilds . 2.
+3.Select the checkbox for RefBuild.im_corporate. 3.
+4.Click Install component(s)  from the Actions  panel  on the right. 4.
+The component management program installs the components along with any dependencies. This
+may take some time  depending on c on figur ation  requirements and dependencies. You should see
+"Completed install for component" messages for each selected component in the Details section  of
+the Actions  panel.
+When you install a component, the component management program creates the database tables,
+framework, and c on figur ations  that are necessary for the plugin points to function.
+5.Review the settings  by clicking Manage external data store > hid_global_c on figur ation . 5.
+6.Verify the default settings  for Scenario.hid_authchain_smspin_email are as below: 6.Edit the hid_authchain_smspin_email table
+Populate or verify defaults in the external database namespaces for smspin and the SMS provider:
+1.As superuser, navigate to the main menu and click Manage external data store . 1.
+2.Select hid_global_con figur ation . 2.
+3.Search in the table for something like "Value like '%SMSPIN_EMAIL%'" . 3.
+4.Click the edit icon 
+  next to the empty row at the bottom  of the table. 4.
+5.Adjust the following values:5.
+▪ID <id> ▪
+▪namespace  <> ▪
+▪ setting▪
+▪key▪
+▪value▪
+▪ description▪
+6.Click Done to close the edit form. 6.
+7.Click Update . 7.Format the pr ofile  attribut e  to store users' phone numbers.
+The external data store ( extdb ) hid_global_c on figur ation  table contains the name of the pr ofile  attribut e
+to be used to store users' phone numbers. Format the pr ofile  attribut e  (on page 1270) to match the
+format expected by the SMS provider used.
+Provide the data source for the cellphone attribut e:
+▪If a source target account attribut e  is available in an HR feed, Company Directory or some other target ▪
+from where the cellphone number can be aut omatic ally  imported, link that account attribut e  into the
+pr ofile  attribut e  (on page 571) de fined  in the external data store.
+▪Consider gr anting  the end-user access to edit that pr ofile  attribut e,  for example by adding it to the ▪
+BASE_ATTRIBUTES pr ofile  attribut e  group  (on page 555).
+Add a custom SMS/PIN scenario
+There are many other such possible scenarios for sending a PIN via SMS or email that could be
+customized for an SMS/PIN provider that provides a REST API or some other form of WebApp in t egr ation.
+If you have the necessary Python and web-service in t egr ation  e xpertise,  you can:
+1.Copy the hid_authchain_smspin_twilio Scenario component from the component\Default\Scenario1.
+directory to component\Custom\Scenario.
+2.Copy the r espectiv e  Functional  component (c omponen t\De f ault\Functional\hid_smspin_t wilio)  from 2.
+Default to Custom.
+3.Rename the two components' directories to match the name of the new SMS ISP to integrate with; for3.
+example Functional\hid_smspin_plivo  and Scenario\hid_authchain_smspin_plivo.
+4.Edit the two Custom components' files to match the requirements of the new in t egr ation. 4.
+For guidance from Bravura Security's Professional Services, contact your Account r epr esen t ativ e  to
+request a service engagement.
+Authentic ation  via Bravura One  app
+Or g aniz ations  often  deploy Bravura Privilege on their private, corporate network. Using their work PCs,
+users can access the web portal of any of these products either through the physical corporate network
+(Ethernet or WiFi) or using a VPN.
+Users may wish to access these same Bravura Security  products, which are not normally reachable from
+the public Internet, using a personal device such as a smart phone or tablet.
+The Bravura One  app allows personal mobile devices to access the Bravura Security  Identity  and Access
+Management (IAM) system deployed on the corporate private network.
+Connectivity  between the phone or tablet, attached  to the public Internet, and the on-premise Bravura
+Security  softw ar e,  is mediated by a proxy server, deployed either on-premises or in the cloud.
+See the Mobile access  (on page 1444) for more in f ormation  about Bravura One  and the Bravura One  app.Con figur e  two-factor authentic ation  via Bravura One  app
+The following steps demonstrate how to allow for users to authentic a t e  using a QR Code that is provided
+by this module for two-factor authentic ation.  The QR Code must be scanned from the Bravura One  app
+that is registered for Bravura One  for the user.
+Install the Scenario.hid_authchain_2factor component
+1.Click Home . 1.
+2.Click Manage components . 2.
+3.Search for "2factor".3.
+4.Select Scenario.hid_authchain_2factor . 4.
+5.Click Install component(s) in the details panel. 5.
+6.Wait for the install to complete.6.
+7.The component is installing all of its own dependencies and also the dependencies of7.
+Functional.hid_authchain_2f act or .
+When complete, the DETAILS panel will show:
+▪Installed: True▪
+▪Enabled: True▪
+Log in to Bravura Pass on the desktop using two-factor authentic ation  with QR code
+1.On the desktop:1.
+a.Access the log in page.a.
+b.Enter a user name and click Continue . b.
+A QR code appears with a time  limit of 60 seconds.
+2.On your mobile device:2.
+a.Open the Bravura One  app. a.
+b.Tap the rocket icon.b.
+c.Tap Computer Login . c.
+d.Tap Authentic a t e  User . d.
+e.Aim the device’s camera at the unobstructed QR code being displayed on the desktop monitore.
+3.Once the code has been recognized, the Choose an authentic ation  method  page will be displayed on 3.
+the desktop.
+4.Select the desired method. For example, Use password  or Answer security questions . 4.
+5.Complete the authentic ation  using the second method and click Log in . 5.
+Challenge-response authentic ation
+Users can be allowed at access Bravura Security Fabric  using challenge-response authentic ation,
+including tokens, via applicable Authentic ation  (Tokens/MFA)  connectors. The connector package agent
+module runs the built-in agent.pss  authentic ation  program.This can be implemented in diff er en t  ways. The following example makes use of the connector package
+agent module:
+1.Three separate custom authentic ation  chains are c on figur ed: 1.
+Chain Module Control type
+chain_password Password authentic ation
+(password.pss)binding
+chain_questions Security questions  (response.pss) binding
+chain_token Connector package agent (agent.pss) binding
+2.The connector package agent module is c on figur ed  as follows: 2.
+▪Target system to use for address and cr edentials : <RSA AM7.x/8.x target ID> ▪
+▪Password v erific ation  oper ation : Challenge response authentic ation ▪
+3.Each of the three separate custom authentic ation  chains must be added to the Available chains 3.
+section  of the DEFAULT_LOGIN authentic ation
+When logging in, the end user chooses the applicable method and enders a valid passcode.
+For more detail see example c on figur ation  steps for RADIUS  (on page 877), RSA (on page 878), or DUO
+(on page 879).
+Add RADIUS authentic ation  to Bravura Security Fabric
+You can integrate RADIUS authentic ation  in Bravura Security Fabric  by c on figuring  a custom
+authentic ation  chain, using the agent.pss authentic ation  module with the RADIUS Authentic ation
+connector agtradius , to perform a challenge-response oper ation.
+The following steps demonstrate how to integrate RADIUS Authentic ation  in Bravura Security Fabric :
+1.Add the RADIUS Authentic ation  target system. 1.
+2.Create a list file to associate users with the target system. 2.
+The agtradius connector does not support listing  oper ations.  You must create a list file to
+associate users during auto-discovery, so that users can authentic a t e  against the target system.
+3.Add a new custom authentic ation  chain: 3.
+a.Add the Connector package agent (agent.pss ) module to the chain. a.
+b.In the module’s settings: b.
+▪Set Target system to use for address and cr edentials  to the target you created. ▪
+▪Set Password v erific ation  oper ation  to ”Challenge response authentic ation” . ▪
+c.Enable the custom authentic ation  chain. c.
+4.Add the new custom authentic ation  chain to the DEFAULT_LOGIN chain: 4.
+a.Click Policies > Authentic ation  chains > Front-end login . a.
+b.Disable the chain so that you can edit it.b.
+c.Edit the select_chain module to add the new custom authentic ation  chain to the list of Available c.
+chains .d.Update and enable the DEFAULT_LOGIN chain.d.
+5.Test the authentic ation  by logging in as an end user associated with the target system. 5.
+You should be prompted to enter a valid RADIUS passcode.
+See also:
+RADIUS Authentic ation  in the Connector Pack Documen t ation  for details on adding a target system.
+Add RSA Authentic ation  to Bravura Security Fabric
+You can add integrate RSA Authentic ation  Manager authentic ation  in Bravura Security Fabric  by
+c on figuring  a custom authentic ation  chain, using the agent.pss authentic ation  module with the RSA
+Authentic ation  Manager 7.1/8.2 connector agtrsaam , to perform a challenge-response oper ation.
+The following case illustrates how to integrate RSA Authentic ation  Manager authentic ation  in Bravura
+Security Fabric :
+If the requirements include using this target for authentic ation  and do not need the other adminis trative
+features from the Java Adminis trative  API, it's simpler and less maintenance to only install the C
+Authentic ation  API. If you do need adminis trative  features and also require authentic ation  failover, which
+only the C Auth API provides, it is recommended to install both APIs.
+1. Optional:  Con figur e  RSA Authentic ation  Manager 7.1/8.2. 1.
+2. Optional:  Add the system as an RSA Authentic ation  Manager 7.1/8.2 target system . 2.
+Alt ernativ ely ,  if an actual RSA Authentic ation  Manager 7.1/8.2 target system is not being used and
+only the challenge response authentic ation  oper ation  for the agtrsaam connector is to be used,
+the following steps must be taken:
+a.Add an RSA Authentic ation  Manager 7.1/8.2 target system. a.
+b.Leave the target system address parameters as defaults or provide any value for each of theb.
+parameters.
+c.Uncheck the List accounts  option  for the target system. c.
+d.Check Aut omatic ally  attach  accounts  for the target system. d.
+e.Manually create a <TARGETID> .db list file and copy it to the <ins t ance>\p sc on fig\  directory. e.
+A sample targetid.db file is located in the samples directory.
+Add data for each user; or run the following queries in SQLite:
+INSERT INTO discobj (stableid, type, longid, shortid,displayid,sd) values ("1001","ACCT","rsauser1","rsauser1","RSA Userone",NULL); 
+INSERT INTO discobjattr (stableid,type,attrkey,attrval,seqno) values ("1001","ACCT","@fullname","RSA Userone","0"); 
+INSERT INTO discobj (stableid, type, longid, shortid,displayid,sd) values ("1002","ACCT","rsauser2","rsauser2","RSA Usertwo",NULL); 
+INSERT INTO discobjattr (stableid,type,attrkey,attrval,seqno) values ("1002","ACCT","@fullname","RSA Usertwo","0"); 
+The value for the longid field  must be the user IDs of the RSA Authentic ation  Manager 7.1/8.2
+users that will be used to authentic a t e  with their SecurID tokens.
+See also: Cr eating  a list file and copying data from other targets  in the main Bravura Security Fabric
+documen t ation.3.Add a new custom authentic ation  chain: 3.
+a.Add the Connector package agent (agent.pss ) module to the chain. a.
+b.In the module’s settings: b.
+▪Set Target system to use for address and cr edentials  to the target you created. ▪
+▪Set Password v erific ation  oper ation  to ”Challenge response authentic ation” . ▪
+c.Enable the custom authentic ation  chain. c.
+4.Add the new custom authentic ation  chain to the DEFAULT_LOGIN chain: 4.
+a.Click Policies > Authentic ation  chains > Front-end login . a.
+b.Disable the chain so that you can edit it.b.
+c.Edit the select_chain module to add the new custom authentic ation  chain to the list of Available c.
+chains .
+d.Update and enable the DEFAULT_LOGIN chain.d.
+5.Test the authentic ation  by logging in as an end user associated with the target system. 5.
+You will be prompted to enter a valid passcode for the user’s SecurID token.
+There will also be additional  prompts if the user’s SecurID token is in an extended mode for either the
+new pin or next token code modes.
+Add DUO Authentic ation  to Bravura Security Fabric
+You can integrate DUO authentic ation  in Bravura Security Fabric  by c on figuring  a custom authentic ation
+chain, using the agent.pss authentic ation  module with the DUO Authentic ation  connector agtduo ,
+to perform a challenge response oper ation.
+The following steps demonstrate how to integrate DUO authentic ation  in Bravura Security Fabric :
+1.Add the DUO Authentic ation  target system. 1.
+2.Add a new custom authentic ation  chain: 2.
+a.Add the Connector package agent (agent.pss ) module to the chain. a.
+b.In the module’s settings: b.
+▪Set Target system to use for address and cr edentials  to the target you created. ▪
+▪Set Password v erific ation  oper ation  to ”Challenge response authentic ation” . ▪
+c.Enable the custom authentic ation  chain. c.
+3.Add the new custom authentic ation  chain to the DEFAULT_LOGIN chain: 3.
+a.Click Policies > Authentic ation  chains >  Front-end login . a.
+b.Disable the chain so that you can edit it.b.
+c.Edit the select_chain module to add the new custom authentic ation  chain to the list of Available c.
+chains .
+d.Update and enable the DEFAULT_LOGIN chain.d.
+4.Test the authentic ation  by logging in as an end user associated with the target system. 4.You will be prompted for the DUO authentic ation  methods that are available for the user and will
+depend on what the user has registered on the DUO Authentic ation  server.
+Here are a few examples of some of the available authentic ation  methods that may be presented to
+the user:
+▪Phone call to authentic a t e  from a key press ▪
+▪SMS text message for a passcode▪
+▪Passcode from the Duo Mobile app ▪
+▪Push notific ation  to accept or deny from the Duo Mobile app ▪
+See also:
+DUO Authentic ation  in the Connector Pack  Documen t ation  for details on how to target DUO
+Authentic ation.
+Azure MFA in t egr ation  using RADIUS NPS
+Azure MFA is a feature of Azure Activ e  Directory that can be used as an additional  form of identific ation.
+By using Azure MFA, users can be prompted during the sign-in process to provide a code on their mobile
+phone, Face ID, a fing erprin t  scan, or other authentic ation  factor.
+A Bravura Security Fabric  instance can be c on figur ed  to use Azure MFA through RADIUS, enabling cloud-
+based MFA c apabilities  to an e xisting  network without having to install, c on figur e,  and maintain new
+servers. Azure MFA can be used directly as a passwordless Bravura Security Fabric  login method, or as a
+provider of 2FA.
+The following is the w orkflo w  of logging into Bravura Security Fabric  using Azure MFA push notific ations
+as a second factor:
+1.End user navigates to the Bravura Pass  self-service portal. 1.

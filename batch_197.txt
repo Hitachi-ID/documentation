@@ -1,0 +1,314 @@
+esc alation  hotkey key Set the letter  key for the esc alation  hotkey. When used with the esc alation  hotkey
+modifier ,  the esc alation  sequence is inserted.See Inserting  an esc alation  sequence  (on
+page 1962) for more details.
+esc alation  hotkey
+modifierSet the modifier  for the esc alation  hotkey. There are three options:  ’Ctrl’, ’ Alt’,
+and ’Middle click’. When used with the esc alation  hotkey key, the esc alation  sequence
+is inserted. See Inserting  an esc alation  sequence  (on page 1962) for more details.
+esc alation  sequence The text to aut omatic ally  type into the applic ation.
+esc alation  window
+nameIf this window name is detected, the esc alation  sequence is inserted into the program.
+See Inserting  an esc alation  sequence  (on page 1962) for more details.
+host The IP or DNS of server. See Domain and host values  (on page 1966) for further
+in f ormation  about using an alt ernativ e  attribut e  value.
+impersonate Set the imper sonation  level of the process. This is set to ’none’ by default. See
+Imper sonating  the checked-out account  (on page 1962) for more details.
+program External program (including full path) to execute.
+window If true, the command is executed within a display window. If false, the command is
+executed without a display window.
+Arguments attribut e
+The arguments provide sub stitution  of the password, user name, host, and other custom plugin
+attribut es.  The sub stitutions  are as follows:
+value %host%
+replacement The domain managed system member is on, without any optional  parameters.
+value %username%
+replacement The account ID for the privileged password being disclosed.
+value %password%
+replacement The password being disclosed.
+value %<custom attribute>%
+replacement If there is a “custom attribut e”  de fined  for the plugin, the value of the attribut e
+is used.
+Using custom attribut es  provides control over the arguments attribut e.  You can enable the user to
+override on the custom attribut e  only and leave the arguments locked or hidden.
+pswxcmd examples
+The following illustrate examples of cus t omiz ations  using the pswxcmd access disclosure plugin.
+Allowing optional  arguments
+The default settings  for pswxcmd execute PuTTY and connect using the privileged password. This
+example shows how you can add a custom attribut e  to allow the user to specify the port:
+1.Create an attribut e  named port with the following settings: 1.▪Integer type▪
+▪Allow the port attribut e  to be overridden by the users ▪
+▪Set the minimum value to 1▪
+▪Set the default value to 22▪
+▪Set the port attribut e  to be non-empty ▪
+2.Set the arguments attribut e  value to: -ssh %host% -l %username% -pw %password% - 2.
+P %port%
+Inserting  an esc alation  sequence
+You can allow users to insert an esc alation  sequence into a program (such as PuTTY .exe) using a hotkey or
+window name.  Insert esc alation  sequence using a hotkey 
+When a user presses the esc alation  hotkey, the esc alation  sequence is aut omatic ally  typed into the
+program. By default, the esc alation  hotkey is ’Ctrl + K’.
+To c on figur e  the esc alation  hotkey:
+1.Set the esc alation  sequence attribut e  to the text to insert into the program. 1.
+2.Set the esc alation  hotkey modifier  attribut e  to: 2.
+▪Ctrl – Pressing the Ctrl key with the esc alation  hotkey key aut omatic ally  types the sequence. This is ▪
+the default setting.
+▪Alt – Pressing the Alt key with the esc alation  hotkey key aut omatic ally  types the sequence. ▪
+▪Middle click – Middle-clicking aut omatic ally  types the sequence. The esc alation  hotkey key ▪
+attribut e  is ignored for this option.
+3.If using the Ctrl key or Alt key for the modifier ,  set a letter  key (A-Z) for the esc alation  hotkey key 3.
+attribut e.
+ Insert esc alation  sequence using a window name 
+When the window name is detected, the esc alation  sequence is aut omatic ally  typed into the program.
+To c on figur e  the esc alation  window name:
+1.Set the esc alation  sequence attribut e  to the text to insert into the program. 1.
+2.Set the esc alation  window name attribut e  for the window where the esc alation  sequence will be 2.
+inserted.
+Users will not be able to use the esc alation  hotkey when the esc alationn windo w  name attribut e  is
+defined.
+Imper sonating  the checked-out account
+You can allow the requester to run a program (such as cmd.exe) with the permissions of the checked-out
+account. This will essentially  simulate the runas  command.
+Set the impersonate attribut e  to:▪none – No imper sonation  will be performed. This is the default setting. ▪
+▪ withoutpr ofile  – Attemp t  to impersonate without loading the user’s pr ofile. ▪
+▪ withpr ofile  – Attemp t  to impersonate and load the user’s pr ofile. ▪
+▪netonly – Do not impersonate locally, but present the managed cr edentials  for network authentic ation ▪
+only.
+Ex ecuting  a shell script
+This example shows how you can c on figur e  pswxcmd to execute a shell script:
+▪Set the program attribut e  to: C:\windows\system32\cmd.exe . ▪
+▪Set the arguments attribut e  to: /C X:\ITApps\runapp.cmd%host% %password ▪
+% %username%
+Ex ecuting  SQL*Plus
+This example shows how you can c on figur e  pswxcmd to execute SQL*Plus:
+▪Set the program attribut e  to: C:\oracle\product\10.1.0\client_1\bin\sqlplus.exe ▪
+▪Set the arguments attribut e  to: %username%/%password%@%host% ▪
+Changing the message to users on failure
+You can change the message displayed to users in the event that the external program fails to launch by
+modifying the RES CONNECTION TO SERVER FAILED MSG setting  in the global or managed system policy
+Account access request  options.
+PuTTY over SSH: pswxcmd
+This is a pr ec on figur ed  pswxcmd access disclosure plugin specific ally  for managed accounts. By default,
+this plugin is c on figur ed  to execute PuTTY and connect using the user’s SSH keys instead of the privileged
+password.
+The following requirements must be met:
+▪ Connection  details must be accepted as part of the arguments ▪
+▪The program must be installed on the user w ork s t ation ▪
+▪The user’s private key must already be c on figur ed  on the w ork s t ation ▪
+▪The program must either exist on the full path specified  as part of the “program” attribut e;  or if no ▪
+path has been specified,  the external program must be specified  on the w ork s t ation  system path
+▪SMON HTTP URL must resolve to the server from client w ork s t ations ▪
+The following attribut es  are available:
+arguments Arguments to supply to the external program, the %password% argument is not used.
+checkout expiry This is set to true, the external program closes when the user’s access checkout expires.
+cr edentialpr omp t This is set to false, users are not prompted to enter their cr edentials.host The IP or DNS of server.
+program External program (including full path) to execute. This is set to putty.exe by default.
+window This is set to true, the command is executed within a display window.
+See Command prompt: pswxcmd  (on page 1960) for more in f ormation  on modifying these attribut es.
+Copy: pswxcopy
+The pswxcopy access disclosure plugin provides users with access to a password by copying it into the
+clipboard of the client w ork s t ation.  By default, it is c on figur ed  to clear the clipboard if the browser is
+closed or if the default 30 seconds expiry time  for the plugin has passed.
+You can modify the following default attribut es  to control the behavior of pswxcopy :
+erase If false, the clipboard is not cleared. If true, the clipboard is cleared after  the time  expires
+or the browser is closed.
+timeout This controls how long before the clipboard is cleared.
+Remote desktop / Remote APP RDP: pswxtsvc
+The pswxtsvc access disclosure plugin provides users with access to Windows server or client
+managed systems and RemoteApp programs using Remote Desktop Connection  (RDC). The plugin
+provides aut omatic  c onnection  to the managed system without the need to enter the adminis tr ativ e
+cr edentials  for the managed account. You can also connect to the remote server when accessing group
+sets. This access disclosure plugin supports Network Level Authentic ation  (NLA), as well as session
+monitoring.
+There are 2 versions of the pswxtsvc access disclosure plugin:
+▪Remote desktop , for remote access to a managed system’s desktop environment. ▪
+▪Remote APP RDP , for remote access to one of the managed system’s programs that can be run ▪
+directly on the client’s w ork s t ation.  RemoteApp must already be c on figur ed  on the managed system.
+The plugin requires the following:
+▪ Micr osoft  terminal services client (mstsc.exe) installed on the user’s w ork s t ation. ▪
+▪Terminal service enabled on the client w ork s t ation  or server. ▪
+▪Firewalls c on figur ed  to allow RDC (default port 3389/tcp) from user’s w ork s t ation  to managed system. ▪
+▪The managed account has remote terminal service access to log on under remote terminal services.▪
+▪SMON HTTP URL must resolve to the server from client w ork s t ations ▪
+You can modify the following default attribut es  to control the behavior of pswxtsvc :
+checkout expiry If set to true, the remote desktop applic ation  closes when the user’s access checkout
+expires.
+color depth Preferred color depth (value must be 8, 15, 16 or 24 bits per pixel).
+domain Domain of the user account that the control will connect with. The default is %host% .
+host The IP or DNS of server.host search If set to true, will enable searching on attribut e  ”host” when override is allowed
+for ”host”.
+keyboardhook Apply Windows key c ombinations  to the remote c onnection:
+Value Setting
+1 Applied on the remote
+computer
+2 Applied in fullscreen mode
+only
+login from list Display login button  in list of access disclosure plugins when editable attribut es  exist.
+If set to false, the login ability is moved to the override page.
+multimon If set to true, the screen mode will be full screen and extended to all monitors,
+provided there is more than one monitor.
+rdp port The port to use when c onnecting  to the host.
+redirect clipboard If set to true, will enable r edir ecting  of the clipboard.
+redirect devices If set to true, will enable r edir ecting  of devices.
+redirect drives If set to true, will enable r edir ecting  of local disk drives.
+redirect ports If set to true, will enable r edir ecting  of local ports.
+redirect pos devices If set to true, will enable r edir ecting  of Point of Service devices.
+redirect printers If set to true, will enable r edir ecting  of printers.
+redirect smart cards If set to true, will enable r edir ecting  of smart cards.
+The following disclosure attribut es  are applicable to the Remote desktop access disclosure plugin only:
+administer server If set to true, will connect to the server for remote adminis tr ation.
+fullscreen If set to true, the screen mode will be full screen. If set to false, the screen
+mode will be windowed.
+height The desktop height used when using windowed mode.
+idle timeout Idle time  before auto log off .
+multimon If set to true, the screen mode will be full screen and extended to all monitors,
+provided there is more than one monitor.
+smartsizing If set to true, will enable the client computer to scale content to fit the window
+size.
+username An overridable attribut e  with support for the special value %shortid% , which
+retrieves the managed account’s shortid.  Add this attribut e  manually through
+UI.
+width The desktop width used when using windowed mode.
+The following disclosure attribut es  are applicable to the Remote APP RDP disclosure plugin only. You can
+obtain these values by viewing the contents of the RemoteApp’s .rdp file.
+expand
+r emot eapplic ationcmdlineen v  varsIf set to true, the server should expand environment variables in the
+command line arguments. This is set to false by default.expand working dir env vars If set to true, the server should expand environment variables in the
+working directory path. This is set to false by default.
+r emot eapplic ationcmdline The command line arguments for the RemoteApp program, if applicable.
+r emot eapplic ationname The RemoteApp program name.
+r emot eapplic ationpr ogr am The RemoteApp program alias. (ex. —— <program> )
+working directory The working directory on the server for the RemoteApp program.
+Domain and host values
+The domain and host values are used to connect to the remote system. Their values may depend on how
+the managed system is set up, and whether it is push or local service mode, manually or aut omatic ally
+discovered.
+The domain must be the DNS Domain Name or NetBIOS name. It should not be an IP address. The reason
+is that the Windows logon requires the account ID and the context (domain/local machine) to identif y
+the adminis tr ativ e  user. If an IP address is used in place of a proper name, the c onnection  will fail.
+Bravura Privilege  gets the replacement value for %host% from the managed system’s address, or
+the ’name’ attribut e  for discovered systems. You could choose to leave the value as an IP address.
+Windows Server 2008 and above supports an IP address for the host.
+If the address does not contain the DNS name (for example, if it is an IP address) and you want it to, you
+have several options:
+▪If the system is local service mode, use one of the sub stitution  values %NETBIOS% , %DNSHostname ▪
+%, or %NetbiosDomain% depending on the type of account. Default is %NETBIOS% .
+▪If the system is push mode, and if using the Windows NT connector, enable WINNT_EMIT_INFO  (on ▪
+page 528) and use %DNSHostname% . This allows the Windows NT connector to return the IP and
+DNS hostname on the reset oper ation.
+▪If the system is push mode, and if using a scripted connector ( agtssh , agtdos , agttelnet ), ▪
+c on figur e  the PSLang script to return the IP address and DNS hostname on the reset oper ation.
+▪Use a managed system attribut e  set by the API Service Manag eS y s t emAttrAdd  function.  The key- ▪
+values set for the managed system can then be used for the host/domain settings.
+▪Use a hard coded value.▪
+▪Let the user override the value.▪
+When an user checks out a domain account, the user has the option  to select from a list of domain
+member computers to connect to. To enable this, the ”host” attribut e  must have the ability to be
+overridden by the user, and the ”host search” attribut e  is set to true. As well, discovered systems must be
+listed from the Activ e  Directory target.
+Local service managed system values 
+The terminal services plugin connects to the domain set in the managed system’s address field  by
+default.When you install the Bravura Privilege  local service, it transmits the in f ormation  about the w ork s t ation,
+including:
+▪DNS Domain name▪
+▪NetBIOS domain name▪
+▪Fully qualified  DNS name ▪
+▪NetBIOS name▪
+▪Physical DNS domain name▪
+▪Physical fully qualified  DNS name ▪
+▪Physical DNS host name▪
+▪Physical NetBIOS name▪
+You can view the in f ormation  for a w ork s t ation  by clicking Manage the system  > Privileged access  >
+Managed systems  > < W ork s t ation  ID>, then scrolling down to the in f ormation  table below the account
+table.
+The attribut e  names can be used to sub stitut e  values for the domain and host attribut es  for the
+pswxtsvc ; for example you can set the domain value to %NETBIOS% , %DNSHostname% , or
+%NetbiosDomain% .
+Changing the failure message to users
+You can change the message displayed to users in the event that the external program fails to launch by
+modifying the RES PROGRAM PATH INVALID MSG setting  in the global or managed system policy
+Account access request options.
+Authentic ation  pr ompting
+If the managed system you are c onnecting  to is c on figur ed  to include a prompt for password upon
+c onnection,  you may notice  that the password field  is already filled  in. You can proceed by clicking OK;
+you do not need to specify any additional  in f ormation.Single sign-on authentic ation
+You can c on figur e  SSO (single sign-on) authentic ation  so that domain users r equesting  access to group
+sets can bypass the authentic ation  prompt when running the pswxtsvc access disclosure plugin. SSO
+is implemented by using the pre-established cr edentials  used to log onto a client computer and sending it
+to the remote server directly. This allows the user to access the remote server without needing to enter
+the password multiple  times.
+In order for SSO to be in e ff ect,  the client computer must be on the same domain as the remote server,
+and the user must log onto the client computer with their domain account.
+To order to accommodate single sign-on authentic ation,  you must c on figur e  settings  on both the remote
+server and the client.  Remote Server 
+The remote server must be Windows 2008/Vista or above, and it must allow c onnections  from
+computers running Network Level Authentic ation.
+To allow c onnections  from computers running Network Level Authentic ation:
+1.Go to Start menu and right click on Computer . 1.
+2.Click Pr operties . 2.
+3.Click Remote settings . 3.4.Select Allow c onnections  only from computers running Remote Desktop with Network Level 4.
+Authentic ation
+5.Click Select Users... 5.
+6.Click Add... to include users that will be r equesting  group set access to ensure they can remotely log 6.
+onto the server.
+7.Click OK. 7.
+8.Click OK again to close the system pr operties. 8.
+Remote Client 
+The remote client must be Windows XP SP3 or above, and support Network Level Authentic ation.
+For Windows 2008/Vista+ Clients:
+1.Go to Start menu, type gpedit.msc in the search box, and click on the program to access the Local 1.
+Group Policy Editor.
+2.Expand Computer Con figur ation \ Adminis tr ativ e  Templates \System \ Cr edentials  Deleg ation . 2.
+3.Double click on Allow Deleg ating  Default Cr edentials . 3.
+4.Set this object to Enabled . 4.
+5.Click the Show... button  to add servers to the list. 5.
+6. Con figur e  a list of trusted remote servers for SSO. 6.
+For each server, enter a new value of TERMSRV/ <hostname > where <hostname > is the address
+that the pswxtsvc access disclosure plugin will use to connect to the remote server. Typically, this
+will be the fully qualified  DNS name of the server.
+You can also simply type in TERMSRV/. <domain > to include all servers in <domain >.
+For Windows XP SP3 Clients:
+1.Go to Start menu, type regedit in the search box, and click on the program to access the Registry 1.
+Editor.
+Ensure that you are comfortable and knowledgeable in the mechanics of the registry before you
+attemp t  to change any c on figur ation  settings.  Contact support@bravurasecurity.com  if in doubt.
+2.In HKLM \SOFTWARE \Policies \ Micr osoft \Windows, create a new key called 2.
+CredentialsDelegation .
+3.In the newly created Cr edentialsDeleg ation  key, create a DWORD value called 3.
+AllowDefaultCredentials and set its value to 1.
+4.Create a new key under Cr edentialsDeleg ation  called AllowDefaultCredentials . 4.
+5.In the newly created Allo wDe f aultCr edentials  key, create a new string value. 5.
+6.Set the name of this to some unique identifier;  you may wish to simply use ”1”, ”2”, ”3”, and so on. Set 6.
+the value to TERMSRV/ <hostname >, similar to above.
+7.Repeat this step for each server you want to enable SSO for.7.8.Go to HKLM \SYSTEM \CurrentControlSet \Control \Lsa and modify Security Packages by appending 8.
+tspkg to it.
+9.Go to HKLM \SYSTEM \CurrentControlSet \Control \SecurityProviders and modify SecurityProviders by 9.
+appending credssp.dll to it.
+Display: pswxview
+The pswxview access disclosure plugin provides users with access to a password by displaying it within
+the browser. When the secure method is enabled, Bravura Privilege  uses JavaScript to decrypt the
+privileged password embedded in the page. If the insecure method is enabled, the browser can store
+passwords in plain text in the page source, and users can view the password in browsers that do not have
+JavaScript enabled.
+You can modify the following default attribut es  to control the behavior of pswxview :
+secure If true, the password is only disclosed if the browser has JavaScript enabled, and the
+password is not selectable. If false, the password is available in plaintext for
+browsers without JavaScript.
+timeout This controls how long the privileged password is shown.
+pwd split Allows the password to be split amongst multiple  viewers so that no single viewer
+sees the entir e  password.
+Changing default font and size of viewable passwords
+You modify the default font and size of viewable passwords by opening the following files:
+▪<instance>\skin\widgets \pluginctrl-end.html ▪
+▪<instance>\skin\widgets \ie\pluginctrl-end.html ▪
+and editing  the following lines:
+  passFontFamily: ‘<font_name>' 
+  passFontSize: <font_size>
+If the ie directory exists, the file in it will override the global file outside of it.
+Split password view
+You can split up a password amongst multiple  viewers by specifying the pwd split  attribut e.  This takes the
+form ”n/m” where m is the number of pieces to split the password into, and n is the number of the piece
+that this instance of the control should display.
+For example, 1/2 will display the fir s t half of the password, while 2/2 will display the second half. You
+can c on figur e  a plugin to determine what part of the password a viewer will see. See Using a plugin to
+de fine  access disclosure plugin  (on page 1856). If you don’t intend to use password splitting ,  you can
+safely delete the default pwd split attribut e.

@@ -1,0 +1,314 @@
+Option Description
+ALLOWED ORIGINS A list of hosts separated by comma in use by any server. It is defaulted
+to localhost and hostname of each node if unspecified.  The hostname
+is taken from the database service list under column Address.
+BASE IDSYNCH URL The URL that will display in all emails to direct users to the Bravura
+Security Fabric  applic ation.  The URL must be in the format:
+http://<servername>
+or
+https://<servername>
+This value is set during ins t allation.
+The SMON HTTP URL  value is by default derived from this URL.
+The URL of the local instance value for the Mobile Worker Service
+(mobworker ) is by default used by this URL.
+IDSYNCH GROUP EMAIL RANGE If an email should be sent at a given time, T ,gr oup  it with emails that
+should be sent between T-N and T+N where N is the value (in
+seconds) of this field.  In an environment where a high volume of
+password r andomiz ations  occur (more than 10,000), this value should
+be se to 0.
+NOTIFY RESULT Notif y  relevant authorizers when the w orkflo w  process has been
+completed for a request.
+REMINDER INTERVAL Set a global interval r epr esenting  the minimum time,  in minutes,
+between reminders sent to authorizers to review and authorize
+requests.
+Note : This will set a minimum time  between reminders. That is, if the
+minimum time  is 300 minutes (5 hours), then it will override any
+REMINDER TIME settings  that are less than 5 hours apart.
+REMINDER TIME If you want to set a global time  of day to send reminders to
+authorizers enter times  in 24-hour format..
+See also:
+See Email reminder intervals and scheduling  (on page 421) for more in f ormation
+Email reminder intervals and scheduling
+When a request is made, Bravura Security Fabric  can send emails to authorizers:
+▪As soon as each stage of the w orkflo w  is reached. The Notif y  this user immediately option  is set by ▪
+default for individual authorizers.
+▪At or during specified  mail times;  for example if mail times  are set for 9:00,13:00,16:00, and a new ▪
+request requiring approval comes in at:
+▪8:15, the authorizer gets the email at 9:00.▪
+▪9:15, the authorizer gets the email at 13:00.▪
+▪17:15, the authorizer gets it at 9:00 the following day.▪If mail time  is set for the period between 9:00-17:00, and a new request requiring approval comes
+in at:
+▪8:15, the authorizer gets the email at 9:00.▪
+▪9:15, the authorizer gets the email at 9:15.▪
+▪17:15, the authorizer gets it at 9:00 the following day.▪
+The times  are set either for individual authorizers by the Times of day to email or globally by the
+REMINDER TIME .
+Bravura Security Fabric  also sends reminder emails, after  the initial  email has been sent, at intervals set
+by the global REMINDER INTERVAL . This is the minimum time  between reminders. The default interval is
+24 hours.
+If you alter the reminder times  or interval, messages that have already been queued will be sent at the
+previously set time.  The new time  values apply to messages triggered after  you make the changes.
+Modifying privileged access management settings  for sending email
+You can c on figur e  settings  for email notific ations  related to adminis tr ativ e  password management by
+clicking the Options  > Email tab on a managed system policy c on figur ation  page.
+Product administrators with all adminis tr ativ e  privileges enabled (superuser) can set these options
+globally in the Manage the system > Privileged access > Options  > Email menu. Group level settings
+override global settings.
+Option Description
+EMAIL NOTIFICATION TIME Set times  of day to send out notific ation  emails for
+adminis tr ativ e  password resets.
+Write times  in the format HH:MM in a comma-delimited list.
+If no time  is specified,  an email is sent immediately after  a
+password reset event.
+RES RECIPIENT EMAIL A comma-delimited list of email addresses to notif y  of
+password change issues.
+RES FAIL RECIPIENT EMAIL A comma-delimited list of email addresses to notif y  of
+password change failures.
+RES SUCCESS RECIPIENT
+EMAILA comma-delimited list of email addresses to notif y  of
+successful password changes.
+If you alter the reminder times  or interval, messages that have already been queued will be sent at the
+previously set time.  The new time  values apply to messages triggered after  you make the changes.
+E diting  email messages
+Default email message text is controlled by the Bravura Security Fabric  skins . You can:
+▪Use the Manage the system  (PSA) module to customize w orkflo w  email content ▪▪Edit custom KVGroup files to modify any message subject and content, or prevent Bravura Security ▪
+Fabric  from sending specific  types of email
+Customizing w orkflo w  email using the Manage the system (PSA) module
+The Email cus t omiz ation  page provides easy access to w orkflo w  email language macros so that you can
+customize them without manually modifying any KVGroup files.
+To customize w orkflo w  email macros using the Email cus t omiz ation  page:
+1.Click Manage the system > W orkflo w  > Email cus t omiz ation . 1.
+2.Select values in at least one category of Type , Status , or P articipan t . 2.
+You can search all values in a category by leaving it set to “(Select one)”.
+The values are described in the table below.
+3.Click Select . 3.
+If the values you selected match any email macros, they are displayed below. The w orkflo w  email tag
+names use the following format: EM_WORKFLOW_ <type> _<status> _ <participan t> _*. If there are no
+matches found, modify the category values and Select again.
+Each macro has a Default and Custom value. The Default value cannot be modified.
+4.Enable the Custom field  and type values as required. 4.
+You can copy and paste values from the Default field.
+5.Enable the Generate skin checkbox, at the bottom  of the table, if you want to generate the Bravura 5.
+Security Fabric  skins now.
+6.Click Update . 6.
+If you chose to generate the skin, your cus t omiz ations  are written  to the <lang >-<locale >-
+errmsg.kvg file in the <instance>\design\custom\  directory, for the language currently
+displayed in the browser.
+Option Description
+Type
+CERT Bravura Group s
+CICO Check-in / check-out of privileged accounts
+DELEG Deleg ation
+IMPL Implementers
+INV Inventory
+MULTI Matches macros set to MULTI, which are used to match
+multiple  types
+ORG Org Manager
+PASSWORD Passwords
+REQ Requests
+RESOURCE Bravura Privilege  managed systemsOption Description
+SMON Recorded sessions
+Status
+FINAL Processed
+INITIAL Request initia t ed
+MULTI Matches macros set to MULTI, which are used to match
+multiple  statuses
+ONHOLD On-hold pending administrator in t er v ention
+PROCESSING Approved, performing requested oper ations
+REMINDER Reminder
+THANKYOU Thank you
+P articipan t
+ADMIN Administrators, while not actual participan ts,  are notified  in
+cases where an error occurs and email is sent to them so
+they can correct the issue. These administrators are de fined
+by the RECIPIENT EMAIL system variable.
+AUTHORIZER Authorizers, including delegated authorizers
+MULTI Matches macros set to MULTI, which are used to match
+multiple  participan ts
+RECIPIENT Recipient
+REQUESTER Requester
+Undoing w orkflo w  email cus t omiz ations
+To reverse a cus t omiz ation  to a w orkflo w  email and return the message to it’s default value:
+1.Locate the appropriate macro, as described on Customizing w orkflo w  email using the Manage the 1.
+system  (on page 423).
+2.Enable the Default field. 2.
+3.Enable the Generate skin checkbox, at the bottom  of the table, if you want to generate the Bravura 3.
+Security Fabric  skins now.
+4.Click Update . 4.
+If you chose to generate the skin, your cus t omiz ations  are deleted from the appropriate <lang >-
+<locale >-errmsg.kvg file in the <instance>\design\\ custom\  directory.
+E diting  KVGroup files  to customize messages
+You can edit custom KVGroup files to customize any email message. See the CUSTOMIZATION  (on page
+3471) for more detailed in f ormation  about editing  these files.Message content
+Like GUI message text, the content of email messages is de fined  in <lang >-<locale >-errmsg.kvg . To
+change the content of a message, follow the procedure outlined in CUSTOMIZATION  (on page 3471) to
+create a custom <lang >-<locale >-errmsg.kvg  file. Generally, email subject tags include _SUBJECT_ ,
+and corresponding body text tags include _CONTENT_ .
+If more in f ormation  is required in email messages, then the following sub stitutions  are available:
+▪ %RE CIPIENT_<attrid>%  – the recipient of the request ▪
+▪ %RE QUE S TER_<attrid>%  – the requester of the request ▪
+▪ %EMAIL_RE CIPIENT_<attrid>%  – the recipient of the email; the ”To:”. ▪
+Pr e v enting  email from being sent
+You can prevent Bravura Security Fabric  from sending specific  types of emails by adding the appropriate
+tag, with no content, to your custom <lang >-<locale >-errmsg.kvg file. The CUSTOMIZATION  (on
+page 3471) shows you how to locate the appropriate tag.
+For example, to prevent Bravura Security Fabric  from sending ”Thank-you” emails to reviewers after  a
+certific ation  campaign has been reviewed:
+1.Open the en-us-errmsg.kvg file. 1.
+2.Retrieve this tag:2.
+"EM_WORKFLOW_CERT_THANKYOU_AUTHORIZER_THANKYOU_CONTENT_PRIMARY_ACTOR""
+" =
+{
+"text" = "EM_CERT_THANKYOU_CONTENT"
+}
+3.Empty the text:3.
+"EM_WORKFLOW_CERT_THANKYOU_AUTHORIZER_THANKYOU_CONTENT_PRIMARY_ACTOR""
+" =
+{
+"text" = " "
+}
+4.Stop the W orkflo w  Manager Service ( idwfm ). 4.
+5.Generate the skin files 5.
+To generate and install new or modified  skin files,  use the following format for the commands to run
+from the <instance>\design\ directory, where en-us  is American English:
+1.Compile the skins:1.
+make.bat default en-us
+Changes are saved in the instance's <instance>\design\skin\ directory
+2.Install the skins:2.make.bat install default en-us
+The compiled files are copied to the instance's skin\ directory
+3.If necessary, reload and review any changes to Bravura Security Fabric  web pages. 3.
+Do not run the second command to install the skins if they fail to compile, especially if the firs t m4
+file (links.m4) fails to compile.
+Skins can fail to compile if something in the environment is locking the skin files.  That can be a
+malware program, an automated backup tool running at the time,  but more likely the product UI itself
+being in use at the time  of the skin c ompilation
+Have a test instance where you can compile the skins when the instance is not being used. Make a
+backup copy of the files on the production  instance in case you need to quickly roll them back. Review
+changes on the test instance, then copy the skin files to the production  instance.
+.
+6.Start the W orkflo w  Manager Service. 6.
+See also:
+See CUSTOMIZATION  (on page 3471) for more in f ormation  about g ener ating  skin files.
+Email block list
+Updated v12.2.1
+Bravura Security Fabric  can block emails being sent to a specific  address or a group of addresses; for
+example, undeliverable addresses. Two types of block lists can be used:
+▪Single address▪
+▪Regular expression pattern ▪
+To c onfigur e  an email block list
+You c on figur e  email block lists in the hid_global_c on figur ation  table in the Manage external data store
+(DBE) module. Emails originating  from Bravura Security Fabric  and the Functional.hid_email_notific ation
+component will be subject to these rules.
+1.Click Manage external data store  > hid_global_c on figur ation  to add the new rules. 1.
+2.Add new rules with the following values:2.
+▪namespace:  hid_email_notific ation ▪
+▪ setting:  BLOCK_EMAIL ▪
+▪key:  ADDRESS for individual address, REGEX for regular expression pattern ▪
+▪value:  Email address or regular expression pattern. ▪
+▪Each value can only contain a single address or pattern,  however, multiple  settings/k e y s  can be ▪
+de fined.Addresses and regular expression patterns  can also be de fined  in python scripts that become part of a
+custom component. For example:
+from idmlib.idmemail import Email
+e = Email()
+e.se t_subject("T esting  sending raw Email object")
+e.attach_t e x t("This  is a Test Email.")
+e.set_to(addresses)
+e.set_from('s@scratch.local')
+e.send_smtp(
+excluded_emails={'blocked_address@test.local'},
+e x clude_r eg e x es={r'notific ation_.*'},
+)
+See Cr eating  custom components  (on page 319) for more in f ormation  about custom components.
+Con figur ation  via the wfemail component
+The component framework provides a way to manage what emails are sent by Bravura Security Fabric  to
+notif y  and remind users and authorizers of w orkflo w  events, including the following:
+▪Authorizer approvals, denials, and esc alations ▪
+▪ Deleg ation  requests ▪
+▪Batch processing events▪
+The Functional.hid_policy_w f email  component controls policy settings  for all of the available w orkflo w
+events in Bravura Security Fabric .
+This component provides a policy table that allows granular control over the behavior of individual
+events within Bravura Security Fabric . Each event can be c on figur ed  to send messages to end users via
+either email or push notific ation.  Each event can also be c on figur ed  to write sent emails to a file. In
+addition,  the policy table allows any w orkflo w  event notific ation  to have its original subject and body
+o v er written,  which permits an administrator to provide their own f ormatting ,  structure and logic to
+Bravura Security Fabric .
+Installing Functional.hid_policy_w f email  will aut omatic ally  set GLOBAL_MAIL_PLUGIN to wfemail.py .
+See COMPONENTS  (on page 312) for more in f ormation  about installing components.
+In order to complete email c on figur ation,  you must:
+1. Con figur e  w orkflo w  options  in Manage the system > W orkflo w  > Options  > Email c on figur ation , 1.
+including the email server and sender address.
+2.Verify that the hid_policy_wfemail table in the external data store (extdb) is c on figur ed  for your 2.
+environment.3. Con figur e  events to send messages to users via email or push notific ation. 3.
+Example: Sending email when a user is locked out
+This example shows you how to c on figur e  Bravura Security Fabric  to send an email to an administrator
+when a user is locked out due to too many failed login attemp ts.
+Requirements
+This use case assumes that:
+▪Bravura Security Fabric  and Connector Pack are installed. ▪
+▪An Activ e  Directory system has been targeted as a source of pr ofiles. ▪
+▪All users have values de fined  in the mail attribut e  on the Activ e  Directory target system. ▪
+Configur e  email settings
+To c on figur e  email settings:
+1.Log in to Bravura Security Fabric  as superuser . 1.2.Click Manage the system > W orkflo w  >  Email c on figur ation . 2.
+When you select the W orkflo w  tab, Bravura Security Fabric directs you to the Email c onfiguration
+menu until  the required variables are set.
+3.Note the following settings  which are set during ins t allation: 3.
+▪BASE IDSYNCH URL  The URL that will display in all emails to direct users to the Bravura Security ▪
+Fabric  applic ation.
+▪GLOBAL MAIL PLUGIN  The plugin that sends email to users. ▪
+The default setting ,  global-mail-plugin , is o v er written  by the hid_policy_wfemail
+component to use the plugin_wfemail.py  plugin.
+▪GLOBAL MAIL PLUGINDIR  The directory path to store messages when they are written  to a file. ▪
+The default is <Program Files path>\Bravura Security\Bravura Security Fabric\Logs\<instance> mail.
+4.Set the following:4.
+▪MAIL SEND METHOD  SMTP,FILE ▪
+These are the delivery options  for notific ation  messages. When the MAIL SEND METHOD  value
+includes FILE,  it writes to a file in the directory specified  by GLOBAL MAIL PLUGIN MAILDIR ,
+which by default is <Program Files path>\Bravura Security\Bravura Security Fabric\Logs
+\<instance>mail. When the value includes SMTP , the plugin sends emails.
+▪MAIL_SERVER  <mail server address> This can be localhost . ▪
+▪RECIPIENT_EMAIL  The comma-delimited list email addresses of the Bravura Security Fabric ▪
+administrators who should receive notific ation  of events r elating  to the running of the server; for
+example admin@example.corp .
+▪SENDER_EMAIL  The email address that will appear as the sender of emails; for example ▪
+bravura@example.corp .
+When accessing the product using the Google Chrome browser, Google Password Manager can
+erroneously aut o-fill  the MAIL AUTH LOGIN and MAIL AUTH PASSWORD fields  from saved
+credentials.  These fields  do not require values for this course and, if filled,  will cause emails to fail.
+Clear these fields  and disable Google Password Manager as follows: 1. Click your Google Chrome
+profile  avatar at top right. 2. Click the Passwords  (key) icon under your name/email address. Toggle
+the Off er  to save passwords  switch to Off .
+5.Click Update . 5.
+Configur e  the event action
+To set up an email action  when a user is locked out of Bravura Security Fabric :
+1.Click Manage the system > Policies > Login options . 1.
+2.Select Con figur e  event under the USER LOGIN LOCKOUT  field. 2.
+A pop-up form appears.
+3.Select Each time  this event occurs under send email. 3.
+4. De fine  the message; for example: 4.To admin@example.corp
+From  bravura@example.corp
+Subject  User Lockout
+Message body  Due to several failed password attempts
+%USERID% has been locked out. Check for suspicious behavior .
+The Event action  strings help link at the bottom  left of the form gives you a guide to variable strings
+that you can use in the message body.
+5.Click Update . 5.
+6.Close the pop-up form.6.
+7.Click Update . The settings  will be saved. 7.
+Test the event action
+To test the event action:
+1.As an end user, attemp t  to log into Bravura Security Fabric  with the wrong password until  you are 1.
+locked out (3 attemp ts).
+2.Open your email client as the admin user, or go to the <Program Files path>\Bravura Security\Bravura 2.
+Security Fabric\Logs\<instance> mail\ directory.
+You should see that there is a "User lockout" message. Open this message to c on firm  that it appears
+as you intended.
+When the MAIL SEND METHOD includes FILE a copy of this email will also be created in the the
+<Program Files path>\Bravura Security\Bravura Security Fabric\Logs\<instance> mail\ directory as a
+<date>.eml file.
+3.Open an Administrator Command Prompt and navigate to:3.
+<Program Files path>\Bravura Security\Bravura Security Fabric\<instance>\ util\
+4.Run the following command to unlock the user:4.
+userunlock.exe -user <username>
+5.Close the command prompt.5.

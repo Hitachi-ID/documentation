@@ -1,0 +1,91 @@
+Click Next .
+7.Search for and select Adam Gibbs ADAMG0  on the Members  page. 7.
+ADAMG0  will be a temporary member of this group so we will set the expiry date entitlemen t
+attribut e.
+8.Click on the Expiry date of an entitlemen t  field  next to ADAMG0  to display the calendar. 8.9.Select a future date for Expiry date of an entitlemen t . 9.
+10. Click Next . 10.
+11. On the Child groups  page, click Next . 11.
+12. On the Parent groups  page, search for and select the checkbox of the TEMPS  group. 12.13. Click Submit . 13.
+14. Click the View request  link at the top of the page to check the status of the request. 14.Approve the request
+To approve the request:
+1.Log in to the Front-end (PSF) as a group owner; in this case the user is a member of the ENG-1.
+MANAGERS-owners group.
+2.Click the link: There are 1 request(s) a w aiting  your approval . 2.
+The Requests  app opens.
+3.Select the request you want to review; Create group . 3.
+Bravura Security Fabric  displays the details in the Actions  panel  on the right.
+4.Review the request details.4.
+5.Click Approve  and c on firm  the approval by clicking the Approve  button  below the Comment field. 5.
+Track the results of the request
+Return to your browser tab where abbiel is logged in and refresh the request details for the new group.
+The request status will change to "Processed".
+If the values of the Results  columns in Request details  tables are all "Success", you will know you have
+successfully completed the group cr eation.Requests app
+The Requests  app allows users to view or manage requests based on their role and access controls.
+The Requests  app is accessible via the Requests link to:
+▪Users with accounts when they have the ”Requests” user access rule (all self-service users by default)▪
+▪Product administrators who have the ”Manage reports” user access rule. Users with this right can▪
+view requests they have submitted  via reports.
+▪Help desk users with the ”View w orkflo w  requests” user access rule. These users can view other users’ ▪
+authoriz ation  requests.
+▪ W orkflo w  managers with the ”Manage w orkflo w  requests” rule. These users can manage other users’ ▪
+authoriz ation  requests.
+▪ Deleg ation  managers with the ”Delegate w orkflo w  requests” user access rule. These users can ▪
+delegate other users’ authoriz ation  requests.
+To c on figur e  options  that apply to the Requests  app:
+1.Click Manage the system  > Modules  > Requests . 1.
+2. Con figur e  the options  in Table Modules > Requests  options  (on page 1249) as required. 2.
+3.If required, c on figur e  event options,  listed in Table Requests app events that launch interface 3.
+programs  (on page 1250), Requests app events that launch interface programs  (on page 1539).
+4.Click Update to submit the changes. 4.
+The options  marked with 
+  in Table Modules > Requests  options  (on page 1249) are also c onfigurable
+from the W orkflo w  > Options  > General page. Changes you make here will also update that page. All
+other settings  apply only to the Requests  app.
+Modules > Requests  options
+Option Description
+IDP APPROVE SINGLE RESOURCE If enabled, authorizers can approve or deny requested resources
+individually.
+When enabled, an approved oper ation  is immediately actioned,  without
+w aiting  for the entir e  request to be approved; for example, where a request
+is submitted  to add a user to three groups, as soon as group owner one
+approves his part, the user gets added to group one and that state is
+r e flect ed  on the authoriz ation  status page.
+Note:  This setting  is temporarily disabled if the request is for a group set or
+account set access. This is to prevent users from gaining access to deny
+requests of this type if a single resource is approved.
+IDP DISABLE USER SEARCH Remove advanced search and listing  c apabilities  for e xisting  users who are
+authorizers. When this option  is enabled Bravura Security Fabric will only
+return an exact match.
+IDP REQUIRES REASON
+APPROVALAuthorizers must enter a reason for approving a request.Option Description
+IDP REQUIRES REASON
+REJECTIONAuthorizers must enter a reason for denying a request.
+IDP REQUIRES SIGNATURE Authorizers are required to enter their password for use as their electronic
+signature when either approving or denying a request.
+IDP UPDATE ATTRIBUTES ENABLED Allow or disallow requesters, recipients and authorizers to edit requests
+after  submission.
+IDS DISABLE USER SEARCH Remove advanced search and listing  c apabilities  for e xisting  users who are
+requesters or recipients. When this option  is enabled Bravura Security
+Fabric  will only return an exact match.
+IDV DISABLE USER SEARCH Remove advanced search and listing  c apabilities  for e xisting  users who are
+implementers. When this option  is enabled Bravura Security Fabric  will only
+return an exact match.
+IDV REQUIRES REASON COMPLETED Implementers must enter a reason for marking a task as completed.
+IDV REQUIRES REASON COULD NOT
+COMPLETEImplementers must enter a reason for being unable to complete a task.
+IDV REQUIRES REASON DECLINE Implementers must enter a reason for declining a task.
+Requests app events that launch interface programs
+The following Requests app options  can be accessed from Manage the system  > Maintenance > System
+variables  or Manage the system  > Modules > Requests:
+Option Description
+IDP APPROVE FAILURE An authorizer’s attemp t  to approve a request fails.
+IDP APPROVE SUCCESS An authorizer’s attemp t  to approve a request succeeds.
+IDP REJECT FAILURE An authorizer’s attemp t  to deny a request fails.
+IDP REJECT SUCCESS An authorizer’s attemp t  to deny a request succeeds.
+IDS DELETE FAILURE A user’s attemp t  to delete their request fails.
+IDS DELETE SUCCESS A user’s attemp t  to delete their request succeeds.
+Disabling advanced search c apabilities
+Regular users can normally use advanced search c apabilities  to find e xisting  users on request pages.
+By default, if Bravura Security Fabric finds  more than one match for the search terms, it displays a list and
+allows the requester to make a selection.

@@ -1,0 +1,354 @@
+▪"click"  a flag that determines if the browser extension will click on the "input_value" element. ▪
+▪ "settle_time_be f or e"  the time  in seconds the browser extension waits before accessing this element. ▪
+▪ "settle_time_after"  the time  in seconds the browser extension waits after  accessing this element. ▪
+▪"stop_on_fail"  a flag that stops the c ontinued  e x ecution  if the browser extension fails to find the ▪
+element set by "value".
+Sample c on figur ation  file for web app privileged sign-on (twitter .json)
+{
+"info": {
+"url": "http s://twitter .c om/i/flo w/login"
+},
+"username": {
+"order": 1,
+"type": "XPATH",
+"value": "//span[contains(text(),'email')]/ancestor::label//*/input",
+"input_value": "%username%",
+"keypress_event": true,
+"click": false,
+"settle_time_be f or e":  5,
+"settle_time_after":  0,
+"stop_on_fail": false
+},
+"next": {
+"order": 2,
+"type": "XPATH",
+"value": "//div[@r ole='button']//*/ span[t e x t()='Ne x t']",
+"input_value": "",
+"keypress_event": false,
+"click": true,
+"settle_time_be f or e":  5,
+"settle_time_after":  0,
+"stop_on_fail": false
+},
+"password": {
+"order": 3,
+"type": "XPATH",
+"value": "//input[@name='password']",
+"input_value": "%password%" ,
+"keypress_event": true,
+"click": false,
+"settle_time_be f or e":  5,
+"settle_time_after":  0,
+"stop_on_fail": false
+},"submit": {
+"order": 4,
+"type": "XPATH",
+"value": "//div[@r ole='button']//*/ span[t e x t()='Log  in']",
+"input_value": "" ,
+"keypress_event": false,
+"click": true,
+"settle_time_be f or e":  2,
+"settle_time_after":  0,
+"stop_on_fail": false
+}
+}
+Sample website disclosure c on figur ation  (JSON) for AWS
+{
+"info": {
+"url": "http s:// c onsole.a w s.amaz on.c om"
+},
+"root_user": {
+"order": 1,
+"type": "CSS",
+"value": "input#r oot_user_r adio_button",
+"input_value": "",
+"keypress_event": false,
+"click": true,
+"settle_time_be f or e":  5,
+"settle_time_after":  0,
+"stop_on_fail": false
+},
+Sample website disclosure c on figur ation  (JSON) for Outlook
+{
+"info": {
+"url": "http s://login.liv e.c om/"
+},
+"username": {
+"order": 1,
+"type": "CSS",
+"value": "input[type='email']",
+"input_value": "%username%",
+"keypress_event": false,
+"click": false,
+"settle_time_be f or e":  5,
+"settle_time_after":  5,
+"stop_on_fail": false},
+"next": {
+"order": 2,
+"type": "CSS",
+"value": "input[type='submit']",
+"input_value": "",
+"keypress_event": false,
+"click": true,
+"settle_time_be f or e":  0,
+"settle_time_after":  3,
+"stop_on_fail": false
+},
+"password": {
+"order": 3,
+"type": "CSS",
+"value": "input[name='passwd']",
+"input_value": "%password%" ,
+"keypress_event": true,
+"click": false,
+"settle_time_be f or e":  0,
+"settle_time_after":  0,
+"stop_on_fail": false
+},
+"passwordNext": {
+"order": 4,
+"type": "CSS",
+"value": "input[type='submit']",
+"input_value": "" ,
+"keypress_event": false,
+"click": true,
+"settle_time_be f or e":  0,
+"settle_time_after":  0,
+"stop_on_fail": false
+}
+if the website you want to access is not available with Bravura Security Fabric .
+For in f ormation  about c on v erting  e xisting  browser driver (pswxdom) c on figur ation  to JSON format that
+can be used for website disclosure c on figur ations  see pswxdom2webapp
+The pswxdom2webapp  utility  converts e xisting  Browser Driver ( pswxdom ) c on figur ation  to JSON that
+can be used for web apps. The utility  locates all Browser Driver access disclosure plugins, including ones
+created globally, as well as those overridden in the managed system policy (MSP) level. By default, a
+corresponding web app will be generated for each converted Browser Driver access disclosure. Browser
+Driver access disclosures used in the MSP-level will not be converted if none of the disclosure attribut es
+values are overridden.The pswxdom2webapp utility  can be found in the util directory.
+The following Browser Driver disclosure attribut e  settings  are converted:
+▪checkboxdata▪
+▪ c onstfieldda t a▪
+▪ f ormatted  username ▪
+▪ pass w or dfieldids▪
+▪ settletime▪
+▪ submitbuttonids▪
+▪url▪
+▪ username fieldids▪
+The following Browser Driver disclosure attribut e  settings  are not converted:
+▪denypopups▪
+▪ f ormatted  title ▪
+▪height▪
+▪uicontrols▪
+▪width▪
+▪simulatekeypress▪
+Notes:
+▪simulatekeypress will be supported, but not in Phase 1. A warning message will be given when▪
+pswxdom2webapp finds  a Browser Driver disclosure that has this setting  enabled. A web app will be
+created, but running it may cause issues if the website relies on keypresses to log in.
+▪If a semicolon is used as a submitbuttonids  rather than an HTML tag, it will no longer work on web ▪
+app. This will need to be replaced with an explicit HTML tag.
+Usage
+pswxdom2webapp.exe [-pr e fix]  [- file]  [-force]
+Argument Description
+-pr e fix Pr e fix  the web app’s name with the specified  value.
+- file Convert Browser Driver disclosure c on figur ation  to JSON
+files.  This is added to <ins t ance>/w ebapp files.  This does
+not commit changes to the database. The JSON files
+generated can be used to manually create web apps.
+-force Override e xisting  changes made to the database or
+converted web app files.
+Converted global-level Browser Driver disclosure plug-ins will be named: <disclosure plugin> . If
+the -pr e fix  argument is used, they will be named: <prefix><disclosure-plugin> . Description  of
+the web app will be: Webappjson generated for <disclosure plugin> .Converted MSP-level Browser Driver disclosure plugins will be named: managed system policy -
+<disclosure plugin> . If the -pr e fix  argument is used, they will be named: <prefix> managed
+system policy -<disclosure-plugin> . Description  of the web app will be: Webappjson
+generated for managed system policy  / <disclosure plugin>.
+If a web app was already generated for a specific  Browser Driver disclosure using pswxdom2webapp , it
+will not be generated again unless -force is used.
+Examples
+▪To convert all browser driver disclosures to web app and adding it to the database, assuming none of▪
+the browser driver disclosures are converted previously:
+pswxdom2webapp.exe
+▪To convert all browser driver disclosures to web app and add them to the database, regardless if they▪
+have been already converted using pswxdom2webapp :
+pswxdom2webapp.exe -force
+▪To convert all browser driver disclosures to web app, but only create JSON c on figur ation  files instead ▪
+of cr eating  web app entries in the database:
+pswxdom2webapp.exe -file
+▪To convert all browser driver disclosures to web app, but only create JSON c on figur ation  files ▪
+regardless if they have been already converted using pswxdom2webapp:
+pswxdom2webapp.exe -file -force
+.
+Example: Install optional  scenarios
+1.Log in to the front-end as superuser.1.
+2.From the main menu click Manage components. 2.
+3.Search and select the checkbox for the following optional  scenarios: 3.
+▪Scenario.pam_webapp_social▪
+▪ Scenario.pam_w ebapp_cloud_c omputing▪
+▪Scenario.pam_webapp_cloud_service▪
+4.Click Install component(s) . 4.The panel on the right will indicate when the ins t allation  is complete.
+These optional  scenarios include website disclosure c on figur ations  for the following:
+▪GMail▪
+▪Facebook▪
+▪ T witter▪
+▪ Micr osoft  Azure ▪
+▪AWS IAM/root accounts▪
+▪ServiceNow▪
+Example: View the optional  website disclosure c onfigur ations
+Additional  requirements 
+This example assumes that:
+▪Scenario.pam_webapp_management is installed▪
+▪Scenario.pam_webapp_social is installed▪
+▪ Scenario.pam_w ebapp_cloud_c omputing  is installed ▪
+▪Scenario.pam_webapp_cloud_service is installed▪
+▪A web applic ation  administrator has been added to the PAM_TEAM_ADMINS user class, thus has the ▪
+privilege to c on figur e  website disclosure c on figur ations
+To view the website disclosure c on figur ations  installed by these three scenarios:
+1.Log in to Bravura Security Fabric  as a web applic ation  administrator. 1.
+2.Click Manage Resources . 2.
+3.Click Website Disclosure Con figur ation:  Update . 3.
+4.Click Select a website disclosure c on figur ation . 4.
+The c on figur ations  installed by the three scenarios are available.
+5.Close the Update wizard.5.
+or
+Edit the website disclosure c on figur ation:a.Select one of the website disclosure c on figur ations  and click Next . a.
+Change the website disclosure c on figur ation  name, description,  or c on figur ation  file used if
+required.
+b.Click Submit. b.
+Install the Secure browser client
+Install the secure browser client to use the secure browser access disclosure plugin.
+Windows 10 Version 1809 is the minimum required version.
+To install the client on Windows 10:
+1.Copy SecureBrowser-1.0.0.zip  from \<instance>\addon\securebrowser\ and paste it into a 1.
+temporary folder on the Windows 10 system.
+2.Open the temporary folder and extract the contents of the zip file. 2.
+3.Open the SecureBrowser-1.0.0 folder, and locate3.
+SecureBrowser.UWP_1.0.0.26_x86_x64_arm.msixbundle .
+4.Double-click to launch the installer.4.
+5.Click Install. 5.
+ T r oubleshooting  
+If the client fails to install with the following or similar error:
+ App installation failed with error message: error 0x80073D02: Unable to 
+ install because the following apps need to be closed 
+ Microsoft.DesktopAppInstaller_1.0.30251.0_x64__8wekyb3d8bbwe. (0x80073d02)
+▪Verify if dependencies are being downloaded and installed correctly.▪
+▪Check app updates can be downloaded and installed via the Micr osoft  store. ▪
+▪Check DNS.▪
+▪Manually install dependencies in Dependencies/x64 either by double clicking or through PowerShell:▪
+▪ Micr osoft.NET .Nativ e.Fr ame w ork.2.2.app x▪
+▪ Micr osoft.NET .Nativ e.Runtime.2.2.app x▪
+▪ Micr osoft. UI.Xaml.2.4.app x▪▪ Micr osoft. V CLib s.x64.14.00.app x▪
+Uninstalling the client
+To uninstall via the Start menu:
+1.In the Start  menu, find Bravura Security Secure Browser . 1.
+2.Right-click then click Uninstall . 2.
+To uninstall through Apps & features:
+1.Open "Apps & features".1.
+2.Search for Bravura Security Secure Browser. 2.
+3.Uninstall.3.
+Example: Create a website disclosure c on figur ation
+The following optional  scenarios are available which provide pr e-c on figur ed  website disclosure
+c on figur ations:
+▪Scenario.pam_webapp_social (optional) ▪
+This optional  component includes website disclosure c on figur ations  for GMail, Facebook, and T witter
+▪Scenario.pam_webapp_cloud_service (optional) ▪
+This optional  components includes website disclosure c on figur ations  for Micr osoft  Azure and AWS
+IAM/root accounts
+▪ Scenario.pam_w ebapp_cloud_c omputing  (optional) ▪
+Include a website disclosure c on figur ation  for ServiceNow accounts.
+Web applic ation  administrators can create website disclosure c on figur ations  for broking access to specific
+websites if the c on figur ation  required is not available.   
+This example demonstrates adding a website disclosure c on figur ation  for Outlook/Live which is not
+included with Bravura Security Fabric .
+Additional  requirements 
+This example assumes that:
+▪Scenario.pam_webapp_management is installed.▪
+▪A web applic ation  administrator has been added to the PAM_TEAM_ADMINS user class and thus has ▪
+the privilege to c on figur e  website disclosure c on figur ations.
+▪A c on figur ation  file (JSON) for Outlook/Live is available and complete. ▪
+See create a c on figur ation  file (JSON)
+The c on figur ation  file for the web app privileged sign-on disclosure requires a JSON file with the following
+structure:{
+    "info": {
+        "url": "http s://w ebpag e/"
+        },
+    "username": {
+        "order": 1,
+        "type": "CSS",
+        "value": "input[name='session[username_or_email]']",
+        "input_value": "%username%",
+        "keypress_event": true,
+        "click": false,
+        "settle_time_be f or e":  5,
+        "settle_time_after":  0,
+      "stop_on_fail": false
+    },
+    "password": {
+        "order": 2,
+        "type": "CSS",
+        "value": "input[name='session[password]']",
+        "input_value": "%password%" ,
+        "keypress_event": true,
+        "click": false,
+        "settle_time_be f or e":  0,
+        "settle_time_after":  0,
+        "stop_on_fail": false
+    },
+    "submit": {
+        "order": 3,
+        "type": "CSS",
+        "value": "[r ole='button'][type='sub mit']",
+        "input_value": "" ,
+        "keypress_event": false,
+        "click": true,
+        "settle_time_be f or e":  0,
+        "settle_time_after":  0,
+        "stop_on_fail": false
+    }
+Where:
+▪"Info"["url"]  is the url the web app will open the webpage on. ▪
+▪"username"  , "password ", and "submit"  action  keys with a structure which determines how the ▪
+browser will interact with the webpage.
+You can have as many action  keys as needed to interact with the webpage tab
+▪"order"  order number the browser extension will act on. ▪▪"type"  the search method the browser extension will use to find an element that matches "value" on ▪
+the webpage. The supported types are:
+▪"XPATH": find an element using XPATH that matches the "value" ▪
+▪"CSS": find an element using CSS that matches the "value" ▪
+▪"ID": find an element with "id" that matches the "value" ▪
+▪"NAME": find the fir s t element with "name" that matches the "value" ▪
+▪"CLASS": find the fir s t element with the class that matches the "value" ▪
+▪"value"  browser extension will use to look the webpage by "type". ▪
+▪"input_value"  the value we will look for in the search to identif y  the input field. ▪
+▪"keypress_event"  a flag that is required, but not yet used. ▪
+▪"click"  a flag that determines if the browser extension will click on the "input_value" element. ▪
+▪ "settle_time_be f or e"  the time  in seconds the browser extension waits before accessing this element. ▪
+▪ "settle_time_after"  the time  in seconds the browser extension waits after  accessing this element. ▪
+▪"stop_on_fail"  a flag that stops the c ontinued  e x ecution  if the browser extension fails to find the ▪
+element set by "value".
+Sample c on figur ation  file for web app privileged sign-on (twitter .json)
+{
+"info": {
+"url": "http s://twitter .c om/i/flo w/login"
+},
+"username": {
+"order": 1,
+"type": "XPATH",
+"value": "//span[contains(text(),'email')]/ancestor::label//*/input",
+"input_value": "%username%",
+"keypress_event": true,
+"click": false,
+"settle_time_be f or e":  5,
+"settle_time_after":  0,
+"stop_on_fail": false
+},
+"next": {
+"order": 2,
+"type": "XPATH",
+"value": "//div[@r ole='button']//*/ span[t e x t()='Ne x t']",
+"input_value": "",
+"keypress_event": false,
+"click": true,
+"settle_time_be f or e":  5,
+"settle_time_after":  0,
+"stop_on_fail": false
+},

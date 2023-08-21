@@ -1,0 +1,282 @@
+Track the results of the name change
+To track the results of the name change request:
+1.Try to log into the Bravura Security Fabric  web app with the old Pr ofile  ID of the renamed user. 1.
+The login should fail, as the user is invalid.
+2.Log in to Bravura Security Fabric  with the new Pr ofile  ID of the renamed user. 2.
+The login should be successful.
+The new Profile  ID can be found in the details page of the name change request. By default, the new
+Profile  ID will be Last name + Middle name + First name, all in capital case. The rule for Profile  ID
+generation  is defined  in hid_policy_attr val_c alculation.
+3.Click View and update pr ofile  from the My profile  menu. 3.
+The name and pr ofile  ID of the user should have been updated. The renamed user should retain all
+entitlemen ts  and privileges.
+4.On the Activ e  Directory target system, view pr operties  of the renamed user. 4.
+The name, logon name, and email of the user should have been changed.
+Leave of absence
+Bravura Security Fabric  can update a user’s leave of absence status and disable their accounts on the
+specified  date they leave and enable them again on the date the user returns. This is particularly  useful
+when employees take paternity or maternity leave.
+im_corp_loa
+Purpose:
+This scenario component implements a leave of absence (LoA) use case, where users can be disabled for
+a de fined  period of time,  after  which their access is aut omatic ally  r eactiv a t ed.  When installed, it
+c on figur es  a number of pr e-de fined  requests as well as a dedicated policy engine for granular control
+over each step of the process.
+Configur ation:
+External data store ( extdb ) tables containing c on figur ation  relevant to this scenario:
+▪im_leave_of_absence: Adds policy settings  to control all aspects of the leave of absence process. ▪
+▪ im_policy_authoriz ation:  Adds authoriz ation  rules to facilitate the fulfillmen t  of LoA related requests ▪
+without requiring any authoriz ation,  since all w orkflo w  requests are driven by scheduled tasks and API
+users.
+▪ hid_policy_attr v al_*:  Adds rules for handling LoA related pr ofile  attribut es  (LEAVE-*), which may have ▪
+to be updated as part of these requests.Example: Leave of Absence - Offboar ding  and Onboarding
+A leave of absence can be applied to s t a ff  who will be on extended leave, such as sabbatic als,  study,
+parental, and medical leave. A manager will request a leave of absence on behalf of a user and set start
+and return dates. A scheduled task will run to trigger the leave of absence and disable the user’s
+accounts.
+Since leaves of absence are intended to be reversible, accounts are not deleted and group memberships
+are not revoked – the only actions  are to disable and later re-enable accounts and user pr ofiles.
+This example shows how to install the component t which controls corporate leave of absence policies,
+lists the pr e-de fined  requests that will need customized to your environment, and walks you through a
+leave of absence request.
+Requirements
+This example assumes that:
+▪Bravura Identity  and Connector Pack are installed. ▪
+▪An Activ e  Directory target system has been added as a source of pr ofiles ▪
+Deploy Leave of Absence
+To deploy the leave-of-absence component:
+1.Install Scenario.im_corp_loa . 1.
+2.Click Manage external data store  to verify the following tables are available and c on figur ed  for the 2.
+environment:
+▪HID_GLOBAL_CONFIGURATION to set targets that are a source of pr ofile  ID ▪
+▪HID_POLICY_ATTRVAL_DEFAULT to set r elativ e  default values ▪
+▪HID_POLICY_ATTRVAL_VALIDATION to set input v alidation ▪
+▪IM_LEAVE_OF_ABSENCE to set leave of absence c on figur ations ▪
+▪IM_POLICY_AUTHORIZATION to set authoriz ations  for the requests ▪
+3. Con figur e  the membership of the LOA-AUTHORIZERS user class. 3.
+4. Con figur e  the following pr e-de fined  requests: 4.
+▪LOA-EFFECTIVE▪
+▪LOA-REQUEST▪
+▪LOA-RETURN▪
+▪LOA-RETURNED▪
+As a manager, request a leave of absence using the pr e-defined  leave of absence request
+To test this feature, request a leave of absence:
+1.Log in to Bravura Security Fabric  as a manager. 1.
+2.Click View and update pr ofile  under Other users . 2.3.Select the user to request a leave of absence for.3.
+4.Click Leave of absence . 4.
+5.Fill out and submit the request.5.
+6.If required, log in to Bravura Security Fabric  as an authorizer and approve the request. 6.
+7.Allow the start date to pass so that LOA-EFFECTIVE can trigger the event.7.
+8.Verify that the user has been modified  as follows: 8.
+▪The user’s status should be set to on leave.▪
+▪The user’s pr ofile  and account should be disabled. ▪
+See also:
+▪ Pr e-de fined  requests  (on page 1311) for more in f ormation  about c on figuring  pr e-de fined  requests and ▪
+user classes.
+▪Installing components  (on page 316) for in f ormation  about installing components. ▪
+Offboar ding
+Use case
+Over a life cycle of a user they will need to be removed from the system. A user may be required to be
+deactiv a t ed  because their contract has concluded or there is a need to urgently deactiv a t e  them.
+Depending on the need, the users will go through a t ermination  process that will progress over several
+stages including, warning their manager, disabling and archiving their accounts and finally  deleting  and
+cleaning their access and in f ormation.
+Solution
+Bravura Identity  includes scenario components to manage the offboar ding  of users from the system. This
+can include scheduled t ermination  or urgent t ermination.
+Bravura Identity  can detect when a user’s scheduled t ermination  date is approaching. The t ermination
+date will either be set by the manager or via a human resources system. Bravura Identity  will inform the
+user’s manager via email that they have a subordinate that will be terminated soon. This will give the
+manager an opportunity to review and pot entially  extend their access.
+When the user’s t ermination  date has been reached Bravura Identity  will disable the user’s access. The
+manager has the option  to restore the user at this point if they so desire. After  a period of time  the user’s
+access will be archived. This process can include moving accounts into a diff er en t  or g aniz ational  unit or
+group and moving home directories.
+After  another period of time  the user’s access will be cleaned up by deleting  accounts and the user’s
+personal in f ormation  may be deleted from Bravura Identity . Some in f ormation  will remain in Bravura
+Identity  to detect whether or not the user can be rehired.
+Configure  Bravura Identity  to monitor upcoming t erminations.  At a minimum, send email reminders to
+managers telling them their soon to be terminated subordinates and a url link to extend the user’s accessperiod. Warning emails should be sent to managers 30, 15 and 10 days before the access is terminated.
+The archive and cleaning phases should be set to a minimum of 90 and 180 days respectively .
+Initial  c onsider ations
+Answer the following questions  to determine the best solution:
+▪Are there employees that have a set t ermination  date like contractors? Setting  a user’s t ermination ▪
+date may allow greater fle xibility  for contractor t ermination  or renewal processes.
+▪Is there a need to urgently terminate a user and remove their access? A situation  may arise where a ▪
+user’s access needs to be removed immediately.
+▪Where is the scheduled t ermination  in f ormation  coming from? The user’s manager or a human ▪
+resources system may have this in f ormation  which is propagated into Bravura Identity .
+▪What process or periods of time  for each stage do you want users’ access to go through? The periods ▪
+of time  between notific ations  of t ermination  and final  clean up can be c on figur ed.
+▪Does the user’s personal in f ormation  need to be deleted during the final  stage? Depending on your ▪
+locale this may be required to be compliant with legislation.
+Aut omation
+im_c orp_aut oma t ed_t ermination
+Purpose:
+This scenario implements an automated, multi-s t ep  t ermination  process for e xisting  users based on
+changes detected on a monitored system of record (SoR).
+Configur ation:
+External data store ( extdb ) tables containing c on figur ation  relevant to this scenario:
+▪ hid_global_c on figur ation:  Adds TERMINATE_* and TERMINATION_* settings  under the AUTOMATION ▪
+namespace, to de fine  parameters such as the target ID for the SoR, the pr e-de fined  request to be used
+for automated t ermination  requests or the criterion used to trigger the t ermination  process.
+▪ im_t ermination:  This is a policy table containing c on figur ation  details for each step of the t ermination ▪
+process.
+▪ hid_policy_attr v al_*:  Adds rules involving pr ofile  and request attribut es  c alculation  and v alidation, ▪
+required for the w orkflo w  engine and scheduled tasks to successfully process t ermination  requests.
+▪ im_policy_authoriz ation:  Adds authoriz ation  rules for each w orkflo w  request that is part of the ▪
+scheduled t ermination  process.
+Example: T ermination  of a user account originating  from a System of Record.
+This example shows you how to c on figur e  Bravura Identity  to deactiv a t e  an account using in f ormation
+from a System of Record; for example, a t ermination  date set on the account in Activ a t e  Directory.
+Use this component when:▪You want one or more source of record targets to be monitored for deleted records and generate a▪
+t ermination  request while avoiding duplic ation.
+▪You have contractors who should be terminated at a scheduled t ermination  date. ▪
+▪You may have a business need to defer these t ermination  dates, so you need advance warning of ▪
+upcoming t erminations.
+▪You may have a business need to restore a terminated user whose accounts are in disabled status, so▪
+you need to c on figur e  archive and cleanup policy as part of t ermination.
+Requirements
+This use case assumes that:
+▪You have installed Bravura Workforce P attern . ▪
+▪You have c on figur ed  the AD target system. ▪
+▪You have c on figur ed  the HRAPP target system. ▪
+Configur e  automated t ermination
+1.Log in to Bravura Security Fabric  as a superuser. 1.
+2.Install Scenario.im_c orp_aut oma t ed_t ermination  if it is not installed already. 2.
+3.Click Manage external data  store to verify the following tables are available and c on figur ed  for the 3.
+environment:
+▪ im_policy_authoriz ation  sets the authoriz ation  policies for t ermination  pr e-de fined  requests for ▪
+both scheduled and urgent t ermination  requests.
+▪ im_t ermination  contains c on figur ation  details for each step of a scheduled t ermination  process. ▪
+▪ hid_policy_attr v al_de f ault  sets the rules involving pr ofile  and request attribut es  c alculation  and ▪
+v alidation,  required for the w orkflo w  engine and scheduled tasks to successfully process
+t ermination  requests.
+▪ hid_global_c on figur ation  adds TERMINATE_* and TERMINATION_* settings  under the ▪
+AUTOMATION namespace, to identif y  parameters such as the Target ID for the SoR, the pr e-de fined
+request to be used for the automated t ermination  requests or the criterion used to trigger the
+t ermination  process.
+4.Click hid_global_c on figur ation  table. 4.
+5.Adjust AUTOMATION settings  as necessary: 5.
+▪TERMINATE_SOR_TARGET  Sets the Source of Record for accounts. This will be a target system that ▪
+contains the scheduled t ermination  date.
+▪TERMINATE_SOR_ROOT  Sets the target root account. ▪
+▪TERMINATE_REQUEST_REASON  Sets the request reason for the automated t ermination. ▪
+▪TERMINATE_PDR  Sets the pr e-de fined  request that the automated t ermination  will use. ▪
+▪TERMINATION_TYPE  Sets the c ondition  to use to determine if a user is terminated. ▪
+▪TERMINATION_ATTR  Sets the attribut e  used to determine whether a user should be terminated ▪
+(only used when TERMINATION_TYPE = attribut e).▪TERMINATION_ATTR_VAL  Sets the value to be used to determine whether a user should be ▪
+terminated (only used when TERMINATION_TYPE = attribut e).
+6.Customize PDRs as necessary.6.
+The following PDRs have been pr e-c on figur ed  for the t ermination  scenario. However, you may want to
+customize to your needs. For example; edit the access control or change the oper ations.
+▪SCHEDULE-NOTIFY▪
+▪SCHEDULE-TERM▪
+▪ARCHIVE-USER▪
+▪CLEANUP-DELETE-USER▪
+Schedule a t ermination
+To test the automated t ermination  component settings:
+1.Set the scheduled t ermination  date for a user on the Source of Records. 1.
+This process will be diff er en t  for each or g aniz ation  based on the HR target you use.
+2.Execute auto discovery.2.
+3.Depending on the t ermination  date specified  one of the following will occur: 3.
+▪A t ermination  warning will be submitted  the recipient’s manager 10,15,30 days prior to ▪
+t ermination.
+▪The user will be disabled and when the terminated user attemp ts  to login it will fail with a notice ▪
+that the account is disabled.
+4.Execute auto discovery following the archive days (defaulted to 90).4.
+Users in a terminated state for the length of the archive days will have an archive request submitted  to
+perform archive tasks.
+5.Execute auto discovery following the clean-up days (defaulted to 180).5.
+Users in an archived state for the length of the clean-up days will have an clean-up request submitted
+to perform clean-up tasks.
+Manual requests
+im_c orp_manual_t ermination
+Purpose:
+This scenario implements use cases for both scheduled and urgent t ermination   of users. When installed,
+this component c on figur es  a number of pr e-de fined   requests as well as a dedicated policy table for
+granular control over each step  of a scheduled t ermination  process.
+Configur ation:
+External data store ( extdb ) tables containing c on figur ation  relevant to this scenario:
+▪ im_t ermination:  This is a policy table containing c on figur ation  details for each step of a scheduled ▪
+t ermination  process.▪ hid_policy_attr v al_*:  Adds rules involving pr ofile  and request attribut es  c alculation  and v alidation, ▪
+required for the w orkflo w  engine and scheduled tasks to successfully process t ermination  requests.
+▪ im_policy_authoriz ation:  Adds authoriz ation  rules for both scheduled and urgent t ermination ▪
+requests.
+Example: Deactiv a t e  users manually
+This example shows you how to install the scenario component that implements use cases for both
+scheduled and urgent t ermination  of users. When installed, this component c on figur es  a number of PDRs
+as well as a dedicated policy table for granular control over each step of a scheduled t ermination  request
+via the UI using a PDR.
+Use this component when:
+▪You have contractors who should be terminated at a scheduled t ermination  date. ▪
+▪You may have a business need to defer these t ermination  dates, so you need advance warning of ▪
+upcoming t erminations.
+▪You have to trigger an urgent t ermination  of a user. ▪
+▪You may have a business need to restore a terminated user whose accounts are in disabled status, so▪
+you need to c on figur e  archive and cleanup policy as part of t ermination.
+Requirements
+This example assumes that:
+▪You have installed Bravura Workforce P attern . ▪
+▪You have c on figur ed  the AD target system. ▪
+▪You have c on figur ed  the HRAPP target system. ▪
+Install t ermination  components
+1.Log in to Bravura Identity  as a superuser. 1.
+2.Install Scenario.im_c orp_manual_t ermination. 2.
+3.Navigate to Manage external data store  to verify the following tables are available and c on figur ed  for 3.
+the environment:
+▪ im_policy_authoriz ation  sets the authoriz ation  policies for t ermination  pr e-de fined  requests for ▪
+both scheduled and urgent t ermination  requests.
+▪ im_t ermination  contains c on figur ation  details for each step of a scheduled t ermination  process. ▪
+▪ hid_policy_attr v al_de f ault  sets the rules involving pr ofile  and request attribut es  c alculation  and ▪
+v alidation,  required for the w orkflo w  engine and scheduled tasks to successfully process
+t ermination  requests.
+4.Click Manage the system > W orkflo w  > Pr e-de fined  requests . 4.
+5. Con figur e  the following pr e-de fined  requests as needed: 5.
+▪SCHEDULE-NOTIFY Used to set notific ation  attribut es  for scheduled t ermination  during the ▪
+notific ation  stage of the t ermination.▪SCHEDULE-TERM  Used to disabled user accounts and set t ermination  attribut es. ▪
+▪ARCHIVE-USER  Used to archive user accounts and home directories. ▪
+▪CLEANUP-DELETE-USER  Used to delete user accounts and personal in f ormation. ▪
+▪REHIRE  Used to enable user accounts after  they have been terminated. This pr e-de fined  request is ▪
+valid if the user is allowed to be rehired.
+▪URGENT-TERM  Used to terminate a user immediately. The user will not be allowed to be rehired ▪
+after  this request is issued.
+▪RESTORE-TERMINATED-USER  Used to restore a user that was terminated. ▪
+Set t ermination  policy
+Con figur e  t ermination  policy based on the business logic required using Bravura Identity .
+1.Log in to Bravura Identity  as a superuser.. 1.
+2.Click Manage external data store > im_t ermination  table . 2.
+3.Modify settings  to suit your needs. While the default settings  are sufficien t  for majority of cases the 3.
+following can be changed:
+▪pdrid The pr e-de fined  request id to be submitted. ▪
+▪reason  The reason to be appended to the pr e-de fined  request. ▪
+▪days  Applies to archive  and warning . ▪
+▪For archive , this de fines  the number of days after  t ermination  to archive or delete the user. ▪
+▪For warning , this de fines  the number of days before leave of absence to send a notific ation. ▪
+▪to Applies to disable  and warning . List of email addresses to send notific ations  to. ▪
+▪to_fallback Applies to disable  and warning . A fallback email address to send notific ations  to (if ▪
+the ’to’ c ondition  described above yields no valid email addresses). This can be a comma separated
+list of email addresses.
+▪subject Applies to disable  and warning . Email subject tag. ▪
+▪body Applies to disable  and warning . Email body tag. ▪
+▪manager_propagate Applies to archive . If ’true’, update the ORGCHART_MANAGER attribut e  for ▪
+the archived user’s subordinates to the archived user’s managers.
+▪detach_grp Applies to archive . If set, remove the archived user from the specified  groups. Group ▪
+must be in the form TARGETID:GROUPFQN. Can be set multiple  times.
+▪ attach_grp  Applies to archive . If set, add the archived user from the specified  groups. Group must ▪
+be in the form TARGETID:GROUPFQN. Can be set multiple  times.
+▪requester  The requester userid. If set, will be used instead of the default _API_USER. If specified ▪
+multiple  times,  the fir s t valid requester will be used.
+▪delete_data  Whether sensitiv e  user data should be deleted as part of user t ermination. ▪
+▪ deletion_attr s  A comma separated list of personal user attribut es  which should be deleted as part ▪
+of t ermination.
+4.Click Manage external data store > im_policy_authoriz ation  table. The default settings  are sufficien t 4.
+for the majority of cases you can change the authoriz ation  flo w  as desired by the business logic.5.Test your c on figur ation  as follows: 5.
+a.Log into Bravura Identity  as a manager. a.
+b.Navigate to the View and update pr ofile  menu option  for the user to be terminated. b.
+c.Submit the Scheduled or deferred t ermination  PDR with the scheduled t ermination  date far c.
+enough in the future.
+d. Con firm  that the user’s manager is warned by email about the approaching t ermination  date of d.
+user once per warning period as per the policy.
+e. Con firm  that after  the t ermination  date elapses, the user is terminated, their pr ofile  is disabled and e.
+their accounts are disabled, archived and cleaned up according to policy.Part VII Network Resource Management

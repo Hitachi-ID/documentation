@@ -1,0 +1,336 @@
+▪All servers have the same installed components.▪
+▪All r eplic ation  c on figur ation  changes are made from the primary server; that is, the server that runs ▪
+auto-discovery.
+Once auto-discovery has run on the primary server, the gathered in f ormation  is replicated to other
+nodes. This may take some time.  Concurrent changes can cause race c onditions  in a replicated
+environment.
+▪The Micr osoft  SQL versions are the same on all servers, including the same edition  and service pack ▪
+level.
+When upgrading Micr osoft  SQL, schedule the upgrades on all databases as close together as possible,
+because r eplic ation  will be stopped while the applic ation  nodes are served by diff er en t  version
+databases.
+The backend database must be available when a Bravura Security Fabric  node is running; see Installing
+and c on figuring  Micr osoft  SQL Server  (on page 173) for a list of ins t allation  and monitoring
+requirements.
+▪The email server c on figur ation  is manually set up on each individual node in the r eplic ation ▪
+environment.
+R ec ommendations
+Bravura Security recommends:
+▪All servers use the same Bravura Security Fabric  license. ▪
+▪All nodes are installed with the same directory paths, psadmin user and password.▪
+▪Using the idmsetup.inf file from the main server to aid the ins t allation  of the r eplic ation  node. ▪
+▪Not using database-level clustering (including AWS RDS Always-On Availability Groups).▪
+Setting  up the r eplic ation  environment
+To c on figur e  Bravura Security Fabric  servers for r eplic ation:
+1.Set up node servers for SQL database r eplic ation  (on page 271). 1.
+2.Add nodes in Bravura Security Fabric  (on page 274) 2.
+Installing Bravura Security Fabric  using idmsetup.inf
+When you install Bravura Security Fabric  on the main server, an idmsetup.inf  file is created in the
+\<ins t ance>\p sc on fig\  directory. You can use to file to aid the ins t allation  of a r eplic ation  node. It contains
+the encrypted c ommunic ation  key (or Master Key) and other correct default values and encr yption  keys
+for prompts during ins t allation.
+To install a r eplic ation  node using the idmsetup.inf c on figur ation  file:
+1.Log into the host Windows server as member of the Administrators group.1.
+2.If required, download and unzip the Bravura Security Fabric  dis tribution  folder. 2.
+Contact your Bravura Security account r epr esen t ativ e  for details.3.Copy idmsetup.inf  from the \<ins t ance>\p sc on fig\  directory on the primary server to the 3.
+r eplic ation  node and place it in the root of the dis tribution  folder.
+4.Launch the setup program located at the root of the dis tribution  folder. 4.
+The setup program asks you to choose a product to install.
+Do not install Connector Pack firs t;  choose Bravura Security Fabric.
+5.Select Bravura Security Fabric . 5.
+Click Next .
+6.Verify that instance name is already filled  in and optionally  enter a description. 6.
+Click Next .
+The setup program performs a pr e-ins t allation  check and v erifies  all of the requirements for
+ins t allation.
+7.If all of the checks are successful, click Next to proceed with the ins t allation. 7.
+If any of the pre-install checks produce warnings or errors, click Report for details.
+The Configure  a Dedicated Database User  page is displayed.
+8.Choose your database user setup option,  then click Next . 8.
+▪Create and c on figur e  a new dedicated database user for a new database node, as illustrated below. ▪
+On the Configure  a Dedicated Database User  page, when you select Create a new dedicated
+database user for the new instance , setup displays the database user and c onnection
+in f ormation  page depending on your database system.
+Enter the database c onnection  and user in f ormation,  then click Next .
+▪Use an e xisting  database user when cr eating  a shared schema node, or a hybrid schema node if the ▪
+database node already exists.
+On the Advanced tab uncheck the options  to install the schema and default data.The setup program launches idm.msi .
+9.Click Next . 9.
+10. Read and accept the license agreement. 10.
+Click Next.
+11. Verify the loc ation  of the license file already filled  in. 11.
+It is recommended that all replicated servers use the same license file.
+Click Next .
+12. Choose the setup type: 12.
+▪Typical to accept the settings  from the idmsetup.inf file. ▪
+▪Custom to customize settings. ▪
+It is recommended that all replicated servers have the same installed components.
+13. Verify that the psadmin passwords are already filled  in (masked with stars). 13.
+Click Next .
+14. Verify that the c ommunic ation  key is the same as the one entered for the main Bravura Security Fabric 14.
+server.
+Click Next .
+15. Verify that the database encr yption  key is the same as the one entered for the main Bravura Security 15.
+Fabric server.
+Click Next .
+16. Verify that the w ork s t ation  authentic ation  encr yption  key is the same as the one entered for the main 16.
+Bravura Security Fabric  server.
+Click Next .
+17. Verify that the connector encr yption  key is the same as the one entered for the main Bravura Security 17.
+Fabric  server.
+Click Next .
+18. Verify that the IDMLib encr yption  key is the same as the one entered for the main Bravura Security 18.
+Fabric  server.
+Click Next .
+19. Verify the adminis tr ation  login ID and password. 19.
+Click Install .
+20. Click Finish to exit. 20.
+The pos t -ins t allation  tasks begin.
+Do not stop the pos t -ins t allation  tasks. The installer is attempting  to load connectors from the
+Connector Pack, language tags, and reports.
+If you install the Bravura Security Fabric  before a Connector Pack has been installed (recommended), a
+warning appears at this stage that no connectors could be found. It is safe to proceed.If any of the pos t -ins t allation  tasks produce warnings or errors, click:
+▪Report for details on all pos t -ins t allation  tasks ▪
+Or,
+▪Messages ... for details on a specific  pos t -ins t allation  task ▪
+Otherwise, wait until  the status changes to success, then click Finish.
+Run setup again to install a Connector Pack for this instance (unless you installed a global Connector
+Pack fir s t,  which is not recommended, as it can introduce maintenance issues).
+Install all softw ar e  required for in t egr ation  with target systems and for accessing all resources. Con figur e
+the fir e w all  on the new server and other required networking that allows access to needed resources.  
+See also:
+The setup of the applic ation  node’s Connector Pack should match the setup of the primary node’s
+Connector Pack. See the Connector Pack Documen t ation  for details.
+Adding a node
+Summary
+To replace an applic ation  node that has failed, or add a net-new applic ation  node:
+1.Install the hardware (physical or virtual), oper ating  system and database softw ar e  on the new node. 1.
+Apply whatever patches are available from the OS and database vendors, as noted in Pr epar ation  (on
+page 270).
+Note that everything must be the same on the replicated nodes, including: OS version and bitsize,
+applic ation  loc ations,  database versions, instance name (spelled exactly the same, case sensitiv e),
+softw ar e  required to communicate with target systems, and other in t egr ation  requirements.
+2.Verify that there is c onnectivity  on the Bravura Security Fabric  ports, bidir ectionally ,  from all other 2.
+node servers to the new server (usually, this involves opening fir e w all  ports and/or setting  up VPN
+c onnections  between sites/data-centers to allow network r outing  between the servers on those
+ports).
+3.Install the Bravura Security Fabric  softw ar e  on the new applic ation  node, as described in Installing 3.
+Bravura Security Fabric  using idmsetup.inf  (on page 271)
+4.On the applic ation  node that contains the most data (usually the primary node): 4.
+a.Add the new node to the r eplic ation  c on figur ation  (on page 275). a.
+b.Propagate the r eplic ation  c on figur ation  to cause the current instance to synchronize its database b.
+with the new instance. This is described in the steps below.
+c. Optional:  Synchronize data  (on page 282) (sending the relevant data from the database node c.
+where the oper ation  is performed, to the database node being added). This is not required, for
+example, when adding a node in shared schema, or when the database is very large and it’s more
+e fficien t  to migrate the database, sending the data.More detail is provided below. You should also refer to nativ e  database adminis tr ation  tools and their
+related documen t ation  for the process to generate and load snapshots.
+After  finishing  any changes, remember to verify the r eplic ation  c on figur ation  (on page 293).
+Adding a node steps in detail
+Before s t arting  this procedure, ensure that you have created the new server according to the
+requirements described in Preparation  (on page 270).
+Verify that there are no database-intensive scheduled tasks that can be triggered on any of the database
+nodes of the instance if database r es ynchr oniz ation  will have to run:
+1.On the web-based interface, click Manage the system > Maintenance > Scheduled jobs  >PSUPDATE > 1.
+Disable .
+Repeat that for any other jobs like autores if it was scheduled.
+Disable rotatelog to avoid the log r ot ation  to remove the temporary iddb.cfg  before the
+oper ation  ends and to be able to find the logs of the oper ation  in the same file.
+2.On each applic ation  node’s Windows Schedule r >Library , right-click and disable any "HID*" task. 2.
+3.Disable any other database-intensive API aut omation  that is scheduled elsewhere. 3.
+Remember to re-enable these tasks after  the database r es ynchr oniz ation  successfully completes.
+Depending on your chosen r eplic ation  network topology, there are diff er en t  steps for adding an
+applic ation  node for:
+Direct r eplic ation
+A database node is an applic ation  node connected to its own database, not shared by any other node.
+To add a new database node (applic ation  node connected to its own database, not shared yet by any
+other applic ation  node) to  Bravura Security Fabric  r eplic ation  environment:
+1.Log onto your primary node as a product administrator1.
+Adding a node from a replicated node will result in the new node o ver writing  e xisting  nodes and
+becoming the primary node.
+2.Click Manage the system  >Maintenance >Database r eplic ation . 2.
+3.Before the very fir s t node can be added, you must enable r eplic ation  on the primary node. To do this, 3.
+select the default node and set Mode to "Enabled" and click Update .
+4.To add the next node click Add new... 4.
+5.Type the Address of a r eplic ating  instance’s server and the corresponding Database Service (iddb) Port 5.
+number (the default port number is 5555).
+6.Click Continue . 6.
+7.Type a node Description . 7.
+8.Set the Mode to: 8.▪"Enabled" if you want this node to send and receive in f ormation  to and from other r eplic ations ▪
+nodes.
+▪"Suspended" if you want to temporarily stop c ommunic ation  with other nodes. ▪
+If the r eplic ation  is suspended on a node, then changes made on other r eplic ation  nodes will not
+be propagated to this node, but will be queued.
+▪"Disabled" if you want to disable c ommunic ation  with other r eplic ation  nodes. ▪
+9.Set the received and/or send Queue size limit  , if required. 9.
+When database r eplic ation  is unavailable, r eplic ation  data is queued until  the queue file has reached
+its size limit, or the node comes back online. You can modify:
+▪Receive queue c on figur ation  for this node ▪
+▪Send queue c on figur ation  for all nodes r eplic ating  to this node ▪
+You can set the queue limit to a fix ed  size, using the following settings:
+▪Minimum queue size  - default is 100MB ▪
+▪Maximum queue size - for fix ed  size limit ▪
+▪Queue usage warning threshold (%) : - default is 60% ▪
+You can set the queue limit to a percentage of disk, using the following parameters:
+▪Minimum queue size  - default is 100MB ▪
+▪Maximum usage before queue stops growing (%) : - default is 90% ▪
+▪Disk usage warning threshold (%) : - default is 60% ▪
+10. Click Add. 10.
+11. Click Propagate and reload r eplic ation  c on figur ation  on all servers . 11.
+This propagates the changes and replicates the entir e  database to the new node. If you do not want
+data on the newly added node to be dropped and replaced with data from the current node, click
+Propagate and reload r eplic ation  c on figur ation  on all servers (without resynchronizing nodes).
+Propagate r eplic ation  changes
+Once you have modified  the c on figur ation  of a node in a r eplic ation  environment, you must propagate
+the node c on figur ation  to all connected servers. The status for the nodes will change to "Reload
+required" on the Select a replic ation  node  page.
+To do this:
+1.Ensure all nodes can successfully communicate with each other. When pr opag ating  changes, the 1.
+system checks that all nodes can connect, and if any c onnection  issues are detected, pr opag ation  will
+fail.
+2.If adding a new database node, verify there is enough space available on:2.
+▪The source applic ation  node (the one from whose web-based interface the pr opag ation  is ▪
+triggered)
+▪The target nodes (the ones where the pr opag ation  goes) ▪
+▪Their r espectiv e  backend databases. ▪3.Click Propagate and reload r eplic ation  c on figur ation  on all servers  on the Database replic ation  page. 3.
+This propagates the changes. When a new node is added the entir e  database will be replicated to the
+new node.
+4.Wait while the Database Services reload the changes and possibly builds queue files. 4.
+Click Refresh 
+  to check progress, as indicated in the status column.
+If a node is in "Reload in progress" status, or is running auto discovery, you cannot make any
+changes to the r eplic ation  nodes until  the reload is complete.
+The Propagate and reload r eplic ation  c onfigur ation  on all servers only appears if a change in the
+c onfigur ation  has occurred. Configur ation  notes
+▪When you c on figur e  database r eplic ation,  Bravura Security Fabric  creates a temporary iddb.cfg  file ▪
+in the log directory. The files record the c on figur ation  in f ormation  for backup. The in f ormation  is
+rotated with the log files by the Logging Service (idmlogsvc).
+▪If a server detects that one of the nodes has a diff er en t  r eplic ation  c on figur ation,  then a message ▪
+opens to notif y  you of the need to propagate this r eplic ation  c on figur ation  over to the other server.
+▪If you change which server is the primary server, you must update which server’s scheduler will run▪
+psupdate.
+▪Do not propagate changes while auto discovery ( psupdate ) is running. ▪
+▪When pr opag ation  changes include queue sizing, the queues are adjusted dynamically. Queues files ▪
+that still include data will remain until  the data is either sent or c ommitted,  regardless of queue
+settings.  When a new queue file is needed or a queue file is no longer needed, then the queue sizings
+are considered.
+See also:
+For in f ormation  about recovering from network failures, see Recovery .
+Shared schema
+When adding an applic ation  node to an e xisting  database all that is required is to install the node while
+selecting  the e xisting  database of a previously installed applic ation  node, as described in Installing with a
+Shared Schema  (on page 229). This is the simplest way to create a shared schema node.
+If a database has to be r etir ed  but its applic ation  nodes are still needed to provide web-based interface
+resources for users, this can also be done after  node ins t allation:
+1.Have a fully installed database node (applic ation  node with its own database) 1.
+2.On the new applic ation  node, use the iddbadm utility  to change the database c onnection  details and 2.
+point to the database used by the other node.
+3.Delete the database used when cr eating  the new applic ation  node. In this case it is not used anymore. 3.
+Note:If you allow setup to create the new database during ins t allation,  it
+will do so with the same name as the instance, and you cannot use
+the same backend database instance to install two databases with
+the same name.P r opag ating  without r eplic ation
+In some cases, such as a shared-schema r eplic ation  environment, you may need to propagate changes to
+the r eplic ation  environment without initiating  a full database r es ynchr oniz ation.  On the Database
+R eplic ation  page, the option  to Propagate and reload r eplic ation  c on figur ation  on all servers (without
+resynchronizing nodes)  is available for this purpose.
+Hybrid schema
+There are two ways to add nodes to a hybrid schema:
+▪Adding a database node with applic ation  nodes ▪
+▪Adding one applic ation  node to each of the e xisting  database nodes ▪
+Adding a database node with applic ation  nodes
+To add failover, further geographical support, nodes in a new data center and/or complete 100% uptime
+requirements, add a database node with the same number of applic ation  nodes as the other e xisting
+database nodes; that means going from this topology:
+DB/Schema A   R eplic ation  DB/Schema B
+Node A1 <–         –> Node B1
+Node A2 <–         –> Node B2
+… to this one:
+DB/Schema A   R eplic ation  DB/Schema B   R eplic ation  DB/Schema C
+Node A1 <–         –> Node B1 <–         –> Node C1
+Node A2 <–         –> Node B2 <–         –> Node C2
+To do this:
+1.Consider A1 is the primary node of the instance1.
+2.Create node C1 as a full database node pointing  to Database C and using the instance’s idmsetup.inf 2.
+(on page 271)
+3.Create node C2 as a shared schema node pointing  to Database C 3.
+4.From A1’s web-based interface click Manage the system > Maintenance > Database r eplic ation , add 4.
+C1’s server and port and propagate changes without r eplic ation.
+5.From A2’s web-based interface click Manage the system > Maintenance > Database r eplic ation , add 5.
+C2’s server and port and propagate changes without r eplic ation.
+Adding one applic ation  node to each of the e xisting  database nodes
+To add web-based interface and/or aut omation  resources, add a new applic ation  node to each of the
+e xisting  database nodes; that means going from this topology:
+DB/Schema A   R eplic ation  DB/Schema B
+Node A1 <–         –> Node B1Node A2 <–         –> Node B2
+… to this one:
+DB/Schema A   R eplic ation  DB/Schema B
+Node A1 <–         –> Node B1
+Node A2 <–         –> Node B2
+Node A3 <–         –> Node B3
+To do this:
+1.Consider A1 is the primary node of the instance1.
+2.Create node A3 as a shared schema node pointing  to Database A. 2.
+3.Create node B3 as a shared schema node pointing  to Database B. 3.
+4.From A3’s web-based interface click Manage the system > Maintenance > Database r eplic ation , add 4.
+B3’s server and port and propagate changes without r eplic ation.
+Checking r eplic ation  status as an administrator
+To view status in f ormation  about a r eplic ation  node:
+1.Click Manage the system > Maintenance > Database r eplic ation . 1.
+2.Select a node.2.
+3.Select the Status tab. 3.
+The status page includes in f ormation  about:
+▪General▪
+▪Product version▪
+▪Database version▪
+▪Commits to the database have been suspended▪
+▪ R eplic ation  from this node has been suspended ▪
+▪Unique identifier  for this server ▪
+▪Send queue to <node><port>▪
+▪Minimum size of the queue▪
+▪Queue backlog▪
+▪Maximum size of the queue (% of disk space)▪
+▪Disk space used (%)▪
+▪Queue has reached minimum free space threshold▪
+▪Queue is empty▪
+▪Time since last queue item was processed (seconds)▪
+▪Last item completely processed▪
+▪Queue delay of last item (seconds)▪
+▪Size of failed procedure log▪▪Current queue sequence number▪
+▪ Gener ation  ID of this queue ▪
+▪Receive queue from <node><port>▪
+▪Minimum size of the queue▪
+▪Queue backlog▪
+▪Maximum size of the queue (% of disk space)▪
+▪Disk space used (%)▪
+▪Queue has reached minimum free space threshold▪
+▪Queue is empty▪
+▪Time since last queue item was processed (seconds)▪
+▪Last item completely processed▪
+▪Queue delay of last item (seconds)▪
+▪Size of failed procedure log (bytes)▪
+▪ Gener ation  ID of this queue ▪
+▪Receive queue usage s t atistics  for the last 5 minutes ▪
+▪Command▪
+▪Total time  spent processing (ms) ▪
+▪Number of e x ecutions ▪
+Send queue  and Receive queue  will show the queues for each connected node where:
+▪<node> is the address of the r eplic ation  node. ▪
+▪<port> is the port number for the Database Service.▪
+Configur ation  notes
+▪This database status refers to Bravura Security Fabric ’s Database Service, not to the actual database ▪
+status, which must be monitored separately.
+▪In shared schema (either hybrid or simple - only one database node with more than one applic ation ▪
+node), the local status and settings  have to be c on figur ed  separately on each applic ation  node that
+connect to the same database.
+▪The settings  for each node can be found in the applic ation  node’s file system in <instance>\service ▪
+\iddb.cfg; as the previous note implies, after  settings  pr opag ation  these files should contain the same
+data in all nodes in direct r eplic ation  (other than the local-node setting),  but diff er en t  on the nodes in
+shared schema.
+▪Telemetry is enabled for r eplic ation  by default, to periodically gather metrics on the r eplic ation  queue ▪
+state. These metrics are stored locally on each r eplic ation  node and are not aut omatic ally  tr ansmitted,
+and do not contain sensitiv e  in f ormation.  These metrics may assist in tr oubleshooting  possible
+r eplic ation  queue issues. To opt-out from telemetry, contact support .
+Automated node check when using a load balancer
+In addition  to the manual process of checking the r eplic ation  status, Bravura Security Fabric  also presents
+a web-based interface that can be used to determine the status of each applic ation  node.

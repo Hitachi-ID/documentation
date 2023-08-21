@@ -1,0 +1,325 @@
+▪In the Groups app table view, the quantity  of records/rows shown are in accordance with the ▪
+"records" drop down selection.
+▪The user select wizard in Internet Explorer displays well when the records count is more than 10.▪
+▪Fixed the issue when an error message appears on trying to get account status from the wizard.▪
+▪ In f ormation  displayed in the Request details page is now consistent with what is displayed in the ▪
+Requests app, which shows unique approval status for each authorizer when applicable.
+▪Fixed an issue so that already-assigned roles appear on the top part of the list in wizard ’Change role▪
+membership’.
+▪Fixed an issue to allow Bravura Security Fabric to display group descriptions  in the details pane in the ▪
+Requests app.
+▪Resolved an issue where errors in custom skins could cause the AJAX service to stop unexpectedly.▪
+▪Fixed an issue so that only proper resource attribut es  are available for the field  ’Resource attribut e  to ▪
+display’ in Data quality Resource attribut e  report.
+▪User type attribut e  values can be reverted by removing the action  in detail panel. ▪
+▪Fixed an issue when the View and update pr ofile  (IDR) module did not display the dates before 1970. ▪
+▪Fixed View and update pr ofile  (IDR) module forced enrollment to only display applicable attribut e ▪
+groups.
+▪Fixed the issue when the items previously clicked on retain their clicked / selected state.▪
+▪Fixed an issue where some of toast messages were shown in English on other language packs.▪
+▪The "Enable mobile device" page layout has been changed from table-based layout to the simpler▪
+text-on-page layout.
+▪Fixed the issue with fla t ’Cancel’ and ’ Add Conditions’  buttons  on the Advanced Search page in ▪
+Internet Explorer 11.
+▪Fixed an issue so that disabled "Delete" checkbox and note for auto-assigned roles and groups are▪
+visible in pr ofile  comparison page.
+▪No space will be padded in preqwizard.type.▪
+▪Improved the Show/hide column drop-down menu to keep the opened position  when the user scrolls ▪
+down the page. This improvement allows the user to select columns that appear at the bottom  of a
+long list which were previously hidden by the footer.
+▪Fixed the wizards UI so that default values are now only displayed for newly selected entitlemen ts. ▪
+▪Fixed the required user type attribut es  to no longer display an error v alidation  when initially  opening ▪
+the update attribut es  wizard.
+▪Updated view groups plugin such that filt er s  in Groups app will be ordered properly. ▪
+▪Fixed issue so that the end-user is re-directed the psf screen upon c ompletion  of the IDR forced ▪
+enrollment.
+▪Disabled checkbox and its note is shown for auto-assigned roles and groups in pr ofile  comparison ▪
+page
+▪Corrected language tr anslation  issue where apps were not displayed when searching for available ▪
+actions  in the top menu search bar.
+▪Fixed issue to aut omatic ally  load refresh and update buttons  at the top of the page. ▪
+▪Corrected expanding issue in Add missing role entitlemen t  wizard. ▪▪Fixed display issues in the certific ation  app and SOD r esolution  wizard when a managed group ▪
+description  is empty.
+▪Corrected the display of group ID/description  in the memberships tab via account clickable links. ▪
+▪Fixed an issue so that group description  tags are translated when selecting  members for resource ▪
+attribut e  group.
+▪Updated "Resend PIN" button  to look like a link. ▪
+▪Fixed an issue for Bravura Privilege clickable link pop-ups so that when there are tabs with no results,▪
+the search engines will now display a ’No data available’ row.
+▪Improved the notific ation  messages when moving items between the main menu boxes so they are no ▪
+longer duplicated.
+▪Removed the extra header divider on pages which do not have topMenu content.▪
+▪Fixed the role membership page to display in wizard when the required role in a pr e-de fined  request ▪
+has optional  entitlemen ts.
+▪Improved the v alidation  messages displayed to the end user within the attribut es  wizard. ▪
+▪Fixed an issue with the sizing and r epositioning  of the widgets on reload. ▪
+▪Added drop-down in Groups app to select PDR for group cr eation. ▪
+Upgrade
+▪All views are recreated correctly during upgrade, including dbar c-modified  ones. ▪
+▪Fixed issue so that migratedata and dbarc behaves correctly on non-default schemas. ▪
+▪Upgrade fix ed  so that it will be successful even if there are duplicate or null entries in the wstnpwdhis ▪
+table. During the upgrade the duplicate/null entries are removed.
+▪Resolved an issue where a missing ALLREQUESTERS Global help desk rule caused upgrade failure.▪
+▪The correct entitlemen t  description  is displayed in an AESOD request detail after  upgrading from pre ▪
+10.0.0.
+Usability
+▪Improved the products accessibility while using a screen reader to read language menu.▪
+▪Updated the request w orkflo w  wizard so that error messages are rendered properly for wfreq ▪
+password attribut e  v alidation  errors.
+▪Improved the Groups Membership wizard to aut omatic ally  expand the row and show the entitlemen t ▪
+attribut e  and additional  details when the item/row has been selected.
+▪ Pr e-de fined  requests are now displayed in the Groups app when the recipient ACL is c on figur ed. ▪
+▪Improved the product’s accessibility while using a screen reader to read notific ations  when they are ▪
+displayed.
+▪Fixed the issue when attribut e  group notes were not displayed on the wizards. ▪
+▪Fixed wizards so that view value can be loaded properly for user type entitlemen t  attribut es. ▪Utilities
+▪The rbacenforce program’s performance has been improved. ▪
+▪The servicemove properly restores the acting  server of a specific  service back to home server. ▪
+▪Ensured that migratedata can import a valid pr ofileguid  value only for a user type attribut e ▪
+record.
+▪Fixed an issue with migratedata where extra attribut e  values were removed from a user if those ▪
+attribut es  exist for other users in an import file,
+▪Ensured that rbacenforce program can complete its process during auto discovery. ▪
+▪Ensured targetsync consistency for target s ynchr oniz ations. ▪
+▪Fixed the dbarc utility  extractreset option  to properly clear the archive time  previously set by ▪
+extract.
+▪Fixed the dbarc utility  so that when the delete option  is used the proper data is removed from the ▪
+database full tables.
+▪Fixed issue when userunlock.exe -check did not return expected results.▪
+▪The managegrp can change group descriptions  as expected. ▪
+▪The verifydbobjects utility  validates filt er ed  indexes correctly. ▪
+▪Improved the adm_set program to successfully run a number of arguments at once. ▪
+Shell extension
+▪Fixed an issue where the Shell extension URL was not working in Edge browser.▪
+W orkflo w
+▪Fixed wizards to skip resource attribut e  update if entitlemen t  is to be deleted. ▪
+▪Updated w orkflo w  to cancel a request instead of putting  it on hold when plugin fails to run during ▪
+post-submission of the request.
+▪ Modified  the wizard SoD page to use language tags for error messages. ▪
+▪Resolved an issue where the account cr eation  request wizard could fail to launch if the WF WIZARD ▪
+PLUGIN did not de fine  a password policy to use.
+▪Fixed a problem where the password page would fail to show up if r esolution  of a variance was to add ▪
+a new template.
+▪The W orkflo w  Manager Service will now identif y  bad deleg ation  requests and remove them from the ▪
+w orkflo w  queue.
+▪Updated W orkflo w  Manager Service to avoid putting  dependencies between GRB[AD] oper ations. ▪
+▪Improved performance when there are large amount of w orkflo w  requests in the queue. ▪
+▪Fixed an issue where entid2(acc oun tguid)  is stored as a lower-cased string in the en t attr v al  table for ▪
+role membership entitlemen t  attribut es.
+▪Improved page loading when the viewer has many activ e  deleg ations  to him or her. ▪
+▪ Optimiz ed  deleg ation  related stored procedures for full deleg ations. ▪
+▪ Cancelation  for a deleg ation  of a terminated user works well. ▪▪Added the tr anslation  of the tags in the wizard plugin error message. ▪
+▪The system variable MAX_AUTH_ALLOWED is adjusted to accept values from 0 to 200.▪
+▪Role members are not expanded more than once for autores requests as some oper ations  were not ▪
+processed.
+▪Fixed an issue where entitlemen t/pr ofile  attribut es  were not ordered correctly in wizards when the ▪
+display order was the same.
+▪Restricted values are loaded properly in request details pages.▪
+▪Fixed an issue where an authorizer is unable to update request reason.▪
+▪Fixed a race c ondition  issue where we could get duplicate acc oun t/ entitlemen t  attribut es  in a three or ▪
+more nodes environment.
+▪Made a fix to display default entitlemen t  attribut e  changes in the wizard sidebar. ▪
+▪Updated w orkflo w  to avoid sending duplicate implementer initializ ation  emails. ▪
+▪Fixed an issue where entitlemen t  attribut e  updates are not removed from a request when delete ▪
+oper ation  specified  for an entitlemen t.
+▪The correct number of authorizers are being added to the temporary resource entitlemen t  requests. ▪
+▪Fixed an issue to handle PDR oper ation  changes across pages. ▪
+▪Fixed an issue where the W orkflo w  Manager Service could not change attribut es  in requests from ▪
+other nodes.
+▪Fixed de t ermination  of attribut e  values in a request to properly handle values from topic resources. ▪
+▪Fixed an issue in requests where the account are duplicated when there are pending oper ations. ▪
+▪Disabled the update resource attribut e  oper ation  for group update PDRs with multiple  subjects. ▪
+▪Fixed an issue with pr e-de fined  request oper ations  c on figur ation  where the Parent groups page is ▪
+removed from the PDR when the "Add parent group" oper ation  is removed, while the "Delete parent
+group" oper ation  is still selected.
+▪Fixed an issue where deselection  of rows in a pr e-de fined  request doesn’t process when previously ▪
+submitted  as selected.
+▪Fixed an issue where an attribut e  change does not show in the side bar on secondary selections. ▪
+▪Wizards work as expected where there are required resource attribut es. ▪
+▪Fixed wizards to handle removal of entitlemen t  attribut es  properly. ▪
+▪Fixed an issue to release selected items on reload for wizards.▪
+▪Resolved an issue where the w orkflo w  service could stop unexpectedly when errors occur in the ▪
+plugins called after  the request is submitted.
+▪Updated W orkflo w  Manager Service to prevent long-lived file lock and added retry in skin build when ▪
+file copy is failed due to file lock.
+▪The account filt er  plugin (FILTER_ACCOUNT_PLUGIN) can be used from the account modific ation  page. ▪
+▪Added a control to avoid running the wizard plugin until  the authmod plugin output returns the flag to ▪
+allow it.
+▪Fixed an issue where a pr ofile  rename oper ation  creates a new pr ofile  instead of renaming e xisting ▪
+pr ofile.▪ Pr e-de fined  request g ener ation  does not include invalid accounts for account related required ▪
+oper ations.
+▪The w orkflo w  of updating  a transfer user request can complete properly. ▪
+▪In the case where a request needs multiple  authorizers, and one of the primary authorizer who ▪
+delegated the request is then deleted, "Acting  on behalf of Primary authorizer" will be displayed in the
+detail panel of the request in the delegatee’s request app.
+▪ After  a request to create a new user is generated, update request process can be finished  when select ▪
+more targets.
+▪In the case of w orkflo w  using a plugin, the submit button  works successfully when entitlemen t ▪
+attribut es  of multiple  entries are assigned values.
+▪An attribut e  errors set by plugin are now displayed on the attribut e  request wizard page. ▪
+▪Requests cannot be submitted  when an error occurs on wizard pages of type: ATTRGROUP , ▪
+MANAGEDGROUP , ENFORCEMENT, SOD, and PASSWORD in multi-pag e  pr e-de fined  requests.
+▪Changed the value of "submitted"  to the request submitting  time  in the Request details page in the ▪
+Requests app.
+▪Changed the value of "submit date" to the request submitting  time  in the action  panel in the ▪
+Privileged access app.
+▪Fixed an issue when dynamic attribut es  that are submitted  in a pr e-de fined  request via API do not ▪
+make it into the W orkflo w  Manager Service.
+▪Fixed issue Where the default number of ’Records’ in wizards does not return value from system▪
+variable RECORDS PER PAGE.
+▪The Groups app correctly prevents users from adding multiple  group owners for targets that support ▪
+only one owner.
+▪Resolving SoD violations  related to group membership of parent and child group is correctly handled. ▪
+▪The optional  entitlemen t  search pop up in the Change Role Membership pr e-de fined  request shows ▪
+all details, even if there’s an entitlemen t  with very lengthy group description.
+▪Fixed the issue where a user failed to submit a request when a resource attribut e  (set with default ▪
+value) is used in multiple  attribut e  groups in a wizard.
+▪In cases that a primary authorizer has requests and certific ation  reviews, emails are generated ▪
+properly when the authorizer only delegated authority for certific ations.
+▪The request reason is updated with the right message when a request is denied due to a pr ofile ▪
+cr eation  failure.
+▪Fixed the algorithm for finding  cycles to scale when there are many redundant dependencies. ▪
+▪Fixed the issue where a user could not update the e xisting  entitlemen t  attribut es  for a role ▪
+membership.
+▪Enhanced stored procedures to prevent the W orkflo w  Manager Service from assigning a duplicate ▪
+itemid to diff er en t  oper ations.
+▪Fixed the issue where the Requests app update account wizard did not mark target systems for which▪
+the account has already been created.
+▪Updated the View and update pr ofile  (IDR) module to properly handle file type attribut es  in a ▪
+certific ation  and r eplic ation  environment.▪Fixed an issue when an error message appears on trying to c on figur e  a pr e-de fined  request from a ▪
+report.
+▪ Modified  r eport -t o-pr e-de fined-r eques t  infrastructure to call the wizard plugin (WF_WIZARD_PLUGIN) ▪
+when submitting  requests.
+▪Enhanced stored procedure RequestBatchClean such that r eser v ations  not associated to any request ▪
+will be removed by psupdate after  one day.
+▪ Options  are correct in the user comparison screen when the "Create account" ACL is missing. ▪
+▪Fixed an issue where the request recipient was removed from the request details page when all▪
+request oper ations  were hidden by the WFModView plugin.
+▪The ID generator plugin works as expected when implementers are c on figur ed. ▪
+▪The details panel in the change role membership wizard works well when a role has option ▪
+entitlemen ts.
+▪ACUA oper ations  (an account is created on a target system and attached  to a user) work as expected ▪
+for invalid accounts during role enforcement.
+▪Duplicate auto-assign requests will not be generated.▪
+▪Fixed the issue when the Request detail page is missing the Host ID of the group.▪
+▪The WFApprove IDAPI function  returns the correct error message when an authorizer has nothing to ▪
+authorize.
+▪Fixed the issue when when a recipient tries to update the request and receives an system error▪
+message.
+▪Fixed the issue when the request for changing a role failed when a recipient has multiple  attached ▪
+accounts.
+▪Requests to change r elationship  attribut es  no longer have to have the r elationship  attribut e  being ▪
+changed as part of the pr e-de fined  request c on figur ation.
+▪ Segr eg ation  of Duties  (SoD) w orkflo w  works correctly so that group descriptions  of new groups are ▪
+displayed correctly in the SoD Resolve violations  pane, and SoD authorizers can approve SoD resolve
+violations  requests.
+▪Fixed an issue so that multiple  values of attribut e  of type equal USER can now be updated or cleared ▪
+on child group membership.
+▪Fixed requests to avoid g ener ating  duplicate oper ations  where the pr e-de fined  request was c on figur ed ▪
+to apply an oper ation  to all resources of a given type and to a specific  resource.
+▪Fixed the issue when Enable Account request failed because the user does not have an e xisting ▪
+account (it is intended to be created) on a target system.
+▪Fixed group adds to no longer fail to update nosgroup if the agent does not return a stableid.▪
+▪When a user submits a request for an entitlemen t  that creates a role enforcement surplus violation, ▪
+the Resolve enforcement violation  pr e-de fined  request is triggered. Previously the pr e-de fined
+request would only be triggered if the entitlemen t  request included a de ficit.
+▪Fixed an issue so that resolving RBAC enforcement violation  now works correctly when a segr eg ation ▪
+of duties  rule (SoD) is invoked.
+▪Fixed an issue so that initial  and subsequent SoD that is triggered when resolving RBAC violation  can ▪
+now be shown.▪Changed user type attribut e  criteria from guid to pr ofile  name in user class. ▪
+▪Fixed wrong parent request ID for AUTORES requests in request APP action  panel. ▪
+▪Fixed the issue when a user could attach  a file larger than what is allowed in the MAX UPLOAD FILE ▪
+SIZE system settings.
+▪Requests aut omatic ally  approved by the requester now return the correct authoriz ation  reason. ▪
+▪ Authoriz ation  c on figur ation  data is properly added when a group is created and managed for the fir s t ▪
+time.
+▪Fixed the issue where the UI shows a request that has been generated,to be in an "Approved,▪
+performing requested oper ations"  status even though it appears the request is complete.
+▪Fixed the issue when the authentic ation  rule with ORGADDSUB (Attach  a subordinate to an OrgChart ▪
+manager) oper ation  was ignored when a user added a subordinate request.
+▪Changed SoD v alidation  in wizards so that Apply button  will have correct state (enable/disable). ▪
+▪The w orkflo w  request plugin respects the rerun setting  after  the request is submitted. ▪
+▪Updated the Requests app so that request/recipient are sorted on what is displayed.▪
+▪Show request entries correctly in update request wizard if add/revoke membership was done via▪
+groups app.
+▪A fix in the authoriz ation  w orkflo w  allows requests to proceed when an authorizer’s pr ofile  becomes ▪
+invalid.
+Bravura IVR
+▪Resolved an issue where the VoIP service could fail to start on systems with newer Dialogic HMP▪
+softw ar e  installed.
+Disc ontinued
+▪The iddiscover  service no longer runs the loaddb.psl script to process the in f ormation  contained ▪
+in the attribut e  list files.  This can be done using a Python script. The sample loaddb.psl file was also
+removed.
+▪Removed deprecated plugin point ADMIN ACL PLUGIN.▪
+▪"Are You A Human" captcha is no longer supported by Bravura Security Fabric . The authayah.psl and ▪
+authayah.m4 sample scripts are removed.
+▪Removed deprecated system variable PSW_REQUIRES_REASON_NEWREQUEST.▪
+▪Removed duplicated entries for system variables RESOURCE_PASSWORD_CHANGE_INTERVAL and▪
+RESOURCE_PASSWORD_HISTORY_NUMBER.Part III INSTALLATION1 Network architecture
+This chapter provides an overview of softw ar e  components, on various servers throughout the network,
+of a Bravura Security Fabric  ins t allation.  This includes:
+▪Core server softw ar e  (on page 169) ▪
+▪ Optional  local agents and services  (on page 171) ▪
+This chapter also shows you how to calculate the number of servers required  (on page 170).
+Core server softw ar e
+Server softw ar e Description
+Database server Stores and manages Bravura Security Fabric data.
+The loc ation  of the softw ar e  depends on the third-party database
+management system (DBMS) that you are using. This is explained further
+in Where to install the softw ar e . You will also need to install database
+client softw ar e  on the Bravura Security Fabric  server. For Micr osoft  SQL
+Server, it is recommended that you install the database on Windows
+Server 2014, 2016 or 2019.
+For ins t allation  details see Installing Database and Database Client
+Softw ar e  (on page 172).
+Bravura Security Fabric  server Provides web access (the GUI), core functionality ,  and essential  services.
+The softw ar e  is installed on a Windows-based server. It is recommended
+that you install on three or more replicated servers. See Calculating  the
+number of servers required  (on page 170)
+For ins t allation  details see Installing the Bravura Security Fabric  Server
+Softw ar e  (on page 196).
+Connector Pack Facilitates c ommunic ation  between the Bravura Security Fabric  server and
+the target systems.
+The connectors are installed on the Bravura Security Fabric  server, as well
+as all replicated servers. They must also be installed on any proxy servers
+that are utiliz ed  by the Bravura Security Fabric server. For ins t allation
+details see the Connector Pack Documen t ation .
+Optional
+Bravura Security Fabric proxy server Fulfills  requests on behalf of the Bravura Security Fabric server. The proxy
+service is useful for securing c onnections  or accessing client softw ar e.
+This optional  softw ar e  is installed on a Windows-based server. For
+ins t allation  details see Installing a Proxy Server  (on page 260).Server softw ar e Description
+Mobile Proxy Service (mobproxy) This server runs on the Mobile Access proxy server and communicates
+with the Mobile Worker Service ( mobworker ) to allow the Bravura One
+app on mobile devices to access Bravura Security Fabric  servers.
+This optional  softw ar e  is installed on a Linux-based server. For ins t allation
+details see Mobile access  (on page 1444)
+Calculating  the number of servers required
+Bravura Security  strongly recommends that you create at least two or three replicated Bravura Security
+Fabric  database nodes for fault tolerance and backup, depending on which products are licensed and
+which features are implemented. When Bravura Privilege  is installed, or when close to 100% uptime  is
+required from the instance, the recommended minimum is three. This is because when backend
+database r eplic ation  is performed, at least two database nodes have to go down at the same time.
+On the other hand, avoid setting  up too many replicated database nodes. It is likely that the additional
+overhead of any more than six fully replicated nodes would outweigh the advantage of having multiple
+nodes to do work. If you implement transparent password s ynchr oniz ation,  it is recommended that you
+avoid having more than fiv e concurrently activ e  database nodes.
+Calculate the number of database nodes you require with the following formula:
+N = ceil(1 + [ U∕P * 7∕5∕Z * A]∕[60  * 60 * C∕T])
+Where:
+▪U = # of users▪
+▪P = days between password expiry▪
+▪Z = time  zones ▪
+▪A = accounts/user▪
+▪C = # of concurrently running connectors▪
+▪T = seconds on average to change a password▪
+For example, when:
+▪U = 10000 people▪
+▪P = 45 days▪
+▪Z = 1 time  zone ▪
+▪A = 10 accounts/user▪
+▪C = 30 connectors at a time ▪
+▪T = 2 seconds▪
+then:
+▪N = ceil(1 + [10000∕45 * 7∕5∕1 * 10]∕[60 * 60 * 30∕2]) ▪

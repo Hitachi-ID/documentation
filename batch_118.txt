@@ -1,0 +1,342 @@
+Table c on figur ation  options
+Each table in the Manage external data store  (DBE) module has c on figur ation  options  that only product
+administrator s with all adminis tr ativ e  privileges (superuser) can modify. Superusers can access the
+c on figur ation  options  by clicking on the plus ( +) symbol.
+The following options  can be set for each table:
+▪Read-only options: ▪
+▪Select Read-only to make the whole table read only. ▪
+▪Specify Read-only rows based on a column value. ▪
+▪Default search query – Once set only certain data will be displayed each time  the table is viewed. ▪
+▪Group – Used to organize the tables and make searching for sets of tables easier. ▪
+▪ Description  – Used to organize tables and make searching for them easier. ▪
+▪Column groups – Use a comma-delimited list to create groups for table columns. An example of this ▪
+would be to create groups using ”Required,Non-required” as input then assigning columns
+accordingly.
+▪ Ins tructions  – Used to provide table users with additional  in f ormation  about the table or usage ▪
+ins tructions.
+The following options  can be set for each column:
+▪ Description  – Used to explain in detail the contents of the column if the column name is insufficien t. ▪
+▪Allowed IDs – Used to restrict what data can be added to the column. ▪
+▪Read-only – Select to make the column read only. ▪
+▪Uppercase – Select to display text in uppercase. ▪
+▪Display width – Used to set column width. ▪
+Click Update in the c on figur ation  section  to save the settings.   
+R eplic ation
+R eplic ation  between nodes can be done through one of the following:
+▪The scheduled auto discovery process which, by default, happens once a day▪
+▪A Windows scheduled task which, by default, happens once every fiv e minutes ▪
+▪The Manage external data store  (dbe) module web interface by clicking Replicate on the Table ▪
+in f ormation  page, which happens immediately
+▪The Ins t anceRunUtility  API ▪
+R eplic ation  can only be triggered by the primary node; that is, the node with auto discovery scheduled.
+Digital ID (DID)
+This section  shows you how to c on figur e  the Digital ID  (DID) module, which is used to update the Lotus
+Notes ID file repository on the Bravura Security Fabric  server, particularly  when managing Lotus Notes
+passwords with Bravura Security Fabric . For a complete e xplanation  of the challenges involved incertific a t e  management with Lotus Notes ID File passwords and some possible solutions,  see the Lotus
+Domino Server  in the Connector Pack Documen t ation.
+To c on figur e  the Digital ID  (DID) module:
+1.Click Manage the system  > Modules  > Digital ID (DID). 1.
+2. Con figur e  the options  in Table Digital ID  (DID) module options  (on page 1172) as required. 2.
+3.If required, c on figur e  event options,  listed in Table Digital ID events  (on page 1172), Digital ID events 3.
+(on page 1545) trigger external programs.
+4.Click Update to submit the changes. 4.
+Digital ID  (DID) module options
+Option Description
+DID ASSOCIATION Select the method to use to associate users. Choose from:
+▪Network oper ating  system ID association ▪
+▪Single client ID association ▪
+▪ Multiple  client ID association ▪
+See DID association  (on page 1172) for details.
+DID REG VALIDATION PLUGIN Type the name of the plugin program or PSLang script to use to validate new
+digital ID r egis tr ation  requests.
+See Digital ID r egis tr ation  (on page 1173) for details.
+Digital ID events
+The following Digital ID  (DID) module options  can be accessed from Manage the system  > Maintenance >
+System variables  or Manage the system  > Modules  > Digital ID (DID) .
+Option Description
+DID REGISTER FAILURE A digital ID fails to register.
+DID REGISTER SUCCESS A digital ID is successfully registered.
+DID SEND SUCCESS A digital ID is successfully uploaded.
+DID UPDATE SUCCESS A digital ID is successfully updated (after  a password change using the Lotus
+Notes client).
+DID association
+Network oper ating  system ID association  is the default association  mode. It associates a registered ID file
+with a user’s network account ID. The fir s t network account ID to successfully register the ID file obtains
+the association.
+Client ID association  is useful when a single user has multiple  network oper ating  system ID’s, but only a
+single digital ID. Additional  uses for this type of association  are shared w ork s t ations  (kiosks) where a user
+does not log in or out of the oper ating  system. There are two types of client ID association:Single Under single client ID association,  the fir s t client w ork s t ation  that successfully registers a
+digital ID is the w ork s t ation  that will be associated with that ID.
+Multiple Under multiple  client ID association,  digital ID files can be registered from multiple
+w ork s t ations.  The digital ID is not associated with a single w ork s t ation.  Once registered,
+updates to the digital ID can come from either an applic ation  (for example, Notes) or from
+Bravura Security Fabric .
+Digital ID r egis tr ation
+You can c on figur e  a plugin to validate incoming requests for new Digital ID r egis tr ation  requests.
+The Digital ID r egis tr ation  v alidation  plugin receives in f ormation  about:
+▪Account ID (DN of the Digital ID)▪
+▪NOS ID▪
+▪Client ID▪
+▪Target ID▪
+▪Mail server▪
+The plugin returns whether the r egis tr ation  should be allowed.
+To c on figur e  this plugin, type the plugin’s full name in the DID REG VALIDATION PLUGIN field  on the
+Manage the system  > Modules  > Digital ID  page.
+A built-in plugin, nos-validate.pss  is shipped with Bravura Security Fabric . The nos-
+validate.pss  plugin checks whether the matching account table entry for this r egis tr ation  has a user
+ID (shortid)  that matches the NOS ID of the incoming r egis tr ation.  If the user ID and NOS ID do not match,
+the ID file is not uploaded to the did table.
+See more in f ormation  on writing  a customized plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The Digital ID r egis tr ation  v alidation  plugin is run by the Digital ID (DID) module when a r egis tr ation
+request is received.
+Input
+Following is an example of the input required for this plugin:
+   "" "" = {
+     "ACCOUNTID" = "CN=test 2/O=bravura"
+     "CLIENTID" = "WINXP206"
+     "MAILSERVER" = "CN=win2k4/O=bravura"
+     "NOSID" = "Administrator77"     "TARGETID" = "NOTES"
+   }
+Output
+Following is an example of the output expected for this plugin:
+   "" "" = {
+     "errmsg" = "Everything is good :)"
+     "retval" = "0"
+   }
+.
+Unlock encrypted systems/accounts (HDD)
+Users with access to Bravura Pass ’s web interface can recover an encrypted system through the Unlock
+encrypted systems/accounts  (HDD) module.
+To c on figur e  options  for the Unlock encrypted systems/accounts  (HDD) module:
+1.Click Manage the system  > Modules  > Unlock encrypted systems/accounts  (HDD) . 1.
+2. Con figur e  the options  in the table below. 2.
+3.Click Update to submit the changes. 3.
+For more detail see Encrypted systems/accounts  (on page 1645).
+Modules > Unlock encrypted systems/accounts HDD options
+Options Description
+HDD CHALLENGE FORMAT Specify a format for the challenge code string.
+See Overriding the string format for challenge/response codes  (on page
+1646) for more in f ormation
+HDD ENABLED Enable/disable the HDD module.This is enabled by default.
+HDD RESPONSE FORMAT Specify a format for the response code string.
+See Overriding the string format for challenge/response codes  (on page
+1646) for more in f ormation
+Help users (IDA)
+Users who are granted rights as help desk user s use this module to administer users that have at least one
+account. This can include:
+▪Modifying user pr ofile  status ▪
+▪ Attaching  e xisting  IDs ▪
+▪Changing passwords▪
+▪Modifying security questions ▪Console-only users, such as the superuser, do not have access to the Help users  (IDA) module or other
+self-service modules.
+In order for help desk user s to unlock users accounts via the Help users  menu, you must enable the Unlock
+accounts  (PSR) module.
+In order for help desk user s to manage token via the Help users  menu, you must enable the Manage tokens
+(PSP) module.
+To c on figur e  options  that apply to the Help users  (IDA) module:
+1.Click Manage the system  > Modules > Help users  (IDA). 1.
+2. Con figur e  the options  in Table Modules > Help users  (IDA) options  (on page 1175)  as required. 2.
+3.If required, c on figur e  event options,  listed in Table Help users  (IDA) module events that launch 3.
+interface programs  (on page 1175), Help users  (IDA) module events that launch interface programs  (on
+page 1543),.
+4.Click Update to submit the changes. 4.
+Modules > Help users  (IDA) options
+Option Description
+ADMIN ATTACH USERS ONLY TO
+EXISTING ACCOUNTSWhen enabled, help desk users can only attach  users to e xisting  accounts.
+ADMIN ATTACH USERS ONLY TO
+VALID ACCOUNTSWhen enabled, help desk users can only attach  users to valid accounts.
+ADMIN AUTH USR MANDATORY When enabled, help desk users must authentic a t e  on behalf of users unless
+help desk users have been granted the Bypass security questions  user
+access rule.
+ADMIN TOKEN CLEAR SET Allows help desk users to clear or set users’ PINs.
+ADMIN TOKEN EMERGENCY Allows help desk users to toggle Emergency Access Mode for users’ tokens.
+ADMIN TOKEN ENABLE DISABLE Allows help desk users to enable or disable users’ tokens.
+ADMIN TOKEN RESYNC Allows help desk users to re-synchronize users’ tokens.
+A RESET EXT The name of an external plugin program or <PSLANG> script that supplies
+HTML to the Change passwords page. See Adding new functionality  and
+HTML  (on page 1149).
+A RESET TO PUSHPASS Use the Password Manager service ( idpm ) to retry failed assisted password
+changes.
+Help users  (IDA) module events that launch interface programs
+The following Help users (IDA) module options  can be accessed from Manage the system  > Maintenance
+> System variables  or Manage the system  > Modules > Help users (IDA):
+Option Description
+ADMIN AUTH USR FAILURE A help desk user fails to correctly answer authentic ation  questions  on
+behalf of a caller.Option Description
+ADMIN AUTH USR SUCCESS A help desk user correctly answers authentic ation  questions  on behalf of a
+caller, or bypasses the security questions.
+ADMIN CGI PLUGIN RUN The external HTML plugin, specified  by A RESET EXT, is run.
+ADMIN DELALIAS FAILURE A help desk user fails to delete a user’s account.
+ADMIN DE ALIAS SUCCESS A help desk user successfully deletes a user’s account.
+ADMIN DISABLE USER A help desk user disables a user’s login ID.
+ADMIN DUPLICATE ALIAS A help desk user tries to attach  an account for a user when the account is
+already in use.
+ADMIN ENABLE USER A help desk user enables a user’s login ID
+ADMIN QAADD FAILURE A help desk user tries to add one or more new question/ ans w er  pairs for a
+user, but fails for some reason.
+ADMIN QAADD SUCCESS A help desk user de fines  one or more new question/ ans w er  pairs for a
+user, then submits the changes for the question  set.
+ADMIN QADELETE SUCCESS A help desk user deletes one or more e xisting  question/ ans w er  pairs for a
+user, then submits the changes for the question  set.
+ADMIN QAUPDATE FAILURE A help desk user tries to change one or more e xisting  question/ ans w er
+pairs for a user, but fails for some reason.
+ADMIN QAUPDATE SUCCESS A help desk user changes one or more e xisting  question/ ans w er  pairs for a
+user, then submits the changes for the question  set.
+ADMIN RESET FAILURE A help desk user with the ”change password” privilege fails to change a
+user’s password.
+ADMIN RESET START A help desk user with the ”change password” privilege starts to change a
+user’s password.
+ADMIN RESET SUCCESS A help desk user with the ”change password” privilege successfully
+changes a user’s password.
+ADMIN SEARCH FAILURE A caller account is not found in a search using the Help users.
+ADMIN SEARCH SUCCESS A caller account is successfully found in a search using the Help users.
+ADMIN UNLOCK FAILURE A help desk user fails to unlock a user.
+ADMIN UNLOCK START A help desk user starts to unlock a user.
+ADMIN UNLOCK SUCCESS A help desk user successfully unlocks a user.
+ADMIN UNLOCK USER A user unlocks another user.
+ADMIN UPDALIAS FAILURE A help desk user fails to update a user’s accounts.
+ADMIN UPDALIAS SUCCESS A help desk user successfully updates a user’s accounts.Manage the OrgChart (IDG)
+The Manage the OrgChart  (IDG) module allows product administrator s to:
+▪ Identif y  managers and their subordinates ▪
+In some or g aniz ations,  a Bravura Security Fabric  administrator could simply identif y  the top-level
+manager, such as a CEO, then initia t e  an Org building round to build the OrgChart. In other cases,
+product administrator s could build parts or all of the OrgChart, then initia t e  an Org building round to
+have managers verify the in f ormation.
+▪ Identif y  users who no longer report to a certain manager ▪
+▪Transfer users from one manager to another▪
+To c on figur e  the Manage the OrgChart  (IDG) module:
+1.Click Manage the system  > Modules  > Manage the OrgChart  (IDG) . 1.
+2.If you want to allow product administrator s to detach a manager and all subordinates below the 2.
+selected manager’s level, turn on the IDG ALLOW DETACH TREE option.
+3.If required, c on figur e  event options,  listed in Table Manage the OrgChart  (IDG) module events that 3.
+launch interface programs  (on page 1177), Manage the OrgChart  (IDG) module events that launch
+interface programs  (on page 1544).
+4.Click Update to submit the changes. 4.
+Manage the OrgChart  (IDG) module events that launch interface programs
+The following Manage the OrgChart  (IDG) module options  can be accessed from Manage the system  >
+Maintenance > System variables  > or Manage the system  > Modules >  Manage the OrgChart  (IDG):
+Option Description
+IDG ATTACH SUBORDINATE A user attaches  a subordinate in an or g aniz ation  chart when using the
+Manage the OrgChart module.
+IDG DETACH SUBORDINATE A user detaches a subordinate in an or g aniz ation  chart when using the
+Manage the OrgChart module.
+IDG TRANSFER SUBORDINATE A user transfers a subordinate in an or g aniz ation  chart when using the
+Manage the OrgChart module.
+IDG TRANSFER SUBORDINATE A user transfers a subordinate from another manager in an or g aniz ation
+chart when using the Manage the OrgChart module.
+Browse the OrgChart (IDO)
+The Browse the OrgChart  (IDO) module allows users to browse the OrgChart to see which users report to a
+manager. Managers use the Browse the OrgChart  (ido) module to:
+▪View the OrgChart▪
+▪Add their direct subordinates ▪
+▪Remove users who do not report to them from their list of subordinates▪
+▪ Identif y  their direct subordinates who are also managers ▪▪Transfer subordinates to another manager▪
+▪Accept or deny users as subordinates following a transfer request from another manager▪
+Users require the ”Browse OrgChart” right to access this module. This is enabled for all self-service users
+by default.
+The Browse the OrgChart  (IDO) module is enabled by default. To disable this feature, turn off the IDO
+ENABLED option.
+To c on figur e  the Browse the OrgChart  (IDO) module:
+1.Click Manage the system  > Modules  > Browse the OrgChart  (IDO) . 1.
+2.If required, c on figur e  event options,  listed in Table Browse the OrgChart  (IDO) module events that 2.
+launch interface programs  (on page 1178), Browse the OrgChart  (IDO) module events that launch
+interface programs  (on page 1535), that trigger external programs.
+3.Click Update to submit the changes. 3.
+Browse the OrgChart  (IDO) module events that launch interface programs
+Option Description
+IDO ATTACH SUBORDINATE A user attaches  a subordinate in an or g aniz ation  chart when using the
+Browse the OrgChart module.
+IDO DETACH SUBORDINATE A user detaches a subordinate in an or g aniz ation  chart when using the
+Browse the OrgChart module..
+IDO TRANSFER SUBORDINATE A user transfers a subordinate in an or g aniz ation  chart when using the
+Browse the OrgChart module..
+IDO TRANSFER SUBORDINATE A user transfers a subordinate from another manager in an or g aniz ation
+chart when using the Browse the OrgChart module..
+View and update pr ofile  (IDR)
+The View and update pr ofile  (IDR) module allows users to update their pr ofile  in f ormation  and to request
+changes for themselves or other users.
+Changes can include:
+▪New accounts and inventory based on templates and roles▪
+▪Changes to e xisting  accounts, user in f ormation,  and group membership ▪
+▪Changes to their own in f ormation ▪
+These changes can be done manually or they can be modeled after  another user.
+The View and update pr ofile  (IDR) module is enabled by default. To block access to this feature, disable the
+IDR ENABLED setting.
+To c on figur e  options  that apply to the View and update pr ofile  (IDR) module:
+1.Click Manage the system  > Modules  >View and update pr ofile  (IDR) . 1.
+2. Con figur e  the options  in Table Modules > Submit requests (IDR) options  (on page 1179) as required. 2.3.If required, c on figur e  event options,  listed in Table View and update pr ofile  view and update pr ofile  (IDR) 3.
+module events that launch interface programs  (on page 1179), View and update pr ofile  view and update
+pr ofile  (IDR) module events that launch interface programs  (on page 1536), that trigger external
+programs.
+4.Click Update to submit the changes. 4.
+Modules > Submit requests (IDR) options
+Option Description
+IDR DISABLE ACCOUNT SEARCH Remove advanced search and listing  c apabilities  for network resource group
+owners and members. When this option  is enabled Bravura Security Fabric
+will only return an exact match.
+IDR DISABLE USER SEARCH Remove advanced search and listing  c apabilities  for e xisting  users. When this
+option  is enabled Bravura Security Fabric  will only return an exact match.
+IDR ENABLED The switch to turn the View and update pr ofile  module on and off . The
+module is enabled by default.
+IDR NETWORK RESOURCE VALIDATE For network resources created by the shell extension: Enable this to limit
+users who can view sub-resources to those who have read permission for
+the parent resource.
+For manually created resources, this is controlled by the Users are only
+allowed to see sub-resources when they read permission for a resource
+setting.
+IDR NETWORK RESOURCE VALID
+ONLYFor network resources created by the shell extension: Allow only c on figur ed
+network resources to be eligible of being selected for request access
+(disabled by default).
+IDR NETWORK RESOURCE SELECT
+ONE GROUPWhen enabled users can only request one group membership at a time
+when r equesting  access to network resources. (Disabled by default).
+IDR REQUIRES REASON NEW
+REQUESTRequesters must enter a reason when cr eating  a new request.
+MODELAFTER SHOW DIFFS Enable this to display diff er ences  between pr ofiles  when using pr ofile
+comparison by default.
+MODELAFTER VALID ONLY Enable this to only display valid model users when using pr ofile  comparison.
+Performance can be signific an tly  slower when this option  is enabled.
+USER HIST INTERVAL The number of days of pr ofile  history to display. If unspecified,  the default
+value is seven days.
+View and update pr ofile  (IDR) module events that launch interface programs
+The following View and update pr ofile  (IDR) module options  can be accessed from Manage the system  >
+Maintenance > System variables  or Manage the system  > Modules  > View and update pr ofile  (IDR):
+Option Description
+USER ATTR CHANGED A user successfully changes an attribut e.Disabling advanced search c apabilities
+Regular users can normally use advanced search c apabilities  to find e xisting  users on request pages.
+By default, if Bravura Security Fabric finds  more than one match for the search terms, it displays a list and
+allows the requester to make a selection.
+You can disable this behavior if you want to prevent Bravura Security Fabric from displaying a list of users
+or accounts, and if you want Bravura Security Fabric to only match on exact search terms.
+To disable advanced search c apabilities  in the View and update pr ofile  (IDR) module, set the IDR DISABLE
+ACCOUNT SEARCH and IDR DISABLE USER SEARCH options  to “Enabled”.
+Aut o-populating  suggested passwords
+You can enable a JavaScript option  to aut omatic ally  populate password fields  when a suggested password
+is selected. To do this, enable the UseSuggestedPassword option  in the config.js script. See
+Modifying JavaScript behavior  (on page 3518) for more in f ormation.
+Manage deleg ations  (IDS)
+Regular users use the Manage deleg ations  (IDS) module to respond to deleg ation  requests.
+You can c on figur e  the module to determine whether users must enter a reason for declining a request for
+a deleg ation.  Bravura Security Fabric  returns an error if a reason is not entered.
+To do this, click Manage the system  > Modules  > Manage deleg ations  (IDS)  and enable
+IDS REQUIRES REASON REJECT DELEGATION .  
+View requests (IDW)
+In addition  to the Requests  app, the View requests  provides a way for regular users or product administrator s
+to search and view the status of requests. Users can view requests, regardless of whether they are
+authorizer, requester, or recipient, with read-only permission.
+The View requests  is disabled by default. Unlike other modules, the View requests  is enabled via a plugin:
+Manage the system  > Modules  > Options  > VIEW REQUEST PLUGIN .
+Only users with the canViewRequest variable set to true in the plugin will have access to this module, via
+a View requests link on the main menu.
+Generate voice print enrollment PIN (PSI)
+You can use Bravura Pass ’s Generate voice print enrollment PIN  (PSI) module to reliably register voice print
+samples for all users. You can use this facility for new IVR deployments or for new users on e xisting
+systems.
+Without Bravura Pass , IVR users are commonly provided with a short PIN via email, and are required to
+key in the PIN when they fir s t register with the IVR system. This presents a security weakness: PINs are
+short, guessable, and sent via an insecure media (email).

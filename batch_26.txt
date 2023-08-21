@@ -1,0 +1,331 @@
+Property Description
+INSTALLDIR The directory in which the notific ation  client will be
+installed. The default is C:\Program Files\Bravura Security
+\\Notific ation  Client\.
+INSTALLLEVEL This parameter is used in a silent ins t allation  and is
+mutually exclusive with ADDLOCAL. Set to a value of 1 or
+more (up to 32767) to install the PSNTFCLIENT feature.
+The default is 1.
+NTFTIMEOUT The inactivity  timeout  value used by the notific ation
+client for force-level notific ations.
+PSNURL The url of the User notific ations  (psn) module on the
+Bravura Security Fabric  server; for example, https://
+server:443/instance/cgi/psn.exe .
+psns.msi
+Features
+psns.msi ADDLOCAL ins t allation  options
+Feature Description
+PSNSFEATURE Parent feature – Installs the Lotus Notes Extension.
+PSNSSCRIPTFEATURE Installs the Lotus Notes Extension EXE.
+PSNSSCRIPTSHORTCUT Installs a shortcut to the EXE in the Startup folder.
+PSNSCREDSERVICEFEATURE Installs the Lotus Notes SSO s ynchr oniz ation  service.
+P r operties
+psns.msi pr operties
+Property Description
+INSTALLDIR The directory in which the Lotus Notes Extension will be
+installed. The default is C:\Program Files
+\Bravura Security\Notes Extension\ .
+INSTALLLEVEL This parameter is used in a silent ins t allation  and is
+mutually exclusive with ADDLOCAL. Set to a value from 1
+to 100 for a typical ins t allation:  PSNSFEATURE,
+PSNSSCRIPTFEATURE, PSNSSHORTCUT. Set to a value
+greater than 100 (up to 32767) for complete ins t allation.
+The default is 1.
+CODEPAGE Sets the code page for Lotus Notes API calls. The default
+is 850 – OEM Multilingual  Latin  1; Western European
+(DOS).Property Description
+CGIURL The URL to did.exe ; for example, https://
+server:443/instance/cgi/did.exe.
+CGIIGNORECERT 0|1 Set to 1 to ignore security certific a t es.
+NOTESTARGET The Bravura Security Fabric  target system ID for the Lotus
+Notes server.
+NOTESINIPATH The path to the notes.ini file; for example,
+"C:\Program Files\lotus\notes
+\notes.ini"
+This argument is required when the Notes desktop
+shortcut has been modified  to explicitly specify the path
+to the notes.ini file. If not specified  on the command line,
+then psns will attemp t  to auto-detect the notes.ini path.
+ska.msi / ska-x64.msi
+The ska.msi and ska-x64.msi  installers require Windows Installer 4.5.
+Features
+ska.msi / ska-x64.msi ADDLOCAL ins t allation  features
+Feature Description
+SKA Parent feature, installs the Login Assistant SKA (secure
+kiosk account).
+CREDPROV Installs the Bravura Pass  Cr edential  Provider for Windows
+clients.
+P r operties
+ska.msi / ska-x64.msi generic pr operties
+Property Description
+INSTALLDIR The directory in which Login Assistant will be installed.
+The default is C:\Program Files\Bravura Security\Login
+Assistant\.
+INSTALLLEVEL This parameter is used in a silent ins t allation  and is
+mutually exclusive with ADDLOCAL. Set to a value of 1 or
+more (up to 32767) for a complete install: SKA
++CREDPROV.Property Description
+ADMIN_USERNAME Specify the username of a privileged administrator. When
+you need to launch the installer from an account with
+insufficien t  privileges, use this and ADMIN_PASSWORD to
+specify a more privileged account to perform the
+ins t allation.
+ADMIN_PASSWORD Specify the password of a privileged administrator. When
+you need to launch the installer from an account with
+insufficien t  privileges, use this and ADMIN_USERNAME to
+specify a more privileged account to perform the
+ins t allation.
+ska.msi / ska-x64.msi SKA pr operties
+Property Description
+SKATIMEOUT The maximum amount of minutes the Login Assistant
+secure kiosk account will stay open before it
+aut omatic ally  closes. Default is 15 minutes.
+URL The full path to the Front-end (psf) on the Bravura Pass
+server; for example, https://server:443/
+instance/ .
+USEVPN 0|1 If set to 1, use a VPN connect program.
+HELPADMINENABLED 0|1 No longer used.
+HELPACCOUNT The name of the Login Assistant "help" account (default
+is help).
+HELPPASSWORD The password for the help account specified  by
+HELPACCOUNT. If this option  is not set, you must set
+RANDOM_HELPPASSWORD to generate a random
+password. If neither option  is set, a blank password is
+created.
+RANDOM_HELPPASSWORD 0|1 Set to 1 to create a random password for
+HELPACCOUNT. This setting  is off by default.
+This setting  defaults to 0 for Login Assistant SKA-only
+ins t allations  and to 1 for CREDPROV installs – it is not
+recommended to use a random password in Login
+Assistant SKA-only ins t allations.
+Note that when HELPPASSWORD and
+RANDOM_HELPPASSWORD are both specified,  the
+RANDOM_HELPPASSWORD setting  is ignored.Property Description
+IMAGEFILE Fully -qualified  file name for the bitmap file used to
+replace the the Cr edential  Provider tile for CREDPROV
+ins t allations.
+The MSI can also be modified,  using an msi editing  tool,
+to add an "ImgFile" entry into the Binary table, where the
+binary file is the bitmap to use.
+LANGUAGEFILES Specifies  a pipe-separated list of gina.z files to use as
+additional  languages for the secure kiosk account and
+Cr edential  Provider. These must be fully -qualified  file
+names. The gina.z files are generated in the 12.3.0
+language packs. The list must be enclosed in double
+quotes.
+The MSI can also be modified,  using an msi editing  tool,
+to add an entry into the Binary table, of the form
+Lang_<language>-Rest of World, where the binary file is
+the gina.z file for the corresponding language. For
+example, Lang_fr-ca can be added with the contents of
+the gina.z file from the fr-ca skin.
+EN_US,
+<LANGUAGE>_Rest of World0|1 Indicates whether the specified  language is enabled
+for use. EN_US is installed by default. Additional
+languages are specified  with the LANGUAGEFILES setting.
+SHELLOPTIONS Command-line options  for the runurl command, used
+when invoking the web browser. The default is "-kiosk -
+no_icw -log off  -trapsesslock".
+RUNURLCFG Provide any additional  options  that may be required for
+runurl. This replaces the shell options  with "-cfg
+runurl.cfg", and generates a runurl.cfg file that includes
+the shell options  and any additional  options  specified  by
+this property. The default is no value.
+HIDEERRORS This setting  applies only to Bravura Security Fabric  12.4
+or older.
+ska.msi / ska-x64.msi VPN pr operties
+Option Description
+REMOTESKAACCESSENABLED 0|1 Enable or disable remote access to the SKA.
+VPN_CONNECT_PROGRAM Name and full path of the VPN connect program to run in
+order to establish a VPN c onnection.
+VPN_CONNECT_CMDLINE Command-line arguments for VPN connect program; for
+example -u %USERID% -p %PASSWORD% . This value
+cannot be blank.
+VPN_DISCONNECT_PROGRAM Name of the VPN disconnect program to run to
+disconnect from the VPN.Option Description
+VPN_DISCONNECT_CMDLINE Command-line arguments for VPN disconnect program;
+for example -u %USERID% -p %PASSWORD%.
+VPN_USER VPN user ID to be used with the VPN connect and
+disconnect programs.
+VPN_PASSWORD Password to be used with the VPN user ID.
+VPN_TIMEOUT The number of seconds to wait between retries. The
+default is 30.
+VPN_RETRIES The number of VPN retries to test for c onnectivity .  If this
+value is blank, there will only be one retry attemp t.  The
+default is 3.
+VPN_CONNECT_STDINPUT Standard input lines for Cisco anyConnect c onnections.
+See Run the SKA installer  (on page 1596) for details.
+VPN_CONNECT_TERMINATE For Cisco anyConnect, terminate any running programs
+before trying to launch the VPN client.
+VPN_HIDE_WINDOW For Cisco anyConnect, hide the pop-up console window
+that vpncli.exe starts.
+VPN_URL Set this to a URL to use as a test page for the SKA. If this
+page cannot be accessed by the SKA, then a VPN
+c onnection  will be established to access it.
+VPN_URL_SEARCH Set this to a marker in the HTML code to search for in the
+page set by VPN_URL.
+ska.msi / ska-x64.msi remote access pr operties
+Option Description
+RUNURL_EXTERNAL_URL This will be the URL of a website that used to determine
+if the computer is connected to the Internet, or still
+behind a r egis tr ation  screen or c aptiv e  portal. This
+defaults to http://www.msftncsi.com/
+ncsi.txt.
+Other options  for the external url are http://
+detectportal.firefox.com/success.txt
+with RUNURL_EXTERNAL_URL_EXPECTED_DATA set to
+success
+Or http://captive.apple.com/hotspot-
+detect.html with
+RUNURL_EXTERNAL_URL_EXPECTED_DATA set to
+SuccessOption Description
+RUNURL_EXTERNAL_URL_EXPECTED_DATA This is a string that is expected from the above website. It
+should be unique enough to ensure that a r egis tr ation
+page will not have the data, but always present on the
+external URL. The default is Microsoft NCSI.
+RUNURL_EXTERNAL_CONNECT_PROGRAM If users will be using an AirCard or Internet stick,  this is
+the name of the program to run in order to connect. This
+program will be run from the SKA to allow the user to
+connect.
+RUNURL_EXTERNAL_CONNECT_PROGRAM_TITLE If the Program to use to create a c onnection  is used, this
+is the main window title of the program when run. In
+AirCard, this is listed under the Task column on the
+Applic ations  tab.
+RUNURL_PORTAL_TIMEOUT The number of seconds to wait for a c aptiv e  portal
+c onnection.  The default is 300.
+RUNURL_REMOTE_HOST The address of the VPN server to test if the server is
+reachable.
+RUNURL_REMOTE_PORT
+ The port that the VPN server is listening on to test if the
+server is reachable.
+ 
+ska.msi / ska-x64.msi proxy pr operties
+Option Description
+PROXY_ENABLE 0|1 Enable or disable the installer to modify proxy
+c on figur ation.
+PROXY_AUTODETECT 0|1 Enable or disable proxy to use "Aut omatic ally  detect
+settings".
+PROXY_AUTOCONFIGURATION_ENABLE 0|1 Enable or disable proxy to use "Use aut omatic ally
+c on figur ation  script".
+PROXY_AUTOCONFIGURATION_URL Use this to set the URL of an aut omatic  c on figur ation
+script.
+PROXY_URL Use this to set the proxy server’s address.Option Description
+PROXY_PORT Use this to set the proxy server’s port number.
+The following parameters are available with ADDLOCAL=CREDPROV for Windows:
+ska.msi / ska-x64.msi CREDPROV pr operties
+Property Description
+HIDEFASTUSERSWITCHING 0|1 Hides Fast User Switching on this machine,
+pr e v enting  multiple  concurrent logins. The default is 1.
+This property is no longer used and will be removed in
+future releases. Fast User Switching must be enabled.
+USECLASSICLOGON 0|1 Provides a more tr aditional  interface for login (rather
+than individual tiles)  for users. It prompts for a user ID
+and a password.
+The default is 1.
+ 
+Enabling logging
+You can use the logutil program to enable logging, for debugging purposes, for add-on softw ar e.  To
+do so:
+1.Copy the logutil program, located in the util directory on the Bravura Security Fabric  server, to 1.
+the server hosting  the add-on tools. It can be placed anywhere on the server.
+2.Open a command prompt and invoke logutil  with: 2.
+logutil -makekey -instance <instance> -level <loglevel> 
+The -makekey option  needs to be run once only, to generate an instance name and required registry
+entries.
+See logutil  usage
+Requirements
+You must run the logutil  command as an administrator with sufficien t  privileges.
+Usage
+logutil.e x e  [options]  -instance <instance> | -cleanup [-instance <instance> ]Argument Description
+-bufmax <count> Maximum number of buff er s.  The default value is the
+Windows Events MinimumBuff er s  + 20.
+-bufmin <count> Minimum number of buff er s.  The default value is the
+number of CPUs + 2.
+-bufsize <size> Size of the session buff er s  in multiples  of 4 kb. The
+default is 64 kb.
+-instance <instance> Instance to watch events for. For Bravura Privilege local
+service mode instances, the value is "Privileged Access
+Manager Client".
+-cleanup Terminate any logging sessions which are not connected
+to any activ e  client. If the instance name is specified,  only
+the logging session for this particular  instance is cleaned
+up.
+-level <level> Debug level 1-5. Default is 5.
+-list List all enabled Event Tracing for Windows sessions.
+-logfile  <filename> File to write events to. You must specify an absolute path.
+-makekey Generate an instance name and its log GUID in the
+registry.
+Note:  This option  needs to be run once only.
+-maxdelay <maxdelay> The maximum seconds to allow the sorting  buff er  to keep
+items before flushing  out into the log file. The default
+value is 300.
+-maxsorted <count> The maximum number of events that can be sorted in
+memory. The default value is 100,000.
+-outdbg Write events with an output debug string.
+When logutil  runs, a new registry entry is created to record the session. The entry is stored under:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\LogSession
+The name of the entry is the instance name. When you press [enter]  to stop a session, the key will be
+gone with the session; however, if you kill the session by typing [Ctrl] +[C], the registry entry will remain.
+Use the -cleanup option  to remove remaining registry entries.
+Note that various tools also have hardcoded instance names:
+▪browser-extension-win: "Browser Extension" ▪
+▪ fir e f o x -br o w ser -e xt ension:  "Firefox Browser Extension" ▪
+▪hidshext: "Shell Extension" ▪
+▪hipamlws-win: "Hipamlws" ▪
+▪hippm-sm: "Session Monitor" ▪
+▪intcpt: "Password Filter" ▪
+▪ ntfclien t:  "Notific ation  Client" ▪▪ ppm-activ e-c on tr ols:  "PPM Client Activ eX  Controls" ▪
+▪pslocalr: "Local Reset Extension" ▪
+▪psns: "Notes Extension" ▪
+▪ sc ar d-activ e x -c on tr ols:  "SmartCard PIN Management Activ eX  Controls" ▪
+▪ska/runurl: " Login Assistant" ▪
+▪ pamutil : "pamutil" ▪
+Examples
+▪To start logging data for client softw ar e  with a debug level of 4, type: ▪
+logutil.e x e  -makekey -instance Bravura_client -level 4 -logfile  c:\idarchive.log 
+▪To start logging data on a local service mode managed system with a debug level of 4, to a log file ▪
+named local_service.log, type:
+logutil.e x e  -instance "hipamlws" -level 4 -logfile  local_service.log 
+▪To start logging data on pamutil and runwithpass with a debug level of 4, to a log file named ▪
+pamutil.log ,  type:
+logutil.e x e  -instance "pamutil"  -level 4 -logfile  pamutil.log  
+▪To start logging data on Activ eX  password disclosure plugins at level 4 to log file activ e x.log ,  type: ▪
+logutil.e x e  -instance "PPM Client Activ eX  Controls" -level 4 -logfile  activ e x.log  
+You must run logutil with the -makekey argument firs t for the instance "PPM Client ActiveX
+Controls".
+▪To start logging data for the default Login Manager instance with a debug level of 4, type:▪
+logutil.e x e  -instance "Login Manager" -level 4 -logfile  c:\logfile.log  
+in f ormation.7 Managing proxy servers
+In some cases, the c onnection  to a target system may be slow, insecure or blocked by a fir e w all.  This is
+often  true when the c onnection  is made over a wide area network.
+To address such c onnectivity  problems, Bravura Security Fabric  includes an applic ation  proxy server.
+When a proxy server is deployed, the main Bravura Security Fabric  server ceases to communicate with
+one or more (usually distant) target systems directly, and instead forwards all c ommunic ation  to those
+systems through one or more co-located proxy servers.
+Communic ation  from the main Bravura Security Fabric  server to the proxy servers is encrypted, e fficien t,
+and tolerant of high latency.
+When fir e w alls  intervene, the TCP port number of the proxy is programmable, a port redirector can be
+used, and only a single opening through the fir e w all  is required for multiple  target systems.
+Communic ation  between the proxy server and target systems c ontinues  to use nativ e  protocols, but it is
+physically controlled, in a high-bandwidth, low-latency, high-security LAN.  
+This chapter shows you how to:
+1.Install a proxy server  (on page 260). 1.
+2. Con figur e  target systems to point to the proxy  (on page 265). 2.
+3.Update the proxy server  with updated c on figur ation  from the Bravura Security Fabric  server, if 3.
+required.
+ See also: 
+▪Proxy Service  (on page 2870) for in f ormation  about the psproxy  service, which allows the proxy ▪
+server to execute account management connectors on behalf of the Bravura Security Fabric  server.
+Installing a proxy server
+Proxy server requirements
+Each Bravura Security Fabric  proxy server requires the following:
+▪ Oper ating  system: ▪
+▪Windows Server 2022.▪
+▪Windows Server 2019.▪
+▪Windows Server 2016.▪
+It is recommended that the server is not a domain controller.
+▪Networking:▪
+▪TCP/IP networking, with a s t atic  IP address and DNS name entry ▪
+▪.NET Framework 3.5 and 4.5+▪
+▪.NET WSE▪
+▪Connector Pack : ▪

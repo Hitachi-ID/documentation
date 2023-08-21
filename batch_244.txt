@@ -1,0 +1,336 @@
+Pr opag ating  changes with idtrack
+This section  shows you how to c on figur e  idtrack  to propagate tracked changes using settings  in the
+Manage the system  (PSA) module and a PSLang script.
+The idtrack  program is part of Bravura Security Fabric ’s automated user adminis tr ation  system that
+tracks changes to users, user attribut es,  and user group memberships on target systems and propagates
+those changes to other target systems.
+You must write an idtrack.psl  script to propagate changes to accounts, group memberships, or
+account attribut es.
+You can propagate pr ofile  and request attribut e  changes to target systems:
+▪ Aut omatic ally ,  with no scripting  required ▪
+▪By writing  an idtrack.psl script to make the changes ▪
+This may be required for more complex cases, or for more fle xibility .
+For aut omatic  pr ofile  and request attribut e  pr opag ation,  the idtrack program can operate in:
+▪Execute mode – idtrack  is executed to propagate changes whenever auto discovery is executed. ▪
+▪Write mode – idtrack  writes changes to a work file, which you can use manually with iddriver  (on ▪
+page 2436) to make changes. Use write mode to perform dry runs of user attribut e  pr opag ation,
+t esting ,  tr oubleshooting  or for performing one time  manual user attribut e  pr opag ation.
+Under normal circumstances, you should set up aut omatic  pr opag ation  to run in execute mode to
+propagate user attribut e  changes and write an idtrack.psl  script to propagate account, group
+membership, and account attribut e  changes.If the idtrack.psl  script contains a syntax error, then idtrack.exe  returns an error code during
+auto discovery, and a notific ation  email is sent to the Bravura Security Fabric administrator.
+You set up s t atic  authoriz ation  for aut omatic  or scripted attribut e  pr opag ation  by assigning authorizers at
+the target system level. You can also determine authoriz ation  dynamically with an IDSYNCH AUTH
+CRITERIA MOD plugin program  (on page 1363).
+During automated provisioning, the View and update profile  (IDR) module and web module plugins are
+bypassed. The W orkflo w  Manager Service (idwfm) plugins are still called; specific ally  the ATTR
+VALIDATION, IDSYNCH AUTH CRITERIA MOD PLUGIN, IDWFM REQUEST REWRITE PLUGIN.
+Diff sets
+Before idtrack  can take actions  based on changes, the changes have to be tracked. This function  is
+performed by iddiscover  aut omatic ally  during auto discovery.
+Changes on target systems are tracked using diff sets that are identified  by a globally unique identifier
+(GUID). A new diff set is created every time  auto discovery is executed and at least one tracking option  is
+activ a t ed.
+Set the KEEP DIFF DAYS variable in Maintenance > Options  if you want to limit the number of diff sets
+stored in the database. By default Bravura Security Fabric  keeps them forever.
+Requirements
+▪Each system on which idtrack  operates must be c on figur ed  as a target system. ▪
+▪At least one tracking option  must be enabled. ▪
+▪The idtrack.psl  script, if required, must be located in the \<instance>\script\ directory. ▪
+Usage
+idtrack -difflist <N> |[ -diffset <guid>|latest -threshold <N>]
+Option Description
+-difflis t List the <N> newest diff sets. If N= 0, list all available.
+-diff se t Run with specified  or latest diff set.
+-threshold <N> Do not submit any request if number of requests to be
+submitted  exceeds <N>. If N= 0, no threshold. Using this
+option  overrides the ATTR AUTO PROPAGATE THRESHOLD
+setting.
+Examples
+1.To list the fiv e newest diff sets: 1.
+  idtrack -difflist 5
+2.To list all available diff sets: 2.
+  idtrack -difflist 0
+3.To run idtrack  with the latest diff set: 3.  idtrack -diffset latest
+4.To run idtrack  with a specific  diff set: 4.
+  idtrack -diffset "<guid>"
+The sections  below describe use cases and script functions  for pr opag ating  attribut es,  groups, or
+accounts.
+W riting  the idtrack.psl script
+The idtrack.psl  script is required for pr opag ating  changes to user accounts and account association,
+group memberships, or account attribut es.  It is optional  when tracking changes to pr ofile  and request
+attribut es.
+A sample script is located in the samples\ directory in the Bravura Security Fabric  dis tribution.  The
+sample script simply prints out all the changes into the idmsuite.log .
+With scripted pr opag ation,  any tracked change can be a triggering event to perform any provisioning
+oper ation  allowed via the applic ation  programming interface (API).
+To perform scripted provisioning, the script needs to make API calls based on decisions made by the
+script.
+The script must include idtrack-types.psl , which is shipped in the \<instance>\script\ directory.
+This file provides structure de finitions  that are necessary for the script to query what changes have been
+tracked.
+The script must de fine  a processChange function:
+  processChange( const $userid, const $isProfile )
+This function  is called once for every user for which idtrack  discovers changes.
+If changes were discovered for items that are attached  to a user pr ofile,  then $userid  is set to the
+pr ofile  ID, and $isProfile  is 1.
+If the changes were discovered for items that are not associated to a user pr ofile,  then $userid  is the
+account longid, and $isProfile  is 0.
+The script can include startup() and shutdown() functions  when idtrack  starts and finishes.  The
+behavior of the startup() function  is based on the return value:
+▪0 (or no return value) – c ontinues  to call processChanges on tracked changes ▪
+▪1 – halts without error▪
+▪-1 – halts with an error▪
+Functions  for capturing changes are described in the sections  that follow.
+See also
+The PSLang Reference Manual  for details on writing  PSLang scripts.
+The Bravura Security Fabric  Remote API ( api.pdf ) for details on the API.Pr opag ating  pr ofile  and request attribut e  changes
+Changes to pr ofile  and request attribut e  values can be tracked. You can c on figur e  the idtrack  program
+to execute a variety of provisioning actions  aut omatic ally .  A common use case is to track changes to a
+pr ofile  and request attribut e  to synchronize attribut es  on target systems.
+To c on figur e  idtrack  to synchronize pr ofile  and request attribut es:
+▪Determine which attribut es  are authorit ativ e  and what changes should occur based on changes to ▪
+authorit ativ e  attribut es.
+▪ Con figur e  pr ofile  and request attribut es  to be tracked and set the Track changes to this attribut e ▪
+option.
+▪ Con figur e  attribut e  pr opag ation  by: ▪
+▪ Con figuring  attribut e  logic  (on page 2434). ▪
+Or
+▪ W riting  an idtrack.psl script  (on page 2434). ▪
+Con figuring  aut omatic  attribut e  pr opag ation
+To set up pr ofile  and request attribut e  logic settings  for aut omatic  pr opag ation:
+1.Click Manage the system > W orkflo w  > Options  > Aut omation . 1.
+2.Enable ATTR AUTO PROPAGATE EXECUTE to aut omatic ally  execute the pr opag ation  of changes to 2.
+pr ofile  and request attribut es  to account attribut es  on subordinate systems.
+3.Set the ATTR AUTO PROPAGATE REQUESTER field  to a valid Bravura Security Fabric  user. This is the 3.
+user that will submit change requests to the Bravura Security Fabric  w orkflo w  system.
+4.Enable ATTR AUTO PROPAGATE WRITE to aut omatic ally  write the pr opag ation  of changes to pr ofile 4.
+and request attribut es  to a work file. You can set this one alone to make changes manually, or
+combined with ATTR AUTO PROPAGATE EXECUTE for logging purposes.
+5.Set the ATTR AUTO PROPAGATE THRESHOLD  to control the number of requests to be submitted  due 5.
+to changes to pr ofile  attribut es,  unless overridden on the command line. If the threshold is exceeded,
+no requests will be submitted  aut omatic ally  by idtrack . Bravura Security Fabric  sends an email to
+the product administrator (de fined  by RECIPIENT EMAIL ) who can decide whether to run idtrack
+manually to submit those requests.
+Scripting  attribut e  pr opag ation
+Scripted attribut e  pr opag ation  is not as simple to set up as aut omatic  pr opag ation,  but is more fle xible.  A
+tracked change can be a triggering event to perform any provisioning oper ation  allowed via the API.
+Two built-in functions  are available to the idtrack.psl script to determine changes to pr ofile  and
+request attribut es:
+1. g e tPr ofileAttrAdded()1.
+2. g e tPr ofileAttrDelet ed()2.To prevent a pr ofile  and request attribut e  from aut omatic ally  being propagated, call the
+aut os yncAttrDisable()  function  from the startup() function  in the idtrack.psl  script.
+In this example, the pr ofile  and request attribut e  "FIRST_NAME" will not be aut omatic ally  propagated.
+    autosyncAttrDisable( "FIRST_NAME" );
+Pr opag ating  account attribut e  changes
+Changes to account attribut e  values can be tracked. You can c on figur e  the idtrack  program to execute
+a variety of provisioning actions  aut omatic ally .  To c on figur e  the idtrack  program to propagate account
+attribut e  changes:
+1.Override the account attribut e  default value. 1.
+2.Select the Track changes  option. 2.
+3.Write an idtrack.psl  script. 3.
+Two built-in functions  are available to the idtrack.psl  script to determine changes to account
+attribut es:
+1. g e tAcc oun tAttrAdded()1.
+2. g e tAcc oun tAttrDele t ed()2.
+Pr opag ating  group changes
+Changes to groups can be tracked. You can c on figur e  the idtrack  program to execute a variety of
+provisioning actions  aut omatic ally .  To c on figur e  the idtrack  program to propagate group membership
+changes:
+▪ Con figur e  Bravura Security Fabric  to manage the group. ▪
+▪Set the Track changes to this group  option. ▪
+▪Write an idtrack.psl  script. ▪
+Two built-in functions  are available to the idtrack.psl  script to determine changes to group
+memberships:
+1.getGroupMemberAdded()1.
+2.getGroupMemberDeleted()2.
+Pr opag ating  account changes
+Changes to accounts can be tracked. You can c on figur e  the idtrack  program to execute a variety of
+provisioning actions  aut omatic ally .  To c on figur e  the idtrack program to synchronize accounts on
+target systems:
+▪ Con figur e  the target system in Bravura Security Fabric . ▪
+▪Set the Track changes to accounts on this target  option. ▪
+▪Write an idtrack.psl  script. ▪Three built-in functions  are available to the idtrack.psl  script to determine changes to accounts:
+1.getAccountAdded()1.
+2.getAccountDeleted()2.
+3.getAccountAssocChanged()3.
+Making changes with iddriver
+The iddriver  program reads a file, usually generated by idtrack  (on page 2431) , that describes
+changes to make on target systems. The iddriver  program then sends these changes to the idtm
+and idwfm services.
+It is possible to write a custom script to generate a custom work file without idtrack  to make
+complicated or dynamic changes to users, user attribut es,  or user group memberships. This method is not
+recommended because it allows aut omation  direct access to T ransaction  Monitor Service ( idtm ),
+bypassing the authoriz ation  workflo w .  Instead, the recommended method is to use API calls in the
+idtrack.psl  script to make changes to users or user group membership.
+Usage
+Run iddriver with the following arguments:
+  iddriver [-f <filename>] [options]...
+where: -f tells iddriver to use the input file <filename>.  If the -f option  is not specified,  then stdin
+is used as the source of input. You must use [CTRL+Z]  on a new line to end the input from stdin .
+The following server options  are only needed if the services are not running on the local host:
+Argument Description
+-idtmserver <servername> The host running the idtm service
+-idtmsvcid <svcid> The service id that idtm is listening on
+-idwfmserver <servername> The host running the idwfm service
+-idwfmsvcid <svcid> The service id that idwfm is listening on
+To just print what would be sent and not contact any service, type:
+  iddriver -n
+Input format
+The input that iddriver receives, either in a file or from stdin,  has to be in KVGroup format. The
+input can contain multiple  types of requests that touch diff er en t  users. The following are examples of
+diff er en t  types of input.
+Single requestThe following is an example of single addUser request. Note that if passwords are included in the
+request they must be encrypted. Any account attribut es  omitted  will be set using the c on figur ation.
+# KVGROUP-V1.0
+"addUser" "AD" = {
+  "fullname" = "John Doe"
+  "password" = "<encrypted password value>"
+  "shortid" = "johnd"
+  "template" = "user"
+  "accountid" = "johnd"
+  "addAttrs" "" = {
+    "accountDisabled" = "f"
+    "displayName" = "John Doe"
+    "givenName" = "Doe"
+    "sn" = "John"
+    "userPrincipalName" = "johnd@server.local"
+  }
+}
+W orkflo w  containing multiple  requests in a single batch
+The following is an example of a w orkflo w  containing multiple  requests in a single batch. Note that:
+▪The KVGroup name is case sensitiv e,  and it must match the case of the user as it exists in the user ▪
+database table.
+▪ Submitting  w orkflo w  requests using iddriver  triggers the e x ecution  of Bravura Security Fabric ▪
+plugins after  the request is submitted.  Primarily the attribut e  v alidation,  authorizer modific ation,  and
+oper ation  rewrite plugins. This will only happen if the appropriate plugin is already c on figur ed.
+# KVGROUP-V1.0
+"workflow" "JOHND" = {
+  "metadata" "" = {
+    "requester" = "bobs"
+    "requestReason" = "Adding new user -> John Doe"
+    "requesterEmail" = "bobs@company.com"
+  }
+  "operation" "template" = {
+    "metadata" "" = {
+      "targetID" = "WIN2003AD"
+      "template" = "WIN2003AD"
+    }
+  }
+  "operation" "enable" = {
+    "metadata" "" = {      "targetID" = "WIN2003AD"
+      "account" "" = {
+        "longid" = "user1"
+        "targetID" = "WIN2003AD"
+      }
+    }
+  }
+  "operation" "delete" = {
+    "metadata" "" = {
+      "targetID" = "WIN2003AD"
+      "account" "" = {
+        "longid" = "user2"
+        "targetID" = "WIN2003AD"
+      }
+    }
+  }
+  "operation" "groupuseradd" = {
+    "metadata" "" = {
+      "targetID" = "WIN2003AD"
+      "groupid" = "CN=Cert Publishers,CN=Users,DC=WIN2003AD,DC=psynch,DC=com"
+      "account" "" = {
+        "longid" = "user3"
+        "targetID" = "WIN2003AD"
+      }
+    }
+  }
+  "operation" "groupuserdelete" = {
+    "metadata" "" = {
+      "targetID" = "WIN2003AD"
+      "groupid" = "CN=Cert Publishers,CN=Users,DC=matrix02,DC=psynch,DC=com"
+      "account" "" = {
+        "longid" = "user4"
+        "targetID" = "WIN2003AD"
+      }
+    }
+  }
+  "operation" "disable" = {
+    "metadata" "" = {
+      "targetID" = "WIN2003AD"
+      "account" "" = {
+        "longid" = "user5"        "targetID" = "WIN2003AD"
+      }
+    }
+  }
+  "requestAttributes" "" = {
+    "FIRST_NAME" = "John"
+    "LAST_NAME" = "Doe"
+  }
+}
+Update oper ation
+The following is an example of a w orkflo w  containing an update oper ation.  Note that:
+▪The r eques tAttribut es  KVGroup contains a list of Bravura Security Fabric  pr ofile  and request attribut es ▪
+which have to be properly de fined  in Bravura Security Fabric .
+▪For each Attribut e  value in the r eques tAttribut es  KVGroup there must be a key-value pair. Attribut es ▪
+with multiplue  values must have a multiple  keys in the r eques tAttribut es  KVGroup.
+▪If an update oper ation  is performed, then the account KVGroup within the metadata KVGroup must ▪
+contain all target systems that are a ff ect ed  by the update of the pr ofile  and request attribut e  –
+basically all target systems that the pr ofile  and request attribut e  is mapped to.
+"workflow" "JOHND" = {
+  "operation" "update" = {
+    "metadata" "" = {
+      "targetID" = "WIN2003AD"
+      "account" "" = {
+        "longid" = "JOHND"
+        "targetID" = "WIN2003AD"
+      }
+    }
+  }
+  "requestAttributes" "" = {
+      "EMAIL" = "johnd@example.com"
+      "NTLOGON" = "johnd"
+      "OTHERPHONE" = "555-555-4565"
+      "OTHERPHONE" = "555-555-4567"
+  }
+}
+Group membership
+When adding a new user, use the allGroups KVGroup to provide the list of groups the user needs to
+belong to."addUser" "AD" = {
+    "shortid" = "joeb"
+    "userid" = "joeb"
+    "accountid" = "joeb"
+    "fullname" = "Joe Black"
+    "template" = "AD"
+    "allGroups" "" = {
+       "group" = "CN=ad-admin,OU=Calgary,DC=company,DC=dom"
+       "group" = "CN=ad-alltech,OU=Calgary,DC=company,DC=dom"
+       "group" = "CN=ad-allsales,OU=Calgary,DC=company,DC=dom"
+       "group" = "CN=ad-remotesales,OU=Calgary,DC=company,DC=dom"
+       "group" = "CN=Domain Users,CN=Users,DC=company,DC=dom"
+    }
+}
+When modifying a user’s group membership using moduser, addGroups and allGroups are used in the
+following ways:
+▪If addGroups is supplied, then the request is sent to add the user to each listed group.▪
+▪If allGroups is supplied, then a request is created to modify the user’s group memberships so that the▪
+user only belongs to the listed groups; in e ff ect,  removing the user from group’s that the user belongs
+to that are not on the list, and adding the user to group’s on the list that the user does not currently
+belong to.
+Container's distinguished  name
+A container’s distinguished  name can be used in iddriver  input. Note that:
+▪A container’s distinguished  name is part of general input and is not part of addAttr s. ▪
+▪The addAttr s  KVGroup contains account attribut es  that have to be properly c on figur ed  in Bravura ▪
+Security Fabric  before they are used. The names of the account attribut es  are case sensitiv e.
+"addUser" "AD" = {
+    "shortid" = "rons"
+    "userid" = "rons"
+    "accountid" = "rons"
+    "fullname" = "Ron Smith"
+    "template" = "AD"
+    "_container_dn" = "ou=Sales,DC=company,DC=dom"
+    "addAttrs" "" = {
+        "accountDisabled" = "f"
+        "displayName" = "ronsmith"
+        "givenName" = "smith"
+        "sn" = "ron"
+        "userPrincipalName" = "ronsmith@sales.company.com"

@@ -1,0 +1,309 @@
+Adding a target system to managed system policies
+If you enabled the Aut omatic ally  create a Privileged Access Manager managed system option,  you can
+add the system to and remove it from a managed system policy  directly from the Target system
+in f ormation  page.
+You must have write access to the managed system policy  to which you want to add or remove target
+systems, and at least one of the following adminis tr ativ e  privileges:
+▪Manage resources▪
+▪Manage orphan managed systems▪
+▪Manage managed system policies▪
+To de fine  managed system policy  membership for a target system:
+1.Click Policies at the bottom  of the Target system in f ormation  page for an e xisting  target system. 1.
+Bravura Security Fabric  displays a list of managed system policies  to which the system is already a
+member.
+2.Click Select... . 2.
+3.Enable the checkbox next to the managed system policies  you want to modify, then: 3.
+▪Click Select to add the target system to the policy. ▪
+or
+▪Click Delete to delete the target system from the policy. ▪
+CAUTION: If you delete the target system from the policy, then all managed accounts
+on this system are also removed.
+Viewing target system logs
+You can use the Manage the system  (PSA) module to view log entries that are specific  to the target system
+connector.
+The date and time  recorded in the Bravura Security Fabric logs are based on the settings  of the Windows
+server where Bravura Security Fabric is installed. You can view the current Bravura Security Fabric server
+date and time  from the Target logs page.
+To do this:
+1.Navigate to the Target system logs page  (on page 489). 1.
+2.If necessary, enter search criteria to display only specified  log entries: 2.
+Log message Type a string or a regular expression that represents the log message you want to view.
+You can use + and - symbols to include and exclude keywords from the search; for example
++ update operation - unlock
+includes the keywords update and operation , and excludes unlock .
+If you want to use a regular expression, you must also select the corresponding Regular
+expression checkbox.
+Severity Select if you want to view only messages at a particular  level of severity.Da t e/time Use the fir s t da t e/time  field  to select the earliest log entry to include, and the second
+da t e/time  field  to select the latest log entry to include.
+3.Click Search . 3.
+Downloading logs
+Click Download to save the current log view to a file on the server. Any search criteria filt ering  is
+preserved in the file. A copy of the file is saved to the log directory and is rotated along with the rest of
+the logs.  
+See also: 
+If you need help with regular expression click the Regular expression link on the Target system logs  page.
+T esting  auto discovery dur ation
+When adding a target to Bravura Security Fabric , a suitable List timeout  value is not known, so the value
+is set to -1 (in finit e).  If that default value is not changed, listing  issues or issues with the target system
+could cause auto discovery to never end. In order to avoid this, after  the target is successfully c on figur ed
+and tested  (on page 519), replace the initial  value with a suitable timeout  value.
+Calculating  the listing  dur ation  value
+1.Time how long it normally takes to list. The idmsuite .log records dur ation  at the end of the 1.
+agent's e x ecution.
+2. Multiply  by 2 and transform to seconds. 2.
+3.Replace the List timeout  value of that target with the result. 3.
+If the listing  dur ation  is too long
+▪Reconsider what the target is c on figur ed  to list. ▪
+▪List only the objects required for the in t egr ation: ▪
+▪Accounts - only list managed accounts.▪
+▪ Attribut es  - only if they are needed, and only the attribut es  actually used. ▪
+▪Groups - only if needed; if thousands of groups are listed; for example from Activ e  Directory, ▪
+consider listing  a reduced number of groups from a specific  OU or other container.
+▪Group members:▪
+▪If all security groups are not needed, do not select "All groups" under the General target tab▪
+option  for "Groups whose membership will be listed".
+▪Only manage groups if their members are actually used.▪
+If the listing  dur ation  is still long after  c ompleting  the steps, just increase the time  enough so it can
+account for normal diff er ences  in listing  dur ation  due to network and target system load, instead of
+multiplying  by 2.If the timeout  dur ation  is exceeded when listing ,  the listing  oper ation  will be aborted, and the previous
+listing  from auto-discovery for the target will be used.
+Con figuring  target-system-level authoriz ation
+De fine  authoriz ation  in f ormation  for target systems to:
+▪Set the number of approvals or denials required for requests involving e xisting  accounts or managed ▪
+groups on the target system.
+▪Assign s t atic  authorizers to de fine  who can approve requests based on the target system. ▪
+Users must be loaded into the Bravura Security Fabric database before you can de fine  them as
+authorizers.
+You must assign enough authorizers to meet the minimum number of authorizers requirement. If you do
+not do this, requests involving the resource are aut omatic ally  denied unless authorizers are assigned by a
+w orkflo w  plug-in.
+Target-system-level authoriz ation  does not apply to new account requests.
+Con figuring  inherited authoriz ation
+If you enable the Default authoriz ation  for child resources, including templates and managed groups,
+will be inherited from the target system option  on the Target system in f ormation  page the authoriz ation
+settings  from the target system will be inherited by managed groups and templates.
+You can override the c onfiguration  at the group and/or template level. See "Configuring  group-level
+authoriz ation"  for more inf ormation  about group authoriz ation.  See "Configuring  template-level
+authoriz ation"  for more inf ormation  about template authoriz ation.
+Con figuring  phased authoriz ation
+If phased authoriz ation  is enabled, navigate to the target system’s Authoriz ation  page  (on page 489),
+then:
+▪Click Add new… if you want to add a phase. ▪
+▪To change the order of phases, change the numbers in the Authoriz ation  phase column and click ▪
+Update .
+▪Select a phase to de fine  authorizers and settings. ▪
+If an authorizer is c onfigured  to be in more than one phase, then he must review the request in each
+phase. You can enable IDWFM AUTH PHASE PROPAGATION  (Manage the system > W orkflo w  >
+Options  > General ) to allow the authorizer’s response in the firs t phase in which he appears to be
+propagated to later phases.
+Determining number of required approvals
+To set authoriz ation  thresholds for a target system:
+1.Navigate to the target system’s Authoriz ation  page  (on page 489). 1.Select a phase if phased authoriz ation  is enabled.
+2.Type a value for the:2.
+▪Minimum number of authorizers – A value of 0 means requests for the resource are auto- ▪
+approved.
+The default value is set by the MIN AUTHORIZERS  policy.
+▪Number of denials before a change request is terminated – A resource request is canceled when ▪
+this number of authorizers deny it, as long as the Minimum number of authorizers has not been
+reached.
+The default value is set by the MAX REJECTIONS  policy.
+3.Click Update . 3.
+Assigning s t atic  authorizers
+To assign s t atic  authorizers to a target system:
+1.Navigate to the target system’s Authoriz ation  page  (on page 489). 1.
+Select a phase if phased authoriz ation  is enabled.
+2.Click Select... at the bottom  of the Authorizers table. 2.
+3.Search for, or enable the checkboxes next to the authorizers that you want to assign.3.
+4.Click Select at the bottom  of the page. 4.
+Assigning authorizers by user class
+To assign authorizers to a target system based on user class:
+1.Navigate to the target system’s Authoriz ation  page  (on page 489). 1.
+Select a phase if phased authoriz ation  is enabled.
+2.To de fine  membership criteria: 2.
+▪Select e xisting  user classes: Click Select... and enable the checkboxes for the user classes you want ▪
+to add, then click Select .
+▪Create new user classes: Click 
+ Add new… . See Adding user classes  (on page 738) for full details ▪
+on how to create a new user class.
+3. Con figur e  P articipan t  mapping for each user class that you add. 3.
+Select and create user classes until  you have de fined  membership.
+4.If your membership criteria includes multiple  user classes, de fine  whether users are required to match 4.
+All of the user classes or Any of the user classes .
+ Removing users from membership
+To remove users from membership, you can:
+1.Edit user classes to change the participan ts. 1.
+2.Delete user classes from the membership criteria.2.a.Navigate to the membership criteria  page where user classes are listed. a.
+b.Enable the checkbox next to the user classes you want to delete.b.
+3.Click Delete . 3.
+Con figuring  target-system-level resource oper ations
+De fine  resource oper ations  for target systems to:
+▪Determine whether Bravura Security Fabric  connectors aut omatic ally  fulfill  requests or whether ▪
+human agents will carry out tasks to fulfill  the requests.
+▪Add implementers to a target system to de fine  who fulfills  account requests based on the target ▪
+system if  Bravura Security Fabric  connector is not used.
+By default, all oper ations  are set to be carried out by the connector. You can override resource oper ations
+at the target system, group, and template level. If the oper ation  is set at target-system-level to be carried
+out by an implementer, you must assign at least one implementer to the target system. If you do not do
+this, requests involving the target system will be put on hold unless implementers are dynamically
+assigned by a plugin.
+Con figuring  inherited authoriz ation
+If you enable the Default authoriz ation  for child resources, including templates and managed groups,
+will be inherited from the target system option  on the Target system inf ormation  page the
+implemen t ation  settings  from the target system will be inherited by managed groups and templates.
+You can override the c onfiguration  at the group and/or template level. See Configuring  group-level
+resource operations  (on page 601) for more inf ormation  about group implemen t ation  c onfiguration.  See
+Configuring  template-level resource operations  (on page 627) for more inf ormation  about template
+implemen t ation  c onfiguration.
+Determining override levels
+To set resource oper ation  override levels for a target system:
+1.Navigate to the  Resource oper ations  page  (on page 489). 1.
+2.Select:2.
+▪No override the oper ation  is inherited from the target system type, which is by default connector ▪
+enacted.
+▪Connector oper ation  – the oper ation  will be connector enacted. ▪
+▪Implementer oper ation  – the oper ation  will be implementer enacted. ▪
+3.Click Update . 3.Assigning s t atic  implementers
+When the target-system-level oper ation  is carried out by an implementer, an Implementers table is
+included on the Implementer oper ation  page. You can remove or keep the inherited implementer, or add
+new implementers for the target system.
+To assign s t atic  implementers to a target system:
+1.Navigate to the  Resource oper ations  page  (on page 489). 1.
+2.Click Select... at the bottom  of the Implementers table. 2.
+3.Search for, or select the checkboxes next to the implementers that you want to assign to the resource.3.
+4.Click Select at the bottom  of the page. 4.
+To remove s t atic  implementers from a target system:
+1.Click Remove implementer in the same row as the user’s ID. 1.
+2.Click Update at the bottom  of the page. 2.
+Assigning implementers by user class
+To assign implementers to a target system based on user class:
+1.Navigate to the Resource oper ations  page  (on page 489). 1.
+2.Click the User classes sub-tab. 2.3.To de fine  membership criteria: 3.
+▪Select e xisting  user classes: Click Select... and enable the checkboxes for the user classes you want ▪
+to add, then click Select .
+▪Create new user classes: Click 
+ Add new… . See Adding user classes  (on page 738) for full details ▪
+on how to create a new user class.
+4. Con figur e  P articipan t  mapping for each user class that you add. 4.
+Select and create user classes until  you have de fined  membership.
+5.If your membership criteria includes multiple  user classes, de fine  whether users are required to match 5.
+All of the user classes or Any of the user classes .
+ Removing users from membership
+To remove users from membership, you can:
+1.Edit user classes to change the participan ts. 1.
+2.Delete user classes from the membership criteria.2.
+a.Navigate to the membership criteria  page where user classes are listed. a.
+b.Enable the checkbox next to the user classes you want to delete.b.
+3.Click Delete . 3.
+Con figuring  target-system-level role enforcement
+The role enforcement engine can identif y  users who have excessive or insufficien t  access, and issue
+w orkflo w  requests to correct variances. To set role-based access control (RBAC) enforcement options  for
+target systems:
+1.Navigate to the target system’s Role enforcement page  (on page 489). 1.
+2.Select the Enabled checkbox. 2.
+Bravura Security Fabric  displays the r esolution  settings.
+Role enforcement cannot be enabled on the target system until  at least one template account has
+been c onfigured  for it.
+3.If required, select a setting  for the R esolution  for de ficit  violation , to determine what action  Bravura 3.
+Security Fabric  takes when it discovers users who do not have an account on the target system, when
+they have a role that requires it:
+▪Add resource▪
+▪Request e x ception ▪▪Use parent role setting ▪
+The default is to take the setting  from the target system’s parent role.
+4.If required, select a setting  for the R esolution  for surplus violation , to determine what action  Bravura 4.
+Security Fabric  takes when it discovers users who have an account on this target system, but do not
+have a role that includes it:
+▪Remove resource▪
+▪Request e x ception ▪
+The system default is displayed as the “E ff ectiv e  setting ” .
+5.Click Update 5.
+Global RBAC enforcement options  must also be set before these settings  can take e ff ect.
+Gener ating  a pr ofile  s t atistics  report
+To generate a simple report of users who have a de ficit  or surplus violation  for this target system, click
+Generate . Bravura Security Fabric  does not issue violation  enforcement requests when you run this
+report. To see a more detailed report, see the REPORTS  (on page 2891). To list violations  and issue
+enforcement requests, run auto discovery  or use the rbacenforce program.  
+T esting  users 
+To determine whether an individual user has a de ficit  or surplus violation,  type the user’s Pr ofile  ID and
+click Test. The user’s RBAC enforcement pr ofile  and request attribut e  must be set to true.
+Customizing connector behavior
+Use the Manage the system  (PSA) module to set registry entries that control the behavior of individual
+connectors; for example, whether or not the Activ e  Directory connector should verify passwords against
+the PDC emulator. To customize the in t er action  between an individual connector and the corresponding
+target system:
+1.Click Manage the system > Maintenance > Connector behavior . 1.
+2.Select the sub-menu item for the connector you want to customize, or click Options  for options  that 2.
+apply to connector programs in general.
+Bravura Security Fabric  displays the options  page.
+3.Select the appropriate option  to enable or disable, or type a value in the field  provided. 3.
+4.Click Update at the bottom  of the page. 4.
+The following sub sections  describe settings  for individual connectors.
+Windows NT Server/domain
+The following apply to all Windows NT type targets:Option Description
+WINNT EMIT INFO If enabled, this registry setting  causes the agtnt
+connector to return IP/DNS in f ormation  on reset.
+WINNT RESET ENABLE ACCT Enable disabled Windows NT accounts after  a successful
+password reset.
+WINNT VERIFY DISABLED Allow Bravura Security Fabric  to verify passwords for
+disabled Windows NT accounts.
+By default, Bravura Security Fabric  returns failure if the
+account is disabled.
+Novell NDS
+The following apply to all Windows NT type targets:
+Option Description
+NDS RESET CLR EXPIRY Expire NDS passwords this many hours after  an
+adminis tr ativ e  reset.
+Note: If the Force Periodic Password Changes” setting
+is not enabled in NDS, Bravura Security Fabric  does not
+enable this setting  after  a password reset.
+NDS RESET ENABLE ACCT Enable disabled NDS accounts after  a successful
+password reset.
+NDS RESET EXPIRY INTERVAL By default, expire NDS passwords this many minutes
+after  a password reset, if users have no expiry interval
+set on the NDS server.
+Note: If the Force Periodic Password Changes” setting
+is not enabled in NDS, Bravura Security Fabric  does not
+enable this setting  after  a password reset.
+Groupwise Domain
+If the GroupWise connector ( agtgrpw ) fails to retrieve user lists (typically due to mail infrastructure
+problems), you can c on figur e  Bravura Security Fabric  to list users by enumer ating  each P os tOffice  rather
+than from the domain directly. To do this, enable the GRPW LIST PO setting.
+Connector Behavior Options
+Proxy list r andomiz ation  
+When a target system is c on figur ed  with a List of proxies to run connectors on , the default behavior is to
+attemp t  to connect to the proxies in sequence in the order in which they are listed. The fir s t successful
+c onnection  is used as the proxy to run the connector.You can c on figur e  Bravura Security Fabric  to attemp t  to connect to proxies in random order. To do this,
+enable the AGENT PROXY RANDOM setting  on the Manage the system > Maintenance > Connector
+behavior  > Options  page.
+Connector timeout  
+Bravura Security Fabric  can trigger updates on external IT Service Management (Ticket) systems, and
+send email to administrators when an connector times  out. The amount of time  before Bravura Security
+Fabric  stops an connector is c on figur ed  in each target system’s Connector timeout  setting.
+To activ a t e  this trigger, type the name of the program or target ID in the AGENT TIMEOUT field  on the
+Manage the system > Maintenance > Connector behavior  > Options  page.  
+Con figuring  target system oper ation  locking
+Some target systems do not allow multiple  client c onnection  attemp ts  to occur simultaneously, so
+connectors write lock files to prevent this from happening. Locks are also created when other programs
+connect to a target system.
+Some connector concurrency rules are pr e-de fined;  for example:
+▪NDS (and related target systems such as GroupWise) have a pr e-de fined  lock: ▪
+%LDIR%NWCLIENT.lock .
+If an oper ation  on the NDS target system nds1 triggers a lock, the following lock file is created:
+<Program Files path>\Bravura Security\Bravura Security Fabric\Locks
+\NWCLIENT.lock
+No other target systems that use this lock (groupwise1, nds2) can do anything until  the lock is
+removed.
+▪Windows server target systems have a pr e-de fined  lock: ▪
+%LDIR%NTCLIENT%HOST%.lock .
+So if an oper ation  on the Windows server target system nt1 triggers a lock, the following lock file is
+created:
+<Program Files path>\Bravura Security\Bravura Security Fabric\Locks
+\NTCLIENTNT1.lock.
+No other oper ations  can be performed on nt1, however oper ations  can still be performed on other
+Windows server target systems.
+When to add manual locks
+Under normal circumstances you do not need to set manual locks because there are already internal
+locks set; however, in some circumstances manual locks are necessary. For example, when using a
+mainframe system and a Telnet connector with no inherent locks, your mainframe target system may
+limit the target system administrator  to have only one login at a time.  In this situation,  you need to set a
+manual lock so you do not attemp t  to simultaneously have two login sessions using the same
+administrator ID.

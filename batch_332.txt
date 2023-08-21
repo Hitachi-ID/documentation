@@ -1,0 +1,317 @@
+Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: In f ormation  is only included in the report output if the
+start date and time  falls within the Start date range . Use
+the fir s t set of date / time  controls to select the earliest
+time  to include, and the second set of date / time
+controls to select the latest time  to include.Criteria Description
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Sent notific ations
+Purpose : To report messages sent by the Bravura Pass  notific ation  subsystem.
+Executable : usernotif
+Search Criteria :
+Criteria Description
+Notific ation  type Select which notific ation  types to include in the report:
+All notific ations : includes both activ e  and deleted
+notific ations.
+Activ e  notific ations : only includes activ e  notific ations.
+Inactiv e  notific ations : only includes inactiv e  notific ations.
+Notific ation  ID Select one or more user notific ation  IDs. All notific ations
+are selected by default. This field  is not displayed if there
+is no data available.
+User ID Type the pr ofile  ID of the user for whom you want to
+generate the report. Alt ernativ ely ,  you can search for one
+or more pr ofile  IDs. All users are selected by default.
+Status Select one or more statuses to only list notific ation
+events for users who have been placed in that status in
+the usernotif  table:
+Unknown : An error occurred, there is something wrong.
+Reminded : Notific ation  has been sent, user has not yet
+resolved.
+On hold : If the notific ation  c on figur ation  de fines  any "Do
+not send ..." period, or any pr e-c onditions  are set to
+exclude. For challenge and response notific ations,  the
+notific ation  may not be set up properly.
+Implemented : Sent notific ation  has been resolved by the
+user.
+Expired : User did not respond, did not resolve and
+notific ation  has expired.
+Last reminder time Choose one of the following options  to de fine  a last
+reminder time:Criteria Description
+Date not required : This is the default setting.  Events are
+reported regardless of the "last reminder time".
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.Criteria Description
+Option Description
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: Users are only included in the report output if their "last
+reminder time"  falls within the selected r elativ e  date
+range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Users are only included in the report output if their "last
+reminder time"  falls between the Earliest last reminder
+time  and Latest last reminder time.
+Use within the last N days : Users are only included in the
+report output if their "last reminder time"  falls within the
+specified  last number of days.
+Use N or more days ago : Users are only included in the
+report output if their "last reminder time"  was more than
+the specified  number of days ago.
+Report type Choose from the drop-down list. The Detailed setting  is
+used by default.
+Detailed : Creates a detailed report.
+Users without notific ations : Report includes users who
+qualify for notific ations  but have not yet received any.
+Summary by notific ation  ID: Creates a summarized
+report, organized by notific ation  ID.
+Graph type Specify the type of graph for a visual r epr esen t ation  of
+the data. The available graph type is a v ertic al  bar chart.
+This field  is only visible when the report type Summary
+by notific ation  ID is selected.
+Daily notific ation  s t atistics
+Purpose : Summary of messages sent per day.
+Executable : usernotifstats
+Search Criteria :
+Criteria Description
+Notific ation  type Select which notific ation  types to include in the report:Criteria Description
+All notific ations : includes both activ e  and deleted
+notific ations.
+Activ e  notific ations : only includes activ e  notific ations.
+Inactiv e  notific ations : only includes inactiv e  notific ations.
+Notific ation  ID Select one or more user notific ation  IDs. All notific ations
+are selected by default. This field  is not displayed if there
+is no data available.
+User ID Type a user ID that matches the user for which you want
+to report events. Alt ernativ ely ,  you can search for one or
+more pr ofile  IDs.
+Last reminder time Choose one of the following options  to de fine  a last
+reminder time:
+Date not required : This is the default setting.  Events are
+reported regardless of the "last reminder time".
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.Criteria Description
+Option Description
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: Users are only included in the report output if their "last
+reminder time"  falls within the selected r elativ e  date
+range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Users are only included in the report output if their "last
+reminder time"  falls between the Earliest last reminder
+time  and Latest last reminder time.
+Use within the last N days : Users are only included in the
+report output if their "last reminder time"  falls within the
+specified  last number of days.Criteria Description
+Use N or more days ago:  Users are only included in the
+report output if their "last reminder time"  was more than
+the specified  number of days ago.
+Show detailed report Select this checkbox to display additional  report details.
+Graph type Specify the type of graph for a visual r epr esen t ation  of
+the data. The available graph type is horizontal bar chart.
+This field  is only visible when the detailed report type is
+not selected.
+Number of rows for graph The number of notific ation  IDs to display. The maximum
+number of rows that can be displayed is 100. This field  is
+only visible when the graph type is horizontal bar chart.
+Event log
+Purpose : To report events that have occurred in Bravura Security Fabric  within a de fined  time  period.
+Executable : operations
+Search Criteria :
+Criteria Description
+Node ID Select the r eplic ation/ shar ed  schema nodes that you
+want to include. All nodes are included by default.
+This option  is only displayed if there are multiple  nodes in
+the environment; for example, with r eplic ation  or shared
+schema c on figur ations.
+Result Select:
+(All): to include all events, regardless of their outcomes.
+Success : to only include successful events.
+Failure : to only include failed events.
+Show only help desk events Select this checkbox to only display events triggered by
+help desk users and to change the list of oper ations  into
+the list of help desk oper ations  accordingly.
+Oper ation Select the oper ations  that you want to include. By
+default, all oper ations  available with the current Bravura
+Security Fabric  license are included.
+Target system ID Type a comma-and-space-delimited list of target system
+IDs for which you want to run the report. All target
+systems are included by default. Alt ernativ ely ,  you can
+search for one or more target systems.
+Target system type Select the target types to include. All target types are
+included by default.
+This field  is not displayed if there is no data available.Criteria Description
+Target system group Select one or more target system groups to include in the
+report. The list includes only target system groups in use
+with the instance.
+This field  is not displayed if there is no data available.
+Template accounts Type one or more template accounts to include in the
+report.
+Roles Type one or more roles to include in the report.
+Segr eg ation  of duties  rules Type one or more SoD rules to include in the report.
+Group ID Type the ID of one or more groups to include in the
+report. Alt ernativ ely ,  you can search for one or more
+groups.
+Session log identifier Type an identifier  to include.
+By default, this is the IP address of the user who initia t ed
+the event. Other in f ormation  may be specified  by the
+SESSION IDENT PLUGIN .
+User ID Type a user ID that matches the user for which you want
+to report events. Alt ernativ ely ,  you can search for one or
+more pr ofile  IDs.
+Requester ID Type a pr ofile  ID that matches the users you want to
+include, where the requester is the user that initia t ed  the
+event. Alt ernativ ely ,  you can search for one or more
+pr ofile  IDs.
+Request ID Type the ID of the request for which you want to run the
+report.
+Requester is a product administrator Select this checkbox to only display events triggered by a
+product administrator.
+Choose date range Choose one of the following options  to de fine  a date
+range for the events:
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.

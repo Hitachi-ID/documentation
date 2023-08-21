@@ -1,0 +1,237 @@
+9.Click the c on figur e  icon 
+  next to the Plugin to determine compliance  field. 9.
+10. Con figur e  parameters for password expiry: 10.
+▪Set the required Number of days before expiry that the user will be notified  to 10,5,3,2,1 . ▪
+▪In the Only calculate password expiry for accounts on these target systems  field,  select the Activ e ▪
+Directory system you set up to check password expiry in Chapter 1.
+11. Click Update . 11.12. Navigate to the Batch notific ation  inf ormation  page for the PASSWORDEXPIRY notific ation. 12.
+You can click the General tab or use the breadcrumb links.
+13. Con figur e  the plugin responsible for delivering reminders. 13.
+a.Click the c on figur e  icon 
+  next to the Plugin to run to deliver compliance reminder  field. a.
+b.Enter the following:b.
+Mail subject  Your password will expire in %DAYS% days .
+Mail message
+Dear %USERNAME%,
+Your password will expire in %DAYS% days.
+Please visit the link below to change your password.
+http://bravura-pass.example.com
+Sincerely, Support Desk Manager
+14. Click Update . 14.15. Navigate to the  Batch notific ation  inf ormation  page for the PASSWORDEXPIRY notific ation. 15.
+You can click the General  tab or use the breadcrumb links.
+16. Schedule the notific ation: 16.
+a.Click the Schedule  tab. a.
+b.Next to Days to run  this job, select "Only on weekdays". b.
+c.Enter 13:00  in the Time to run  field. c.
+d.Click Add. d.You have now c on figur ed  Bravura Security Fabric  to notif y  users that their password will expire on Activ e
+Directory in 10, 5, 3, 2 and 1 days.
+Con figur ation  detail
+To c on figur e  batch notific ations:
+1.Click Manage the system > Policies > User notific ations  > Batch notific ations . 1.
+2.Click Add new … . 2.
+3.Type the notific ation  ID and Description . The notific ation  ID can only contain ASCII characters. 3.
+4.Set the notific ation  Severity : 4.
+▪Info  ▪
+The notific ation  is in f ormational.  The user may be requested to take action,  but if he does not
+respond, no further action  is taken.
+▪Warning  ▪
+The notific ation  is a warning. An action  is requested but not forced at the current time.  If the user
+does not comply after  a certain number of warnings, Bravura Security Fabric  can take another
+action.5.Determine the compliance event to trigger a notific ation  by choosing the Plugin to run to determine 5.
+compliance :
+▪Password expiry  ▪
+Users’ passwords are about to expire.
+▪Security questions  r egis tr ation  ▪
+Users have not registered their security question  pr ofiles.
+▪Query USERSTAT tag  ▪
+A user in f ormation  query evaluates a particular  value; for example, the value exists, is true, or is
+less than some other value. Users who do not match the c ondition  are notified.  There are several
+built-in USERSTAT tags
+Tag Description Example
+LASTPSL The last time  the use used the Attach  other
+accounts module. The time  used is the
+authentic ation  time  of the session.2021-10-28 14:40:16 (UTC-06:00)
+LASTSKIN The last skin the user used. default
+LASTLANG The last language the user used en-us
+LASTPWCHGMODULE The last module used to reset the user's
+password.pss,ida,idpm
+PSLDONE The user has satis fied  mandatory account
+requirements. This is de fined  by the per
+target system setting  Users must have
+accounts , and the global system variable
+PSL_MIN_ACCOUNTS.
+The allowed value true is set by
+psdonechk or when the user or a help
+desk user uses the Attach  other accounts
+module.true
+PSQDONE The user has satis fied  the security question
+requirement. The allowed value true is set
+by psdonechk or when the user or a help
+desk user uses the Update security questions
+module.true
+.
+▪Accounts attachmen t  ▪
+Users do not own enough accounts, as de fined  by the PSL MIN ACCOUNTS system variable.  
+or  
+Users do not have an account on a target system which has the Users must have accounts option
+enabled.
+▪Mobile enrollment  ▪
+Users have not enrolled a mobile device.6.Determine the Maximum number of messages to send per run to limit how many messages are sent 6.
+out per batch run. When used together with Time interval after  sending a message during which no
+further messages should be sent to the same user , the users that are notified  in the fir s t batch can be
+bypassed in the next batch. As a result, a batch notific ation  can be sent to all users in batches, rather
+than all at once.
+7.Select the radio button  for: 7.
+▪Maximum number of messages to send per user and type the number of messages to send ▪
+▪Unlimited reminders to keep sending reminders until  the user is compliant ▪
+▪No reminders to disable the notific ation ▪
+8.Set the Time interval after  sending a message during which no further messages should be sent to 8.
+the same user.
+Enter a number and choose an interval. For example, if this is set to 10 minutes and the plugin is run
+twice within 8 minutes, then any users who receive the fir s t notific ation  will not receive it a second
+time.
+9.If you de fined  a Maximum number of messages to send per user for a warning-level notific ation, 9.
+determine the action  to take for non-compliant users by choosing the Plugin to run when reminder
+limit is exceeded :
+▪Set USERSTAT tag▪
+Set a USERSTAT tag for a non-compliant user, and optionally  deletes the tag when compliance is
+reached.
+▪Global email plugin▪
+Sends an email to the user via the plugin specified  by the GLOBAL MAIL PLUGIN system variable.
+▪Disable pr ofile ▪
+Disable the Bravura Security Fabric  pr ofile  of the particular  user, and optionally  re-enables the user
+when compliance is reached.
+10. If you want to stop reminders from being sent on certain dates, type them in the No reminders on 10.
+these dates field.
+Type the dates one line at at time,  in the format MM-DD or YYYY-MM-DD.
+11. Click Add. 11. Next: 
+You can now:
+▪ Con figur e  settings  for the compliance, reminder, and action  plugins by clicking the c on figur e  icon 
+ ▪
+next to the plugin name. Settings  for built-in programs are explained on the current page.
+▪Schedule batch notific ations  (on page 470). ▪
+▪Test batch notific ations  (on page 473) using the ntftrigger program. ▪
+▪Set pr e-c onditions  (on page 475) for e v aluating  a notific ation  for a user. ▪
+Con figuring  batch notific ation  compliance plugins
+Compliance plugins evaluate the attribut es  of a particular  user and determine whether that user is
+compliant with the notific ation  rule or not. Unlike plugins for web notific ations,  compliance plugins for
+batch notific ations  do not determine the text of the message to be delivered.
+No c onfiguration  is required for the Security questions  regis tration  plugin for batch notific ations.
+Con figur e  built-in plugins for batch notific ations  by clicking the c on figur e  icon 
+  next to the plugin field.
+Built-in plugins available for the Plugin to run to generate a list of non-compliant users require the
+following parameters:
+Option Description
+Password expiry options
+Number of days before expiry that the user
+will be notifiedUse comma-delimited values to set multiple
+notific ations
+Only calculate password expiry for accounts
+on these target systemsSelect the target systems on which account password
+expiry will be calculated. By default it calculates on all
+target systems listed.Option Description
+If password on these target systems are set
+to not expire, do not send notific ationsSelect the target systems for which you do not want to
+send notific ation  if the account has ”Password never
+expires” enabled.
+Query USERSTAT tag options
+Tag The name of the USERSTAT tag value to check.
+Comparison Select the comparison rule to determine that the tag
+value Must or Must not :
+▪be equal to▪
+▪be less than▪
+▪be greater than▪
+▪equal▪
+Value Type the value used to evaluate the tag,and select the
+value type.
+There are several built-in USERSTAT tags
+Tag Description Example
+LASTPSL The last time  the use used the Attach  other
+accounts module. The time  used is the
+authentic ation  time  of the session.2021-10-28 14:40:16 (UTC-06:00)
+LASTSKIN The last skin the user used. default
+LASTLANG The last language the user used en-us
+LASTPWCHGMODULE The last module used to reset the user's
+password.pss,ida,idpm
+PSLDONE The user has satis fied  mandatory account
+requirements. This is de fined  by the per
+target system setting  Users must have
+accounts , and the global system variable
+PSL_MIN_ACCOUNTS.
+The allowed value true is set by
+psdonechk or when the user or a help
+desk user uses the Attach  other accounts
+module.true
+PSQDONE The user has satis fied  the security question
+requirement. The allowed value true is set
+by psdonechk or when the user or a help
+desk user uses the Update security questions
+module.true
+.Con figuring  batch notific ation  reminder plugins
+Reminder plugins are responsible for delivering the notific ation  in the recipients’ chosen language.
+Con figur e  built-in plugins for batch notific ations  by clicking the c on figur e  icon 
+  next to the plugin field.
+Built-in plugins available for the Plugin to run to deliver compliance reminder require the following
+parameters:
+Option Description
+Mail subject The message subject line can contain user -specific  macros, and m4macros
+without embedded HTML.
+Mail message The message content can be up to 2000 characters long and can contain
+user -specific  variables,as listed in table Adding user -specific  variables in
+notific ation  messages  (on page 475) You can use m4 tag names to de fine
+more complex notific ation  messages that use HTML code to enhance the
+pr esen t ation.See  Email notific ation  (on page 412).
+These plugins also use settings  de fined  in the Manage the system > W orkflo w  > Email c on figur ation
+menu. See Email notific ation  (on page 412).
+Email recipients cannot see other recipients. Mail is sent with bcc to each recipient.
+Con figuring  batch notific ation  action  plugins
+An action  plugin runs when a user has received the maximum number of notific ations  for a specific  rule.
+It is responsible for taking extra action  in the event of c ontinued  non-compliance. Con figur e  built-in
+plugins for batch notific ations  by clicking the c on figur e  icon 
+  next to the plugin field.
+No c onfiguration  is required for the Disable profile  plugin for batch notific ations.
+Built-in plugins available for the Plugin to run when reminder limit is exceeded require the following
+parameters:
+Option Description
+Send email options
+Mail subject The message subject line can contain m4 maros without embedded HTML.
+Mail message The message content can contain user -specific  variables, as listed in table
+Adding user -specific  variables in notific ation  messages  (on page 475).
+You can use m4 tag names  (on page 476) to de fine  more complex
+notific ation  messages that use HTML code to enhance the pr esen t ation.
+Set USERSTAT tag options
+Tag This is the field  name in the USERSTAT table. If the field  does not exist, the
+plugin creates it.
+Value Set the field  value for this user.
+There are several built-in USERSTAT tagsTag Description Example
+LASTPSL The last time  the use used the Attach  other
+accounts module. The time  used is the
+authentic ation  time  of the session.2021-10-28 14:40:16 (UTC-06:00)
+LASTSKIN The last skin the user used. default
+LASTLANG The last language the user used en-us
+LASTPWCHGMODULE The last module used to reset the user's
+password.pss,ida,idpm
+PSLDONE The user has satis fied  mandatory account
+requirements. This is de fined  by the per
+target system setting  Users must have
+accounts , and the global system variable
+PSL_MIN_ACCOUNTS.
+The allowed value true is set by
+psdonechk or when the user or a help
+desk user uses the Attach  other accounts
+module.true
+PSQDONE The user has satis fied  the security question
+requirement. The allowed value true is set
+by psdonechk or when the user or a help
+desk user uses the Update security questions
+module.true
+.
+Scheduling batch notific ations
+Once you have added a batch notific ation,  you must schedule it. To do this:
+1.On the Batch notific ation  inf ormation  page for a notific ation,  click the Schedule tab. 1.
+2. Con figur e  Schedule  settings  as listed in the table below. 2.
+If JavaScript is enabled, options  are shown or hidden depending on the Repeat type .
+3.Click Add or Update . 3.
+The scheduled job can also be viewed and modified  in the Manage the system > Maintenance >
+Scheduled jobs  menu. Bravura Security Fabric  aut omatic ally  appends the pr e fix  _NFY_ to all scheduled
+notific ation  jobs to distinguish  them from other scheduled jobs.

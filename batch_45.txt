@@ -1,0 +1,339 @@
+psntfclient -userid <user ID>[-url http[s]://<server>[:<port>]/
+<path>/cgi/psn.exe ] [-targetid <target ID> ] [-width <width> -
+height <height>] [-skin <skinID>] [-lang <lang-locale>]
+Option  / Argument Description
+-userid <userid> Use %USERNAME% to use the currently logged in user,
+or specify a user ID.
+-url <URL> The path to the User notific ations  (psn) module on the
+Bravura Security Fabric  server. If used, this value
+overrides the URL set during ins t allation.
+-t ar g etid  <target ID> Specify a target system if the user ID is not a Bravura
+Security Fabric  pr ofile  ID. The url can optionally  specify
+a port and security.
+-width <width> Specify the notific ation  window width.
+-height <height> Specify the notific ation  window height.
+-skin <skinID> Specify a skin ID. If used, this value overrides the one
+that is specified  for the user in the LASTSKIN tag in the
+userstat table.
+-lang <lang-locale> Specify a language code for the language-locale. If used,
+this value overrides the one that is specified  for the user
+in the LASTLANG tag in the userstat table.
+The Notific ation  Client has a minimum width and height of 913 x 338 pixels. If the specified  -width
+or -height is less than the minimum required dimensions, or if there are any force-type notific ations,
+then the browser opens at 913 x 338 pixels.
+Examples
+1.To launch the notific ation  page for user JOHNS: 1.
+psntfclient.exe -userid JOHNS
+2.To launch the notific ation  page for user JOHNS with specified  width and height: 2.
+psntfclient.exe -userid JOHNS -width 913 -height 338
+3.To launch the notific ation  page with the secure kiosk account (SKA) skin for user JOHNS: 3.
+psntfclient.exe -userid JOHNS -ska 1
+4.To launch the notific ation  page for the user aduser1 de fined  on target system AD1, overriding the 4.
+default URL set during ins t allation,  and using SSL and port 8080:
+psntfclient.exe -userid aduser1 -target AD1 -url https://
+10.0.51.26:8080/idmsuite/cgi/psn.exe
+5.To launch the notific ation  page for the user JOHNS and specifying a skin named myskin and 5.
+specifying the fr-fr language and locale, overriding the values in the userstat table for LASTSKIN
+and LASTLANG:
+psntfclient.exe -userid JOHNS -skin myskin -lang fr-fr.
+Notific ation  utility  (ntftrig g er)
+Bravura Security Fabric  uses the ntftrigger  program to communicate with the Notific ation  Service
+(psntfsvc ) and send out notific ations.  Scheduling a batch notific ation  creates a scheduled job to run
+ntftrigger . You can use this program to test notific ations  rather than wait for the scheduled time.
+See ntftrigger usage in f ormation  and examples
+Web notific ations:
+ntftrigger.exe -listusernotifications -user <user ID> [-
+targetid <target ID>]
+                 [-svcid <SVCID>] [-timeout <N>] [-threads <N> ]
+                 [-increment I|N|P]
+ntftrigger.exe -getusernotification -notifyid <notifyid> -
+user <user ID>
+                 [-targetid <target ID>]
+                 [-svcid <SVCID>] [-timeout <N>] [-threads <N>]
+                 [-increment I|N|P]
+Batch notific ations:
+ntftrigger.exe -runbatch -notifyid <notifyid> [-targetid <target ID>]
+                 [-svcid <SVCID>] [-timeout <N>] [-threads <N>]
+                 [-increment I|P]
+Argument Description
+-g e tusernotific ation Get a specified  web notific ation  for a specified  user.
+-increment <increment> User notific ation  increment indicator:
+I - increment
+N - no increment
+P - peek - used for a dry-run or test
+The default for web notific ations  is N. The N indicator
+does not apply to batch notific ations.
+-lis tusernotific ations List all web notific ations  for a specified  user.
+-notif yid  <notif yid> Notific ation  ID.
+-runbatch Run a specified  batch notific ation.
+-svcid <svcid> SVCID that the Notific ation  Service (p sntfs v c)  uses. If not
+specified,  it is read from the instance’s registry.
+-t ar g etid  <t ar g etid> Target system ID for the specified  account.
+-threads <threads> Number of threads to send concurrent requests. If not
+specified,  the default is 1.Argument Description
+-timeout  <timeout> Connection  timeout  value. If not specified,  it is read from
+the instance’s registry.
+-user <user> Pr ofile  ID if TARGETID is not specified;  account/longid on
+TARGETID otherwise.
+Examples
+1.To list web notific ations  for a specific  user: 1.
+    ntftrigger.exe -listusernotifications -user brownwi
+2.To list a specific  web notific ation  for a specific  user: 2.
+    ntftrigger.exe -getusernotification -notifyid WEBNOTE -
+user brownwi
+3.To run a batch notific ation: 3.
+   ntftrigger.exe -runbatch -notifyid BATCHNOTE
+4.To dry-run a batch notific ation,  use the -increment P  option.  The batch notific ation  proceeds as 4.
+usual with the compliance plugin and will return non-compliant users. The users' notific ation  status
+will not be updated and the reminder plugin and action  plugin will not be executed. The option  is used
+to test the notific ation.
+   ntftrigger.exe -runbatch -notifyid BATCHNOTE -increment P
+.
+Password expiry de t ection
+Bravura Security Fabric  can detect when users’ passwords are about to expire on some target systems. It
+can also keep track of when their passwords will expire based on the last time  the passwords were
+changed and Bravura Security Fabric  password policies. Based on these criteria, Bravura Security Fabric
+can determine that it is time  for users to change their passwords.
+. If both the target system Check password expiry  and Bravura Security Fabric password policy rule for
+password must be changed every N days  are in eff ect,  the earliest expiry time  is used.
+Bravura Security Fabric  informs users of the upcoming expiry, and asks them to change all of their
+passwords using Bravura Security Fabric , rather than changing individual passwords on the target
+systems as they expire. Bravura Security Fabric  notifies  users either by email, or by opening the user’s
+browser to an in f ormativ e  page during network login.
+Initial  c onsider ations
+To determine the best solution  for expiry notific ation,  answer the following questions:
+1.Where is the expiry in f ormation  coming from? 1.
+You can gather a list of soon-to-expire users from:
+▪One or more target systems▪In most environments, password aging is already implemented on one or more target systems.
+Using target systems as the source means that users’ scheduled will not be interrupted.
+▪The Bravura Security Fabric  database ▪
+The Bravura Security Fabric  password policy rule for password must be changed every N days  is
+enabled to expire passwords.
+▪Both target systems and Bravura Security Fabric  database. ▪
+For example, Con figur e  Bravura Pass  password policy to expire passwords every 80 days and – if
+required – adjust password policy on integrated systems to expire passwords every 90 days. This
+way, Bravura Pass  passwords will expire fir s t and users will never see the expiry warnings from
+individual systems and applic ations.
+Alternately, if feasible, set Bravura Pass  password expiry to 90 days and modify expiry on all
+integrated systems to 100 days. This allows a typical or g aniz ation  to retain a 90 day expiry period
+overall, but involves a bit more change control on e xisting  systems.
+2.How do you want to notif y  users? 2.
+You can c on figur e  Bravura Security Fabric  to:
+▪ Aut omatic ally  open a browser at the Bravura Security Fabric  web site when a user fir s t logs in. ▪
+▪Send all users whose passwords are about to expire a batch email.▪
+▪Take some other action. ▪
+If password expiry is enabled on users’ primary login operating  system – for example, Active
+Directory – it is recommended that you do not c onfigure  Bravura Security Fabric to notif y  users
+whose password has already expired. This could lead to a situation  where a user logs in and
+receives an expiry notific ation  from the operating  system, then changes his password using the
+operating  system’s native  method. Once logged in, the user would receive a Bravura Security Fabric
+notific ation  to change a password he’s already changed. It is also recommended that transparent
+password s ynchroniz ation  is implemented in this case.
+Configure  Bravura Pass to monitor upcoming password expiry on all systems. At a minimum, send
+email reminders to users asking them to change their soon-to-expire password. Include a link to the
+Bravura Pass URL in these emails.
+Password expiry emails should be sent to users 10, 5, 3, 2 and 1 days before the current password
+expires.
+De t ecting  target system password expiry
+1.Click Manage the System > Resources > Target systems . 1.
+2.Select 
+ the target system from which you want to get the expiry in f ormation. 2.
+3.Ensure that the Check password expiry box is selected. 3.
+4.Repeat for each target system to be considered for expiry.4.
+For each target system with the Check password expiry setting  enabled, Bravura Security Fabric  records
+the password e xpir ation  da t e/time,  and the last password change, during auto discovery.See also:
+See Target Systems  (on page 480) for more in f ormation  about c on figuring  target systems.
+De t ecting  password expiry based on Bravura Security Fabric  password policy
+To check soon-to-expire passwords based on the last time  users changed their password, set up password
+strength rules to add users’ password history to the Bravura Security Fabric  database and establish a
+password expiry interval:
+1.Click Manage the system > Policies > Password policies . 1.
+2.Select 
+ the policy you want to update. 2.
+3.Select the Password policy tab. 3.
+4.Set the Not be an old password rule to required, if you want to prevent users from selecting  a 4.
+previously used password.
+5.Enable the password must be changed every N days rule and set the value to the desired password 5.
+expiry interval.
+6.Click Update . 6.
+Example: Detect soon-to-expire passwords
+This example shows you how to c on figur e  Bravura Security Fabric  to detect password expiry on an Activ e
+Directory target system.
+If both target password expiry and Bravura Security Fabric password history are in eff ect,  the earliest
+expiry time  is used.
+Requirements
+This example assumes that:
+▪Bravura Security Fabric  and Connector Pack installed. ▪
+▪An Activ e  Directory target system is added as a source of pr ofiles. ▪
+Use target system policy to record expiry
+To use the target system policy:
+1.Log in to Bravura Security Fabric  as superuser. 1.
+2.Click  Manage the system > Resources > Target systems > Manually de fined. 2.
+3.Select the Activ e  Directory target system. 3.
+4.Ensure that the Check password expiry box is selected. 4.
+For each target system with the Check password expiry setting  enabled, Bravura Security Fabric  records
+the password e xpir ation  da t e/time,  and the last password change, during auto discovery.
+Set Bravura Pass  password policy to use history rulesCon figur e  password expiry policy based on the last time  users changed their password using Bravura
+Security Fabric .
+A particularly  useful strength rule, not be an old password  prevents or warns users against reusing old
+passwords. This ensures that if a user’s password was divulged in the past, it will not c onstitut e  a threat
+in the future.
+Details of history rule implemen t ation  are described here.
+A particularly  useful strength rule, not be an old password prevents or warns users against reusing old
+passwords. This ensures that, if a user’s password was divulged in the past, it will not c onstitut e  a threat
+in the future.
+This rule is implemented as follows:
+▪Passwords are stored in the history database table.▪
+Users’ passwords are cryptographically hashed. Data includes the pr ofile  ID, account ID, target ID, the
+time  the password was modified,  and by whom.
+▪Bravura Security Fabric  enforces password history by matching the newly requested password against ▪
+all passwords used by that user on all target systems within the selected target system group. If there
+is a match, Bravura Security Fabric  rejects the new password request.
+▪Users can select a password that was used on target systems in a target system group other than the▪
+ones selected for password change.
+▪If used in c onjunction  with the have password rules apply to the fir s t N characters rule, new ▪
+passwords will be historically compared on only the fir s t N characters.
+▪Passwords in the history table that are older than a certain number of days may be accepted by▪
+Bravura Security Fabric  if that has been c on figur ed  by the password rule allow old passwords after  N
+days .
+▪Whenever a password is successfully changed by Bravura Security Fabric , it is added to the history ▪
+table. This includes passwords changed by:
+▪Users of the Change passwords  (PSS) module ▪
+▪help desk user s using the Help users  (IDA) module ▪
+▪The Password Manager service (IDPM)▪
+The number of days for allow old passwords after  N days  must be greater than the number of days for
+password must be changed every N days .
+The recommended setting  is that N = 6 x maximum age; for example, password must be changed every
+N days  set to 30 days, and allow old passwords after  N days  set to 180 days.
+If c onfigured  incorrectly, users are able to reset and "change" their password using their e xisting
+password.
+Bravura Security Fabric does not test prospective  passwords against the target system's password history.
+Reset operations  may fail due to the target system rejecting  a password it identifies  as being reused.
+Bravura Security Fabric only identifies  passwords changed through the password change (PSS),
+transparent s ynchroniz ation  (idpm ) or help desk (IDA) moduleBy default Active  Directory expires passwords every 42 days, and does not allow users to use the last 10
+passwords. This means users will not be able to reuse a password until  the 11th reset minimum,
+assuming they only change their password when it expires. The setting  password must be changed every
+N days  only prompts users to change their passwords when they login to Bravura Security Fabric. For use
+cases where Bravura Security Fabric is only accessed when users lock themselves out or forget their
+password, this setting  is not practic al.  This might be the case, for example, when password
+s ynchroniz ation  is c onfigured  to be triggered from Active  Directory (transparent s ynchroniz ation).
+To set rules for password history:
+1.Log in to Bravura Security Fabric  as superuser. 1.
+2.Click Manage the system > Policies > Password policies . 2.
+3.Select the DEFAULT  policy. 3.
+4.Click the Password policy  tab again for the default password policy. 4.
+5.Set not be an old password  to "Required". 5.
+6.Set password must be changed every N days  to "Enabled" and type 42. 6.
+This value match the default Activ e  Directory password expiry setting  (see the note below).
+7.Set allow reuse of old passwords after  N days  to "Enabled" and type 420 . 7.
+This value matches the default Activ e  Directory setting.
+8.Click Update . 8.
+See also
+▪Example: Forced-level password expiry web notific ation  (on page 450) ▪
+▪Example: Con figuring  batch notific ation  for password expiry  (on page 460) ▪
+Adding user in f ormation  to the database
+Miscellaneous non-sensitiv e  in f ormation  about users can be stored in the Bravura Security Fabric
+database USERSTAT  table. The in f ormation  is stored in tag/value pairs. The user notific ation  system can
+search this in f ormation  and determine:
+▪Whether an action  should be taken; for example by sending out a notific ation  to an individual user, or ▪
+building a list of users to be disabled. Built-in plugins are available, and can evaluate a particular  value
+according to a number of comparison rules. You c on figur e  built-in plugins using the Manage the system
+(PSA) module.
+▪Which users to evaluate by setting  up pre-c onditions . You may want to evaluate users in a certain ▪
+loc ation,  or improve server performance by avoiding sending out too many messages at once.
+You can use a notific ation  action  plugin to set a USERSTAT tag; for example, to escalate the severity of
+notific ations.  You could set a tag to true if a user has failed to respond to warning-level reminders, then
+use that tag in a force-level notific ation.
+In addition,  you can query a number of built-in USERSTAT tagsTag Description Example
+LASTPSL The last time  the use used the Attach  other
+accounts module. The time  used is the
+authentic ation  time  of the session.2021-10-28 14:40:16 (UTC-06:00)
+LASTSKIN The last skin the user used. default
+LASTLANG The last language the user used en-us
+LASTPWCHGMODULE The last module used to reset the user's
+password.pss,ida,idpm
+PSLDONE The user has satis fied  mandatory account
+requirements. This is de fined  by the per
+target system setting  Users must have
+accounts , and the global system variable
+PSL_MIN_ACCOUNTS.
+The allowed value true is set by
+psdonechk or when the user or a help
+desk user uses the Attach  other accounts
+module.true
+PSQDONE The user has satis fied  the security question
+requirement. The allowed value true is set
+by psdonechk or when the user or a help
+desk user uses the Update security questions
+module.true
+.
+Con figuring  web notific ations
+Applies to Bravura Pass license 
+A web notific ation  can be triggered when a single user does something to cause the Notific ation  Client
+(psntfclient ) on their w ork s t ation  to connect to the Notific ation  Service ( psntfsvc ) on the
+Bravura Security Fabric  server. If the user requires a notific ation  from the product, such as when their
+password is about to expire or they have not complied with a requirement, the Notific ation  Client can
+open the user's web browser to a specified  page.
+Once the Notific ation  Client has been installed, web notific ations  can be c on figur ed  to open the user's
+web browser with the notific ation  when the user logs into their w ork s t ation.  If the Notific ation  Client is
+not installed, web notific ations  can still be triggered to appear within Bravura Security Fabric  after  the
+user logs into the product.Example: Acceptable use policy
+You can use the web notific ation  module to force all users to view, then accept or decline an agreement,
+such as an acceptable use policy. The following example shows you how to set up a force-level policy
+agreement:
+1.Click Manage the system > Policies > User notific ations  > Web notific ations . 1.
+2.Click Add new … . 2.
+3.Type the notific ation  ID and Description . The notific ation  ID can only contain ASCII characters. 3.
+4.Set the notific ation  Severity to Forced . 4.
+If the web browser is closed without the required action  taken, the user is forced to log out of the
+w ork s t ation.
+5.Set the Plugin to run to determine compliance to Query USERSTAT tag . 5.
+6.Click Add. 6.
+Bravura Security Fabric  warns you that the compliance plugin requires c on figur ation.
+7.Click the c on figur e  icon 
+ next to the compliance plugin field. 7.
+8. Con figur e  parameters for agreement compliance: 8.
+a.Direct users to external URL with the value PSNAUP. a.
+This is required for a policy compliance plugin and directs users to a page where they view and
+accept or decline agreement.
+b.Type a Message to display to a non-compliant user . b.
+c.In the Acceptable use policy section,  click Enabled . c.
+Bravura Security Fabric  displays policy c on figur ation  settings.  Required settings  are pr e-c on figur ed
+with m4 tags that are de fined  in <instance>\design\\src\z\psn.m4 . The tags are
+mapped to macros de fined  in <instance>\design\\src\common\<lang>-<locale>-
+language.kvg .
+m4 tag macro en-us-language.kv g definition
+!!!N_AUP_MESSAGE _PSN_AUP_TITLE Acceptable use policy
+!!!N_AUP_BUTTON_ACCEPT BUTTON_ACCEPT Accept
+!!!N_AUP_BUTTON_DECLINE  BUTTON_DECLINE  Decline
+d.Modify policy c on figur ation  settings  to suit your policy. d.
+For example, you may want to add a lengthier message in multiple  languages. You could add a
+custom macro AUP_MESSAGE and include it under the !!!N_AUP_MESSAGE tag in
+p sntfs v c.m4,  then de fine  the macro in custom language kvg files.
+See Adding macros to messages  (on page 476) to learn how to add custom tags and macros.
+e.Set the Tag that you want to evaluate to determine non-compliant users. e.
+For example, set the tag name to AUP (if the tag does not exist, the plugin creates it) and set it
+to ”must exist” and leave the value field  blank. This will flag users who do not have the tag or the
+tag is blank.9.Click Update . 9.
+When a user clicks Accept , the AUP DONE event action  is triggered. When a user clicks Decline , the AUP
+NOT DONE event action  is triggered. You can c on figur e  these event actions  in the Manage the system  >
+Modules User notific ations  (PSN) menu.
+See also
+Event actions  (exit traps)  (on page 1523)
+Example: Forced-level password expiry notific ation
+The following example shows you how to set up a force-level password expiry notific ation:
+1.Click Manage the system > Policies > User notific ations  > Web notific ations . 1.
+2.Click Add new … . 2.
+3.Type the notific ation  ID and Description . The notific ation  ID can only contain ASCII characters. 3.
+4.Set the notific ation  Severity to Forced . 4.
+If the web browser is closed without the required action  taken, the user is forced to log out of the
+w ork s t ation.
+5.Set the Plugin to run to determine compliance to Password expiry . 5.
+6.Click Add. 6.
+Bravura Security Fabric  warns you that the compliance plugin requires c on figur ation.
+7.Click the c on figur e  icon 
+  next to the compliance plugin field. 7.
+8. Con figur e  parameters for password expiry. 8.
+For example, select Internal link to direct users to the Change passwords (PSS) , and set the required
+Number of days before expiry that the user will be notified  and Message to display to a non-
+compliant user .

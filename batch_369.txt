@@ -1,0 +1,281 @@
+Code Description
+WAAP An access disclosure plugin is added in Bravura
+Privilege .
+WAGP A managed system policy is added to database in
+Bravura Privilege .
+WAPW A new password is added to a manually managed
+system in Bravura Privilege .
+WAWS A managed system is added to Bravura Privilege .
+WCFT W ork s t ation  ID c on flict  detected.
+WCPW A password is set on a managed system in Bravura
+Privilege .
+WDAP An access disclosure plugin is deleted from Bravura
+Privilege .
+WDGP A managed system policy is deleted from Bravura
+Privilege .
+WDUP A managed system account is deleted from Bravura
+Privilege .
+WDWS A resource is deleted from the database.
+WLGN A user accesses the Privileged access app.
+WOPW A password on a managed system is overridden using
+the Request privileged access (PSW) module.
+WRAP A password to a managed system is randomized using
+Bravura Privilege .
+WREI W ork s t ation  reinstalled.
+WRPW A new password is requested on a managed system in
+Bravura Privilege .
+WUAP An access disclosure plugin is updated in Bravura
+Privilege .
+WUGP A managed system policy is updated in Bravura
+Privilege .
+WUWS A managed system is updated in Bravura Privilege .
+WVPH A Bravura Privilege  user views a historical (not current)
+password on a managed system.
+WVPW A Bravura Privilege  user views a password on a
+managed system.
+WWPW Bravura Privilege  records a password to a managed
+system in the database.Agent codes
+The idmsuite.log  file includes codes from connectors (agents) as they attemp t  to contact targets and
+communicate with them. You can use them to troubleshoot issues that may occur during auto discovery
+or with connector oper ations  triggered by services like idpm , idwfm , idarch . The email that process
+sends to product administrators, or the error logged contains only the numeric return code value for a
+connector (in the output KVGroup of the connector as well as in idmsuite.log .
+Integer values returned by connectors indicate the success or failure of an oper ation:
+ACSuccess 0 - The oper ation  succeeded
+ACUnknownError 1 - The oper ation  failed with an unspecified  error
+A C Oper ationNotSupport ed  2 - The connector does not support the oper ation
+ACNotConnected 3 - The connector failed to connect to the target
+ACAlreadyConnected 4 - The connector is already connected to the target
+ACInvalidServer 5 - The server that was specified  is invalid
+ACObjectAlreadyExists 6 - The object that is being created already exists
+ACInvalidUser 7 - The user that was specified  does not exist or is invalid
+ACInvalidModelUser 8 - The model user that was specified  does not exist or is invalid
+ACUserNotInGroup 9 - The user is not a member of the group
+ACTimeout 10 - The oper ation  did not complete within the set timeout
+ACAccessDenied 11 - The oper ation  could not be performed due to not having the required permissions
+ACInvalidGroup 12 - The group that was specified  does not exist or is invalid
+ACUserAlreadyGroupMember 13 - The user is already a member of the group
+ACVerifyFailed 14 - The password being v erified  is incorrect
+ACInitFailed 15 - Failure occurred during initializ ation
+ACLockFailed 16 - Failure to lock
+ACScriptError 17 - An error occurred when processing a script
+ACNotLicensed 18 - Failure due to a license issue
+ACLogFileFailure 19 - Failure due to a log file issue
+ACImplementerFailure 20 - Failure due to incorrect implemen t ation
+ACAdminLocked 21 - The object is locked by an administrator
+ACInvalidPasswd 22 - The password specified  is incorrect
+ACDelayLoadError 23 - Failure when delay loading
+ACReadOnlyResource 24 - Failure due to the object being read only
+ACPluginAborted 25 - Failure due to a plugin issue
+ACPasswordLocked 26 - Failure due to the password being locked
+ACPasswordExpired 27 - Failure due to the password being expired
+ACAccountExpired 28 - Failure due to the account being expiredACAccountDisabled 29 - Failure due to the account being disabled
+A C Oper ationR olledback  30 - Parallel oper ation  was rolled back
+A C Oper ationAbort ed  31 - Parallel oper ation  was aborted
+A C Oper ationR ollbackF ailed  32 - Parallel oper ation  failed to be rolled back
+ACEndOfFile 33 - The end of file was reached
+ACGroupAlreadyGroupMember 34 - The specified  group is already a member of the target group
+ACGroupNotInGroup 35 - The specified  group is not a member of the target group
+ACObjectDoesNotExist 36 - The specified  object does not exist
+ACResponseLater 37 - The connector will provide a response later
+ACInvalidObject 38 - The specified  object is invalid
+ACAlreadyRelated 39 - The specified  objects are already related by the specified  r elation
+ACNotRelated 40 - The specified  objects are not related by the specified  r elation
+ACTryAgainLater 41 - The oper ation  could not be completed and should be retried
+ACDenied 42 - The oper ation  was rejected
+ACReturnUnknown 43 - The oper ation  is in an unknown stateRequest codes
+Request codes are used for oper ations  requested via w orkflo w .  They are exposed to some plugins that
+can read and/or modify these oper ations  on requests, and can be used in reports.
+Some codes may not apply to your licensed products.
+Request codes
+Code Description
+ACUA Request to create an account on a target system and
+attach  to a user.
+AEDEF Request an e x ception  to not have a required role
+resource.
+AEDEFDEL Remove an approved e x ception  to not have a required
+role member.
+AESOD Request an e x ception  to a SoD rule.
+AESODDEL Remove an approved e x ception  to a SoD rule.
+AESUR Request an e x ception  to have a resource that the role
+doesn’t require.
+AESURDEL Remove an approved e x ception  to have a resource that
+the role doesn’t require.
+ARCHREQPWD View password of a privilege account protected by
+Bravura Privilege .
+ARCHREQMAQ Request access to multiple  privileged accounts.
+CFYU Certif y  a user.
+CFYU Certif y  an account.
+CFYG Certif y  group membership.
+CFYR Certif y  role membership.
+CFYAEDEF Certif y  e x ception  to not have a required role resource.
+CFYAESOD Certif y  e x ception  for segr eg ation  of duties  rule.
+CFYAESUR Certif y  e x ception  to have a resource that the role
+doesn’t require.
+CFYRSVSOD Certif y  r esolution  of segr eg ation  of duties  violation.
+CFYSIGN Certific ation  sign off .
+CFYSODACCT Certif y  r esolution  of segr eg ation  of duties  violation.
+(account resource)
+CFYSODGRP Certif y  r esolution  of segr eg ation  of duties  violation.
+(group member)
+CFYSODROLE Certif y  r esolution  of segr eg ation  of duties  violation.
+(role member)
+CRTG Create a group on a target system.Code Description
+DELG Delete a group on a target system.
+DELR Remove a role from a user.
+DELU Delete an account on a target system.
+DNAU Disable an account on a target system.
+ENAU Enable an account on a target system.
+GROA Add an owner to a group on a target system.
+GROD Remove an owner from a group on a target system.
+GRUA Add an account to a group on a target system.
+GRUD Remove an account from a group on a target system.
+GRGA Add a group to a group on a target system.
+GRGD Remove a group from a group on a target system.
+LDEL Delete login association.
+LUPD Update login association.
+MVCU Move an account from one context to another on a
+target system.
+NESOD Stored for in f ormational  purpose for an SoD rule.
+NRCR Create a network resource.
+NRUP Update a network resource.
+NRDL Delete a network resource.
+NRMV Move a network resource.
+ORGADDMGR Designate manager.
+ORGADDSUB Attach  a subordinate to an OrgChart manager.
+ORGDELMGR Designate non-manager.
+ORGDELSUB Detached a subordinate from an OrgChart manager.
+ORGSIGN OrgChart building signoff .
+ORGTRFSUB Transfer a subordinate from an OrgChart manager to
+another OrgChart manager.
+ORGTRFSUBPULL Transfer a subordinate from another OrgChart manager.
+(action  initia t ed  by the new OrgChart manager)
+RENU Rename an account on a target system.
+RLUA Add a role to a user.
+RPRO Rename a pr ofile  ID.
+SM_SEARCH Search monitored sessions.
+SM_VIEW View a monitored session.
+UPAT Update pr ofile  and request attribut es.
+UPDT Update an account’s attribut es  on a target system.
+USRA Create user.Code Description
+VWAT View pr ofile.LEGAL NOTICESCredits
+OpenSSL library
+This product includes softw ar e  developed by the OpenSSL Project ( http://w w w .openssl.or g / ).
+The OpenSSL Project is a c ollabor ativ e  e ff ort  to develop a robust, commercial-grade, full-featured, and
+Open Source toolkit implementing  the Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS
+v1) protocols as well as a full-strength general purpose cryptography library.
+OpenSSL is based on the excellent SSLeay library developed by Eric A. Young and Tim J. Hudson. The
+OpenSSL toolkit is under a dual license - both the c onditions  of the OpenSSL License and the original
+SSLeay license apply to the toolkit. See below for the actual license texts.
+For more in f ormation  on the OpenSSL license, refer to:
+http://w w w .openssl.or g / sour ce/license.h tml
+OpenSSL License
+-------------------------------------------------------------------- 
+Copyright (c) 1998-2006 The OpenSSL Project.  All rights reserved. 
+ 
+Redistribution and use in source and binary forms, with or without 
+modification, are permitted provided that the following conditions are met: 
+ 
+1. Redistributions of source code must retain the above copyright notice, 
+   this list of conditions and the following disclaimer. 
+ 
+2. Redistributions in binary form must reproduce the above copyright 
+   notice, this list of conditions and the following disclaimer in the 
+   documentation and/
+or other materials provided with the distribution. 
+ 
+3. All advertising materials mentioning features or use of this software 
+   must display the following acknowledgment: 
+   ‘‘This product includes software developed by the OpenSSL Project for 
+   use in the OpenSSL Toolkit. (http://www.openssl.org/)'' 
+ 
+4. The names ‘‘OpenSSL Toolkit'' and ‘‘OpenSSL Project'' must not be used 
+   to endorse or promote products derived from this software without prior 
+   written permission. For written permission, please contact 
+   openssl-core@openssl.org. 
+ 
+5. Products derived from this software may not be called ‘‘OpenSSL'' nor 
+   may ‘‘OpenSSL'' appear in their names without prior written permission    of the OpenSSL Project. 
+ 
+6. Redistributions of any form whatsoever must retain the following 
+   acknowledgment: 
+   ‘‘This product includes software developed by the OpenSSL Project for 
+   use in the OpenSSL Toolkit (http://www.openssl.org/)'' 
+ 
+THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ‘‘AS IS'' AND ANY 
+EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR ITS CONTRIBUTORS BE 
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+POSSIBILITY OF SUCH DAMAGE. 
+-------------------------------------------------------------------- 
+ 
+This product includes cryptographic software written by Eric Young 
+(eay@cryptsoft.com). This product includes software written by Tim 
+Hudson (tjh@cryptsoft.com).
+Original SSLeay license
+Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com) 
+All rights reserved. 
+ 
+This package is an SSL implementation written by Eric Young 
+(eay@cryptsoft.com). The implementation was written so as to conform with 
+Netscapes SSL. 
+ 
+This library is free for commercial and non-
+commercial use as long as the 
+following conditions are aheared to. The following conditions apply to all 
+code found in this distribution, be it the RC4, RSA, lhash, DES, etc., 
+code; not just the SSL code. The SSL documentation included with this 
+distribution is covered by the same copyright terms except that the holder 
+is Tim Hudson (tjh@cryptsoft.com). 
+ 
+Copyright remains Eric Young's, and as such any Copyright notices in the 
+code are not to be removed. If this package is used in a product, Eric 
+Young should be given attribution as the author of the parts of the library used. This can be in the form of a textual message at program startup or in 
+documentation (online or textual) provided with the package. 
+ 
+Redistribution and use in source and binary forms, with or without 
+modification, are permitted provided that the following conditions 
+are met: 
+ 
+1. Redistributions of source code must retain the copyright notice, this 
+   list of conditions and the following disclaimer. 
+ 
+2. Redistributions in binary form must reproduce the above copyright 
+   notice, this list of conditions and the following disclaimer in the 
+   documentation and/
+or other materials provided with the distribution. 
+ 
+3. All advertising materials mentioning features or use of this software 
+   must display the following acknowledgement: 
+   ‘‘This product includes cryptographic software written by Eric Young 
+   (eay@cryptsoft.com)'' 
+   The word 'cryptographic' can be left out if the rouines from the library 
+   being used are not cryptographic related :-). 
+ 
+4. If you include any Windows specific code (or a derivative thereof) from 
+   the apps directory (application code) you must include an 
+   acknowledgement: 
+   ‘‘This product includes software written by Tim Hudson (tjh@cryptsoft.com)'' 
+ 
+THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ‘‘AS IS'' AND ANY EXPRESS OR 
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN 
+NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
+DAMAGE. 
+ 
+The licence and distribution terms for any publically available version or 
+derivative of this code cannot be changed.  i.e. this code cannot simply be 
+copied and put under another distribution licence [including the GNU Public 
+Licence.]

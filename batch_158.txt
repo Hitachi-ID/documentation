@@ -1,0 +1,289 @@
+Access to self-service is available from a PC web browser, from the Windows login screen, using a
+telephone or using the mini web browser on a smart phone.
+Password policy
+Password policy enforcement
+Bravura Pass  can enforce a uniform global policy in addition  to the various password policies enforced
+nativ ely  on each target system. It can also apply multiple  alt ernativ e  password policies to groups of
+systems.
+The built-in password policy engine includes over 50 standard rules, plus a regular expression engine and
+plugin system that allows or g aniz ations  to de fine  new rules and rule sets. Open-ended password history
+and dictionar y  checks are included.
+Expiry notific ation  / early warning
+Bravura Pass  aut omatic ally  reminds users to change their passwords regularly. This facility pre-empts
+nativ e  password e xpir ation  on target systems and encourages users to synchronize their passwords with
+a friendly, web-based user interface.
+Users are prompted to change passwords either by receiving email with an embedded URL to the
+Bravura Pass  server, or by responding to a web browser window that is opened during their network
+login script.
+RSA SecurID token management
+Bravura Pass  allows users who have RSA SecurID Authentic a t or s  (tokens) to manage their tokens from a
+web browser using the Manage tokens  (PSP) module, or a telephone using an integrated IVR system.
+Specific ally ,  you can c on figur e  Bravura Pass  to allow users to do any of the following:
+▪Enable or disable their tokens▪
+▪Clear their PIN▪
+▪Set a new PIN▪
+▪Request emergency access codes▪
+▪Clear their previously-requested emergency access codes▪
+▪Re-synchronize their token clock with the RSA Authentic ation  Server ▪
+This facility is separate from password management. You cannot synchronize SecurID PINs with
+passwords unless alpha-numeric PINs are allowed, which is not true in most or g aniz ations.  If alpha-
+numeric PINs are enabled on your RSA Authentic ation  Manager Server, then you can synchronize PINs
+with passwords using Bravura Pass .
+▪If you have an RSA Authentic ation  Manager 7.1/8.2 system installed on your network, the Bravura ▪
+Security connector uses the Java API to update and retrieve in f ormation  from the RSA Authentic ation
+Manager 7.1/8.2 server.
+To set up token management using Bravura Security Fabric , you must:1.Prepare the RSA Authentic ation  Manager 7.1/8.2 server for in t egr ation  and add it as a target on 1.
+Bravura Security Fabric .
+See the Authentic ation  (Tokens/MFA)  in the Connector Pack  documen t ation  for more in f ormation
+about in t egr ating  with this system.
+2.Run auto discovery  to load data from the RSA Authentic ation  Manager 7.1/8.2 server. 2.
+3.Enable and c on figur e  the Manage tokens  (PSP) module to allow users to manage their own tokens. 3.
+See   Modules > Manage tokens  (on page 1192).
+4. Optionally ,  c on figur e  the Help users  (IDA) module to allow help desk user s to manage tokens on users’ 4.
+behalf.
+See   Modules > Help users  (on page 1174).Web-based password management
+Web-based password management involves the following softw ar e:
+Softw ar e Purpose
+Change passwords (PSS) module Enables users to change passwords for one or more of
+their accounts.
+Unlock encrypted systems/accounts (HDD) module Enables users to reset or unlock access to accounts on
+an encrypted target system.
+Help users (IDA) module Allows help desk users to make changes on user’s
+behalf.
+Unlock accounts (PSR) module Enables users to unlock accounts.
+Password Manager service Can be used to queue password changes if they fail on
+a target system.
+This section  describes Bravura Pass ’s web-based password management features in more detail.
+Password s ynchr oniz ation
+Password s ynchr oniz ation  is de fined  as any process or technology that helps users to maintain a single
+password, subject to a single security policy, and changing on a single schedule, across multiple  systems.
+End users can synchronize some or all of their passwords by using the Bravura Pass  web interface to
+make r outine  password changes. Adminis tr ativ e  users, known as help desk user s, can use the web
+interface to synchronize passwords on behalf of callers.
+The c on figur ed  password policy for the relevant systems is clearly displayed to users and enforced
+immediately. This ensures that the password is accepted by the nativ e  password security mechanism on
+all target systems. Bravura Pass  validates the password against the global password policy. If the
+password is accepted, Bravura Pass  synchronizes the passwords on the select systems.
+Password change and s ynchr oniz ation  with a web browser is more in f ormativ e  and educ ational  than
+transparent password s ynchr oniz ation  but requires users to change their behavior. A user awareness
+program is often  required to encourage use of this feature.
+Self-service password changes
+Users who have f or g otten  a password or triggered an intruder lockout can log into Bravura Pass  with
+another form of authentic ation  to perform self-service password changes. Supported authentic ation
+factors include answering security questions,  using a hardware token, using a biometric sample, and
+using smart cards.
+If a user wants to perform a r outine  password change (for example, due to upcoming expiry or to
+synchronize their passwords) they can access the Bravura Pass  using their e xisting  password, or any of
+the above authentic ation  factors.
+Once authentic a t ed,  users can change or un-expire their passwords without calling the help desk.
+Bravura Pass  can aut omatic ally  create tick e ts  on a call tracking system for the event.General flo w  for web-based password changes
+1.A user signs into the Bravura Pass  web interface. 1.
+2.The user selects the Change Password s option 2.
+3.If the user has accounts which belong to diff er en t  target system groups  (on page 562), they may be 3.
+presented an option  to select which target system group they would like to change passwords for.
+4.On the left pane Bravura Pass  shows the accounts to be changed. On the right side of the UI it shows 4.
+the password strength rules that the entered password "must" (required) or "should" (warning) meet.
+These password strength rules are sourced from the password policy  (on page 999) assigned to the
+target system group for the target systems  (on page 480) from which their accounts to be changed
+reside.
+5.The user begins to type their desired new password into the New password  field 5.
+6.For each character input by the user, their entered password string will be evaluated against each of6.
+the password strength rules.
+When the currently entered password matches a password strength rule, that password strength rule
+entry will be highlighted green. - When the currently entered password does not match a password
+strength rule, that rule entry will be highlighted red. If a "must" c ondition  is highlighted red the
+Change Passwords button  will be grayed out. If a "should" c ondition  is highlighted red, it will not
+cause the Change Passwords  c ondition  to be grayed out.
+7.The user clicks Change passwords. 7.
+If a "should" c ondition  is red when doing so the UI will not change the password and report a warning
+along these lines: Please choose a stronger password, or resubmit to ignore
+this warning and continue with the selected, weak password .8.Bravura Pass  will proceed to change the passwords of each account and will report if those individual 8.
+oper ations  occurred successfully.
+See Changing Your Passwords  in the End User Documen t ation  for more use cases.
+Self-service encrypted hard drive recovery
+Or g aniz ations  deploy full disk encr yption  (FDE) softw ar e  to protect against data leakage in the event that
+a corporate w ork s t ation  is lost or stolen. With FDE, users are generally required to authentic a t e  with a
+password to unlock the hard disk. This password is often  synchronized with the user’s primary Windows
+password.
+If a user forgets their hard disk encr yption  unlock password, the user will be unable to start the oper ating
+system. This is a serious service disruption  for the user and can contribute to signific an t  support costs for
+the IT help desk.
+Instead of needing to contact the help desk, a user who has lost access to an encrypted system can log
+into Bravura Pass  and access the Unlock encrypted systems/accounts  (HDD) module, which will provide
+them with ins tructions  on how to acquire a challenge code for the system, if required. The relevant
+connector will use this challenge code to generate a response code that can be used to unlock the
+encrypted device.
+For more in f ormation,  see Unlock encrypted hard disk  (on page 1625).
+Assisted password changes
+When a user calls the help desk, authorized support analysts can sign into the Bravura Pass  web user
+interface, look up a caller’s pr ofile,  authentic a t e  the caller by keying in their answers to a set of personal
+security questions,  and then change one or more of their passwords. A closed tick e t  can be aut omatic ally
+written  to the call tracking system to record the help request.
+Support s t a ff  do not require any privileges to systems on which Bravura Pass  allows them to change
+passwords.
+Self-service and assisted account unlock
+Users who have locked an account due to too many failed login attemp ts  can use the Bravura Pass  web
+interface to unlock their account. Help desk users can also use the web interface to unlock users.
+Users access the Unlock accounts  (psk) module after  logging into Bravura Security Fabric  with a known
+password or with another form of authentic ation.  Once authentic a t ed,  users can unlock their account
+without calling the Help desk. If c on figur ed,  Bravura Pass  can aut omatic ally  create tick e ts  on a call
+tracking system for the event.
+Bravura Pass does not allow users to reactivat e  accounts that were disabled by an administrator.
+To implement the self-service and assisted unlock feature, you must enable the Unlock accounts  (psk)
+module. See   Modules > Unlock accounts  (on page 1184).Setting  up web-based password management
+To implement web-based password management with Bravura Pass :
+1.Carry out initial  setup as outlined in Initial  steps, including: 1.
+▪ Con figuring  email notific ation  (on page 412) ▪
+▪Adding target systems  (on page 480) ▪
+▪ Importing  users  (on page 538) ▪
+▪ Con figuring  authentic ation  (on page 820) ▪
+2. Con figur e  target systems for password management. In particular ,  you can set the following options: 2.
+▪Check password expiry▪
+For Novell Directory Services (NDS), Micr osoft  Windows server, Activ e  Directory, and Micr osoft  SQL
+Server target systems, Bravura Pass  can extract a list of users whose passwords will expire soon, or
+have already expired.
+The list can be used by the Bravura Security Fabric  notific ation  system to warn users of pending
+expiry.
+▪Program to generate a list of target systems▪
+For Activ e  Directory, Unix, or GroupWise systems composed of Multiple  servers, you can use a sub-
+host plugin to enforce or speed up s ynchr oniz ation.
+See Plugins to learn how to write a sub-host plugin.
+▪Allow users to change passwords▪
+This setting  allows the connector (or agent) to change passwords on the system.
+▪Accounts must be included in all password changes▪
+This prevents users from de-selecting  accounts on the target system when changing passwords
+using the web interface.
+This applies only when the target system belongs to a target system group where web password
+change r es trictions  are set to Any number of accounts can be selected for a password change or
+All accounts are selected for password change .
+▪Allow users to unlock accounts▪
+This setting  allows users to unlock accounts using either the Unlock accounts  (PSR) module or Help
+users  (IDA) module.
+▪Display module settings ▪
+Determine whether to include accounts from a target system on the Change passwords  (PSS)
+module, Unlock accounts  (PSR) module, or Help users  (IDA) module web interface.
+See Target Systems  (on page 480) for a full list of target system settings.
+3. Con figur e  password strength rules 3.
+See Authentic ation  (on page 819) Password policy  (on page 999).
+You may also need to determine whether a single password policy will apply to all target systems and
+all users.
+4. Con figur e  target system groups to apply password policy and web s ynchr oniz ation  r es trictions 4.You can set target system group options  to determine whether passwords must be synchronized, can
+be unique, or must be unique across target systems.
+See   Target system groups  (on page 562).
+5. Con figur e  user access controls 5.
+You must set up product administrators and c on figur e  their adminis tr ativ e  privileges before users can
+access adminis tr ativ e  features. You can also fine tune access controls for regular users.
+See   User types and access rules  (on page 671).
+6. Con figur e  user notific ation  as required. 6.
+You can use the notific ation  system to warn users of pending password expiry, enforce deployment
+compliance, or other requirements.
+See Notific ation  > Batch and web notific ation  (on page 431).
+7. Con figur e  modules as required 7.
+The Change passwords  (PSS) module is enabled by default. The User notific ations  (PSN) module and
+Unlock accounts  (PSR) module must be enabled for these features to be activ a t ed.
+See   Modules.Local Reset Extension: R esetting  cached cr edentials
+Bravura Pass  uses Local Reset Extension to update cached network cr edentials  on a user’s Windows
+client w ork s t ation  after  a successful web-based password reset. This addresses the issue of intruder lock-
+outs caused by w ork s t ations  c ontinuing  to log into network resources using cached, no-longer-valid
+passwords.
+Cached cr edentials  on a user’s w ork s t ation
+After  a password change with a web-based password management system, the cached cr edentials  on a
+user’s w ork s t ation  may become unsynchronized with the user’s new domain password:
+▪When a user logs into Windows, the w ork s t ation  stores their domain cr edentials  in a cache in ▪
+memory.
+▪When the user logs into other resources on the w ork s t ation  (shares, printers, Outlook/Exchange mail ▪
+boxes, IIS web sites), it fir s t tries its cached domain password, and if this fails, it prompts the user to
+type the correct password.
+▪If the user changes their domain password from the w ork s t ation  there are no issues updating  the local ▪
+cache. On Windows for example, with the [Ctrl]-[Alt]-[Delete]  process, Windows updates the local
+cache, and there is no problem.
+▪If the Help desk, another w ork s t ation,  or a web applic ation  changes the user’s password on the ▪
+domain, then the w ork s t ation  cache becomes unsynchronized with the new domain password.
+Subsequent attemp ts  to access network resources from the w ork s t ation  use the cached password,
+increment the user’s "failed login attemp ts"  counter, and ultima t ely  trigger an intruder lockout.
+▪Windows services that use network domain cr edentials  also validate against cached cr edentials.  When ▪
+cached cr edentials  are unsynchronized, the user’s "failed login attemp ts"  counter is incremented and
+an error is thrown that triggers a r eauthentic ation  prompt. If several services trigger at the same time,
+the r eauthentic ation  prompt would not have time  to be shown as the user’s "failed login attemp ts"
+counter is incremented for each failure and an intruder lockout is triggered immediately.
+The problem for remote users
+When a remote user that is not connected to the domain network logs into their current w ork s t ation,  the
+w ork s t ation  uses cached domain cr edentials  to authentic a t e  the user. The user then connects to the
+internal network using a RAS or VPN c onnection  and changes their password using the Bravura Pass web
+interface. Changing the password on the web interface does not update the cached domain cr edentials.
+This means, the user's cached w ork s t ation  cr edentials  would still be set to the old password even though
+their domain cr edentials  have been updated to a new password. 
+Once a user’s cached and domain cr edentials  c on flict,  they will be unable to log back into their
+w ork s t ation  without fir s t c onnecting  to the domain. The remote user, once logged out, would need to
+connect to the domain through RAS or VPN before logging back into their w ork s t ation  for their cached
+cr edentials  to be updated. If RAS is c on figur ed  to use the cached Windows password, the user will not be
+able to log into the RAS network and will be locked out of their w ork s t ation.See Self-Service Anywhere: Reset f or g otten,  cached passwords while away from the office  (on page 1624)
+for more in f ormation.
+The Bravura Pass  solution  using Local Reset Extension
+To eliminate these problems, Bravura Pass  utiliz es  Local Reset Extension that is c ompatible  with most
+browsers, including Chrome, Edge Chromium and Firefox. Local Reset Extension silently updates the
+user’s password cache on the w ork s t ation  after  a web-based password change.
+Local Reset Extension:
+▪Is signed by Bravura Security.▪
+▪Works on Windows client versions 8 and newer for both 32-bit and 64-bit versions.▪
+▪Works with Google Chrome, Micr osoft  Edge Chromium and Mozilla Firefox. ▪
+▪The Bravura Security Browser Extension is required to be installed on the browser.▪
+▪This extension can be found in the Chrome and Firefox web stores and will appear in the list of▪
+extensions for the browser once installed.
+▪Includes a nativ e  extension installed on the users' Windows client w ork s t ations  that: ▪
+▪Is able to recognize users who log in with IDs in the <userid>@<domain> format as well as the▪
+standard Pr ofile  ID.
+▪Is normally cached by the supported web browser, so is generally only downloaded once.▪
+▪This extension is installed using browser-extension-win-x86.msi  for Edge Chromium or ▪
+Google Chrome, or firefox-extension-win-x64.msi  / firefox-extension-
+x86.msi  for Firefox.
+Where Local Reset Extension is used to update cached domain passwords, the user’s w ork s t ation  must
+be on the network and be able to authentic a t e  to the domain. This works for loc ally -attached  users and
+users on a corporate VPN c onnection.  Local Reset Extension cannot update cached passwords for users
+accessing Bravura Pass through a reverse web proxy from outside the corporate network.
+It is recommended that, after  users reset their cached password using Local Reset Extension, they then
+log out and then log back into the w ork s t ation  in order to ensure network c onnectivity .  The Change
+passwords  (PSS) module displays a message after  a password reset:
+If you were logged into your w ork s t ation,  log out now. You must log in with your new password to
+ensure that your w ork s t ation  does not try to use your old password to access network resources.
+ 
+Updating  locally protected resources
+The Local Reset Extension includes nplocalr.ocx , which is designed to update locally protected resources.
+It can be used to clear PGP WDE cache passwords so that the new password can be used on the next
+start-up of the PGP client.
+See Hard Drive Encr yption  Systems  in the Connector Pack documen t ation  for in f ormation  about
+in t egr ating  with PGP WDE encr yption  clients.Con figur e  Local Reset Extension
+The Bravura Pass  Local Reset Extension can be used with the following browsers:
+▪Edge Chromium▪
+▪Google Chrome▪
+▪Firefox▪
+The Local Reset Extension only works on Windows. Mac OS X and other operating  systems are not
+supported.
+For all browsers, the Local Reset Extension comprises of a nativ e  extension and the Bravura Security
+browser extension.
+The Local Reset Extension is c on figur ed  by:
+▪An administrator c on figuring  Bravura Pass  to use the Local Reset Extension plugin  (on page 1580). ▪
+▪The Bravura Security browser extension being installed for Chrome, Edge Chromium, and/or Firefox on▪
+each user's Windows client w ork s t ation  from the Chrome or Firefox web stores.
+The end user manually installs the Bravura Security browser extension for Google Chrome, Edge
+Chromium, or Firefox from the Chrome or Firefox web stores while r eseting  their password using
+Bravura Pass .
+See here for ins t allation  details:
+▪ Con figur e  Local Reset Browser Extension on Chrome or Edge Chromium  (on page 1584) ▪
+▪ Con figur e  Local Reset Browser Extension on Firefox  (on page 1584) ▪
+▪The nativ e  extension being installed on each user's Windows client w ork s t ation: ▪
+▪firefox-extension-win-x86.msi  or firefox-extension-x64.msi for Firefox.  (on ▪
+page 1584)
+▪browser-extension-win-x86.msi for Edge Chromium or Google Chrome  (on page 1584). ▪
+The nativ e  extension can be installed by an administrator or end user with the following methods:
+▪An administrator manually installs the appropriate nativ e  extension on each user's w ork s t ation. ▪
+▪An administrator aut omatic ally  installs the nativ e  extension on users' w ork s t ations  using group ▪
+policy.
+▪The end user manually downloads and installs the nativ e  extension on their own Windows ▪
+w ork s t ation  while r eseting  their password using Bravura Pass.
+Con figuring  the Local Reset Extension plugin
+The cgilocalr plugin updates local resources and runs commands after  a web-based password
+change via Bravura Pass .
+▪pslocalr.ocx  silently updates the user’s Windows password cache. With this plugin the user may ▪
+c ontinue  using domain resources without logging out and back into their w ork s t ation  after  a password
+change.

@@ -1,0 +1,289 @@
+1.Log in to Bravura Security Fabric  as superuser. 1.
+2.Click Manage components . 2.
+3.Search and select Scenario.im_c orp_deleg a t e_filt er_or g chart. 3.
+4.Click Install component(s) . 4.
+5.Wait until  Installed  becomes "True". 5.
+Login as Adam again, then check the request for deleg ation.  When searching for the possible delegate,
+you will find only his manager and peers are listed.
+1.Log in to Bravura Security Fabric  as Adam. 1.
+2.Click the There are 1 request(s) a w aiting  your approval  link or click Requests  in the Requests  section. 2.
+The Requests app opens.
+3.Click the request and click Delegate . 3.
+4.Search for the Delegate . 4.
+5.Select Carlos.5.
+6.Set the following options: 6.
+▪Ask the delegate before s t arting  Unselected ▪
+▪Allow further deleg ation  Uselected ▪
+▪Reason  Please review the request ▪
+7.Click Update . 7.
+If you view the request details you should see the request requires authoriz ation  from Carlos as a
+delegate for Adam.Approve the request
+1.Log in to Bravura Security Fabric  as Carlos. 1.
+2.Click the There are 1 request(s) a w aiting  your approval as a delegate  link or click Requests in the 2.
+Requests  section.
+The Requests app opens.
+3.Select the checkbox next to the request.3.
+4.Click Approve . 4.
+5.Type Approved  in the box provided. 5.
+6.Click Approve . 6.
+Verify the request is processed
+1.Log in to Bravura Security Fabric  as Debbie. 1.
+2.Click View and update pr ofile  in the My pr ofile  section. 2.
+3.Check Debbie’s Accounts/Managed groups.3.Example: Delegate a certific ation  segment when the reviewer is invalid
+Business requirement
+Or g aniz ations  require the ability to sign off on a certific ation  campaign when the initial  reviewer is no
+longer a valid user.
+Solution
+A superuser can create deleg ation  adminis tr ation  rules in Bravura Security Fabric  to enable a certific ation
+segment to be delegated to a valid user. The valid user can then complete the certific ation  round.
+The following demonstrates how to c on figur e  delegated adminis tr ativ e  rules using the Deleg ation
+authority  privilege to delegate an invalid user’s certific ation  segment to a valid user.
+In this example, a superuser creates two delegated adminis tr ativ e  rules with the Deleg ation  authority
+privilege:
+▪One rule specifying NEWUSER  as the RECIPIENT. This rule enables the Delegate authority  link under ▪
+Other users .
+▪Another rule specifying ALLUSERS  as the RECIPIENT. This rule enables the Show invalid  icon 
+  to ▪
+display when selecting  the user whose authority you need to delegate.
+This setup is for demons tration  purposes only; in a production  environment it is recommended that
+you restrict access to the "Delegate authority" privilege to specific  users through a global helpdesk
+rulePre-requisites
+This example assumes that:
+▪Bravura Security Fabric  and Connector Pack  installed. ▪
+▪An Activ e  Directory target system is added as a source of pr ofiles. ▪
+▪There is an activ e  certific a t e  segment where the reviewer has been deleted in the target system. ▪
+Configur e  the fir s t delegated adminis tr ativ e  rule:
+1.Log in to the front-end as superuser.1.
+2.Click Manage the system > Security > Access to user pr ofile s > Delegated adminis tr ation  rules . 2.
+3.Click Add new. 3.
+▪ID: Rule 1▪
+▪ Description:  Rule 1 ▪
+4.Select Delegate authority  for Allowed privileges. 4.
+Click Add.
+5.Click Membership criteria  tab. 5.
+Click Select.
+6.Select the _ALLUSERS_ user class.6.
+7.Select RECIPIENT  for P articipan t  mapping. 7.
+Click Select.
+8.Select the _ALLUSERS_ user class.8.
+9.Select REQUESTER  for P articipan t  mapping. 9.
+10. Set The participan ts  have to match which of the user classes to All of the user classes . 10.
+Configur e  the second delegated adminis tr ativ e  rule:
+1.Log in to the front-end as superuser.1.
+2.Click Manage the system > Security > Access to user pr ofile s > Delegated adminis tr ation  rules. 2.
+3.Click Add new. 3.
+4.Click Add new. 4.
+▪ID: Rule 2▪
+▪ Description:  Rule 2 ▪
+5.Select Delegate authority  for Allowed privileges. 5.
+Click Add.
+6.Click Membership criteria  tab. 6.
+Click Select.
+7.Select the _NEWUSER_ user class.7.
+8.Select RECIPIENT  for P articipan t  mapping. 8.
+Click Select.9.Select the _ALLUSERS_ user class.9.
+10. Select REQUESTER for P articipan t  mapping. 10.
+11. Set The participan ts  have to match which of the user classes to All of the user classes . 11.
+Delegate an invalid user’s certific a t e  segment to an valid user:
+1.Log in to the front-end as an end user.1.
+2.Click Delegate authority  in the Other users section. 2.
+3.Click Show invalid . 3.
+4.Click the deleted reviewer link to open the deleg ation  page. 4.
+5.On the deleg ation  page, select a valid user as the delegate. 5.
+Tracking requests
+Self-service users, including authorizers, requesters, and recipients, can track the status of their requests
+if they have the ”View open requests” right. By default, requesters can cancel their own requests before
+they are authorized, and recipients can view and cancel requests that apply to them as long as the
+requests are not t ermination  requests.
+Self-service users with the ”View archived requests” right can view their closed requests.
+W orkflo w  viewers – users with the ”View w orkflo w  requests” right – can view requests of other users.
+W orkflo w  managers – users with the ”Manage w orkflo w  requests” right – can also act on requests,
+including those not explicitly assigned to them as authorizer.
+You can use the FILTER REQUEST PLUGIN  (on page 1062)plugin point ( Modules > Options ) to hide specific
+types of requests from recipients. For example, you might want to hide account deletion  requests from
+recipients.
+You can use the AUTHORIZATION DETAIL MASK PLUGIN  (on page 1428)plugin point ( W orkflo w  > Options
+> Plugins ) to determine whether authoriz ation  details about the request should be displayed to the user
+viewing the request. For example, you might want to hide authoriz ation  details from request recipients.
+When users make a request, they can use a temporary ”toast message” link, displayed after  the final
+step, to access the status page for the request. In some browsers, a JavaScript link may allow them to
+bookmark the status page or they may be able to right-click the link to bookmark it. Later, they can access
+the status page by clicking the Requests option  on the main menu, or by following a link in the email they
+received from the w orkflo w  engine.
+In some cases, Bravura Security Fabric will display the status of a request as “Processed, informing
+authorizers”, even though it has been processed by authorizers and emails have already been sent.
+Requests remain in this status until  all workflo w  events handled by the W orkflo w  Manager Service service
+have passed. This includes reminder email times  and the esc alation  timeout  period. At this point, the
+W orkflo w  Manager Service realizes there is nothing left to do and moves the request into its final
+“Processed” state.Allowing aut omatic  approval for authorizer requests
+Bravura Security Fabric  can aut omatic ally  approve a request if the requester is also an authorizer
+assigned to the a ff ect ed  resource.
+To turn on this option  enable IDWFM AUTO APPROVE on the W orkflo w  > Options > General menu.
+Installing Bravura P attern  sets the value for this option  as "enabled".
+A request will not be auto-approved if:
+▪Authorizers must enter values for required attribut es  when a request is reviewed. ▪
+Or,
+▪More than one authoriz ation  is required to approve the request. ▪
+Unapproving requests
+Bravura Security Fabric  authorizers have the ability to unapprove privileged access requests if they are
+originally listed as an authorizer for the request.
+Unapproving a request cancels the request. The request is treated as though it was denied. The
+unapprove action  only a ff ects  the specific  request; user privileges, user access, and other requests are
+una ff ect ed.
+A privileged access check-out request can be unapproved when:
+▪It has been approved by an authorizer.▪
+▪It is in the ’Pending’ check-out status.▪
+A privileged access check-out request cannot be unapproved when:
+▪It is in the status of checking out.▪
+▪The request has been processed.▪
+A privileged access extension request can be unapproved when:
+▪It has been approved by an authorizer.▪
+▪The request has been processed.▪
+▪The check-out will still have time  remaining once the extension is removed. ▪
+A privileged access extension request cannot be unapproved when:
+▪The check-out will no longer have time  remaining if the extension was removed. ▪
+If you want to cancel a check-out or extension request that can no longer be unapproved, you must
+terminate the user’s privileged access instead. To do this, you must provide appropriate users with
+the ”Check in access” privilege.
+R e writing  pr e-de fined  requests
+A request can be updated and controlled using the WF WIZARD PLUGIN . The plugin can:
+▪Update the request’s attribut es ▪▪Update the request’s resources▪
+▪Update the pages displayed▪
+▪Provide a list of restricted values for an attribut e ▪
+▪Control which attribut es  are displayed ▪
+▪Control which attribut es  can be edited ▪
+▪Provide the pr ofile  ID of the new user ▪
+▪Provide the initial  password for new accounts ▪
+▪Validate the request and provide feedback to the user▪
+This plugin applies only to pr e-de fined  requests. Custom requests or legacy requests do not execute this
+plugin.
+To use this plugin, type the name of the plugin in the WF WIZARD PLUGIN field  on the W orkflo w  >
+Options  > Plugins c on figur ation  page.
+There are no shipped plugins in use with this plugin point. See more in f ormation  on writing  a custom
+plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The plugin is run by the W orkflo w  Manager Service and Asynchronous Request Service. The plugin is
+called when a request is:
+▪ Initia t ed  by the user when selecting  a request type ▪
+▪Updated by the user▪
+▪ Submitted  by the user ▪
+▪ Submitted  via the API Service ▪
+Input
+Input to the plugin includes:
+"" "" = {
+        sessionid = <id>;
+        extras = { ... }; # Present when run by idwfm
+        module = <ajaxsvc|idwfm>; # Program that is running the plugin
+        wizard "" = {
+                prequest "" = { ... }; # Provides the pre-
+defined request information
+        lastRequest "" = { ... }; # Not present on initial load
+        attributes "" = { ... }; # Provides recipient attribute information
+        request "" = { ... }; # Provides request details        }
+}
+New users include a blank recipientname. When this is provided by the plugin, the pr ofile  ID provided will
+be used. If the recipientname matches an e xisting  invalid user, the request will restore the user and
+update attribut es  and resources that are included the request.
+Output
+The request rewrite plugin returns the following output:
+"" "" = {
+  wizard "" = {
+    prequest "" = { ... };  # Optional, omission indicates no changes
+    request "" = { ... }; # Optional, omission indicates no changes
+  }; # Optional, omission indicates no changes
+  changed = <false|
+true>; # Optional, if false, any changes are ignored.
+                          # Default is true
+  retval = <N>; # Required, non-zero indicates a plugin failure
+}
+.
+R e writing  custom requests
+You can use a plugin to rewrite custom or legacy requests to dynamically attach  or detach resources. This
+plugin works in a similar way to the oper ation  rewrite plugin  (on page 532). Use wizard request plugin to
+rewrite pr e-de fined  requests.
+The request rewrite plugin is suited to situations  where authorizers need to see the implic ations  of a
+request, and to audit access changes before and after  a request.
+The request rewrite plugin allows the attached  resources to be mandatory or optional.  Optional
+resources can be unselected by the requester. Mandatory resources remain selected and cannot be
+removed by the requester.
+The request rewrite plugin allows the aut o-selection  of resources. This aut o-selection  relies on pr ofile
+and request attribut es.
+The request rewrite plugin executes whenever a change to the request is made. These changes can come
+from pr ofile  and request attribut e  changes, resource selection,  or when resources are added or removed
+by the CGIs. The request rewrite plugin also runs when the Bravura Security Fabric  API submits a request
+to W orkflo w  Manager Service (idwfm).
+The following use cases demonstrate how the request rewrite plugin might be used:
+▪Use case 1: Map loc ation  and job code changes to account and group changes ▪A request to change “Job code” or “Loc ation”  attribut es  for an e xisting  user is submitted,  either by a
+requester or the automated user adminis tr ation  system ( idtrack )
+The company’s business rules state that a change to either of these attribut es  means that the user’s
+accounts and group memberships also have to change.
+The W orkflo w  Manager Service (idwfm) calls the request rewrite plugin so that the authorizer can see
+what the full impact of the request will be. For auditing  purposes, the r esulting  connector oper ations
+can be traced back to the original request.
+▪Use case 2: Event actions  based on new IDTM oper ations ▪
+A single delete oper ation  on a target system that is a source of Pr ofile  IDs is converted into disable
+oper ations  on all accounts owned by the user. The USER DELETE SUCCESS exit trap needs to be
+c on figur ed  to update the database with in f ormation  about the disabled accounts.
+If the oper ation  is “fanned out” after  authoriz ation  by the oper ation  rewrite plugin, the exit trap can
+only act on the single delete oper ation.
+If the request is converted before authoriz ation  by the request rewrite plugin, in f ormation  about
+multiple  disable account requests can be used by the exit trap.
+These cases require a plugin that can translate a request into 0 or more oper ations  before the request is
+approved and transferred to the T r ansaction  Monitor Service. The request rewrite plugin is used by the
+W orkflo w  Manager Service, which is responsible for handling the authoriz ation  w orkflo w ,  and receives
+feedback from the T r ansaction  Monitor Service.
+Once the request is posted, authorizers are attached  to authorize the resources of the request. If the
+plugin modifies  the posted request to:
+▪Remove resources, the attached  authorizers are reviewed. Any authorizers are detached if there are ▪
+no resources that require their authoriz ation.  Bravura Security Fabric  sends detached authorizers an
+email to notif y  them that their authoriz ation  is no longer required.
+▪Add resources, then Bravura Security Fabric  determines what authorizers need to be attached  to the ▪
+request for the new resources. Bravura Security Fabric  sends newly attached  authorizers an email to
+notif y  them that their authoriz ation  is required for the request.
+To use this plugin, type the name of the plugin in the IDWFM REQUEST REWRITE PLUGIN field  on the
+W orkflo w  > Options  > Plugins c on figur ation  page. For Bravura Privilege  requests, type the name of the
+plugin in the PAM IDWFM REQUEST REWRITE PLUGIN field  instead.
+There are no shipped plugins in use with this plugin point. See more in f ormation  on writing  a custom
+plugin.
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The plugin is run by the W orkflo w  Manager Service:
+▪When a requester updates pr ofile  and request attribut es ▪▪Before requests have been submitted,  when requests are created ▪
+▪ After  requests have been submitted ▪
+▪ After  the attribut e  v alidation  plugin has run and before the ID assignment plugin has run ▪
+▪If an authorizer modifies  attribut es ▪
+Input
+Input to the plugin includes:
+"" "" = {
+  "module" = "idwfm"
+  "sessionid" = "<session ID>" # The session ID of the logged in viewer/
+requester
+  "navigation" "" = { ... } # User navigation data
+  "firstrun" = "<true|
+false>" # If this is the first run of the plugin for the request
+                              # the value will be true; Otherwise, false.
+  "preselect_role" = "1" # Sent to the plugin before users make a role selection
+                         # in the CGIs.
+  "postselect_role" = "1" # Sent to the plugin after changes to the
+                          # roles are made by the CGIs.
+  "preselect_template" = "1" # Sent to the plugin before users make a template
+                             # selection in the CGIs.
+  "postselect_template" = "1" # Sent to the plugin after changes to the
+                              # templates have been made by the CGIs.
+  "preselect_nosgroup" = "1" # Sent to the plugin before a managed groups selection
+                             # displayed by the CGIs.
+  "postselect_nosgroup" = "1" # Sent to the plugin after changes to managed
+                              # groups have been made by the CGIs.
+  "recipient" "user" = { } # Recipient's data if they are an
+                           # existing user.
+  "model" "user" = {} # Data of the model user used in profile comparison.
+  "request" "" = { # Standard request data listing resources
+    "resource" "" = {}
+  }
+  "recipient" "user" = {} # Recipient's data.
+  "requester" "user" = {} # Requester's data.
+}
+Authorizer-related parameters are place holders for future extension. Do not use them for this plugin.

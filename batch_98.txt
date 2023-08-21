@@ -1,0 +1,326 @@
+Two servers should now be c on figur ed  to authentic a t e  via SAML. To test this:
+1.Open the SP instance login page1.
+2.Submit the username of one of the test accounts that is a member of SAML_USERS.2.
+You should be redirected to IdP's login page
+3.Complete the authentic ation  process, using valid cr edentials. 3.
+Login uses the SAML authentic ation  chain.
+Upon successful authentic ation,  the user’s web browser is redirected back to the service provider,
+where they are logged in aut omatic ally .
+Replacing certific a t e  files  in the plugin directory
+When you need to replace an expired identity  provider public certific a t e  file, o restart of any services is
+needed. The certific a t e  is used each time  it has to be checked against the certific a t e  coming from the IdP
+in the SAMLResponse. There may be minor cacheing of the file in the psf.exe CGI loaded into IIS.
+Collect the certific a t e  file from the IdP and put it in the instance plugin directory.
+You may want to verify against the format of the previous certific a t e,  which you can compare in a text
+viewer with the new certific a t e  you exported from the IdP .
+It is recommended that you back up the old certific a t e  in case the new one has an issue and you must
+revert.
+Component deployment
+Installing Scenario.hid_authchain_saml_sp aut omatic ally  installs and c on figur es  the
+following:
+▪Creates a SAML_USERS user class which is used to control which users can login using SAML.▪
+▪Creates a skeleton authentic ation  chain module called SAML_SP that contains the fedidp_samlauth ▪
+module.
+▪Adds SAML_SP authentic ation  chain to the list of allowed chains for hid_authchain_select ▪
+▪External database tables▪
+▪Adds a row to the hid_authchain_select table that aut omatic ally  selects SAML_SP if the user is a ▪
+member of SAML_USERS.
+▪Adds a row to the hid_authchain_select table to c ontinue  SAML authentic ation  requests if ▪
+SAMLResponse is in the session.
+▪Event c on figur ation  (exit traps)  (on page 1537). ▪
+Notes:
+▪ Additional  c on figur ation  is required to: ▪
+a.Set up appropriate login processes into Bravura Security Fabric  and; a.
+b.Establish a trust r elationship  between the IdP and Bravura Security Fabric . b.
+▪This component does not provide single sign-on functionality . ▪User class
+Installing this component adds the SAML_USERS user class. By default, members of this user class
+attempting  to authentic a t e  to Bravura Security Fabric  will be directed to the federated authentic ation
+login process, via the SAML_SP authentic ation  chain.
+Fedidp_samlauth
+This authentic ation  chain module is responsible for g ener ating  the SAML authentic ation  request,
+r edir ecting  users to the identity  provider, and gr anting  access to successfully authentic a t ed  users upon
+their return.
+SAML_SP Authentic ation  chain
+Custom authentic ation  chain SAML_SP is responsible for r edir ecting  users to the identity  provider, as well
+as gr anting  them Bravura Security Fabric  access once they have successfully authentic a t ed.  This
+authentic ation  chain is c on figur ed  to call the fedidp_samlauth authentic ation  module, and must be
+manually c on figur ed  before use.
+External database tables
+The hid_authchain_select  table is used by several Bravura Security Fabric  component ins t allations,  and
+overrides the normal authentic ation  chain selection  process. With the SAML SP c on figur ation  installed,
+this table directs members of the SAML_SP user class, or any user that has provided a SAML_RESPONSE
+POST parameter to the SAML_SP authentic ation  chain.Authentic ation  chains: Components
+Authentic ation  chain scenario components
+Bravura Security Fabric  has several authentic ation  chains and selector modules available for ins t allation
+through the Component Framework. The following scenario components are installed with the default
+repository:
+▪ hid_authentic ation_2f act or:  Selector for basic second factor authentic ation.  Allows for users to store ▪
+company and personal emails, cell phones (text and mobile app), which will be used as well as the
+password or Q&A. If the browser is recognized, it will be used as the second factor. Imports the
+scenarios for the authentic ation  methods.
+▪hid_authchain_emailpin: Send PIN to company email.▪
+▪hid_authchain_forgot_password: Send ”link to password change” to email.▪
+▪hid_authchain_localauth: If the c onnection  is from ::1 or 127.0.0.1, allow access without ▪
+authentic ation.  If someone is already on the Bravura Pass  server and shouldn’t be, there are much
+bigger issues than "can access the product without hacking *another* password".
+▪hid_authchain_personal_emailpin: Send PIN to personal email previously registered by the user.▪
+▪hid_authchain_pii: Use Personally Identifiable  In f ormation  (PII) to authentic a t e  a user. These are Q&A ▪
+from HR, almost always used only for a fir s t login scenario (as using PII is susceptible  to social
+engineering, and can be legally dangerous with users eligible for GPDR).
+▪hid_authchain_recaptcha: Use a ReCAPTCHA (usually for external access) to frustrate robots▪
+attempting  invalid access attemp ts.
+▪hid_authchain_saml_sp: Selector used to allow Password Manager to be used as an SAML provider.▪
+▪hid_authchain_smspin_celltrust: Use CellTrust account to send SMS texts to registered cell phones.▪
+▪hid_authchain_smspin_email: Use mobile providers’ email-to-text gateways to send SMS texts to▪
+registered cell phones. Major US and Canadian providers are aut omatic ally  onboarded; other
+providers must be added before users register the phone to be available.
+▪hid_authchain_smspin_twilio: Use Twilio account to send SMS texts to registered cell phones.▪
+▪hid_saml_idp: This component enables Bravura Security Fabric  to act as a federated Identity  Provider ▪
+(IdP) using the Security Assertions  Markup Language (SAML v2.0) protocol. This allows other
+applic ations,  either on-premise or hosted in a Softw ar e-as-a-Ser vice  (SaaS) manner, to hand off their
+user login processes to Bravura Security Fabric .
+hid_authchain_select
+The hid_authchain_select component provides a policy framework for controlling the authentic ation
+process by allowing product administrators to de fine  rules that determine which authentic ation  chains
+are available to users who are attempting  to login.
+This component is not meant to be installed on its own, since it does not provide any initial  c on figur ation
+as part of its ins t allation.  Instead, it should always be installed as a dependency of another authentic ation
+chain scenario component, which would then have to provide some initial  c on figur ation  for the policyengine to ensure that the authentic ation  process remains una ff ect ed.  In fact, the hid_authchain_select
+component is installed when you install any of shipped authentic ation  chain scenario components.
+Two authentic ation  chains are c on figur ed  by default when you install Bravura Security Fabric :
+▪DEFAULT_LOGIN  called when a user attemp ts  to log into Bravura Security Fabric . ▪
+▪HELPDESK_LOGIN  called when a helpdesk user attemp ts  to authentic a t e  a user to assist them. ▪
+Installing this component overrides the built-in authentic ation  chain selection  process by c on figuring  its
+script extension to become part of the DEFAULT_LOGIN  chain via a chain selector module that:
+1.Sets SELECT_AUTHCHAIN_MODULE_OBJPLUGINPOINT  to DEFAULT_LOGIN . 1.
+2. Con figur es  DEFAULT_LOGIN  to use authselect.py . 2.
+When components are installed to c onfigure  authentic ation  chains, any manually created
+authentic ation  chain settings  will not be used. The hid_authchain_select component will override any
+settings  done via the GUI. A workaround is to convert manual settings  to a component, so that
+hid_authchain_select can know about them.
+Once installed, the authentic ation  process becomes subject to rules de fined  in an External data store
+(ExtDB) c on figur ation  table called hid_authchain_select. Other authentic ation  chain components can
+leverage this table by injecting  their own rules here when installed.
+If using the 2factor scenario component, a browser fingerprin t  option  can be added after  the chain
+decided by the selector runs, to take/update the fingerprin t;  that fingerprin t  if it exists, can be used as the
+"second factor”. Apart from that, once the selected chain runs successfully, the user is granted access.
+Deployment
+This component should be used for all decision points in your authentic ation  process. Therefore:
+▪Plan the entir e  tree, and flag the decision points. ▪
+▪For each decision point, determine the rules.▪
+▪Run authcfg -export  to back up current c on figur ation. ▪
+▪Back up <instance>\db\ extdb.db  using the appropriate database backup softw ar e. ▪
+▪Implement the chains required.▪
+▪For each module that is a decision point, set Run this plugin to aut omatic ally  select sub-chain to ▪
+hid_authchain_select.py .
+▪Run authcfg -export  again and determine CfgIds for all selection  plugin modules. ▪
+▪Add the rules into the hid_authchain_select external database table, each labeled with the relevant▪
+CfgId. See Obtaining the GUID  (on page 978).
+▪Backup and test.▪
+The hid_authchain_select policy c on figur ation  ExtDB table controls the authentic ation  sequence for any
+available authentic ation  chain.Whenever the authentic ation  chain selector plugin script is executed, rules in this table are processed
+sequentially ,  ordered by their stage number fir s t,  and within each stage, in an incremental order dictated
+by their rule number.
+For each plugin run, only rules pertaining to the calling authentic ation  chain module are processed. The
+calling module is identified  by its GUID (the CfgId column in this table).
+The hid_authchain_select table contains all the rules that determine what chains are to be allowed for a
+particular  login attemp t,  when the authentic ation  selection  module uses hid_authchain_select.py. Like all
+component framework policy tables, it contains the following basic fields:
+Stage Number (int) The policy engine will run checks in stages. Each stage completes before
+rules in the next stage are tested; only after  all stages are completed, or a rule
+finaliz es  processing, are the final  results passed.
+Rule Number (int) Within each stage, the engine processes the rules in number order. Note
+that this is not necessarily table entry order.
+Comment (string) Used to explain what the rule means in English. Like all comments, very
+useful if kept correct, and activ ely  dangerous if not.
+SkipRemaining This field  can have three values:
+▪Empty: Proceed with all remaining rules▪
+▪Stage: Skip rules from the same stage and proceed with rules in diff er en t ▪
+stages
+▪All: Skip all remaining rules▪
+Owner (string, not modifiable):  The component that registered the rule. For manually
+created rules, this is blank.
+The hid_authchain_select table also contains the following fields:
+CfgId The GUID or blank and determines which module the rule apply to. Each
+module is assigned a GUID on cr eation.  To determine a module’s GUID see
+Obtaining the GUID  (on page 978).
+If the rule’s CfgId is blank, it will run on every in v oc ation  of the selection  plugin.
+This should only be used when the selector is only invoked in one place.
+Note:  It is recommended that you do not leave the CfgId blank.
+When the selector is used in two places in authentic ation,  knowing which rules
+should be tested for each in v oc ation  is critic al,  and therefore each rule should
+have the CfgId of its module. For example; in Bravura Workforce P attern ,
+DEFAULT_CHAIN is a selector, to determine if two-factor authentic ation  is
+required, or if this is the fir s t login for a user; then the 2FACTOR chain is a
+selector, determining what second factor types are possible for this user; and
+FIRST_LOGIN is also a selector, determining if we can use SMS or PII to
+authentic a t e  the user for the fir s t time.MatchType, MatchKey,
+Ma t chCondition,  MatchValueOptional . Within a plugin run, each module rule is then further evaluated based
+on optional  values c on figur ed  for matching parameters in these four fields.
+Example; if the rule must match authentic ating  users based on their
+membership in a user class:
+▪MatchType = userclass▪
+▪MatchKey = MOBILEUSERS (user class ID)▪
+▪ Ma t chCondition  = in ▪
+▪MatchValue = (empty)▪
+Example; if the rule is to identif y  users who have registered for
+authentic ation  via security questions:
+▪MatchType = userstat▪
+▪MatchKey = PSQDONE▪
+▪ Ma t chCondition  = equal ▪
+▪MatchValue = true▪
+MatchType This field  can have one of the following restricted values:
+▪acl: For logic involving plugin.viewer.acl entries (admin table Boolean flags). ▪
+The Ma t chCondition  field  can be set or notset if acl is used.
+Example; Set MatchType=acl, MatchKey=superuser and Ma t chCondition=set
+to apply the rule to superusers.
+▪cgi: Determines which page the user logs into. For logic involving▪
+plugin.cgi.value entries. HTTP HEADER in f ormation.
+▪parameter: For logic involving plugin.parameters entries. HTTP Post▪
+in f ormation  such as HOSTID, USER_IDENT, LANG, SKIN.
+▪sessdata: Does this item exist in the session data for this login/session? Or,▪
+does it have this value? For logic involving plugin.sessdata entries, such as
+NEW_SERVICE_NAME (authentic ation  chain calling this selector),
+SAML_REQUEST (SAML XML request data).
+▪state: For state between authentic ation  chains. Has this state value been ▪
+created during this login attemp t,  or is it equal to this value? For more
+advanced logic which requires the maintenance of a shared state between
+multiple  AuthChainSelect component runs during authentic ation.
+▪userclass: Is the user in this userclass?▪
+▪userstat: Does the user have this key (or this key with this value) in the▪
+USERSTAT table? The most common keys in USERSTAT are PSQDONE,
+LAST_LOGIN and LAST_LANG;
+For example; if PSQDONE is false or is not set, then it is a ”fir s t  login”
+scenario so the user will be required to create a valid question  set.
+Ma t chCondition This field  can have one of the following restricted values:
+▪set/notset: Whether the MatchKey value exists. Applies to the acl, cgi,▪
+parameter, sessdata and userstat types.
+▪equal/notequal: Whether MatchKey is equal/not equal to MatchValue.▪
+Applies to the cgi, parameter, sessdata and userstat types.
+▪ in/notin:  Whether the user is or is not a member of the MatchKey user class. ▪
+Applies to the userclass type.
+MatchKey The key to match based on the MatchType flag.MatchValue (string) The value to match based on the values based on the values of
+MatchType and MatchKey.
+Examples:
+▪MatchType = userstat▪
+▪MatchKey = PSQDONE▪
+▪ Ma t chCondition  = equal ▪
+▪MatchValue = false▪
+▪MatchType = userclass▪
+▪MatchKey = MOBILE_APP_USERS▪
+▪ Ma t chCondition  = in ▪
+▪MatchValue = (empty)▪
+Action (selection)  If a match is found, the ” Action”  column determines what the policy
+engine should do with the list of chains already matched as part of the current
+run. The following options  are available:
+▪ flush  - Remove any chains that were added by a previous policy rule and add ▪
+the chain specified  by the Chain_ID field  (if any).
+▪append- Add the chain specified  by the Chain_ID field  to the list of e xisting ▪
+chains.
+Chain_ID Optional . If this rule matches, this field  determines which chain is allowed.
+The value of this column is an authentic ation  chain_ ID; it is not a GUID of an
+individual authentic ation  chain module.
+Built-in chains such as the password or security questions  authentic ation  must
+be pr e fix ed  accordingly since this is how the authentic ation  selector plugin
+expects them to be listed in its output; for example, $INTERNAL_password.pss,
+$INTERNAL_response.pss. Other custom authentic ation  chains must be listed
+by their ID; for example, SUCCESS, SMSPIN, FIRST_LOGIN.
+It is important to note here that any authentic ation  chain added to this field
+must fir s t be made available to the calling chain via Manage the system >
+Policies > Authentic ation  chains otherwise the plugin run will fail.
+The Chain_ID field  can be empty, thus allowing a rule to ’throw away’ any
+e xisting  chains collected in the current run up until  then, if the authentic ation
+logic requires it.
+There are several built-in USERSTAT tags
+Tag Description Example
+LASTPSL The last time  the use used the Attach  other
+accounts module. The time  used is the
+authentic ation  time  of the session.2021-10-28 14:40:16 (UTC-06:00)
+LASTSKIN The last skin the user used. default
+LASTLANG The last language the user used en-us
+LASTPWCHGMODULE The last module used to reset the user's
+password.pss,ida,idpmTag Description Example
+PSLDONE The user has satis fied  mandatory account
+requirements. This is de fined  by the per
+target system setting  Users must have
+accounts , and the global system variable
+PSL_MIN_ACCOUNTS.
+The allowed value true is set by
+psdonechk or when the user or a help
+desk user uses the Attach  other accounts
+module.true
+PSQDONE The user has satis fied  the security question
+requirement. The allowed value true is set
+by psdonechk or when the user or a help
+desk user uses the Update security questions
+module.true
+.
+Obtaining the GUID
+A complete list of authentic ation  chain modules currently c on figur ed  for an instance can be exported to a
+plain-text file with the authcfg  command  line utility:
+authcfg -export authchains.txt 
+The modguid parameter in the exported file corresponds to the value of the CfgId column in the
+c on figur ation  table.
+Individual rule examples
+The following are various examples of rules to show how the fields  in the table work together.
+Rule example
+Rule Proceed MatchType MatchKey MatchCond MatchValue Action ChainID
+1 True cgi REMOTE_ADDR equal ::1 append LOCALAUTH
+2 True cgi REMOTE_ADDR equal 127.0.0.1 append LOCALAUTH
+3 True parameter token notset append FORGOT_PASSWORD
+The rules do the following:
+Rule 1 Allows users to skip authentic ation  when instance is accessed from localhost
+Rule 2 Allows users to skip authentic ation  when instance is accessed from localhost
+Rule 3 Provides a ’forgot my password’ authchainExample of a complete set of rules
+As an example, here is a complete set of rules for the 2FACTOR authchain:
+Rule example
+Rule Proceed MatchType MatchKey MatchCond MatchValue Action ChainID
+1 False state FINGERPRINT in all append SUCCESS
+2 True userclass EMAILUSERS in append EMAILPIN
+3 True userclass PERSONAL_EMAILUSERS in append EMAILPIN
+4 True userclass MOBILEUSERS in append SMSPIN
+5 True userclass _MOBILE_USERS_ in append MOBILEAPP
+The rules do the following:
+1.If there is a browser fing erprin t  for this user, accept that as the second factor (SUCCESS is a special 1.
+chain that always returns True) and stop processing. Otherwise, add any chains that there is
+v erific ation  in f ormation  for.
+2.If the account is in the EMAILUSERS userclass, allow them to authentic a t e  with a PIN sent to that 2.
+email.
+3.If the account has a personal email address set, allow authentic ation  with a PIN sent to that email. 3.
+4.If the account has a text number set, allow authentic ation  with PIN texted to that number. 4.
+5.If the user has the Bravura One  app installed, allow authentic ation  via QR code scan from the app. 5.
+If no 2FACTOR options  are available, the user will not be able to log in unless their browser is in the
+fing erprin t  database for that user. If multiple  options  are available, the user will be asked which one to
+use. If only one option  exists, the user will be pushed directly into that one.
+In the B2B table, there are 20 rules. However, only these five have the 2FACTOR module GUID set as CfgId,
+so only they will be tested when trying to find a second factor.
+Example of rules that rely on user c onditions
+Userstat tags can be used to create authchain rules that rely on the user having fulfilled  certain
+c onditions.  This can be useful for sending users to specific  authentic ation  chains when they do not have
+certain c onditions  met such as:
+▪If user's have not enrolled in security questions ▪
+▪if user's have not reset their password▪
+As an example, here are several authentic ation  chain rules that utiliz e  userstat tag condiions:
+Rule example
+Rule SkipRemaining MatchType MatchKey MatchCond MatchValue Action ChainID
+1 Stage userstat PSQDONE equal false flush FIRST_LOGINRule SkipRemaining MatchType MatchKey MatchCond MatchValue Action ChainID
+2 Stage userstat PSQDONE notset flush FIRST_LOGIN
+3 (None) userstat LASTPWCHGMODULE notcontain pss flush FIRST_LOGIN
+4 Stage userstat LASTPWCHGMODULE equal ida flush HELPDESK_FIRST_LOGIN
+P ot ential  MatchValues  for LASTPWCHGMODULE include:
+pss - password was changed by using the self-service product UI.
+ida - password was changed using the help desk module.
+idpm  - password was changed using transparent s ynchroniz ation.
+The rules do the following:
+1.If the user has not completed security question  enrollment, send the user to the fir s t time  login chain. 1.
+Do not evaluate more rules in this stage if these c onditions  are met.
+2.If the user has not completed security question  enrollment, send the user to the fir s t time  login chain. 2.
+Do not evaluate more rules in this stage if these c onditions  are met.
+Rules 1 and 2 mean eff ectively  the same thing, but diff er  in that rule 1 is checking if the PSQDONE tag
+is set to "false" and rule 2 is checking if it is set at all. Both values mean that the user has not
+completed their security questions  so both rules need to exist to cover users that have either value.
+3.If the user has not reset their password using the product UI, send the user to the fir s t time  login 3.
+chain. Continue  to evaluate more rules in this stage even if these c onditions  are met.
+4.If the user has had their password reset by the help desk, send the user to a help desk fir s t time  login 4.
+chain. Do not evaluate more rules in this stage if these c onditions  are met.
+See USERSTAT built-in tags  (on page 974) from the deployment topic to see more MatchKey options.

@@ -1,0 +1,269 @@
+Option Description
+WF RUN CONFLICTING OPS When this option  is enabled, c on flicting  oper ations  (for example, remove a
+group, add the same group) are both run. If set to disabled, the oper ations
+cancel each other out, and neither is run.
+W orkflo w  general events that launch interface programs
+Option Description
+APPROVED EXCEPTION ADD
+FAILUREAn e x ception  to a SoD rule fails to be added to the database.
+APPROVED EXCEPTION ADD
+SUCCESSAn e x ception  to a SoD rule is successfully added to the database.
+APPROVED EXCEPTION DEL FAILURE An e x ception  to a SoD rule fails to be deleted from the database.
+APPROVED EXCEPTION DEL SUCCESS An e x ception  to a SoD rule is successfully deleted from the database.
+EXCEPTION DEFICIT PRIVILEGE ADD A role-enforcement de ficit  e x ception  is approved.
+EXCEPTION DEFICIT PRIVILEGE DEL A role-enforcement de ficit  e x ception  is deleted.
+EXCEPTION SURPLUS PRIVILEGE
+ADDA role-enforcement surplus e x ception  is approved.
+EXCEPTION SURPLUS PRIVILEGE DEL A role-enforcement surplus e x ception  is deleted.
+GROUP GROUPADD SUCCESS A group has been successfully added to another group
+GROUP GROUPADD FAILURE A group has failed to be added to another group.
+GROUP GROUPDELETE SUCCESS A group has been successfully removed from another group.
+GROUP GROUPDELETE FAILURE A group has failed to be removed from another group.
+GROUP OWNER ADD SUCCESS A user is successfully made an owner of a group.
+GROUP OWNER DELETE SUCCESS A user’s ownership of a group is revoked.
+IDACCESS TOO MANY GROUPS A network resource plugin returns a number of groups greater than or
+equal to the value of the IDACCESS GROUPS THRESHOLD setting.
+IMPLEMENTER POPULATED Implementers are assigned to a resource.
+NR CREATE FAILURE Program to execute when a network resource failed to be created.
+NR CREATE SUCCESS Program to execute when a network resource is successfully created
+NR DELETE FAILURE Program to execute when a network resource failed to be deleted.
+NR DELETE SUCCESS Program to execute when a network resource is successfully deleted.
+NR MOVE FAILURE Program to execute when a network resource failed to be moved.
+NR MOVE SUCCESS Program to execute when a network resource is successfully moved.
+NR UPDATE FAILURE Program to execute when a network resource failed to be updated.
+NR UPDATE SUCCESS Program to execute when a network resource is successfully updated.
+PREQUEST USED A pr e-de fined  request is used.
+REMOVE ROLE FAILURE A role fails to be removed from a user.
+REMOVE ROLE SUCCESS A role is successfully removed from a user.Option Description
+USER CREATE FAILURE An account fails to be created.
+USER CREATE SUCCESS An account is successfully created.
+USER DELETE FAILURE An account fails to be deleted
+USER DELETE SUCCESS An account is successfully deleted.
+USER DISABLE FAILURE An account fails to be disabled.
+USER DISABLE SUCCESS An account is successfully disabled.
+USER ENABLE FAILURE An account fails to be enabled.
+USER ENABLE SUCCESS An account is successfully enabled
+USER GROUPADD FAILURE A user fails to be made a member of a group.
+USER GROUP ADD SUCCESS A user is successfully made a member of a group.
+USER GROUPDELETE FAILURE A user fails to be removed from a group.
+USER GROUPDELETE SUCCESS A user is successfully removed from a group.
+USER MOVECTX FAILURE An account fails to be moved to another context.
+USER MOVECTX SUCCESS An account is successfully moved to another context.
+USER UPDATE FAILURE An account fails to be updated.
+USER UPDATE SUCCESS An account is successfully updated.
+WF MODELAFTER USED A request has been submitted  using pr ofile  comparison.
+WF MODELAFTER VIEW A model user has been selected for pr ofile  comparison.
+WF REQUEST ACTION FINALIZED Some actions  in a request have been finaliz ed.
+WF REQUEST COMPLETED A request has been completed. No more actions  are to be taken.
+WF REQUEST DECIDED A request has been fully decided. All actions  have been approved, denied,
+or canceled.
+WF REQUEST ONHOLD A request has been put on hold.
+WF REQUEST POSTED A request has been posted to w orkflo w .
+WF REQUEST POST FAILURE A request has failed to be posted to w orkflo w .
+W orkflo w  manager service (idwfm) events that launch interface programs
+Option Description
+IDWFM EVENT ABORT W orkflo w  Manager Service aborts a w orkflo w  event.
+IDWFM EVENT EMAIL MISSING W orkflo w  Manager Service detects the email address is missing for the
+email recipient.
+IDWFM EVENT FAILURE W orkflo w  Manager Service fails to execute a w orkflo w  event.
+IDWFM EVENT RETRY W orkflo w  Manager Service retries a w orkflo w  event.
+IDWFM EVENT START W orkflo w  Manager Service starts a w orkflo w  event.
+IDWFM EVENT SUCCESS W orkflo w  Manager Service succeeds in e x ecuting  a w orkflo w  event.Determining the full name format
+You determine how Bravura Security Fabric  displays the full name of a user in email and Bravura Security
+Fabric  web pages by modifying the value of IDSYNCH FULL NAME FORMAT .
+This field  consists of sub-strings, where each are enclose by % characters and can contain specific
+start/end positions.
+An end position  cannot be specified  without a start position.
+Some sub-string examples include:
+▪%FIRST_NAME% displays the fir s t name as entered when the user was created. ▪
+▪%OTHER_NAME:1:2% displays the fir s t letter  of the other name as entered when the user was ▪
+created.
+▪%LAST_NAME:1:9% displays the fir s t 8 letter s  of the last name as entered when the user was created. ▪
+▪%LAST_NAME:9% displays the last letter s  of the last name s t arting  at the 9th letter  as entered when ▪
+the user was created.
+The default is %FIRST_NAME% %OTHER_NAME% %LAST_NAME% which is the user’s fir s t name followed
+by their other (middle) name and then their last name.  
+See also: 
+See Modifying w orkflo w  options  for sending mail  (on page 420) to learn how to customize settings  for
+sending messages during authoriz ation  w orkflo w .Part VII Mobile AccessBravura One
+Or g aniz ations  typically deploy Bravura Identity , Bravura Pass , or Bravura Privilege  on their private,
+corporate network. Using their work PCs, users can access the web portal of any of these products either
+through the physical corporate network (Ethernet or WiFi) or using a VPN.
+Users may wish to access these same Bravura Security  products, which are not normally reachable from
+the public Internet, using a personal device such as a smart phone or tablet. Phones and tablets are often
+not connected to the corporate network, instead using a home or public WiFi hot spot or a cell phone
+data plan. Accordingly, without a corporate VPN client deployed to the phone or tablet, the personal
+device cannot access the Bravura Security product’s web user interface.
+The Bravura One  app allows personal mobile devices to access the Bravura Security system deployed on
+the corporate private network, from outside that network, over the Internet, in a secure way.
+Connectivity  between the phone or tablet, attached  to the public Internet, and the on-premise Bravura
+Security softw ar e,  is mediated by a secured reverse proxy server, deployed in the cloud.
+The Bravura One  app requires activ ation.  It is only useful to users whose or g aniz ation  has deployed both a
+Bravura Security softw ar e  product, with a version number of 9.0 or later, and where a cloud reverse proxy
+has been activ a t ed  to enable mobile access to the on-premise IAM system.
+Architecture
+The Bravura One mobile proxy  server communicates with the Mobile Worker Service and allows the
+Bravura One  app on mobile devices using a home or public WiFi hot spot or a cell phone data plan to
+access Bravura Security Fabric  servers on a corporate and private network.
+At minimum, a typical Bravura One  deployment consists of the following:
+▪A Bravura Security Fabric  server running the Mobile Worker Service ( mobworker ). ▪
+This service works in c onjunction  with the Bravura One mobile proxy  server to allow the Bravura One
+app on mobile devices to access Bravura Security Fabric  servers.
+▪A separate Bravura One mobile proxy  server running the Mobile Proxy Service ( mobproxy ). ▪
+The Bravura One mobile proxy  server communicates with the Mobile Worker Service ( mobworker )
+and allows the Bravura One  app on mobile devices using a home or public WiFi hot spot or a cell phone
+data plan to access Bravura Security Fabric  servers on a corporate and private network.
+▪ Optional : A separate Bravura One mobile proxy  server running the Mobile Proxy Service ( mobproxy ) ▪
+may be c on figur ed  to send push notific ations  to mobile devices for users that have the Bravura One  app
+registered on their devices.
+Contact support@bravurasecurity.com  for assistance with the c onfiguration  and access of the Bravura
+One mobile proxy push notific ation  server.
+The architecture diagram below shows one of the solutions  for a Bravura One  deployment.
+The requirements and layout of the Bravura One  solution  will vary depending on the needs of your
+or g aniz ation  and network.Architecture
+The mobile proxy, used to mediate c onnections  between Bravura One  on smart phones and Bravura
+Security Fabric  servers which do not have a public URL, is c on figur ed  with Linux and Apache and the
+following hardware capacity:
+1.Small instance, minimum setup (for example, supporting  up to 5,000 users): Single core CPU, 1 GB 1.
+RAM, 10GB HDD.
+2.Large instance (for example, supporting  10,000 or more users): Quad core CPU, 4 GB RAM, 40GB HDD. 2.
+At least two mobile proxies should be deployed and load balanced in all cases, for high availability.
+Adding proxies also has the desirable side e ff ect  of increasing capacity.Setting  up and c on figuring  Bravura One
+Task checklist
+Use this checklist as a guide to ensure that you complete each step in enabling mobile access with
+Bravura One :
+1.Use setup to install Bravura Security Fabric . 1.
+2. Con figur e  the Bravura Security Fabric  server. 2.
+a.Add a least one Source of Pr ofile  target. a.
+This will provide the user pr ofiles  available to register with Bravura One.
+b. Con figur e  the self-service rules  (on page 1469). b.
+This is to determine the access controls for which users are allowed to register mobile devices.
+c. Con figur e  the global help desk rules  (on page 1470). c.
+This is to determine the access controls for which help desk users are allowed to view and delete
+mobile device r egis tr ations  on behalf of other users.
+d. Con figur e  any additional  c on figur ation  options  for Bravura One  (on page 1471). d.
+This includes skin cus t omiz ations  and adjusting  activ ation  timeout.
+3.Install Apache and copy the binaries to the mobile proxy server using one of the following methods:3.
+▪Install Apache and copy the mobile proxy RPMs on Red Hat Enterprise Linux (on page 1448) ▪
+▪Install Apache and copy the mobile proxy DEBs on Debian GNU/Linux  (on page 1449) ▪
+Ensure that the version of the Bravura One mobile proxy server matches the version that is shipped
+with the Bravura Security Fabric server.
+4.Install the mobile proxy server using the setup-mobproxy script  (on page 1451) 4.
+During the ins t allation  you will be prompted to c on figur e  and enable the Mobile Worker Service in
+Bravura Security Fabric , including adding the Bravura One mobile proxy  server url as well as the
+authentic ation  key that is c on figur ed  on the proxy server. The script will not c ontinue  until  this has
+been c on figur ed  and the Mobile Worker Service is restarted.
+5.Install the Bravura One  app onto the mobile devices  (on page 1472). 5.
+The Bravura One  app is available for both Android and iOS mobile devices.
+Setting  up the mobile proxy server
+This chapter describes how to set up the Bravura One mobile proxy  server running the Mobile Proxy
+Service ( mobproxy ). The c on figur ation  in this document is based on:
+▪Red Hat Enterprise Linux ins t allation  on CentOS 6.x x64 or 7.x x64 architecture. ▪
+▪Debian GNU/Linux ins t allation  on the Debian 9.x AMD64 architecture. ▪
+If support for another dis tribution  is required, please contact support@bravurasecurity.com .Additional  c on figur ation  may be needed depending on your dis tribution,  environment and requirements.
+Contact support@bravurasecurity.com  for assistance with the ins t allation  and c on figur ation  of the
+Bravura One mobile proxy  server.
+Ensure that you keep a record of the following in f ormation  in a safe loc ation,  as it will be required when
+c on figuring  Mobile Worker Service:
+▪Bravura One mobile proxy  server authentic ation  encr yption  key. ▪
+▪Host name or IP address of the Bravura One mobile proxy  server. ▪
+▪Bravura One mobile proxy  push notific ation  server authentic ation  encr yption  key. ▪
+▪Host name or IP address of the Bravura One mobile proxy  push notific ation  server. ▪
+Install Apache and copy the mobile proxy RPMs on Red Hat Enterprise Linux or CentOS
+To set up a Bravura One mobile proxy  server on a Red Hat Enterprise Linux (RHEL) or CentOS ins t allation:
+1.Log in to the Unix server with adminis tr ativ e  privileges and c on firm  the following: 1.
+▪Shared memory has been enabled and /dev/shm exists.▪
+▪The /tmp folder must exist on the RHEL/CentOS server.▪
+▪The libc package has been installed.▪
+▪The OpenSSL 1.1 package has been installed.▪
+2.Install the web server.2.
+The Bravura One mobile proxy  server requires a web server. Apache is the most commonly used Web
+Server on Linux servers. To install Apache2:
+At a terminal prompt enter the following command:
+sudo yum install httpd
+The server must use a pre-fork Multi-Proc essing  Module.
+This command installs the default version of Apache for RHEL/CentOS, which may not be the latest
+version of Apache.
+The setup-mobproxy.sh  ins t allation  script will also check the dependencies for the web server
+and will aut omatic ally  install any additional  required modules.
+3.To eliminate any manual in t er v ention,  c on figur e  Apache2 to start on boot. That way, if the server is 3.
+ever restarted, Apache2 will aut omatic ally  start again. The method to do this depends on the version
+of the dis tribution.  Consult the dis tribution’ s  documen t ation.
+4. Con firm  that mod_rewrite and mod_cgi are enabled. 4.
+5.View the default Apache c on figur ation  file, / e t c/httpd/ c on f/httpd.c on f  and c on firm  that the following 5.
+lines are uncommented and listed with other LoadModule entries:
+LoadModule rewrite_module modules/mod_rewrite.so 
+LoadModule cgi_module modules/mod_cgi.so
+6.Enable and c on figur e  SSL for the default site. 6.Bravura Security  requires that you c on figur e  the site for HTTPS to secure c ommunic ations  between the
+Bravura One mobile proxy  server and Bravura Security Fabric  server.
+The following are useful links to get you started:
+https://wiki.centos.org/HowTos/Https
+https://mozilla.github.io/server-side-tls/ssl-config-generator/
+An SSL certific a t e  from a trusted Certific a t e  Authority should be used.
+See Con figuring  SSL (on page 1457)  for more in f ormation  on c on figuring  SSL for the Bravura One
+mobile proxy  server.
+7.Locate the idmunix  folder from the Bravura Security Fabric  server. By default, it is installed in the 7.
+addon directory.
+The Mobile Proxy Service is available for the following RHEL/CentOS dis tributions:
+idmunix-rhel-el8.x64.tar.gz 
+8.Copy the idmunix-rhel-el8.x64.tar.gz  file from the idmunix  directory to a scratch 8.
+directory, such as /tmp/, on the Unix server.
+9.Log into the Unix server with adminis tr ativ e  privileges, and extract the files from the idmunix 9.
+archive.
+For example for CentOS 7.x, at a terminal prompt enter the following commands:
+cd /tmp 
+tar -zxvf idmunix-rhel-el8.x64.tar.gz
+10. Locate the following files: 10.
+hid-common.rhel-el8.x64.rpm 
+hid-idapi.rhel-el8.x64.rpm 
+hid-mobproxy.rhel-el8.x64.rpm
+11. With adminis tr ativ e  privileges, extract the files from the rpm archive. 11.
+For example, at a terminal prompt enter the following commands for CentOS 7.x:
+cd /tmp 
+rpm -i hid-common.rhel-el8.x64.rpm 
+rpm -i hid-idapi.rhel-el8.x64.rpm 
+rpm -i hid-mobproxy.rhel-el8.x64.rpm
+Install Apache and copy the mobile proxy DEBs on Debian GNU/Linux
+To set up a Bravura One mobile proxy  server on a Debian GNU/Linux ins t allation:
+1.Log in to the Unix server with adminis tr ativ e  privileges and c on firm  the following: 1.
+▪Shared memory has been enabled and /dev/shm exists.▪
+▪The /tmp folder must exist on the Debian server.▪
+▪The libc package has been installed.▪
+▪The OpenSSL 1.1 package has been installed.▪
+2.Install the web server.2.The Bravura One mobile proxy  server requires a web server. Apache is the most commonly used Web
+Server on Linux servers. To install Apache2:
+At a terminal prompt enter the following command:
+sudo apt-get install apache2 apache2-mpm-prefork
+The setup-mobproxy.sh  ins t allation  script will also check the dependencies for the web server
+and will aut omatic ally  install any additional  required modules.
+3.To eliminate any manual in t er v ention,  c on figur e  Apache2 to start on boot. That way, if the server is 3.
+ever restarted, Apache2 will aut omatic ally  start again. The method to do this depends on the version
+of the dis tribution.  Consult the dis tribution’ s  documen t ation.
+4.Enable the default site.4.
+Run the following command at a terminal prompt to enable the default site:
+sudo  a2ensite default
+5.Enable mod_rewrite.5.
+Run the following command at a terminal prompt to enable mod_rewrite.
+sudo  a2enmod rewrite
+6.Enable and c on figur e  SSL on the default site. 6.
+Bravura Security  requires that you c on figur e  the site for HTTPS to secure c ommunic ations  between the
+Bravura One mobile proxy  server and Bravura Security Fabric  server. The following are useful links to
+get you started:
+http://httpd.apache.org/docs/2.4/ssl/ssl_howto.html
+https://mozilla.github.io/server-side-tls/ssl-config-generator/
+An SSL c ertific at e  from a trusted Certific at e  Authority must be used. A self-signed c ertific at e  may not
+be used for the Bravura One mobile proxy server.
+See Con figuring  SSL (on page 1457) for more in f ormation  on c on figuring  SSL for the Bravura One
+mobile proxy  server.
+7.Check to see if the mpm_prefork module is already installed. This may be v erified  with the following 7.
+command:
+sudo apache2ctl -M
+Look for mpm_prefork_module in the list of enabled modules.
+If necessary, at a terminal prompt enter the following command to disable mpm_event and enable
+mpm_prefork.
+a2dismod mpm_event 
+a2enmod mpm_prefork
+8.Locate the idmunix  folder from the Bravura Security Fabric  server. By default, it is installed in the 8.
+addon directory.
+Copy the idmunix-debian-9.x64.tar.gz  file from the idmunix  directory to a scratch
+directory, such as /tmp/, on the Unix server.

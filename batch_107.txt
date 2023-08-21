@@ -1,0 +1,361 @@
+           # subject of the request.
+       }
+       "module" = "idr"
+       "viewer" "user" = {
+           # The "viewer" group contains standard information about the
+           # person using the CGI.
+       }
+   }
+The plugin then receives a series of KVGroups; one for each item.
+For example:
+# KVGROUP-V1.0
+          "prequest" "" = {
+            "description" = "PREQ1"
+            "itemID" = "PREQ1"
+          }
+# KVGROUP-V1.0
+          "prequest" "" = {
+            "description" = "PREQ2"
+            "itemID" = "PREQ2"
+          }
+# KVGROUP-V1.0
+          "prequest" "" = {
+            "description" = "PREQ3"
+            "itemID" = "PREQ3"
+          }
+# KVGROUP-V1.0
+          "prequest" "" = {
+            "description" = "!!!_CUSTOM_REQUEST_"
+            "itemID" = "_CUSTOM_"
+          }
+Output
+For each item, one output KVGroup is expected on stdout, with an optional  "filt er"  = "true" pair to
+indicate that the item should not be displayed:
+"" "" = {
+"filter" = "true|false"
+       # If false, the user is displayed
+       # If true, the user is not displayed
+"retval" = "<#>"       # Optional, if non-zero returned, abort the plugin
+}
+A plugin that encounters errors in its processing can add standard output pairs for individual items,
+which should cause the plugin e x ecution  to be aborted.
+that processes standard filt er  plugin input/output.
+▪Callback mode▪
+In callback mode the pr e-de fined  request filt er  plugin uses two functions:
+OnFilterInit(const $inkvg, output $detail)  This function  is called once to initializ e
+the environment based on the cgi user.
+▪$inkvg – the viewer▪
+▪$detail▪
+▪if 0, no detail provided on input kvg for each user▪
+▪if 1, detail is provided on input kvg for each user▪
+▪can also be expressed as a KVGroup▪
+OnItemFilter(const $inkvg, output $msg, output $allow)  This function  is called once per item to
+determine what pr e-de fined  requests the user can use.
+▪$inkvg – the pr e-de fined  request to filt er ▪
+▪$msg – error message▪
+▪$allow▪
+▪if 1, this user is displayed and available▪
+▪if 0, this user is not displayed and is unavailable▪
+that uses two functions  to process the input/output.
+This mode can be used to reduce processing time  in environments with large numbers of users.
+.
+Filter requests
+Bravura Security Fabric  can hide certain requests from recipients and authorizers. For example, you may
+want to prevent recipients from viewing requests for the t ermination  of their accounts, or you may want
+to prevent w orkflo w  managers in Houston from working on requests submitted  for users in Calgary.
+Bravura Security Fabric  can run a request filt er  plugin when a request is made, to determine whether a
+request should be hidden from users.
+This plugin is set by the Modules > Options  > FILTER REQUEST PLUGIN field.   
+There are no shipped plugins in use with this plugin point. See more in f ormation  about writing  a custom
+plugin
+Requirements
+See W riting  plugins  for general requirements.Ex ecution  points
+This plugin is run by the Requests app and W orkflo w  Manager Service.
+Filter plugins operate diff er en tly  from most plugins, which are synchronous. All filt er  plugins support
+asynchronous calling. There are two forms of asynchronous calling:
+▪Standard input/output mode▪
+In standard input/output (stdio) mode, filt er  plugins work in the following way:
+1.An event triggers a CGI program to call the plugin program or script and sends it standard user1.
+data.
+2.The calling program c ontinues  to stream input from stdin, one item at a time  until  there are no 2.
+more items.
+3.For each item, the plugin returns the filt er  result to stdout. 3.
+4.The calling program receives the final  standard output and c ontinues. 4.
+Input
+Input is similar for all resource filt er  plugins. The plugin fir s t receives standard data in the format:
+"" "" = {
+  "sessionid" = "<session ID>" # The session ID of the request.
+  "module" = "<idr|ids|idp|idwfm>"
+  "accountID" = "<account ID>" # The account ID of the recipient.
+  "template = "<template ID>" # The selected template ID.
+  "targetid" = "<target ID>" # The target ID for the recipient.
+  "navigation" "" = { ... } # User navigation data
+  "recipient" "<user|empty>" = {
+     # The "recipient" group contains standard information about the
+     # subject of the request.
+   }
+  "viewer" "user" = {
+     # The "viewer" group contains standard information about the
+     # person using the CGI.
+   }
+  "request" "" = {
+     # The "request" group contains standard information about the
+     # the request.
+   }
+ }
+Some of the values above may be empty, due to the stage and type of the request.
+The plugin then receives a series of KVGroups; one for each item.For example:
+"request" "" = {
+  "entryDate" = "1218736546"
+  "macroStatus" = "G"
+  "notes" = ""
+  "reason" = ""
+  "recipient" = "steven.benes"
+  "recipientEmail" = "steven.benes@norse.bravurasecurity.com"
+  "requestID" = "2048"
+  "requester" = "steven.benes"
+  "requesterEmail" = "steven.benes@norse.bravurasecurity.com"
+  "requesterName" = "Steven Benes"
+  "reservationid" = "00000000-0000-0000-0000-000000000000"
+  "segment" = "0"
+  "attribute" "EMAIL" = {
+     "value" "" = {
+     }
+  }
+  "attribute" "END_TIME" = {
+     "value" "" = {
+        "value" = "2008-08-14 13:55:00"
+     }
+  }
+  "attribute" "FIRST_NAME" = {
+     "value" "" = {
+     }
+  }
+  "attribute" "LASTLOGON" = {
+     "value" "" = {
+     }
+  }
+  "attribute" "LAST_NAME" = {
+     "value" "" = {
+     }
+  }
+  "attribute" "OTHER_NAME" = {
+     "value" "" = {
+     }
+  }
+  "attribute" "START_TIME" = {     "value" "" = {
+        "value" = "2008-08-14 12:55:00"
+     }
+  }
+  "attribute" "TELEPHONE" = {
+     "value" "" = {
+     }
+  }
+  "attribute" "VIEWABLE_BY_RECIPIENT" = {
+     "value" "" = {
+     }
+  }
+  "authorizer" "steven.benes" = {
+    "actualAuthorizer" = ""
+    "reason" = ""
+    "remindersSent" = "0"
+    "resource" = "4F12FA11531BCBC574BC4C4295D4872E"
+    "status" = "I"
+  }
+  "resource" "4F12FA11531BCBC574BC4C4295D4872E" = {
+    "authorizationsReceived" = "0"
+    "authorizationsRequired" = "1"
+     authorizer" = "steven.benes"
+    "itemType" = "accountID"
+    "notes" = ""
+    "operation" = "ARCHREQPWD"
+    "pseudoData" = ""
+    "pseudoOp" = "false"
+    "pseudoTag" = ""
+    "result" = "K"
+    "accountID" = "backdoor"
+    "targetid" = "NORSE"
+  }
+}
+See Request data  (on page 1506) for a description  of the request KVGroup.
+Output
+For each item, one output KVGroup is expected on stdout, with an optional  "filt er"  = "true" pair to
+indicate that the item should not be displayed:
+"" "" = {    "filter" = "true|false"
+           # If false, the user is displayed
+           # If true, the user is not displayed
+    "retval" = "<#>"
+           # Optional, if non-zero returned, abort the plugin
+    "sendactions" = "1|0"
+           # If 1, the detailed "resource" kvgroup is included in the input of
+           # the next request. By default, it is set to 1.
+           # If 0, the detailed "resource" kvgroup is not included in the input
+           # of the next request.
+    "sendattrs" = "1|0"
+           # If 1, the "attribute" KVGroups are  included in the input of the
+           # next request.
+           # If 0, the "attribute" KVGroups are not included in the input of the
+           # next request. By default, it is set to 0.
+}
+The sendactions  and sendattrs  items can only be used in call back mode if you express $detail as a
+KVGroup. See Callback mode below for details.
+A plugin that encounters errors in its processing can add standard output pairs for individual items,
+which should cause the plugin e x ecution  to be aborted.
+that processes standard filt er  plugin input/output.
+▪Callback mode▪
+n callback mode the request filt er  plugin uses two functions:
+OnFilterInit(const $inkvg, output $detail) This function  is called once to initializ e  the environment
+based on the request.
+▪$inkvg – the viewer▪
+▪$detail▪
+▪if 0, only "resource" detail is provided on input kvg for each request▪
+▪if 1, both "resource" and "attribut e"  details are provided on input kvg for each request ▪
+▪can also be expressed as a KVGroup, see the example below▪
+OnItemFilter(const $inkvg, output $msg, output $allow)  This function  is called once per item to
+determine what requests the user can view or manage.
+▪$inkvg – the request to filt er ▪
+▪$msg – error message▪
+▪$allow▪
+▪if 1, this request is displayed and available▪
+▪if 0, this request is not displayed and is unavailable  ▪Examples
+1.Using integer for $detail:1.
+function OnFilterInit( const $inkvg, output $detail ) 
+       { 
+       $detail = 0; 
+       }  
+2.Using KVGroup for $detail:  2.
+function OnFilterInit( const $inkvg, output $detail ) 
+       { 
+           $detail = kvgCreate( "", "" ); 
+        kvgAddValue( $detail, "sendactions", "1" ); 
+     kvgAddValue( $detail, "sendattrs", "1" ); 
+       }  
+that uses two functions  to process the input/output.
+This mode can be used to reduce processing time  in environments with large numbers of users.
+.
+Modify the number of records per page
+Bravura Security Fabric  displays lists of objects with a default 20 items per page. Users can scroll through
+the pages to find the item they want, and change the number of items if required. You can change the
+default number of items per page by modifying RECORDS PER PAGE . There is a minimum of 2 and a
+maximum of 500 records per page.
+RECORDS PER PAGE must be one of the values in RECORDS PER PAGELIST . For example; the default
+RECORDS PER PAGE LIST is 10, 20, 50, 100 and the default RECORDS PER PAGE is 20. This provides 20
+records per page and the option  to show 10, 20, 50 or 100 search result records per page.
+Identif y  users in a session
+You can use a session identifier  plugin to add identif ying  in f ormation  to session event reports. By default,
+the reports carry in f ormation  about the IP address that an event originated from. Alt ernativ ely  you can
+write a plugin that will return an IDENT=<info> key-value  pair.
+You can use the Session Log Identifier  field  on the Operations  report  page to search on the identif ying  IP
+address or other in f ormation.  The in f ormation  is displayed in the report under the "Ident" heading.
+This plugin is enabled by the SESSION IDENT PLUGIN  option.
+There is no shipped plugin in use with this plugin point. See more in f ormation  on writing  a custom plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  pointsWhen c on figur ed,  this plugin is run by all modules when a user logs into Bravura Security Fabric .
+Input
+The plugin will receive the following input corresponding to fields  in the sesslog table:
+"" "" = {
+  "ENVIRONMENT" "" = {
+    "ALLUSERSPROFILE" = "C:\\Documents and Settings\\All Users"
+    "CommonProgramFiles" = "C:\\Program Files\\Common Files"
+    "COMPUTERNAME" = "MYCOMPUTER"
+    "ComSpec" = "C:\\WINNT\\system32\\cmd.exe"
+    "CONTENT_LENGTH" = "145"
+    "CONTENT_TYPE" = "application/x-www-form-urlencoded"
+    "EXCHICONS" = "C:\\Program Files\\Exchsrvr\\bin\\maildsmx.dll"
+    "GATEWAY_INTERFACE" = "CGI/1.1"
+    "HTTP_ACCEPT" = "image/gif, image/x-xbitmap, image/jpeg, image/
+pjpeg, application/x-shockwave-flash, ⋆/⋆"
+    "HTTP_ACCEPT_ENCODING" = "gzip, deflate"
+    "HTTP_ACCEPT_LANGUAGE" = "en-us"
+    "HTTP_CACHE_CONTROL" = "no-cache"
+    "HTTP_CONNECTION" = "Keep-Alive"
+    "HTTP_CONTENT_LENGTH" = "145"
+    "HTTP_CONTENT_TYPE" = "application/x-www-form-urlencoded"
+    "HTTP_COOKIE" = "HITACHI-ID-DEFAULT-VALUES=43d7c817-00"
+    "HTTP_HOST" = "localhost"
+    "HTTP_REFERER" = "https://localhost/default/"
+    "HTTP_USER_AGENT" = "Mozilla/
+4.0 (compatible; MSIE 6.0; Windows NT 5.0)"
+    "HTTPS" = "off"
+    "INSTANCE_ID" = "1"
+    "LOCAL_ADDR" = "127.0.0.1"
+    "NUMBER_OF_PROCESSORS" = "1"
+    "OS" = "Windows_NT"
+    "Os2LibPath" = "C:\\WINNT\\system32\\os2\\dll;"
+    "Path" = "C:\\WINNT\\system32;C:\\WINNT;C:\\WINNT\\System32\
+\Wbem;C:\\PROGRA~1\\ULTRAE~1"
+    "PATH_TRANSLATED" = "c:\\inetpub\\wwwroot"
+    "PATHEXT" = ".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH"
+    "PROCESSOR_ARCHITECTURE" = "x86"
+    "PROCESSOR_IDENTIFIER" = "x86 Family 15 Model 4 Stepping 8, GenuineIntel"
+    "PROCESSOR_LEVEL" = "15"    "PROCESSOR_REVISION" = "0408"
+    "ProgramFiles" = "C:\\Program Files"
+    "REMOTE_ADDR" = "127.0.0.1"
+    "REMOTE_HOST" = "127.0.0.1"
+    "REQUEST_METHOD" = "POST"
+    "SCRIPT_NAME" = "/default/"
+    "SERVER_NAME" = "localhost"
+    "SERVER_PORT" = "80"
+    "SERVER_PORT_SECURE" = "0"
+    "SERVER_PROTOCOL" = "HTTP/1.1"
+    "SERVER_SOFTWARE" = "Microsoft-IIS/5.0"
+    "SystemDrive" = "C:"
+    "SystemRoot" = "C:\\WINNT"
+    "TEMP" = "C:\\WINNT\\TEMP"
+    "TMP" = "C:\\WINNT\\TEMP"
+    "USERPROFILE" = "C:\\Documents and Settings\\psadmin"
+    "windir" = "C:\\WINNT"
+  }
+  "SESSION" "" = {
+    "HOST" = ""
+    "HOSTID" = ""
+    "ID" = "S382005-153PMY~h/2Z@"
+    "LONGID" = "SMITHBO"
+    "OPER" = "USUP"
+    "REQBY" = "SMITHBO"
+    "RESULT" = ""
+    "RESULTCODE" = "0"
+    "TEND" = "422e10d1"
+    "TSTART" = "422e10d1"
+    "USERID" = "SMITHBO"
+  }
+  "requester" "user" = {
+    "ID" = "SMITHBO"
+    "NAME" = "Bob Jon Smith"
+  }
+}  
+Output
+The plugin returns:
+"" "" = {  "IDENT" = "<ip address>"
+  "retval" = "0"
+}
+Where:
+IDENT is the string to be saved in the sesslog.ident field
+retval indicates success if the value is 0.
+If the plugin fails (value is not 0), the user’s IP address will be stored. The optional  key-value pair errmsg
+can be used to provide a reason for the failure.
+.
+Limit session file size
+You can limit the session file size by c on figuring  SESSION MAX BIN SIZE . This prevents large numbers of
+concurrent access requests to Bravura Security Fabric  from identic al  users. When the c on figur ed  size is
+reached, the off ending  user’s session is invalidated and the user is required to re-login.
+By default, SESSION MAX BIN SIZE is set to 5,242,880 bytes (5MB).
+Enable remotely administered target systems
+A target system is "administered remotely" if its cr edentials  are stored on an external source rather than
+local to the target system. Before Bravura Privilege  can remotely administer target systems, you must
+enable the TARGET CREDENTIAL ASSOCIATION system variable in the Manage the system  > Modules  >
+Options  menu.
+See Remotely administered target systems  (on page 518) for details.
+Control the Phone Password Manager source of IVR IDs
+You can change the pr ofile  and request attribut e  that is used as a source of users’ IVR IDs (the digits users
+enter to identif y  themselves to the IVR phone system). By default, the telephone keypad tr anslations  of
+users’ pr ofile  IDs are used as their IVR IDs. Phone Password Manager  finds  a users’ pr ofile  ID by searching
+on their “numid” and “altnumid”.
+The TPM ID ATTR option  allows you to change the source of IVR IDs by specifying a new pr ofile  and
+request attribut e.  When TPM IDATTR is in use, Phone Password Manager  finds  users’ pr ofile  IDs by
+searching on the specified  attribut e.
+For example:
+Using the default setup of pr ofile  ID Find user “test123” by entering 8378123 on the
+keypad. This is the telephone keypad tr anslation  of the
+user’s pr ofile  ID.

@@ -1,0 +1,219 @@
+Repeat type Select the frequency of the scheduled job using the drop-down list.
+Depending on the repeat type, set scheduling options:
+▪Run once – you must select a Date and time  to run this job. ▪
+▪Daily – you must select which Days to run this job by selecting  either ▪
+Every day or Only on weekdays .
+▪Weekly – you must Choose the days of the week to perform this task . ▪
+▪Monthly – you must Choose the days of the month to perform this task ▪
+and Choose which months to perform this task . All months are selected
+by default.
+▪Quarterly – The task is started every three months after  the initial  run. ▪
+▪Semi-Annually – A new round is started every six months after  the initial ▪
+run.
+▪Annually – A new round is started every twelve months after  the initial ▪
+run.
+Period mode For jobs that are repeated quarterly, semi-annually, and annually, choose
+either:
+▪Start date - then Period start date and time ▪
+▪Month/week/day - then select the fir s t month, week of the month, and ▪
+day of the week to perform the task.
+The Choose the firs t month to perform this task  setting  is based
+on the current calendar year. For example if you set the firs t month
+for a quarterly job to January, and the current month is February,
+the task will start in April.
+Date and time  to run / Time to run All scheduled jobs time  to run is local to the server that runs the job. Except
+for jobs that are run once, the default time  to run is set by Manage the
+system  > Modules > Options  > DEFAULT SCHEDULED TIME .
+.
+10. Click Schedule to create the scheduled job. 10.
+Viewing and modifying scheduled reports
+Once a scheduled job is created, you can use the Scheduled reports  tab to modify, enable, disable, or
+delete a scheduled report. You can also view other users’ scheduled reports. You cannot remove or
+modify a pr e-de fined  request that uses the report output from this menu.
+When viewing reports, if the DISPLAY TIMEZONE option  is enabled, the scheduled time  displayed may
+diff er  by an hour if the server or the user profile  follows Daylight Savings Time and the other does not.
+Example: Schedule report on accounts
+This example shows you how to run a one-time  Accounts report, and then schedule a regular report.
+For this example it is assumed that:
+▪Bravura Security Fabric  and Connector Pack are installed. ▪
+▪An Activ e  Directory target system is added as a source of pr ofiles. ▪Run a report
+To view and save a one-time  report:
+1.Log in to Bravura Security Fabric  as superuser. 1.
+2.Click Manage reports > Reports . 2.
+Bravura Security Fabric  generates a list of available reports. If this is the fir s t time  that you have visited
+the page, this process may take several seconds.
+3.Click Users > Accounts . 3.
+4.Click the search icon 
+  in the Target system ID  field  to select checkbox for the AD target system. 4.
+5.Click Select . 5.
+6.Expand the Save c on figur ation  and output on server section. 6.
+7.In the Saved report name  field,  type AD Accounts . 7.
+8.Click Run at the bottom  of the form to see the results. 8.
+You may need to click Refresh  to reload the page and display the results.
+9.Click the Saved reports  tab. 9.
+10. Click My saved reports . 10.
+Your report should be listed on the My saved reports  page.
+Schedule a regular report
+To schedule and save a regular report:
+1.Click Manage reports > Reports > Users > Accounts  again. 1.
+2.Click the search icon 
+ in the Target system ID  field  to select the AD target system. 2.
+3.Click Select . 3.
+4.Expand the Email report section. 4.
+5.Enter the following values:5.
+To <user>Subject  Regular user report
+Message The user report is attached
+Attachmen t  type  PDF
+6.Expand the Schedule report section. 6.
+7.In the Job field,  type AD Accounts . 7.
+8.Select the Enabled checkbox. 8.9.Click Schedule at the bottom  of the form. 9.
+10. Click the Scheduled reports  tab. 10.
+11. Click My scheduled reports . 11.
+Your report should be listed on the My scheduled reports page. At the next scheduled runtime,  the
+report will be emailed to <user>.
+12. Once a scheduled job is created, you can use the Scheduled reports  menu to modify, enable, disable, 12.
+or delete a scheduled report.
+When a scheduled report is run, you can view it in the Saved reports list. The report name is <Job>
+appended with the times t amp.
+Submitting  pr e-de fined  requests using report output
+Applies with a Bravura Identity  or Bravura Privilege license.
+If you have permission to run a pr e-de fined  request  (on page 1311) that is set up to use with reports, you
+can use the report output to issue the request to Bravura Security Fabric ’s w orkflo w  engine via theManage reports (RPT) module. Segments of the report can be submitted  to pr e-de fined  requests with
+it er ativ e  submissions. Note that you need to run the report before the request option  becomes available.
+To use report output to issue a request:
+1.Run the report  (on page 2893). 1.
+The Submit pr e-de fined  requests using report output  section  is added to the bottom  of the table.
+2.Expand Submit pr e-de fined  requests using report output . 2.
+3.Select one of the Pr e-de fined  requests  from the drop-down list. 3.
+Bravura Security Fabric  adds a magnifying glass icon 
+  next to the request ID . Click this to view
+in f ormation  about the pr e-de fined  request. Another icon is added next to the Attribut es  field.
+Currently not all types of pre-de fined  requests are available in reports; these include some pre-de fined
+requests for network resources, and pre-de fined  requests for e xisting  parent or child groups which
+contain a required operation  of adding a group to or removing a group from another group.
+4.Click the 
+  to c on figur e  Attribut es . 4.
+Bravura Security Fabric  displays the Con figur e  pr e-de fined  request based on report output  window.
+a.For user-based requests, enter the Recipient ID , either by mapping it to an ID in the report output, a.
+or typing a s t atic  pr ofile  ID. The recipient ID must match a valid pr ofile  ID. Alt ernativ ely ,  you can
+click 
+  to search for the Recipient ID .
+b.Map other attribut es  to the report output or s t atic  values. b.c.Click Done  to return to the report form. c.
+5.If you want to filt er  out duplicate requests from previous output, select Enable past request filt ering 5.
+and set the number of days you want filt er .
+Combine this option  with Maximum rows to submit to submit segments of the report output to pre-
+defined  requests with it erative  submissions.
+You can also c on figur e  a Manage reports (RPT) module plugin to filt er  out requests based on business
+logic. or details.
+6.Change the Maximum rows to submit  option  to ’Other’ if you want to test the request from report 6.
+output, or submit the requests in smaller batches. This option  is set to ’ All’ by default.
+If you specify a number (between 1 and 999), requests will be submitted  until  the maximum is
+reached.
+7.If you want notific ation  sent to an address other than the one shown, change the value in Send emails 7.
+to this address with in f ormation  about the request .
+8.Type Requester notes  as required. 8.
+This field  allows the use of macros to sub stitut e  text
+Macros can be used to sub stitut e  text when the report runs. The macros must be enclosed in angle
+brackets <> and are case sensitiv e.
+Macros can be used in the following fields:
+▪Email subject▪
+▪Email message▪▪Saved report name▪
+▪Network path (UNC)▪
+▪File name▪
+▪Notes▪
+▪Requester notes▪
+Below is a list of available macros:
+Macro Example sub stitution
+<SERVER> idmsuite-1
+<USER> reporter00
+<DATETIME> 2015-06-18 01-22
+<RUNTIME> 2015-06-18 01-22
+<DATE> 2015-06-18
+<TIME> 01-22
+<DAY> 17
+<MONTH> 03
+<YEAR> 2015
+<CC> 20
+<YY> 15
+<MM> 03
+<DD> 17
+<HH> 14
+<hh> 02PM
+<mm> 57
+<ss> 04
+when the report runs.
+9.Type the ID of a Parent request  as required. 9.
+If specified,  the parent request will be attached  to the pr e-de fined  request when the report runs.
+10. Optional:  Con figur e  settings  to Schedule report 10.
+Report options:  Schedule report
+Option Description
+Job Type an ID for this scheduled report.
+When a scheduled report is run, you can view it in the Saved reports  list.
+The report name is <Job> appended with the times t amp.
+Email address to send scheduled
+report warnings toType an email address to receive notific ation  of problems with scheduled
+reports. If not specified  the RECIPIENT EMAIL address is used.
+Enabled Select this when you are ready to run the report at the next schedule time.Expiry days Specify expiry period to save the report in days. The value must be between
+1 and 999. The default value is 60. You can modify the default using the
+SAVED REPORTS EXPIRY DAYS  setting  on the Manage the system > Modules
+> Manage reports (RPT)  menu.
+Never expire Use this to make the saved report never expire. Expiry days field  is hidden
+when this option  is checked.
+Notes Type notes to be emailed with the report.
+Job time  range Specify if you want your job to always run, to run for a specific  length of
+time,  or for a specific  number of it er ations  by selecting  one of the following
+from the drop-down list:
+▪Always run  – Scheduled job always runs as specified. ▪
+▪From specified  start date to end date  – Click the da t e/time  fields  to ▪
+select a date and hour for the Start date and End date. To edit the
+minutes enter a time  in the HH:MM format.
+▪For number of it er ations  from specified  start date  – Click the da t e/time ▪
+field  to choose select a date and hour for the Start date. To edit the
+minutes enter a time  in the HH:MM format. Specify a Number of
+it er ations  to run. Your job will only run for the number of it er ations  you
+enter here.
+Last day of the month For monthly to annual schedules, use this setting  to avoid missed run times.
+For example, if you schedule a job quarterly, with a start date of August 31,
+the next run time  after  August 31 would be November 31, which does not
+exist. With this setting  enabled, the next round would start on the last day
+of the month, November 30.
+Repeat type Select the frequency of the scheduled job using the drop-down list.
+Depending on the repeat type, set scheduling options:
+▪Run once – you must select a Date and time  to run this job. ▪
+▪Daily – you must select which Days to run this job by selecting  either ▪
+Every day or Only on weekdays .
+▪Weekly – you must Choose the days of the week to perform this task . ▪
+▪Monthly – you must Choose the days of the month to perform this task ▪
+and Choose which months to perform this task . All months are selected
+by default.
+▪Quarterly – The task is started every three months after  the initial  run. ▪
+▪Semi-Annually – A new round is started every six months after  the initial ▪
+run.
+▪Annually – A new round is started every twelve months after  the initial ▪
+run.Period mode For jobs that are repeated quarterly, semi-annually, and annually, choose
+either:
+▪Start date - then Period start date and time ▪
+▪Month/week/day - then select the fir s t month, week of the month, and ▪
+day of the week to perform the task.
+The Choose the firs t month to perform this task  setting  is based
+on the current calendar year. For example if you set the firs t month
+for a quarterly job to January, and the current month is February,
+the task will start in April.
+Date and time  to run / Time to run All scheduled jobs time  to run is local to the server that runs the job. Except
+for jobs that are run once, the default time  to run is set by Manage the
+system  > Modules > Options  > DEFAULT SCHEDULED TIME .
+.if you want to run the report and submit requests at a later time.
+11. Click: 11.
+▪Schedule for submission  if you set up a scheduled job. ▪
+The selected pre-de fined  request cannot be modified  or removed from the Scheduled jobs page.
+Mapped attribut es  cannot be modified.
+▪Run for submission  to submit requests immediately. ▪
+Bravura Security Fabric  displays a summary of the requests submitted.You can click on the info icon 
+  in the Shows the c on figur ation  of pr e-de fined  requests  column
+to view the status of each request.
+Tracking requests
+You can view request status via the Requests  link on the Front-end (PSF). You may also be able to cancel
+or escalate the request, or modify some attribut es  before the request is authorized.
+Using date ranges within reports
+Some reports allow you to specify a date range in the search criteria, allowing you to r e fine  the report
+output.

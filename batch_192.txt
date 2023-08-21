@@ -1,0 +1,187 @@
+The following mechanisms are used to manage SSH public keys:
+▪Auto-discovery of SSH public keys and authorized keys for accounts on Unix servers.▪
+▪Connector oper ations  for SSH public key injection  and removal. ▪
+▪Default access disclosure plugin for c onnecting  to the server using SSH keys. ▪
+▪Check-out and check-in failure retries if servers cannot be reached.▪
+The above are used when Unix managed systems are integrated with Bravura Privilege  in ”push mode”.
+You can select accounts to be used for accessing files or running commands on a Unix server. Users can
+check out these accounts using their SSH pubic key. This means that at check-out time,  their public key is
+added to the server and at check-in time,  their public key is removed.
+Users must have their SSH public keys in their profile  when using SSH keys to check out accounts.Use case: SSH key access
+This use case demonstrates how to set up and check out an SSH key.
+In this use case:
+Requirements. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1912
+Cr eating  SSH Key pairs. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1912
+Add SSH key target system. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1913
+Manage SSH key accounts. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1915
+Request access to SSH key. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1916
+Check out SSH key access. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1917
+Launch SSH using PuTTY over SSH disclosure. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1918
+Check in SSH key access. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1920
+Requirements
+This use case assumes that:
+▪The target system is Unix oper ating  system (Linux, Solaris, AIX, HP-UX are supported) ▪
+▪OpenSSH installed is installed on the target system▪
+▪The use case environment details are:▪
+▪A linux system with hostname linux01 . ▪
+▪linux01 contains the following: ▪
+▪User admin1 , used to request SSH key access ▪
+▪User sshkeyaccount , in which admin1 will request SSH key access to ▪
+▪Both admin1 and sshkeyaccount have SSH keys de fined ▪
+Cr eating  SSH Key pairs
+The following steps are based on a CentOS 7 64-bit server with OpenSSH pre-installed. The steps may
+vary depending on which linux dis tributions  you decide to use.
+More in f ormation  about OpenSSH: http s://w w w .ssh.c om/ ac adem y/ ssh/k e y g en
+1.SSH into the linux system as root and enter its password: 1.
+ssh root@linux01
+2.Create 2 users: admin1 and sshkeyaccount using the useradd command: 2.
+useradd admin1
+useradd sshkeyaccount
+3.Set a password for the accounts using the passwd command: 3.
+passwd admin1
+passwd sshkeyaccount
+4.SSH into linux01 as admin1 and enter its password: 4.
+ssh admin1@linux015.Create an SSH key pair using ssh -keygen . Accept all defaults. 5.
+ssh-keygen
+This saves the keys into the user’s .ssh directory.
+6.End the SSH session for admin1.6.
+7.SSH into linux01 as sshkeyaccount and enter its password: 7.
+ssh sshkeyaccount@linux01
+8.Create an SSH key pair using ssh-keygen. Accept all defaults.8.
+ssh-keygen
+This saves the keys into the user’s .ssh directory.
+9.End the SSH session for sshkeyaccount . 9.
+If you provide a passphrase for the ssh key, this will also need to be specified  upon SSH key account
+check out, even when a password is not required.
+Add SSH key target system
+1.Log in to the Front-end  as superuser 1.
+2.Click Manage the System > Resources > Target systems > Manually de fined. 2.
+3.Click Add new… 3.
+4.Specify an ID and Description: 4.
+a.ID: SSH_TARGETa.
+b. Description:  SSH key system b.
+5.Set type to ‘Generic Linux Server (SSH)’5.
+6. (Optional)  Select checkbox for ‘Source of pr ofile  IDs’ 6.SSH_TARGET does not need to be a source of profile  IDs, however accounts in SSH_TARGET must be
+able to be associated with accounts in the source of profile  target in order to request SSH key access.
+7.Select checkbox for ‘ Aut omatic ally  create a Privileged Access Manager managed system’ 7.
+8.Click Change in the Address field: 8.
+a.Set server as linux01a.
+b.Select the checkbox for ‘Enable SSH public and authorized key discovery’b.
+c. (Optional)  If the ssh keys are of a non-standard file name (ie. rsa or dsa public keys are not named c.
+id_rsa.pub or id_dsa.pub), or of a diff er en t  algorithm (ecdsa, ed25519):
+i.Expand ‘Advanced’i.
+ii.Update ‘Enter the filenames  (comma delimited) to get the public keys from. Must be in the ii.
+user's /.ssh directory’ to include all other public key filenames
+9.Click Continue 9.
+10. Click Add 10.
+11. Specify cr edentials  for the target 11.
+12. Click Update 12.
+13. Click Test c onnection  tab 13.
+14. Click Test cr edentials 14.
+15. Verify that the cr edential  test is successful 15.
+16. Run auto discovery to list accounts and public keys 16.To c onfirm  that SSH public keys are successfully listed, expose the SSH_PUBLIC_ATTRS attribut e
+group:
+1.Click Manage the system  > W orkflo w  > Attribut e  groups 1.
+2.Click SSH_PUBLIC_ATTRS 2.
+3.Click Display Criteria 3.
+4.Set Display type = Main4.
+5.Click Update 5.
+6.Log in to the Front-end  as admin1 6.
+7.Under My Pr ofile,  click View and update pr ofile 7.
+8.Under SSH public key pr ofile  attribut es,  c on firm  that the public key(s) are attached  to the pr ofile 8.
+Manage SSH key accounts
+1.As superuser, click Manage the system  > Privileged access  > Managed system policies 1.
+2.Click Add new… 2.
+3.Set the following:3.
+▪ID: SSH_KEY_ACCOUNTS▪
+▪ Description:  SSH key accounts ▪
+▪ Authentic ation  type: SSH key ▪
+4.Click Add 4.
+5.Click Member systems  tab 5.
+6.Click Add new… 6.
+7.Select SSH_TARGET7.
+8.Click Select 8.
+9.Click Managed accounts  tab 9.
+10. Click Add new… 10.
+11. Select sshkeyaccount 11.
+12. Click Select 12.
+13. Click Authorizers tab 13.
+14. Under Authorizers, click Select… 14.15. Select a user to be the authorizer, and click Select 15.
+16. Click Access disclosure plugins  tab 16.
+17. Select PuTTY over SSH (using SSH keys) 17.
+18. Click Select 18.
+19. Select the checkbox for Access SSH keys 19.
+20. Click Update. 20.
+Additional  c onfiguration  is required for this disclosure to work, including the ins t allation  of PuTTY on
+the work s t ation  that will launch the disclosure. See section  Launch SSH using PuTTY over SSH
+disclosure.
+Request access to SSH key
+1.Log in to the Front-end  as admin1 1.
+2.Click Privileged access 2.
+3.Click the Accounts filt er  in the left panel 3.
+4.Select sshkeyaccount4.
+5.Click Request check-out 5.
+6.Fill in required fields 6.
+7.Set ‘ Oper ation  to perform for check-out and check-in’ to SSH Key, if not already set 7.
+8. (Optional)  Select a public key from ‘SSH public key to add to account’, if the user has multiple  public 8.
+keys9.Click Submit 9.
+10. If authoriz ation  is required, approve the request as authorizer 10.
+Check out SSH key access
+After  checking out an SSH key account, the requester should be able to ssh into the managed account
+without a password.1.Log in to the Front-end  as admin1 1.
+2.Click Your privileged access requests have been approved 2.
+3.Click Check out 3.
+4.Wait until  check out is complete 4.
+To verify:
+1.SSH into linux01 as admin1 and enter its password:1.
+ssh admin1@linux01
+2.SSH into linux01 as sshkeyaccount:2.
+ssh sshkeyaccount@linux01
+3. Con firm  admin1 should now be able to ssh using sshkeyaccount without pr ompting  for password 3.
+If you specified  a passphrase for the ssh key, you will be prompted to provide one, even if a password
+is not required.
+Launch SSH using PuTTY over SSH disclosure
+In order to use the PuTTY over SSH (using SSH keys) access disclosure plugin, additional  c on figur ation  will
+need to be done, including:
+▪Installing PuTTY on the client w ork s t ation  that will launch the disclosure. ▪
+▪Adding the requester’s private key on the w ork s t ation. ▪
+▪(If Session Monitor is c on figur ed)  Con figur e  SMON HTTP URL system variable. See Session Monitoring ▪
+section  in the c on fig  doc on how to do this.
+1.On the client w ork s t ation  that will launch the PuTTY over SSH disclosure, download and install PuTTY . 1.
+This can be found at http s://w w w .putty .or g /
+2.Ensure PuTTY can be run by opening up a command prompt window and typing ‘putty ’ .  If it does not 2.
+resolve properly, add the full path to PuTTY to your PATH environment variables.
+3.Copy over the foreign key of admin1 from linux01 (ie. id_rsa or id_dsa) to the client w ork s t ation.  This 3.
+can be found in the .ssh directory.
+4.Use the puttygen utility ,  found in C:\Program Files\PuTTY , utility  to generate a .ppk private key file 4.
+from the foreign key:
+a.Click Loada.
+b.Locate and select the foreign key file b.
+The key should now be loaded into puttygenc. (Optional)  Provide a passphrase for the ssh key c.
+d.Save the private key file in a local directory d.
+5.Double-click on the .ppk file. Pageant (PuTTY authentic ation  agent) will launch and load the private 5.
+key file. You should see the icon of the Pageant program in the taskbar.
+To verify that PuTTY over SSH disclosure successfully ssh into the managed account without a
+password:
+1.Log in to the instance as admin1 1.
+2.Click Privileged access 2.
+3.Under Check-outs, click the Mine filt er  in the left panel 3.
+4.Select sshkeyaccount 4.
+5.Click PuTTY over SSH (using SSH keys)5.
+6. Con firm  PuTTY is launched, and admin1 is aut omatic ally  logged in as sshkeyaccount using SSH 6.
+without pr ompting  for password
+If you specified  a passphrase for the ssh key, you will be prompted to provide one, even if a password
+is not required.Check in SSH key access
+After  checking in a SSH key account, the requester should no longer be able to ssh into the managed
+account without a password.
+1.Log in to the Front-end  as admin1 1.
+2.Click Privileged access 2.
+3.Under Check-outs, click Mine filt er  from the left panel 3.
+4.Select sshkeyaccount4.
+5.Click Check in 5.
+To verify:
+1.SSH into linux01 as admin1 and enter its password: 1.
+ssh admin1@linux01
+2.SSH into linux01 as sshkeyaccount : 2.
+ssh sshkeyaccount@linux01
+3. Con firm  admin1 is prompted for a password for sshkeyaccount 3.

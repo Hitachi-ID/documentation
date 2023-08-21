@@ -1,0 +1,292 @@
+4.Source the file to start using the proxy settings: 4.
+source /etc/profile
+5.Ensure the Guacamole server is up to date:5.
+a.yum update  (for Centos 7 / RHEL 7) a.
+b.dnf update  (for Centos 8 / RHEL 8 or newer) b.
+6.Choose a method of installing Guacamole6.
+7. Con figur e  Guacamole access disclosure plugins  (on page 1989) 7.
+8. (Optional)  Secure Guacamole c onnections  using SSL 8.
+IMPORTANT:
+▪It is highly recommended that you follow the above steps in sequence, otherwise you may encounter▪
+c on figur ation  issues.
+▪Before editing  any file mentioned  in this documen t ation,  it is recommended to make a backup of that ▪
+file fir s t.
+▪If you encounter issues at any point, check out the T r oubleshooting  (on page 2002) section. ▪
+Con figur e  Guacamole remote desktop gateway
+There are several methods of installing the Guacamole remote desktop gateway:
+▪Using Docker  (on page 1981): Docker is a daemon that runs applic ations  with all of the required ▪
+dependencies and libraries that are bundled into one package, or ”container”. Docker is open-source
+and can be installed on many platforms  including Windows, Linux and Mac OS.
+▪Using Podman : As of CentOS 8/RHEL 8, Docker support has been dropped in favor of a similar ▪
+container engine called Podman. Podman is daemonless and can run multiple  containers by
+combining them into “pods”.
+▪Installing the RPMs manually: While this method should work on a CentOS 7 64-bit dis tribution,  there ▪
+are no guarantees that this will work on other Unix oper ating  systems or CentOS/RHEL versions and
+may require additional  c on figur ation.  Upgrades to newer versions of Guacamole might not be possible
+due to pot ential  c ompatibility  or dependency issues. Contact support@bravurasecurity.com  if you
+decide to go this route.
+Install Guacamole using Docker
+The following steps are based on a CentOS 7 64-bit dis tribution.  All steps performed on the Guacamole
+server should be performed as root user.
+1.Obtain the idmunix-rhel-<elversion>.tar.gz  file from <instancedir>\addon 1.
+\idmunix  on the Bravura Privilege  server and copy it into the Guacamole server under the /root
+directory (where <elversion> is the RHEL version and architecture). We will use idmunix-
+rhel-el7.x64.tar.gz  as an example.
+2.Navigate to the root directory: 2.
+cd /root3.Unzip the idmunix-rhel-el7.x64.tar.gz  file: 3.
+tar -xf idmunix-rhel-el7.x64.tar.gz
+4.Navigate to the  idmunix-rhel-el7.x64/docker/guacd directory: 4.
+cd /root/idmunix-rhel-el7.x64/docker/guacd
+5.Modify the DockerFile by unc ommenting  the applicable line(s) for your environment, and replace 5.
+<proxy> with the hostname/IP address and port number of the proxy, in the format <proxy
+address>:<port> . For example, 10.0.0.4:80:
+#ENV http_proxy <proxy>:<port> 
+#ENV https_proxy <proxy>:<port> 
+6.The current Fedora dis tribution  does not allow RDP to machines older than Windows 10. In order to 6.
+RDP into these machines, also uncomment the following lines:
+#RUN dnf install -y crypto-policies-scripts 
+#RUN update-crypto-policies --set DEFAULT:FEDORA32 
+WARNING! Enabling this option  might result in possible security exploits on older
+Windows clients. It is highly recommended to use heightened RDP
+protocols whenever possible.
+Save the file.
+7.Navigate to the idmunix-rhel-el7.x64/docker  directory: 7.
+cd /root/idmunix-rhel-el7.x64/docker/
+8.Build the Docker image:  8.
+docker compose build  
+9.Create and start the Docker container:  9.
+docker compose up -d 
+If using Version 1 of the Docker Compose repository the command is docker-compose .
+10. Open a browser window on a server or w ork s t ation  where the guacamole server certific a t e  is 10.
+installed, and access the Guacamole server using port 8080, ie:
+http://<DNSName-of-guacamole-server>:8080/pam-guacamole
+A black screen with the following message will be displayed, however this is expected at the setup
+stage:
+Stopping the container
+To stop the Docker container run:
+docker compose down
+St arting  the container
+To start the Docker container; for example, after  r es t arting  the Guacamole server, run:
+docker compose up -d
+Running the docker container as a service
+Docker containers can be controlled using systemd . This is useful when you want to start Guacamole
+aut omatic ally  upon reboot of the Guacamole server.
+1.Ensure that the Docker service is c on figur ed  to start at boot.  1.
+systemctl enable docker  
+2.Execute the following commands to run the guacd and guacamole containers, and restart the 2.
+containers when they are stopped:  
+docker run -d --restart unless-stopped guacd 
+docker run -d --restart unless-stopped guacamole 
+Logging
+Tail the logs for the running containers with the following commands:
+▪docker logs -f guacd▪
+▪docker logs -f guacamole ▪
+Install Guacamole using Podman
+The following steps are based on a CentOS 8 64-bit dis tribution.  All steps performed on the Guacamole
+server should be performed as root user.
+1.Obtain the idmunix-rhel-<elversion>.tar.gz  file from <instancedir>\addon 1.
+\idmunix  on the Bravura Privilege  server and copy it into the Guacamole server under the /root
+directory (where <elversion> is the RHEL version and architecture). We will use idmunix-
+rhel-el8.x64.tar.gz  as an example.
+2.Navigate to the root directory: 2.
+cd /root
+3.Unzip the idmunix-rhel-el8.x64.tar.gz  file: 3.
+tar -xf idmunix-rhel-el8.x64.tar.gz
+4.Navigate to the etc/guacamole  directory. 4.
+cd /root/idmunix-rhel-el8.x64/docker/guacamole/etc/guacamole
+5.Modify guacamole.properties , by replacing the value of guacd-hostname  to be localhost: 5.# Hostname and port of guacamole proxy
+guacd-hostname: localhost
+guacd-port: 4822
+Save the file.
+6.Navigate to the  idmunix-rhel-el8.x64/docker/guacd directory: 6.
+cd /root/idmunix-rhel-el8.x64/docker/guacd
+7.Modify the DockerFile by unc ommenting  the applicable line(s) for your environment, and replace 7.
+<proxy> with the hostname/IP address and port number of the proxy, in the format <proxy
+address>:<port> . For example, 10.0.0.4:80:
+#ENV http_proxy <proxy>:<port> 
+#ENV https_proxy <proxy>:<port> 
+8.The current Fedora dis tribution  does not allow RDP to machines older than Windows 10. In order to 8.
+RDP into these machines, also uncomment the following lines:
+#RUN dnf install -y crypto-policies-scripts 
+#RUN update-crypto-policies --set DEFAULT:FEDORA32 
+WARNING! Enabling this option  might result in possible security exploits on older
+Windows clients. It is highly recommended to use heightened RDP
+protocols whenever possible.
+Save the file.
+9.Navigate to the idmunix-rhel-el8.x64/docker  directory: 9.
+cd /root/idmunix-rhel-el8.x64/docker/
+10. Build the guacd image: 10.
+podman build -t guacd ./guacd
+11. Build the guacamole image: 11.
+podman build -t guacamole ./guacamole
+When prompted to select a tomcat image, choose  docker.io/library/tomcat:9-jre8
+12. Create the pod called "guac": 12.
+podman pod create --name guac -p 8080:8080
+13. Add the guacd container to the guac pod: 13.
+podman run -d --pod guac --name guacd guacd
+14. Add the guacamole container to the pod: 14.
+podman run -d --pod guac --name guacamole guacamole
+15. Open a browser window on a server or w ork s t ation  where the guacamole server certific a t e  is 15.
+installed, and access the Guacamole server using port 8080, ie:
+http://<DNSName-of-guacamole-server>:8080/pam-guacamole
+A black screen with the following message will be displayed, however this is expected at the setup
+stage:Stopping the pod
+To stop the Guacamole pod run:
+podman pod stop guac
+St arting  the pod
+To start the Guacamole pod run; for example, after  r es t arting  the Guacamole server, run:
+podman pod start guac
+Removing the pod
+To remove the Guacamole pod, run:
+1.podman pod stop guac1.
+2.podman pod rm guac2.
+If you remove the Guacamole pod, you will need to recreate the pod again.
+Running the podman pod as a service
+Podman pods can be controlled using systemd . This is useful when you want to start Guacamole
+aut omatic ally  upon reboot of the Guacamole server.
+All steps are to be run as root user.
+1.Ensure the guac pod is stopped:1.
+podman pod stop guac
+2.Generate a systemd c on figur ation  for the Guacamole pod: 2.
+podman generate systemd --new --name guac > guac.config
+This will output the c on figur ation  into a file called guac.config  in the current directory. The file
+contains 3 c on figur ations:
+▪one for the guac pod ▪
+▪one for the guacd container ▪
+▪one for the guacamole container ▪3.Create a new file called pod-guac.service : 3.
+vi /etc/systemd/system/pod-guac.service
+This should only contain the c on figur ation  for pod-guac.service  as de fined  in guac.config :
+# pod-guac.service
+# autogenerated by Podman 3.4.1-dev
+# Wed Dec 22 17:04:24 MST 2021
+[Unit]
+Description=Podman pod-guac.service
+Documentation=man:podman-generate-systemd(1)
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=
+Requires=container-guacamole.service container-guacd.service
+Before=containter-guacamole.service container-guacd.service
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+TimeoutStopSec=70
+ExecStartPre=/bin/rm -f %t/pod-guac.pid %t/pod-guac.pod-id
+ExecStartPre=/usr/bin/podman pod create --infra-common-pidfile %t/pod-guac.pid --pod-id-file %/pod-guac.pod-id --
+name guac -p 8080:8080 --replace
+ExecStart=/usr/bin/podman pod start --pod-id-file %t/pod-guac.pod-id
+ExecStop=/usr/bin/podman pod stop --ignore --pod-id-file %t/pod-guac.pod-id -t 10
+ExecStopPost=/usr/bin/podman pod rm --ignore -f --pod-id-file %t/pod-guac.pod-id
+PIDFile=%t/pod-guac.pid
+Type=forking
+[Install]
+Wantedby=multi-user.target default.target
+4.Create a new file called container-guacd.service : 4.
+vi /etc/systemd/system/container-guacd.service
+This should only contain the c on figur ation  for container-guacd.service  as de fined  in
+guac.config :# container-guacd.service
+# autogenerated by Podman 3.4.1-dev
+# Wed Dec 22 17:04:24 MST 2021
+[Unit]
+Description=Podman container-guacd.service
+Documentation=man:podman-generate-systemd(1)
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=%t/containers
+BindsTo=pod-pod-guacd.service
+After=pod-guac.service
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+TimeoutStopSec=70
+ExecStartPre=/bin/rm -f %t/%n.ctr-id
+ExecStart=/usr/bin/podman pod run --cidfile=%t/%n.ctr-id --cgroups=no-conmon --rm --pod-id-file %t/pod-guac.pod-
+id --sdnotify=common --replace -d --name guacd guacd
+ExecStop=/usr/bin/podman pod stop --ignore --cidfile=%t/%n.ctr-id
+ExecStopPost=/usr/bin/podman pod rm --ignore --cidfile=%t/%n.ctr-id
+Type=notify
+NotifyAccess=all
+[Install]
+Wantedby=multi-user.target default.target
+5.Create a new file called container-guacamole.service : 5.
+vi /etc/systemd/system/container-guacamole.service
+This should only contain the c on figur ation  for container-guacamole.service  as de fined  in
+guac.config :# container-guacamole.service
+# autogenerated by Podman 3.4.1-dev
+# Wed Dec 22 17:04:24 MST 2021
+[Unit]
+Description=Podman container-guacamole.service
+Documentation=man:podman-generate-systemd(1)
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=%t/containers
+BindsTo=pod-guacd.service
+After=pod-guac.service
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+Restart=on-failure
+TimeoutStopSec=70
+ExecStartPre=/bin/rm -f %t/%n.ctr-id
+ExecStart=/usr/bin/podman pod run --cidfile=%t/%n.ctr-id --cgroups=no-conmon --rm --pod-id-file %t/pod-guac.pod-
+id --sdnotify=common --replace -d --name guacamole guacamole
+ExecStop=/usr/bin/podman pod stop --ignore --cidfile=%t/%n.ctr-id
+ExecStopPost=/usr/bin/podman pod rm --ignore --cidfile=%t/%n.ctr-id
+Type=notify
+NotifyAccess=all
+[Install]
+Wantedby=multi-user.target default.target
+6.Start the pod-guac.service:6.
+systemctl start pod-guac.service
+7.On a web browser, c on firm  that Guacamole has started: 7.
+http://<DNSName-of-guacamole-server>:8080/pam-guacamole
+8.Set the pod-guac.service run aut omatic ally  at startup: 8.
+systemctl enable pod-guac.service
+Logging
+Tail the logs for the running containers with the following commands:
+▪podman logs -f guacd▪
+▪podman logs -f guacamole ▪Con figur e  Guacamole access disclosure plugins
+At a minimum, in order to use Guacamole access disclosure plugins, the url of the Guacamole service
+needs to be set. To do this:
+1.Log in to the Bravura Privilege  instance as superuser. 1.
+2.Click Manage the system > Privileged access > Access disclosure plugins . 2.
+3.Select a Guacamole access disclosure plugin. See Types of access disclosure plugins  (on page 1957) for 3.
+a list of available plugins.
+4.Set guacamole-url . It must be set using the following format: <address >:<port >/ 4.
+<webappname >
+▪address: The IP address or server name of the Guacamole remote desktop gateway. This must▪
+begin with http://  or http s://,  depending on your c on figur ation.
+▪port: The port number the Guacamole service is listening on. This should either be set to 8080 or▪
+8443, depending on your c on figur ation.
+▪webappname: The web applic ation  name. This should be set to pam-guacamole . ▪
+▪For example:▪
+▪http://linux1.bravura1.corp:8080/pam-guacamole▪
+▪https://linux1.bravura1.corp:8443/pam-guacamole▪
+5.Click Update . 5.
+6.Update the guacamole-url  for each In-Browser disclosure plugin you wish to use. 6.
+7.Click Next. 7.
+8.Click Finish. 8.
+Securing Guacamole c onnections  using SSL
+In order to secure Guacamole c onnections  using SSL, please ensure the following have been created
+before proceeding:
+▪An SSL certific a t e  for the Bravura Fabric server (we will use bravuracert.cer  as an example) ▪
+▪An SSL certific a t e  for the Guacamole server (we will use guacamole.cer  as an example) ▪
+▪A keystore for guacamole.cer on the Guacamole server (we will use keystore.jks  as an example) ▪
+It is assumed the reader knows how to generate these items, otherwise contact
+support@bravurasecurity.com for assistance.
+keytool  is a c ertific at e  management utility  will be used to import the Bravura Fabric server SSL
+c ertific at e  into a truststore. If your version of CentOS/RHEL does not have this installed, you need to
+install java. For example as root user, run yum install java or dnf install java depending
+on your CentOS/RHEL version.
+1.On the Guacamole server, navigate to the /root directory: 1.
+cd /root
+2.Create a new directory called certificates : 2.mkdir certificates
+3.Place keystore.jks  into the certificates directory. 3.
+4.Copy bravuracert.cer  from the Bravura Fabric server to the Guacamole server and place it in 4.
+the certificates directory.
+5.Navigate to the certificates directory. 5.
+cd /root/certificates
+6.Run keytool to import the bravuracert.cer  certific a t e  to a truststore: 6.
+keytool -import -v -trustcacerts -alias <alias> -file bravuracert.cer
+-keystore truststore.jks
+Replace <alias>  with a unique ID (ie. bravurainst )
+It will ask for a truststore password, and prompt you to trust the certific a t e:

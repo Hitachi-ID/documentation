@@ -1,0 +1,342 @@
+Certific ation
+▪Fix issue in certific ation  where spinner did not appear when revoke r emediation  PDR was being ▪
+calculated.
+Upgrade / migr ation
+▪Changed migratedata.exe  to require administrator permissions. ▪
+▪Removed the symbolic link in the registry between the Hitachi ID and Bravura Security keys when they▪
+are no longer needed or in use and installing a new instance.
+▪ Modified  upgrade scripts to properly clean up invalid data from "xgrpmbr_diff"  (11.2.0) and ▪
+"ucpcache" (12.3.0) so upgrade can proceed.
+▪Fixed an extremely rare upgrade failure when stableids are duplicated with only a diff er ence  in ▪
+whitespace-only Unicode characters
+Fixed a less-rare upgrade failure when stableids are duplicated, diff ering  only by case, for group
+objects.
+▪The Password change history report lists the Date of password change  column with values from ▪
+before and after  an upgrade to 12.*.
+▪Fixed migratedata failing to correctly export encrypted pr ofile  attribut es ▪
+R eplic ation
+▪Fixed a handle leak in idfiler ep  when an i/o error occurs (such as the disk being out of space). ▪
+▪Fixes an issue pr e v enting  account attribut e  modific ation  history from pr opag ating  to secondary nodes. ▪
+▪Added the "down" option  to nodestat.cfg/loadbalancerstatus.exe to cause it to always report the ▪
+node as down.
+Security
+▪Update X -X SS -Pr ot ection  HTTP header to recommended value these days (0, or disabled). ▪
+▪Fixed a security issue where users could pot entially  cancel a request for others from the Requests app, ▪
+where they don't have the privilege to do so.
+▪Fixed a security issue when viewing the request details of other requests when he/she doesn't have▪
+the privilege.
+▪Patched jQuery vulner abilities  CVE-2019-11358, CVE-2015-9251 and CVE-2020-11022. ▪
+▪Fixed an issue to prevent XSS injection  while editing  main menu boxes and items. ▪
+Components
+▪Fixed replacement of variables within environment files. ▪
+▪Fixed issue where loaddb components would fail if the stableid of an object changed only by its ▪
+case.
+▪Fixed idtrack Scenarios to account for invalid Pr ofiles. ▪
+▪Removed sanitiz e_number  function  from SMS provider components. ▪
+▪Fixed how export_data_components.py check_encrypted behaves so can actually be used to correct▪
+invalid/unusable T ar g e tCr edentials.▪Fixed an issue where users without a TERM-STATE value would be ignored in▪
+Scenario.im_corp_hr_orgchart_manager's e v aluation  of users.
+▪Fixed the logic in pam_t eam_authoriz ation  to correctly select a random sample of authorizers if the ▪
+number of requested authorizers was less than the number available.
+▪Fixed issue where extra authorizers could not be added to a request via pam_t eam_authoriz ation ▪
+extdb table.
+API
+▪Fixed Resource* class of IDAPI functions  to be able to modify discovery flags  of targets. ▪
+▪Fixed an issue where sessionid is not returned back from api call WFRequestCreate if no preqid.▪
+Connectors (agents)
+▪Fixed idmc on fig-based  target administrator onboarding to respect the "isconnpswd" flag. ▪
+▪Fixed the external password hash e x ecution  for the pwdhash utility  that is used alongside the LDAP ▪
+Directory Service connector for the "pwhash" option  in the LDAP attribut e  script file.
+User interface
+▪ Modified  Requests app search page to load new user's name under Recipient column when the user ▪
+does not exist yet.
+Auto discovery
+▪ Modified  "orgchart_stg" table to remove primary key on "pr ofileguid"  and add a unique key with ▪
+IGNORE_DUP_KEY on instead. This will avoid failure to build orgchart during auto discovery when
+duplicate manager values present.
+▪Added index to speed up import rule e v aluations. ▪
+▪On the Scheduled jobs  page for psupdate  in the Manage the system , the local server is now included ▪
+in the list of servers in the Run this job on the following Bravura Security Fabric servers  field.
+Events (exit traps)
+▪The certific ation  round's initia t or  is passed as requester to the CERT SIGN OFF exit trap. ▪
+Notific ations  (email, sms)
+▪Made the recipient's Pr ofile  ID available in the Recipient section  of Create new user request emails. ▪
+▪Changed usernotif .macr os  data type in notific ation  to memo. ▪
+T r ansaction  Monitor (idtm)
+▪ Modifies  our queue code to properly deal with events that are to be handled more than 23 days in the ▪
+future (due to o v erflo w),  do not create idtm thread for implementer tasks.
+Guacamole
+▪Guacamole now launches with appropriate width, height, and DPI settings  based on the client ▪
+browser dimensions and pixel density.▪The 'resize-method' Guacamole parameter is now stripped out if it has been added as a disclosure▪
+attribut e  as it causes problems with session monitoring currently.
+User classes
+▪Added audit fields  to "userclassmember" table and a new table "userclassmember_audit" to log ▪
+changes to "userclassmember" table.
+▪The "userclassmember" table is now available to generate the "Database table audit" report.▪
+Bravura Security Fabric 12.5.1
+Features and improvements
+Bravura Pass
+▪Updated Password Change Notific ation  Module installer, so the LONGID installer variable can be used ▪
+on the command line to c on figur e  the setting  "Long ID format to send to Password Manager service".
+Bravura Privilege
+▪Added filt er  to hide invalid accounts from PAACCESS. ▪
+Upgrade / migr ation
+▪Added the upgradetest  utility  with the shipped ins t allation  files to check for pot ential  issues prior ▪
+to upgrading the database.
+Notific ation
+▪Moved PSN "user becomes compliant" message to be displayed in the Front-end  (PSF). ▪
+▪ Modified  auto discovery error email to keep the text f ormatting  even when system variable ▪
+MAIL_CONTENT_TYPE is enabled (Enable HTML mail content).
+Resolved issues
+Bravura Privilege
+▪Fixed inconsistency between authoriz ation  of API and UI submitted  requests for ▪
+pam_vault_management.
+Bravura Pass
+▪Adjusted netvalidatepwpol plugin to be able to directly check against Azure.▪
+Upgrade / Migr ation
+▪Changed migratedata.exe  to require administrator permissions. ▪
+▪Fixed migratedata  installer to recognize instances of the product before rebranding. ▪
+▪Removed the symbolic link in the registry between the Hitachi ID and Bravura Security keys when they▪
+are no longer needed or in use and installing a new instance.▪ Modified  upgrade scripts to properly clean up invalid data from "xgrpmbr_diff"  (11.2.0) and ▪
+"ucpcache" (12.3.0) so upgrade can proceed.
+Mobile
+▪Fixed an issue pr e v enting  the UI from rendering on Android webviews (such as authentic ating  to the ▪
+Gmail app).
+W orkflo w
+▪Fixed request g ener ation  to include seqno's in reqinfo kvg for default attribut e  values. ▪
+▪Ensure ORG authorizer email only sends out to the related managers when request also has non-org▪
+oper ations.
+Maintenance / R eplic ation
+▪Fixed updinst  utility  to properly determine the primary node when using the requestsync option. ▪
+Components
+▪Fixed replacement of variables within environment files. ▪
+▪Fixed issue where loaddb  components would fail if the stableid of an object changed only by its ▪
+case.
+▪Added hook_patch to Functional.hid_authchain_r ec ap t cha  so that authchain.m4 is correctly ▪
+regenerated on patch skin rebuild.
+▪Fixed idtrack Scenarios to account for invalid Pr ofiles. ▪
+API
+▪Fixed Resource* class of IDAPI functions  to be able to modify discovery flags  of targets. ▪
+▪Fixed an issue where sessionid is not returned back from api call WFRequestCreate if no preqid.▪
+Connectors (agents)
+▪Fixed idmc on fig-based  target administrator onboarding to respect the "isconnpswd" flag. ▪
+User interface
+▪ Modified  Requests app search page to load new user's name under Recipient column when the user ▪
+does not exist yet.
+Cus t omiz ation
+▪Added default robots.txt to block webcrawlers.▪
+▪Added default X-Robots-Tag response headers.▪
+▪Added c on figur able  response headers by using a setupiis.cfg in the p sc on fig  directory. ▪
+Auto discovery▪ Modified  "orgchart_stg" table to remove primary key on "pr ofileguid"  and add a unique key with ▪
+IGNORE_DUP_KEY on instead. This will avoid failure to build orgchart during auto discovery when
+duplicate manager values present.
+Events (exit traps)
+▪The certific ation  round's initia t or  is passed as requester to the CERT SIGN OFF exit trap. ▪
+Notific ations  (email, sms)
+▪Made the recipient's Pr ofile  ID available in the Recipient section  of Create new user request emails. ▪
+Bravura Security Fabric 12.5.0
+Features and Improvements
+Branding
+▪Rebranded the user interface for Bravura Security.▪
+▪Updated branding in visible portions  of components. ▪
+▪Local service mode softw ar e  has been updated to use the new Bravura Security branding. ▪
+Bravura Privilege
+▪Added ability to include/exclude accounts in the MANAGEABLEACCOUNTS search engine.▪
+▪Add the ability to update the team description  in the PDR Team: Update . ▪
+▪Added c on flict  check between pam_disclosure_view_copy and ▪
+pam_account_management_disclosure_view_copy scenario components.
+▪Added ability to control whether owners of personal admin accounts can override/randomize the▪
+password of the account. Personal admin accounts need to be updated after  an upgrade to enable
+this ability.
+▪Local service mode softw ar e  has new upgr ade-specific  ins t allation  pr operties. ▪
+See Upgrading Local W ork s t ation  Service softw ar e .
+Bravura Pass
+▪The Internet Explorer requirement for the Login Assistant and SKA / Cr edential  Provider as well as for ▪
+the Notific ation  client for the locked down browser has been removed and replaced with a Micr osoft
+Edge browser solution  that utiliz es  Micr osoft  Edge WebView2.
+Bravura Identity
+▪Added the ability to allow a second 'warning' threshold to be de fined  for the rehire scenario that is ▪
+used to add additional  authorizers to the request if the rehire de t ection  meets a certain value.
+▪Added "safe" upgrade scripts that do not replace data in an e ff ort  to maintain custom data. Instead ▪
+the upgrade script adds a new threshold row, renames 'threshold' to 'block_threshold' and adds
+another row to the newly dependent authoriz ation  policy table.
+▪Added additional  rehire functionality . ▪▪ Modified  rbacenforce  generated violations  KVG: ▪
+▪Fixed "Target ID" field  for MANAGEDGROUP type violation  to load the group's target id instead of ▪
+nosgroupguid as value.
+▪Load pr ofile  name into "User Name". ▪
+▪Load pr ofile  full name into "User Full Name". ▪
+▪Add a new field  "Resource Member ID" to load the role member's sigkey value (only applicable to ▪
+de ficits).
+Password policy
+▪Added new password rules:▪
+▪MINLOWER: have at least N lowercase letter s ▪
+▪MINUPPER: have at least N uppercase letter s ▪
+Cus t omiz ation
+▪Improve ability for customer to customize the colours throughout the product.▪
+Reports
+▪Added "Password pr ofile  attribut e  fulfillmen t"  report, that provides details on who has set a value for ▪
+pr ofile  attribut es  of type "password".
+R eplic ation
+▪Improved c onnectivity  test feedback when adding a new replica. ▪
+▪Added telemetry for r eplic ation  to gather metrics regarding the r eplic ation  queue state. ▪
+Utilities
+▪Added the -infolist option  to the agtsvccli.exe  utility  to output s t atistic al  in f ormation  in the ▪
+kvgroup format for the currently running persistent list target.
+▪Added a -testconnect option  to testlist  that executes serverinfo oper ation. ▪
+▪Added a -quiet option  to testlist  to only emit output KVG from agent. ▪
+▪Improved usability of upgradetest  with clearer feedback. ▪
+Logging
+▪Cleaned up the warning level log messages when unlocking mobile accounts.▪
+Auto discovery
+▪Reassignment of the primary node is now prevented while psupdate or persistent lists are ▪
+currently running.
+▪Improved error handling around very large discovered attribut es. ▪
+▪Added control files for AD_HOOK_POST_PSUPDATE_PRE and AD_HOOK_POST_PSUPDATE_POST ▪
+system variables.S ynchr oniz ation
+▪Added a limited and faster r es ynchr oniz ation  mode on the database r eplic ation  page that avoids ▪
+transfers of larger audit data.
+Python - IDMLib
+▪Added the ability for script manage-components.py to reload only the environment for component(s)▪
+specified  in the new optional  parameter --components.
+▪Removed IDMLib usage of dis tutils  as the Python package is being deprecated (PEP 632). ▪
+▪Added idmlib/list_db.py for working with agent list DB files. ▪
+API
+▪ Modified  idmc on fig  to allow setting  all types of product administrator. ▪
+REST API
+▪Added support for REST API functions  to Add, Remove and Replace group attribut es. ▪
+▪Changed login flo w  to password grant type for IdentitySer v er4  to allow all users to mint tokens, and ▪
+allow session tokens to be generated for UI to use.
+Resolved issues
+Branding
+▪Updated branding in visible portions  of components. ▪
+Ins t allation  / Configur ation
+▪ Clarified  messages for pre-install SQL provider checks. ▪
+▪Exposed parent attribut e  details for Attribut eR es trict edV alue  when e xporting  idmc on fig  data. ▪
+R eplic ation
+▪Fixed file r eplic ation,  to correctly synchronize 64-bit global connector pack files. ▪
+▪Corrected issue where removing and re-adding the same node to r eplic ation  could cause the Database ▪
+service ( iddb) to crash.
+▪Improved r es ynchr oniz ation  resilience around SQL errors on the sending node ▪
+Auto discovery
+▪ Optimiz ed  the discovery tracking logic to enhance the performance of the auto-discovery process. ▪
+Bravura Identity
+▪Fixed an issue where the audit in f ormation  would be a ff ect  all users in orgchart table when there is ▪
+any change to user's manager.
+▪Fixed an issue in wizard where segr eg ation  of duties  violations  are not listed when violations  are ▪
+triggered by r equesting  new role memberships and e xisting  indirect group membership is also
+involved.▪Fixed an issue where request to delete multiple  roles (oper ations  added by wfreq at submission time) ▪
+failed to submit due to duplicate oper ations  (expanded from roles).
+▪Fixed password page in wizards to check whether a request generated password is provided before▪
+proceeding.
+▪Fixed an issue to ensure that the correct record is updated in the orgchart when transferring▪
+subordinates.
+▪ Optimiz ed  the stored procedures to check for segr eg ation  of duties  rule violations  to return early ▪
+when no valid rules are c on figur ed  so that queries to prepare role memberships based on validity
+windows in order to calculate sod violations  will be skipped.
+▪Some improvements for stored procedures used by the rbacenforce utility  to return a list of variances ▪
+for all users.
+▪Changed behavior in request app so that implementer tasks section  is not aut omatic ally  expanded ▪
+when the implementer selects a request.
+▪Moved the csv_to_pdr.py idmlib sample CLI script into the hid_batch_request_submit component and▪
+enhanced the script for extra options.
+▪The accounts POST endpoint no longer requires the attribut e  array when cr eating  and account on a ▪
+target.
+▪The REST api attribut es  endpoint will return the correct reference fields  for attribut es  of type 'file' ▪
+▪Updated component im_corp_hr_orgchart_manager to not submit duplicate requests.▪
+▪ Optimiz ed  the psupdate_post script in component im_corp_hr_orgchart_manager to e fficien tly ▪
+retrieve the users missing an orgchart manager.
+▪ Modified  idwfm to only cancel autores (child) requests spawned from another request if wfreq failed ▪
+the child request.
+▪Fixed escape issue in IDTrack w orkfile. ▪
+▪Made optional  role member entitlemen ts  assigned to user available under Roles section  in pr ofile ▪
+in f ormation  and entitlemen ts  page.
+▪Fixed an issue on groups search page (PSA); when selecting  groups to un-manage, a proper check is ▪
+done to see if the selected groups are in use, and if so, error out and do not unmanage them.
+▪Fixed an issue where a session becomes invalid when accessing a resource c on figur ation  page, where ▪
+an invalid user is c on figur ed  as an authorizer in one of the phased authorizers.
+Bravura Pass
+▪Updated Login Assistant installer, to validate the password of the Login Assistant account against the▪
+password policy of the system.
+▪Fixed an issue with the Login Assistant / Cr edential  Provider when multiple  language skin files are ▪
+specified  and they contain the same language and locale.
+▪Disabled the Keyboard manager applic ation  kbdmgr.exe that could be launched on some Lenovo ▪
+laptops using the FN+F11 hot key from the Cr edential  Provider for the Login Assistant.
+▪Fixed an issue with the Login Assistant / SKA to no longer allow the system menu options  to be ▪
+available from VPN prompts or windows.▪Fixed an issue with the Login Assistant / Cr edential  Provider when right clicking on the VPN status / ▪
+countdown prompt.
+▪ Modified  Profile  and request attribut e  inf ormation  page to make c on figur ation  option  Allow duplicate ▪
+values  available under Bravura Pass-only license.
+Bravura Privilege
+▪Fixed auto-discovery, so that import rules based on the memberOf computer attribut e  will be ▪
+correctly evaluated.
+▪Changed the behavior for account checkout limits to only accept either no value or integers from 1 to▪
+10 inclusively for the maximum checkout limit on vault and onboarded accounts.
+▪pam_account_management: Updated search filt er  for the ONBOARD_ACCOUNT pr e-de fined  request ▪
+to hide already onboarded accounts.
+▪Fixed issue where the access control page for managed system policies would not function  if any ▪
+access groups had a space in their IDs.
+▪Resolved an issue where having teams or team groups with long descriptions  could cause pr e-de fined ▪
+requests to fail.
+▪Resolved an issue where managed accounts with special characters in the username or password▪
+could not be used with secure browser/webapp disclosure.
+▪Resolved an error in website disclosure c on figur ation  scripts when disclosing managed accounts with ▪
+special characters in the name or password.
+▪Fixed session monitor to avoid modifying the keyboard state in the keyboard hook (Windows 10 build▪
+1607 and later).
+▪Allow session monitoring to capture keystrokes where multiple  characters are produced from a single ▪
+keystroke (i.e. when typing the sequence ~x on a United St a t es-In t ernational  keyboard, nothing is
+outputted  when you press ~ but 2 characters ~x are outputted  when you press the final  x).
+▪Fixed issue in session monitor keystroke recording where the presence of diacritics  would cause issues ▪
+with buff er  lengths, r esulting  in the recorded text being cut off or the process name being null.
+▪Group IDs are now recalculated properly when changing teams.▪
+▪Updated the pam_personal_admin_management component to read the personal admin MSP from▪
+the global c on figur ation  table.
+▪idmlib: adjusted helper functions  for unmanaging/managing groups to align with stored procedure ▪
+changes.
+▪Managed accounts with c on flict ed  passwords will no longer be acted upon if they are in the historical ▪
+policy.
+▪Fixed Session Monitor so that screenshots from multiple  monitors are properly captured. ▪
+▪Corrected dependencies for 2 data components:▪
+▪webappjson_aws▪
+▪pam_disclosure_sql_server▪
+▪System and account onboar d/ offboar d  requests submitted  using RMS are now auto-approved. ▪
+▪Added Scenario.pam_rms_aut o_authoriz ation  component, that creates an API user for RMS requests ▪
+and corresponding authoriz ation  rules▪Scenario.pam_vault_management: Updated dependencies so that view and copy disclosures for▪
+onboarded accounts are pulled from a single component.
+Bravura Privilege teams
+▪pam_team_management.pdr.team_members: Forcing the deselection  of a group to assure that teams ▪
+with the same group name does not cause errors in member list population.
+▪Fixed race c ondition  in r eplic ation  so cr eation  of P AMUtil  API User through team management PDR ▪
+will only have one GUID in the DB.
+▪pam_team_management: check the pr ofilename  field  returned from GroupMemberList before using ▪
+it
+▪pam_team_management: improve PAM team user membership maintenance and notific ations ▪
+▪globally and e fficien tly  compute and clean up user memberships ▪
+▪globally and e fficien tly  compute orphaned teams and dispatch notific ations ▪
+▪orphaned teams notific ation  emails now contain a c on figur able  number of teams listed in a single ▪
+email instead of having an email per team
+▪orphaned teams notific ation  emails are now properly sent when two or more users are removed ▪
+from a team
+▪the list of PAM team admins and their emails is retrieved only once and e fficien tly ▪
+▪pam_team_management: enable the orphaned team notific ations  by default ▪
+▪pam_team_management: properly mark the account r elationship s  for deletion ▪
+▪add support for discoveryObjectDelWithoutMoveCtx object removals▪
+▪ Optimiz ed  the UCCacheV alidityLis tDiff  and UCPCacheV alidityLis tDiff  stored procedures to return a list ▪
+of a ff ect ed  userclasses/ucps by changed groups during discovery
+▪Added Scenario.pam_rms_aut o_authoriz ation  as a dependency to RefBuild.pam_team_management ▪
+component
+Upgrade
+▪Fixed the installer when upgrading instances where the service administrator password contains < or >▪
+characters.
+▪Fixed issues when skipping or retrying failed SQL upgrade scripts.▪
+▪Changed the post-upgrade schema v erific ation  task to report on all errors encountered rather than ▪
+just the fir s t.
+▪Fixed installer to not prompt for REST API user password during upgrade if REST API user already▪
+exists.
+▪Corrected component upgrade scripts pr e v enting  successful 11.1.3 to 12.4.x upgrades. ▪
+▪Fixed two issues where proxy instances could not be upgraded.▪
+▪Components only change version number on successful upgrades.▪
+▪Manage Components CLI now emits messages on upgrade failures, and has improved logging.▪
+▪Added an upgrade script to fix userclasspoint's id for MGRP_IMPLEMENTER_GROUP and ▪
+MGRP_AUTHORIZER_GROUP userclasspoints (from pre-12 version) due to nosgroupguid is now all
+upper-cased.

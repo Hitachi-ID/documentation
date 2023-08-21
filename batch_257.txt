@@ -1,0 +1,95 @@
+▪These items have been flag g ed  as risky, because they have a low consistency score and a high risk ▪
+attribut e  value, and are identified  as r e v oc ation  candidates with a small red flag on the upper right
+part of the revoke action  icon:
+As reviewer you can choose to click on the alert icon to open the request wizard and complete the
+request.
+As reviewer you can override any of the above actions  or edit the note by clicking the appropriate
+symbol.
+Setting  up for single user certific ations
+product administrator  s with relevant privileges can manage or initia t e  certific ations  involving multiple
+users. You can set up Bravura Security Fabric  to allow end users to quickly review the entitlemen ts  of a
+single user via the user’s pr ofile  page.
+Bravura Security Fabric  applies a tw o-participan t  user class, for example _MANAGER_DIRECT_, to
+determine whether user X can initia t e  a certific ation  of user Y . If permitted,  then an Initia t e  a review of
+all entitlemen ts  option  is available on user Y’s pr ofile  page.
+To set up to allow single user certific ations:
+1.Click Manage the system > Security > Access to user pr ofile s > Delegated adminis tr ation  rules > Add 1.
+new… .
+2.Enter an ID and Description  for the new rule. 2.
+3.Select the Initia t e  a review of all entitlemen ts  privilege. 3.4.Click Add. 4.
+5.Select Membership criteria . 5.
+6.Click Select… to use an e xisting  user class, for example, _MANAGER_DIRECT_, or click <Plusnew> Add 6.
+new… to create a new user class.
+The user class must be a tw o-participan t  user class.
+7. Con figur e  the participan t  mapping; for example, if using the _MANAGER_DIRECT_ user class, map 7.
+MANAGER to REQUESTER and SUBORDINATE to RECIPIENT to allow managers to initia t e  a review of
+entitlemen ts  of their direct subordinates.
+8.Click Update . 8.To test this setup:
+1.Log in to Bravura Security Fabric  as a user who satis fies  the requester participan t  criteria; for example 1.
+a manager if you are using the MANAGER_DIRECT user class.
+2.Click View and update pr ofile  in the Otherusers section. 2.
+3.Select a user who satis fies  the recipient criteria to view their pr ofile  in f ormation  and resources page. 3.
+4.Click Initia t e  a review of all entitlemen ts . 4.
+It can take a moment before the certific ation  campaign is ready for review. Click on Refresh to refresh
+the page.
+Bravura Security Fabric  displays a link based on the saved setup:5.Click the link to open the certific ation  review app. 5.You can run the Entitlemen t  review privileges report to list who can run a single user certific ation  for
+which users.
+Save a default c on figur ation
+SINGLE_USER_CERTIFICATION_DEFAULT_CAMPAIGN is the default setup for a single user certific ation
+campaign. You can modify this setup on the Saved certific ation  setups page. To use another setup, type
+the ID of the saved setup in the CERT SINGLE USER CONFIGURATION field  at Manage the system  >
+Modules  >Manage certific ation  process  (CERT) .Managing the certific ation  process
+This chapter shows you how to create, save, schedule, and start certific ation  campaigns.
+Getting  started
+Requirements 
+Before you start, see Setting  up access certific ation  (on page 2520) for a full list of pre-requisites. The
+following security privileges control access to the Manage c ertific ation  process  (cert) module:
+▪Product administrator s with the ”Manage certific ation  process” adminis tr ativ e  privilege can initia t e ▪
+certific ation  campaigns with multiple  reviewers.
+▪Product administrator with the ”Initia t e  entitlemen t  certific ation  campaigns” adminis tr ativ e  privilege ▪
+can initia t e  entitlemen t  certific ation  campaigns with a single reviewer.
+Users with the ”Initia t e  a review of all entitlemen ts”  privilege can initia t e  a quick certific ation  of a single
+user via the View and update profile  (IDR) module.  
+See also: 
+Reviewing entitlemen ts  for a user  in End User Documen t ation  shows you how to start a quick review of a
+single user from the View and update pr ofile  menu.  
+Na vig ation  steps 
+Use the Manage certific ation  process  (CERT) module to create, save, schedule and start a certific ation
+campaign. To begin:
+1.Click Manage certific ation  process  or Initia t e  entitlemen t  certific ation  campaigns . 1.
+The option  that is available to you depends on your product administrator  privileges.
+2.Click:2.
+▪ Activ e  campaigns  (on page 2567) to view in f ormation  about campaigns that are in progress ▪
+▪Start entitlemen t  certific ation  campaign  (on page 2569) to add a new certific ation  campaign ▪
+▪Start c on figur ation  certific ation  campaign  (on page 2593) to add a new certific ation  campaign ▪
+▪Saved certific ation  setups  (on page 2597) to select a saved certific ation  setup ▪
+▪Scheduled campaigns  (on page 2625) to view in f ormation  about campaigns that are scheduled ▪
+View activ e  campaigns
+To view activ e  certific ation  campaigns:
+1.Navigate to the Manage certific ation  process  (CERT) module  (on page 2567) and select Activ e 1.
+campaigns .2.Select an activ e  campaign to display details. 2.Cancel activ e  campaigns
+To cancel activ e  certific ation  campaigns:
+1.Navigate to the Manage certific ation  process  (CERT) module  (on page 2567) and select Activ e 1.
+campaigns .
+2.To cancel the campaign, select the campaign and click Cancel campaign . 2.
+Create an entitlemen t  certific ation  campaign
+To create a new certific ation  campaign, click Manage certific ation  process  > Start entitlemen t
+certific ation  campaign .
+The certific ation  setup menu for new campaigns includes a series of tabbed pages to guide you through
+the process of cr eating  a certific ation  campaign. The fir s t page in the series allows you to select the
+entitlemen ts  or c on figur ations  that will be part of the campaign. You can proceed through the required
+steps by clicking Next: <tab>  or clicking any tab on the certific ation  menu to:1.Select entitlemen ts  to review 1.
+Entitlemen ts  are resources that have been assigned to users. For the purposes of certific ation  they
+can include:
+▪Target systems▪
+▪Roles▪
+▪Managed groups▪
+▪ Segr eg ation  of duties  rules ▪
+▪ Pr ofiles▪
+▪ Pr ofile  attribut es ▪
+When entitlemen ts  are assigned to a user via a role, they can only be c ertified  through that role.
+Reviewers cannot view or c ertif y  the member entitlemen ts  individually.
+Empty manage groups will not be shown in group selection  list.
+To select an entitlemen t  on which to certif y  users:
+1.Navigate to the c on figur ation  page for a new or saved campaign. 1.
+2.Select the Items to review tab, then select the entitlemen ts  you want to certif y . 2.

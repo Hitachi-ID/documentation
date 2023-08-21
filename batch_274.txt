@@ -1,0 +1,356 @@
+Some arguments are dependent on the Bravura Security product license.
+Usage
+instdump.exe [ <options> ] -outfile <outfile>
+Argument Description
+-acl Output ACL in f ormation.
+-attr grp Output attribut e  group in f ormation.  Requires Bravura
+Identity .
+-authenidlist Output authentic ation  target system list in f ormation.
+-authorizer Output authorizer in f ormation.  Requires Bravura Identity .
+-binaryversion Output binary version in f ormation.
+-consoleuser Output product administrator in f ormation.
+-cus t om file Output custom file in f ormation.
+-e xittr ap Output event action  (exit trap) in f ormation.
+-inventory Output inventory in f ormation.  Requires Bravura Identity .
+-managedgrp Output managed group in f ormation.  Requires Bravura
+Identity .
+-outfile  <outfile> File name for output (required).
+-plugin Output plugin in f ormation.
+-pr ofileattr Output attribut e  in f ormation.
+-registry Output registry in f ormation.
+-role Output role in f ormation.  Requires Bravura Identity .
+-service Output service in f ormation.
+-strength Output strength in f ormation.
+-system Output system c on figur ation  variables.
+-target Output target in f ormation.
+-t ar g e t attr Output account attribut e  in f ormation.
+-template Output template in f ormation.  Requires Bravura Identity .
+-userclass Output userclass in f ormation.
+-verbose Use a more readable format for output.
+program.
+St arting  auto discovery
+By default, Bravura Security Fabric  runs auto discovery  every night at 1:30 am. Bravura Security Fabric
+aut omatic ally  schedules  (on page 2702) this "psupdate" job when you add your fir s t target system.
+To manually start auto discovery , from the Manage the system  (PSA) module, click Manage the system >
+Maintenance >  Auto discovery > Execute auto discovery , then click Continue . Bravura Security Fabricdisplays the Auto discovery  status page that indicates whether auto discovery  is running. Click Refresh to
+update the page.
+Each time  it is run, auto discovery  attemp ts  to verify that it is not already running on another server.
+Never run psupdate  on more than one replicated Bravura Security Fabric server at the same time.
+To run specific  tasks during auto discovery :
+1.Clear the All checkbox for Selected target systems . 1.
+2.Type, or search for, the IDs of the target systems you want to include.2.
+3.Select the tasks you want to include:3.
+Task Equivalent command
+List data from specified  target
+systems.psupdate.exe -target <target ID> -list
+Load data from specified  target
+systems into the databasepsupdate.exe -target <target ID> -
+loaddb
+You can also run auto discovery  for specific  targets on the target system in f ormation  page  (on page 489) or
+by na vig ating  to Manage the system > Resources > Target systems > <type> , selecting  targets and
+clicking Run discovery .
+Alt ernativ ely ,  you can start auto discovery  from the command line by running the psupdate  program.  
+See psupdate
+The psupdate program initia t es  and controls the auto discovery process. It is responsible for calling a
+series of programs and PSLang scripts, which in turn, control e x ecution  of each auto discovery task.
+These tasks include:
+▪Refreshing proxy servers▪
+▪ Listing  in f ormation  from managed systems ▪
+▪Evaluate the import rules on discovered systems and accounts and assign them to managed system▪
+policies
+▪Monitoring list file size ▪
+▪ Con figuring  listed computer objects as Bravura Privilege resources ▪
+▪ Updating  the Bravura Security Fabric database ▪
+▪ De t ecting  out-of-band changes ▪
+▪Cleaning up the database▪
+▪Checking inventory levels▪
+▪Loading user class cache▪
+▪ Submitting  aut omatic  assignment requests ▪
+▪Synchronize server files and registry keys ▪
+▪ Notif ying  the Bravura Security Fabric administrator of errors or warnings ▪
+▪ Cr eating  the default scheduled task to run psupdate ▪You can also run psupdate to update a single user.
+Never run psupdate on more than one replicated Bravura Security Fabric server at the same time
+In a replic ation  environment, the sending node creates additional  queue files in the <ins t anc e>/db/
+replic ation  directory. These are used to store the data to be sent to all replic ation  nodes. Once this data
+has been replicated to the nodes, these files are removed.
+Usage
+psupdate.exe
+   [-account <accountID>]
+   [-alltasks]
+   [-checkinv]
+   [-enforce_list <enforcement-list>]
+   [-enforce_submit <enforcement-list>]
+   [-forcerun]
+   [-import]
+   [-importlws]
+   [-list]
+   [-list_reset_threshold]
+   [-loaddb]
+   [-no-plugins]
+   [-profile <profileID>]
+   [-resattr <attrID>]
+   [-resattrvalue <attrVal>]
+   [-schedule]
+   [-status]
+   [-target <targetID>]
+   [-targetdiscovered]
+   [-targetmanual]
+   [-updproxy]
+   [-v|--version]
+Argument Description
+-updproxy Refresh proxy servers.
+-list Only list login IDs and supported in f ormation  from
+specified  target systems. At least one target must be
+specified.
+-list_reset_threshold Resets the recorded object count before listing.  This
+disables listthr esholdma xr elativ echang e  for that specific
+list.Argument Description
+-loaddb Only load data from specified  target systems based on
+the e xisting  list files to the database. At least one target
+must be specified.
+-checkinv Check inventory levels.
+- alltasks Complete all tasks that are done during a full update
+even though specific  target systems are being listed
+and/or loaded.
+-import Evaluate all discovered objects from target systems
+against push mode import rules where they apply.
+Applies to the discovered computers from the target, and
+the subsequent discovered accounts from discovered
+systems that get managed.
+-importlws Evaluate all discovered objects from target systems
+against local service mode import rules where they apply.
+Applies to the local service mode discovered computers,
+and the subsequent discovered accounts from discovered
+systems that get managed.
+-no-plugins Run psupdate without e x ecuting  plugin scripts  (on
+page 2742) (*_pre.cmd, *_post.cmd).
+-enforce_list <enforcement-list> Run the rbacenforce program to list role
+enforcement violations.
+-enforce_submit <enforcement-submit> Run the rbacenforce program to submit requests
+role enforcement violations.
+-pr ofile  <pr ofile  ID> Run psupdate for a single user de fined  by a Bravura
+Security Fabric pr ofile  ID. You can use this with the -target
+option  zero or more times  to specify the targets on which
+psupdate will update the accounts. When used without
+the -target option,  psupdate will update the accounts
+on all target systems.
+-account <pr ofile  ID> Run psupdate for a single user de fined  by an account
+ID on a single specified  target system. You must use the -
+target option  to specify the target system.
+-target <target ID> Specify a target system on which psupdate will list a
+single user. This option  must be used with the -pr ofile,  -
+account, -list or -loaddb option.
+-targetdiscovered Specify all discovered target systems.Argument Description
+-targetmanual Specify all target systems that are manually de fined.
+-forcerun Force psupdate to have it c ontinue  even if it looks like
+psupdate is already running or scheduled to run on some
+other node.
+-r esattr Select target systems based on a specified  resource
+attribut e  ID. This option  must be used with the -
+r esattr v alue  and -target option.
+-r esattr v alue Select target systems that match a resource attribut e
+value. This option  must be used with the -r esattr  and -
+target option.
+-schedule Creates the default scheduled task to run psupdate if
+it does not already exist. No other tasks are run.
+-status Returns the current status of the auto discovery process:
+▪No c on figur ation  changes can be made until  it is ▪
+completed %RUNNINGACTIONS%
+▪Running connector for target [%TARGETID%] (elapsed▪
+time:  %ELAPSEDTIME%)
+▪ Listing  files on proxy [%PROXYSERVER%] (elapsed ▪
+time:  %ELAPSEDTIME%)
+▪Loading staging table [%STAGETABLE%] (elapsed time: ▪
+%ELAPSEDTIME%)
+▪Running plug-in [%PLUGIN%] (elapsed time: ▪
+%ELAPSEDTIME%)
+▪Running stored procedure [%STOREDPROC%] (elapsed▪
+time:  %ELAPSEDTIME%)
+▪ R eplic ating  file [%REPLFILE%] to proxy ▪
+[%PROXYSERVER%] (elapsed time:  %ELAPSEDTIME%)
+▪ Updating  database (%ACTION%) ▪
+▪ Listing  target (%ACTION%) ▪
+▪ Updating  proxy (%ACTION%) ▪
+-v — --version Display version in f ormation.
+Examples
+1.To run auto discovery, as it would be run during the scheduled psupdate job, type:1.
+psupdate.exe
+2.To determine the current status of the auto discovery process, type:2.
+psupdate.exe -status3.To list in f ormation  from all manually added target systems, type: 3.
+psupdate.exe -targetmanual -list
+4.To list in f ormation  from the target system ADDOM, type: 4.
+psupdate.exe -target ADDOM -list
+5.To list in f ormation  without running plugin scripts, type: 5.
+psupdate.exe -targetmanual -targetdiscovered -list -no-plugins
+6.To list, load, and evaluate in f ormation  from all discovered target systems, type: 6.
+psupdate.exe -targetdiscovered -list -loaddb -import
+7.To update accounts for a single pr ofile  on all target systems, type: 7.
+psupdate.exe -profile <profile ID>
+8.To only list from specified  target systems that have "New York" as a value for resource attribut e 8.
+"Loc ation".
+psupdate.exe -list -resattr Location -resattrvalue "New York" -
+target TARGET1  -target TARGET2
+for command-line options  and examples.
+Viewing the last auto discovery log
+You can use the Manage the system  (PSA) module to view the log for the last e x ecution  of auto discovery .
+Note: The date and time  recorded in the Bravura Security Fabric  logs are based
+on the settings  of Windows server where Bravura Security Fabric  is
+installed. You can view the current Bravura Security Fabric  server date and
+time  from the Last autodiscovery log page.
+To do this:
+1.Click Maintenance > Auto discovery > Last log . 1.
+Bravura Security Fabric  displays the Last auto discovery log page.
+2.If necessary, enter search criteria to display only specified  log entries, listed in the table below. 2.
+3.Click Search . 3.
+Log message Type a string or a regular expression that represents the log message you want to view.
+You can use + and - symbols to include keywords from the search; for example
++ update operation - unlock
+includes the keywords update and operation , and excludes unlock .
+If you want to use a regular expression, you must also select the corresponding Regular
+expression checkbox.
+Severity Select if you want to view only messages at a particular  level of severity.
+Process Type a string or a regular expression that represents the process you want to view. If you
+want to use a regular expression, you must also select the corresponding Regular
+expression checkbox.
+Da t e/time Use the:
+▪First field  to select the earliest log entry to include. ▪
+▪Second field  to select the latest log entry to include. ▪Downloading logs
+Click Download to save the current log view to a file on the server. Any search criteria filt ering  is
+preserved in the file. A copy of the file is saved to the Logs directory and is rotated along with the rest of
+the logs.  
+See also: 
+If you need help with regular expression click the Regular expression link on the System logs page, or see
+Using Regular Expressions
+Regular expressions provide a way to identif y  patterns  of text in strings.
+Bravura Security Fabric  uses regular expressions to:
+▪Match and block invalid passwords.▪
+▪ Identif y  users who it should not manage. ▪
+▪Extract text from Telnet/TN3270 screens in Telnet connector scripts.▪
+▪Extract text from the output of password hashing programs in DBMS connector scripts.▪
+Regular expressions use a shorthand of literal characters and special characters to de fine  a pattern  in a
+precise and compact way. Literal characters are case sensitiv e.  The regular expression parser used by
+Bravura Security Fabric  uses the following special characters in literal strings:
+Character Purpose Example Match
+. Matches any single
+charactera.c aac , abc , a1c , a2c
+^ Beginning of a line ^hat hat , hatch , not
+chat
+$ End of a line hat$ hat , chat , not
+hatch
+| Alt ernation job|task job or task
+( ) Grouping job(12 |34) job12 or job34
+\ Treat the following
+special character
+literally\$5\.6\\7 $5.6\7
+The | alternates the longest possible string. That is, it matches job or task , and matches both jotask
+and jobask .
+Grouping with ( ) limits the alternate branches.
+Character sets
+Character sets
+You can de fine  a set of characters within a string. Character sets match any single character enclosed in
+square brackets [ ] . For example:Expression Match
+j[oa]n jon or jan
+Use the - character between two characters in a set to indicate a range. A - character outside of a set,
+or at the beginning or end of a set, is treated literally. For example:
+Expression Match
+[a-c] a, b, or c
+[1-3] 1, 2, or 3
+[ab-] a, b, or -
+[B-D]-3 B-3 , C-3 , or D-3
+If the fir s t character in the set is ^, then the character set matches any character that is not in the list. For
+example:
+Expression Match
+[^oa] Any character except o and a
+All other special characters lose their meaning when included in a character set. For example:
+Expression Match
+^[^*\+.-] Line must not start with *, \, +, .,or -
+To include a literal ] in the character set, make it the fir s t character in the set. It can also be excluded by
+following ^. The ] character is also treated literally outside of a set. For example:
+Expression Match
+[^]a-] Any character besides ], a, and -
+[]a] ] or a
+[a]] a]
+Quantifier s
+Quantifier s
+You can specify quantities  of character sets, grouped characters, or individual characters. The quantifier s
+*, +, ?, and { } act on the preceding set, group, or individual character.
+Character Purpose Example Match
+* Specifies  0 or more
+c onsecutiv e  occurrencesab*c ac, abc , abbbbc
++ Specifies  1 or more
+c onsecutiv e  occurrencesab+c abc , abbbbc
+? Specifies  0 or 1 occurrence colou?r (wo)?man color or colour
+woman or man
+{x} Exactly <x> occurrences ab{4}c abbbbc{x,y} At least <x>, no more than
+<y> occurrencesab{2,4}c abbc , abbbc , abbbbc
+{x,} At least <x> occurrences ab{2,}c abbc , abbbc
+{,x} No more than <x>
+occurrencesab{,2}c ac, abc , or abbc
+Shorthand expressions
+Shorthand expressions
+The following expressions are shorthand for longer or more complex regular expressions:
+Expression Purpose Example Match
+[:alpha:] Matches must consist of
+letter s.[:alpha:]8,16 aBcmGLeEhhi
+[:digit:] Matches must consist of
+digits. [:digit:] is equivalent
+to [:d:] and \d.[[:digit:]]+ 2962954576
+[:upper:] Matches must consist of
+uppercase characters.[[:upper:]
+[:digit:]]+9DDD4MLAG13
+[:alnum:] Matches must be
+alphanumeric. [:alnum:] is
+short hand for [a-zA-Z0-9]
+in the ascii character set,
+but the use of [:alnum:] is
+preferred for c ompatibility
+with other languages and
+character sets.[:alnum:]7[^[:digit:]] a3dM9DD+
+Examples
+Examples
+Only allow letter s,  numbers, e x clamation  point, and
+period^[a-zA-Z0-9!.] ⋆$
+At most 8 characters long ^.,8$
+Must start with a letter ^[a-zA-Z]
+Must have a number [0-9]
+Must end in -admin or -test (-admin |-test)$
+Must begin with three capital letter s  and an underscore ^[A-Z] {3}_
+ See also: 
+Bravura Security Fabric  uses the ECMAScript regular expression grammar. For more in f ormation  on
+regular expressions supported by Bravura Security Fabric , see:▪The ECMA Script Language Specific ation  at: ▪
+http://w w w .ecma-in t ernational.or g /public ations/files/E CMA -S T /E cma-262.pdf
+or
+▪The Micr osoft  Developer Network (MSDN) TR1 Regular Expressions document at: ▪
+http://msdn.micr osoft.c om/ en-us/libr ar y/bb982727.asp x
+for more in f ormation.
+You can also use the Manage the system  (PSA) module to view the log:
+▪For all Bravura Security Fabric  server events ▪
+See Viewing Bravura Security Fabric system logs  (on page 2777).
+▪For a given target system’s connector▪
+See Viewing target system logs  (on page 521).
+Con figuring  licensing notific ations
+Bravura Security Fabric  notifies  you via the Manage the system  (PSA) module web interface when you are
+close to, reach, or exceed your license limit ations.  Bravura Security Fabric  also sends email notific ations
+to the Bravura Security Fabric  administrator. By default, Bravura Security Fabric  starts sending warnings
+when the number of users or target systems is greater than 90% of the maximum allowed.
+To c on figur e  the percentage threshold for license limit warnings:
+1.Click Maintenance > Options . 1.
+2.Type a number in the fields  listed in the table below. 2.
+3.Click Update . 3.
+Auto discovery licence options
+Option Description
+LICENSE TARGET Percentage of licensed targets that exist before Bravura Security Fabric
+warns administrators.
+LICENSE TARGET Percentage of licensed managed servers that exist before Bravura Security
+Fabric warns administrators.
+LICENSE TARGET IDARCHIVE
+WORKSTATIONPercentage of licensed managed w ork s t ations  that exist before Bravura
+Security Fabric warns administrators.
+LICENSE USER Percentage of licensed users that exist before Bravura Security Fabric warns
+administrators.
+LICENSE USER IDARCHIVE SERVER Percentage of licensed managed server passwords that exist before Bravura
+Security Fabric warns administrators.
+LICENSE USER IDARCHIVE
+WORKSTATIONPercentage of licensed managed w ork s t ation  passwords that exist before
+Bravura Security Fabric warns administrators.
+ 

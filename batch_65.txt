@@ -1,0 +1,255 @@
+Role enforcement is enabled by default for roles to allow users to request to add any role entitlemen ts
+they are missing. This can be changed to requesting  an e x c eption  by disabling role enforcement or
+changing the R esolution  for de ficit  violation
+4.If required, select a setting  for the R esolution  for de ficit  violation  of role members , to determine 4.
+what action  Bravura Security Fabric  takes when it discovers users with the role who do not have
+access to all member resources:
+▪Add resource▪
+▪Request e x ception ▪
+▪Inherit enforcement from entitlemen t ▪
+The ’Inherit enforcement from entitlemen t ’  setting  will cause an error if any of the member
+entitlemen ts  are set with ’Use parent role setting ’ .
+5.Click Update . 5.
+ Gener ating  a pr ofile  s t atistics  report 
+To generate a simple report of users who have a de ficit  violation  for this role, click Generate . Bravura
+Security Fabric  does not issue violation  enforcement requests when you run this report. To see a more
+detailed report, see the REPORTS  (on page 2891). To list violations  and issue enforcement requests, run
+auto discovery  or use the rbacenforce  program.
+T esting  users 
+To determine whether an individual user has a de ficit  violation,  type the user’s Pr ofile  ID and click Test.
+The user’s RBAC enforcement pr ofile  and request attribut e  must be set to true. Bravura Security Fabric
+lists:
+▪Number of enforced user roles in de ficit ▪
+▪Number of enforced user roles in de ficit  with an approved e x ception ▪
+▪Number of enforced user roles in de ficit  with a request to resolve ▪
+▪Number of unenforced user roles in de ficit ▪
+▪Overall de ficits ▪
+Con figuring  auto assignment
+The aut omatic  assignment engine can aut omatic ally  assign users that are members of a user class to a
+role.To set aut omatic  assignment options  for roles:
+1.Navigate to the Role in f ormation  page  (on page 636). 1.
+2.Select the Assignment tab. 2.
+3.Select or create to de fine  membership criteria. 3.
+4.Click Recalculate to calculate the membership cache. 4.
+In a replicated environment, cache rec alculation  can only be performed on the instance which runs
+psupdate .
+5.Select the Enabled checkbox. 5.
+Additional  options  are displayed.
+6.Set options  described in the table below to suit your needs. 6.
+7.Click Update . 7.
+Role assignment options
+Option Description
+Aut omatic ally  add users that satis f y
+the membership criteriaSelect this to allow the aut omatic  assignment program, autores, to
+add users that have membership in the specified  user class from
+the role during auto discovery.
+Aut omatic ally  remove users that no
+longer satis f y  the membership
+criteriaSelect this to allow the aut omatic  assignment program, autores ,
+to remove users that do not have membership in the specified
+user class from the role during auto discovery.
+Ignore submission limit during auto
+discoverySelect this if you want this aut omatic  assignment to exceed the
+maximum allowed number of request submissions.
+This setting  overrides the global submission limit set by AUTO
+ASSIGNMENT MAXSUBMIT DEFAULT (Manage the system >
+W orkflo w  > Options  > Aut omation ).
+Submit no requests if there are more
+than this many oper ations  detected
+in a single runSet a limit if you do not want autores to submit any requests if
+too many variances are detected. If this happens Bravura Security
+Fabric  sends an email to product administrators.
+If roles include resources that require passwords, c onfigure  the PASSWORD GEN PLUGIN.
+Gener ating  an assignment deficit  or surplus report 
+To generate a simple report of users that have a de ficit  or surplus of a role assignment, click the De ficit  or
+Surplus sub-tabs. Bravura Security Fabric  does not issue requests when you run this report. You can
+search for users on either of these pages. To see a more detailed report, see the REPORTS  (on page
+2891). To issue requests, run the autores  program.
+T esting  user class 
+You can verify that the user class de fined  will produce the correct list of users that will be aut omatic ally
+assigned this resource.To test the user class de fined:
+1.Navigate to the Role in f ormation  page  (on page 636) General tab. 1.
+2.Click the Test... button. 2.
+3.Type the User ID of the user to evaluate, then click Test. 3.
+The Test button  evaluates all criteria defined  for the user class, not just the criteria selected.
+Bravura Security Fabric  displays the test results, specifying whether the user satis fied  the criteria for the
+user class.
+To list members of the user class:
+1.Navigate to the Role in f ormation  page (on page 636) General tab. 1.
+2.Click the Test... button. 2.
+3.Click List. 3.
+The list of members is displayed. If no members are listed, then there are no users matching the
+criteria for the specified  participan t.
+Con figuring  resource attribut es
+It is possible to add resource attribut es  to this resource type; you can use resource attribut es  to create
+and set attribut e  values for individual resources. Before you can do this, you must add the resource
+attribut es  to at least one resource attribut e  group, and c on figur e  access to resource attribut es.
+Depr ec ating  roles
+Once a role has been used, you can deprecate it if you want to render it unusable, while preserving it for
+auditing  purposes. While it is deprecated, it cannot be requested, included as part of an enabled role, or
+deleted. A deprecated role can be restored at a later date.
+To deprecate a role:
+1.Navigate to the Role in f ormation  page  (on page 636). 1.
+2.Select the checkbox next to the deprecate button  and enter a Reason for depr ec ation  if wanted. 2.
+3.Click Deprecate . 3.
+ Restoring a role 
+To restore a role:
+1.Click Manage the system >Resources > Roles  to see a list of e xisting  roles. 1.
+2.Select the role you want to restore.2.
+3.Click Restore . 3.Deleting  roles
+You can delete roles that are disabled and have not been used yet. You cannot delete a role if it is
+enabled or deprecated.
+To delete a role:
+1.Click Manage the system >Resources > Roles . 1.
+2.Select the checkboxes next to the roles you want to delete.2.
+If a checkbox is not available next to a role you want to delete, then the role is not disabled. Select the
+role, and restore and/or disable the role as necessary, then return to the Roles page.
+3.Click Delete and c on firm  the deletion. 3.
+Alternately, you can delete a disabled role from its Role in f ormation  page.Oper ation  dependencies
+Oper ations  executed by Bravura Security Fabric  connectors can be linked by dependencies; for example
+the cr eation  of an Exchange mailbox can be made dependent on an Activ e  Directory account.
+Dependencies can also carry target system attribut es  from one oper ation  to the next.
+You can use the Manage the system  (PSA) module to set up dependencies that control how data is
+exchanged between connectors.
+The blackboard architecture allows for complex in t er actions  and makes it possible to perform actions
+whose inputs are not known until  an earlier action  completes. You de fine  rules to decide which pieces of
+connector output are written  to the blackboard storage area, and which in f ormation  (extra or sub stitut e)
+is provided to connector input .
+Default rules
+Bravura Security Fabric  ships with the following blackboard rules. You can modify them or use them as an example
+of how to add your own rules:
+Oper ation  dependency ID Description
+idsynch::addnACUA The ACUA (Create account) oper ation  on these target system types:
+▪Exchange 2007 Server (64 bit)▪
+▪SharePoint▪
+▪SQL Server▪
+is dependent on the ACUA oper ation  on Activ e  Directory DN.
+idsynch::addnNR These network resource oper ations  on the SMB Protocol for Activ e  Directory
+DN target system type:
+▪NRCR (Network resource create)▪
+▪NRDL (Network resource delete)▪
+▪NRMV (Network resource move)▪
+▪NRUP (Network resource update)▪
+are dependent on the ACUA oper ation  on Activ e  Directory DN.
+The longid output from the ACUA oper ation  is used as input on acctid  for
+the network resource oper ations.
+idsynch::crtg These group oper ations:
+▪GRUA (Assign group)▪
+▪GROA (Add group owner)▪
+▪GRGA (Add child group)▪
+▪GOGA (Add owner group)▪
+are dependent on the CRTG (Create group) oper ation  for the same target
+system.
+There is no data exchanged between these oper ations.
+idsynch::delu The ACUA (Create account) oper ation  is dependent on the DELU (Delete user)
+oper ation  for the same target system. There is no data exchanged between
+these oper ations.  This action  is used for roles.Oper ation  dependency ID Description
+idsynch::groupgroupadd The GRUA (Assign group) oper ation  is dependent on the GRGA (Add child
+group) oper ation  for the same target system. There is no data exchanged
+between these oper ations.
+idsynch::groupowner The GROA (Add group owner) and GOGA (Add owner group) oper ations  are
+dependent on the GROD (Delete group owner) and GOGD (Delete owner
+group) oper ations  for the same target system. There is no data exchanged
+between these oper ations.
+idsynch::groupowneradd The GRUA (Assign group) and GRGA (Add child group) oper ations  are
+dependent on the GROA (Add group owner) and GOGA (Add owner group)
+oper ations  for the same target system. There is no data exchanged between
+these oper ations.
+idsynch::grud The DELU (Delete user) and GRUA (Add group membership) oper ations  are
+dependent on the GRUD (group user delete) oper ation  for the same target
+system. There is no data exchanged between these oper ations.  This action  is
+used for roles.
+idsynch::longid The GRUA (Add group membership) oper ation  is dependent on the ACUA
+(Create account) oper ation.
+The longid from the connector output is stored on the "blackboard”, and sent
+to the connector input as the acctid  value.
+idsynch::ndsACUA The ACUA (Create account) oper ation  on a Groupwise Domain type target
+system is dependent on the ACUA oper ation  on an NDS type target system.
+There is no data exchanged between these oper ations.
+idsynch::rename The RENU (Rename account) oper ation  on a target system is dependent on
+the c ompletion  of any oper ation  on the same target system. There is no data
+exchanged between these oper ations.
+idsynch::win2kACUA The ACUA (Create account) oper ation  on these target system types:
+▪Exchange 2007 Server (64 bit)▪
+▪SharePoint▪
+▪SQL Server▪
+is dependent on the ACUA oper ation  on Activ e  Directory.
+For example; SharePoint is tigh tly  integrated with Activ e  Directory. These
+rules exists because SharePoint requires that its users also have Activ e
+Directory accounts.
+Similarly, SQL Server supports Windows user authentic ation,  which
+requires that users also have Activ e  Directory accounts. These rules do not
+adversely a ff ect  standard users (whose accounts are stored in SQL server
+and separate from any Windows domain).Oper ation  dependency ID Description
+idsynch::win2kNR The network resource oper ations  on the SMB Protocol for Legacy Activ e
+Directory target system type:
+▪NRCR (Network resource create)▪
+▪NRDL (Network resource delete)▪
+▪NRMV (Network resource move)▪
+▪NRUP (Network resource update)▪
+is dependent on the ACUA oper ation  on Activ e  Directory.
+The longid output from the ACUA oper ation  is used as input on acctid  for
+the network resource oper ations.
+Getting  started
+A set of output and input rules, linked by an Operation  dependency attribut e , is de fined  on the Oper ation
+dependency in f ormation  page. The page is divided into two main tables:
+▪Output from this oper ation - Rules that capture data output by the connector oper ation,  and store it ▪
+in a blackboard.
+▪Input to this oper ation - Rules that retrieve data from the blackboard, and send it to the input for the ▪
+oper ation.
+You must be a product administrator  with the ”Manage resources” privilege to access this page.
+To de fine  oper ation  dependencies:
+1.Click Manage the system > Resources > Oper ation  dependencies . 1.
+2.To de fine  a: 2.
+▪A new dependency, click Add new... ▪
+▪An e xisting  dependency, search for, or select the dependency you want to view or modify ▪
+When you add a new dependency set, you start by de fining  the fir s t output rule.De fining  rules
+To de fine  oper ation  dependency rules:
+1.Navigate to the Oper ation  Dependencies  (on page 645). 1.
+▪Add new rules to a dependency set by clicking Add new … at the bottom  of the output or input ▪
+table.
+▪Modify an e xisting  rule by selecting  it from the output or input lists tables. ▪
+The rule de finition  table is displayed below the two list tables. An e xisting  rule is highlighted if it is
+being modified.2. De fine  attribut es  for the output or input rule as described in Table below. 2.
+Rules are applied to oper ations  based on matching criteria.
+3.Click Add or Update to save your changes. 3.
+Data can only be exchanged between related operations;  that is, two or more connector operations
+that are part of the same workflo w  request.
+You must add additional  logic – using an oper ation  rewrite plugin  (on page 532) or some other method –
+to ensure that either the dependent oper ations  are part of the same request, or to ensure that a
+necessary c ondition  has already been met.
+Oper ation  dependency rule parametersOption Description
+Oper ation  dependency attribut e The attribut e  used to identif y  dependencies and link rules to data in the
+database.
+This field  is only displayed when you are adding a new dependency
+Target system type The target system type to match.
+If not specified,  all target system types are matched.
+Rule to be applied on the same
+target system
+(Input rules only)If set, this flag indicates that the target system ID to match should be
+ignored and that the rule matches the same target system that produced
+the blackboard data.
+This flag is useful to produce generic rules.
+Target system The target ID to match.
+If not specified,  all target systems of the type are matched.
+Template The w orkflo w  template ID to match.
+Oper ation The oper ation  code to match
+Connector key The connector key to capture or send. This may be one of a fix ed  list of
+keys, that are common to many connector oper ations;  for example:
+acctid,longid, shortid, groupid .
+Account attribut e The account attribut e  ID to capture or send.
+If not specified,  all attribut es  for the target system are matched.
+Pr ofile  attribut e The ID of the pr ofile  and request attribut e  to populate. This field  only
+applies to output rules.
+Priority The priority of a rule. By default, the priority for rules is 500. Priorities  of
+lower numerical values are chosen fir s t.  A tie will cause both values to be
+returned (which may be useful for multi- v alued  attribut es  whose values
+come from multiple  sources).
+The data to exchange are determined by the Connector key and account attribut e  fields.  Only one of
+these fields  should be populated. Both fields  can be empty, which means that no data exchange will take
+place. Rules with these empty fields  can be used to de fine  simple ordering dependencies when the data
+doesn’t matter .
+When the Pr ofile  attribut e  is set to a valid ID, Bravura Security Fabric  populates the corresponding pr ofile
+and request attribut e  with a value determined by Connector key or Target system attribut e  . Bravura
+Security Fabric  does this at the time  the connector oper ation  is performed, rather than w aiting  until  the
+next auto discovery .

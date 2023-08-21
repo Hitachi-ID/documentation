@@ -1,0 +1,159 @@
+▪ Con figuring  and updating  an expired API token is less work than updating  an expired SAML certific a t e. ▪
+for in f ormation  about SAML versus API in t egr ation.
+Solution
+Bravura Security Fabric  can be c on figur ed  to operate as a SAML v2 Service Provider, allowing it to
+integrate with Okta Single Sign-On IdP to authentic a t e  its users. Once authentic a t ed  with the IdP , or even
+before authentic ating  with the IdP , additional  authentic ation  chains may or may not be run.
+Bravura Security Fabric  can be c on figur ed  to authentic a t e  users directly against Okta by r edir ecting  them
+to the Okta Sign-In page. When this method is used, the authentic ation  requirements for the
+authentic ating  applic ation  are c on figur ed  within Okta.
+Prepare Okta
+To c on figur e  Okta to allow in t egr ation  with Bravura Security Fabric :
+1.Sign in to your Okta instance as a system administrator.1.
+2.Navigate to the Administrator Dashboard.2.3.Click Add Applic ations . 3.4.Click Create new App . 4.▪Under Platform , select Web ▪
+▪Under Sign on Method , select SAML 2.0 . ▪
+▪Click Create . ▪5.Give your new applic ation  a name; for example Bravura Security WebPortal . 5.
+6.Select a logo for the applic ation. 6.
+7. Con figur e  the applic ation  visibility settings. 7.
+8.Click Next . 8.9. Con figur e  the Single-Sign-On URL for the Bravura Security Fabric  SP; for example 9.
+https://idm.company.com/instance/cgi/psf.exe .
+10. Ensure that Use this for Recipient URL and Destination  URL is enabled. 10.11. Con figur e  the SP Entity  ID for the Bravura Security Fabric  SP; for example 11.
+https://idm.company.com/instance/ .
+12. Leave the Default RelayState blank. 12.
+13. Set Name ID format to Unspecified . 13.
+14. Map pr ofile  attribut es  between Okta and Bravura Security Fabric  users. 14.
+In order for Okta to authentic a t e  Bravura Security Fabric  users, it needs to have a means of associating
+Bravura Security Fabric  users to e xisting  Okta users. This is done via attribut e  mapping, where Okta
+will compare the two pr ofiles’  attribut es  to see if they match. In the Applic ation  username field,  you
+must select an attribut e  which can be mapped to Bravura Security Fabric  user pr ofiles.  This is used to
+link Okta and Bravura Security Fabric  user pr ofiles.
+▪If the Okta username matches the Bravura Security Pr ofile  name then select Okta username . ▪
+▪Otherwise, an attribut e  within Okta can be used to match either the Bravura Security Fabric  user ▪
+pr ofile  name, or a user attribut e  within Bravura Security Fabric . You will need to mirror these
+attribut e  mappings when you c on figur e  the authentic ation  chain in Bravura Security Fabric .
+WARNING! It is important to ensure that only a single pr ofile  within Bravura Security
+Fabric  matches the selected value. Ensure that the attribut es  selected will
+be an exact match.
+The attribut e  mapping between Okta and Bravura Security Fabric  must be 1:1. If there are multiple
+attribut es  c on figur ed  in Okta under Applic ation  username, Bravura Security Fabric  acting  as an SP
+will not be able to distinguish  between them and will redirect back to Okta, which combined with
+activ e  Okta SSO is likely to cause an in finit e  redirect loop.
+15. Click Show Advanced Settings . 15.
+16. Set Response to Unsigned . 16.
+17. Click Next . 17.
+18. Fill out the Feedback section,  and click Finish . 18.
+19. Export the IdP meta-data for this applic ation  and save the file in a loc ation  where it can be accessed 19.
+by Bravura Security Fabric  in order to finish  c on figuring  the authentic ation  chain module.
+Next:
+Set up Bravura Security Fabric  to authentic a t e  with the IdP  (on page 968)
+In this use case:
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  967
+See also
+Okta in the Connector Pack  Documen t ation  for details on how to add an Okta target.
+Example: In t egr ating  with a Ping IdP
+RequirementOr g aniz ations  that use Ping Single Sign-On solution  to leverage federated authentic ation  require Bravura
+Security Fabric  to authentic a t e  with their current IdP solution.
+Solution
+Bravura Security Fabric  can be c on figur ed  to operate as a SAML v2 Service Provider, allowing it to
+integrate with a Ping Single Sign-On Identity  Provider (IdP) to authentic a t e  its users. Once authentic a t ed
+at the IdP , or even before authentic ating  with the IdP , additional  authentic ation  chains may or may not be
+run.
+Bravura Security Fabric  can be c on figur ed  to authentic a t e  users directly against Ping by r edir ecting  them
+to the Ping Sign-In page. When this method is used, the authentic ation  requirements for the
+authentic ating  applic ation  are c on figur ed  within Ping.
+Prepare Ping
+To c on figur e  Ping to allow in t egr ation  with Bravura Security Fabric :
+1.Log into the Ping adminis tr ativ e  console as a system administrator. 1.
+2.Navigate to Server Con figur ation  > Server Settings  > Roles & Protocols and ensure Ping has been 2.
+established as an identity  provider.
+3.If required, navigate to Server Con figur ation  > Password Cr edential  Validators and click Create new 3.
+Instance to create a new cr edential  validator.
+▪Ensure that this cr edential  validator contains account in f ormation  that corresponds to user pr ofiles ▪
+in Bravura Security Fabric .
+▪ Con figur e  the mapping r elationship  that will be used to compare Bravura Security Fabric  accounts ▪
+to those stored on Ping.
+4.Navigate to IdP Con figur ation  > Applic ation  In t egr ation  > Adapters , and click Create new instance . 4.
+5.Follow the on-screen ins tructions  to c on figur e  the adapter for Bravura Security Fabric . 5.
+6.Navigate to IdP Con figur ation  and click Create a c onnection . 6.
+7.Follow the on-screen ins tructions  of the SP c onnection  wizard to c on figur e  the c onnection  to Bravura 7.
+Security Fabric .
+8.Export the IdP meta-data for this applic ation  and save the file in a loc ation  where it can be accessed 8.
+by Bravura Security Fabric  in order to finish  c on figuring  the authentic ation  chain module.
+Next:
+Set up Bravura Security Fabric  to authentic a t e  with the IdP  (on page 968)
+Setting  up Bravura Security Fabric  to authentic a t e  with an IdP
+The Scenario.hid_authchain_saml_sp component installs the functionality  to allow Bravura Security
+Fabric  to act as a service provider, enabling it to accept third-party authentic ation  assertions  from a
+trusted identity  provider.
+In t egr ating  Bravura Security Fabric  as a service provider requires the following administrator rights:▪Manage external data store: In order to c on figur e  authentic ation  chain logic using the ▪
+hid_authchain_select table.
+▪Manage policies: in order to c on figur e  the SAML_SP custom Authentic ation  chain, and the ▪
+SAML_USERS User class.
+Before you begin
+1.Have an identity  provider prepared that implements SAML to authentic a t e  users on behalf of other 1.
+service providers, and c on figur e  it to provide authentic ation  for Bravura Security Fabric .
+2.User pr ofiles  that will use Bravura Security Fabric  as a service provider must exist in the databases of 2.
+both the identity  provider as well as Bravura Security Fabric . Mappings between the Bravura Security
+Fabric  and identity  provider pr ofiles  must be c on figur ed  in the identity  provider.
+3.Export the IdP metadata from the IdP and save the file in a loc ation  where it can be accessed by 3.
+Bravura Security Fabric  in order to finish  c on figuring  the authentic ation  chain module.
+4.Collect the following in f ormation  that will be required to establish the SAML trust r elationship: 4.
+▪Single sign-on URL  for the identity  provider. ▪
+▪ Identity  provider issuer , a URL for your IdP that may or may not match the SSO URL. ▪
+▪ Identity  provider public certific a t e  file (.cer) , a copy of which should be placed in the instance’s ▪
+plugin directory.
+▪Issuer to send identity  provider , typically the URL for the Bravura Security Fabric  instance. ▪
+▪Single sign-on binding format  as required by your IdP , either HTTP POST or HTTP Redirect. ▪
+All URLs must use HTTPS where applicable.
+Setup and c onfigur ation  steps
+1.Install Bravura Security Fabric , including the connector packs. 1.
+2.Log in to the front end as superuser, and navigate to manage components. 2.
+3.Install the Scenario.hid_authchain_saml_sp component.3.
+4. Con figur e  the target systems to load user pr ofiles  from. 4.
+5.Run auto discovery.5.
+6. Con figur e  which users in Bravura Security Fabric  you want enabled for SAML Authentic ation. 6.
+a.Click Manage the system > Policies > User classes  > SAML_USERS. a.
+b.Add the users you want to authentic a t e  against the IdP to this user class. You can add explicit users, b.
+a domain group or other criteria.
+IdP initiat ed  SSO is only supported if the profile  ID's match the IdP account names.
+c.Recalculate the UC cache.c.
+Configur e  the SAML_SP authentic ation  chain
+1.As superuser in the SP instance, click Manage the system  > Policies > Authentic ation  chains  > custom 1.
+> SAML_SP.
+a.Disable this authentic ation  chain so it can be edited a.b.Click the fedidp_samlauth  module to open it for editing b.
+c.The in f ormation  can be added by either: c.
+i.Click Browse  under Import metadata , and upload the i dp-metadata.xml  file you copied i.
+earlier.
+or
+ii.Populate the following fields  manually: ii.
+▪Single sign-on URL:  the URL of the identity  provider ▪
+▪ Identity  provider issuer:  a URL for your IdP that may or may not match the SSO URL. ▪
+▪ Identity  provider public certific a t e  file (.cer) : a copy of which should be placed in the instance’s ▪
+plugin directory.
+▪Issuer to send identity  provider:  typically the URL for the Bravura Security Fabric instance ▪
+▪Single sign-on binding:  the format as required by your IdP , either HTTP POST or HTTP Redirect. ▪
+d.Ensure the Control Type is set to "Required". d.
+e.Choose the correct Identity  provider signature loc ation . Assertion  is set by default. If you are using e.
+an IdP c on figur ed  to sign the response, change this to Response  (or adjust the IdP signature
+settings,  if desired). The response value must match what is selected on the IDP side.
+f. Optional : Select the Allow IdP initia t ed  SSO checkbox to allow users to start at the IdP log in and f.
+be redirected to the SP , where they will be aut omatic ally  authentic a t ed.
+g. Optional:  Select the Force IdP authentic ation  checkbox to allow the IdP to r e-authentic a t e  the user g.
+even if the user has an e xisting  session.
+Some IdP's do not support the Force IdP authentic ation  option.
+h. Con figur e  the Identity  provider subject type, which is used to map user pr ofiles  in Bravura Security h.
+Fabric  to their counterparts on the IdP . When the IdP authentic a t es  a user, it sends a subject
+attribut e  in the SAML assertion  that is used to identif y  which user was authentic a t ed:
+▪Select ”Pr ofile  ID” if the subject attribut e  will be identic al  to the user’s Bravura Security Fabric ▪
+pr ofile  ID.
+▪Select ”Pr ofile  attribut e”  if the subject can be mapped to a user attribut e  instead of the pr ofile ▪
+ID.
+Bravura Security Fabric as a SP only supports IdP initiat ed  SSO  if the Bravura Security Fabric
+profile  ID is used.
+i.If you selected ”Pr ofile  attribut e”  as the Identity  provider subject type, you must also c on figur e  the i.
+Subject pr ofile  attribut e,  which specifies  the pr ofile  attribut e  that can be mapped to the SAML
+subject.
+2.Click Update , then Enable  to enable this authentic ation  chain. 2.
+3.Verify that the Front-end login authentic ation  chain includes SAML_SP as an available chain for the 3.
+chain selector module.
+Test the c onfigur ation

@@ -1,0 +1,348 @@
+Browser driver: pswxdom
+Use an alt ernative  disclosure plugin, such as Website access disclosure plugins  (on page 2010), as
+Internet Explorer is no longer a supported browser. For inf ormation  about pswxdom  see documen t ation
+for 12.5  or older.
+Installing nativ e  access disclosure plugins
+Nativ e  access disclosure plugins can be used with the following browsers:
+▪ Micr osoft  Edge ▪
+▪Mozilla Firefox▪
+▪Google Chrome▪
+If access to the password includes insecure access to the password with pswxview , then deploying access
+disclosure plugins is not required.
+Native  access disclosure plugins only work on Windows. Mac OSX and other operating  systems are not
+supported.
+Mozilla Firefox
+On Firefox access disclosure plugins can be installed by:
+▪Allowing users to install both the Bravura Security browser add-on and firefox-extension- ▪
+x64.msi  at the time  of check out
+The nativ e  extension, firefox-extension-x64.msi  can be deployed using a Group Policy or a
+System Center Con figur ation  Manager (SMS)
+▪Using a one-time  disclosure method ▪
+You can launch access disclosure plugins using the one-time  disclosure method. These plugins have
+the same functionality  as the nativ e  access disclosure plugins and do not require additional  softw ar e,
+however they are good for one-time  use only. The one-time  disclosure is available as an executable
+that can be run directly or downloaded to be run on a diff er en t  w ork s t ation.  A new executable needs
+to be generated in order to view the access disclosure plugin again.
+You can c on figur e  messages  (on page 1950) to display to users how much check-out time  is remaining
+and that the check-out time  has expired.
+When a one-time  disclosure plug-in is downloaded and executed, the plug-in will check with Bravura
+Privilege to determine how much time  is left in the checkout, or if the authorized interval has expired.
+This also applies to one-time  plug-ins that have been saved for future use.
+The one-time  disclosure option  is enabled by default. End-users may be able to see this option  if the
+nativ e  access disclosure plugins are not yet installed or are disabled. When the one-time  disclosure
+option  is disabled, the option  will be grayed out.
+To disable one-time  disclosures:
+1.Go to Manage the system  > Modules  > Privileged access . 1.2.Set PAM ALLOW ONE TIME DISCLOSURE to Disabled . 2.
+3.Click Update . 3.
+Use Case: Firefox
+This use case demonstrates the typical w orkflo w  a user will experience the fir s t time  a nativ e  access
+disclosure plugin is used in Firefox.
+This use case assumes firefox-extension-x64.msi  has not been deployed using a Group Policy
+or system Center Con figur ation  Manager (SMS)
+1.Check out an and click on the disclosure (copy or display). 1.
+2.Click Install fir e f o x  add-on. 2.
+3.Click Continue  to Ins t allation  when prompted to install add-on. 3.
+4.Click Add when prompted to add Bravura Security browser add-on. 4.
+The Bravura Security browser add-on should be added, as indicated by the  icon on address bar.
+5.Return to the check- out screen and Install nativ e  add-on  should be displayed. This may require 5.
+refreshing the screen.
+6.Click Install nativ e  add-on . 6.
+7.Save fir e f o x -e xt ension- x64.msi. 7.
+8.Run the MSI installer.8.
+9. After  the extension is installed, restart the browser. 9.
+Return to the check-out page and the disclosure should be launched when you click it.
+Google Chrome and Micr osoft  Edge
+On Google Chrome and Micr osoft  Edge access disclosure plugins can be installed by:
+▪Allowing users to install both the Bravura Security browser extension and browser-extension- ▪
+win-x86.msi  at the time  of check out
+The nativ e  extension, browser-extension-win-x86.msi  can be deployed using a Group
+Policy or a System Center Con figur ation  Manager (SMS)
+The Bravura Security browser extension is available from the Chrome web store
+▪Using a one-time  disclosure method ▪
+You can launch access disclosure plugins using the one-time  disclosure method. These plugins have
+the same functionality  as the nativ e  access disclosure plugins and do not require additional  softw ar e,
+however they are good for one-time  use only. The one-time  disclosure is available as an executable
+that can be run directly or downloaded to be run on a diff er en t  w ork s t ation.  A new executable needs
+to be generated in order to view the access disclosure plugin again.
+You can c on figur e  messages  (on page 1950) to display to users how much check-out time  is remaining
+and that the check-out time  has expired.When a one-time  disclosure plug-in is downloaded and executed, the plug-in will check with Bravura
+Privilege to determine how much time  is left in the checkout, or if the authorized interval has expired.
+This also applies to one-time  plug-ins that have been saved for future use.
+The one-time  disclosure option  is enabled by default. End-users may be able to see this option  if the
+nativ e  access disclosure plugins are not yet installed or are disabled. When the one-time  disclosure
+option  is disabled, the option  will be grayed out.
+To disable one-time  disclosures:
+1.Go to Manage the system  > Modules  > Privileged access . 1.
+2.Set PAM ALLOW ONE TIME DISCLOSURE to Disabled . 2.
+3.Click Update . 3.
+Use Case: Check out an account in Chrome or Edge:
+This use case demonstrates the typical w orkflo w  a user will experience the fir s t time  a nativ e  access
+disclosure plugin is used in Chrome or Edge.
+This use case assumes browser-extension-win-x64.msi  has not been deployed using a Group
+Policy or system Center Con figur ation  Manager (SMS).
+1.Check out a vault account and click on the disclosure (copy or display). 1.
+2.Click Install chrome extension. 2.
+A new browser tab with the Bravura Security browser extension in the Chrome Web store is opened.
+3.Click Add to Chrome. 3.
+4.Click Add when prompted to add Bravura Security browser extension. 4.
+The Browser Extension should be added, as indicated by the icon on address bar.
+5.When you return the check-out page, Install nativ e  extension  should be displayed . This may require 5.
+refreshing the screen.
+6.Click Install nativ e  extension.  You may be prompted to save browser-extension-win- 6.
+x86.msi , or it will be aut omatic ally  saved.
+7.Run the MSI installer.7.
+8. After  the extension is installed, restart the browser. 8.
+9.Return to the check-out page and the disclosure should launch when you click on it.9.
+Installing Activ eX  controls with ppm-activ e x -c on tr ols.msi
+Installing ActiveX  controls is no longer a supported method. See documen t ation  for Bravura Security
+Fabric  version 12.5  or older if you need inf ormation  about this feature..
+Installing JavaScript controls with MSI installers
+An MSI installer is available for download when users attemp t  to access a password without installing the
+browser extension for Chrome or Firefox fir s t:▪browser-extension-win-x86.msi for Chrome ▪
+▪firefox-extension-win-x64.msi for Firefox browsers on a Windows 32-bit w ork s t ation ▪
+▪firefox-extension-win-x64.msi for Firefox browsers on a Windows 64-bit w ork s t ation ▪
+These MSI installers are also available on the Bravura Security Fabric  server in the addons idarchive
+directory.
+To manually install the browser extension:
+1.Launch the Windows Installer package.1.
+2.Click Next . 2.
+3.Read and accept the Bravura Security Fabric  license. 3.
+4.Click Next . 4.
+5.Select an ins t allation  scope (if options  are available). 5.
+If you are logged in as an administrator, you can choose to install the browser extension for yourself or
+for all users on the w ork s t ation.
+6.Click Next . 6.
+7.Click:7.
+▪Typical to install all browser extension modules. ▪
+or
+▪Custom to select modules. ▪
+It is recommended that you do not change the ins t allation  directory.
+8.Click Install to start the ins t allation.  The installer begins copying files to your computer. The 8.
+Ins t allation  Complete dialog appears after  the browser extension has been successfully installed.
+9.Click Finish to exit. 9.
+If a previous version of native  extensions for Firefox is already installed on the work s t ation  (11.1.x or
+older) you must uninstall and install the current version.
+Disclosure plugins are not supported for Mac OS.
+One-time  disclosure plugin
+You can launch access disclosure plugins using the one-time  disclosure method. These plugins have the
+same functionality  as the nativ e  access disclosure plugins and do not require additional  softw ar e,
+however they are good for one-time  use only. The one-time  disclosure is available as an executable that
+can be run directly or downloaded to be run on a diff er en t  w ork s t ation.  A new executable needs to be
+generated in order to view the access disclosure plugin again.
+You can c on figur e  messages  (on page 1950) to display to users how much check-out time  is remaining
+and that the check-out time  has expired.
+When a one-time  disclosure plug-in is downloaded and executed, the plug-in will check with Bravura
+Privilege to determine how much time  is left in the checkout, or if the authorized interval has expired. This
+also applies to one-time  plug-ins that have been saved for future use.The one-time  disclosure option  is enabled by default. End-users may be able to see this option  if the
+nativ e  access disclosure plugins are not yet installed or are disabled. When the one-time  disclosure
+option  is disabled, the option  will be grayed out.
+To disable one-time  disclosures:
+1.Go to Manage the system  > Modules  > Privileged access . 1.
+2.Set PAM ALLOW ONE TIME DISCLOSURE to Disabled . 2.
+3.Click Update . 3.
+T r oubleshooting
+ Users on a Windows w ork s t ation  are prevented from installing browserextensions 
+To allow users to install the browser extensions, enable and modify the following group policy setting:
+1.Go to Start menu, type gpedit.msc in the search box, and click on the program to access the Local 1.
+Group Policy Editor.
+2.Expand Computer Con figur ation  > Adminis tr ativ e  Templates >Windows Components > Windows 2.
+Installer
+3.Right-click Turn off Windows Installer , select Edit. 3.
+Older versions of Windows refer to this setting  as Disable Windows Installer instead of Turn off
+Windows Installer .
+4.Select Enabled . 4.
+5.Under Disable Windows Installer , select Never . 5.
+6.Click OK. 6.
+Administrators on a Windows w ork s t ation  cannot install browserextensions for all users 
+If administrators are unable to select an ins t allation  scope option,  disable the following in the Local
+Group Policy Editor:
+▪Computer Con figur ation  > Windows Settings  > Security Settings  > Local Policies > Security Options  > ▪
+User Account Control: Run all administrators in Admin Approval Mode
+▪Computer Con figur ation  > Windows Settings  > Security Settings  >Local Policies > Security Options  > ▪
+User Account Control: Admin Approval Mode for the built-in Administrator account
+Guacamole access disclosure plugins
+In-browser RDP: guacamole-rdp
+The guacamole-rdp  Guacamole access disclosure plugin provides users with remote access to
+Windows server or client managed systems using Remote Desktop Connection  (RDC). This control
+provides aut omatic  c onnection  to the managed system without the need to enter the adminis tr ativ e
+cr edentials  for the managed account and is c ompatible  with session recording.You can modify the following default attribut es  to control the behavior of guacamole-rdp :
+color-depth Set the preferred color depth of the display in bits per pixel. Available values are
+8, 16, 24 and 32.
+console Connect to the server as a console (admin) session. This is set to false by default.
+disable-audio Disable audio driver. This reduces the bandwidth of the session. This is set to true
+by default.
+domain Set the domain the user account is a member of. This is set to
+%netBIOSDomainName% by default.
+See Domain and host values  (on page 1966) for further in f ormation.
+enable-printing Enable printing  to a virtual PDF printer. This is set to false by default.
+guacamole-url Set the URL of the Guacamole service. The format is <address >:<port >/
+<webappname >.
+height Set the height of the RDP window.
+hostname Set the IP or DNS of the server. This is set to %server% by default.
+See Domain and host values  (on page 1966) for further in f ormation.
+hostname search If set to true, will enable searching on attribut e  ”host” when override is allowed
+for ”host”. This is set to false by default.
+ignore-cert Ignore certific a t e  from the RDP server. This is set to false by default.
+port Set the c onnection  port of the server.
+security Set the security mode for the c onnection.  This is set to rdp by default.
+width Set the width of the RDP window.
+In-browser Remote App: guacamole-remote-app
+The guacamole-remote-app  Guacamole access disclosure plugin provides users with remote access
+to applic ations  hosted on a Windows server or client managed system using Remote Desktop Connection
+(RDC). This control provides aut omatic  c onnection  to the managed system without the need to enter the
+adminis tr ativ e  cr edentials  for the managed account and is c ompatible  with session recording.
+You can modify the following default attribut es  to control the behavior of guacamole-remote-app :
+color-depth Set the preferred color depth of the display in bits per pixel. Available values are 8,
+16, 24 and 32.
+disable-audio Disable audio driver. This reduces the bandwidth of the session. This is set to true
+by default.
+domain Set the domain the user account is a member of. This is set to
+%netBIOSDomainName% by default.
+See Domain and host values  (on page 1966) for further in f ormation.
+enable-printing Enable printing  to a virtual PDF printer. This is set to false by default.
+guacamole-url Set the URL of the Guacamole service. The format is <address >:<port >/
+<webappname >.
+height Set the height of the RDP window.hostname Set the IP or DNS of the server. This is set to %server% by default.
+ignore-cert Ignore certific a t e  from the RDP server. This is set to False by default.
+port Set the c onnection  port of the server.
+remote-app De fine  the RemoteApp program. This should be in the format ||<program >.
+remote-app-args Set the command line arguments of the RemoteApp program.
+remote-app-dir Set the working directory of the RemoteApp program.
+security Set the security mode for the c onnection.  This is set to rdp by default.
+width Set the width of the RDP window.
+In-browser SSH: guacamole-ssh
+The guacamole-ssh  Guacamole access disclosure plugin provides users with remote access to a
+server using Secure Shell (SSH). This control provides aut omatic  c onnection  to the managed system
+without the need to enter the adminis tr ativ e  cr edentials  for the managed account and is c ompatible  with
+session recording.
+You can modify the following default attribut es  to control the behavior of guacamole-ssh :
+color-scheme Set the color scheme to use for the terminal emulator.
+font-name Name of font to render on the terminal emulator. By default, a monospace font
+will be used.
+font-size Size of font to render on the terminal emulator. By default, the font will be set
+to size 12.
+guacamole-url Set the url of the Guacamole service. The format is ’ <address> :<port> /
+<webappname> ’.
+hostname Set the IP or DNS of the server. This is set to %server% by default.
+See Domain and host values  (on page 1966) for further in f ormation.
+passphrase Set the passphrase to use with a private key, if required.
+port Set the c onnection  port of the server.
+private-key Set the private key to use when c onnecting ,  if required.
+In-browser Telnet: guacamole-telnet
+The guacamole-telnet  Guacamole access disclosure plugin provides users with remote access to a
+server using Telnet. This control provides aut omatic  c onnection  to the managed system without the need
+to enter the adminis tr ativ e  cr edentials  for the managed account and is c ompatible  with session
+recording.
+In order to use this control, Telnet must be installed and enabled on the managed system.
+You can modify the following default attribut es  to control the behavior of guacamole-telnet :
+color-scheme Set the color scheme to use for the terminal emulator.
+font-name Name of font to render on the terminal emulator. By default, a monospace font
+will be used.font-size Size of font to render on the terminal emulator. By default, the font will be set to
+size 12.
+guacamole-url Set the url of the Guacamole service. The format is ’ <address> :<port> /
+<webappname> ’.
+hostname Set the IP or DNS of the server. This is set to %server% by default.
+See Domain and host values  (on page 1966) for further in f ormation.
+password-regex The regular expression to use when searching for where to enter the managed
+account password. By default, this is set to [Pp]assword: . If unspecified,
+Guacamole will use a reasonable default value.
+port Set the c onnection  port of the server.
+username-regex The regular expression to use when searching for where to enter the managed
+account username. By default, this is set to [Ll]ogin: . If unspecified,
+Guacamole will use a reasonable default value.
+In-browser VNC: guacamole-vnc
+The guacamole-vnc  Guacamole access disclosure plugin provides users with remote access to a
+server using Virtual Network Computing  (VNC). This control provides aut omatic  c onnection  to the
+managed system without the need to enter the adminis tr ativ e  cr edentials  for the managed account and
+is c ompatible  with session recording.
+In order to use this control, VNC must be installed and enabled on the managed system.
+You can modify the following default attribut es  to control the behavior of guacamole-vnc :
+autoretry Set the number of times  to retry c onnection  before failing. This is set to 0 by
+default.
+color-depth Set the preferred color depth of the display in bits per pixel. Available values are
+8, 16, 24 and 32.
+cursor Set whether to render a mouse cursor locally or remotely. This is set to local by
+default.
+encodings Space-delimited list of encoding to use by libvncclient. Guacamole will use
+supported encodings by default.
+guacamole-url Set the url of the Guacamole service. The format is ’ <address> :<port> /
+<webappname> ’.
+hostname Set the IP or DNS of the server. This is set to %server% by default.
+See Domain and host values  (on page 1966) for further in f ormation.
+port Set the c onnection  port of the server.
+read-only Allows the user to view the display but not make any modific ations.  This is set to
+false by default.
+swap-red-blue Swaps colors of red and blue, used to correct incorrect displays. This is set to
+false by default.Guacamole in t egr ation  details
+Bravura Privilege  can provide access to remote systems using access disclosure plugins for Guacamole.
+Guacamole is a third-party remote desktop gateway that supports standard protocols including RDP , SSH,
+VNC, and Telnet. It is clientless, which means there are no additional  softw ar e  or drivers needed to view
+the access disclosure plugins on your w ork s t ation;  all that is required is a dedicated Linux-based system
+to act as the Guacamole remote desktop gateway. The access disclosure plugins can then displayed on an
+HTML5-supported web browser.
+There are two main pieces of softw ar e  that run on the Guacamole gateway:
+▪The guacd  service, which is a server package that acts as a proxy that connects to the managed ▪
+system;
+▪The guacamole  package, a Java web applet that runs on Apache Tomcat, ▪
+▪guacamole  acts as client to the guacd  service and as server to the user's browser ▪
+▪It also acts as client to the Bravura Privilege  sessmonc  CGI to which it sends session monitoring ▪
+data if that feature is c on figur ed.
+Guacamole access disclosure plugins have similar functionality  as the nativ e  access disclosure plugins,
+but instead of having to manage a diverse set of local programs for remote access to target systems,
+provides a convenient, cen tr ally -c on figur ed  thin client. It also completely hides the password from the
+target system administrators (unlike nativ e  disclosures, which normally provide the password in plain text
+on the command line which is captured in the admin's w ork s t ation  Task Manager process and in the
+Windows Event log.)
+The plugin controls contain default attribut es  to customize behavior, and are c ompatible  with session
+recording.
+The only drawback of the Guacamole disclosures is the need to install and maintain the third-party
+Guacamole services on Linux proxy systems, and to calculate how many such systems are required for the
+amount of users who can disclose access at the same time.
+How it works
+1.A user checks out a single account or account set and accesses a Guacamole disclosure plugin. This1.
+redirects the user to a specific  URL on the Guacamole gateway.
+2.The URL opens a browser window that contains specific  in f ormation  about the managed account 2.
+checked out, including the checkout ID, account ID, and the type of access disclosure plugin
+requested.
+3.The Guacamole gateway contacts the Bravura Privilege  server using the CheckoutStatusGet and 3.
+CheckoutParamsGet API calls to get in f ormation  about the status and validity of the account checked
+out.
+4.If the check-out is deemed valid, the Guacamole gateway initia t es  the disclosure session to the 4.
+managed system and shows the r esulting  screen in the browser window.
+5.The user can now interact with the managed system from that browser window.5.6.The Guacamole gateway contacts the Bravura Privilege  server using the CheckoutStatusGet API call 6.
+periodically until  the checkout is no longer valid or until  the user closes the disclosure session.
+There is greater fle xibility  when using Guacamole access disclosure plugins. It can be viewed on
+commonly used browsers such as Google Chrome, Mozilla Firefox and Micr osoft  Edge. Unlike nativ e
+access disclosure plugins which are limited to Windows, you can view Guacamole access disclosure
+plugins on other oper ating  systems such as Linux, provided that it has a HTML5-c ompatible  browser.
+Guacamole access disclosure plugins can also be viewed on mobile devices such as smart phones and
+tablets.
+Guacamole access disclosure plugins have similar functionality  as the nativ e  access disclosure plugins.
+The controls contain default attribut es  to customize behavior, and are c ompatible  with session recording.
+Preparing for Guacamole setup
+This section  will go through the steps on how to set up Guacamole. In sequence, you will need to:
+1.Decide which CentOS/RHEL version will be used as the Guacamole server.1.
+▪The following versions are supported:▪
+▪Centos 7 / RHEL 7 64-bit▪
+▪Centos 8 Stream / RHEL 8 64-bit▪
+▪Centos 9 Stream / RHEL 9 64-bit▪
+2.View the Guacamole benchmarking metrics  to determine the optimal  system requirements for the 2.
+Guacamole server
+3. Con figur e  proxy server settings  for the Guacamole server. To do this, edit the /etc/profile  file (as 3.
+root user):  
+vi /etc/profile
+For example, add the following lines to the bottom  of the file:
+PROXY_URL="http://<proxyaddress>:<port>/"
+export http_proxy="$PROXY_URL"
+export https_proxy="$PROXY_URL"
+export ftp_proxy="$PROXY_URL"
+export no_proxy="127.0.0.1,localhost"
+# For curl
+export HTTP_PROXY="$PROXY_URL"
+export HTTPS_PROXY="$PROXY_URL"
+export FTP_PROXY="$PROXY_URL"
+export NO_PROXY="127.0.0.1,localhost"
+Replace <proxyaddress> and <port>  with the IP address and port number of the proxy server,
+r espectiv ely .  Note that this is based on a proxy server using HTTP protocol; further modific ations  are
+required if the proxy server uses HTTPS.
+Save the file.

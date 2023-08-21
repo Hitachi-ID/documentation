@@ -1,0 +1,112 @@
+for more in f ormation  about the REQUEST_TEAM attribut e.
+ACCOUNT and HOSTID attribut es  are required. Note that those are not aut omatic ally  populated from
+SELECT_MA. This will be accomplished in a future version(s)
+ONBOARD_ACCOUNT batch request sample
+"ACCOUNT","HOSTID","MSP_ID","MA_TEAM","REQUEST_TEAM","SESSMON_CLIPBOARD","
+SESSMON_KEYSTROKE","SESSMON_SCREENSHOT","MA_PWD_OVERRIDE",
+DISCLOSURE_METHOD_DIRECT","DISCLOSURE_METHOD_VIEW_COPY","MA_RES_CHECKOUT_LIMIT"
+"account01","D39B55F07A6A487AABE4BD8C9EC1679C","ONBOARDED_ACCOUNTS","TEAM-000000","
+TEAM-000000","T","T","T","T","T","T","T","1"
+Updating  an account
+Users assigned as account trustees can use the Account: Update request to migrate an account to
+another team, update other account attribut es,  or change a team account to a personal admin account
+or vice versa. In order for an account trustee to migrate accounts, they must also be an account trustee
+for another team.
+1.From the home page, click Manage resources . 1.
+2.Select the Account: Update request. 2.
+3.Select a managed account.3.Click Next .
+4.Select the Disclosure method . 4.Click Next .
+5.Select the Account Team 5.Click Next .
+6.If the disclosure method was by direct c onnection,  determine whether sessions will be monitored by: 6.
+▪Clipboard▪
+▪Keystroke▪
+▪Screen▪Click Next .
+7.Select the Users with ’ cr edential  manager’ privilege can override and randomize the password 7.
+checkbox if you want to allow users with the cr edential  manager role to override and randomize
+checked-out passwords.8.Click Submit . 8.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+9.Click the View request link at the top of the page to view the status of the request. 9.API aut omation  for account update
+Once the API has been c on figur ed  (See ”SOAP API” in Bravura Security Fabric  Remote API ( api.pdf )), and
+your script has been authentic a t ed  to the API (Login or LoginEx API calls), the WF API calls can be used to
+create an API request to update an account.
+Use the WFPDRSubmit function  to create a w orkflo w  request and submit the request for publishing.
+When submitting  a request, use ”UPDATE_ONBOARDED_ACCOUNT” as the PDR ID. The request uses the
+following attribut es:
+attrk e y value
+HOSTID The ID of the system on which the account resides.
+ACCOUNT The ID of the account.
+MSP_ID The managed system policy the account will be binded to.
+MA_TEAM The team that will account will be assigned to.
+REQUEST_TEAM The team in which its account trustee(s) will be used to
+authorize the request.
+DISCLOSURE_METHOD_DIRECT T to enable direct c onnection  disclosures for the account, F to
+disable.
+DISCLOSURE_METHOD_VIEW_COPY T to enable display and copy disclosures for the account, F to
+disable.
+SESSMON_KEYSTROKE T to enable keystroke recording for direct c onnections,  F to
+disable.
+SESSMON_CLIPBOARD T to enable clipboard recording for direct c onnections,  F to
+disable.
+SESSMON_SCREENSHOT T to enable screen recording for direct c onnections,  F to
+disable.
+MA_PWD_OVERRIDE T to allow cr edential  managers to randomize or override
+account during check-out, F to disallow.
+MA_RES_CHECKOUT_LIMIT The number of concurrent checkouts for the account.
+See REQUEST_TEAM
+The REQUEST_TEAM attribut e  is the team in which its system trustee(s) will be used to authorize the
+request. This can be a diff er en t  value depending on which PDR is used. In some cases, the value is auto
+filled  and in other cases, a value is not required.
+PDR ID API submittable REQUEST_TEAM
+requiredREQUEST_TEAM aut o-
+filled
+BATCH_REQUEST No N/A N/APDR ID API submittable REQUEST_TEAM
+requiredREQUEST_TEAM aut o-
+filled
+CREATE_LARGE_CREDENTIAL No N/A N/A
+UPDATE_LARGE_CREDENTIAL No N/A N/A
+WEBAPP_DISCLOSURE_CREATE No N/A N/A
+WEBAPP_DISCLOSURE_DELETE Yes No N/A
+WEBAPP_DISCLOSURE_UPDATE No N/A N/A
+TEAM-CREATE Yes Yes Yes
+TEAM-DELETE Yes Yes Yes
+TEAM-MEMBERS Yes Yes Yes
+TEAM-UPDATE Yes Yes Yes
+CREATE_VAULT_SYSTEM Yes Yes Not required
+ARCHIVE_VAULT_SYSTEM Yes Yes Yes
+UPDATE_VAULT_SYSTEM (1 - same team) Yes Yes Yes
+UPDATE_VAULT_SYSTEM (2 - transfer) Yes Yes Yes
+CREATE_VAULT_ACCOUNT (1 - team vault) Yes Yes YesPDR ID API submittable REQUEST_TEAM
+requiredREQUEST_TEAM aut o-
+filled
+CREATE_VAULT_ACCOUNT (2 - system vault - same team) Yes Yes Yes
+CREATE_VAULT_ACCOUNT (3 - system vault - diff er en t
+team)Yes YesYes 
+ARCHIVE_VAULT_ACCOUNT Yes Yes Yes
+UPDATE_VAULT_ACCOUNT (1 - team vault) Yes Yes Yes
+UPDATE_VAULT_ACCOUNT (2 - system vault - same team) Yes Yes Yes
+UPDATE_VAULT_ACCOUNT (3 - system vault - transfer) Yes YesYes 
+ONBOARD_SYSTEM Yes Yes, but not enforced No
+ARCHIVE_ONBOARDED_SYSTEM Yes Yes, but not enforced No
+UPDATE_ONBOARDED_SYSTEM Yes No If the destination  team is
+unset or the destination
+team is the same as the
+source team
+ONBOARD_ACCOUNT Yes Yes, but not enforced No
+OFFBOARD_ACCOUNT Yes Yes Yes
+UPDATE_ONBOARDED_ACCOUNT Yes Yes, but not enforced No
+CREATE_PAMUTIL_API_USER Yes No Not required
+ improper display of the team in update/archive when the destination  team's vault trustee is not in a
+team owning the vault system. This will be fix ed  in a future release.
+for more in f ormation  about the REQUEST_TEAM attribut e.
+UPDATE_ONBOARDED_ACCOUNT batch request sample"ACCOUNT","HOSTID","MSP_ID","MA_TEAM","REQUEST_TEAM","SESSMON_CLIPBOARD",
+"SESSMON_KEYSTROKE","SESSMON_SCREENSHOT","MA_PWD_OVERRIDE",
+"DISCLOSURE_METHOD_DIRECT","DISCLOSURE_METHOD_VIEW_COPY","MA_RES_CHECKOUT_LIMIT"
+"account01","D39B55F07A6A487AABE4BD8C9EC1679C","ONBOARDED_ACCOUNTS","TEAM-000000",
+"TEAM-000000","F","F","F","F","F","F","F","2"
+Offboar ding  an account
+Users assigned as account trustees can use the Account: Offboar d  request to offboar d  an account.
+When you offboard  an account, all historical password data associated with the account is still available.
+Historical data is only deleted if the managed system is also offboarded.
+1.From the home page, click Manage resources . 1.
+2.Select the Account: Offboar d  request. 2.
+3.Select a managed account.3.

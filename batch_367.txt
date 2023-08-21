@@ -1,0 +1,327 @@
+1.Modify or create a new attribut e  file(s)  in the agent\dat directory. 1.
+2.From the util directory, run: 2.
+loadplatform -a <agent>
+This loads or modifies  the default attribut es  for the connector platforms  by populating  attr de f  and
+attr de f v al  tables.
+You should be able to find default attribut es  for account and group under Manage the system >
+Resources >Account attribut es  or Manage the system  >Resources > Group attribut es  then select the
+connector target system type or the connector target system.
+Loading a new or modified  discovery template
+Bravura Security Fabric can load target system discovery templates dynamically. Connector Pack 3.1.0 or
+later is required. By default, they are located in the agent\dat directory.
+Discovery template files are written  in the following format:
+KVGROUP-V2.0
+templates = {
+  <TARGET_TEMPLATE> = {
+        name = <PSLang name description>
+        address = <PSLang address description>
+        <key> = <value>; # target system option
+        ...
+        ...
+        <key> = <value>;
+           Resources = {
+           };
+           T ar g e tAttr s  = {
+           };
+  };
+}
+for example:
+# KVGROUP-V2.0
+templates = {
+  NT_TEMPLATE = {
+    name = "$comp[\"dNSHostName\"][0]";    address = "\"{server=\" + $comp[\"dNSHostName\"][0] + \";}\"";
+    runlist = true;
+    lis t attribut es  = true;
+    listgroups = true;
+    idarchivepush = true;
+    adminresethide = true;
+    selfresethide = true;
+    adminunlockhide = true;
+    selfunlockhide = true;
+    adminclaimhide = true;
+    selfclaimhide = true;
+    selfmanagehide = true;
+    listmembertype = A;
+      Resources = {
+        ls_scmacct;
+        ls_taskacct;
+        ls_iisacct;
+        ls_comacct;
+        ls_normacct;
+       };
+     T ar g e tAttr s  = {
+       ADDR_ATTR = "DNSHOSTNAME";
+       DESC_ATTR = "DNSHOSTNAME";
+     };
+  };
+The keys in the discovery template file are all required, and are all case sensitiv e.  The name and address
+keys are written  using PSLang expression based on account attribut es  discovered using auto discovery.
+To load a discovery template:
+1.Modify or create a new <target>-template.cfg file in the agent\dat directory. 1.
+2.From the util directory, run: 2.
+loadplatform -a <agent>This loads the agent with the ne w/modified  discovery template onto the instance. You should be able to
+find the discovery template under Manage the system > Resources >Target systems  > Discovery
+templates .
+pwdhash
+Use the pwdhash program to hash a password, verify a password or generate a salt. The program
+accepts arguments and outputs the hashed password on standard output.
+Usage
+pwdhash.exe <hash|verify|saltgen> <options>
+Argument Description
+hash Generates a password hash
+verify V erifies  a password against a hash
+saltgen Generates a salt
+-help Print out help/usage message and exit
+-v, --version Print out version and exit
+-encalg <b64—hex> Encoding algorithm to use
+-hash <hash> Input hash to verify
+-hashalg <sha256—sha512—sha1—md5> Hashing algorithm to use
+-password <password> The password to hash/verify
+-pr e fix  <pr e fix> output pr e fix
+-salt <salt> The optional  salt to use when verifying
+-salt-chars <salt-chars> Optional  character set to use for salt
+-saltlen <saltlen> Optional  length of salt to generate
+Examples
+To use pwdhash to generate a password hash with base64 encoding and a SHA1 hashing algorithm, type:
+pwdhash.exe hash -encalg b64 -hashalg sha1 -password ThePassword
+To generate a password hash with base64 encoding and a SHA512 hashing algorithm:
+echo "ThePassword" | pwdhash.exe hash -encalg b64 -hashalg sha512 -
+prefix {SHA512}
+sshhostkey
+The sshhostkey  program is used to manage host keys in the Windows registry or a KVGroup-based
+database.
+This program is installed with Connector Pack . It may be located in the util directory under either the
+Connector Pack\global\ directory or the IDM Suite\<instance> directory.Usage
+sshhostkey print|delete|verify|update -s <Server>:<Port> [-v] [-
+f <filename>] [--instance <instance>]
+The arguments are described in the following table:
+Argument Description
+print Prints the public key for the specified  <server>:<port> or
+for the servers specified  by the server pattern.
+delete Deletes the public key for the specified  <server>:<port>
+or for the servers specified  by the server pattern.
+verify V erifies  the public key for the specified  <server>:<port>.
+update Updates the public key for the specified  <server>:<port>,
+if it doesn’t match the stored key.
+-s <server>:<port> The DNS name or IP address of the target system. You can
+use a regular expression to match more than one server.
+-l Displays verbose messaging for verify and update
+arguments.
+-f <filename> Uses the host key KVG file, or the registry if a file isn’t
+specified.
+--instance <instance> The name of the Bravura Security Fabric  instance on
+which to run this utility  to get log in f ormation.  If not
+specified,  the program looks for the default instance.
+It is recommended that you perform a print before using delete with extended regular expression
+patterns.
+Examples
+1.To print the public keys stored in the registry, type:1.
+sshhostkey print
+2.To connect to an SSH target and verify whether the locally stored public key is correct, type:2.
+sshhostkey verify <server>:<port>
+sshkeyconvert
+The sshkeyconvert program is used to convert SSH public/private keys. The key pairs can be
+converted into KVGroup or PuTTY format, and can be either saved to a file or sent to stdout.
+Keys generated by sshkeyconvert or PuTTY’s putty g en  utility  are supported by this program.
+Usage
+sshkeyconvert [options]
+The arguments are described in the following table:Argument Description
+-i <filename> The name of the key file to convert.
+-o <filename> The name of the key output file. If omitted,  the stream is
+written  to stdout, with the e x ception  of SSHv1 KVGroup
+format keys.
+Conditions
+▪A passphrase must be specified  when c on v erting  keys. Keys will not be converted if the wrong ▪
+passphase is given.
+▪A key output file must be provided if the key input file format is SSHv1 and the key format is KVGroup. ▪
+▪Keys not generated from a recent PuTTY version (ie. older than v0.72) cannot be converted by this▪
+program.
+Examples
+1.To use sshkeyconvert to to convert a KVGroup format key file (non-SSHv1) called testkvg.kvg into 1.
+PuTTY format and write to stdout, type:
+sshkeyconvert.exe -i "\Program Files\ Bravura Security\Bravura Security Fabric
+\default\script\testkvg.kvg"
+2.To use sshkeyconvert to to convert a PuTTY format key file (non-SSHv1) called t es tputty .ppk  into 2.
+KVGroup format and write to stdout, type:
+sshkeyconvert.exe -i "\Program Files\ Bravura Security\Bravura Security Fabric
+\default\script\testputty.ppk"
+3.To use sshkeyconvert to convert a KVGroup format key file called testkvg.kvg into a PuTTY 3.
+format key file called kvg2ppk.ppk, type:
+sshkeyconvert.exe -i "\Program Files\ Bravura Security\Bravura Security Fabric
+\default\script\testkvg.kvg" -o "\Program Files\ Bravura Security\Bravura
+Security Fabric\ default\script\kvg2ppk.ppk"
+4.To use sshkeyconvert to convert a PuTTY format key file called t es tputty .ppk  into a KVGroup 4.
+format key file called ppk2kvg.kvg, type:
+sshkeyconvert.exe -i "\Program Files\ Bravura Security\Bravura Security Fabric
+\default\script\testputty.ppk" -o "\Program Files\ Bravura Security\Bravura
+Security Fabric\ default\script\ppk2kvg.kvg"
+sshkeygen
+The sshkeygen program is used to generate SSH public/private keys. The key pairs can be created in
+KVGroup or PuTTY format, and can be either saved to a file or sent to stdout .
+RequirementsTo enable logging for this program, you must add a system environment variable, IDM_SUITE_INSTANCE,
+to de fine  the instance on which to log; for example: IDM_SUITE_INSTANCE = default. See your oper ating
+system documen t ation  to learn how to do this. The program will be logged in
+Bravura Security\Bravura Security Fabric\Logs\<instance name>\idmsuite.log
+Usage
+sshkeygen [options]
+The arguments are described in the following table:
+Argument Description
+-b <bits> The length of the key in bits. If omitted,  the default
+values will be used:
+▪2048 for rsa, dsa and sshv1▪
+▪384 for ecdsa▪
+▪256 for ed25519▪
+-c <comment> The comment used in the private and public key files.
+-f <file  name> The name of the key file. If omitted,  the stream is written
+to stdout.
+-t <type> The key type. The acceptable values are rsa, dsa, ecdsa,
+ed25519, and sshv1. Default type is rsa.
+-r <format> The key format: putty  or kvg. Default format is kvg.
+Keys generated by sshkeygen in Connector Pack 4.1.x are c ompatible  with Connector Pack 4.2 and
+above, while the reverse is not c ompatible.
+Refrain from using SSHv1 keys for systems that support newer protocols. SSHv1 does not meet current
+security standards; use only for legacy systems that support nothing else.
+Conditions
+▪A passphrase must be specified  when cr eating  keys. ▪
+▪The minimum of 256 bits is required for rsa and dsa key types. sshkeygen will not generate a key▪
+otherwise.
+▪The acceptable key lengths for ecdsa is 256 bits, 384 bits, or 521 bits. Any key length will be ignored▪
+and the default value will be used.
+▪The acceptable key length for ed25519 is 256 bits. Any other key length will be ignored.▪
+▪A file name must be provided if the key type is sshv1 and key format is putty . ▪
+▪Key files will not be created if there is already a file with the same name. ▪
+KVGroup format for the key pair
+The KVGroup format for the user’s key pair is as follows:
+# KVGROUP-V1.0"" "" = {
+    "Comment" = " "
+    "Encrypted" = " "
+    "KeyFingerprint" = " "
+    "KeyType" = " "
+    "PrivateKey" = " "
+    "PrivateMAC" = " "
+    "PublicKey" = " "
+}
+The KVGroup format for the user’s key pair for SSHv1 is as follows:
+# KVGROUP-V1.0
+"" "" = {
+    "A1-RSA-Signature" = "SSH PRIVATE KEY FILE FORMAT 1.1\n"
+    "Comment" = " "
+    "KeyFingerprint" = " "
+    "RSA-SSH1-Key" = " "
+    "authorized_keys" = " "
+}
+Examples
+1.To use sshkeygen to create a KVGroup format key and write to stdout, type: 1.
+sshkeygen.exe -r kvg
+The output looks like:
+# KVGROUP-V1.0 
+"" "" = { 
+  "Comment" = "Public/
+Private Key Generated by sshkeygen at 2021-01-12 15:44:42 (UTC-07:00)" 
+  "Encrypted" = "yes" 
+  "KeyFingerprint" = "ssh-
+rsa 2048 45:2e:38:a4:99:50:ad:10:61:8a:33:da:df:c4:32:e0" 
+  "KeyType" = "ssh-rsa" 
+  "PrivateKey" = "Vc52v4mvaqyWer+f2roNluuxCcvpAorvAKcgS/
+dWpW8Pwzf6twJ1eLhfiQ0QrhfMWZTzM9kMdErEHWH+/av0GEfYqMloli74Au+ihOpn0F
++ChIwDU/lSheIwGCcEU/
+3cyH8bBAGFMX7PUhl58FEoO0K0WtM7ROJjEzyO1WswIIDkM2hSvGINpm6jAlxPZUdUwNkhcFh17odSpUgRFVaKRU03BUxMARxNyA4dTzg50uzSOoEyF1sxDSMQUsiNpvlep4m/
+87xFTt0+h0cvv9yvFMAaRsegXOUu2oug5aBKMGYgiEvZKH0v0LIFcL3OQfp
++1h07c01XlA8Bl4REhBqcIRYd9AN+Hwru5Cn99Gg9ygrxAJ1M2ra2+DG3j
++NZeqowgbDax2yphFZgytOmbawnWxxICBB+Yp3eZyCsiT78QGGYB2r12ucpTSV8+dR/
+zqwhg8M6CM6riptdlGjtID7N7cxlbcTw2Cj8b4UbJ
++rEXw1ViiwKcOkuBVZsBNkN9Ei1yQublZwIrdsCrRdeRDC9nXQuK02e0P8ZQdhUZA8wGAEu9FSflka7sLdCZ3wxhJip22KMvbVJFrGv9jyyJzaGXSJ3xY/
+jaUgES6Tz2CJpQZ483D9tPF60pek3AlOUG9JtjaHUzn3svOVNEIuEq/REffKhBtd3q4URX74Qc+kZC0Raw89v7mW+zDhL+h0IDX
++LsZMy1x6IV0uJBj5ottBpSKmC/
+kRZuCDOIBnfRdXIktP5tldXmoctAhh7h8eZBLCHCCV6CnxuxtaWI3ajWNzSVH/
+CxWmE57brDf2wmIEEr/
+qkjQbFMMu7NLOSnrFr89AzmnECB6b36FWi0BK5hGpMAXl8QD25n48qheeqfYL4T88+DjFpe3AKEeNge51gYCrW" 
+  "PrivateMAC" = "bd5693d9b9c59064a35a3f70ecf397f5b346e50c" 
+  "PublicKey" = "AAAAB3NzaC1yc2EAAAABJQAAAQEAy+2xdnaBaHjxqwSUOo
++gtIaX3ztLLoB4lYzs
++YrcMP5uP3thjGBTOry3JXL4sV2PCL3Gl5pXH6m5t2YyKywGnTHy0SsPs+XqA
++JTREYgWihHBILrb16DmdOUo0G3+pQRcnKgxf0xLzKyM/Yv+Rtq3lt/
+qo0OxBCIJP2Kpl76lggGe+J8JNhbW530DgFw/soqBUNHJ52sdVscvYQNky
++tptTrE5xN/bw/OB9gN2uzKMOjWkcZQ6i3yfbpTwjsT4h1b3WhHvHDeYI0y/rc
++CyCPqx076u8d0mPKWudJuXyTBkXktQYrO2A0foo/q30idrCNjxniF7iHpimd/
+EwO0qHgQ==" 
+}
+2.To use sshkeygen to create a PuTTY format key and write to stdout, type: 2.
+sshkeygen.exe -r putty
+The output looks like:
+PuTTY-User-Key-File-2: ssh-rsa 
+Encr yption:  aes256-cbc 
+Comment: Public/Private Key Generated by sshkeygen at 2021-01-12 15:56:04 (UTC-07:00) 
+Public-Lines: 6 
+AAAAB3NzaC1yc2EAAAABJQAAAQEA/XhhGFeZOxU99kV7s43wk4VY9PIeJAHQ+uon 
+Gc2KwFU1Ad288I1kdrZDPWDxZTQfv1KZEIaVWvLO7qSjqOO64TrPXa4ZabLc39JO 
+OaUZxB2BjDnQG3xsRzjPLphp8G63s1xavSLpVdDBtyT+tJzm+VYgYBW1+CWLMFLS 
+RxzpmNrN8P69dJo5cVVcusMLqw7PzlyQt7SdqDzdMJIj8QPv1J3YfZJznnGedTao 
+EC4lWp7ve18utjpy1EOXIPPJShcV5f9hLnVyXKVvnhzT5slaXGJtzP/LvSGCmj3s 
+D3AL7aHfCDvepVeTvsyseC41xoLrzJbHJk/Il5ksn8vSWLWr8Q== 
+Private-Lines: 14 
+STmae6fZ2+7T7Ji2I3Zp9/J+oiG/F7qGub3t3oWSZ3rvN3UYjWSVXokiSgFjMmg3 
+bubIeNIGCJDG37PbbFpaLPQv66Zc636EdFxUSAGWQU7LMNN8ALKVXui5yDef+kz+ 
+gw7pL+VLOtHac27ztVKyIPp0HR+zIS1Z9aObVIeuMLxhFk9iUOlrch1dLX6dbaME 
+bBS WFT+a72tOgx+//bbNAhBK cM8W3nD V26Bumr45KZDgsBPi S WxJcffK UcUPwVWh  
+Ou94NCrDvqQyYDmLGnuxvVnJPNMibHVrTIguWj3f8UxpWZ03tIkd12URB/b9BQI4 
+UOxcXEPayau2u287WwgM1pTb6jvk2fUACu6YdZDcBZYS1IUV3dZyytdIZM/HDd8g 
+JPuKt49s2gL9P9dJpmxbO6Jp38Bv3kxsP5KHneauin48soV0A7ACmIg5zONQOFTC 
+jDlL6XdHeu9bG7b2BOz9XRGG8k4H98gqOQt6AcwBW4/LwXhHIpObKF6h42o9b2iy 
+JnJ2niii5+XmaCGr1O7zEm2G1csQMEAYzRBSYZ4tk7F2qBw6p+JGuOou/NDPo5ec 
+G63TfUAQHPzghjS/sYT44lgAcluIiUq6QhQCO30jMcrSkqtgUlVQALiAmezjEv2v 
+Q g ofiXJ15q+Ljo2wFHmCwXJzY7 u6iV5qhULsjL CBC7s3akjhJWBCp+k d9be6pAz9  
+5QesvZeRH21yPmGuTiGVjShDkCfvzIV+Sa06E6fuJ1K9ER4TvXxtZRnN4Zv569Pp 
+vVJXScUW5B67JIb9YwSUEjQAefnxrHiS58mvnU09m6BpXN+UI6LeQNKNTq3yp6Qq RzLUTS+oWvnmC2fJz3aasuaShyafSRXxOJ9cRA3iMl5VcwYxWSpbd5byi7/Q/d09 
+Private-MAC: f81dd3f7a7e0ce4b22dd5ae279ec7bc02c9a9b3d
+3.To use sshkeygen to create a key file using KVGroup format (test.kvg): 3.
+sshkeygen.exe -r kvg -f "\Program Files\ Bravura Security\Bravura Security Fabric
+\default\script\test.kvg"
+4.To use sshkeygen to create a key file using PuTTY format, ecdsa as the key type, and 521 as the key 4.
+length:
+sshkeygen.exe -t ecdsa - b 521 -r putty -f "\Program Files\ Bravura
+Security\Bravura Security Fabric\ default\script\test.ppk"
+targetsync
+Use the targetsync  program to synchronize the instance database state with the state from target
+systems without blocking other high value r eplic ation  data for prolonged periods of time.
+Usage
+ targetsync.exe [options]...
+Argument Description
+-j Specify the number of targets to process in parallel
+(default: 1)
+-nolist Skip agent list update
+-target Specify the ID of the target for which to run targetsync to
+synchronize the state of the instance database. This
+option  can be used multiple  times  to select multiple
+targets
+-targetmanual Select all manual targets
+-wait Wait for discovery to complete
+Examples
+1.To synchronize the state of an Activ e  Directory target system AD and a Windows NT target system 1.
+WINNT, type:
+ targetsync.exe -target AD -target WINNT
+2.To synchronize the state of all manual targets, process 2 targets in parallel and wait for discovery to2.
+complete, type:
+ targetsync.exe -targetmanual -j 2 -wait
+testlist
+Use the testlist  program to perform a test of the user list oper ation  for a specified  target system.
+This program generates a SQLite-based user list file, <target ID>.test.db, in the \<ins t ance>\p sc on fig\
+directory.Usage
+ testlist  -targetid <target ID> -timeout <seconds>
+Argument Description
+-h, --help Print out help/usage message and exit
+-v, --version Print out version and exit
+-quiet Only output result of oper ation
+-t ar g etid  <target ID> The ID of the target system for which to perform the user
+list oper ation
+-testconnect Execute serverinfo oper ation  to test target c onnection
+-timeout  <seconds> The timeout,  in seconds, for the list oper ation
+Examples
+To test the list oper ation  for your WINDOM1 target system, run:
+testlist.exe -targetid WINDOM1
+To execute serverinfo during the list oper ation  where list oper ation  will timeout  after  specified  seconds,
+run:
+testlist.exe -targetid WINDOM1 -testconnect -timeout 60
+See also
+This program is run by the Manage the system  (PSA) module when you click Test list  on a target’s Test
+c onnection  page  (on page 519).

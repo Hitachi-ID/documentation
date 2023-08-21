@@ -1,0 +1,341 @@
+Criteria Description
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Use within the next N days: In f ormation  is only included
+in the report output if the start date falls within the
+specified  next number of days. This is only available when
+Search time  by is set to Expir ation  time .
+Time range Specify a date range:
+Time range not required : This is the default setting.
+In f ormation  is listed regardless of start time.
+Use time  range : In f ormation  is only included in the
+report output if the start time  falls within the start time
+range. Use the:
+▪Start time  field  to select the earliest time  to include. ▪
+▪End time  field  to select the latest time  to include. ▪
+Check-out status Select the check-out status to include in the report. By
+default, all are included.
+▪Checking out▪
+▪Checked out▪
+▪Checking in▪
+▪Checked in▪
+▪Pending▪
+▪Closed▪
+▪Being expired▪
+▪Expired▪
+▪Being checked in▪
+▪Checked in by another user▪
+▪Check-out failed and was rolled back▪
+▪Check-out failed and rollback failed▪
+▪Check-in failed and was rolled back▪
+▪Check-in failed and rollback failed▪
+This option  is only available if Report type = Detailed .
+Request attribut e  to search The request attribut e  to search by. You can de fine  up to 2
+attribut es.  Choose one of the following options  to de fine
+an attribut e:
+Attribut e  not required : This is the default setting.
+Reports results regardless of their attribut e  value.
+<attribut e> : Search for check-out/check-in with an
+attribut e  value that matches Attribut e  value to search .Criteria Description
+Request attribut e  to display Choose from the list of request attribut es  to be displayed
+in the report.
+Oper ation  to perform for check-out and check-in Select one or more oper ations:
+▪Password▪
+▪SSH key▪
+Group sets check-outs / check-ins
+Purpose : List group sets check-out / check-in status.
+Executable : managedgroupsetcico
+Search Criteria :
+Criteria Description
+Group set ID Type the ID of a group set ID to include in the report.
+Alt ernativ ely ,  search for one or more group sets.
+Managed system policy ID Type a comma-and-space-delimited list of managed
+system policy IDs to include in the report. Alt ernativ ely ,
+search for one or more managed system policies.
+Target system with group Type a comma-and-space-delimited list of managed
+systems with groups managed and checked out to
+include in the report. Alt ernativ ely ,  search for one or
+more managed systems.
+Group ID Type the ID of a group you want to include in the report.
+Alt ernativ ely ,  search for one or more groups.
+Requester ID Type a comma-and-space-delimited list of Pr ofile  IDs of
+requesters to include in the report. Alt ernativ ely ,  search
+for one or more requesters.
+Recipient ID Type a comma-and-space-delimited list of recipient IDs to
+include in the report. Alt ernativ ely ,  search for one or
+more recipients.
+Target system with account Type a comma-and-space-delimited list of target systems
+with accounts that have been granted temporary group
+membership to include in the report. Alt ernativ ely ,
+search for one or more target systems.
+Account Type an account in the field  that has been temporarily
+added to the group set.
+Search time  by Select whether to run the report based on the following:
+▪Do not search by time ▪
+▪Check-out time ▪
+▪Check-in time ▪
+▪ Expir ation  time ▪Criteria Description
+Time range Specify a date range:
+Time range not required : This is the default setting.
+In f ormation  is listed regardless of start time.
+Use time  range : In f ormation  is only included in the
+report output if the start time  falls within the start time
+range. Use the:
+▪Start time  field  to select the earliest time  to include. ▪
+▪End time  field  to select the latest time  to include. ▪
+Check-out status Select the check-out status to include in the report. By
+default, all are included.
+▪Checking out▪
+▪Checked out▪
+▪Checking in▪
+▪Checked in▪
+▪Pending▪
+▪Closed▪
+▪Being expired▪
+▪Expired▪
+▪Being checked in▪
+▪Checked in by another user▪
+Show only temporary group membership failures Enable this option  to list failures in accessing group sets.
+Request attribut e  to search The request attribut e  to search by. You can de fine  up to 2
+attribut es.  Choose one of the following options  to de fine
+an attribut e:
+Attribut e  not required : This is the default setting.
+Reports results regardless of their attribut e  value.
+<attribut e> : Search for check-out/check-in with an
+attribut e  value that matches Attribut e  value to search.
+Request attribut e  to display Choose from the list of request attribut es  to be displayed
+in the report.
+Privileged password e xpir ation
+Purpose : Reports Managed accounts whose passwords are due to be changed.
+Executable : expiredpassword
+Search Criteria :
+Criteria Description
+Managed system policy ID Type a comma-and-space-delimited list of managed
+system policy IDs to include in the report. Alt ernativ ely ,
+search for one or more policies.Criteria Description
+Managed system ID Type a comma-and-space-delimited list of IDs for
+managed systems you want to include in the report.
+Alt ernativ ely ,  search for one or more managed systems.
+Managed system description Type the description  of a managed system to include in
+the report.
+Managed account Search for one or more managed accounts you want to
+report on. Alt ernativ ely ,  you can type a managed account
+ID or a pattern  of managed account IDs using wildcard
+characters, ’*’ r epr esenting  any string of characters
+and ’?’ r epr esenting  any single character.
+Expired password time Choose one of the following options  to de fine  the expired
+password time:
+Date not required : This is the default setting.  In f ormation
+is listed regardless of start date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.Criteria Description
+Option Description
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: In f ormation  is only included in the report output if the
+start date falls within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: In f ormation  is only included in the report output if the
+start date and time  falls within the Start date range . Use
+the fir s t set of date / time  controls to select the earliest
+time  to include, and the second set of date / time
+controls to select the latest time  to include.Criteria Description
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Use within the next N days : Results are only included in
+the report output if their expiry falls within the specified
+next number of days.
+Users with many managed account check-outs
+Purpose : Users who checked out access to more than a threshold number of accounts in the indicated
+time  interval.
+Executable : pwdcothreshold
+Search Criteria :
+Criteria Description
+Managed system ID Type a comma-and-space-delimited list of IDs for
+managed systems you want to include in the report.
+Alt ernativ ely ,  you can search for one or more managed
+systems.
+Managed account Search for one or more managed accounts you want to
+report on. Alt ernativ ely ,  you can type a managed account
+ID or a pattern  of managed account IDs using wildcard
+characters, ’*’ r epr esenting  any string of characters
+and ’?’ r epr esenting  any single character.
+Requester ID Type the pr ofile  ID of the requester for whom you want
+to run the report. Alt ernativ ely ,  you can search for one or
+more pr ofile  IDs.
+Recipient ID Type the pr ofile  ID of the recipient for whom you want to
+run the report. Alt ernativ ely ,  you can search for one or
+more pr ofile  IDs.
+Check-out time Specify a date range for user check-outs.
+Time range Specify a start time  and an end time  to check each day.
+User check-outs made outside of this time  range will not
+be returned in the results, even if they fall in the
+specified  check-out time.
+Check-out status Select the check-out status to include in the report. By
+default, all are included.
+▪Checking out▪
+▪Checked out▪Criteria Description
+▪Checking in▪
+▪Checked in▪
+▪Pending▪
+▪Closed▪
+▪Being expired▪
+▪Expired▪
+▪Being checked in▪
+▪Checked in by another user▪
+Number of check-out threshold per user Type the minimum amount of check-outs each user must
+have in the report. This number must be a positiv e
+integer.
+Checkouts of unique managed accounts Select this checkbox to report users that have a number
+of check-outs of unique accounts greater than or equal to
+the threshold.
+Oper ation  to perform for check-out and check-in Select one or more oper ations:
+▪Password▪
+▪SSH key▪
+Summarize report Select this checkbox to display a summarized report.
+Graph type Select a type of graph to generate for the report. This
+option  is only available if Summarize report  is selected.
+None : no graph will be generated.
+V ertic al  bar chart : a v ertic al  bar chart will be generated
+for the report.
+Users with many group set check-outs
+Purpose : Users who checked out access to more than a threshold number of group sets in the indicated
+time  interval
+Executable : gsetcothreshold
+Search Criteria :
+Criteria Description
+Group set ID Type the ID of a group set ID to include in the report.
+Alt ernativ ely ,  search for one or more group sets.
+Requester ID Type a comma-and-space-delimited list of Pr ofile  IDs of
+requesters to include in the report. Alt ernativ ely ,  search
+for one or more requesters.
+Recipient ID Type a comma-and-space-delimited list of Pr ofile  IDs of
+recipients to include in the report. Alt ernativ ely ,  search
+for one or more recipients.Criteria Description
+Check-out time Choose one of the following options  to de fine  the expired
+password time:
+Date not required : This is the default setting.  In f ormation
+is listed regardless of start date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. ForCriteria Description
+Option Description
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: In f ormation  is only included in the report output if the
+start date falls within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.

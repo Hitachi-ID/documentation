@@ -1,0 +1,191 @@
+Bravura Security Fabric  aut omatic ally  c on figur es  the appropriate interface program ( pxrem ) and lists
+it in the Run programs  section.5.If required, set up email to be sent when the tick e t  update succeeds or fails. 5.
+a.In the Send email table at the bottom  of the page, click Add in the appropriate row. a.
+b.Type text into each field,  using the strings described in Table Event action  variable strings  (on page b.
+1563) as placeholders for variable text.
+6.Click Update . 6.
+Adding email support
+Bravura Security Fabric uses the pxnull interface program to send email when events are c onfigured  using
+the Configure  event  (ITSM) module. You must install this program with the Connector Pack.
+To set up email event actions  and compose message content, using the Con figur e  event  (ITSM) module:
+1.Using the Con figur e  event (ITSM) module  (on page 1556), select 
+  to Send email each time  this 1.
+event occurs.
+2.Type text into each field.  You can include variable strings as placeholders for variable text, and M4 2.
+macros as well. These can be included in the Subject and Message body .
+For example, for the DB_REPLICATION_CONN_FAILURE event, you could enter values as follows:
+3.Click Update . 3.After  you click Update , any M4 macros that you’ve included are expanded to show their Displayed
+value. Repeat step 1 to see the Displayed value. Variable strings are not expanded, because their
+values vary depending on when the event occurs.
+4.Click Back to add more event actions. 4.
+Adding event action  variable strings in email messages
+When you compose message content using the Con figur e  event  (ITSM) module, you can include variables
+in the Subject  and Message body that expand to e v en t -specific  in f ormation.  The following variables are
+available:
+Event action  variable strings
+String Value Example
+%CTIME% The current time Tue Jun 29 07:16:12 2004
+%LTIME% The current local time 6/29/2004 3:18 PM 2004
+%OPERATION% The event name SELF_RESET_SUCCESS
+%REMOTE_ADDR% The IP address of the user that initia t ed  the
+event169.6.33.197
+%SESSID% The ID of the current session S20040629-1925
+%RECIPIENT_ID% The ID of the user a ff ect ed  by the event JSMITH
+%RECIPIENT_NAME% The full name of the user a ff ect ed  by the
+eventJohn Smith
+%RECIPIENT_EMAIL% The email address of the user a ff ect ed  by
+the eventJSmith@example.com
+%REQUESTER_ID% The ID of the requester a ff ect ed  by the
+eventazhu
+%REQUESTER_NAME% The full name of the requester a ff ect ed  by
+the eventAndy Zhu
+%REQUESTER_EMAIL% The email address of the requester a ff ect ed
+by the eventAZhu@example.com
+%EXECUTION_DATE% The date and time  that c on flicting
+passwords are discovered and updated.
+Only used by the PAM CONFLICTED
+PASSWORDS UPDATED event.6/29/2004 3:18 PM
+%CONFLICTED_PASSWORDS_LINK
+%The URL link to the Con flicting  passwords
+page. Only used by the PAM CONFLICTED
+PASSWORD SUPDATED event.http://idm-ser v er/de f ault/manag e-the-
+s y s t em/privileg ed-access/ c on flicting-
+pass w or ds
+The strings are c ase-sensitive .Con figuring  of %LTIME% event action  variable.
+Use the %LTIME% variable to display the local time  zone within email messages triggered by event
+actions.  This variable requires the cr eation  of a new pr ofile  attribut e  named PREFERRED_TIMEZONE . The
+attribut e  PREFERRED_TIMEZONE must be set to a supported time  zone in the same format specified  by
+those in the following registry key:
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion
+\Time Zones 
+For example if UTC-0700 was the time  zone of the user, the following would be a valid value:
+Mountain Standard Time  
+The email action  c on figur ation  file
+When you c on figur e  an email action  for an event using the Con figur e  event  (ITSM) module, Bravura
+Security Fabric  aut omatic ally  creates a pxnull-itsm.cfg file in the script directory. This file contains
+the mail server settings  you set in Manage the system > W orkflow  > Email c on figur ation .
+If you change the mail server settings,  you must update the pxnull-itsm.cfg  file by:
+▪Manually editing  the file ▪
+▪Adding or updating  any event c on figur ation  that includes an email action,  to allow Bravura Security ▪
+Fabric  to regenerate the file
+Adding macros to email messages
+When you compose message content using the Con figur e  event  (ITSM) module, you can use M4 macros
+that expand to text strings, in the language of the user. These macros can be used in the Subject and
+Message body of message content. The macros can include HTML code to enhance the display of
+message content.
+The M4 system and requirements are detailed in the CUSTOMIZATION  (on page 3471).
+To use M4 macros, type the corresponding tag, beginning with !!! , in the relevant fields  on the Edit
+email page; for example:
+!!!ADMIN_GROUP_TITLE
+To learn how to:
+▪Add HTML code to enhance the display of the message content, see CUSTOMIZATION  (on page 3471). ▪
+▪Modify the text de fined  by the M4 macros, see CUSTOMIZATION  (on page 3471). ▪
+The message subject line can contain macros that expand to text, but you cannot include HTML code
+in the subject.
+Adding custom tags
+To add customized messages to Con figur e  event  (ITSM) module message fields:1.Create itsm.m4 in <instance>\design\custom \, if it does not already exist. 1.
+2.Add lines to the custom file in the following format: 2.
+!!!<MESSAGE_TAG>
+<text>
+where <text>  can include HTML code and M4 macros.
+For example:
+!!!SIMPLE_MESSAGE_TAG
+Have a <strong>good</strong> day.
+!!!TRANSLATABLE_MESSAGE
+CUSTOM_MACRO_1
+CUSTOM_MACRO_2
+CUSTOM_MACRO_ 3
+3.To de fine  text in multiple  languages, create the <lang >-<locale >-language.kvg file for each 3.
+supported language in <instance>\design\custom \if it does not already exist.
+If you want the email to be translated, the To: field  must be a single person, either the recipient
+(%RECIPIENT_EMAIL%) or the requester (%REQUESTER_EMAIL%) of the operation  or event being
+trapped. The user’s last used language in the Bravura Security Fabric web interface will be the
+language the email will be translated in (as determined by the userid’s LASTLANG tag value in the
+USERSTAT table).
+Edit the macro de finitions  as required, in the format:  
+    "CUSTOM_MACRO_1" "" = { 
+       "text" = "This is the first line of the message" 
+     } 
+     "CUSTOM_MACRO_2" "" = { 
+       "text" = "... the second" 
+     } 
+     "CUSTOM_MACRO_3" "" = { 
+       "text" = "...and the third.<br>Signed, your company" 
+     } 
+4.In the relevant field  in the Manage the system  (PSA) module Edit email  page, type the corresponding tag 4.
+beginning with !!! from itsm.m4 .
+5.Recompile and install your skin (*.z) files by running make.bat in the design directory. 5.
+See CUSTOMIZATION  (on page 3471) for more in f ormation.
+Deleting  email event actions
+To delete the email action  for a c on figur ed  event, click 
+  in the Send email  row in the Con figur e  event
+(ITSM) module.Adding programs to run
+Bravura Security Fabric aut omatic ally  c on figur es  certain programs to run when you set up actions  as
+described in Adding email support  (on page 1562) and Con figuring  tick e t  updates  (on page 1558). For
+other interface programs, you must write a c on figur ation  script for the program. You can c on figur e
+multiple  programs for the same event.
+To set up scripted programs to run when certain events occur on the Bravura Security Fabric server:
+1.Type the name of the programs, or tick e t  system target IDs, to be invoked when the event occurs. 1.
+You can do this in the appropriate c on figur ation  page, or Using the Con figur e  event (ITSM) module  (on
+page 1556).
+When adding program names, you must include the full name; for example pxrem.exe. Do not include
+path inf ormation.
+You can specify a c onfiguration  file with the -cfg parameter, described on the current page.
+2.Click Update . 2.
+3.Write a script file that de fines  the in t er action  between Bravura Security Fabric and the interface 3.
+program. You can de fine  a diff er en t  sequence of actions  for every type of event. Default script file
+names correspond to the interface program name.
+Using target ID's
+When using tick e t  system target IDs, you can specify alternate c on figur ation  files.  For example, assuming
+you have a Remedy Action  Request System 9.0+ (Ticket) target with an ID of ARS7, you can add:
+▪pxrem9.exe▪
+or
+▪ARS9▪
+In both cases, the pxrem9 program will use the default script pxrem9.cfg in the script directory.
+You can specify an alt ernativ e  c on figur ation  file using the -cfg parameter; for example:
+▪pxrem9.exe -cfg myfile.cfg▪
+or
+▪ARS9 -cfg myfile.cfg▪
+In both cases, the pxrem9 program will use the script myfile.cfg in the script directory.
+It is recommended that you use a target system ID in this field.  The bene fit  is that all sensitiv e
+in f ormation  (server address, admin cr edentials)  is aut omatic ally  passed to the program, rather than
+stored in the .cfg file in plain text. This enhances security.
+You must specify an alt ernativ e  .cfg file when when you have multiple  tick e t  targets of the same type; for
+example, ARS1 and ARS2. If you wanted to c on figur e  event actions  only for the ARS1 target, then the
+program to run would be: ARS1-cfg ARS1_file.cfg .The cfg file name must not contain the string -itsm ; for example, myfile.cfg is allowed, but my-
+itsm.cfg is not.Part VI PASSPart I Self-Service Password ResetImplementing  self-service password reset
+Bravura Pass  is an integrated solution  for managing cr edentials  across systems and applic ations.  It
+simplifies  the management of passwords, tokens, smart cards, security questions  and biometrics.
+Bravura Pass  lowers IT support cost and improves the security of login processes.
+Bravura Pass  includes password s ynchr oniz ation,  self-service password and PIN reset, strong
+authentic ation,  federated access, enrollment of security questions  and biometrics and self-service unlock
+of encrypted drives.
+You can c on figur e  Bravura Pass  to allow users to change f or g otten  passwords, synchronize some or all of
+their passwords, or unlock accounts.
+Answer the following questions  to determine the best solution  for self -service password reset:
+▪Will users be r esetting  their password only from a locally connected network? ▪
+▪Will users need to reset their password from remote loc ations  such as a WiFi hotspot? ▪
+▪Will the Cr edential  Provider be installed on a user’s w ork s t ation  to provide a tile users can click to ▪
+reset their password?
+▪Do users rely on cached passwords when not connected directly to the domain?▪
+Self-service password reset provides the following solutions:
+1.Web-based password management  (on page 1573) - includes self-service if the user can access 1.
+Bravura Pass and assisted password changes.
+2.Local Reset Extension  (on page 1578) - updates cached network cr edentials  on a user’s Windows 2.
+client w ork s t ation  after  a successful web-based password reset. This addresses the issue of intruder
+lock-outs caused by w ork s t ations  c ontinuing  to log into network resources using cached, no-longer-
+valid passwords.
+3.Login Assistant - uses a secure kiosk account (SKA); to provide users with secure access to the Bravura3.
+Pass password change interface. Login Assistant also includes an optional  Cr edential  Provider
+extension to provide a Change my password  tile on the Windows login screen.
+▪Local Secure Kiosk Account and Cr edential  Provider  (on page 1593) ▪
+▪Domain-level Secure Kiosk Account  (on page 1611) - no w ork s t ation  softw ar e ▪
+▪Domain-level secure kiosk account  (on page 1593) -includes the option  to Install Login Assistant ▪
+softw ar e  on users’ w ork s t ations  to allow them to access the domain help account.
+▪Self Service Anywhere set up Login Assistant for remote users  (on page 1628) ▪
+The following sections  describe the core features:
+Self-service password changes
+Users who have f or g otten  a password or triggered an intruder lockout can sign into Bravura Pass  using
+other types of cr edentials  to reset their password or clear the lockout. Non-password authentic ation
+options  include security questions,  voice biometrics, smart cards, hardware tokens and random PINs sent
+to a user’s mobile phone using SMS.

@@ -1,0 +1,221 @@
+▪The participan ts  can match Any of the user classes listed ▪
+▪The participan ts  must match All of the user classes listed ▪
+.
+Following is an example of how an esc alation  might proceed using the escorgchart.pss  plugin,
+based on the figur e  below:
+1.Marc LeBlanc submits a request that requires authoriz ation  from Kathy Richardson. 1.
+2.Kathy is notified  that she needs to review the request. 2.
+3.Kathy does not act within the set 3-day time  period. 3.
+4.The esc alation  plugin escalates the request to Susanne Kober. 4.
+5.Susanne is notified  that a request has been escalated to her. 5.
+6.Susanne does not act within the set 3-day time  period. 6.
+7.The esc alation  plugin escalates the request to Doug Brost. 7.
+8.Doug is notified  that a request has been escalated to him. 8.
+9.Doug logs into Bravura Security Fabric , and chooses to review the request originally assigned to Kathy. 9.
+OrgChart esc alation
+Doug Brost, the delegate , is granted the same access rights as Kathy Richardson for the relevant request .
+For example, if Kathy is normally the authorizer for new account requests, the Authorize requests option
+appears on Doug’s self-service menu until  he has acted on the escalated request. In other words Dougreviews the request as if he is Kathy. When a delegate authorizer views a list of pending requests, a drop-
+down list appears at the top of the page so that they can choose who they want to act as.
+If a delegate authorizer was already assigned to a delegated request, they must act on their own behalf
+as well as for a primary authorizer (the authorizer who initially  did not act on time).  For example, based
+on the figur e  above:
+1.Marc LeBlanc submits a request that requires authoriz ation  from Kathy Richardson and Susanne 1.
+Kober.
+2.Kathy and Susanne are notified  that they need to review the request. 2.
+3.Susanne logs into Bravura Security Fabric  and approves the request. 3.
+4.Kathy does not act within the set 3-day time  period. 4.
+5.The esc alation  plugin escalates the request to Susanne. 5.
+6.Susanne is notified  that a request has been escalated to her. 6.
+7.Susanne logs into Bravura Security Fabric , and chooses to review the request originally assigned to 7.
+Kathy.
+Susanne can modify, or even deny the request (for a business reason for example) on Kathy’s behalf,
+even though Susanne has already approved the request on her own behalf.
+If a primary requests a delegation,  and the pot ential  delegate does not respond in time,  the delegation
+request is escalated to the primary’s superior. In e ff ect  the primary’s manager becomes the delegate.
+When a deleg ation  is in place, and a delegate authorizer does not respond to a request on time,  the
+w orkflo w  request is escalated to both the primary’s manager and the delegate’s manager.  
+Esc alating  requests immediately when authorizers are assigned
+You can use a firs t chance esc alation  plugin to determine whether a request should be escalated at the
+time  an authorizer is fir s t assigned to a request. If, for example, the authorizer is away, Bravura Security
+Fabric  can then run the esc alation  plugin to determine to whom the request should be escalated. The
+most common way of determining that an authorizer is away is to check the out -of -office  status of the
+mail account of the authorizer.
+Bravura Security Fabric  can also utiliz e  user classes with this plugin point, so that if an authorizer is
+included in a de fined  user class, the request is aut omatic ally  escalated.
+The executable plugin-fce-exchange is a shipped fir s t chance esc alation  plugin.
+See more in f ormation  on how to write custom fir s t chance esc alation  plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The esc alation  plugin is run by the W orkflo w  Manager Service service when authorizers are assigned to a
+request.Input
+The plugin receives standard input for Request data  (on page 1506) and User data  (on page 1514).
+Output
+If the output includes:
+ "" "" = { 
+   "errmsg" = "" 
+   "retval" = "0" 
+   "authorizer" = "<authorizerID>" = { 
+      "doFirstChanceEscalation" = "true" 
+     } # for each authorizer 
+}  
+then esc alation  occurs immediately. If doFir s tChanceEsc alation  is empty or set to false, esc alation  occurs
+after  the esc alation  timeout  expires.
+.
+Con figuring  esc alation  options
+To c on figur e  Bravura Security Fabric  to use esc alation:
+1.If you are using a custom plugin instead of escorgchart.pss , ensure that your plugin program or 1.
+script is located in the plugin directory.
+2.Click W orkflo w  > Options  > Esc alation . 2.
+3. De fine  one or both methods for selecting  delegates: 3.
+▪Click Use user classes and follow the procedure outlined in Using user classes with plugin points ▪
+User class de finitions  can be added to the following plugin points:
+▪Manage the system > W orkflo w  > Options  > Esc alation  > ESCALATION PLUGIN ▪
+▪Manage the system > W orkflo w  > Options  > Esc alation  > FIRST CHANCE ESCALATION PLUGIN ▪
+▪Manage the system > W orkflo w  > Options  > Plugins >  AUTHORIZATION DETAIL MASK PLUGIN ▪
+▪Manage the system  > Modules  > Options  > FILTER USER PLUGIN ▪
+▪Manage the system  > Modules  > Options  > KEEP USER PLUGIN ▪
+▪Manage the system  > Modules  > Options  > GENERATE USER PLUGIN ▪
+These plugin points include the Use user classes option,  which allows you to filt er  or generate lists
+of users based on user user classes.
+If you choose to use user classes, then you do not need to write a plugin. However, user classes can
+also be used in c onjunction  with a plugin.
+For example, if you:
+Use user classes then the specified  user classes are used to filt er  or generate lists of users.Use user classes and write a plugin then the specified  user classes and plugin script are both used to filt er  or
+generate lists of users, with the plugin taking its input from results
+provided by the user class.
+Write a plugin then the plugin is used to filt er  or generate lists of users.
+For details, see:
+▪Filter users  (on page 1049) to learn how to write a user filt er  or user ▪
+g ener ation  plugin
+▪About esc alation  (on page 1386) to learn how to write an esc alation ▪
+plugin
+▪Hiding authoriz ation  details  (on page 1428) to learn how to write an ▪
+authoriz ation  mask plugin.
+To c on figur e  the Use user classes option:
+1.Click Use user classes under the field  for the plugin point you want to modify. 1.
+A page loads related to the option  you are modifying. For example, if you are modifying FILTER
+USER PLUGIN, then the Filter Criteria filt er_user_plugin  page loads. If user class de finitions
+already exist for this option,  they are listed.
+2. De fine  your user classes. You can choose e xisting  user classes, create new user classes, or both: 2.
+▪To select from e xisting  user classes: ▪
+i.Click Select... . i.
+ii.Enable the checkboxes next to the user classes you want to select, then click Select . ii.
+The list of user class members is displayed.
+iii.Complete the participan t  de finitions  for the newly added user classes by selecting  from iii.
+the drop-down menu.
+iv.Click Update . iv.
+▪To create a new user class:▪
+i.See Adding user classes  (on page 738) for details on how to create a user class. i.
+ii.Once created, complete the participan t  de finition  for your new user class by selecting ii.
+from the drop-down menus.
+Once you’ve added at least one user class to the list of user class members, you can also:
+▪Delete user classes from the list.▪
+▪Update the participan t  de finitions  for the user classes in the list. ▪
+If you have multiple  user classes in the list of user class members, then The participan ts  have
+to match which of the user classes option  is displayed.
+This can be set so that:
+▪The participan ts  can match Any of the user classes listed ▪
+▪The participan ts  must match All of the user classes listed ▪
+▪Type the name of the esc alation  plugin program, built-in plugin, or script in the ESCALATION ▪
+PLUGIN field.4.Type values in the following fields  to control how requests can be escalated: 4.
+ESCALATION IS DELEGABLE allows subsidiary authorizers to delegate an escalated
+request to another user.
+ESCALATION TIMEOUT is the time  in seconds that an authorizer has to act
+before a request is escalated.
+EARLY ESCALATE TIME determines how soon requesters and recipients can
+choose to escalate the request early, by clicking an
+Escalate now button  in the Requests app, before the
+ESCALATION TIMEOUT ends.
+5.If required, de fine  whether requests should be escalated as soon as certain authorizers are assigned, 5.
+using one or both of the following methods:
+▪Click Use user classes and follow the procedure outlined in Using user classes with plugin points ▪
+User class de finitions  can be added to the following plugin points:
+▪Manage the system > W orkflow  > Options  > Esc alation  > ESCALATION PLUGIN ▪
+▪Manage the system > W orkflow  > Options  > Esc alation  > FIRST CHANCE ESCALATION PLUGIN ▪
+▪Manage the system > W orkflow  > Options  > Plugins >  AUTHORIZATION DETAIL MASK PLUGIN ▪
+▪Manage the system  > Modules  > Options  > FILTER USER PLUGIN ▪
+▪Manage the system  > Modules  > Options  > KEEP USER PLUGIN ▪
+▪Manage the system  > Modules  > Options  > GENERATE USER PLUGIN ▪
+These plugin points include the Use user classes option,  which allows you to filt er  or generate lists
+of users based on user user classes.
+If you choose to use user classes, then you do not need to write a plugin. However, user classes can
+also be used in c onjunction  with a plugin.
+For example, if you:
+Use user classes then the specified  user classes are used to filt er  or generate lists of users.
+Use user classes and write a plugin then the specified  user classes and plugin script are both used to filt er  or
+generate lists of users, with the plugin taking its input from results
+provided by the user class.
+Write a plugin then the plugin is used to filt er  or generate lists of users.
+For details, see:
+▪Filter users  (on page 1049) to learn how to write a user filt er  or user ▪
+g ener ation  plugin
+▪About esc alation  (on page 1386) to learn how to write an esc alation ▪
+plugin
+▪Hiding authoriz ation  details  (on page 1428) to learn how to write an ▪
+authoriz ation  mask plugin.
+To c on figur e  the Use user classes option:
+1.Click Use user classes under the field  for the plugin point you want to modify. 1.A page loads related to the option  you are modifying. For example, if you are modifying FILTER
+USER PLUGIN, then the Filter Criteria filt er_user_plugin  page loads. If user class de finitions
+already exist for this option,  they are listed.
+2. De fine  your user classes. You can choose e xisting  user classes, create new user classes, or both: 2.
+▪To select from e xisting  user classes: ▪
+i.Click Select... . i.
+ii.Enable the checkboxes next to the user classes you want to select, then click Select . ii.
+The list of user class members is displayed.
+iii.Complete the participan t  de finitions  for the newly added user classes by selecting  from iii.
+the drop-down menu.
+iv.Click Update . iv.
+▪To create a new user class:▪
+i.See Adding user classes  (on page 738) for details on how to create a user class. i.
+ii.Once created, complete the participan t  de finition  for your new user class by selecting ii.
+from the drop-down menus.
+Once you’ve added at least one user class to the list of user class members, you can also:
+▪Delete user classes from the list.▪
+▪Update the participan t  de finitions  for the user classes in the list. ▪
+If you have multiple  user classes in the list of user class members, then The participan ts  have
+to match which of the user classes option  is displayed.
+This can be set so that:
+▪The participan ts  can match Any of the user classes listed ▪
+▪The participan ts  must match All of the user classes listed ▪
+.
+▪Type the name of the esc alation  plugin program, built-in plugin, or script in the FIRST CHANCE ▪
+ESCALATION PLUGIN field.
+For the FIRST CHANCE ESCALATION PLUGIN, the plugin takes precedence over user classes if both
+are defined.
+6.Click Update . 6.
+Any action  assigned to a disabled user profile  in W orkflo w  Manager Service would be aut omatic ally
+escalated at assignment time
+Example: Con figur e  esc alation
+This example shows you how to c on figur e  esc alation  to occur 10 seconds after  a request is issued if the
+original authorizer has not responded. The escorgchart.pss  plug-in will use the OrgChart to escalate to
+the original authorizer’s direct manager. It then shows the e ff ect  of the c on figur ation  when submitting  a
+request. Note that this is not a r ealistic  time  period; it is for demons tr ation  only.Requirements
+This use case assumes:
+▪Bravura Workforce P attern  is installed. ▪
+▪There is an Activ e  Directory target system set up as a source of pr ofiles. ▪
+▪The Activ e  Directory target system is c on figur ed  to create the OrgChart based on the manager ▪
+attribut e.
+▪User CELESH is the manager of the IT-DB-READWRITE group.▪
+▪The OrgChart looks something like this illus tr ation ▪
+Orgchart example, where user CELESH reports to LESLIP , who reports to CORDEH, who reports to HANKB, who reports
+to BRYANW.
+Configur e  esc alation
+To c on figur e  Bravura Security Fabric  to use esc alation:
+1.Log in to the Front-end (PSF) as superuser . 1.
+2.Click Manage the system > W orkflo w  > Options  > Esc alation . 2.
+3.Enter the following values:3.
+ESCALATION PLUGIN  escorgchart.pss
+ESCALATION TIMEOUT  10
+4.Click Update . 4.
+You have now c on figur ed  esc alation.
+Issue a request
+As an end user, issue a request to join the IT-DB-READWRITE group, which must be approved by the
+group’s manager:
+1.Log in to the Front-end (PSF) as BILLIG . 1.
+2.Click View and update pr ofile  in the MY PROFILE section. 2.
+3.Click Change group membership  near the bottom  of the page. 3.
+4.Search for and select the IT-DB-READWRITE  group. 4.
+5.Click Submit . 5.6.View the request.6.
+The Requests  app opens.

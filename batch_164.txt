@@ -1,0 +1,288 @@
+For added security, follow these best pr actices  when choosing to create a special VPN account with a
+s t atic  password that Login Assistant will use to connect to the network and update locally-cached
+passwords when users are off -sit e.
+Presuming that the VPN service you use is capable of this, apply the following limits to this account on
+the VPN server side:
+1.Create a new, dedicated read-only AD domain controller (DC), which will be used by Local Reset1.
+Extension.
+2. Con figur e  Bravura Pass to always push new AD password resets to the read/write DC along with any 2.
+others.
+3. Con figur e  the VPN user to only be able to access: 3.
+a.The IP of this DC (all TCP ports).a.
+b.The HTTPS URL of Bravura Pass – typically via a load balancer.b.
+4.Set a c onnection  timeout  on the VPN user to 10 minutes. 4.
+5.Disable intruder lockouts on the VPN user, to minimize the pot ential  for a denial-of-service attack  on 5.
+user access to self-service.
+Activ e  Directory requirements
+Some Activ e  Directory c on figur ation  is required for SSA to function  properly. As a result, it is necessary to
+take steps to ensure that c onnecting  SSA clients will use one of the specially -c on figur ed  DCs for their
+login server.
+▪A dedicated AD "site" must be provisioned.▪
+▪One or more read-only domain controllers (RODCs) should be assigned to the AD site mentioned ▪
+above.
+▪These RODCs will also be deployed in the perimeter network(s) of the VPN endpoint(s).▪
+▪This site will need to include an IP subnet to be de fined  below. ▪
+▪Ensure timely  delivery of the new password to the RODC. (See Password pr opag ation  delays ▪
+between DCs  (on page 1636).)
+▪The IP subnets from which the VPN clients will be assigned addresses must also be assigned to this▪
+site within AD.
+▪One or more domain controllers must be provisioned, and assigned to the dedicated site.▪
+▪All DCs in the dedicated site must be c on figur ed  to use a fix ed  TCP port for NTDS and NetLogon RPC ▪
+tr a ffic.
+▪The DCs must be deployed into the same network into which VPN clients connect, including if that▪
+ends up being a perimeter network ("DMZ").
+For VPN c onnections  that use a status password it is recommended to use read-only domain
+controllers.
+Architectural c onsiderations  for deploying read-only domain controllers into a perimeter network is
+out of scope for this document. For inf ormation  on perimeter network AD deployments, see http://t echne t.microsoft.c om/ en-us/librar y/dd728034(v=ws.10 ).asp x .
+Microsoft  provides some documen t ation  for how to c onfigure  RPC dynamic port alloc ation  and RPC to
+use certain ports and how to help secure those ports by using IPsec
+Bravura Security does not believe port filt ering  is required between an RODC and its upstream,
+writable DC. Nonetheless organiz ations  may port filt er  such traffic  at their discretion  and responsibility
+if they wish to do so.
+Contact support@bravurasecurity.com  for a more detailed document with a detailed breakdown of
+implemen t ation  tasks.
+IP subnet requirements
+When deploying Login Assistant, provision an IP subnet which:
+▪Is used by the VPN endpoints as the IP address pool(s) off er ed  to c onnecting  VPN clients. ▪
+▪Can reach the RODCs mentioned  above over the network. ▪
+▪Is assigned within the AD to the AD site mentioned  above. ▪
+▪Can reach either the Bravura Pass  server or a suitably c on figur ed  reverse proxy by HTTPS. ▪
+The VPN endpoint, IP subnet and associated AD site should be provisioned within a perimeter network
+("DMZ").
+Con figur ation  and usage notes
+Timeout
+When the SKA is launched using the Change Password  button,  it aut omatic ally  closes after  two minutes if
+no activity  takes place on the web page, which is default Windows behavior. The page can also be
+c on figur ed  to close after  a pre-determined amount of time  regardless of activity  using the Timeout
+option.In  this case, the user is notified  30 seconds before the session is terminated.
+Once countdown hits 0 it will wait for 2 minutes before it closes aut omatic ally .  Clicking OK on the
+countdown prompt after  it reaches 0 closes the SKA page immediately. Clicking OK when the countdown
+is still running closes the Login Assistant page after  the remaining amount of time.
+Cr edential  provider and the help account
+The Cr edential  Provider add-on uses the help account to login and execute runurl to launch the SKA.
+When the Cr edential  Provider is installed, it is recommended that you c on figur e  the help account with a
+random password  and that you do not adv ertise  the help account to users. In this setup, the help account
+should only be used by the Cr edential  Provider add-on, and users should access Bravura Pass  through the
+Cr edential  Provider.Connections  over VPN
+When using a VPN to connect to the instance, runurl will search for one of three HTML tags used to
+uniquely identif y  the Bravura Pass  login page. The tags expected by runurl are:
+▪A hidden <input> element with name="TRANSACTION" and value="F_LOGIN".▪
+▪A hidden <input> element with name="TRANSACTION" and value="C_AUTHCHAIN_LOGIN".▪
+▪A comment containing a GUID that was created specific ally  for runurl.exe to match: ▪
+<!-- 81A84EBD-2CE5-4794-8341-E1828711FFBC -->
+If runurl cannot identif y  any of these values, it will default to attempting  a r ec onnection  through
+other means.
+When VPN c onnection  cr edentials  is changed, you can use skautil to update the encrypted VPN
+cr edential,  the help account, and their cached password values kept in registry. This utility  does not
+change the actual underlying password.
+See skautil usage in f ormation
+Use the skautil program to update cached registry values for VPN c onnection  cr edentials  or the
+Login Assistant (LSKA) ( help ) userID and/or password used in the secure kiosk account. The program
+does not change the underlying password; only the cached registry values.
+Usage
+skautil.exe -vpnuser <vpnuser> | -vpnpass <vpnpass> | -helpuser help
+desk user | -helppass <helppass>
+Argument Description
+-vpnuser <vpnuser> The new VPN user to write into the registry.
+-vpnpass <vpnpass> The new VPN user’s password to write into the registry.
+-helpuser help desk user The new help account to write into the registry.
+-helppass <helppass> The new help account’s password to write into the
+registry.
+.
+Logging SKA remote c onnection  failure
+When the SKA remote c onnection  fails, debugging in f ormation  is provided in the SKA progress window
+which displays on the right bottom  corner on the locked-down SKA page. By enabling a registry key called
+debugska , the debugging in f ormation  also can be captured in a log file which is generated by using
+logutil.exe . The following example demonstrates how to capture dubugging in f ormation:
+Ensure that you are comfortable and knowledgeable in the mechanics of the registry before you attemp t
+to change any c onfiguration  settings.  Contact support@bravurasecurity.com  if in doubt.
+1.On the w ork s t ation  where SKA is installed, create an entry in the Login Assistant registry key to enable 1.
+SKA debug:HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\Login
+Assistant\Login Assistant\debugska
+Entry name  debugska
+Value 1
+Data type  REG_DWORD
+2.Copy the logutil program from the \<ins t ance>\utils  folder on the instance server to a folder on 2.
+the w ork s t ation  where SKA is installed.
+3.Run a command like the following to launch logutil  to start logging: 3.
+logutil -level 5 -instance "Login Assistant" -logfile log.txt
+4.Lock the w ork s t ation  and then go to the user log on windows page. 4.
+5.Click on the Change my password  tile to launch SKA. 5.
+6.Click the details >>  button  displaying on the progress window to browse error messages provided 6.
+when remote c onnection  fails.
+7.Exit the SKA page.7.
+8.Log back to the w ork s t ation  as the user and stop logutil.exe . 8.
+9.Open the log file. 9.
+Debugging in f ormation  displayed in the progress window should be available in the log file as well.
+See logutil  usage
+Requirements
+You must run the logutil  command as an administrator with sufficien t  privileges.
+Usage
+logutil.e x e  [options]  -instance <instance> | -cleanup [-instance <instance> ]
+Argument Description
+-bufmax <count> Maximum number of buff er s.  The default value is the
+Windows Events MinimumBuff er s  + 20.
+-bufmin <count> Minimum number of buff er s.  The default value is the
+number of CPUs + 2.
+-bufsize <size> Size of the session buff er s  in multiples  of 4 kb. The
+default is 64 kb.
+-instance <instance> Instance to watch events for. For Bravura Privilege local
+service mode instances, the value is "Privileged Access
+Manager Client".
+-cleanup Terminate any logging sessions which are not connected
+to any activ e  client. If the instance name is specified,  only
+the logging session for this particular  instance is cleaned
+up.Argument Description
+-level <level> Debug level 1-5. Default is 5.
+-list List all enabled Event Tracing for Windows sessions.
+-logfile  <filename> File to write events to. You must specify an absolute path.
+-makekey Generate an instance name and its log GUID in the
+registry.
+Note:  This option  needs to be run once only.
+-maxdelay <maxdelay> The maximum seconds to allow the sorting  buff er  to keep
+items before flushing  out into the log file. The default
+value is 300.
+-maxsorted <count> The maximum number of events that can be sorted in
+memory. The default value is 100,000.
+-outdbg Write events with an output debug string.
+When logutil  runs, a new registry entry is created to record the session. The entry is stored under:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\LogSession
+The name of the entry is the instance name. When you press [enter]  to stop a session, the key will be
+gone with the session; however, if you kill the session by typing [Ctrl] +[C], the registry entry will remain.
+Use the -cleanup option  to remove remaining registry entries.
+Note that various tools also have hardcoded instance names:
+▪browser-extension-win: "Browser Extension" ▪
+▪ fir e f o x -br o w ser -e xt ension:  "Firefox Browser Extension" ▪
+▪hidshext: "Shell Extension" ▪
+▪hipamlws-win: "Hipamlws" ▪
+▪hippm-sm: "Session Monitor" ▪
+▪intcpt: "Password Filter" ▪
+▪ ntfclien t:  "Notific ation  Client" ▪
+▪ ppm-activ e-c on tr ols:  "PPM Client Activ eX  Controls" ▪
+▪pslocalr: "Local Reset Extension" ▪
+▪psns: "Notes Extension" ▪
+▪ sc ar d-activ e x -c on tr ols:  "SmartCard PIN Management Activ eX  Controls" ▪
+▪ska/runurl: " Login Assistant" ▪
+▪ pamutil : "pamutil" ▪
+Examples
+▪To start logging data for client softw ar e  with a debug level of 4, type: ▪
+logutil.e x e  -makekey -instance Bravura_client -level 4 -logfile  c:\idarchive.log ▪To start logging data on a local service mode managed system with a debug level of 4, to a log file ▪
+named local_service.log, type:
+logutil.e x e  -instance "hipamlws" -level 4 -logfile  local_service.log 
+▪To start logging data on pamutil and runwithpass with a debug level of 4, to a log file named ▪
+pamutil.log ,  type:
+logutil.e x e  -instance "pamutil"  -level 4 -logfile  pamutil.log  
+▪To start logging data on Activ eX  password disclosure plugins at level 4 to log file activ e x.log ,  type: ▪
+logutil.e x e  -instance "PPM Client Activ eX  Controls" -level 4 -logfile  activ e x.log  
+You must run logutil with the -makekey argument firs t for the instance "PPM Client ActiveX
+Controls".
+▪To start logging data for the default Login Manager instance with a debug level of 4, type:▪
+logutil.e x e  -instance "Login Manager" -level 4 -logfile  c:\logfile.log  
+in f ormation.
+Password pr opag ation  delays between DCs
+The Local Reset Extension updates locally cached passwords on the end-user’s PC by r e-authentic ating  to
+the domain using the new password. The Bravura Pass  server will typically reset the user’s password on
+one domain controller ("DC1"), while the user’s PC will attemp t  to authentic a t e  to another domain
+controller ("DC2"). This creates a risk that the new password has not yet propagated from DC1 to DC2, or
+to other "upstream" DCs such as the PDC Emulator , before the user’s PC attemp ts  r e-authentic ation.
+While Bravura Pass  always issues password resets to Activ e  Directory before attempting  the cache-
+refresh authentic ation,  it is still possible for network c ong estion  or other factors to result in the
+subsequent authentic ation  attemp t  failing.
+To mitig a t e  the risk of timing-induced  failures, Bravura Security recommends using Bravura Pass ’s sub-
+host plugin feature to dynamically control which domain controllers receive password resets. If this is not
+pr actic al,  other mitig ation  strategies may also be considered:
+1.Within Bravura Pass , explicitly target one of the DCs in the SSA site, or 1.
+2.Use Bravura Pass  to target the domain (rather than any particular  DC), but assign the Bravura Pass 2.
+server’s /32 subnet address to the SSA site, or to the best-connected Activ e  Directory site on the
+network.
+Disaster recovery
+Enterprises should consider whether remote, end-user password reset scenarios should be part of
+disaster recovery (DR) planning. If required for DR, then multiple  VPN end points should be used, in at
+least two diff er en t  regions or physical loc ations.  Furthermore, enterprise Activ e  Directory architects
+should be consulted on suitable Activ e  Directory site layout changes needed to leverage those end
+points.Self Service Anywhere: In t er activ e  Voice Response systems
+Bravura Pass  integrates with In t er activ e  Voice Response (IVR) systems to enable users to authentic a t e
+and perform self-service from a telephone.
+Bravura Pass  enables users to:
+▪ Authentic a t e  to the IVR system and reset their f or g otten  or expired passwords, unlock their accounts, ▪
+or manage their RSA SecurID from a telephone.
+▪Designate a pr ofile/r eques t  attribut e  to use as an IVR ID during touch-tone identific ation. ▪
+To identif y  themselves, users either enter the telephone keypad tr anslation  of alphanumeric IVR IDs,
+or simply key in numeric IVR IDs.
+▪Complete IVR question  sets used for touch-tone authentic ation. ▪
+IVR systems with touch-tone authentic ation  identif y  users by v alidating  numeric data entered on a
+telephone keypad.
+▪Reliably register voice print samples for voice-print authentic ation. ▪
+IVR systems with voice print authentic ation  identif y  callers by analyzing their voice print, and
+matching it against a record of each registered user.
+Architecture
+The network architecture of an integrated Bravura Pass  / IVR system is illustrated below.
+In t er activ e  Voice Response in t egr ation  architectureSee Phone Password Manager  (on page 1742) for more detailed in f ormation  about how Bravura Pass
+integrates with IVR systems.IVR with touch-tone identific ation
+Users are identified  on the network using alphanumeric login IDs. Since most IVR systems do not off er  a
+reliable speech-to-text mechanism, they can only accept numeric input. This presents a challenge for a
+password reset system: users must enter an alpha-numeric login ID, but the system can only accept a
+numeric ID.
+Assigning unique, numeric IDs
+In or g aniz ations  where each network login ID is already associated with some unique numeric ID, the
+simple solution  is to ask users to log into the IVR system by keying in their numeric ID on the telephone
+touch pad. Examples of such numeric ID include employee numbers, or home telephone numbers.
+Alternately, if a user r egis tr ation  process will be used (e.g., to collect personal security question  data for
+user authentic ation),  then users may be asked to key in or select a new numeric personal identifier .  An
+example might be the user’s driver’s license number. In this case, users will log into the IVR with their
+new numeric ID.
+Numeric mapping of alphanumeric login IDs
+In some cases, numeric IDs are not available. This may happen if there are no e xisting  numeric IDs
+available for all users, or if what numeric IDs exist are not correlated to network login IDs, or if a
+r egis tr ation  process is undesirable.
+In these cases, users may be asked to log in by pressing the keys on their telephone marked with the
+letter s  and numbers of their network login ID. For example, the user smith01 would type 7648401.
+Since the digit mapping of two diff er en t  alpha-numeric login IDs may produce the same number (e.g.,
+poguh01 also maps to 7648401), an IVR system that uses this technique must allow for number collisions,
+and ask the caller to select the correct ID when the entered number resolves to more than one alpha-
+numeric login ID.
+Selecting  an IVR ID source
+You can change the pr ofile  and request attribut e  that is used as a source of users’ IVR IDs (the digits users
+enter to identif y  themselves to the IVR phone system). By default, the telephone keypad tr anslations  of
+users’ pr ofile  IDs are used as their IVR IDs. Phone Password Manager  finds  a users’ pr ofile  ID by searching
+on their "numid" and "altnumid".
+The TPM ID ATTR  option  allows you to change the source of IVR IDs by specifying a new pr ofile  and
+request attribut e.  When TPM ID ATTR  is in use, Phone Password Manager  finds  users’ pr ofile  IDs by
+searching on the specified  attribut e.
+For example:
+▪Using the default setup of pr ofile  ID Find user "test123" by entering 8378123 on the keypad. This is ▪
+the telephone keypad tr anslation  of the user’s pr ofile  ID.▪Using TPM ID ATTR  If user "test123" has their "Telephone number" attribut e  specified  as ▪
+"4035550740", then set TPM ID ATTR  to "Telephone number", and enter 4035550740 on the
+telephone keypad to find the user.
+For the  TPM ID ATTR  option  to work as defined  above, you must associate the "Telephone" profile/
+reques t  attribut e  with the account attribut e  "telephoneNumber".
+TPM ID ATTR  requires the specified  attribut e  to only contain numeric characters; it cannot contain
+alphabetic  or special characters.
+IVR with touch-tone authentic ation
+IVR systems with touch-tone authentic ation  identif y  users by v alidating  numeric data entered on a
+telephone keypad. This includes Phone Password Manager .
+IVR question  sets
+A simple process to authentic a t e  users is to ask them to answer one or more security questions  with
+numerical answers. Numerical security questions  should have the following char act eristics:
+▪Answers should be private – r elativ ely  hard for anyone other than the user to come by. ▪
+▪Answers should be easy – users should be able to quickly and reliably answer the questions,  without ▪
+having to remember anything new, and with a low likelihood of making mistakes.
+Here are a few examples of numerical security questions  that meet the above criteria:
+▪Social Security Number▪
+▪Employee number (if this is typically secret)▪
+▪Driver’s license number▪
+▪Insurance policy number (if printed on a card the user carries with him, or if used often) ▪
+▪Date of birth (of self or a close family member)▪
+▪First or current home telephone number▪
+Since all of these may be acquired by a third party, it makes sense to use more than a single question,  to
+randomize which questions  are used for any given authentic ation  session, and to lock out users who
+repeatedly fail to authentic a t e.
+Using too few numerical security questions,  or using data that is too easily acquired by an intruder, has
+the e ff ect  of reducing password strength on the network. Biometric voice print verific ation  (on page
+1641) is a stronger technology.
+Con figuring  IVR question  sets
+You can set up one or more question  sets for IVR systems that use touch-tone authentic ation.  Users
+authentic a t e  over the phone by keying in numerical answers to questions  that you de fine  in Bravura
+Pass .
+Ensure that:

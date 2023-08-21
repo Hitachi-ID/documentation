@@ -1,0 +1,153 @@
+2.Click Add new… 2.
+3.Enter the following values:3.
+ID: ROLE_ATTR_GROUP
+Description:  Role attribut es
+Resource type: Role memberships
+4.Click Add. 4.
+5.Click the Access control tab. 5.
+6.Select the checkboxes to allow the ALLUSERS group read and write permission.6.7.Click the Members tab. 7.
+8.Click Select… 8.
+9.Select the checkboxes for ROLE_ATTR1 and ROLE_ATTR2 , then click Select . 9.
+ Add attribut es  to the pr e-defined  request 
+To add the role membership attribut es  to the Update role membership  request:
+1.As a product administrator , click Manage the system > W orkflo w  > Pr e-de fined  requests . 1.
+2.Select the built-in _UPDATE_ROLES_ request. 2.
+3.Select the Attribut es  tab. 3.4.Click Select… 4.
+5.Select the checkbox for the ROLE_ATTR_GROUP , then click Select . 5.
+ Update role attribut es  
+To update role attribut es  as an end user:
+1.Under the My pr ofile  section,  click View and update pr ofile  to see the Pr ofile  in f ormation  and 1.
+entitlemen ts  page.
+2.Click Change role membership in the requests section. 2.
+Bravura Security Fabric  displays the request wizard.3.Enter values for the attribut es. 3.
+4.Click Submit . 4.
+Relevant authorizers are notified  to review the request if necessary.
+Attribut e  values are displayed on the request details page.Search for resources based on attribut es
+Some or g aniz ations  have very large numbers of resources, such as target systems and managed group s.
+It can be difficult  to find groups of resources, or resources that match specific  criteria; for example, you
+might want to find all target systems at the or g aniz ation’ s  New York loc ation.If you require each target system to set a Loc ation  resource attribut e,  then this attribut e  is available for
+use with the advanced search engine to find all target systems with Loc ation  set to New York. You can
+narrow the search results further by using additional  attribut es.
+Use resource attribut es  to control plugin behavior
+You can use plugins throughout Bravura Security Fabric  to implement business logic, and in some cases
+this requires associating  c on figur ation  data with resources; for example, when c on figuring  managed
+group s to require serial authoriz ation  instead of having a single authorizer.
+Instead of using an external CSV file to store c on figur ation  data, you can use resource attribut es  and
+associated API functions.  You can c on figur e  resource attribut es  as required values when cr eating  new
+resources, instead of having to update an external file in order for the business logic to function  properly.
+Example 3: Using a group entitlemen t  attribut e  
+You can apply the built-in ENTITLEMENT_EXPIRY_DATE attribut e  to members of a managed group.
+When the expiry date arrives, an email can be sent to prompt the removal of that user from the group.
+Add a resource attribut e  group to allow users to update the entitlemen t  attribut e  
+1.Click Manage the system > Resources > Resource attribut e  groups . 1.
+2.Click Add new… 2.
+3.Enter the following in f ormation: 3.
+ID Group_entitlements_attrs
+Description  Group entitlement attributes
+Resource type Account group memberships
+4.Click Add. 4.
+5.Click the Access control tab. 5.
+6.Select ” Allow read” and ” Allow write” for ALLUSERS.6.
+7.Click Update . 7.
+8.Click the Members tab. 8.
+9.Click Select... 9.
+10. Select ”ENTITLEMENT_EXPIRY_DATE”. 10.
+11. Click Select . 11.
+12. Click the Display criteria tab. 12.
+13. Ensure the Display type is set to ”Main”. 13.Resource attribut e  groups
+A resource attribut e  group is a named c ollection  of resource attribut es.  You can c on figur e  resource
+attribut e  groups to include resource attribut es  on the resource de finition  pages for:
+▪Target systems▪
+▪Template accounts▪
+▪Roles▪
+▪managed group s▪
+▪Managed systems▪
+▪Managed accounts▪
+▪Account group memberships▪
+▪Computer group memberships▪
+▪Child group memberships▪
+▪Role memberships▪
+▪SoD rules▪
+You must also c on figur e  access controls to determine who can read and write resource attribut e  values.
+The rest of this chapter describes how to:
+▪Create resource attribut e  groups  (on page 668) ▪
+▪Add attribut e  group members  (on page 668) ▪
+▪Assign read and write permissions  (on page 668) ▪
+▪Determine how attribut es  are displayed  (on page 669) ▪
+▪Determine attribut e  group display order  (on page 669) ▪
+Getting  started
+ Requirements 
+Before you add a resource attribut e  group:
+▪You require the Manage resources adminis tr ativ e  privilege in order to access the Resource attribut e ▪
+groups menu item.
+ Na vig ation  steps 
+Use the Resource attribut e  group de finition  page to add and c on figur e  resource attribut e  groups. To
+navigate to this page:
+1.Click Manage the system > Resources > Resource attribut e  groups . 1.
+2.To de fine  a: 2.
+▪New resource attribut e  group – click Add new... . ▪
+▪ Existing  resource attribut e  group – search for, or select the resource attribut e  group you want to ▪
+view or modify.Built-in resource attribut e  groups
+The following attribut e  groups are included in Bravura Security Fabric  :
+GROUP_INFO_CREATE Group in f ormation  used in create group oper ations.
+GROUP_INFO_UPDATE Group in f ormation  used in update group oper ations.
+SOD_EXCEPTION_EXPIRY Expiry settings  for requested e x ceptions  to SoD rules.
+ROLE_VALIDITY De fines  the start and end times  for role entitlemen ts.
+Cr eating  resource attribut e  groups
+To create a resource attribut e  group:
+1.Navigate to the Resource attribut e  group de finition  page  (on page 667). 1.
+2.Type a unique ID and Description . 2.
+3.Select one or more resource types to which you want to apply this group.3.
+4.Click Add. 4.
+Adding attribut e  group members
+To add resource attribut es  to a resource attribut e  group:
+1.From the Resource attribut e  group de finition  page  (on page 667), click the Members tab. 1.
+2.Click Select... to see a list of all resource attribut es. 2.
+3.Select or enable the checkboxes next to the resource attribut es  you want to include. 3.
+4.Click Select . 4.
+To remove resource attribut es  from the resource attribut e  group, enable the checkbox next to the
+resource attribut e  and click Delete . If required c on firm  your actions  (on page 360).
+Assigning read and write permissions
+There must be at least one user group de fined  for Access to resource attribut es  before you can assign
+read and write permissions for a resource attribut e  group.
+To add a user group to control access to resource attribut e  groups:
+1.Click Manage the system > Security  > Access to resource groups . 1.
+2.Click Add new... 2.
+3.Type a unique ID and Description . 3.
+4.Click Add. 4.
+5.Select the Membership Criteria tab. 5.
+6.Select or create user classes to de fine  membership criteria. 6.
+Membership of non-built-in user classes can be cached to improve performance. There are options  to
+recalculate or invalidate the cache on the user class c on figur ation  page.In a replicated environment, cache rec alculation  can only be performed on the instance which runs
+psupdate .
+After  you have de fined  user groups, you can assign read and write permissions for a resource attribut e
+group, either from the User group in f ormation  page, or the Resource attribut e  group de finition  page:
+1.Select the Access control tab. 1.
+2.If required, search to r e fine  the list of groups displayed on the page. 2.
+3.Select Read and Write checkboxes as required. 3.
+By default, the checkboxes indicate allowed permissions. If Bravura Security Fabric  is c on figur ed  to
+display Allow and Deny columns, ensure that you select checkboxes in the appropriate columns.
+4.Click Update . 4.
+If you require product administrator s to be able to edit attribut es,  you must assign them both read and
+write permissions.
+Determining how attribut es  are displayed
+To determine how the group’s attribut e  fields  are displayed to users:
+1.From the Resource attribut e  group de finition  page  (on page 667), click the Display criteria tab. 1.
+2.Determine the Display type . Select: 2.
+▪Main – to display the group and its attribut es  on the main resource de finition  page. ▪
+▪Subsidiary – to display the group’s attribut es  on a subsidiary page. ▪
+▪None – to hide the group and its attribut es  from users. ▪
+3.Click Update . 3.
+To determine the order in which resource attribut es  within a group are listed:
+1.From the Resource attribut e  group de finition  page  (on page 667), click the Members tab. 1.
+2.Drag and drop one of the double dir ection  arrows in the ID field  to change the resource attribut es’ 2.
+order in the list.
+3.Click Update . 3.
+Determining attribut e  group display order
+To determine the order in which attribut e  groups are displayed to users:
+1.Click Manage the system > Resources > Resource attribut e  groups . 1.
+2.Click Order... . 2.
+3.Drag and drop one of the double dir ection  arrows in the ID field  to change the attribut e  groups’ order 3.
+in the list.
+4.Click Update . 4.
+Bravura Security Fabric  saves the changes to the attribut e  groups’ order.Part III User Groups and Rules

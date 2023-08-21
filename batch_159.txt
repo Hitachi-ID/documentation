@@ -1,0 +1,239 @@
+▪nplocalr.ocx is designed to update locally protected resources. It can be used to clear PGP WDE ▪
+cache passwords so that the new password can be used on the next start-up of the PGP client.
+See Hard Drive Encr yption  Systems  in the Connector Pack documen t ation  for in f ormation  about
+in t egr ating  with PGP WDE encr yption  clients.
+▪hidgeneric.ocx  is a generic control that can be used to determine the correct bitness of ▪
+*localr.ocx  to launch after  a password changes in order to update cached passwords on a user’s
+w ork s t ation.
+Notes
+▪32 bit and 64 bit versions of cgilocalr.ocx  and nplocalr.ocx  are available. The bitness to ▪
+launch is determined from the oper ating  system.
+Usage
+The cgilocalr plugin triggers local resource updates when a self-service password reset succeeds on
+a target system as specified  in cgilocalr.cfg .
+To enable cgilocalr :
+1.Click Manage the system > Modules > Change passwords  (PSS ). 1.
+2.Add cgilocalr.exe  in the S STATUS EXT  field. 2.
+The field  accepts a comma-delimited list for multiple  plugins.
+3.Click Update . 3.
+Requirements
+The cgilocalr plugin requires a c on figur ation  file. The cgilocalr.cfg  file in the samples\
+directory includes example c on figur ations  for pslocalr.ocx , nplocalr.ocx  and
+hidgeneric.ocx . Copy the file to the \<instance>\script\ directory, then edit the c on figur ation.
+Generic control
+The generic control can determine which bitness of *localr.ocx to launch based on the browsers
+requirements.
+The generic control requires the following parameters for running arbitrary commands:
+▪id Used to identif y  the generic control ▪
+▪ files  Download from Bravura Pass  instance server’s directory wwwdocs/x86 or wwwdocs/x64 ▪
+depending on the client w ork s t ation  oper ating  system’s bitness.
+▪program (optional)  The program to run in the cgilocalr plugin. ▪
+If left blank, rundll32.exe will be used.
+▪arguments Arguments or parameters to pass to the program or rundll32.exe . ▪Cus t omiz ation
+You can customize the user interface text in the plugin-pslocalr.m4  file. The Activ eX ’ s  result
+messages can also be modified  in this M4 file. See CUSTOMIZATION  (on page 3471) for more in f ormation.
+Use case
+The cgilocalr plugin uses the c on figur ation  file to specify the target system and AD domain for
+which passwords should be changed locally, where:
+▪Each target system on which you want to enable the Local Reset must have an entry containing the▪
+target system ID.
+▪Legacy Activ e  Directory target systems must have a logonDomain value. Users passwords will only be ▪
+reset if they are logged on to their w ork s t ation  with cr edentials  from this domain.
+▪ t ar g etid,  control and logonDomain are case insensitiv e. ▪
+Note: For Activ e  Directory DN targets, the domain in f ormation  is taken implicitly
+from the longid, and does not need to be explicitly specified  by
+logonDomain, which is only used for legacy Activ e  Directory target
+systems.
+For example, a company has an Activ e  Directory Domain Controller managing the domain OFFICE. A
+target system for this domain controller has already been added with a target system ID of INTERNAL-AD.
+The following script c on figur es  the Local Reset Extension for passwords changed using the web-based
+interface. The user must be logged onto a w ork s t ation  that is a member of the domain OFFICE. When the
+user changes his password on INTERNAL-AD the plugin will immediately update the user’s local Windows
+password cache. Either pslocalr or generic can be used.
+# NOTE: This example is for backwards compatibility only, use of the
+# pslocalr control directly should be changed to use the generic
+# control as described in Generic Control example below.
+#
+# cgilocalr plugin config file to use pslocalr
+ # KVGROUP-V2.0
+ "" "" = {
+   "targetid" "INTERNAL-AD" = {
+     "control" "pslocalr" = {
+       "protocol" = "2";
+       "attributes" "" = {
+         "logonDomain" = "OFFICE";
+       };
+     };
+   };
+ };
+or#
+ # cgilocalr plugin config file to use generic control
+ # KVGROUP-V2.0
+ "" "" = {
+   "targetid" "INTERNAL-AD" = {
+    "control" "generic" = {
+       "id" = "pslocalr";
+       "files" "" = {
+         "file" = "pslocalr.ocx";
+       };
+       "arguments" = "pslocalr.ocx,ResetCachedPassword2 %HID_ENCRYPTED_DATA
+%";
+       "attributes" "" = {
+         "logonDomain" = "OFFICE";
+       };
+     };
+   };
+ };
+Furthermore, w ork s t ation  lock down after  successfully updating  the user’s local Windows password
+cache also can be c on figur ed  by adding "useLockWstn" = "true" to the c on fig  file using the generic
+control. For example,
+"" "" = {
+  "targetid" "INTERNAL-AD" = {
+    "control" "generic" = {
+      "id" = "pslocalr";
+      "files" "" = {
+        "file" = "pslocalr.ocx";
+      };
+      "arguments" = "pslocalr.ocx,ResetCachedPassword2 %HID_ENCRYPTED_DATA
+%";
+      "attributes" "" = {
+        "logonDomain" = "OFFICE";
+        "useLockWstn" = "true";
+      };
+    };
+  };
+};T esting
+To test the correctness of the c on figur ation  file, attemp t  a password reset for one of the users on that
+system. If the syntax of the c on figur ation  file is invalid, the end user will not see any errors, but the server
+will log details about the parse error encountered:
+   Failed to parse file [C:\<path-to-instance>\script\cgilocalr.cfg]:
+   [Line: 36, Pos: 14]: Parse error: expected '='"
+See also:
+▪Plugins for more in f ormation  about this plugin point. ▪
+Con figur e  Local Reset Browser Extension on Firefox
+A Bravura Security browser extension as well as a nativ e  extension is required to reset a user’s password
+cache on a w ork s t ation  when using Firefox. A download link will be available to install the extensions if
+they have not been installed yet.
+To install the Bravura Security browser extension and nativ e  extension as an end user:
+1.Reset a password using Bravura Pass  in the Change passwords  (PSS) module using Firefox. 1.
+An ins t allation  link will display after  the password is reset successfully on the target system that is
+c on figur ed  to use the local reset extension.
+2.Click Install fir e f o x  extension . 2.
+A prompt to allow and install the Bravura Security Browser Add-On is displayed in the browser.
+3.On the password reset result page, click on  Install nativ e  extension . 3.
+4.If using a Windows 32-bit w ork s t ation,  run the firefox-extension-x86.msi  file. If using a 4.
+Windows 64-bit w ork s t ation,  run the firefox-extension-x64.msi  file. Alt ernativ ely ,
+download and save the file onto your w ork s t ation  and run the file.
+When running the installer on Windows as an administrator, you can choose to install the nativ e
+extension for yourself or for all users on the w ork s t ation.
+Con figur e  Local Reset Browser Extension on Chrome or Edge Chromium
+A Chrome Bravura Security browser extension as well as a nativ e  extension is required to reset a user’s
+password cache on a w ork s t ation  when using either Chrome or Edge Chromium. A download link will be
+available to install the extensions if they have not been installed yet.
+To install the Bravura Security browser extension and nativ e  extension as an end user:
+1.Reset a password using Bravura Pass  in the Change passwords  (PSS) module using Chrome or Edge 1.
+Chromium.
+An ins t allation  link will display after  the password is reset successfully on the target system that is
+c on figur ed  to use the local reset extension.
+2.Click Install chrome extension . 2.
+This opens a new browser tab to the Bravura Security Browser Extension in the Chrome web store.3.Click Add to Chrome . 3.
+4.Click Add extension . 4.
+5.On the password reset result page, click on Install nativ e  extension . 5.
+6.Run the browser-extension-win-x86.msi  file. Alt ernativ ely ,  download and save the file onto 6.
+your w ork s t ation  and run the file.
+When running the installer on Windows as an administrator, you can choose to install the nativ e
+extension for yourself or for all users on the w ork s t ation.
+Example: Test the Local Reset Extension
+To test the ins t allation  and c on figur ation,  change a users password and ensure a success message
+appears on the results page.
+1.Log in to the Windows W ork s t ation  with the Local Reset Extension installed with a user’s domain 1.
+account.
+2.Open the Chrome browser.2.
+3.Navigate to the Bravura Pass  URL. 3.
+4.Log in to Bravura Pass  as the user. 4.
+5.Click Change passwords . 5.
+6.On the Change passwords  page, enter a New password  and Con firm  the password . 6.
+7.Click Change passwords . 7.
+This will display the Results page that shows the addition:  "Local Reset Extension Status: Updated the
+local copy of the network password".
+The user’s password has now been changed. With Local Reset Extension installed, their previously
+cached password on the Windows W ork s t ation  will update to match the new password.
+Use Case: Business Case for Local Reset Extension
+This use case provides a situational  example that demonstrates the usefulness of the Local Reset
+Extension.
+1.Abbie brings their Windows W ork s t ation  laptop from home to the corporate office. 1.
+2.When in the corporate office,  the laptop connects to the corporate network and can communicate 2.
+with the Activ e  Directory domain.
+3.Abbie logs into the Windows W ork s t ation  laptop with her current password A123 . 3.
+4.The Windows W ork s t ation  authentic a t es  the password against the corporate Activ e  Directory domain 4.
+since the laptop is connected to the corporate network.
+5.Abbie is now signed into the laptop.5.
+6.Abbie realizes that they need to change their password since it is about to expire.6.
+7.Abbie opens a browser window and navigates to the company’s Bravura Pass  instance URL. 7.
+8.Abbie logs in to the Front end (PSF) as abbiel with password A123 . 8.
+9.Abbie changes her password to B456 . 9.10. Abbie’s password has now been changed. 10.
+With Local Reset Extension installed, Abbie’s previously cached password on the Windows
+W ork s t ation  updates to match the new password.
+11. Abbie signs out of the Windows w ork s t ation  laptop at the end of the day. 11.
+12. Abbie still has work to do, so brings their laptop home. 12.
+13. Abbie’s laptop is no longer connected to the corporate network at home. 13.
+14. Abbie logs in to the Windows w ork s t ation  laptop with the new password B456 . 14.
+The Windows w ork s t ation  tries to authentic a t e  Abbie’s password against the corporate Activ e  Directory
+domain, but since it is not connected to the corporate network, it cannot reach AD for authentic ation.
+The Windows w ork s t ation  next tries to authentic a t e  Abbie against the stored Windows cache.
+Since the Local Reset Extension updated that cache during the password change at work, the Windows
+w ork s t ation  allows Abbie to log in.
+Result if Local Reset Extension is not installed
+When the Local Reset Extension is not installed, the Windows cache would have still been set to the old
+password A123 . This would mean after  following the same steps in the Use Case, when Abbie attemp t ed
+to log in using B456  at home, the Windows w ork s t ation  would have denied them entry. The laptop
+would not be able to reach the AD domain for authentic ation  and would try to authentic a t e  against the
+Windows cache. The cached password A123  would not match the attemp t ed  B456  password, so the
+password authentic ation  would fail. Abbie might think to call the Help Desk at this point, but even if the
+Help Desk performs a password reset, the laptop is not connected to the network domain and c ontinues
+to attemp t  user authentic ation  against the outdated cache.
+If Abbie remembered her old A123 password at home, then she would be able to log in to the laptop with
+the old password since it would match the cached Windows password. However, due to complex
+password policies, it is often  not the case that users remember their old password.Login Assistant: R esetting  passwords from a login prompt
+Users may forget their initial  w ork s t ation  / network login passwords, or lock themselves out of their
+w ork s t ation,  and therefore be unable to access their own web browsers. Login Assistant uses a secure
+kiosk account (SKA); a specially constructed and locked down account, to provide users with secure
+access to the Bravura Pass  password change interface from the login prompt on their w ork s t ations.
+Login Assistant softw ar e
+Login Assistant is composed of:
+▪The secure kiosk account SKA, working with client softw ar e  (runurl ) ▪
+▪ Cr edential  Provider extensions for Windows 8 and newer ▪
+Methods of secure kiosk account implemen t ation
+There are two main methods that you can use to implement a secure kiosk account (SKA):
+▪Domain-level account▪
+A domain-level secure kiosk account is a network login account de fined  in an Activ e  Directory domain.
+It typically has a help  login ID. A security policy is applied to the help account that restricts access to
+the oper ating  system and network resources when using the SKA.
+▪ W ork s t ation-le v el  account ▪
+A help account is de fined  on a user’s w ork s t ation  instead of in a network oper ating  system directory
+such as a Windows domain. The account is added to the Log on Locally user rights assignment policy.
+Users can then log into their w ork s t ations  with the local ID help . Logging into the account launches
+the SKA.
+Cr edential  Provider for Windows
+Working with the help account, the Bravura Pass  Cr edential  Provider softw ar e  provides a Change my
+password  tile on the Windows login screen.
+Clicking the tile logs into the help account, which launches the SKA and allows users to change their
+passwords and unlock their accounts using Bravura Pass . The Cr edential  Provider extension works with
+both the local and domain-level help account.
+If a user is locked out of their account because the password has expired, or an incorrect password has
+been entered too many times,  they may want to change their password using Bravura Security Fabric .
+The user can click Switch User  or Other Cr edentials  to access the Change my password  tile.Security c onsider ations  of in t egr ating  the Cr edential  Provider tile
+When the user clicks on the tile or logs in with the help account, Login Assistant starts a web browser
+with the help account’s limited permissions and security pr ofile.
+Remote access
+The Login Assistant client allows locked-out users to connect to the Internet over a WiFi hotspot or using
+an AirCard. Locked-out users can also establish a temporary Internet c onnection  using their home
+Internet c onnection  or a hotel Internet service.
+When the Login Assistant is run, it can do an immediate check to see if it is connected to the Internet
+using the external URL and expected data as specified  during ins t allation  (on page 1595). If connected,
+then it immediately works the same as a regular Login Assistant.
+If it cannot connect to the Internet, a prompt asks users to select how to connect, with these options:
+▪Wired attemp t  another direct c onnection ▪
+▪WiFi allow the user to select a WiFi network to connect through▪
+▪AirCard use a wireless stick  if c on figur ed. ▪If WiFi is selected, the Login Assistant displays a list of detected networks, allowing the user to select one
+and pot entially  enter a network key.

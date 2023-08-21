@@ -1,0 +1,62 @@
+3.Click Team: Manage Group Membership . 3.
+4.Select the "Unix Admin Accounts" team.4.
+Click Next .
+5.On the Team Group List  page, select "Approver" and "Requester". 5.
+Click Next .
+6.In the Select Child Group for Approver  field,  select the "IT-UNIX-MANAGERS" group. 6.
+7.In the Select Group Members for Requester  field,  select the user. 7.
+8.Click Submit . 8.
+Managing team group memberships
+To update a group’s membership, log into Front-end (PSF) as a team trustee  and use the Team: Manage
+Group Membership request. When selected, a wizard will guide you through the process of updating  the
+team’s group membership.
+This request can be made by either the team trustee of the team or the team administrator, however the
+latter  will require authoriz ation  by the team trustee.
+1.From the home page, click Manage resources . 1.
+2.Click Team: Manage Group Membership . 2.
+3.Select the team to be updated.3.Click Next .
+4.Select the groups to be managed.4.Click Next .5.Add or remove users from the group.5.
+You can add users who have pr ofiles  in Bravura Security Fabric , or add managed groups as child
+groups.Click Submit .
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+6.Click the View request link at the top of the page to view the status of the request. 6.
+Once submitted  and approved, the group’s membership will be updated with the users that have been
+selected.
+The request will not proceed if updating  a team group’s membership results in none of the groups with
+team trustee privileges on a team with at least one user de fined.
+Limiting  the number of child groups displayed
+By default, child groups from all targets are selectable from the Team: Manage Group Membership  pr e-
+de fined  request. To limit the amount of child groups by only displaying those from certain target systems,
+a new entry can be added to the hid_global_c on figur ation  table for each target.
+▪namespace : pam_team_management ▪
+▪ setting : TEAM-MEMBERS ▪
+▪key: TARGET_TO_SHOW ▪
+▪value : the ID of the target system whose child groups will be shown ▪
+API aut omation  for team group membership
+Once the API has been c on figur ed  (See "SOAP API” in Bravura Security Fabric  Remote API ( api.pdf )), and
+your script has been authentic a t ed  to the API (Login or LoginEx API calls), the WF API calls can be used to
+create an API request to manage team group membership.
+Use the WFPDRSubmit function  to create a w orkflo w  request and submit the request for publishing.
+When submitting  a request, use ”TEAM-MEMBERS” as the PDR ID. At a minimum, the request requires
+the following attribut es:
+attrk e y value
+TC The name of the team.
+TC_GROUPS The team group name(s).
+*_MEMBERS The pr ofile  GUID of the user(s) for the team
+group, where * is the team group name. This only
+needs to be de fined  for team groups with the
+Team_Trustees  privilege only.
+TEAM-MEMBERS batch request sample"TC","TC_GROUPS","Group2_MEMBERS","Group3_MEMBERS" 
+"TEAM-000000","Group2,Group3","5CA66384-6277-4360-B94F-9D34F4F36F13","1BE00757-
+A15E-4BA1-A528-507AE744E47F"
+Updating  a team
+To update a team’s attribut es,  groups, privilege assignments, or trustees, log into Front-end (PSF) as a
+team trustee and use the Team: Update request. When selected, a Wizard will guide you through the
+process of updating  the team’s groups and privileges associated to those groups.
+This request can be made by either the team trustee of the team or the team administrator, however the
+latter  will require authoriz ation  by the team trustee.
+1.From the home page, click Manage resources . 1.
+2.Click Team: Update . 2.
+3.Select the team to be updated.3.Click Next .
+4.Update the team description  as necessary. 4.
+5.Add or remove groups as necessary.5.

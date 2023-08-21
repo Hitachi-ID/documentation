@@ -1,0 +1,313 @@
+Criteria Description
+Option Description
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+Users are only included in the report output if their "last
+successful login time"  falls within the selected r elativ e
+date range.
+Use selected date :
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+Users are only included in the report output if their "last
+successful login time"  falls between the Earliest last login
+time  and Latest last login time .
+Use within the last N days : Users are only included in the
+report output if their "last successful login time"  falls
+within the specified  last number of days.Criteria Description
+Use N or more days ago:  Users are only included in the
+report output if their "last successful login time"  was
+more than the specified  number of days ago.
+Summarize report Select this checkbox to summarize the report details.
+In this mode, the report includes the number of users,
+the number of users without accounts, and the license
+size.
+If you do not specify any search criteria or select any options,  the report output includes the pr ofile  ID
+and full name of every Bravura Security Fabric  user.
+Userstat
+Purpose:  Lists in f ormation  about users with associated tags in the userstat database table.
+Executable:  userstat
+Search Criteria:
+Criteria Description
+User ID Type the pr ofile  ID of the user for whom you want to
+generate the report. Alt ernativ ely ,  you can search for one
+or more pr ofile  IDs.
+User name Type the full name of the user for whom you want to
+generate the report.
+Tags Select one or more tags to list the users associated with
+these tags.
+This field  is not displayed if there is no data available.
+Tag value Type a tag value to list the tags and associated users.
+Report type Choose a report type from the drop-down list. The
+Details report is selected by default.
+Detailed:  lists accounts with tags by User ID, User name,
+Tag ID and Tag value.
+Users without tag or not matching tag value:  lists
+accounts without tags or not matching tag value by User
+ID, Username and Tag ID.
+Summary:  lists a summary of each tag; includes the total
+number of users with, and without the tag value for each
+tag.
+Resources per user
+Purpose: View resources (accounts, group memberships, roles, user classes, deleg ations,  authorizer
+power and access privileges) associated with a given set of users.Executable:  userresources
+Search Criteria:
+Criteria Description
+User ID Type a comma-and-space-delimited list of the pr ofile  IDs
+you want to include in the report. Alt ernativ ely ,  you can
+search for one or more pr ofile  IDs.
+User attribut es  to display Select the pr ofile  attribut es  that you want to add to the
+report output. This option  is only available when
+Summarize report is unselected. Default: none.
+Sections  to display Select the sections  you want to add to the report output.
+Default: all.
+Number of entitlemen ts Select an option  to filt er  out users by total number of
+entitlemen ts.  This option  is only available when
+Summarize report is selected.
+No threshold:  lists all users.
+Threshold for minimum number of entitlemen ts:  only
+lists the users whose total number of entitlemen ts  is not
+less than the threshold.
+Threshold for maximum number of entitlemen ts:  only
+lists the users whose total number of entitlemen ts  is not
+greater than the threshold.
+Threshold value Type a number to de fine  the threshold. The default value
+is 1. This option  is only available in summary mode
+when ’Threshold for minimum number of entitlemen ts’
+or ’Threshold for maximum number of entitlemen ts’  is
+selected for Number of entitlemen ts .
+Summarize report Check to summarize the report details.
+Account attribut es
+Purpose:  Lists accounts and account attribut es
+Executable:  accountattr
+Search Criteria:
+Criteria Description
+Account Type a comma-and-space-delimited list of long IDs (not
+short IDs) that match the accounts you want to include in
+the report. Alt ernativ ely ,  you can search for one or more
+accounts.
+User ID Type a comma-and-space-delimited list of pr ofile  IDs to
+only include accounts belonging to certain users.
+Alt ernativ ely ,  you can search for one or more pr ofile  IDs.Criteria Description
+Target system ID Type a comma-and-space-delimited list of target system
+IDs to only include accounts from those systems.
+Alt ernativ ely ,  you can search for one or more target
+systems.
+Account attribut e Select an attribut e  on which to filt er  accounts. You can
+select up to eight attribut es.  You can also select the same
+attribut e  multiple  times;  for example, you may want to
+list all accounts where ’givenName’ is ’Mike’ or ’Michael’.
+Value Type the value of the account attribut e.  This field  is only
+displayed if an attribut e  is selected to filt er  accounts.
+Display of attribut es From the drop-down list, select:
+All attribut es  if you want all account attribut es  to be
+displayed in the report. By default, all attribut es  are
+shown.
+Searched on attribut es  if you want only the account
+attribut es  selected for filt ering  to be displayed in the
+report.
+No attribut es  if you want no account attribut es  to be
+displayed in the report.
+Encrypted attribut e  values are masked.
+Attribut e  match From the drop-down list, select:
+Match on all  if you want Bravura Security Fabric  to match
+on all the account attribut e  rows.
+Match on any  if you want Bravura Security Fabric  to
+match on any account attribut e  row.
+Password pr ofile  attribut e  fulfillmen t
+Purpose : Provides details about who has set a password for pr ofile  attribut es  of type password.
+Executable : PasswordUserAttrFulfilment
+Search Criteria:
+Criteria Description
+User ID Type a comma-and-space-delimited list of pr ofile  IDs to only include pr ofile
+attribut es  for certain users. Alt ernativ ely ,  you can search for one or more
+pr ofile  IDs.
+User attribut e  to search Select a pr ofile  attribut e  on which to filt er  users. The options  include pr ofile
+attribut es  of type password.Criteria Description
+Condition Select one or more of the following options  of the following options  to filt er
+users based on whether they set a value for a pr ofile  attribut e  of type
+password:
+▪Is set▪
+▪Is not set▪
+Policies reports
+User class errors
+Purpose: Lists user class c on figur ation  error; for example, where a PSLang expression could not be
+evaluated.
+Executable:  ucerrors
+Search Criteria:
+Criteria Description
+User class ID Type the User class ID to list its in f ormation.
+Policies where the user class can be referenced Select one or more user class policy points to include in
+the report. All user class policy points are included by
+default.
+Display errors only Select this checkbox to display errors only.
+User class members
+Purpose:  Lists membership in single participan t  user classes. R elational  user classes are not included.
+Executable:  ucmember
+Search Criteria:
+Criteria Description
+Single-participan t  user classes Select one or more single-participan t  user classes. All
+single-participan t  user classes are included by default.
+Policies where the user class can be referenced Select one or more user class policy points to include in
+the report. All user class policy points are included by
+default.
+Do not display built-in user classes Enable this checkbox to exclude built-in user classes,
+which are hard-coded. For example,
+_USER_IS_MANAGER_ is built-in.
+Summarize report Select this checkbox to summarize the report details.Criteria Description
+Minimum number of user class members The minimum number of user class members allowed to
+display. This option  will only display when Summarize
+report is selected.
+Maximum number of user class members The maximum number of user class members allowed to
+display. This option  will only display when Summarize
+report is selected.
+User classes
+Purpose:  Lists c on figur ation,  use and cache status of user classes.
+Executable:  userclasses
+Search Criteria:
+Criteria Description
+User class ID Type the User class ID to list its in f ormation.
+Policies where the user class can be referenced Select one or more user class policy points to include in
+the report. All user class policy points are included by
+default.
+Date user class created Choose one of the following options:
+Date not required: This is the default setting.  User classes
+are reported regardless of the date they were created.
+Use r elativ e  date :
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. ForCriteria Description
+Option Description
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+User classes are only included in the report output if the
+date they were created falls within the selected r elativ e
+date range.
+Use selected date :
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+User classes are only included in the report output if the
+date they were created falls between the selected dates.
+Use within the last N days : User classes are only included
+in the report output if the date they were created falls
+within the specified  last number of days.Criteria Description
+Use N or more days ago : User classes are only included
+in the report output if the date they were created was
+more than the specified  number of days ago.
+User access privileges
+Purpose:  Security privileges granted to users.
+Executable:  userpriv
+Search Criteria:
+Criteria Description
+Requester ID Type the ID of the user whose privileges you want listed.
+Alt ernativ ely ,  you can search for one or more pr ofile  IDs.
+Allowed privileges Select one or more privileges to display. All privileges are
+included by default.
+Rules Select which set of user access rules to generate the
+report for:
+▪Global help desk rules▪
+▪Self-service rules▪
+▪Delegated adminis tr ation  rules: You must enter the ▪
+pr ofile  ID of the Recipient .
+Recipient Type the pr ofile  ID of the recipient for whom you want to
+run the report.
+Entitlemen t  review privileges
+Purpose:  The link between reviewers and users they are allowed to review.
+Executable: adhoccertificationprivileges
+Search Criteria:
+Criteria Description
+Options Select to:
+▪List reviewers for selected users▪
+▪List users who can be reviewed by selected reviewers▪
+Users to be reviewed This option  is displayed if List reviewers for selected
+users  is selected. Type a comma and space delimited list
+of user pr ofile  IDs to list the possible reviewers for these
+users. Alt ernativ ely ,  you can search for one or more user
+pr ofile  IDs

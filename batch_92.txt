@@ -1,0 +1,159 @@
+2.Select "Azure MFA" from the Choose an authentic ation  method  page 2.
+The user should receive a Azure MFA push notific ation  on their mobile phone to approve the login
+request.
+3.The user approves the request, then logs on the Bravura Security Fabric  instance. 3.
+Okta API in t egr ation
+This section  demonstrates how to c on figur e  Okta, using the API in t egr ation  method, as an authentic ation
+chain with Bravura Security Fabric .
+See Okta in t egr ation  strategy
+Okta off er s  a platform  for:
+▪Web single sign-on (SSO) with f eder ation  or password form s tuffing. ▪
+▪Two-factor authentic ation  (2FA) via a smart phone app or a PIN delivered to user emails or mobile ▪
+phones.
+▪Simple cr eation  and deactiv ation  of accounts on certain SaaS platforms. ▪
+It is possible to integrate Bravura Security Fabric  with Okta to utiliz e  one of Okta's authentic ation
+methods when signing into Bravura Security Fabric .In t egr ating  Okta with Bravura Security Fabric
+There are two mechanisms available to integrate Okta with Bravura Security Fabric :
+▪ In t egr ation  with SAML f eder ation ; where the Okta service is the Identity  Provider (IdP) and Bravura ▪
+Security Fabric  is the Service Provider (SP) . Bravura Security Fabric  can also act as the IdP to Okta or
+any other web app acting  as the SP .
+Note: The SAML solution  is not recommended for Bravura Security Fabric
+versions prior to 12.0.3. Contact support  for more in f ormation.
+▪ In t egr ation  via the Okta web services API ; where the Bravura Security login subsystem asks Okta for ▪
+session status, is also available.
+Advantages of a SAML-based in t egr ation
+▪Consistent SSO (single-sign-on): Once signed into Okta from one browser, any future attemp ts  to login ▪
+for the dur ation  of the SSO token, don't require authentic ation.
+Note: This does have security and audit implic ations  for Privileged accounts and
+should not be implemented alone for those accounts, however, for end-
+users it is a time-sa v er .▪More consistent user experience:: The visual login sequence with Okta's Web UI showing up when▪
+authentic ating  from other Web applic ations  is what customers' users are sometimes  already familiar
+with.
+▪2FA can be c on figur ed  nativ ely  on the Okta platform  by the relevant applic ation  administrators. ▪
+▪2FA can be c on figur ed  using Bravura Security Fabric  authentic ation  chains. ▪
+▪Once SAML tokens are created during the login process, the login is transparent for additional  SAML ▪
+SPs
+In high-security applic ations  like Bravura Privilege this is actually a security risk; for example, going
+directly into Bravura Privilege because a user authentic a t ed  into Google Calendar may not be secure
+enough.
+▪There is no need to create an adminis tr ativ e-le v el  API token on the Okta platform  and import it into ▪
+Bravura Security Fabric .
+▪There is no need to create an extra target, or copy a list from the target Okta authentic a t es  against ▪
+(AD or other LDAP).
+Advantages of an API-based in t egr ation
+▪Bravura Identity  can manage accounts on Okta, and role assignment. ▪
+▪More solid directory in t egr ation  than the SAML method: Listing  accounts from the Okta target directly ▪
+and making it a SoP can ensure no f alse-neg ativ es  exist, if the Okta directory is out of sync with the
+SoP of the Bravura Security Fabric  instance.
+▪Smaller attack  surface: As the diagram above shows, Okta exists on the Internet; c onnections  to it are ▪
+using encrypted, over TLS:
+▪Using the SAML in t egr ation  method the user browser needs access to both the Bravura Security ▪
+Fabric  instance and the Okta instance c on figur ed  for authentic ation  using SAML.
+▪Using the API authentic ation,  the users browser only need access to the Bravura Security Fabric 's ▪
+UI, which is usually on the private network. Bravura Security Fabric  then communicates to Okta.
+▪Less r epetitiv e  work for end-users: Users enter their pr ofile  ID only once. With SAML, users must enter ▪
+their ID twice; once when in t er acting  with the Bravura Security Fabric  instance and again when
+in t er acting  with the Okta login subsystem.
+▪More consistent user experience per login: Users interact with just a single portal, the Bravura ▪
+Security Fabric  instance rather than being redirected between two login pages.
+Note that each portal can use its own cookie to auto-populate this input field,  which reduces the
+impact on login attemp ts  from a previously used browser.
+▪With API-based in t egr ation,  two diff er en t  users can sign into Bravura Security Fabric  from the same ▪
+browser. With SAML-based in t egr ation,  it is more difficult  for users to share a browser; either the
+previously signed-on user must sign off from both products when finished,  or the second user wishing
+to use the browser must fir s t sign into Okta and only then can sign into Bravura Security Fabric .
+▪API-based in t egr ation  is much easier to use in cases where users share a laptop and need access to ▪
+'Self-Service, Anywhere' to reset f or g otten,  locally cached passwords using Bravura Security  ID Password
+Manager.
+▪It is possible to c on figur e  the Bravura Security  portal to prompt users to provide multiple  Okta factors, ▪
+leading to multi- f act or  authentic ation  rather than strictly two-factor authentic ation.▪ Con figuring  and updating  an expired API token is less work than updating  an expired SAML certific a t e. ▪
+for in f ormation  about SAML versus API in t egr ation.
+Requirements
+This demons tr ation  assumes:
+▪An Okta target system  has been c on figur ed  as described in Connector Pack documen t ation. ▪
+▪The Okta target system is set as a source of pr ofiles,  or the Okta accounts are associated to another ▪
+source.
+▪Auto discovery has been run.▪
+Add Okta to Authentic ation  Chains
+1.Click Manage the system > Policies > Authentic ation  chains > Front-end login . 1.
+2.Disable the DEFAULT_LOGIN chain and click Add new…  to add a new module. 2.
+3.Select Connector package agent  for the module type. 3.
+4.Click Update . 4.5.Set the Okta target system in Target system to use for address and cr edentials . 5.
+6.Select Challenge response authentic ation  for Password v erific ation  option. 6.
+7.Click Update . 7.8.Reorder the authentic ation  chain modules so the Okta module comes fir s t. 8.9.Enable the authentic ation  chain. 9.
+10. Test the authentic ation  by logging in as a user with an Okta account. 10.
+11. Select an Okta factor from the list of registered factors for the user. 11.12. Complete the Okta authentic ation  step. 12.
+13. Sign in to Bravura Security Fabric  by c ompleting  the next step; the non-Okta authentic ation  step. 13.
+Authentic ation  into Bravura Security Fabric  should now be complete.
+Smart Card authentic ation
+Bravura Security Fabric  can authentic a t e  users with smart cards if:
+▪Internet In f ormation  Services (IIS) is c on figur ed  as your web server and it is set up with SSL. ▪
+▪Users’ web browsers are enabled for smart card access.▪
+▪The login ID typed by users on the Bravura Security Fabric  login page matches the user ID identified  in ▪
+the smart card certific a t e  (the cn part of the CERT_SUBJECT environment variable).
+To enable users to access Bravura Security Fabric  using their smart cards, you must:
+▪ Con figur e  IIS for smart card in t egr ation  (on page 918). ▪
+▪ Con figur e  certific a t e  authentic ation  of users with smart cards ▪
+The steps required vary depending on your environment. Consult your smart card documen t ation.
+▪Enable and c on figur e  the HTTPAUTH authentic ation  chain for web server authentic ation  in t egr ation. ▪
+The httpauth.exe program is both a cgiexecutable and an authentic ation  plugin. It can be
+c on figur ed  using a PSLang script.  (on page 981)
+The custom authentic ation  chain HTTPAUTH can be enabled.
+Con figur e  IIS for smart card authentic ation
+The following ins tructions  are for Internet Inf ormation  Services (IIS) 8.0. Details may vary depending on
+your version of IIS and installed service packs.These steps apply for a remote IIS server. On ins t allation  of Bravura Security Fabric , the httpauth CGI
+is installed and enabled for Windows authentic ation.  To c on figur e  IIS for smart card authentic ation  to
+Bravura Security Fabric  :
+1.Set up IIS with SSL and install a Server SSL certific a t e. 1.
+Consult your IIS documen t ation  to learn how to do this.
+2. Con figur e  IIS to accept client certific a t es  for httpauth.exe : 2.
+a.Open the Internet In f ormation  Services (IIS) Manager snap-in on the Bravura Security Fabric  server. a.
+b.Expand <computer name> > Web Sites > <install site> , then select the virtual directory for the b.
+Bravura Security Fabric  instance.
+c.On the bottom  of the window, click on Content View . c.
+d.From the list of content under the Bravura Security Fabric  instance, select the httpauth.exe . d.
+e.Right-click httpauth.exe , then click Switch to Features View . e.
+f.Click SSL Settings . f.
+g.Select the Require SSL checkbox. g.
+h.Select the Accept radio button  under Client certific a t es . h.
+i.Under Actions , click Apply . i.
+3. Con figur e  mapping of client certific a t es. 3.
+Consult your IIS or smart card documen t ation  to learn how to do this.
+Single-page login and authentic ation
+By default, the authentic ation  process into Bravura Security Fabric  is carried out in two separate steps:
+the user is identified,  then authentic a t ed  (that is, the product prompts for a user name and then a
+password on separate screens). A plugin can be used to modify this behavior and have the product
+display both the user name and password fields  on a single page.
+In this use case a plugin is used to aut omatic ally  direct users to a password authentic ation  page, with ID
+and password fields  on a single page.
+This can be implemented by c on figuring  the DEFAULT_LOGIN chain’s select_chain.pss to run the
+authselect.psl plugin  (on page 981).
+A sample PSLang script, authselect.psl , is located in the samples directory. This file is only installed
+with a complete ins t allation  or if you selected Sample files in a custom ins t allation.
+When a user logs in:
+1.The user is presented with a login page that also includes a password field. 1.
+The page includes the message:
+Leave the password blank and press c ontinue  if you don’t know your password
+2.The user may enter his ID and password to authentic a t e,  or enter only his ID and proceed to the 2.
+authentic ation  menu that includes other authentic ation  methods. If the user ID and password entered
+is:▪Valid, then the user is immediately logged into the Front-end . ▪
+▪Invalid, then the user is redirected to the authentic ation  menu to select another method. ▪
+Reorder available chains in select_chains module
+When providing a choice of available authentic ation  chains at login time,  the chains listed in the
+Available chains  list of the select_chain module get displayed for the user in the alphabetic al  order of
+their chain IDs, for example:
+1. Con figur e  Manage the system > Policies > Authentic ation  chains > Front-end login . 1.
+2.In the Available chains  setting ,  list: 2.
+Use PSFEXT_VALUES
+EMAILPIN
+SMSPIN
+When users log in, Bravura Security Fabric  displays the options  in the in the alphabetic al  order of their
+chain IDs (after  Use PSFEXT_VALUES ):
+Requirements
+This use case assumes that:
+▪Bravura Security Fabric  and Connector Pack  are installed. ▪
+▪User has the adminis tr ativ e  privilege and can access the Bravura Security Fabric  server ▪
+Steps
+1. Identif y  all cases where reordering is required. This will mean that you need to adjust the 1.
+authentic ation  chain names only once.
+2.Export  (on page 865) the authentic ation  chains. 2.

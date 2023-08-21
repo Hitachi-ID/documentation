@@ -1,0 +1,205 @@
+3.Click the advanced search icon 
+ . 3.
+4.Add more filt er s  to the search. 4.
+5.Click Save search . 5.
+6.Click Save as and enter a name for saved search. 6.
+7.Click Create . 7.
+To add more filt er s  to an e xisting  saved search and save as current saved search:
+1.As an end user, from the main menu , click View and update pr ofile  under Other users . 1.
+2.Select a saved search.2.
+3.Click the advanced search icon 
+ . 3.
+4.Add more filt er s  to the search. 4.
+5.Click Save search . 5.
+6.Click Update . 6.
+To create a saved search and override an e xisting  one:
+1.As an end user, from the main menu  click View and update pr ofile  under Other users . 1.
+2.On the Users page, click the advanced search icon 
+ next to the Search button. 2.
+3.Create some search filt er s. 3.
+4.Click Save search and enter the name of a e xisting  saved search which you want to override. 4.
+5.Click Create . 5.
+6.Click Yes. 6.
+Con figur ation  notes
+Below are the important points when cr eating  saved searches:
+▪Plugin saved searches cannot be deleted from the UI (No trash can icon displays).▪
+▪All saved searches have an ID (hidden) and a label (shown in drop-down list).▪
+▪All saved searches must have unique IDs and labels. My Searches have unique, generated ”guid-like” ▪
+IDs. Plugin saved search (Searches) IDs are de fined  by the plugin creator.
+▪Plugin saved searches override my searches. When you have both a plugin and a my search with the▪
+same label, my search is not shown.
+▪Characters <, >, /, &, " and ' are forbidden in plugin saved search IDs as they are signific an t ▪
+characters in XML and/or HTML.▪There is a hard limit of fiv e criteria for each saved search. Extra criteria are simply dropped with a log ▪
+warning.
+▪Duplicate plugin labels are detected and rejected with a logged warning.▪
+▪Plugin saved search labels are not case sensitiv e.  Labels that are identic al  except for c apit aliz ation  will ▪
+be considered duplicates, and will be skipped and logged with warnings.
+▪Label clashes between my searches and plugin saved searches are prevented. You cannot create a▪
+saved search with a label that already exists among plugin saved searches. On the contrary, you can
+create a plugin saved search with a label that already exists among my searches.
+▪Saved searches are ordered alphabetic ally . ▪4 Pinning and customizing the main menu
+Bravura Security Fabric  allows users to customize the main menu to suit their personal preferences. This
+chapter shows you how to:
+▪Pin pages and objects your main menu  (on page 373). ▪
+▪Customize your main menu  (on page 376). ▪
+Pinning pages and objects
+You can pin pages and objects that you use often  to your main menu. Open the pinning menu by clicking
+the pin icon 
+  in the top right menu of each page.
+Pinning the current page
+To add the page you are currently viewing to the main menu, select Pin current page from the pinning
+menu. By default, menu items are pinned to the Pinned menus . See Default box for new pins to learn
+how to change the default.
+If you pin the current page in the middle of a process, the firs t page of the menu item will be pinned and
+preselected data are not kept. For example, if you pin the inf ormation  page for a particular  target system,
+the pin will be actually created for the target system list. Another example is that pinning in the middle of
+creating  a c ertific ation  campaign actually pins the firs t Start entitlemen t  c ertific ation  campaign page
+with no preselected data.
+If you lose the privilege to access a pinned page, an error message will be returned when you try to open
+the pinned page: 
+ You are not allowed to perform this operation.Pinning an object
+When you select the Pin an object menu item, all pinnable objects in current page are highlighted. You
+can pin an object to your home page by clicking that object.
+The pinnable objects include:
+▪Report graphs▪
+▪Report tables▪
+▪Dashboard graphs▪
+▪Dashboard stats tables▪
+The Pin an object menu item will be enabled in pinning menu only when current page contains
+pinnable objects.
+Report object pinning
+When pinning tables and graphs from regular reports and saved reports:
+▪User settings  such as show/hide columns and sorting  will not be saved at the time  you pin and object. ▪
+These settings  will be saved if you update them from the pinned object in main menu.
+▪Pinned report graphs support drill-down.▪
+▪You can re-run a pinned report graph or table by clicking the refresh button  in the pinned report box. ▪
+This does not apply to saved reports.
+▪You can view the search criteria for a pinned report graph or table by clicking the blue in f ormation ▪
+button  in the pinned report box.
+▪If you lose the privilege to manage reports, you will get a warning message inside the pinned report▪
+box and no report will be shown.
+▪If a saved report is going to expire in fiv e days, you will get a warning message inside the pinned ▪
+report box and the report is still shown.
+▪If a saved report is expired, you will get an error message This report has been deleted and no report ▪
+will be shownDashboard object pinning
+When pinning s t atistics  tables and graphs from dashboards:
+▪User settings,  such as view type or display interval, are saved in the pinned dashboard objects. ▪
+▪Pinned dashboard graphs support drill-down.▪
+▪You can re-run a pinned dashboard object by clicking the refresh button  in the pinned dashboard box. ▪
+▪The refresh button  does not appear on pinned dashboard box if you do not have privilege to ▪
+Recompute dashboard cache .
+▪If you lose the privilege to view a dashboard, you will get a warning message inside the pinned▪
+dashboard box and no dashboard table or graph will be shown.
+After  you pin some menu items and objects, your home page will look like this:
+Prompt when pinning
+When you enable Prompt when pinning from the pinning menu, you can change the name and loc ation
+before saving the pin.Default box for new pins
+You can change the default box for new pinned pages:
+1.Hover the mouse over the pin icon 
+ . 1.
+2.Hover over Default box for new pins . 2.
+3.Select a default box for new pins.3.
+You can also add a new box that can be selected as default box for new pins. See Adding a box  (on page
+376) for details.
+Customizing the main menu
+You can customize the main menu by reorganizing and renaming items. To start customizing the main
+menu, from the home page, hover the mouse over the pin icon 
+ , and click Customize menu .
+To stop menu customizing, click Stop customizing under the action  icons in the top right menu.
+Alt ernativ ely ,  from the home page, hover over the pin icon 
+ , and click Stop customizing .
+Adding a box
+You can add a new box after  s t arting  menu cus t omiz ation  by hovering over the pin icon 
+  and clicking
+Add box .
+You can use the new box as the default box for new pinned pages (see Default box for new pins  (on page
+376)) or move menu items from other boxes to this box.
+Customizing oper ations
+After  s t arting  menu cus t omiz ation,  you can:
+▪Rename a box : you can rename a box by clicking the box title and editing  it. ▪▪Delete a box : you can delete a box by clicking the close icon 
+  in the top right of the box ▪
+▪Rename a menu item : you can rename any menu item by clicking and editing  it. ▪
+▪Move a menu item : you can move a menu item by clicking the move icon 
+  at the end of the menu ▪
+item and dragging it to new loc ation,  either within a box or to another box
+▪Delete a menu item : you can delete a menu item by clicking the close icon 
+  in the front of the ▪
+menu item.
+You can undo all customizing oper ations  by clicking the Undo link in the top middle of the page when it is
+still available.
+Restoring the default menu
+You can restore the main menu to default settings:
+1.Hover over the pin icon 
+ . 1.
+2.Click Restore default menu . 2.
+3.Click OK to c on firm  your action. 3.
+All pinned menus and objects will be removed after  you restore the default menu.5 Adminis tr ativ e  menus
+Based on your adminis trative  privileges , you are granted either full, or restricted access to adminis tr ativ e
+options.  If you do not have permissions to access a menu item, it will not be displayed.
+As a product administrator  you may have access to the following options  from the Front-end :
+Oprions marked with:
+▪
+ apply only when Bravura Identity  is licensed. ▪
+▪
+ apply only when Bravura Pass  is licensed. ▪
+▪
+ apply only when Bravura Privilege  is licensed. ▪
+Adminis tr ativ e  options
+Option Description
+Manage the system Con figur e  Bravura Security Fabric  objects and environment, administer
+security, and run reports.
+ 
+ Manage certific ation
+processCreate, save, and start access certific ation  campaigns.
+Manage the OrgChart Manually change the or g aniz ation  chart structure or start Org building
+rounds.
+ 
+ View dashboards View graphical summary reports of Bravura Security Fabric  oper ations  and
+usage.
+Manage reports Enables product administrators to view, run, save, and schedule reports.
+Analytics When c on figur ed,  enables product administrators to view reports that exist
+on a Micr osoft  SQL Server R eporting  Services (SSRS) server.
+Manage external data store Enables product administrators to view and update data in the External
+data store.
+Change product
+adminis tr ation  passwordChange your administrator password. This option  is available only if your
+password is stored in Bravura Security Fabric , and not v erified  against a
+target system.
+Manage components ▪Manage Bravura Security Fabric  components. ▪
+Manage the system
+The Manage the system  (PSA) module main menu includes license and usage s t atistics.  You must quote the
+support code, listed in the license in f ormation  when you contact support@bravurasecurity.com,  for
+v erific ation.  The server that you are logged into is displayed at the bottom  center of the page.The following sub sections  describe the Manage the system  (PSA) module menu and corresponding sub-
+menu options.
+Viewing licensed sub-systems
+Bravura Security Fabric  sub-systems are listed on the c on figur ation  main menu when you fir s t access the
+Manage the system  (PSA) module. The status of each sub-system is listed as follows:
+▪licensed  All features are available ▪
+▪limited license  Some features are available ▪
+▪not licensed  Features are not available or disabled ▪
+All the sub-systems are installed by default except for Phone Password Manager . The license determines
+which features are enabled.
+The c on figur ation  main menu also includes s t atistics  of currently used resources, and the maximum
+allowed by your license, including:
+▪Users▪
+▪Target systems▪
+▪Servers▪
+▪ W ork s t ations▪
+▪License expiry in days▪
+The data for this inf ormation  is not cached.
+Resources
+Options  on the Resources menu enable you to add and update resources that can be managed by
+Bravura Security Fabric . You must have the "Manage resources" right to access this menu.
+Click this link To access this functionality
+Target systems Add, update, or delete target systems.
+Details Target Systems  (on page 480)
+Target system groups Apply web password change r es trictions,  s ynchr oniz ation  rules, and password policies to groups of target systems.
+Details Target System Groups  (on page 562)
+Discovered objects View discovered systems and accounts, and add them to managed system policies.
+Details Discovered Objects  (on page 2088)
+Import rules Add, delete and modify target system import rules.
+Details Import rules  (on page 2095)
+Template accounts Set up templates that can be used to create accounts.
+Details Template Accounts  (on page 622)
+Account attribut es Con figur e  attribut es  specific  to target systems.
+Details Account Attribut es  (on page 566)

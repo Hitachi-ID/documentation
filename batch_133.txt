@@ -1,0 +1,201 @@
+Select attribut es  
+Select attribut e  groups to determine what in f ormation  needs to be updated.
+1.Click the Attribut es  tab. 1.
+2.Click Select… 2.
+3.Select:3.
+▪BASEATTRIBUTE▪
+▪ORG-INFO▪
+▪RBACENFORCEATTR▪
+4.Click Select . 4.
+Add access controls to the request 
+For this case, create a custom SALES_MANAGER class to allow a sales manager to request a new sales
+employee.
+To set up access controls:
+1.Click the Access control tab. 1.
+2.Click Add new… 2.
+Bravura Security Fabric  displays the User class de finition  page in a pop-up window.
+3. De fine  a SALES_MANAGERS user class  (on page 733). 3.4.Close the pop-up window.4.
+Bravura Security Fabric  warns that you need to complete the access control c on figur ation  by mapping
+the user class participan t  to a participan t  in the policy (requester or recipient).
+5.For the user class you just created, set the P articipan t  mapping to REQUESTER. 5.
+6.Click Update . 6.
+Customize the wizard 
+Bravura Security Fabric  aut omatic ally  adds request wizard pages according to the oper ations  and
+attribut es  you add. In this case, Bravura Security Fabric  added a page for each of the attribut e  groups. In
+this case, you will hide the RBACENFORCE group from requesters, because the default setting  is assumed.
+To customize the wizard:
+1.Click the Order and display tab. 1.
+2.Set the Attribut e  group: Role based access control enforcement setting  to ”Hide”. 2.
+3.Set the Set initial  password setting  to ”Show”. 3.
+4.Click Update . 4.
+Submit a request 
+To submit the pr e-de fined  request, login as an end user:1.From the main menu, click Create a new user pr ofile . 1.
+If your administrator has set up pr e-de fined  requests, Bravura Security Fabric  displays a menu of
+request types.
+2.Click Hire a Sales R epr esen t ativ e . 2.
+3.Enter basic pr ofile  in f ormation. 3.
+Click Next .
+4.Enter employment in f ormation. 4.
+This is in f ormation  de fined  by the ORG-INFO attribut e  group.Click Next .
+5.Set the initial  password as required for new accounts. 5.
+6.Click Submit . 6.Example: Request a new desktop computer
+This example demonstrates how to de fine  a request users can select to submit a request for a new
+desktop computer.
+This case assumes:
+▪You have set a NULL target system for inventory.▪
+▪A REQUEST-NOTES pr ofile  and request attribut e  exists. ▪
+▪The pr ofile  and request attribut e  is a member of an attribut e  group called REQUEST_NOTES. ▪
+1.Click Manage the system > W orkflo w  > Pr e-de fined  requests  and add a new request with the 1.
+following general settings:
+▪ID NEW-DESKTOP ▪
+▪ Description  Request a new desktop ▪
+▪Enabled  Selected ▪
+▪Intended recipients  Existing  users. ▪
+2.Click Add. 2.
+You can now de fine  oper ations  and other parameters.  
+Define  oper ations  
+For this example, the request is to add an inventory item to an e xisting  user pr ofile:
+1.Click the Oper ations  tab, then the New account sub-tab. 1.
+2.Click Select... in the upper table. 2.
+3.Select the DESKTOP template and click Select . 3.
+4.Ensure the Necessity is set to ”Required”. 4.
+Inventory templates are used to attach  inventory items to user profiles  rather than create new
+accounts.
+Select attribut es  
+Select attribut e  groups to determine what in f ormation  needs to be updated.
+1.Click the Attribut es  tab. 1.
+2.Click Select… 2.
+3.Select REQUEST_NOTES.3.
+4.Click Select . 4.
+Add access controls to the request 
+For this case, use the default _EXISTING_USERS_ class to allow e xisting  users to request a new desktop.
+To set up access controls:
+1.Click the Access control tab. 1.2.Click Select… . 2.
+3.Select the _EXISTING_USERS_ user class and click Select . 3.
+Bravura Security Fabric  warns that you need to complete the access control c on figur ation  by mapping
+user class participan ts  to a participan t  in the policy (requester or recipient).
+4.Set the P articipan t  mapping to REQUESTER. 4.
+5.Click Update . 5.
+Customize the wizard 
+Bravura Security Fabric  aut omatic ally  adds request wizard pages according to the oper ations  and
+attribut es  you add. To customize the wizard:
+1.Click the Order and display tab. 1.
+2.Set the Attribut e  group: Request notes setting  to ”Show”. 2.
+3.Click Update . 3.
+Submit a request 
+To submit the pr e-de fined  request, login as an end user:
+1.Click View and update pr ofile . 1.
+2.Click Request a new desktop . 2.
+3.Enter request details.3.
+4.Click Submit . 4.
+The request has been submitted  and in this case, the implementer will receive a notific ation  and action
+the request.
+Example: Update a subordinate’s scheduled t ermination
+This example demonstrates how to invite a manager to defer a subordinate’s scheduled t ermination.  The
+manager will receive an email two weeks prior to the t ermination  with a link to Bravura Security Fabric .
+When the manager follows the link and successfully logs in they can use the pr e-de fined  request to
+update the subordinate’s t ermination  date.
+This case assumes that an HR system that contains t ermination  details is set up as a target system, and:
+▪The HR system’s scheduled t ermination  date account attribut e  is mapped to a pr ofile  and request ▪
+attribut e  called SCHEDULED_TERMINATION_DATE.
+▪The pr ofile  and request attribut e  is a member of an attribut e  group called SCHEDULED_TERMINATION. ▪
+1.Click Manage the system > W orkflo w  > Pr e-de fined  requests  and add a new request with the 1.
+following general settings:
+▪ID SCHEDULETERMINATION ▪
+▪ Description  Update t ermination  date ▪
+▪Enabled  Selected ▪
+▪Intended recipients  Existing  users ▪2.Click Add. 2.
+You can now de fine  oper ations  and other parameters.  
+Define  oper ations  
+For this example, the request is to update e xisting  accounts:
+1.Click the Oper ations  tab, then the Existing  account sub-tab. 1.
+2.In the bottom  table select Update account and select ” All” from the All/User-selectable drop-down 2.
+list.
+3.Click Update . 3.
+Select attribut es  
+Select attribut e  groups to determine what in f ormation  needs to be updated.
+1.Click the Attribut es  tab. 1.
+2.Click Select… 2.
+3.Select SCHEDULED_TERMINATION.3.
+4.Click Select . 4.
+Add access controls to the request 
+For this case, use the default _MANAGER_INDIRECT_ class to allow a manager to request the update on
+behalf of a subordinate. We will assume that the Orgchart has been set up, and that managers have
+permission to update subordinates’ in f ormation.
+To set up access controls:
+1.Click the Access control tab. 1.
+2.Click Select… . 2.
+3.Select the _MANAGER_INDIRECT_ user class and click Select . 3.
+Bravura Security Fabric  warns that you need to complete the access control c on figur ation  by mapping
+user class participan ts  to a participan t  in the policy (requester or recipient).
+4.Set the P articipan t  mapping for MANAGER to REQUESTER, and set SUBORDINATE to RECIPIENT. 4.
+5.Click Update . 5.
+Customize the wizard 
+Bravura Security Fabric  aut omatic ally  adds request wizard pages according to the oper ations  and
+attribut es  you add. In this case, Bravura Security Fabric  added a page for each of the attribut e  groups. In
+this case, you will hide the RBACENFORCE group from requesters, because the default setting  is assumed.
+To customize the wizard:
+1.Click the Order and display tab. 1.
+2.Set the Attribut e  group: Role based access control enforcement setting  to ”Hide”. 2.3.Click Update . 3.
+Configur e  tracking 
+1.Set up automated user adminis tr ation  (idtrack ) to track the scheduled t ermination  attribut e. 1.
+2.During the nightly processing, when a t ermination  is scheduled for two weeks from now, send an 2.
+email to the manager notif ying  her of the upcoming t ermination.  Embed a URL linking the user to the
+View and update pr ofile  (IDR) module; for example: https://idm-server/default/view-
+and-update-profile 
+When the manager successfully logs in she will be aut omatic ally  redirected to the View and update pr ofile
+(IDR) module, where she can select the Update t ermination  date pr e-de fined  request to update the
+t ermination  date.
+Use report output to disable orphaned accounts
+This example demonstrates how to create a pr e-de fined  request and run a report to list orphaned
+accounts and then submit request to disable those accounts.
+1.Click Manage the system > W orkflo w  > Pr e-de fined  requests  and add a new request with the 1.
+following general settings:
+▪ID ORPHANED-ACCOUNTS ▪
+▪ Description  Disable orphaned accounts ▪
+▪Enabled  Selected ▪
+▪Accessible from report  Selected ▪
+▪Intended recipients  Existing  users ▪
+2.Click Add. 2.
+You can now de fine  oper ations  and other parameters.  
+Define  oper ations  
+For this example, the request is to disable e xisting  accounts based on certain c onditions:
+1.Click the Oper ations  tab, then the Existing  account sub-tab. 1.
+2.In the bottom  table select Disable account and select ”User-selectable” from the All/User-selectable 2.
+drop-down list.
+3.Click Update . 3.
+Add access controls to the request 
+For this case, use the default _REPORT_READERS_ user class to allow users who can run reports to
+submit this pr e-de fined  request. We will assume that users have been added to the user class.
+To set up access controls:
+1.Click the Access control tab. 1.
+2.Click Select… . 2.3.Select the _REPORT_READERS_ user class and click Select . 3.
+Bravura Security Fabric  warns that you need to complete the access control c on figur ation  by mapping
+the user class participan t  to a participan t  in the policy (requester or recipient).
+4.Set the P articipan t  mapping to REQUESTER. 4.
+This allows any user in the user class to act as requester of the request.
+5.Click Update . 5.
+The pr e-de fined  request is ready to use with report output.  
+Run the Orphan / Inactiv e  report 
+To run a report and use the output to submit a request to disable orphan accounts:
+1.Log in as a member of _REPORT_READERS_.1.
+2.Click Manage reports > Reports  > Users > Orphan / Inactiv e . 2.
+3.Run the report.3.
+4.Expand Submit pr e-de fined  requests using report output at the bottom  of the report form. 4.
+5.Select the ORPHANED-ACCOUNTS pr e-de fined  request. 5.
+6.Click on the magnifying glass icon <infoicon>to c on figur e  Attribut es . 6.
+a.Map the Recipient ID to a s t atic  ID, such as the user running the report. a.
+The recipient ID needs to match a Bravura Security Fabric profile  ID. If the report output has that
+inf ormation,  you can map this attribut e  to that output, otherwise, you will need to enter a s t atic  ID.
+b.Map the target ID and account attribut es  to the r espectiv e  columns. b.
+c.Click Done . c.
+7.Click Run for submission . 7.
+Bravura Security Fabric  displays a summary of the requests submitted.You can click on the info icon 
+  in the request status column to view the status of each request, or use
+the Requests link from the main menu.
+See the REPORTS  (on page 2891) for more in f ormation  on running reports.
+Example: Use report output to enable disabled accounts
+This example demonstrates how to run the account report to list disabled accounts, then use the output
+to submit a request to enable those accounts.
+1.Click Manage the system > W orkflow  > Pr e-de fined  requests  and add a new request with the 1.
+following general settings:

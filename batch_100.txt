@@ -1,0 +1,310 @@
+reCAPTCHA
+Bravura Security Fabric  includes a component, Scenario.hid_authchain_recaptcha , which
+allows you to use the reCAPTCHA program as part of an authentic ation  chain. The reCAPTCHA program is
+a web service which provides an image-based authentic ation  method.
+All images are generated and graded by the reCAPTCHA servers. Adding reCAPTCHA to your
+authentic ation  chains creates another layer of security for your authentic ation  process without adding
+the cost of running image g ener ation  scripts on your servers. See http://w w w . g oogle.c om/ sear ch?
+q=r ec ap t cha  for more in f ormation.
+To c on figur e  Bravura Security Fabric  to include an authentic ation  chain using the reCAPTCHA plugin:
+1.Ensure that the psadmin account on the Bravura Security Fabric  server has the browser c on figur ed  to 1.
+allow internet access for your network; for example, through a proxy. The browser which logs into the
+Front-end must also be c on figur ed  to allow internet access.
+2.Add the following web sites to the list of Trusted sites in the browser settings  in order for reCAPTCHA 2.
+to load and function  properly:
+▪ http s://de v eloper s. g oogle.c om/r ec ap t cha▪
+▪ http://w w w . g oogle.c om▪
+3.Generate site and secret keys from the reCAPTCHA website for use with3.
+Scenario.hid_authchain_recaptcha :
+a.Visit the reCAPTCHA Adminis tr ation  Portal at http://w w w . g oogle.c om/r ec ap t cha/ . a.
+b.Click the Get ReCAPTCHA button. b.
+c.Click either the Sign up Now! button  or the My Account link on the left side menu. c.
+d.Enter a current username and password. Create a new username and password if you do not haved.
+one. Click Sign in .
+The Register a new site page loads if you have not yet added any sites. If you’ve registered one or
+more sites, then the Manage your reCAPTCHA API keys page loads with a list of your registered
+sites.
+e.Enter in a Label for your site that will make it easy for you to identif y  the site in the future. e.
+Enter the name or domain name of the Bravura Security Fabric  server in the Domain field.  For
+example:  
+servername.bravurasecurity.com 
+or
+bravurasecurity.com 
+f.Click Register . f.
+This generates site and secret keys to be used for the fields  within
+Scenario.hid_authchain_recaptcha .
+4.Install Scenario.hid_authchain_recaptcha . 4.
+5.Modify the RECAPTCHA settings  in the hid_global_c on figur ation  Manage external data store  (DBE) 5.
+module table to populate the SITE_KEY and SECRET_KEY fields  with the keys generated from the
+reCAPTCHA website:namespace RECAPTCHA
+setting SITE_KEY
+value <site key value>
+description The Site Key provided by Google ReCaptcha.
+ComponentOwnerFQN Scenario.hid_authchain_recaptcha
+  
+namespace RECAPTCHA
+setting SECRET_KEY
+value <secret key value>
+description The Secret Key provided by Google ReCaptcha.
+ComponentOwnerFQN Scenario.hid_authchain_recaptcha
+  
+namespace RECAPTCHA
+setting HTTPS_PROXY
+value http s:// <proxy server IP> :<port> /
+description The optional  HTTPS proxy.
+ComponentOwnerFQN Scenario.hid_authchain_recaptcha
+Ensure that users cannot login using nothing more than the reCAPTCHA plugin. This would eff ectively
+allow anyone access to Bravura Security Fabric. The reCAPTCHA plugin should only be used in
+c ombination  with other authentic ation  methods, not as an alt ernative  to a password or other default
+methods.
+After  updating  the hid_global_c onfiguration  table with the SITE_KEY and SECRET_KEY, it can take
+some time  before reCAPTCHA can be used. It may take 5-10 minutes for the skin to rebuild in the
+background.
+T r oubleshooting  reCAPTCHA
+After  upgrading Bravura Security Fabric , the reCAPTCHA plugin may not render properly with the "Human
+or robot?" checkbox.1.Wait 10 minutes , or 20 minutes on secondary nodes. It can take some time  for skin changes to take 1.
+a ff ect.
+2.If the problem is not resolved check the external data store ( extdb ) table to see if SITE_KEY and 2.
+SECRET_KEY fields  are restored with REPLACEME value. If they are, fix them, update and replicate.
+Wait 20 minutes.
+3.If the problem is not resolved, reload the component files and generate the skin files. 3.
+From the \<instance>\script\ directory, run the following command:
+manage_components.py load --patch
+This process can take some time.  The manage_components.py script loads the component files
+and generates skin files for them.
+4.Wait a few minutes for changes to get to non-primary servers.4.
+5.Close browsers if you have them open and then re-open them to test the changes.5.
+6.If you do not see changes as expected, try clearing the browser cache before re-opening the browser.6.
+httpauth
+Bravura Security Fabric  includes a generic tool, httpauth , for web server authentic ation  in t egr ation.
+The httpauth.exe program is both a CGI executable and an authentic ation  plugin. Once the tool is
+properly set up on a web server to run as an protected CGI executable, it will detect the user logging on
+the web server via the REMOTE_USER environment variable, and issue a one-time  pass for the user to
+login to Bravura Security Fabric  transparently, or with other Bravura Security Fabric  authentic ation
+methods.
+See Use case: Adding Smart Card authentic ation  (on page 918) for a use case inc orpor ating  smart card
+authentic ation.To c on figur e  Bravura Security Fabric  to include an authentic ation  chain using httpauth :
+1.If e x ecution  is made on a remote IIS server, install and c on figur e  httpauth.exe on the web server 1.
+that is to provide the user authentic ation  service for Bravura Security Fabric .
+a.Copy httpauth.exe from the plugin directory, and idmsetup.inf from the <ins t ance> a.
+\p sc on fig\dir ect or y  to a protected directory on the web server. The two files must be located in the
+same directory.
+Con figur e  the web server to run the httpauth.exe as a cgi program.
+The idmsetup.inf file is required to provide the c ommunic ation  key (or Master Key)  and the
+BASE_IDSYNCH_URL and VIRTUALDIR values. Con figur e  the web server to deny any web access to
+idmsetup.inf . Alt ernativ ely ,  you can manually remove unused setup in f ormation  from the file
+and leave the following items:
+▪DATAKEY▪
+▪COMMKEY▪
+▪INSTANCENAME▪
+▪BASE_IDSYNCH_URL▪
+▪VIRTUALDIR▪
+b.Verify the ins t allation  by pointing  to httpauth.exe on the remote server with a browser. b.
+The browser should be redirected back to Bravura Security Fabric  with the authentic a t ed  user ID,
+remote web server name, and a temporary PASSID which is a non-reusable hash that expires within
+an hour. Note that Bravura Security Fabric  presents a login error until  it is c on figur ed  to
+authentic a t e  the user with this in f ormation.  A common error message is that the plugin failed to
+run.
+c. Optional  – Use a PSLangscript to modify the default behavior of httpauth.exe when it runs as c.
+a CGI.
+A sample script, httpauth.psl , is located in the samples directory. Copy the script to a plugin \
+sub-directory, within the directory containing httpauth.exe on the Bravura Security Fabric
+server. Modify the script as required.
+2.Enable the HTTPAUTH authentic ation  chain to verify in f ormation  returning from the web server with 2.
+httpauth.exe installed.
+3.Verify the c on figur ation  by using a browser to point to httpauth.exe on the remote web server. 3.
+The authentic a t ed  user should be able to login to Bravura Security Fabric  transparently.
+4.Customize the authentic ation  menu to include a link to the URL that runs httpauth on the web 4.
+server.
+The authselect.m4 file in the samples directory provides an example of how to do this.
+When a user attemp ts  to login:
+1.The user selects the link to the remote web service from the authentic ation  menu, or is directed 1.
+there, for example, by an authentic ation  chain selector module.
+2.The remote web server executes httpauth.exe as a cgi, using REMOTE_USER and SERVER_NAME 2.
+to redirect the browser to the Bravura Security Fabric  server.If a URL has not been specified  by the plugin, the default URL redirect is as follows:
+ BASE_IDSYNCH_URL + "/" + VIRTUALDIR + "/" + "HOSTID=" + <SERVER_NAME> + "&" + 
+    "PASSID=" + <GENERATED HASH> + "&" + "USER_IDENT=" + <REMOTE_USER> + "&" + 
+    "PSF_EXT=HTTPAUTH" + "&" + "TRANSACTION=F_OPTION"
+For example:
+http://myserver.com/idmsuite/?
+HOSTID=example.com&PASSID=<generated hash>&"USER_IDENT=USER1&PSF_EXT=HTTPAUTH&TRANSACTION=F_OPTION
+3.The HTTPAUTH custom authentic ation  chain runs the external.pss module to execute 3.
+httpauth.exe as a plugin.
+The plugin validates the PASSID hash, generated by the cgie x ecution,  to ensure the
+USERID= <REMOTE_USER>  value has not been changed during the browser redirect.
+4.The user is granted a one time  pass to proceed to either access Bravura Security Fabric , or c ontinue 4.
+with authentic ation.
+Input for httpauth :
+ 
+  "" "" = { 
+      "environments" "" = { 
+          <available common gateway interface environment variables> 
+          ... 
+      } 
+      "parameters" "" { 
+          <parameters received from user> 
+      } 
+  } 
+Output:
+ 
+       "" "" = { 
+           "errmsg" = "<error messages if any>" 
+           "retval" = "<#>" # 0 on success; non-zero on error 
+           "userid" = "<profile ID>" # set the USERID parameter 
+           "accountid" = "<account ID>" # overrides the USER_IDENT parameter 
+           "hostid" = "<target system ID>" # overrides the HOSTID parameter 
+           "url" = "<redirect URL>" # optional 
+           "export_envs" = "<environment variables name>; ..."" 
+       } 
+T r oubleshooting  httpauth
+If Bravura Security Fabric  returns a login failure, or the user is prompted for Bravura Security Fabric
+password input, it is likely that:▪The target system name is not matching the returning HOSTID on the redirect URL.▪
+▪The authentic a t ed  web server user account does not exist on the account list of the target system. ▪
+Check that auto-discovery has been run to import the web server user account list into Bravura
+Security Fabric .
+▪The target system is not in the identific ation  priority list. ▪
+authanonreg
+Bravura Security Fabric  includes a sample plugin, authanonreg , that allows anonymous users who do
+not have pr e-e xisting  cr edentials  to create a new user pr ofile  using a pr e-de fined  request.
+The anonymous user authentic a t es  using a CAPTCHA, and Bravura Security Fabric  redirects them to the
+pr e-de fined  request for a new user account. The CAPTCHA ensures that pr ofiles  are not created by
+automated programs.
+To c on figur e  Bravura Security Fabric  to include an authentic ation  chain using authanonreg :
+1.Copy the authanonreg.psl file from the samples directory to the plugin directory. 1.
+2.Create a new user on the sour ce-of -pr ofiles  target system to be the designated anonymous user 2.
+account; for example, ”Guest” or ” Anon”.
+3.Create a new user class, and select the new user from step 2 as an explicit user in the class. ( Manage 3.
+the system > Policies > User classes )
+4.Create a new pr e-de fined  request for anonymous login ( Manage the system > W orkflo w  > Pr e- 4.
+de fined  requests ):
+▪Intended recipients : New Users ▪
+▪ Oper ations  > New Account : Enable “Create account” and click Update . Also click Select and ▪
+choose a template.
+▪ Attribut es : Select “BASEATTRIBUTE” and click Select . Ensure that “EMAIL” attribut e  is not optional. ▪
+▪Access control : Select the user class from step 3 and set P articipan t  mapping to “REQUESTER”. ▪
+5.Create a new authentic ation  chain and c on figur e  it for reCAPTCHA. See reCAPTCHA  (on page 991). 5.
+6.Create a new authentic ation  chain with two modules for anonymous log-in: 6.
+External program: ▪ Control type : required ▪
+▪External program : authanonreg.psl ▪
+▪Interface c ommunic ation  protocol : Authentic ation  plugin ▪
+▪ Description : “Anonymous Login”, for example. ▪
+Authentic ation  chain selector: ▪ Control type : required ▪
+▪Available chains : the reCAPTCHA chain (from step 5). ▪
+▪Interface c ommunic ation  protocol : Authentic ation  plugin ▪
+7.Disable and modify the DEFAULT_LOGIN authentic ation  chain: 7.
+▪Control type : required ▪
+▪Run this plugin to aut omatic ally  select a sub-chain : authanonreg.psl ▪
+▪Available chains : Anonymous chain (from step 6), Use PSFEXT_VALUES ▪
+▪Interface c ommunic ation  protocol : Authentic ation  plugin ▪8.Enable the DEFAULT_LOGIN authentic ation  chain. 8.
+9.Modify the authanonreg.psl file to include the following:  9.
+var $ANONYMOUS_USER_ID= "<anonymous user ID>" ; 
+var $ANONYMOUS_AUTHCHAIN= "<anonymous authentication chain ID>" ; 
+var $ANONYMOUS_PREQID= "<anonymous pre-defined request ID>" ; 
+When a user logs in:
+1.The anonymous user attemp ts  the fir s t authentic ation  stage using the reCAPTCHA module. If the 1.
+response is validated, then authentic ation  proceeds.
+2.The anonymous user enters the in f ormation  and cr edentials  required to create a new account, and 2.
+submits the request.
+You can c on figur e  email notific ation  in order to send the user an activ ation  email containing a link to a
+page that allows him to activ a t e  his own account. By default, activ ation  emails are not sent.
+By default, the activation  link expires 24 hours after  the request is submitted.  The value for the length of
+expiry is controlled by the registry key “AnonymousRequestExpiry” DWORD value.
+authuser attr
+Bravura Security Fabric  includes a sample plugin, authuserattr , that allows users to authentic a t e
+using pr ofile  attribut es.
+To c on figur e  Bravura Security Fabric  to include an authentic ation  chain using authuserattr :
+1.Copy the authuserattr.psl file from the samples directory to the plugin directory. 1.
+2.Copy an m4 script from the samples directory into the <CUSTOMDIR> and regenerate the skins:2.
+a.Copy authuserattr.m4 from the samples directory to the <CUSTOMDIR> directory. a.
+b.Rename authuserattr.m4 to authchain.m4 . If authchain.m4 already exists, append b.
+the content of authuserattr.m4 to authchain.m4 .
+c.Generate and install a new set of skins ( make default en-us and make install c.
+default en-us for English).
+3.Create pr ofile  attribut es  for user to validate against. 3.
+a.The sample requires the DOB and EMAIL pr ofile  attribut es.  These attribut es  will need to be a.
+populated by the user before they can be used.
+4.Create a new custom authentic ation  chain: 4.
+External program: Description : "Attribut e  authentic ation” ,  for example.
+▪Control type : required ▪
+▪External program : authuser attr .p sl ▪
+▪Interface c ommunic ation  protocol : Authentic ation ▪
+plugin
+5.Disable and modify the DEFAULT_LOGIN authentic ation  chain: 5.
+▪Control type : required ▪
+▪Available chains : Attribut e  authentic ation,  Use PSFEXT_VALUES. ▪6.Enable the DEFAULT_LOGIN authentic ation  chain. 6.
+When a user logs in they will attemp t  to authentic a t e  using their date of birth and email address. If the
+response is validated, then authentic ation  proceeds.
+fedidp_response
+The fedidp_response.py plugin is called by the fedidp-assert authentic ation  chain module, and generates
+a SAML assertion  using a Mako XML template. This plugin is used by the Scenario.hid_saml_idp
+component as part of SAML federated login.Password policy
+Bravura Security Fabric  can enforce a wide variety of rules as to what c onstitut es  a valid new password.
+Use these rules to:
+▪Enforce an enterprise-wide password security policy, or diff er en t  policies for groups of target systems, ▪
+or for classes of user, or diff er en t  managed systems.
+▪Ensure that passwords are strong enough to be accepted on, and c ompatible  with, all target systems ▪
+and managed systems.
+▪Ensure that the passwords used by console-only product administrator s are strong. Console-only product ▪
+administrator s, such as superuser, do not have an account on any target system; their passwords are
+validated by Bravura Security Fabric .
+▪Control what passwords users may select when they reset their own f or g otten  passwords. ▪
+▪Control what passwords users may select when they create new accounts.▪
+▪Generate random passwords.▪
+Users can select from the list of random passwords when they type new password values. Bravura
+Security Fabric  selects random passwords when performing resets for managed systems.
+Bravura Security Fabric  password policy is enforced when new passwords are created, or passwords are
+reset (using the web interface or via transparent s ynchr oniz ation).
+There are three default password policies used by Bravura Security Fabric :
+▪DEFAULT – applied to all users, including superusers▪
+▪PAM_DEFAULT – applied to managed system policies, when using Bravura Privilege  features ▪
+▪PERSONAL_VAULT – applied to personal vaults▪
+These default policies are de fined  in Manage the system  (PSA) module ( Policies > Password policies ).
+For privileged access features, you can create a separate password policy for each managed system
+policy. Once created, it is used instead of the default policy for that group.
+Global (default) password policy
+A global password policy provides the most clear and understandable experience to users.
+Essentially ,  a global password policy strikes a bargain with users – only one password to remember, and
+they can easily change it without calling the help desk; in exchange the password will be more complex
+and they will have to change it more often.
+When Bravura Security Fabric  is c on figur ed  to enforce a global password policy, it will never accept or
+attemp t  to propagate a password unless it meets the strength rules set in the policy. By combining the
+requirements from each system a ff ect ed  by a global policy, Bravura Security Fabric  forces users to select
+passwords that are accepted on every system. For instance, in the case of an or g aniz ation  where users
+may enter very long passwords on Activ e  Directory but only 8 characters on an OS/390 mainframe,
+Bravura Security Fabric  can require that passwords be 8 characters long, at most. Alt ernativ ely ,  BravuraSecurity Fabric  can support longer passwords, but truncate them when it updates the mainframe. Users
+generally prefer the maximum length rule, as it is easier to understand than aut omatic  trunc ation.
+In general, systems enforce one of three types of password rules:
+▪Complexity requirements ensure that users do not select easily-guessed passwords. Example rules▪
+are: disallowing any permut ation  of the user’s login ID, password history, requiring mixed letter s  and
+digits, forbidding dictionar y  words, etc.
+▪ R epr esen t ational  constraints limit what can be physically stored in a password field  on a given system. ▪
+Usually there are just two such rules: maximum length and allowable character set.
+▪Historical constraints. Examples include max and min password age, number of passwords or days▪
+after  which r epetitions  are allowed
+The alt ernativ e,  of de fining  diff er en t  password policies for every target system or for groups of target
+systems, is user-unfriendly. To update their passwords, users must select a system, choose a password,
+wait for the password update to complete, possibly r e-authentic a t e,  choose another system, choose a
+diff er en t  password, and so on. Users must then remember multiple  passwords and will c ontinue  to
+experience many password problems. It has been shown that users with many passwords have a strong
+tendency to write down their passwords.
+The default global password policy uses some heuristics  to make passwords "easy-to-pronounce, easier
+to remember". This is particularly  helpful to users in an implemen t ation  of Bravura Pass ; however in an
+implemen t ation  of Bravura Privilege , where a higher degree of randomness is required, additional
+strength rules are recommended. See Privileged access password policy  (on page 1000) for more.
+Privileged access password policy
+You can use Bravura Security Fabric  to create cr edentials  on target systems when managing them. The
+default privilegd access password policy is used for this and can be modified  at Manage the system >
+Policies > Password policies  > PAM_DEFAULT . This password policy is also used when cr eating  a new
+managed system policy, which can be modified  individually.
+The default password policy uses some heuristics  to make passwords "easy-to-pronounce, easier to
+remember". In an implemen t ation  of Bravura Privilege , where thousands of passwords can be generated
+and a higher degree of entropy is required, additional  strength rules are recommended.
+The simplest way around the default "easy to pronounce" heuristics  and to increase the entropy of
+generated passwords, is to use whitelists  (on page 1019) at the bottom  of the policy, which fit the rules a
+specific  policy requires. For example, for the password to contain at least 5 uppercase letter s,  the
+whitelisted characters would be all the alphabet letter s,  from A to Z. Same for lowercase letter s,  numbers
+and symbols. Spelling out the possible characters used in a password is also a good way to be sure you
+control which characters are allowed in a password, which is important for many target systems types
+which reduce the allowable character set.
+When whitelists are used, the minimum number of characters in a password should match the total of
+the whitelist rule counts, and the Maximum number should also be set (its maximum value is 150).

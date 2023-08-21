@@ -1,0 +1,101 @@
+Privilege P attern:  Self-service account management
+Users with the Account Trustees privilege can use self-service requests to onboard, update and offboar d
+accounts managed by Bravura Privilege . Users with the Requesters privilege can see and request access
+to the accounts, so long as they are on the same team the account is onboarded to.
+Accounts can be migrated to another team, and can be changed from a team account to a personal
+admin account, or vice versa.
+Account trustees have access to the following pr e-de fined  requests:
+▪Account: Onboard  (on page 2201) ▪
+▪Account: Update  (on page 2211) ▪
+▪Account: Offboar d  (on page 2220) ▪
+In order to manage accounts, a system needs to be onboarded  (on page 2183).
+Onboarding an account
+Users assigned as account trustees can use the Account: Onboard request to onboard an account to a
+team.
+1.From the home page, click Manage resources . 1.
+2.Click Account: Onboard . 2.
+3.Select a managed account.3.Click Next .
+4.Select the:4.▪Managed System Policy ID The ID of the policy used to manage the account ▪
+▪Disclosure option  Select the appropriate checkboxes for the disclosure methods by which the team ▪
+can access the account.
+▪Maximum Concurrent Checkout  The number of concurrent checkouts for the account. If ▪
+unspecified,  this is set to 1.Click Next .
+5.Select the Account Team that will access the account. 5.Click Next .
+6.If the disclosure method was by direct c onnection,  determine whether sessions will be monitored by: 6.
+▪Clipboard▪
+▪Keystroke▪
+▪Screen▪Click Next .
+7.Select the Users with ’ cr edential  manager’ privilege can override and randomize the password 7.
+checkbox if you want to allow users with the cr edential  manager role to override and randomize
+checked-out passwordsPasswords will always be randomized on check-in. This option  provides the user with buttons  to
+override or randomize on demand.
+8.Click Submit . 8.Bravura Security Fabric  notifies  authorizers to review the request if required.
+9.Click the View request link at the top of the page to view the status of the request. 9.
+API aut omation  for account onboard
+Once the API has been c on figur ed  (See Bravura Security Fabric  Remote API ( api.pdf )), and your script has
+been authentic a t ed  to the API (Login or LoginEx API calls), the WF API calls can be used to create an API
+request to onboard and account.
+Use the WFPDRSubmit function  to create a w orkflo w  request and submit the request for publishing.
+When submitting  a request, use ”ONBOARD_ACCOUNT” as the PDR ID. The request uses the following
+attribut es:
+attrk e y value
+HOSTID The ID of the system on which the account resides.
+ACCOUNT The ID of the account to be onboarded.
+MSP_ID The managed system policy the account will be binded to.
+MA_TEAM The team that will account will be assigned to.
+REQUEST_TEAM The team in which its account trustee(s) will be used to
+authorize the request.
+DISCLOSURE_METHOD_DIRECT T to enable direct c onnection  disclosures for the account, F to
+disable.
+DISCLOSURE_METHOD_VIEW_COPY T to enable display and copy disclosures for the account, F to
+disable.
+SESSMON_KEYSTROKE T to enable keystroke recording for direct c onnections,  F to
+disable.
+SESSMON_CLIPBOARD T to enable clipboard recording for direct c onnections,  F to
+disable.
+SESSMON_SCREENSHOT T to enable screen recording for direct c onnections,  F to disable.
+MA_PWD_OVERRIDE T to allow cr edential  managers to randomize or override
+account during check-out, F to disallow.
+MA_RES_CHECKOUT_LIMIT The number of concurrent checkouts for the account.
+See REQUEST_TEAM
+The REQUEST_TEAM attribut e  is the team in which its system trustee(s) will be used to authorize the
+request. This can be a diff er en t  value depending on which PDR is used. In some cases, the value is auto
+filled  and in other cases, a value is not required.PDR ID API submittable REQUEST_TEAM
+requiredREQUEST_TEAM aut o-
+filled
+BATCH_REQUEST No N/A N/A
+CREATE_LARGE_CREDENTIAL No N/A N/A
+UPDATE_LARGE_CREDENTIAL No N/A N/A
+WEBAPP_DISCLOSURE_CREATE No N/A N/A
+WEBAPP_DISCLOSURE_DELETE Yes No N/A
+WEBAPP_DISCLOSURE_UPDATE No N/A N/A
+TEAM-CREATE Yes Yes Yes
+TEAM-DELETE Yes Yes Yes
+TEAM-MEMBERS Yes Yes Yes
+TEAM-UPDATE Yes Yes Yes
+CREATE_VAULT_SYSTEM Yes Yes Not required
+ARCHIVE_VAULT_SYSTEM Yes Yes Yes
+UPDATE_VAULT_SYSTEM (1 - same team) Yes Yes Yes
+UPDATE_VAULT_SYSTEM (2 - transfer) Yes Yes YesPDR ID API submittable REQUEST_TEAM
+requiredREQUEST_TEAM aut o-
+filled
+CREATE_VAULT_ACCOUNT (1 - team vault) Yes Yes Yes
+CREATE_VAULT_ACCOUNT (2 - system vault - same team) Yes Yes Yes
+CREATE_VAULT_ACCOUNT (3 - system vault - diff er en t
+team)Yes YesYes 
+ARCHIVE_VAULT_ACCOUNT Yes Yes Yes
+UPDATE_VAULT_ACCOUNT (1 - team vault) Yes Yes Yes
+UPDATE_VAULT_ACCOUNT (2 - system vault - same team) Yes Yes Yes
+UPDATE_VAULT_ACCOUNT (3 - system vault - transfer) Yes YesYes 
+ONBOARD_SYSTEM Yes Yes, but not enforced No
+ARCHIVE_ONBOARDED_SYSTEM Yes Yes, but not enforced No
+UPDATE_ONBOARDED_SYSTEM Yes No If the destination  team is
+unset or the destination
+team is the same as the
+source team
+ONBOARD_ACCOUNT Yes Yes, but not enforced No
+OFFBOARD_ACCOUNT Yes Yes Yes
+UPDATE_ONBOARDED_ACCOUNT Yes Yes, but not enforced No
+CREATE_PAMUTIL_API_USER Yes No Not required
+ improper display of the team in update/archive when the destination  team's vault trustee is not in a
+team owning the vault system. This will be fix ed  in a future release.

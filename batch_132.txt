@@ -1,0 +1,264 @@
+Pr e-de fined  requests
+The Bravura Security Fabric  self-service request facility provides a high degree of fle xibility ,  allowing users
+to request access changes that involve oper ations  on technical resources. Requesters may not
+understand the technical details, but can express the request in business terms. For example, users may
+understand they need to hire a contractor, schedule employee t ermination,  or move an employee to a
+new department, but may not understand the technical requirements of adding accounts on a target
+system, setting  an account t ermination  date, or managing group membership.
+Bravura Security Fabric  allows you to c on figur e  pr e-de fined  requests that:
+▪ De fine  common requests in terms that are familiar to users. ▪
+▪Reduce the number and complexity of steps required to make a request.▪
+You must be a product administrator  with the right to c on figur e  w orkflo w  setup to be able to c on figur e  pr e-
+de fined  requests.
+In f ormation  regarding the pr e-de fined  request is de fined  in six tabs:
+General Contains pr e-de fined  request ID, description,  URL, status of the pr e-de fined  request, where
+it can be accessed from, and intended recipients.
+Oper ations De fines  which oper ations  will be performed on which resources when the pr e-de fined
+request is approved. Oper ations  can be performed on managed groups, e xisting  accounts,
+new accounts, roles, and pr ofiles.  You can also de fine  custom oper ations  on other objects.
+Attribut es De fines  which attribut e  groups are included as part of the request. This can include pr ofile
+and request attribut es  or resource attribut es.
+Access control De fines  criteria by which a request is available to a user.
+Order and display De fines  sections  and display of the user interface.
+Summary Contains a summary of the pr e-de fined  request which includes the general in f ormation  and
+lists the oper ations,  attribut e  groups and default attribut es  that are c on figur ed  in the other
+tabs.
+P r e-defined  request status 
+When cr eating  a pr e-de fined  request you must set its status. For a pr e-de fined  request to be used it must
+be enabled. An enabled pr e-de fined  request can be deprecated once it is used.
+Submitting  pr e-defined  requests during a certific ation  campaign
+Reviewers’ requests to modify or revoke entitlemen ts  during a certific ation  campaign are submitted  via
+pr e-de fined  requests. Administrators can add customized pr e-de fined  requests when initiating
+certific ation  campaigns.
+Submitting  pr e-defined  requests using report output 
+Users with the ”Manage reports” adminis tr ativ e  right can feed the output of a report back to Bravura
+Security Fabric ’s w orkflo w  engine via a pr e-de fined  request.After  running a report, users can select a pr e-de fined  request to submit, and map report columns to
+pr ofile  and request attribut es.  The request can be submitted  immediately or scheduled along with the
+report. Segments of the report can be submitted  to pr e-de fined  requests with it er ativ e  submissions.
+Built-in pr e-de fined  requests
+The following is a list of built-in pr e-de fined  requests included in the Bravura Security Fabric :
+_AUTORES_ Used by the autores utility  during aut omatic  resource
+assignment.
+_CERT_ACCOUNT_GROUP_REMEDIATION_ Default r emediation  request for revoking account group
+memberships in certific ation.
+_CERT_ACCOUNT_REMEDIATION_ Default r emediation  request for revoking accounts in certific ation.
+_CERT_ATTR_REMEDIATION_ Default r emediation  request for updating  pr ofile  attribut es  in
+certific ation.
+_CERT_CHILD_GROUP_REMEDIATION_ Default r emediation  request for revoking child group
+memberships in certific ation.
+_CERT_ROLE_REMEDIATION_ Default r emediation  request for revoking a role assignment in
+certific ation.
+_CERT_TRANSFER_REMEDIATION_ Default r emediation  request for transferring a user pr ofile  in
+certific ation.
+_CERT_USER_REMEDIATION_ Default r emediation  request for revoking a user pr ofile  in
+certific ation.
+_COMPLETE_ATTRS_ Allows users to supply required pr ofile  and request attribut e
+values when enforced enrollment is enabled for this task.
+_DISABLE_ACCOUNTS_ Allows help desk users to disable other users’ accounts. The
+requester must be a member of the _GLOBAL_HELP_DESK_ user
+class and the GLOBAL_HELP_DESK rules must include the ”Disable
+account” privilege.
+_ENABLE_ACCOUNTS_ Allows help desk users to enable other users’ accounts. The
+requester must be a member of the _GLOBAL_HELP_DESK_ user
+class and the GLOBAL_HELP_DESK rules must include the ”Enable
+account” privilege.
+_GROUP_ADD_MEMBERS_ Allows group owners to add accounts and child groups as
+members to multiple  groups on target systems, using the Groups
+app (on page 1204).
+_GROUP_ADD_OWNERS_ Allows group owners to add owners to multiple  groups on target
+systems, using the Groups app  (on page 1204).
+_GROUP_ADD_PARENTGROUPS_ Allows group owners to add parent groups to multiple  groups on
+target systems, using the Groups app.
+_GROUP_CREATE_ Allows users who belong to the _GROUP_CREATE_USERS_ user
+class  (on page 733) to create a group on a target system, using the
+Groups app  (on page 1204)._GROUP_DELETE_ Allows group owners to delete a group on a target system, using
+the Groups app  (on page 1204).
+_GROUP_DELETE_MEMBERS Allows group owners to delete members from multiple  groups,
+using the Groups app  (on page 1204).
+_GROUP_DELETE_OWNERS Allows group owners to delete owners from a multiple  groups,
+using the Groups app  (on page 1204).
+_GROUP_DELETE_PARENTGROUPS Allows group owners to delete parent groups from multiple
+groups, using the Groups app  (on page 1204).
+_GROUP_UPDATE_ATTRS Allows group owners to update attribut es  on one or more groups,
+using the Groups app  (on page 1204).
+_GROUP_UPDATE_MEMBERS Allows group owners to add or remove members from a group,
+using the Groups app  (on page 1204).
+_GROUP_UPDATE_OWNERS Allows group owners to add or remove owners from a group,
+using the Groups app  (on page 1204).
+_GROUP_UPDATE_PARENTGROUPS Allows group owners to add or remove parent groups from a
+group, using the Groups app  (on page 1204).
+_IDTRACK_ Used by the idtrack utility  when submitting  requests.
+_RESOLVE_ENFORCEMENT_VIOLATIONS_ This pr e-de fined  request is used for rbacenforce -generated
+requests. By default, it is enabled but not accessible to requesters.
+_RESOLVE_ROLE_DEFICITS_ Allows users to add missing role entitlemen ts.
+_RESOLVE_SOD_VIOLATIONS_ Allows users to resolve SoD rules violations.
+_UPDATE_ACCOUNTS_ Allows users to request to add or delete accounts from their
+pr ofile  or other users’ pr ofiles,  when the requester has
+the ”Create account” permission and a template account exists.
+_UPDATE_ATTRS_ Allows users to update pr ofile  in f ormation  for themselves or
+others, when the requester has the ”Update pr ofile”  permission.
+_UPDATE_GROUPS_ Allows users to add or revoke group memberships for themselves
+or others, when the requester has the ”Manage group
+memberships” permission and groups are managed.
+_UPDATE_ROLES_ Allows users to add or remove roles from their pr ofiles  or other
+users’ pr ofiles,  when the requester has the ” Add role” permission
+and a role exists.
+_USER_ADD_GROUPS_ Allows users to join groups using the Groups app.
+_USER_DELETE_GROUPS_ Allows users to leave groups using the Groups app.
+Getting  started
+Requirements 
+Before you can create a pr e-de fined  request, you need to set up:
+▪ Attribut e  groups  (on page 1304) ▪
+▪Managed groups  (on page 585) ▪If your license includes Bravura Identity , you can also set up:
+▪Templates  (on page 622) ▪
+▪Roles  (on page 635) ▪
+▪Network Resources  (on page 575) ▪
+Planning 
+The way you c on figur e  the pr e-de fined  request depends on whether they will be submitted  from the View
+and update pr ofile  (IDR) module, from report output, or from certific ation.  Bravura Security  recommends
+that you create separate pr e-de fined  requests to be used specific ally  with reports or with certific ation,
+because they have diff er en t  c on figur ation  requirements.
+Before cr eating  your pr e-de fined  requests determine:
+▪Who requires permission to create pr e-de fined  requests? ▪
+▪For each pr e-de fined  request, who should be able to access and/or edit that request? For example, if ▪
+it is a request that will be available in reports, the user will also need permission to run reports.
+▪How will you manage those permissions? For example, will you have a group on Activ e  Directory that ▪
+is attached  to a user class, or will you explicitly attach  accounts to a user class?
+▪Which requests do you want to run from the View and update pr ofile  (IDR) module? Bravura ▪
+Security recommends that you do not make these requests available to reports or certific ation.
+▪Which requests do you want to run from reports? Only these pr e-de fined  requests should be made ▪
+available to reports by enabling the Accessible from report option.
+▪Which requests do you want to run from certific ation?  Only these pr e-de fined  requests should be ▪
+made available to certific ation  by enabling the Accessible from certific ation  option.
+Best pr actices  
+▪Create pr e-de fined  requests which are only used for reports, a separate set to be used for ▪
+certific ation,  and a separate set to be used from the View and update pr ofile  (IDR) module.
+▪Use the principle of least privilege; only provide users with privileges which are essential  for them to ▪
+do their work.
+▪When using report output to submit requests, do a trial run with a subset of data before using all of▪
+the records.
+Na vig ation  steps 
+You use the Pr e-de fined  request in f ormation  page to c on figur e  general in f ormation,  and to access
+additional  c on figur ation  settings.  To c on figur e  pr e-de fined  requests:
+1.Click Manage the system > W orkflo w  > Pr e-de fined  requests . 1.
+2.Create or select the request you want to de fine. 2.
+You cannot modify a deprecated pre-de fined  request. You must restore it firs t.
+Changes to a pre-de fined  request that has been scheduled to run in a report can cause serious
+problems. E diting  the pre-de fined  request will change its c omposition  and may invalidate the attribut emappings. There is also the possibility that modifying the pre-de fined  request could change the report
+to pre-de fined  request’s intended result.
+Bravura Security Fabric  will warn you if the request is scheduled to run in a report; however, you can still
+edit the pr e-de fined  request. Remember to thoroughly test your changes.
+Examples
+This section  includes steps through some typical examples for pr e-de fined  requests.
+▪Request a group membership  (on page 1315) ▪
+▪Create a new user using a role  (on page 1320) ▪
+▪Request a new desktop computer  (on page 1325) ▪
+▪Update a subordinate’s scheduled t ermination  (on page 1326) ▪
+▪Use report output to disable orphaned accounts  (on page 1328) ▪
+▪Use report output to enable disabled accounts  (on page 1330) ▪
+Example: Request a group membership
+This example demonstrates how to add a pr e-de fined  request to allow users to easily request
+membership to a limited set of groups. It assumes you have set up a target system and managed groups
+(on page 585).
+1.Click Manage the system > W orkflo w  > Pr e-de fined  requests  and add a new request with the 1.
+following general settings:
+▪ID CHANGELOCALGROUP ▪
+▪ Description  Change local group ▪
+▪Enabled  Selected ▪
+▪Intended recipients  Existing  users ▪
+▪ Ins tructions  Select options  to join or leave your local group. ▪
+2.Click Add. 2.
+You can now de fine  oper ations  and other parameters.  Define  oper ations  
+For this example, the request is to assign or revoke group memberships:
+1.Click the Oper ations  tab, then the Managed group sub-tab. 1.
+2.Click Select… to select managed groups that you want included in the request. 2.
+Click Select .
+3.Select "Assign group" from the Oper ation  drop-down list, and "Optional"  from the Necessity drop- 3.
+down list next to each group.
+4.Click Update . 4.
+Add access controls to the request 
+For this case, use the default _EXISTING_USERS_ class to allow e xisting  users to request the new group
+membership.
+To set up access controls:
+1.Click the Access control tab. 1.
+2.Click Select… . 2.
+3.Select the _EXISTING_USERS_ user class and click Select . 3.
+Bravura Security Fabric  warns that you need to complete the access control c on figur ation  by mapping
+user class participan ts  to a participan t  in the policy (requester or recipient).
+4.Set the P articipan t  mapping to REQUESTER. 4.
+5.Click Update . 5.Submit a request 
+To submit the pr e-de fined  request, login as an end user:
+1.Click View and update pr ofile . 1.
+2.Click Change local group . 2.3.Select groups you want to join, then click Submit . 3.
+Create a new user using a standard pr e-de fined  request
+Bravura Workforce P attern  provides all the necessary c on figur ation  to allow users to submit onboarding
+requests for new employees, using the NEW-EMPLOYEE pr e-de fined  request.
+This example shows you how to create a new user pr ofile  using a pr e-de fined  request NEW-EMPLOYEE.
+Requirement
+This example assumes that:
+▪You have installed Bravura Workforce P attern  so the pr e-de fined  request NEW-EMPLOYEE has been ▪
+added.
+▪You have linked the template account AD_TEMPLATE to an actual account on the Activ e  Directory ▪
+target system.
+▪You have updated the im_policy_authoriz ation  rule for the pr e-de fined  request (PDR) NEW- ▪
+EMPLOYEE.
+Create a new user
+To create a new user:
+1.Log into the Bravura Security Fabric  web app as an end user. 1.
+2.Click Create a new user pr ofile . 2.
+3.Select New employee basic setup . 3.The New employee basic setup request  will be aut omatic ally  triggered if it is the only available
+request type in the Create a new user profile  menu.
+4.Enter Basic in f ormation  for the new user. 4.
+5.Click Next . 5.
+6.Enter Mobile in f ormation . 6.
+Click Next .
+7.Enter Personally identif ying  in f ormation . 7.
+Click Next .
+8.Enter Work contact in f ormation . 8.
+9.Click Submit . 9.
+10. Click the link at the top of the page to check the status of the request. 10.
+The status is displayed in the Requests app , which users use to track their requests.
+Approve the request
+To approve the submitted  NEW-EMPLOYEE request:
+1.Log in to the Bravura Security Fabric  web app as one of the authorizers of the request. 1.
+By default, the authorizers are selected by the authoriz ation  plugin from members of the HR
+department. You can update the im_policy_authoriz ation  rule for the NEW-EMPLOYEE PDR to assign
+authorizers.
+2.From the main menu, click Requests . 2.
+The Requests app opens.
+3.From the Results panel, select the request you want to review.3.
+Bravura Security Fabric  displays the details in the Actions  panel panel on the right.
+4.Review the request.4.
+5.Click Approve  and c on firm  the approval by clicking the Approve  button  below the notes field. 5.
+Track the results of the request
+1.To check the status of the submitted  NEW-EMPLOYEE request as the requester: 1.
+2.Log in to the Bravura Security Fabric  web app as the requester. 2.
+3.From the main menu, click Requests . 3.
+4.The Requests app opens.4.
+From the Results panel, select the request you want to review.
+Bravura Security Fabric  displays the details in the Actions  panel panel on the right.
+At fir s t the status will change to "Approved, performing requested oper ations".
+After  a few more minutes click the Refresh  button  on the request and you should see the status
+change to "Processed" with a comment in the Results column that says, "Success Created with login
+ID" indic ating  that the account has been created on Activ e  Directory.Example: Create a new user using a role
+This example demonstrates how to de fine  a request to hire a new sales r epr esen t ativ e,  based on a role
+that includes necessary accounts and groups.
+This case assumes that you have set up target systems and:
+▪ Con figur ed  template accounts and managed groups. ▪
+▪Added a role called SALESPERSON that contains standard accounts and groups required for sales▪
+employees.
+▪Created an attribut e  group called ORG-INFO to collect standard in f ormation  such as employment type. ▪
+1.Click Manage the system > W orkflo w  > Pr e-de fined  requests  and add a new request with the 1.
+following general settings  (on page 1332):
+▪ID NEW-SALES ▪
+▪ Description  Hire a Sales R epr esen t ativ e ▪
+▪Enabled  Selected ▪
+▪Intended recipients  New users ▪
+2.Click Add. 2.
+You can now de fine  oper ations  and other parameters.  
+Define  oper ations  
+For this use case, the request is to add a role to a new user pr ofile:
+1.Click the Oper ations  tab, then the Role sub-tab. 1.
+2.Click Select... in the upper table. 2.
+3.Select the SALESPERSON role and click Select . 3.
+4.Ensure the Necessity is set to ”Required”. 4.

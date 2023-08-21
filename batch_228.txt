@@ -1,0 +1,125 @@
+7.Assign privileges to the team groups:7.
+▪Team Trustees  Team trustees ▪
+▪Account Trustees  Account trustees ▪
+▪Approvers Approvers ▪
+▪Auto Approved  Auto_Approved and requesters ▪
+▪Requesters  Requesters ▪
+▪ Cr edential  Managers  Requesters and Cr edential_manag er ▪
+▪System Trustees  System trustees ▪
+The Cr edential_Manag er  privilege allows a user to override or randomize the stored password on a
+checked-out account.Click Next .8.Set the initial  team trustees for the new team. There must be at least one team trustee to create a 8.
+team.
+9.Click Submit . 9.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+10. Click the View request link at the top of the page to view the status of the request. 10.
+Once the request has been approved, the team will be c on figur ed.
+Add users to the additional  groups in the team.
+1.Log into Front-end (PSF) as a team trustee.1.
+2.From the home page, click Manage resources . 2.
+3.Click Team: Manage Group Membership . 3.
+4.Select the Vault-Team.4.
+Click Next .
+5.Select the Account Trustees, Approvers, Auto Approved, Requesters, System Trustees, Vault Trustees,5.
+Cr edential  Managers and Team Trustees groups.Click Next .
+6.Add members to each team group.6.
+7.Click Submit . 7.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+8.Click the View request link at the top of the page to view the status of the request. 8.
+Once submitted  and approved, the group’s membership will be updated with the users that have been
+selected.
+Onboard the Corporate AD system
+1.Log into Front-end (PSF) as a superuser.1.
+2.Click Manage the system > Privileged access > Managed systems 2.
+3.Select the Corporate AD managed system.3.
+4.Enter the name of the team that will manage this system4.5.Click Update . 5.
+Onboard Corporate AD accounts to a team
+1.Log into Front-end (PSF) as the account trustee for the corporate AD team.1.
+2.Click Manage Resources . 2.
+3.Click Account: Onboard . 3.
+4.Select an account to be managed by the corporate AD team.4.Click Next .
+5.Select the standard policy as the Managed System Policy ID . 5.
+6.Enable View and Copy Password . 6.
+Click Next .7.Select the Corporate AD Accounts Team as the account team. 7.
+8.Click Next . 8.
+9.Click Next . 9.
+10. Enable Allow override and r andomiz ation  of password . 10.
+11. Click Submit . 11.
+Once the request has been approved, trustees of the AD Corporate team can manage accounts on this
+system.
+Example: Onboard accounts for a personal admin
+Instead of requesters on a team being granted access to an onboarded account, account trustees can give
+a specific  user exclusive access to the account, regardless of team. The user, referred to as the personal
+admin, would be able to check out an account without needing authoriz ation.  The access will also be
+aut omatic ally  checked out (for 12 hours by default) at login.
+Install the Scenario.pam_personal_admin component
+1.Log in to Front-end (PSF) as a superuser.1.
+2.From the main menu click Manage components. 2.
+3.Search and select the checkbox for required components.3.
+4.Click Install component(s) . 4.
+The panel on the right will indicate when the ins t allation  is complete.
+for this example.
+Any managed systems onboarded before the scenario is installed will need to be manually binded to the
+PERSONAL_ADMIN_ACCOUNTS managed system policy. This example will onboard accounts from the
+Corporate AD target system.
+1.Log into Front-end  as a superuser. 1.
+2.From the main menu click Manage components >  RefBuild . 2.
+3.Select the checkbox for Scenario.pam_personal_admin_management.3.
+4.Click Install component(s) . 4.
+The panel on the right will indicate when the ins t allation  is complete.
+5. Con figur e  the Corporate AD target system 5.
+1.Click Manage the system > Resources > Target systems > Manually de fined . 1.
+2.Select the Corporate AD target system.2.
+3.Click Change next to the Address field  and enter the domain for your environment. 3.
+4.Click Continue . 4.
+5.Click Update . 5.
+6.Click the Cr edentials  tab. 6.
+7.Enter your target’s cr edentials. 7.
+8.Click Update . 8.9.Click Maintenance > Auto discovery Execute auto discovery . 9.
+10. Click Continue . 10.
+with the additional  step of selecting  Aut omatic ally  create a Privileged Access Manager managed
+system .
+6.Click Privileged access > Managed system policies . 6.
+7.Select the PERSONAL_ADMIN_ACCOUNTS managed system policy.7.
+8.Click the Member systems tab. 8.
+9.Click Add new... . 9.
+10. Select the Corporate AD managed system and click Select . 10.
+11. Log into Front-end (PSF) as the account trustee for the corporate AD team. 11.
+12. Click Manage Resources . 12.
+13. Click Account: Onboard . 13.
+14. Select an account to be managed by the corporate AD team. 14.
+Click Next .
+15. Select the Personal administrator access policy as the Managed SystemPolicy ID . 15.
+16. Select disclosure options,  as needed. 16.
+Click Next .
+17. Select a user to be the privileged access owner (the personal admin) 17.
+18. Click Next . 18.
+19. Select session monitoring options,  if desired. 19.
+20. Click Next . 20.
+21. Enable Allow override and r andomiz ation  of password , if desired. 21.
+22. Click Submit . 22.
+Once the request has been approved, the personal admin will have instant access to the onboarded
+account the next time  they log in.
+Example: Create an OTP API user
+This example demonstrates how to create an OTP API user that can be used to retrieve managed account
+passwords using pamutil .
+Requirements
+This example requires managed accounts to be onboarded. See Example: Onboard users from an Activ e
+Directory target  (on page 2267) for an example.
+Create an OTP API group
+1.Log into Front-end (PSF) as a team trustee for the corporate AD accounts team.1.
+2.Use the Team: Update PDR. 2.3.Select the Corporate AD Accounts Team . 3.
+4.Add a new group called OTP API Trustee . 4.
+5.Provide this group with OTP trustee privileges.5.
+6.Submit the request.6.
+7.Use the Team: Management Group Membership PDR. 7.
+8.Add a user to the OTP API Trustee group. 8.
+OTP trustees are users who can make OTP API account management requests.
+Create an OTP_User
+1.Log into Front-end (PSF) as a user from the OTP API Trustee group created in Create an OTP API group 1.
+(on page 2279).
+Only an otp_api trustee can see the P AMUtil:  Create OTP API User PDR.
+2.Click the P AMUtil:  Create OTP API User PDR. 2.
+3.Choose the Corporate AD Accounts Team as the System Team. 3.
+4.Click Next . 4.
+5.Add a PAM OTP Account Description 5.
+6.Select the managed accounts onboarded earlier.6.

@@ -1,0 +1,299 @@
+Option Description
+-parentval <parent value> For -add and -delete actions,  specify the value of a parent attribut e.
+-list [<attrk e y>] List all restricted attribut e  values for attribut e  <attrk e y>;  if <attrk e y>  is omitted,  then restricted attribut e  values for all attribut es  are listed. The list
+is in the form of a KVGroup, with each attribut e  having its own sub-KVGroup containing KVPairs for the value/viewable value pairs, and optionally  a
+parent value. See Examples.
+-batchadd <attrk e y>  <datasource> Import the value/viewable value pairs from <datasource>, and add them to attribut e  <attrk e y>.
+-batchreplace <attrk e y>  <datasource> Import the value/viewable value pairs from <datasource>, and use them to replace e xisting  restricted values
+For the batch oper ations,  the <datasource> is in the form:
+<file name>;<type=csv|csv|dbdump|flr|kvg>
+The format should be one of the following:
+▪csv – comma-separated values, with the headers named VALUE , VIEWVALUE , and if the attribut e ▪
+has a parent attribut e,  PARENTVALUE; for example:
+         VALUE,VIEWVALUE,PARENTVALUE 
+         NY,"New York", USA 
+         CA,"California", USA
+▪dbdump – database dump file, either gzipped or uncompressed, with the fields  VALUE , ▪
+VIEWVALUE , PARENTVALUE .
+▪ flr – fix ed-leng th  records, each record being 2000 characters long, with the fir s t 1000 character field ▪
+for VALUE and the second 1000 character field  for VIEWVALUE ;
+▪kvg – single KVGroup containing either: ▪
+1.One to three KVPairs; a required pair with a VALUE key, an optional  pair with a VIEWVALUE key, 1.
+and an optional  pair with a PARENTVALUE key.
+Or
+2.One or more KVGroups, where each group is f ormatted  as in 1; for example: 2.
+"" "" = { 
+   "" "" = { 
+      "VALUE" = "F" 
+      "VIEWVALUE" = "Full time" 
+   } 
+   "" "" = { 
+      "VALUE" = "P" 
+      "VIEWVALUE" = "Part time" 
+   } 
+}
+Or,
+"" "" = { 
+   "" "" = { 
+      "VALUE" = "AL"       "VIEWVALUE" = "Alberta" 
+      "PARENTVALUE" ="CA" 
+   } 
+   "" "" = { 
+      "VALUE" = "QC" 
+      "VIEWVALUE" = "Quebec" 
+      "PARENTVALUE" ="CA" 
+   } 
+}
+See Accessing fla t - file  databases
+Bravura Security Fabric  includes a data access library to access fla t - file  databases, such as CSV. PSLang  can
+use this library to batch-load records from plain or gzipped files.
+Connection  string
+Databases are accessed using an ODBC-style c onnection  string. The string specifies  one of a number of
+providers, each of which knows how to talk to a certain kind of data source. Connection  strings look
+something like:
+filename;type=sometype;attr1=value1;attr2=value2;attr3=value3
+The filename only has meaning to the provider, and doesn’t necessarily have to be a file.
+The type parameter can currently specify one of the following providers:
+▪csv Comma Separated Value. The fir s t record in the file has the field  names. ▪
+The CSV provider can use the following parameter:
+▪separator The character to use to separate fields  from one another. The separator can be a tab, but ▪
+you must insert an actual tab character into the string to use it.
+▪ flr – A fix ed-leng th  record file. Records are a specified  number of bytes long. Field off se ts  and lengths ▪
+must be specified,  since there are no delimiters. Note that the end of lines are not treated specially;
+they are treated as just another byte.
+The flr provider can use the following parameters:
+▪length – The length of a single record in bytes. This parameter is required. ▪
+▪ field  – Specifies  a field,  and looks like NAME,off se t1,off se t2.  This means that a field  named NAME ▪
+will be read that starts at off se t1  and ends at off se t2.  This parameter is required and can be
+specified  multiple  times  to de fine  more than one field  in the file.
+▪trim – Used to aut omatic ally  trim leading, trailing, or leading and trailing spaces from data. ▪
+▪kvg – A KVGroup. If the KVGroup contains only sub-KVGroups, then each sub-KVGroup is treated as a ▪
+record, with its contents (both KVGroups and KVPairs) treated as fields.  If the KVGroup contains both
+sub-KVGroups and KVPairs, or only KVPairs, then the main KVGroup is treated as a single record with
+its sub-KVGroups and KVPairs as its fields.For any object that is treated as a field,  its key name is used as the field  name. For a KVPair that is
+treated as a field,  its value is treated as the field  value. For a KVGroup that is treated as a field,  its
+contents are treated c ollectiv ely  as the field  value.
+For a KVGroup whose sub-KVGroups are treated as records, the sub-KVGroups are scanned to collect
+all the unique field  names. When accessing a record that does not include all of the fields,  the fla t - file
+library returns empty strings for those fields.
+The CSV provider can read in gzipped files as well as plain files.
+Connection  string examples
+1.The following example opens a csv file named sqldump.csv, and uses tab as the separator instead of 1.
+comma. Note that you need to specify the actual tab character. The \t is used here just to illustrate.
+sqldump.csv;type=csv;separator=\t
+2.The following example open a csv file that include quoted values: 2.
+sqldump.csv;type=csv;quotation=\"
+3.The following example opens a fix ed-leng th  record file with records 60 bytes long. Two fields  will be 3.
+read out – one called ID made up of bytes 0 through 19 inclusive (20 bytes long), and another from
+bytes 20 through 34 inclusive (15 bytes long). Spaces are not trimmed.
+users.dat;type=flr;length=60;field=ID,0,19;field=NAME,20,34
+for more in f ormation  about the c onnection  string used for importing  data.
+Examples
+1.To import the value/viewable value pairs from the email.csv file and add them to the EMAIL pr ofile 1.
+and request attribut e:
+attrfixedval -batchadd EMAIL email.csv;type=csv
+2.To add a value to the STATE attribut e,  which is related to the COUNTRY parent attribut e: 2.
+attrfixedval.exe -add STATE CA California -parentval USA
+3.To list values for STATE:3.
+attrfixedval.exe -list STATE
+This would return something like:
+# KVGROUP-V1.0 
+"STATE" "" = { 
+  "AB" "Alberta" = { 
+    "parent" = "CANADA" 
+  } 
+  "CA" "California" = { 
+    "parent" = "US" 
+  } 
+  "NSW" "New South Wales" = { 
+    "parent" = "AUSTRALIA"   } 
+  "NY" "New York" = { 
+    "parent" = "USA" 
+  } 
+  "QC" "Quebec" = { 
+    "parent" = "CANADA" 
+  } 
+  "QLD" "Queensland" = { 
+    "parent" = "AUSTRALIA" 
+  } 
+  "TX" "Texas" = { 
+    "parent" = "USA" 
+  } 
+} .
+.
+De fining  dynamic restricted values using a plugin
+Where attribut e  values are dynamic - they can vary as a user proceeds through the request w orkflo w  -
+you can use a plugin to supply the values. Values may depend on the user or other attribut es,  and can be
+extracted from an external database. The plugin runs on each page as a user proceeds through a request.
+The c on figur ed  plugin must return the list of actual values. If the display value is set for an actual value,
+then the Requests  app uses the display value rather than the actual value. The display value used must be
+set s t atic ally;  it cannot be returned from the plugin. Display values are set using the procedure for
+manually or aut omatic ally  de fining  restricted values.
+If a plugin is used to supply restricted values, those values which are s t atic ally  de fined  (in the Manage the
+system  (PSA) module or by using attrfixedval ) are only displayed if their actual value is returned by
+the plugin.
+To enable this feature, type the name of the plugin in the Plugin used to generate a list of restricted
+values field  on the Pr ofile  and request in f ormation  page.
+There are no shipped plugins in use with this plugin point. Sample plugin scripts are located in the
+samples\ directory:
+▪restricted-value-plugin.psl  for attribut es  with no parent ▪
+▪restricted-value-hierattrs-plugin.psl  for attribut es  with a parent attribut e ▪
+See more in f ormation  about customizing restricted values plugin
+Requirements
+The plugin only sets actual values. If a display value has been set for any of the restricted values, then
+that value is displayed in place of the actual value. Display values must be set via the Manage the system
+(PSA) module prior to the e x ecution  of the plugin. See W riting  plugins  for general requirements.Ex ecution  points
+The plugin is run by the View and update pr ofile  (IDR) module and Requests app whenever attribut es  are
+edited.
+The plugin runs when a user clicks:
+▪Clicks a menu option  to create a new user pr ofile  or access an e xisting  user pr ofile. ▪
+▪Accesses an attribut e  group on a subsidiary page ▪
+▪Clicks Update after  editing  attribut es  on a subsidiary page ▪
+▪Clicks Continue  on a pr ofile  in f ormation  page. ▪
+When requesters de fine  or update a value for another attribut e,  the plugin runs again. This means that if
+an attribut e  with dynamic restricted values depends on the value of another attribut e,  all values remain
+valid.
+The plugin also runs when a request is submitted  to W orkflo w  Manager Service. If the attribut e  value
+does not match one of the values returned by the plugin, then request will be denied.
+Input
+Input passed to the plugin is as follows:
+"" "" = {
+  "attribute" = "<attribute id>"
+    # The ID of the attribute for which the plugin is being run.
+  "module" = "<idp|ids|idr|idwfm>"
+    # Where the plugin is being run from.
+  "userid" = "<profile ID>"
+    # The profile ID (if known) of the recipient.
+    # This is empty if a profile ID generator is used.
+  "requestID" = "<request ID>"
+    # The request ID for the associated request.
+  "sessionid" = "<session ID>" # session ID for the viewer
+  "operation" = "<operation type>"
+    # The possible operation that can be requested; 0 or more
+    # See Operation codes  (on page 3672) for a list of codes.
+  "parent" = "<parent attribute>"
+    #ID of the parent attribute, if set
+  "username" = "<full name>"
+    # The full name (if known) of the user for whom the plugin
+    # is being run.  Omitted if the userid is empty.
+  "recipient" "<user>" = { ... }
+    # Recipient of the request.  The KVGroup name is not present if the request is for a new user. 
+  "request" "" = { ... }
+    # Request details.    "requester" "user" = { ... }
+    # Requester's data. 
+  "viewer" "user" = { ... }
+    # The viewer's data. 
+  "model" "user" = { ... }
+    # Data of the model user used in profile comparison. 
+   }
+For example:
+"" "" = {
+  "attribute" = "STATE"
+  "module" = "idr"
+  "operation" = "GRUA"
+  "parent" = "COUNTY"
+  "requestID" = "536C788C1D12B58CADCDCCE4FD0E3D62"
+  "sessionid" = "Scced6c11-2387-4e0d-a09a-d42ed23360cc"
+  "viewer" "user" = {
+    "id" = "crysta.soria"
+    "name" = "Crysta Soria"
+  }
+}
+Output
+Output passed from the plugin is as follows:
+"" "" = {
+  "errmsg" = "<return message>" # Error messaged by the plugin
+  "retval" = "0" # Mandatory; zero is success and non-zero is failure
+  "restrictedvalue" = "<value>" # 1 or more; each value represents a
+                                # selection for the user.
+}
+If the attribut e  has a parent attribut e,  then additional  KVGroups can be returned in the format:
+  "parent" "<parent value>" {
+    "restrictedvalue" = "<value>" # 1 or more
+  }
+The following is an example of output that should be returned, where there is no parent attribut e:
+"" "" = {
+  "errmsg" = "success"
+  "restrictedvalue" = "Alberta"
+  "restrictedvalue" = "Quebec"  "restrictedvalue" = "New York"
+  "restrictedvalue" = "California"
+  "retval" = "0"
+}
+The following is an example of output that should be returned, where a parent attribut e  has been set:
+"" "" = {
+  "restrictedvalue" = "Other"
+  "parent" = "US" = {
+    "restrictedvalue" = "NY"
+    "restrictedvalue" = "WA"
+    "restrictedvalue" = "TX"
+    "restrictedvalue" = "CA"
+  "parent" = "CA" = {
+    "restrictedvalue" = "AB"
+    "restrictedvalue" = "QC"
+  "errmsg" = "success"
+  "retval" = "0"
+}
+If the parent’s value is empty, then any "restrictedvalue" KVPairs not inside a "parent" KVGroup ("Other"
+in the above example) would fall under the empty parent value. The plugin can also specify an explicit
+"parent" "" KVGroup for this case. If the parent value is not optional,  then any dangling "restrictedvalue"
+KVPairs are ignored.
+.
+Parent values
+Attribut es  can be inter-related in a hierarchical r elationship.  Common use cases include geographical
+loc ations  (for example, country > state/province > city > office  loc ation)  or or g aniz ational  hierarchy (for
+example, company > department > division).
+From an end-user’s per spectiv e,  this means the value they select for a parent attribut e  will determine the
+values that are available for a child attribut e .Both parent and child attribut es  must have restricted values. To set up a hierarchical r elationship
+between attribut es:
+1.Create an attribut e,  for example COUNTRY , that will be the parent attribut e. 1.
+2. De fine  the parent attribut e  with restricted values. 2.
+3.Create an attribut e,  for example STATE , that will be the child attribut e. 3.
+You must click Add to create the child attribut e  before the next step
+4.Enter the ID of the parent in the Parent attribut e  field  of the child attribut e. 4.
+Click Update . If the parent ID is valid, it’s values are added as settings  for restricted and default values.
+5.Click the Restricted values tab. 5.6.Select a Parent value , then enter Actual value and Displayed value . 6.
+The actual value will be stored uppercase unless the Restricted values are c ase-sensitiv e  option  is
+selected.
+To add additional  values, click More or Update to add rows.
+7.Click Update when you have added all values. 7.
+To delete a restricted value, select the check box next to the value then click Update .
+You can sort values alphabetic ally  according to actual value or displayed value.
+After  you have entered restricted values for a child attribut e,  you can set default values.
+If the actual value set contains the sequence !!! , Bravura Security Fabric will treat this text as a custom
+macro, and expand it according to the skin being used. Configuring  a custom macro in the actual value
+field  can prevent users from correctly defining  this value, and is not recommended. If loc aliz ation  is
+required, specify the macro tag in the displayed value field  instead.
+It is possible for parent and child attribut es  to be in separate attribut e  groups. For example, you could set
+up a pr e-de fined  request to add a New York employee. In this case the country and state would be auto-
+populated and hidden from the requester, who only needs to specify a city. The city attribut e  would be in
+a diff er en t  group to the country and state attribut es.
+Default values
+Attribut es  can be set up with default values, so that unless a user intervenes and changes them, the
+default values are entered with a request. This is the case for both required and optional  attribut es.Default values are always used for request-only attribut es,  or for pr ofile  attribut es  during requests for
+new pr ofiles.  They are not applied to pr ofile  attribut es  of e xisting  users.
+Default attribut e  values are aut omatic ally  saved with a request if the attribut e  is not part of an editable
+attribut e  group.
+On the Pr ofile  and request in f ormation  page, de fine  Default values by typing them in the text box
+(unrestricted values) or selecting  from the list of values (restricted or boolean values).
+If the attribut e  has a parent attribut e,  you can set default values based on each parent value. The
+parent’s restricted values must be de fined  fir s t.
+T esting  the validity of attribut e  values
+To test an attribut e  value’s validity, click the Test tab on the Pr ofile  and request attribut e  in f ormation
+page. Enter an attribut e  value to validate, then click the Test button.
+The value entered is validated against the Format requirement of input values  setting ,  the Regular
+expression used for v alidation  of input values setting ,  the Plugin used to generate a list of restricted
+values , and any manually entered restricted values.
+V alidating  and g ener ating  attribut e  values
+Bravura Security Fabric  can use a customized plugin to validate, provide values for, or alter the
+mandatory status of attribut es  according to business logic.
+The process can be summarized as follows:
+1.A user (requester, recipient, or authorizer) updates a change request page (submits or modifies  a 1.
+request).
+2.Bravura Security Fabric  sends all attribut e  values to the plugin. 2.
+3.The plugin determines whether:3.
+▪The value should be changed to a value specified  by the plugin ▪
+▪The value should be changed to a value input by the user▪
+▪The value should be unchanged▪
+▪The attribut e  field  should be disabled to prevent further changes ▪
+▪The attribut e  should be mandatory ▪
+▪The value should be hidden from the user▪

@@ -1,0 +1,380 @@
+▪Fixed an import rules e v aluation  problem when the last e v aluation  or de finition  was performed years ▪
+ago.
+▪Improved the Group set c on figur ation  report by hiding search fields  that do not apply to the ▪
+c on figur ation  item type selected.
+▪Fixed issue where pending group set check-outs appeared in the Group set check-outs / check-ins▪
+report.
+▪Added Or ches tr ations  report to display results of past or ches tr ations. ▪
+▪In the Pr ofile  and request attribut es  report, the number of users in search list and report result are the ▪
+same.
+▪The reports menu now orders privileged access c on figur ation,  oper ations,  and trend reports by logical ▪
+groups when displaying the list of reports.
+▪Improved the performance of the Managed account access trend report.▪
+▪Improved ’Group set access trend’ drill-downs to list by group sets with clickable links.▪
+▪The Request Volume Trend report shows all necessary data without any arithmetic  o v erflo w  issue ▪
+when there is a very long response time.
+▪When "Include deleted membership" is enabled for "Show group membership" type groups report, all▪
+deleted child groups are listed.
+▪ T ooltip  titles  are no longer displayed when the mouse hovers over dashboard graphs. ▪
+▪Removed the Expir ation  time  field  from the Password change history report, as this in f ormation  has ▪
+moved to the Privileged password e xpir ation  report.
+▪The "View pr operties  for this policy" managed system permission is no longer needed to view the ▪
+Privileged Account Access Trend dashboard report, as this report no longer includes in f ormation  on
+managed system policies.
+▪Corrected issue where the Import rule trial run results report did not display deleted managed system▪
+policies.
+▪ Modified  trend reports so that they do not show future dates when displaying in f ormation  based on ▪
+the most recent date.
+▪Removed the unexpected label "_CACHE_EXCEEDED_ICON_" for all the reports pinned on the home▪
+page.
+▪The "End date" column of the Event log report always contains a value. Previously, the value was blank▪
+when the start date and end date for an event were identic al.
+▪Fixed the duplic ation  of records in Auto-assignment surplus and de ficit  report. ▪
+▪Fixed the issue for all reports where the default ordering gets changed when a user refreshes the▪
+report page.
+▪The reason for revoke actions  in certific ation  campaigns is populated in the "Reason" column in the ▪
+Review certific ation  details report after  upgrading Bravura Security Fabric.
+▪Fixed incorrect title of exported reports (PDF and HTML version): ▪
+▪Compare numbers of group memberships▪
+▪Group changes▪
+▪Membership▪
+▪Roles violating  segr eg ation  of duties  rules ▪▪ Con figur ation  reviewer details ▪
+▪Group set excess memberships▪
+▪OrgChart loop▪
+▪Requester and recipient a ffinity ▪
+▪Saved c on figur ation  certific ation  setups ▪
+▪Custom▪
+▪Re-organized database schema so that "IP address/CIDR bitmask" value will be properly populated in▪
+Access to product features report
+▪Fixed inconsistencies between the Certific ation  details report and the Review certific ation  details ▪
+report.
+▪In the Compare Users report, multi- v alued  pr ofile  attribut es  show all values based on the pr ofile ▪
+attribut e  filt er  used.
+▪The Account changes history report can now filt er  by target ID. ▪
+▪Fixed an issue when segr eg ation  of duties  (SoD) e x ceptions  are not r e flect ed  properly in reports and ▪
+on the Violators tab of the SoD c on figur ation  page.
+▪ Multi- v alued  String, Integer, Link and File pr ofile  attribut es  show all entered values in ’Pr ofiles’  Report ▪
+when filt er ed  with ’User attribut es  to display’.
+▪Fixed "Search requests" report, handling of "Current day" request results.▪
+▪Fixed an issue to allow multi- v alued  pr ofile  attribut e  of type USER to be displayed correctly with a ▪
+clickable link in reports.
+▪Fixed to allow Role assignment report, Membership report, Group changes report, Resource-per-user▪
+report, and Resource attribut es  report display correctly multi- v alued  pr ofile  attribut e  of type USER
+with a click-able link.
+▪Fixed the issue where pr ofile  and request attribut es  displayed as GUIDs instead of the attribut e  value ▪
+in some reports.
+▪Fixed an issue so that the User pr ofile  report result now shows the value of mapped pr ofile  attribut e ▪
+"Manager" and any pr ofile  attribut e  of type "User" with a clickable link.
+▪Group changes reports now work correctly.▪
+▪Fixed the issue when the Group Changes report with selected "Delete Group Owner" oper ation ▪
+displays unexpected records.
+▪Fixed an issue when deleted child groups were not visible in the Groups and Membership reports.▪
+▪Managed account access trend dashboard now correctly logs and drills down auto-denied requests.▪
+▪Fixed the issue when assigned owner group is displayed as child group in Group changes report and as▪
+an account in Group changes report.
+▪Fixed an issue to allow Resource authorizers reports to display both explicit authorizers and group▪
+members of the group that managed a given group as authorizers.
+▪Solved the problem when the status value was empty in the Review certific ation  details report for ▪
+specific  oper ations.
+▪The Review certific ation  details report (certfullda t a.e x e)  shows "Review not required" instead of "No ▪
+approval required" in the status column when an item’s last review is still valid and the reviewersigned off on the segment without activ ely  certif ying  it again. The report also populates the "Result"
+column with "Reviewed on date X, previous review valid until  date Y".
+▪The new list of value "Unknown object" is added to the "Member type" drop down that allows user to▪
+filt er  out the group member other than account and group.
+▪Access disclosure plugins e x ecution  trend report no longer includes plugins executed from the ▪
+Personal vault app.
+▪ Certific ation  detail report and Pr ofiles  report work as expected with the managed group filt er  criteria. ▪
+▪The following column names have been changed in the Membership report:▪
+▪Child target system ID changed to Member target system ID.▪
+▪Child target system description  changed to Member target system description. ▪
+▪New fields  are filled  with the target system in f ormation  that the member (account or group) is from. ▪
+▪Updated the Group Changes report to not display duplicate results.▪
+▪Prevented extraneous errors in system log when running reports on account and child group▪
+membership of type USER.
+▪Fixed the issue that the "date-only" attribut e  of the selected group did not display the value in the ▪
+Membership report.
+▪Reviewer details report will not show duplicate certific ation  campaign entries for requests for ▪
+e x emption  to segr eg ation  of duties  rules (AESOD).
+▪Resource attribut es  can be used as criteria in reports. ▪
+▪Resource attribut e  of type USER is supported in Univ er salR esour ceAttribut eFilt er s  widget, so that the ▪
+users can successfully retrieve lists of black-listed users.
+▪Fixed an issue in Univ er salR esour ceAttribut eFilt er s  widget so that resource attribut es  of type ▪
+equal ’DateTime’ as well as display type equal ’Calendar’ can be filt er ed  in reports.
+▪Improved system performance to handle massive simultaneous group cr eation  requests without ▪
+service crash.
+▪Fixed Groups report to not show duplicate rows for multiple- v alue  attribut es ▪
+▪The Include invalid groups checkbox has been removed from group membership reports.▪
+▪The Recipient ID field  was removed from Con figur e  pr e-de fined  request based on report output ▪
+window for non-user-based pr e-de fined  requests.
+▪Fixed issue in the Group set check-outs/check-in report where request attribut es  were not being ▪
+displayed for all groups in the group set.
+▪Fixed issue where some request attribut e  types were not being displayed properly in Privileged access ▪
+check-out/check-in reports.
+▪Widget label "Pr ofile  and Request Attribut es"  is changed to "Pr ofile  attribut e"  in ▪
+Univ er salAttribut esFilt er  in reports.
+▪Added target system attribut e  type to Univ er salAttribut eFilt er s  and Univ er salR esour ceAttribut eFilt er s ▪
+search engines.
+▪Pre-approved account set check-outs are not included in Privileged access app request filt er s,  or ▪
+request counts for the Account Sets dashboard.
+▪Fixed the Resource authorizers report so that authorizers de fined  from user classes are listed ▪
+correctly.▪Duplicate delegates are no longer displayed in a certific ation  campaign reviewer list. ▪
+▪Role enforcement reports have correct counts.▪
+▪ Oper ation  ’extend expiry date of approved SOD’ is shown in 3 reports: Search requests, Request event ▪
+log, and Request Popularity.
+▪Fixed the Managed system status report to properly execute when there are long attribut es  used in ▪
+the criteria.
+▪ Certific ation  Review details report returns correct count for open cert segments. ▪
+▪Downloaded GroupApp reports are correctly named.▪
+▪Removed widgets no longer reappear when a pinned certific ation  dashboard is refreshed. ▪
+▪Fixed the Membership report to include "Include invalid users and accounts" checkbox in the Groups▪
+app.
+▪Corrected reports to be displayed in simplified  format when accessed from the Groups app. ▪
+▪Fixed error in logs when downloading saved reports.▪
+▪Corrected issue so that Guacamole access disclosure plugins are returned in the access disclosure▪
+plugins e x ecution  report.
+▪Fixed missing PuTTY over SSH plugin e x ecutions  in the access disclosure plugins e x ecution  report. ▪
+▪Enhanced the left side menu to no longer store in f ormation  locally. When you leave the reports page ▪
+and navigate to the groups section  it no longer displays the open side menu.
+▪Fixed Groups app so that there are no r outing  errors when running reports. ▪
+▪Updated the download button  so that it will work properly when a report reader downloads reports ▪
+saved by others.
+▪ Modified  c omput ation  of certified  pr ofiles  count to exclude deleted users. This will fix the incorrect ▪
+counts on the certific ation  dashboards.
+▪The Review certific ation  details report was revised to exclude oper ations  that were previously ▪
+associated with segr eg ation  of duties  (SoD) handling prior to the in tr oduction  of the certific ation  app.
+Now SoDs are granted an approved e x ception  at the SoD level rather than at the entitlemen t  level, so
+the oper ations  generated in certific ation  campaigns dealing with SoD entitlemen ts  need not be
+included in the report.
+▪Corrected issue so that the Daily notific ation  s t atistics  report returns the correct notific ation  date. ▪
+Scheduled jobs
+▪Fixed the issue when a new scheduled job created and all e xisting  jobs under it will be grayed out on ▪
+its r eplic ation  nodes.
+Segr eg ation  of duties  rules
+▪Made segr eg ation  of duties  (SoD)s page appear for updating  when editing  an already submitted ▪
+request.
+▪Disabled e x ception  button  (and removed newly requested AESOD oper ation  if applicable) on SoD ▪
+r esolution  page if removal of violated resources alone resolves SoD violations.▪Fixed issues with SoD violations  caused by r equesting  a new role where role required member is also ▪
+an e xisting  entitlemen t  that violates SoDs.
+▪Fixed issues where adding a new role which has required a template member could not be submitted. ▪
+▪Fixed issues with violations  caused by e xisting  entitlemen t  which is also requested under roles. ▪
+▪Fixed SoD issues with e xisting  violation  which is also requested under a role. ▪
+▪Requests can be submitted  successfully if extending AESOD fir s tly  then revoking a resource in AESOD ▪
+wizards
+▪Extended AESOD is saved and shown correctly in Update request wizards, SOD resolve wizards and▪
+request detail pages if the extended in f ormation  is set after  clearing up old values by clicking the
+Remove button.
+▪The Remove button  in SOD resolve and Update request wizards clears up values. ▪
+▪The Undo button  is enabled when extending AESOD. ▪
+▪The Segr eg ation  of duties  rule violate page always show once it has been loaded before. If the SoD ▪
+violation  doesn’t exist any more, a message is displayed to say no more violations  are detected, and
+the submit button  will be enabled.
+▪Fixed idwfm so that SoD violation  checking will include (requested and e xisting)  AESODs for auto-res ▪
+generated requests.
+▪The Resolve SoD violation  page works as expected when removing entitlemen ts  and undoing the ▪
+removal of entitlemen ts.
+▪The SoD panel shows correct entitlemen ts  in violation  and is correctly resolved when entitlemen ts  in ▪
+violation  are removed.
+▪No error is logged when SoD violations  are being resolved. ▪
+▪ Entitlemen ts  in violation  are displayed correctly in the SoD Resolve violations  panel when they are ▪
+removed and replaced.
+▪When a request does not cause new or additional  segr eg ation  of duties  (SoD) violations,  the request ▪
+can now be submitted  and the e xisting  Resolve violations  page does not show.
+▪The segr eg ation  of duties  page is now updated correctly when the entitlemen ts  in violation  are ▪
+removed and their removal is undone.
+▪Fixed an issue so that resolving SoD violations  related to child group violator works correctly. ▪
+▪ Modified  the behavior of request w orkflo w  when a user has an unresolved SOD violation  and submits ▪
+a new request. If the request doesn’t cause any extra violations,  the SOD "Resolve violations"  page
+will not show, and Bravura Security Fabric does not prevent the request from being submitted.
+▪Default r esolution  for segr eg ation  of duties  (SoD) rules will not show up for a user who is not a SoD ▪
+violator any more.
+▪Group counts in SoD Resolve violations  panel and sidebar details are now correctly displayed. ▪
+Search
+▪Wizard search will not throw an uncaught e x ception  when attempting  to search for a batchid that ▪
+does not exist.
+▪Fix an issue where pressing the Enter key to complete the advanced search criteria was actually▪
+switching Wizard pages.▪Advanced search returns correct result by resource attribut e  of DATETIME(Calendar only) type. ▪
+▪Fixed target systems search engine to return correct data for source of pr ofile  criteria. ▪
+▪Renamed original Session Monitor search engine filt er  "Session status" to "Session state". ▪
+▪Added Session Monitor search engine filt er  "Session status" for possible session statuses (Activ e, ▪
+Terminated by administrator request, Terminated by aut omatic  check-in, Stranded from session
+monitoring, Terminated because tampering was detected, Shutdown by user).
+▪Fixed an issue to display the full name for account searches.▪
+▪Fixed misleading/inconsistent descriptions  of ’comma-delimited list’ for system variables. ▪
+▪Fixed an issue with group member search results not paging properly.▪
+▪Resolved an issue where resource attribut es  shown in search engines were visible to users without ▪
+permission to view them.
+▪Fixed group attrdef search engine to properly choose between "group" and "account" in column ▪
+header and advanced search criteria text.
+▪Updated wizards to re-run search filt er  plugin when a user steps though the wizard screens. ▪
+▪Advanced search criteria can be completed for resource attribut es  groups. ▪
+▪Populated data for request attribut es  (ARCH_OPERATION_TYPE, DURATION_UNIT, ▪
+EXTENSION_DURATION_UNIT and SM_EVENT_TYPE) in request advance search on these request
+attribut es  for "has the value" and "does not has the value" operators.
+▪Removed unrelated operators for request attribut es  ACCOUNT_TARGET_LIST in request advance ▪
+search.
+▪Updated the search engine used when viewing a managed account’s password history on▪
+administrator pages.
+▪Enhanced search engine so that the latest requests will be displayed in the Requests app when the▪
+number of requests exceeds SEARCH_MAX_RESULTS.
+▪Privileged access app now supports searching on accounts and managed systems in account sets.▪
+Searching on groups and managed systems in group sets is also now supported.
+▪API users are excluded from the basic search results.▪
+▪Improved performance when searching managed groups.▪
+▪Missing parameter ’requestID’ is now present in KVG search filt er  plugin input file for three search ▪
+types: MANAGEDGROUP , ACCOUNTFORGROUP , and GROUPFORGROUP .
+▪Fixed searching manual password r andomiz ation  batches by initia t or . ▪
+▪The sysvar SEARCH_USER_WITH_ACCOUNTS now correctly displays results in the View and update▪
+pr ofile  table if the SEARCH_USER_WITH_ACCOUNTS module is set to enabled.
+▪Advanced search allows the searching for request using the Request Description. ▪
+▪Search results are correctly shown in the pr ofile  comparison w orkflo w . ▪
+▪Removed search for target system type attribut es. ▪
+▪Improved the search functionality  on the parent attribut e  field  to display results in the table before ▪
+adding a new Pr ofile  and request attribut e.Security
+▪Fixed an issue when setting  a resource attribut e  group to "Subsidiary" instead of "Main" and the pop- ▪
+up sub-page allows editing.
+▪Fixed an issue that ACL changes are not persisted if they are not on the fir s t page of results. ▪
+▪To mitig a t e  r e flect ed  XSS risk, action  and subAction  parameters were removed from ajax.exe. ▪
+▪Added a system variable to control whether HTTP headers such as X-Forwarded-For can be trusted.▪
+Security Questions
+▪Answers to security questions  are no longer displayed in plain text when help desk users are viewing ▪
+questions  for other users.
+▪Fixed case sensitivity  issue when checking for the user’s pr ofile  ID in security question  answers. ▪
+▪Fixed an issue when users have forced notific ations  or enrollment to not allow them to use other ▪
+modules before fulfilling  the notific ation  and enrollment requirements.
+Services
+▪Corrected Persistent Connector Service ( agtsvc ) to take the w aiting  period de fined  by the supported ▪
+connectors.
+▪Service ajaxsvc no longer crashes by unauthentic a t ed  requests. ▪
+▪Fixed an issue with the T r ansaction  Monitor Service to now retry responding to client services if those ▪
+services were unavailable on the fir s t attemp t.
+▪Improved performance of the W orkflo w  Manager Service when processing large requests. ▪
+▪Fixed stability issue in T r ansaction  Monitor Service idtm when the requests contain non-ascii ▪
+character in f ormation.
+▪Fixed an issue where the Ajax service quit unexpectedly.▪
+▪Improved the stability of the Ajax service when the service is under pressure.▪
+▪CORS headers in 200 OK response messages are validated against the values set in the system variable▪
+ALLOWED ORIGINS.
+Transparent password s ynchr oniz ation
+▪Fixed an issue when r esetting  a mainframe user’s password via transparent s ynchr oniz ation  to ensure ▪
+that the proper reply code is returned when a password strength check fails.
+▪The current Activ e  Directory interceptors honor the CIDR bitmask setting  for the Password Manager ▪
+service (idpm), instead of only honoring it for backwards c ompatibility  interceptors.
+▪Fixed the shipped Password Change Notific ation  Module (Windows Trigger) by default to prevent ▪
+computer accounts from participating  in password transparent s ynchr oniz ation.
+▪Corrected a Bravura Pass issue where the password rule, "not have been changed by you in the last N▪
+hours", was not honoured by transparent password s ynchr oniz ation.▪Enhanced the transparent s ynchr oniz ation  queue to display all queued items on all of the r eplic ation ▪
+nodes. As a result, the checkbox to cancel the queued item has been disabled for requests on non-
+managing nodes.
+▪Changed Password Manager service to handle transparent s ynchr oniz ation  requests when the target ▪
+pr ofile  is locked or disabled.
+User classes
+▪Added a fix to ensure that all user classes that are based on persistent listing  targets are recalculated if ▪
+the list changes.
+▪ Optimiz ed  user classes that use PSLang expressions by not r ec alculating  cache needlessly. ▪
+▪Invalid users can be deleted properly in the user class Explicit users tab.▪
+▪Fixed the issue when the MOBILE USERS user class displayed users with partial  r egis tr ation  as valid ▪
+members.
+▪Corrected the user class source option  when cr eating  modifying a user class. ▪
+User interface
+▪Fixed wizard searches to be properly identified  when re-using cached results. ▪
+▪Removed the na vig ational  search in the product header. ▪
+▪ Modified  wizards to ensure that the oper ation  is allowed in the PDR before adding to the request. ▪
+▪Fixed selection  issues in the Groups app; new behaviors are: ▪
+▪If multiple  items are already selected, selecting  a selected item(not the check box) will deselect the ▪
+one item.
+▪If multiple  items are already selected, selecting  an unselected item (not the check box) will select ▪
+the item (other items still selected).
+▪If single item is already selected, selecting  itself will deselect it. ▪
+▪Fixed an issue where the matching term selection  is disappearing on opening another pop-up in a ▪
+wizard.
+▪Fixed an error when some request statuses were not included in the request counter on the user’s▪
+home page.
+▪Fixed the user interface for wizard password pages so that users cannot accidentally submit a▪
+password that does not meet the password policy or submit a PDR before a password is filled  in.
+▪Updated the user interface for wizard password pages so that sidebar items appear as soon as the▪
+user types any character.
+▪Added a warning notific ation  that users will be shown when they enter a password that is invalid and ▪
+navigate away from the password page.
+▪Added back-end v alidation  to wizards so that all passwords submitted  through wizard password pages ▪
+are validated for strength.
+▪Enhanced v alidation  so that when the page is validated, even if there is an error message from the ▪
+plugin, the back-end c ontinues  v alidating  so that the user is shown all error messages the fir s t time
+they reach a page.▪Pressing X to close the pop-up of an optional  entitlemen t  search selector will discard changes. ▪
+▪Added support for the back-end to validate error messages related to entitlemen t  attribut es. ▪
+▪Added support for the w orkflo w  plugin ( wfreq ) to add error messages on entitlemen t  attribut es. ▪
+▪Fixed the issue when an error message appeared in the wizard before the actual v alidation. ▪
+▪Fixed an issue where if a wizard date attribut e  has an error, the error message will covered by the ▪
+popupCalendar. Corrected issue so that date attribut e  errors will stays on UI when value is unchanged.
+▪The Resolve enforcement violations  page stays if it was loaded in the wizard before. If no variances are ▪
+detected, it will display an in f ormation  message on the page so that the request is submitted
+successfully.
+▪Added an error message in the fedidp_samlauth module indic ating  that the imported metadata file is ▪
+corrupted.
+▪Resolved a race c ondition  that could occur when building skins that resulted in broken links. ▪
+▪Fixed links which use hardcoded English and tags without "_AS_LINK" suffix. ▪
+▪Fixed the save filt er  functionality  in the Groups app on mobile devices. ▪
+▪Fixed r outing  issue with "(" in IDs. ▪
+▪Fixed an issue where clicking the magnifying glass icon did not work in wizards.▪
+▪Fixed issues where entitlemen t  attribut e  changes do not show up in the wizard sidebar. ▪
+▪Fixed issues where entitlemen t  and resource attribut e  updates do not appear in the requests app ▪
+sidebar.
+▪The number of items displayed in the wizard sidebar are limited to three and a "Show more" button ▪
+below will be given if the number of items is greater than three.
+▪The threshold of the "Show more" function  is fiv e. ▪
+▪Fixed several issues in wizards when removing and re-adding entitlemen t  attribut es  in request side ▪
+bar.
+▪Improved wizards’s usability by not displaying resources that are not applicable when a revoke PDR is▪
+invoked.
+▪Fixed an issue when template is missing in an ACUA request, the request can be submitted. ▪
+▪Disabled Next and Submit buttons  if there are un filled  entitlemen ts  attribut es  when changing group ▪
+memberships. Added visual indic ation  if required attribut es  are missing.
+▪Fixed a minor UI issue in the Requests app to properly display attribut e  changes for child group ▪
+members.
+▪Fixed minor issue to not display wrong button  on attribut e  group member page. ▪
+▪Fixed an issue to always resubmit attribut es  on wizard pages when the attribut e  previously had an ▪
+error message.
+▪Fixed XSS issues in the main menu and Manage components app.▪
+▪Fixed an issue where wizard can be submit a request when the + button  is pressed on an attribut e. ▪
+▪Fixed the up/down arrow button  in the top menus and added functionality  to move on click and hold. ▪
+▪Skipped entitlemen t  attribut e  defaults for e xisting  members in wizards. ▪
+▪Fixed PDR Wizard Value Errors when a PDR is created exactly at the start of a new second▪
+▪Fixed wizards to not fail when run in W orkflo w  Manager Service and an account filt er  is de fined. ▪▪Fixed an issue with wizards dropping entitlemen ts  when using the "select all" checkbox. ▪
+▪Text area of pr ofile  attribut e  of type Memo is displayed correctly when being filled. ▪
+▪The Update attribut es  wizard works as expected if Enforce role-based access for user is set to false ▪
+when the user is in de ficit.
+▪Increased the width of the "date time  widget" field  to show the whole date and time  value. ▪
+▪No error occurs when e x ecuting  a pr e-de fined  request where the Set initial  password setting  is set to ▪
+"Show" and the system variable WF WIZARD PLUGIN is set to a plugin script.
+▪Fixed the issue that content horizontal alignment fails in the certific ation  deleg ation  dialog. ▪
+▪Scrolling and swiping work correctly in portrait and landscape mode on android and iOS mobile▪
+devices.
+▪Fixed the create group wizard so that it inherits values from preselected groups in the Groups app.▪
+▪Fixed the issue when the expiry date and request authentic ation  in f ormation  are not loaded in the ▪
+Violators tab.
+▪New "Expiry date of e x ception"  column has been added to the Approved e x ceptions  to rules violations ▪
+and Segr eg ation  of duties  rules violations  reports.
+▪Fixed the issue when authorizer becomes invalid and do not marked as invalid (with strike through▪
+mark) in the Violators tab.
+▪A warning is shown for integer attribut es  when a value exceeds the maximum field  length provided in ▪
+the attribut e  cr eation  page.
+▪Fixed a Widg e tButton  error on the user class group criteria page that occurred when the group ID ▪
+contained special characters.
+▪The full text of a group description  is displayed when it contains a double quot ation  mark. ▪
+▪Resolved an issue where updating  discovered target system cr edentials  could cause unwanted page ▪
+na vig ation.
+▪Fixed wizards page of optional  entitlemen ts  in Change role membership request so that optional ▪
+entitlemen ts  of diff er en t  types: roles, template account, and managed groups are correctly displayed
+and simple and advanced search oper ations  yield correct result.
+▪Removed the free form text box from the Deleg ation  in f ormation  form when deleg ating  a user’s ▪
+authority.
+▪Corrected issue displaying Bravura Privilege user groups when c on figuring  access controls for ▪
+managed system policies.
+▪Fixed the r outing  of breadcrumb links so that it points to the correct loc ation. ▪
+▪Fixed the behaviors when a user has two types of reports (table and chart report) pinned to the home▪
+page and clicks on any chart element:
+▪The magnifying glass icon appears in correct loc ation  in search field. ▪
+▪The magnifying glass icon does not appear in the table report.▪
+▪Wizards are not cut off and page numbers, scrollbar, Next and Submit buttons  are available even if ▪
+there are more entries.
+▪The "clear" button  (’x’) is available for da t e/time  attribut es  in the wizard user interface. It clears the ▪
+attribut e  value when clicked.

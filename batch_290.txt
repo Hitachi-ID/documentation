@@ -1,0 +1,286 @@
+Part X REPORTS1 Nativ e  Reports
+Managing and using reports
+Bravura Security Fabric  includes a comprehensive set of packaged reports. You can view these reports
+using the Manage reports (RPT) module, or export the data (in HTML or CSV format) for use with third
+party r eporting  and analytic al  tools. Reports are generated asynchronously and can be saved,
+downloaded, scheduled, and delivered by email.
+Getting  started
+Requirements
+▪Users require the "Manage reports" adminis tr ativ e  right in order to access the Manage reports (RPT) ▪
+module. They can be added to the REPORT_READERS administrator group to be granted this right.
+Membership criteria is de fined  by the _REPORT_READERS_ user class. Some reports require additional
+rights.
+▪If you want to deliver reports by email, you must fir s t set up email notific ation. ▪
+▪In order to use report output to issue pr e-de fined  requests, c on figur e  at least one pr e-de fined  request ▪
+and:
+▪Make it accessible from reports.▪
+▪Provide users who can run reports with the appropriate access control settings  to submit the request. ▪
+Na vig ation  steps
+You generate new reports or view previously saved reports using the Manage reports (RPT) module. From
+the Bravura Security Fabric  main menu, click Manage reports .
+From here, you can:
+▪Run reports  (on page 2893) ▪
+▪Schedule reports  (on page 2897) ▪
+▪Submit pr e-de fined  requests using report output  (on page 2904) ▪
+▪View saved reports  (on page 2920) ▪
+Schedule reports to calculate the following metrics, weekly, and email them to the product owner:
+ - Users in the system
+ - Users with enrolled profiles
+ - Users who have been invited to enroll but have not done so
+ - New enrollments
+ - Passwords successfully reset
+ - Failed password reset attemp ts
+ - Unlocked files ys t ems
+ - Cleared token PINs
+ - Intruder lockouts
+ - Successful authentic ations,  broken down by method (authentic ation  chain)Running reports
+You can run reports with various options  to view, save, email, or export the output. To run and save a
+new report:
+1.Click Manage reports > Reports . 1.
+Bravura Security Fabric  generates a list of available reports. If this is the fir s t time  that you have visited
+the page, this process may take several seconds.
+2.Select a report category.2.
+Reports belonging to that category are displayed.
+3.Select the report that you want to run.3.
+4. Optional : Specify your search criteria if you don’t want to see all results. 4.
+You can use wild cards as search criteria in many text fields.  Available options  are described in the
+sections  that follow.
+5. Optional:  Con figur e  Display options 5.
+When the report has been run you have several options  on how the data is displayed.
+Report options:  Display options
+Option Description
+Visible columns A drop-down list of the available columns that can be
+displayed.
+Items per page The number of items to be displayed in the table. Default
+is 10 items.
+Highlight Will highlight text in the table that has been typed.
+Hide r epeating  cell values When a large data set is generated, this will help reduce
+data to be more easily read.
+Default ordering Will return the table to the default sort ordering.
+You can sort data by clicking a column header to sort the column in ascending or descending order.
+Only one column can be sorted at a time.  Return to the default sorting  can be done at an ytime  by
+selecting  the Default ordering  option.
+Sorting  data only applies to the report output in the web user interface. The sorting  is not preserved
+when the report is saved or sent in an email.
+.
+For example select Hide r epeating  cell values . for large data sets.
+6. Optional:  If you want to email the report, c on figur e  Email report  settings 6.
+Ensure the email c onfiguration  (on page 415) is successfully tested and working.
+If the size of the report exceeds 10MB, then the report is not sent. Instead, an email message is sent
+which informs the recipient that the report was too large, and that they may want to change the
+search criteria to generate a smaller file size.This limit ation  is hard-coded, not c onfigurable,  and some SMTP servers will have a smaller attachmen t
+or global email body limit, causing such large email reports to fail to reach their destination  even if
+they leave the Bravura Security Fabric server.
+Report options:  Email report
+Option Description
+To Type an email address to which to send the report and
+the report selection  criteria. Alt ernativ ely ,  type
+%RECIPIENT_EMAIL% to use that value.
+Cc If required, type an email address to which to send a
+carbon copy of the report. Alt ernativ ely ,  type
+%RECIPIENT_EMAIL% to use that value.
+Bcc If required, type an email address to which to send a
+blind carbon copy of the report. Alt ernativ ely ,  type
+%RECIPIENT_EMAIL% to use that value.
+Subject Type a subject for the email.
+Message Type a message for the body of the email.
+Attachmen t  type Select the export format: CSV, HTML, or PDF.
+Email should not be used for saving long reports. If the report size is likely to be larger than 102MB,
+consider sharing the report by saving to disk or UNC share (next two options).
+7. Optional:  If you want to save the report on the Bravura Security Fabric  server, c on figur e  settings  to 7.
+Save c on figur ation  and output on server
+Report options:  Save c on figur ation  and output on server
+Option Description
+The values in this section  are o ver written  when scheduling a report.
+Saved report name Type the name to be used for the downloadable file.
+You can view the saved report in Manage reports > Saved
+reports .
+Expiry days Specify expiry period for the saved reports in days. The
+value must be between 1 and 999. The default value is
+60. You can modify the default using the SAVED REPORTS
+EXPIRY DAYS  setting  on the Manage the system
+> Modules > Manage reports (RPT)  menu.
+Never expire Use this to make the saved report never expire. Expiry
+days field  is hidden when this option  is checked.
+Notes Types notes to be saved with the report.
+.Saving large report files to the drive or partition  where the product is installed is not recommended, as
+it can decrease the available space required  (on page 2775) by the applic ation.  Consider using a UNC
+share instead (next option)
+8. Optional:  if you want completed reports saved to another server, c on figur e  settings  to Export report 8.
+output
+Report options:  Export report output
+Option Description
+Network path (UNC) Type a UNC path destination  for the exported report.
+The path must be to a target system. It can map to a real
+FS share (e.g. \\server\some_path\share_1) or a domain
+DFS share (e.g. \\domain\namespace\share_1). If you do
+not want to list users or perform other oper ations  on the
+system you want to export to, you can set up a NULL type
+target system simply to store the administrator
+cr edentials.  In this case, ensure that the listing  options
+are disabled for the target system.
+If you are mapping to a network drive ensure you enter
+the cr edentials  using down-level logon name format; for
+example, DOMAIN\UserName.
+File name Type a name for the exported report.
+File type Select the export report format: CSV, HTML, or PDF.
+Target system to use for cr edentials Search for and select the target system ID for cr edentials.
+Administrator ID Select an administrator ID from the target system.
+.
+9.Click Run at the bottom  of the form to see a report. 9.
+When running a report, you may need to click Refresh to reload the page and display the results. You can
+also click Cancel to cancel the running report. If canceled, a partial  report may be displayed.
+When Bravura Identity  or Bravura Privilege  is licensed, you can now use report output to submit pr e-
+de fined  requests  (on page 2904).
+If an attribut e  is encrypted, its value will be masked in report output and the attribut e  will not present in
+search criteria options.Using macros to sub stitut e  text
+Macros can be used to sub stitut e  text when the report runs. The macros must be enclosed in angle
+brackets <> and are case sensitiv e.
+Macros can be used in the following fields:
+▪Email subject▪
+▪Email message▪
+▪Saved report name▪
+▪Network path (UNC)▪
+▪File name▪
+▪Notes▪▪Requester notes▪
+Below is a list of available macros:
+Macro Example sub stitution
+<SERVER> idmsuite-1
+<USER> reporter00
+<DATETIME> 2015-06-18 01-22
+<RUNTIME> 2015-06-18 01-22
+<DATE> 2015-06-18
+<TIME> 01-22
+<DAY> 17
+<MONTH> 03
+<YEAR> 2015
+<CC> 20
+<YY> 15
+<MM> 03
+<DD> 17
+<HH> 14
+<hh> 02PM
+<mm> 57
+<ss> 04
+Scheduling reports
+You can schedule a report to run at a later time,  with options  to email or export the output. The
+scheduled job can be made recurring, and can be modified  at any time.
+To schedule a report:
+1.Click Manage reports > Reports . 1.
+Bravura Security Fabric  generates a list of available reports. If this is the fir s t time  that you have visited
+the page, this process may take several seconds.
+2.Select a report category.2.
+Reports belonging to that category are displayed.
+3.Select the report that you want to run.3.
+4. Optional : Specify your search criteria if you don’t want to see all results. 4.
+You can use wildcards as search criteria in many text fields.  Available options  are described in the
+sections  that follow.
+5. Optional:  Con figur e  Display options 5.
+When the report has been run you have several options  on how the data is displayed.Report options:  Display options
+Option Description
+Visible columns A drop-down list of the available columns that can be
+displayed.
+Items per page The number of items to be displayed in the table. Default
+is 10 items.
+Highlight Will highlight text in the table that has been typed.
+Hide r epeating  cell values When a large data set is generated, this will help reduce
+data to be more easily read.
+Default ordering Will return the table to the default sort ordering.
+You can sort data by clicking a column header to sort the column in ascending or descending order.
+Only one column can be sorted at a time.  Return to the default sorting  can be done at an ytime  by
+selecting  the Default ordering  option.
+Sorting  data only applies to the report output in the web user interface. The sorting  is not preserved
+when the report is saved or sent in an email.
+.
+For example select Hide r epeating  cell values . for large data sets.
+6. Optional:  Con figur e  Email report  settings 6.
+Ensure the email c onfiguration  (on page 415) is successfully tested and working.
+If the size of the report exceeds 10MB, then the report is not sent. Instead, an email message is sent
+which informs the recipient that the report was too large, and that they may want to change the
+search criteria to generate a smaller file size.
+This limit ation  is hard-coded, not c onfigurable,  and some SMTP servers will have a smaller attachmen t
+or global email body limit, causing such large email reports to fail to reach their destination  even if
+they leave the Bravura Security Fabric server.
+Report options:  Email report
+Option Description
+To Type an email address to which to send the report and
+the report selection  criteria. Alt ernativ ely ,  type
+%RECIPIENT_EMAIL% to use that value.
+Cc If required, type an email address to which to send a
+carbon copy of the report. Alt ernativ ely ,  type
+%RECIPIENT_EMAIL% to use that value.
+Bcc If required, type an email address to which to send a
+blind carbon copy of the report. Alt ernativ ely ,  type
+%RECIPIENT_EMAIL% to use that value.
+Subject Type a subject for the email.
+Message Type a message for the body of the email.Attachmen t  type Select the export format: CSV, HTML, or PDF.
+if you want to email the report.
+7. Optional:  Con figur e  settings  to Save c on figur ation  and output on server 7.
+Report options:  Save c on figur ation  and output on server
+Option Description
+The values in this section  are o ver written  when scheduling a report.
+Saved report name Type the name to be used for the downloadable file.
+You can view the saved report in Manage reports > Saved
+reports .
+Expiry days Specify expiry period for the saved reports in days. The
+value must be between 1 and 999. The default value is
+60. You can modify the default using the SAVED REPORTS
+EXPIRY DAYS  setting  on the Manage the system
+> Modules > Manage reports (RPT)  menu.
+Never expire Use this to make the saved report never expire. Expiry
+days field  is hidden when this option  is checked.
+Notes Types notes to be saved with the report.
+if you want to save the report on the Bravura Security Fabric  server.
+8. Optional:  Con figur e  settings  to Export report output 8.
+Report options:  Export report output
+Option Description
+Network path (UNC) Type a UNC path destination  for the exported report.
+The path must be to a target system. It can map to a real
+FS share (e.g. \\server\some_path\share_1) or a domain
+DFS share (e.g. \\domain\namespace\share_1). If you do
+not want to list users or perform other oper ations  on the
+system you want to export to, you can set up a NULL type
+target system simply to store the administrator
+cr edentials.  In this case, ensure that the listing  options
+are disabled for the target system.
+If you are mapping to a network drive ensure you enter
+the cr edentials  using down-level logon name format; for
+example, DOMAIN\UserName.
+File name Type a name for the exported report.
+File type Select the export report format: CSV, HTML, or PDF.
+Target system to use for cr edentials Search for and select the target system ID for cr edentials.
+Administrator ID Select an administrator ID from the target system.
+if you want completed reports saved to another server.
+9. Con figur e  settings  to Schedule report 9.Report options:  Schedule report
+Option Description
+Job Type an ID for this scheduled report.
+When a scheduled report is run, you can view it in the Saved reports  list.
+The report name is <Job> appended with the times t amp.
+Email address to send scheduled
+report warnings toType an email address to receive notific ation  of problems with scheduled
+reports. If not specified  the RECIPIENT EMAIL address is used.
+Enabled Select this when you are ready to run the report at the next schedule time.
+Expiry days Specify expiry period to save the report in days. The value must be between
+1 and 999. The default value is 60. You can modify the default using the
+SAVED REPORTS EXPIRY DAYS  setting  on the Manage the system > Modules
+> Manage reports (RPT)  menu.
+Never expire Use this to make the saved report never expire. Expiry days field  is hidden
+when this option  is checked.
+Notes Type notes to be emailed with the report.
+Job time  range Specify if you want your job to always run, to run for a specific  length of
+time,  or for a specific  number of it er ations  by selecting  one of the following
+from the drop-down list:
+▪Always run  – Scheduled job always runs as specified. ▪
+▪From specified  start date to end date  – Click the da t e/time  fields  to ▪
+select a date and hour for the Start date and End date. To edit the
+minutes enter a time  in the HH:MM format.
+▪For number of it er ations  from specified  start date  – Click the da t e/time ▪
+field  to choose select a date and hour for the Start date. To edit the
+minutes enter a time  in the HH:MM format. Specify a Number of
+it er ations  to run. Your job will only run for the number of it er ations  you
+enter here.
+Last day of the month For monthly to annual schedules, use this setting  to avoid missed run times.
+For example, if you schedule a job quarterly, with a start date of August 31,
+the next run time  after  August 31 would be November 31, which does not
+exist. With this setting  enabled, the next round would start on the last day
+of the month, November 30.

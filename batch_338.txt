@@ -1,0 +1,374 @@
+Criteria Description
+by "Number of users excluding console users and
+superusers".
+OrgChart loop
+Purpose : Lists loops in the source data (for example, the "manager" account attribut e  in an Activ e
+Directory system) used to build the OrgChart.
+The results are returned as a path in the following manner:
+UserA, UserC, UserB, UserA
+What this means is UserA is a manager of UserB, UserB is a manager of UserC, and UserC is a manager of
+UserA.
+Executable : orgchartloop
+Search Criteria :
+None
+Group loops
+Purpose : Lists cyclic groups found on target systems.
+The results are returned as a path in the following manner:
+GroupA, GroupB, GroupC, GroupD, GroupE
+What this means is GroupB is a member of GroupA, GroupC is a member of GroupB, and so on and so
+forth. The final  group, GroupD is the owner of the firs t group, GroupA
+Executable : grouploops
+Search Criteria :
+Criteria Description
+GroupID Type the ID of the group or search to find a group for
+which you want to generate the report.
+Target system ID Type in target system ID or search to find target system to
+report all cyclic groups on that target.
+Resource attribut es
+Purpose : Returns resources based on their attribut es.
+Executable : resourceattributes
+Search Criteria :Criteria Description
+Resource type Select a resource type:
+▪Template account▪
+▪Target system▪
+▪Managed group▪
+▪Role▪
+▪ Segr eg ation  of duties ▪
+▪Managed system▪
+▪Managed account▪
+This criterion is not available for summarized reports.
+Resource attribut e Select a resource attribut e  on which to filt er  resources.
+You can select up to eight attribut es.  The union of all
+attribut es  c on figur ed  will be returned. For detailed
+r eporting ,  only the resource attribut es  for the resource
+type c on figur ed  are available. For summarized r eporting ,
+all resource attribut es  are available.
+If no attribut es  are specified,  the report lists all resources
+filt er ed  by resource type.
+Comparison This field  is displayed if a Resource attribut e  field  is
+something other than Attribut e  not required . Select the
+comparator to apply on the selected resource attribut e.
+Comparators available depend on the resource attribut e
+type.
+is empty  if you want Bravura Security Fabric  to search on
+empty values.
+is not empty  if you want Bravura Security Fabric  to
+search on non empty values.
+is equal to  if you want Bravura Security Fabric  to search
+on values equal to a specified  string.
+is not equal to  if you want Bravura Security Fabric  to
+search on values not equal to a specified  string.
+is less than  if you want Bravura Security Fabric  to search
+on values that are less than a specific  integer.
+is less than or equal to  if you want Bravura Security
+Fabric  to search on values that are less than or equal to a
+specific  integer.
+is greater than  if you want Bravura Security Fabric  to
+search on values that are greater than a specific  integer.
+is greater than or equal to  if you want Bravura Security
+Fabric  to search on values that are greater than or equal
+to a specific  integer.
+is later than today + N days  if you want Bravura Security
+Fabric  to search on dates that are later than N days after
+today.Criteria Description
+is earlier than, or equal to, today - N days  if you want
+Bravura Security Fabric  to search on dates that are earlier
+or equal to N days before today.
+Value This field  is displayed and required if a Comparison field
+is set to something other than is empty  or is not empty .
+Type or select the value to compare.
+Resource attribut e  to display Choose which resource attribut es  to display alongside
+the resources.
+Summarize report Select this option  to summarize the report.
+In this mode, the report includes a count of each
+resource type.
+If you do not specify any search criteria, the report output includes all resources.
+Entitlemen ts  with invalid implementers
+Purpose : Reports on entitlemen ts  with invalid or no implementers.
+Executable : invalidimplementers
+Search Criteria :
+Criteria Description
+Report type Select a report type:
+Invalid implementers : lists all implementers that are no
+longer valid; for example, implementers that were
+removed from the target system.
+No implementer : lists all resources that have empty user
+class as implementers or no implementers in user class.
+Entitlemen t  type This is the type of resource from which you want to list
+invalid or no implementers. Select an entitlemen t  type:
+▪Target system▪
+▪Template account▪
+▪Managed group▪
+Target system ID Type a comma-and-space-delimited list of target system
+IDs to list entitlemen ts  from those systems. Alt ernativ ely ,
+you can search for one or more target systems.
+This option  is only displayed if Entitlemen t  type is set to
+Target system  or Managed group
+Managed groups Type a comma-and-space-delimited list of managed
+groups to list entitlemen ts  for those groups. Alt ernativ ely ,
+you can search for one or more managed groups.
+This option  is only displayed if Entitlemen t  type is set to
+Managed group .Criteria Description
+Template accounts Select one or more accounts.
+This option  is only displayed if Entitlemen t  type  is set to
+Template account and there is at least one template
+account de fined.
+Include inherited implementers Select to include implementers inherited from the target
+system.
+This option  is only displayed if Entitlemen t  type is set to
+Template account  or Managed group .
+Include discovery templates Select to include discovery templates for target systems.
+This option  is only displayed if Entitlemen t  type is set to
+Target system .
+Entitlemen ts  analysis reports
+Some entitlemen t  analysis reports are expected to take longer than other reports. Consider scheduling
+these reporting  tasks at an appropriate time.
+SSH Web of Trust
+Purpose : Allows you to query on the current c on figur ation  of the SSH web of trusted accounts.
+You may need to run auto discovery before running the report in order to include temporary SSH trust
+relationship s  created from privileged access check-outs.
+Executable : sshtrustweb
+Search Criteria :
+Criteria Description
+Report type There are three types of reports to select from:
+Account detail s: Lists all SSH c onnections  between
+accounts. This is the default setting.
+Source account summary : Shows the number of
+accounts a source account can directly or indirectly
+access.
+Destination  account summary : Shows the number of
+accounts that can directly or indirectly access a
+destination  account.
+Source account Type a comma-and-space-delimited list of IDs of source
+accounts to include in the report. This option  is only
+available when Report type  is set to Account details  or
+Source account summary .
+Alt ernativ ely ,  search for one or more account IDs.Criteria Description
+Source system Type a comma-and-space-delimited list of IDs of source
+target systems to include in the report. This option  is only
+available when Report type  is set to Account details  or
+Source account summary .
+Alt ernativ ely ,  search for one or more target system IDs.
+Source pr ofile Type a comma-and-space-delimited list of source pr ofile
+IDs to include in the report. This option  is only available
+when Report type  is set to Account details  or S ource
+account summary .
+Alt ernativ ely ,  search for one or more pr ofile  IDs.
+Destination  account Type a comma-and-space-delimited list of IDs of
+destination  accounts to include in the report. This option
+is only available when Report type  is set to Account
+details  or Destination  account summary .
+Alt ernativ ely ,  search for one or more account IDs.
+Destination  system Type a comma-and-space-delimited list of IDs of
+destination  target systems to include in the report. This
+option  is only available when Report type  is set to
+Account details  or Destination  account summary .
+Alt ernativ ely ,  search for one or more target system IDs.
+Minimum total access count Type the minimum number of total access each account
+must have in the report. This option  is only available
+when Report type  is set to Source account summary  or
+Destination  account summary .
+Graph type Select a type of graph to generate for the summarized
+report. This option  is only available when Report type is
+set to Source account summary  or Destination  account
+summary .
+None : no graph will be generated.
+V ertic al  bar chart : a v ertic al  bar chart will be generated
+for the summarized report.
+Horizontal bar chart : a horizontal bar chart will be
+generated for the summarized report.
+User and entitlemen t  cluster discovery
+Purpose : Discover clusters of users and entitlemen ts  by combining the ones who have the same pr ofile
+attribut es.
+Executable : rolemining
+Search Criteria :Criteria Description
+Pr ofile  attribut e Select a pr ofile  attribut e  ID, up to a maximum of four to
+compare entitlemen ts  of users.
+Value type The value type of the pr ofile  attribut e  comparator.
+Becomes visible once a Pr ofile  attribut e  has been
+selected.
+Value Only available for certain Value type settings.  The value
+of the pr ofile  attribut e.
+Minimum number of users with the same values for
+each of the specified  attribut esInput a minimum amount of users that need to have the
+same value for each specified  attribut e.  Set to 1 by
+default.
+Minimum number of roles a user must have Input a minimum amount of roles that a user must have
+in order to be included in the report results. Set to 0 by
+default.
+Maximum number of roles a user may have (-1=in finit e) Input a maximum amount of roles that a user may have
+in order to be included in the report results. Set to -1
+(in finit e)  by default.
+Include target systems Select whether to include target systems in the report
+output.
+Minimum number of target systems in cluster Only visible when Include target systems checkbox is
+checked. Choose the minimum amount of target systems
+for a single cluster to be displayed by the report. Set to 0
+by default.
+Minimum threshold for target systems (%) Only visible when Include target systems  checkbox is
+checked. Choose a threshold percentage of users for any
+pr ofile  attribut e  that a target system must have in order
+to be displayed by the report. Set to 0 by default.
+Target system ID Only visible when Include target systems  checkbox is
+checked. Specify which target systems are to be included
+in the report. Inputting  no target systems will make the
+report include all target systems in its output.
+Target system type Only visible when Include target systems  checkbox is
+checked. Specify which target system types are to be
+included in the report. Selecting  no target system types
+will make the report include all target system types in its
+output.
+Include groups Select whether to include groups in the report output.
+Minimum number of groups in cluster Only visible when Include groups  checkbox is checked.
+Choose the minimum amount of groups for a single
+cluster to be displayed by the report. Set to 0 by default.
+Minimum threshold for target systems (%) Only visible when Include groups  checkbox is checked.
+Choose a threshold percentage of users for any pr ofile
+attribut e  that a group must have in order to be displayed
+by the report. Set to 0 by default.Criteria Description
+Target system ID Only visible when Include groups  checkbox is checked.
+Specify which groups are to be included in the report.
+Selecting  no groups will make the report include all
+groups in its output.
+Show summary Choose whether to summarize the report output
+Compare users
+Purpose : Compare entitlemen ts  between users who have the same pr ofile  attribut es.
+Executable : entitlementscomparison
+Search Criteria :
+Criteria Description
+Pr ofile  attribut e Select a pr ofile  attribut e  on which to compare users. You
+can select up to eight attribut es.  You can also select the
+same attribut e  multiple  times.  All pr ofile  attribut es  are
+available, except for request-only attribut es.
+At least one pr ofile  attribut e  is required for the report to
+run.
+Value type This field  is displayed if a Pr ofile  attribut e  field  is other
+than Attribut e  not required . Select the value type of
+comparator to apply on selected the pr ofile  attribut e.
+Diff er en t  types of attribut es  have access to diff er en t  sets
+of value types.
+is empty  if you want Bravura Security Fabric  to search on
+empty values.
+is not empty  if you want Bravura Security Fabric  to
+search on non empty values.
+is equal to  if you want Bravura Security Fabric  to search
+on values equal to a specified  string.
+is not equal to  if you want Bravura Security Fabric  to
+search on values not equal to a specified  string.
+is less than  if you want Bravura Security Fabric  to search
+on values that are less than a specific  integer.
+is less than or equal to  if you want Bravura Security
+Fabric  to search on values that are less than or equal to a
+specific  integer.
+is greater than  if you want Bravura Security Fabric  to
+search on values that are greater than a specific  integer.
+is greater than or equal to  if you want Bravura Security
+Fabric  to search on values that are greater than or equal
+to a specific  integer.Criteria Description
+is greater than or equal to  if you want Bravura Security
+Fabric  to search on values that are greater than or equal
+to a specific  integer.
+is later than today + N days  if you want Bravura Security
+Fabric  to search on dates that are later than N days after
+today.
+is earlier than, or equal to, today - N days  if you want
+Bravura Security Fabric  to search on dates that are earlier
+or equal to N days before today.
+Value This field  is displayed and required if a Value type  field  is
+set to something other than is empty  or is not empty .
+Type or select the value to compare with.
+Entitlemen ts  to show Select the type of entitlemen t  that will be included in the
+report:
+▪Accounts▪
+▪Managed groups▪
+▪Roles▪
+Target system ID Type a comma-and-space-delimited list of target system
+IDs to only include Accounts and Managed groups from
+those systems in the report. Alt ernativ ely ,  you can search
+for one or more target systems.
+Transpose output Select this checkbox to display all the entitlemen ts  held
+by a set of users. When the number of users is modest
+but the number of entitlemen ts  is very large, the original
+layout of the report has users as rows and entitlemen ts
+as columns, which is hard to read. The transpose option
+presents report data in a user friendly way and lets the
+viewer easily see what entitlemen ts  the users have in
+common.
+Compare roles
+Purpose : Compares entitlemen ts  in selected roles.
+Executable : rolesentitlementscomparison
+Search Criteria :
+Criteria Description
+Roles to compare Type a comma and space delimited list of role IDs to
+compare. Alt ernativ ely ,  search for one or more roles.
+Entitlemen t  type List of entitlemen ts  to search for and display:Criteria Description
+Roles – sub-roles as entitlemen ts  of the roles to
+compare.
+Search for one or more sub-roles.
+Template accounts  – templates as entitlemen ts  of the
+roles to compare
+Managed groups  – managed groups as entitlemen ts  of
+the roles to compare.
+Search for one or more groups.
+All are displayed by default.
+Minimum number of roles containing entitlemen t Type a number in this field  to only include entitlemen ts
+that are contained by more than the specified  number of
+Roles.
+Expand sub-roles Include indirectly assigned entitlemen ts  (via sub-roles)
+when showing entitlemen ts  assigned to a role.
+Show how entitlemen ts  are attached Display Required and Optional  for role entitlemen ts.  If
+the option  to expand sub-roles is enabled, display the
+sub-roles from which they were inherited.
+Summarize report Select this checkbox to summarize the report details. In
+this mode, role columns will be converted to a comma
+separated list.
+Users with common entitlemen ts
+Purpose : Users who have a minimum number of entitlemen ts  from a set.
+Executable : entitlementcommonuser
+Search Criteria :
+Criteria Description
+Memberships in these managed groups Select or search for zero or more managed user groups.
+Accounts on these target systems Select or search for zero or more target systems
+At least one of the above is required.
+Number of entitlemen ts  selected above that users must
+haveUsers must have at least this many of the above
+entitlemen ts  to be listed
+Pr ofile  attribut e  to display Select the pr ofile  attribut es  to show for each user listed.
+Show accounts Check to include account IDs in full for each target system
+and group membership (instead of check marks)
+Summarize report Check to only show the number of users matching the
+criteria above, instead of the listOverlapping roles
+Purpose : Lists roles that share a given number of entitlemen ts  (accounts, group memberships, sub-roles)
+with a given reference role.
+Executable : rolessharingentitlements
+Search Criteria :
+Criteria Description
+Reference role The reference role to compare with.
+Minimum number of shared entitlemen ts The minimum number of overlaps that the other listed
+roles must have with the reference role.
+Expand sub-roles Include indirectly assigned entitlemen ts  (that is,
+entitlemen ts  assigned via sub-roles) when c ounting  the
+overlapping entitlemen ts.
+E ff ectiv e  role assignment
+Purpose : For a selected reference role, the report shows all users who meet the required, optional  and
+legacy entitlemen ts  specified  for this role with their entitlemen t  s t atistics  and the roles those users have
+been assigned to.
+Executable : effectiverole
+Search Criteria :
+Criteria Description
+Reference role Enter or search for the role to check e ff ectiv e  assignment
+for.
+Include explicitly assigned users Select this checkbox to include those users that have
+been assigned to the reference role.
+Minimum percentage of required entitlemen ts Type an integer between 0 and 100 to only display users
+that have the "Percentage of role’s required
+entitlemen ts"  greater than or equal to this integer. It is
+set to 0 by default.
+Minimum percentage of optional  entitlemen ts Type an integer between 0 and 100 to only display users
+that have the "Percentage of role’s optional
+entitlemen ts"  greater than or equal to this integer. It is
+set to 0 by default.
+Minimum percentage of legacy entitlemen ts Type an integer between 0 and 100 to only display users
+that have the "Percentage of role’s legacy entitlemen ts"
+greater than or equal to this integer. It is set to 0 by
+default.

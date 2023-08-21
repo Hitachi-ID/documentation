@@ -1,0 +1,348 @@
+▪Enable persistence for the request.▪
+▪Assign the pool for the request.▪
+▪Change the "Host" header for the request, setting  it to the address of the Bravura Security Fabric ▪
+server that will receive this request.
+The exact functionality  of this script may vary depending on the needs of your business, but enabling an
+iRule to selectiv ely  handle API tr a ffic  is a minimally -disruptiv e  solution  for supporting  calls to the Bravura
+Security Fabric  API.
+To enable session persistence for API calls through iRules:
+1.Log into the BIG-IP adminis tr ation  UI as an administrator. 1.
+2.Navigate to Main > Local T r a ffic  > iRules . 2.
+3.Click Create... 3.
+4.Assign a unique name for this iRule.4.
+5. Con figur e  the iRule to modify API tr a ffic,  by updating  the following packet in f ormation: 5.
+▪The HTTP "Host" header must be set to the IP address of the server handling the request.▪
+▪The packet must be assigned to a pool, if one was not already assigned.▪
+▪A non-cookie persistence pr ofile  must be applied to the packet. ▪
+The following iRule example is capable of updating  SOAP API tr a ffic  in order to enable session
+persistence through Destination  Address, or "sticky"  persistence:
+when HTTP_REQUEST {
+if {[HTTP::header exists "SOAPAction"]}{ e-session-persistence
+# Set custom persistence profile, as API requests may not support
+cookies.
+persist sticky 255.255.0.0 3600
+# Confirm that members of "Pool1" are available, and set the pool.
+if { [active_members Pool1] > 1 } {
+pool Pool1
+}
+# Replace the Host header, as this needs to match the destination
+node.
+HTTP::header replace Host [LB::server addr]
+# log local0. "SOAP request: [HTTP::header value SOAPAction],
+sending to: [LB::server addr]."
+}
+}
+when LB_FAILED {
+log local0. "Failed pool selection"
+}
+6.Click Finished  when your iRule is complete. 6.Con figur e  virtual server to enable session persistence
+In the F5 LTM load balancer, the "Virtual Server" feature presents a reachable address that network
+tr a ffic  can be sent to in order to be load balanced. The F5 LTM’s virtual servers are responsible for
+receiving tr a ffic  from both clients and servers, and is responsible for deciding where how that tr a ffic  is
+routed. Because of this, the F5 LTM virtual server responsible for Bravura Security Fabric  tr a ffic  must be
+updated to enable session persistence, and to make use of the session persistence settings  we de fined  in
+previous steps.
+To c on figur e  the virtual sever to enable session persistence:
+1.Log in to the BIG-IP adminis tr ation  UI as an administrator. 1.
+2.Navigate to Main > Local T r a ffic  > Virtual Servers > < Bravura Security Fabric  virtual server > > 2.
+Resources .
+3.Under Default Persistence Pr ofile , use the drop-down list to select the cookie persistence pr ofile  you 3.
+cr ea t ed/modified  earlier.
+4.Under Fallback Persistence Pr ofile , use the drop-down list to select source_addr. 4.
+5.Click Update . 5.
+6.Under iRules, click Manage... 6.
+7.Under "Available", select the iRule you created earlier with left-click,  and press the << button  to 7.
+enable it for this virtual server.
+8.Click Finished  to c on firm  your changes. 8.
+10 Locking down a Bravura Security Fabric server
+Or g aniz ations  that are either considering deployment of Bravura Security Fabric , or have already
+deployed it, need to understand how to secure the Bravura Security Fabric  server. Bravura Security Fabric
+is a sensitiv e  part of an or g aniz ation’ s  IT infrastructure and consequently must be defended by strong
+security measures.
+It is important to protect not only the Bravura Security Fabric  server, but also the sensitiv e  data it stores:
+▪Administrator cr edentials  used by Bravura Security Fabric  to connect to target systems. ▪
+▪Console user passwords used by the Bravura Security Fabric  administrator to sign into, c on figur e  and ▪
+manage Bravura Security Fabric  itself.
+▪Passwords to managed accounts on target systems.▪
+▪Password history and security question  data for end users. ▪
+This chapter is a best pr actices  guide for securing a Bravura Security Fabric  server. The objectiv e  of is to
+have a reliable, high availability platform  that is difficult  or impossible to compromise.
+This chapter is organized as follows:
+▪Basic pr ec autions  (on page 303) ▪
+Some common-sense security pr ec autions.▪Physical access and security  (on page 304) ▪
+Provides sug g estions  on how to control physical access to the Bravura Security Fabric  server.
+▪Employee training  (on page 304) ▪
+Explains the importance of security awareness training for all employees.
+▪Hardening the oper ating  system  (on page 304) ▪
+Explains how to c on figur e  a secure Micr osoft  Windows server for use with Bravura Security Fabric .
+▪IIS web server  (on page 306) ▪
+Explains how to select and c on figur e  the web server that serves the Bravura Security Fabric  softw ar e.
+▪SQL Server Database  (on page 308) ▪
+Explains how to harden the SQL Server database.
+▪Password and key management  (on page 309) ▪
+Provides guidance on password management.
+▪ Communic ation  defenses  (on page 309) ▪
+Explains how to protect the data tr ansmitted  to and from each Bravura Security Fabric  server.
+▪ Auditing  (on page 310) ▪
+Explains why auditing  is important and provides guidance on monitoring access, events, and changes
+to Bravura Security Fabric .
+▪ Micr osoft  Security Compliance Toolkit  (on page 311) ▪
+In f ormation  on Micr osoft  Security Compliance Toolkit.
+▪Further in f ormation  (on page 311) ▪
+A list of references for further in f ormation  regarding network security and server hardening.
+Basic pr ec autions
+Some of the most e ff ectiv e  security measures are common sense:
+▪Use a single-purpose server for Bravura Security Fabric . Sharing this server with other applic ations ▪
+introduces more complexity and more administrators, each of which carries its own incremental risk.
+▪Use strong passwords for every adminis tr ativ e  account on the server. ▪
+▪Maintain a current, well-patched oper ating  system on the Bravura Security Fabric  server. This ▪
+eliminates well-known bugs that have already been addressed by the vendor; for example, Micr osoft.
+▪ Aut omatic ally  apply patches, especially security patches, to the OS, database server and any third ▪
+party softw ar e.
+▪Keep the Bravura Security Fabric  server in a physically secure loc ation. ▪
+▪Provide security awareness training to all employees.▪
+▪Install and keep up to date anti- virus  softw ar e. ▪
+▪Do not leave a login session open and unattended  on the Bravura Security Fabric  server’s console. ▪
+▪If you are hosting  Bravura Security Fabric  on your own server, attach  the server to a secure, internal ▪
+network rather than the public Internet. If access from the Internet is required, mediate it via a
+reverse web proxy running a diff er en t  OS an web server platform  than Bravura Security Fabric  –
+platform  diversity reduces the risk of zero-day exploits. This is not an issue when using the softw ar e-
+as-a-ser vice  (SaaS) option.
+▪Regularly review Bravura Security Fabric , OS and network logs. ▪▪Use the Micr osoft  Security Compliance Toolkit to learn more about server hardening. ▪
+Physical access and security
+Bravura Security Fabric  servers should be physically protected, since logical security measures can often
+be bypassed by an intruder with physical access to the console:
+▪Restrict physical access▪
+Put Bravura Security Fabric  server(s) in a locked and secured room. Restrict access to authorized
+personnel only. Product administrators should install and c on figur e  the server(s) and then only access
+it remotely via HTTPS to its web portal or RDP to the OS.
+▪Connect a UPS▪
+Ensure that server power is protected, that graceful shutdowns occur when power is interrupted and
+that there is surge pr ot ection  at least on incoming power c onnections.
+▪Prevent boot from removable media▪
+Con figur e  the server to boot from an internal drive and not from removable media.
+Where the Bravura Security Fabric  server is virtualized, apply the above controls to the hypervisor.
+Employee training
+Security policies are only as e ff ectiv e  as user awareness and compliance. Security awareness training
+should include:
+1.Building security including authoriz ation  for visitors and ID badges. 1.
+2.Password policies, regarding complexity, regular changes, non-reuse and not sharing passwords.2.
+3.Social engineering and phishing attack s,  to help users recognize when a person, malicious web site or 3.
+email tries to trick them into disclosing access or other in f ormation.
+4.The consequences of a security breach, including consequences to users who may have supported the4.
+breach through action  or inaction.
+5. E ff ectiv e  security pr actices  r elating  to mobile devices, such as laptops, smart phones and tablets. 5.
+6.Not leaving endpoints signed on, unlocked and unattended. 6.
+Hardening the oper ating  system
+Bravura Security requires that Bravura Security Fabric  be installed on the latest Micr osoft  Windows
+Server oper ar ating  system. The fir s t step in c on figuring  a secure Bravura Security Fabric  server is to
+harden its oper ating  system. The following are sug g estions  on how to lock down the oper ating  system.
+Patches
+Bravura Security  recommends that or g aniz ations  follow their standard oper ating  patching processes to
+promptly download and install all vendor-supplied patches for the OS, DB and web server, as these often
+address security problems. There has never been, in Bravura Security  experience, a c ompatibility  problem
+with Bravura Security Fabric  caused by such automated patching.Limit logins to only legitima t e  administrators
+One way to limit the number of users who can access the Bravura Security Fabric  server is to remove it
+from any Windows domain. If the Bravura Security Fabric  server is not a member of a domain, it reduces
+the risk of a security intrusion in the domain being leveraged to gain unauthorized access to the Bravura
+Security Fabric  server.
+▪Remove unused accounts, leaving just psadmin – the Bravura Security Fabric  service account. ▪
+▪Create one administrator account to be used by the Bravura Security Fabric  OS administrator to ▪
+manage the server and set a strong password on this account.
+▪Disable the default administrator account.▪
+▪Remove any Guest or unused service accounts.▪
+▪Remove the terminal services user account TsInternetUser. This account is used by the Terminal▪
+Service Internet Connector License.
+For any accounts that must remain, limit their access. At a minimum, block access by members
+of ’Everyone’ to files and folders on the server.
+Minimize running services
+Disable any unused service. This eliminates pot ential  sources of softw ar e  bugs that could be exploited to
+violate the server’s security.
+Only the following Windows services are required on Bravura Security Fabric  servers:
+▪ Applic ation  In f ormation ▪
+▪Background Tasks Infrastructure Service▪
+▪DCOM Server Process Launcher▪
+▪DHCP Client▪
+▪Group Policy Client▪
+▪Local Session Manager▪
+▪Network Store Interface Service▪
+▪Power▪
+▪Remote Procedure Call (RPC)▪
+▪RPC Endpoint Mapper▪
+▪Security Accounts Manager▪
+▪SQL Server (MSSQLSERVER)▪
+▪System Events Broker▪
+▪Task Scheduler▪
+▪TCP/IP NetBIOS Helper▪
+▪User Pr ofile  Service ▪
+▪Windows Process Activ ation  Service ▪
+▪ W ork s t ation▪
+▪World Wide Web Publishing Service▪Additional  services should only be enabled if there is a specific  need for them.
+Packet filt ering
+Open ports are an exploitable means of system entry. By limiting  the number of open ports, you
+e ff ectiv ely  reduce the number of pot ential  entry points into the server. A server can be port scanned to
+identif y  available services.
+Use packet filt ering  to block all inbound c onnections  other than the following default ports required by
+Bravura Security Fabric :
+Default TCP port Service
+443/TCP IIS / HTTPS web service.
+5555/TCP Bravura Security Fabric  database service default port
+number ( iddb ).
+2380/TCP Bravura Security Fabric  file r eplic ation  service default
+port ( idfilerep ).
+3334/TCP Password manager service ( idpm ).
+2340/TCP Session monitoring package g ener ation  service
+(idsmpg ).
+2540/TCP Discovery service ( iddiscover ).
+6190/TCP Privileged access service ( idarch ).
+2240/TCP W orkflo w  Manager service ( idwfm ).
+2234/TCP T r ansaction  monitor service ( idtm ).
+IIS web server
+The IIS web server is a required component since it provides all user interface modules. It should
+therefore be carefully protected.
+IIS is more than a web server; it is also an FTP server, indexing server, proxy for database applic ations  and
+a server for activ e  content and applic ations.  Disable these features as Bravura Security Fabric  does not
+use them.
+Always deploy a proper, issued-by-a-real-CA SSL certific a t e  to Bravura Security Fabric  servers and disable
+plaintext HTTP access. Never use a self-signed certific a t e  in a user-facing system, as this may c ondition
+users to ignore SSL validity warnings.
+Assign the IIS user the right to read from but not write to s t atic  HTML, image file and Javascript files used
+by Bravura Security Fabric .
+Assign the IIS user the right to execute CGI programs but not other executables on the Bravura Security
+Fabric  files y s t em.
+Disable directory browsing – there is no reason why a user c onnecting  to the Bravura Security Fabric  web
+portal should be able to list files in any folder.Content-Security-Policy (CSP)
+Implemented in Bravura Security Fabric 12.6
+The default shipped value of the Content-Security-Policy (CSP) HTTP header has been restricted to limit
+tr a ffic  to only the IIS Web Server (or load balancer) hosting  the product. There is one e x ception,  a
+wildcard (*) in the connect-src policy so that Bravura Security Fabric  works upon ins t allation.  Bravura
+Security recommends that the Content-Security-Policy header be further restricted / hardened to replace
+the wildcard with only valid hostnames for Bravura Security Fabric . Valid hostnames include the
+individual instance hostnames of each server (ex: http s://f abric-ser v er1.c ompan y .c om  and http s://f abric-
+ser v er2.c ompan y .c om),  and the main load balancer hostname (ex: http s://f abric.c ompan y .c om),  as well
+as any special hosts added to the ALLOWED ORIGINS
+A list of hosts separated by comma in use by any server. It is defaulted to localhost and hostname of each
+node if unspecified.  The hostname is taken from the database service list under column Address.
+system variable ( Manage the system> Maintenance> System variables ).
+Example
+The Content-Security-Policy header has a number of diff er en t  policies, the one that needs to be further
+hardened is connect-src, so leave the rest as they are unless you have a reason to change them. Here is
+an example of the hardened policy with the three URLs from the previous paragraph.
+Content-Security-Policy: connect-src 'self' https://fabric-
+server1.company.com/ https://fabric-server2.company.com/ https://
+fabric.company.com/; default-src 'self'; form-action 'self'; frame-
+ancestors 'self'; frame-src 'self' https://www.recaptcha.net/; img-src
+data: 'self'; object-src 'none'; script-src 'self' 'unsafe-eval'
+'unsafe-inline' https://www.recaptcha.net/ https://www.gstatic.com/
+recaptcha/; style-src 'self' 'unsafe-inline'; style-src-elem 'self'
+'unsafe-inline'
+The CSP can be set in IIS on each server or may be able to be set globally on the load balancer that
+rewrites (overwrites) the header. To modify this value in IIS:
+1.Open Internet In f ormation  Services (IIS) Manager  on each server. 1.
+2.In the left panel expand the server (named the server computer name). 2.
+3.In the left panel expand Sites . 3.
+4.In the left panel expand the website the product was installed under (defaults to Default Web Site ). 4.
+5.In the left panel click on the product instance name. 5.
+6.In the center panel double click HTTP Response Headers . 6.
+7.In the center panel double click Content-Security-Policy . Edit the value and then click OK. 7.
+External ImagesOccasionally external images are used that will need to be added to the CSP as well. Pr ofile  pictures in
+user pr ofiles  and the OrgChart can be uploaded (so they are served by the same server as the product),
+or can be a link to an external directory of photos. If an external directory is used, the URL must be added
+to the end of the img-src  policy, and would look like this:
+img-src data: 'self' http://photos.company.com;
+T r oubleshooting
+Make sure you test the value after w ar d  to ensure Bravura Security Fabric  behaves correctly.
+An incorrectly written  policy can result in a white screen (due to no scripts or styles being allowed to
+load). There are CSP validators on the internet that you can paste your value into to have it validated.
+You will see the following type of error in the Chrome or Edge console when the CSP has been violated,
+and that part of the product will not load. Ensure the necessary host names are included.
+Refused to connect to 'https://bravuranode2.company.com/bravura/cgi/
+ajax.exe?guacamoleplay:guacamoleread' because it violates the following
+Content Security Policy directive: "connect-src 'self' https://fabric-
+server1.company.com/ https://fabric-server2.company.com/ https://
+fabric.company.com/".
+Upgrading
+When upgrading, you will need compare the custom hardened CSP with the new CSP included in the
+upgrade to make sure all the necessary e x ceptions  are included in the policy. Keep the e xisting  CSP
+somewhere safe in case the upgrade replaces the CSP .
+Read more about the Content-Security-Policy at http s://de v eloper .mo zilla.or g / en-US/docs/W eb/HT TP /
+CSP.
+SQL Server Database
+Each Bravura Security Fabric  server is c on figur ed  with a SQL Server database. Most commonly, the
+database server softw ar e  is deployed on the same server as the Bravura Security Fabric  applic ation.  It
+follows that the database must also be hardened.
+Remove or disable unused services and components
+Do not install anything beyond the core SQL server softw ar e.  Specific ally ,  leave out or disable:
+▪SQL Server Analysis Services (SSAS).▪
+▪SQL Server In t egr ation  Services (SSIS). ▪
+▪Full-Text Engine.▪
+▪The Filter Daemon Launcher.▪
+▪SQL Server R eporting  Services (SSRS). ▪
+▪ Activ e  Directory Helper. ▪▪SQL Server VSS Writer service.▪
+▪SQL Server Browser.▪
+Disable TCP/IP access to MSSQL
+Bravura Security Fabric  will connect to the database locally, so network access can and should be
+disabled. Use SQL Con figur ation  manager to disable all but shared memory access to the database.
+Limit access to the database
+After  installing the SQL Server database softw ar e  and Bravura Security Fabric , remove access by the OS
+Administrators group to the database and change the password for the sa account.
+Con figur e  a dedicated, local-admin account for use by The SQL Server Agent service, so that it runs in a
+diff er en t  security context than the database itself.
+Password and key management
+During the ins t allation  of Bravura Security Fabric , ensure that the security c ommunic ation  key
+(CommKey) used to encrypt c ommunic ation  between Bravura Security Fabric  servers and other
+components on the network has been randomly created. Either create your own or use the default
+random key.
+You should change the CommKey on a periodic basis. Note, the CommKey is located on all Bravura
+Security Fabric  servers, secondary servers, proxy servers, and target systems using transparent password
+s ynchr oniz ation  or listeners (anything that calls the Bravura Security Fabric  API). Identif y  all instances of
+the CommKey, schedule a change and complete the change, then test and verify that the change was
+successfully carried out.
+Use a strong password policy for all passwords associated with the use of Bravura Security Fabric . At a
+minimum, always use the default password policy provided with Bravura Security Fabric .
+Communic ation  defenses
+Bravura Security Fabric  sends and receives sensitiv e  data over the network. Its c ommunic ations  include
+user passwords, administrator cr edentials,  and personal user in f ormation.
+HTTPS
+Require HTTPS only c onnections  to Bravura Security Fabric  and deploy real (i.e., not self-signed) SSL
+certific a t es  on each server.
+Firewalls
+If you Internet access to Bravura Security Fabric  is required, protect this access using a fir e w all:
+▪Make sure you purchase all network hardware, including the fir e w all,  directly from the manufacturer ▪
+or from resellers who are authorized and certified  by the equipment manufacturer.
+▪Always ensure the latest firm w ar e  running. ▪▪Shutdown unused physical interfaces on the device.▪
+▪Implement access lists that only allow the protocols, ports and IP addresses required and deny▪
+everything else.
+▪Never use default usernames and/or passwords.▪
+▪Monitor outbound tr a ffic  to prevent internal machines from being used to launch a zombie attack  on a ▪
+server.
+▪Use egress filt ering  to block all tr a ffic  by default, then only allow certain tr a ffic  such as email and the ▪
+Web.
+▪Consider purchasing a fir e w all  which has three c onnections;  one for the internal network, one for the ▪
+Internet and the third for the DMZ.
+▪Use NTP to synchronize the time  on the fir e w all.  This will ensure the logs have the correct times t amp s. ▪
+▪ Con figur e  the Intrusion De t ection  System on the fir e w all  if available. ▪
+Communic ating  with target systems
+Avoid sending sensitiv e  data as plaintext:
+▪Where possible ensure that c ommunic ations  are encrypted. ▪
+For example, if you have an Oracle target system, the default setup for the Oracle client is to c on figur e
+unencrypted c ommunic ations  with the Oracle database. Ensure that you c on figur e  encrypted
+c ommunic ation.
+▪When c ommunic ations  cannot be encrypted, you can: ▪
+▪Use a proxy server to set up a secure channel with the primary server.▪
+▪Not synchronize the accounts on that target system and ensure that adminis tr ativ e  passwords are ▪
+periodically rotated.
+Auditing
+Audit logs are an important measure to identif y  and analyze suspicious activity .
+Since anyone with administrator access to the Bravura Security Fabric  server can alter or remove audit
+logs, arrange for periodic archive of audit logs to a diff er en t  server that is managed by diff er en t
+administrators.
+Bravura Security Fabric  administrators with appropriate privileges can run oper ation  reports.
+As part of the Bravura Security Fabric , the Logging Service ( idmlogsvc ) manages logging sessions for a
+particular  instance. It captures event messages from Bravura Security Fabric  program e x ecution,  and
+writes them to the c on figur ed  log file (idmsuite.log  by default).
+The Logging Service ( idmlogsvc ) (on page 2854) also has the ability to write to the Windows events
+logs.
+Windows also provides various audit logs through the Event Viewer. And IIS provides c on figur able  logging
+in f ormation  with W3C Extended Log File Format.
+Ensure you review the logs of your network devices, such as the fir e w all,  on a regular basis.

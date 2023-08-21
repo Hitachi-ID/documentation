@@ -1,0 +1,293 @@
+3.Select the Priority tab. 3.
+Bravura Security Fabric  lists the mapped attribut es  and their target systems.
+4.Enter priority values for the mapped account attribut es.  A larger value indicates a higher priority. 4.
+A default value of 50 is assigned to changes made to attribut e  values from within Bravura Security
+Fabric . This value is controlled by the ATTR PRIORITY IDSYNCH field  (Manage the system  > W orkflo w
+> Pr ofile  and request attribut es  > Attribut e  logic ).
+5.Click Update . 5.
+Setting  up a one-time  override
+To de fine  a one-time  override for a specific  pr ofile  and request attribut e:
+1.Click Manage the system  > W orkflo w  > Pr ofile  and request attribut es  > Pr ofile  and request 1.
+attribut es .
+2.Select the attribut e  for which you want to set the override. 2.
+3.Select the Priority tab. 3.
+Bravura Security Fabric  lists the mapped attribut es  and their target systems.4.Ensure that the priority sequence has been set for the mapped attribut es. 4.
+5.Select the Override on change checkbox for the appropriate account attribut e. 5.
+When the value for the mapped account attribut e  changes, it will override the de fined  priority
+sequence, and its value will be applied to the pr ofile  and request attribut e.
+6.Click Update . 6.
+Tracking and pr opag ating  attribut e  changes
+Changes to pr ofile  and request attribut e  values can be tracked. You can c on figur e  the idtrack  program
+to execute a variety of provisioning actions  aut omatic ally .  A common use case is to track changes to a
+pr ofile  and request attribut e  to synchronize attribut es  on target systems.
+To c on figur e  idtrack  to synchronize pr ofile  and request attribut es:
+▪Determine which attribut es  are authorit ativ e  and what changes should occur based on changes to ▪
+authorit ativ e  attribut es.
+▪ Con figur e  pr ofile  and request attribut es  to be tracked and set the Trackchanges to this attribut e ▪
+option.
+▪ Con figur e  attribut e  pr opag ation  by: ▪
+▪ Con figuring  attribut e  logic. ▪
+or,
+▪ W riting  an idtrack.psl script. ▪
+Con figuring  aut omatic  attribut e  pr opag ation
+To set up pr ofile  and request attribut e  logic settings  for aut omatic  pr opag ation:
+1.Click Manage the system > W orkflo w  > Options  > Aut omation . 1.
+2.Enable ATTR AUTO PROPAGATE EXECUTE to aut omatic ally  execute the pr opag ation  of changes to 2.
+pr ofile  and request attribut es  to account attribut es  on subordinate systems.
+3.Set the ATTR AUTO PROPAGATE REQUESTER field  to a valid Bravura Security Fabric  user. This is the 3.
+user that will submit change requests to the Bravura Security Fabric  w orkflo w  system.
+4.Enable ATTR AUTO PROPAGATE WRITE to aut omatic ally  write the pr opag ation  of changes to pr ofile 4.
+and request attribut es  to a work file. You can set this one alone to make changes manually, or
+combined with ATTR AUTO PROPAGATE EXECUTE for logging purposes.
+5.Set the ATTR AUTO PROPAGATE THRESHOLD  to control the number of requests to be submitted  due 5.
+to changes to pr ofile  attribut es,  unless overridden on the command line. If the threshold is exceeded,
+no requests will be submitted  aut omatic ally  by idtrack . Bravura Security Fabric  sends an email to
+the product administrator (de fined  by RECIPIENT EMAIL ) who can decide whether to run idtrack
+manually to submit those requests.
+Example
+For the following example, it is assumed there are three target systems:▪ Activ e  Directory with a target ID of “AD” ▪
+▪LDAP server with a target ID of “LDAP”▪
+▪SQL hosted applic ation  with a target ID of “SQL” ▪
+In addition,  these W orkflo w  > Options  > Aut omation  options  are also set:
+▪ATTR AUTO PROPAGATE EXECUTE to “On” ▪
+▪ATTR AUTO PROPAGATE REQUESTER to a valid pr ofile  ID ▪
+Pr ofile  and request attribut es  can be authorit ativ e  so that when a pr ofile  and request attribut e  changes
+during auto discovery , the new value is aut omatic ally  propagated to account attribut es.  The most common
+way that a pr ofile  and request attribut e  value is changed during auto discovery  is when it is mapped to an
+overridden account attribut e  with the Load attribut e  values from target system option  checked.
+The other common way that profile  and request attribut e  values are set or changed is when a requester
+creates a request in t eractively  using the View and update profile  (IDR) module. The idtrack program is
+not executed in this situation.
+Pr epar ation:
+1.Override the AD target system description  attribut e 1.
+Map to the DESC pr ofile  and request attribut e
+2.Override the SQL target system description  attribut e 2.
+Map to the DESC pr ofile  and request attribut e
+3.Override the LDAP target system description  attribut e 3.
+Map to the DESC pr ofile  and request attribut e
+Check Load attribut e  values from target system
+This sets the DESC pr ofile  and request attribut e  value to the value of the LDAP description  account
+attribut e.
+4.Track changes to the DESC pr ofile  and request attribut e 4.
+Changes to this pr ofile  and request attribut e  value will cause idtrack to aut omatic ally  propagate
+changes to all mapped account attribut es.
+Scripting  attribut e  pr opag ation
+Scripted attribut e  pr opag ation  is not as simple to set up as aut omatic  pr opag ation,  but is more fle xible.  A
+tracked change can be a triggering event to perform any provisioning oper ation  allowed via the API.
+Pr ofile  and request attribut es  and w orkflo w  authoriz ation
+Updates to pr ofile  and request attribut es  not associated with target systems are aut omatic ally  approved
+as part of the w orkflo w  authoriz ation  process. You can assign authorizers to these types of updates using
+the authorizer selection  plugin  (on page 1363), c on figur ed  by the IDSYNCH AUTH CRITERIA MOD PLUGIN
+field  ( W orkflo w  > Options  > Plugins ).Attribut e  groups
+An attribut e  group  is a named c ollection  of pr ofile  and request attribut es.  Bravura Security Fabric  uses
+attribut e  groups to determine:
+▪Who can see or edit certain attribut e  values (access controls). ▪
+▪How attribut es  are displayed to users. ▪
+Access controls 
+You assign permissions to user groups to control their members’ read and write access to attribut e
+groups, and therefore the attribut es  within each group. An individual user’s access is determined by his
+or her membership in one or more user groups.
+The following user groups exist by default:
+▪allauthorizers– All users designated as authorizers of requests.▪
+▪allimplementers– All users designated as implementers of requests.▪
+▪allrecipients– All recipients of access change requests.▪
+▪allrequesters– All requesters of access change requests.▪
+▪allself– Restricts all users to have access to only their own attribut es. ▪
+▪msp_report_users– Product administrators who can generate and view managed system policy▪
+reports.
+For example, you may want to allow some authorizers to enter c on fidential,  required in f ormation  such as
+users’ salary or Social Security Numbers without allowing requesters to see them.
+Attribut e  display 
+You can have groups of related attribut es  display:
+▪For certain request oper ations;  for example, create user, access account, or add user to a group . ▪
+▪On the main page or any number of sub-pages on the request form▪
+This is useful to avoid exposing users to hundreds of pr ofile  and request attribut es  on one page.
+You can also determine the r elativ e  order that the attribut es  appear within the group.
+In some cases you may not want the attribut es  to display at all. The attribut e  values are still available to
+the system, including interface programs and plugins; for example you may use a plugin to set default
+values rather than have users fill them in.  
+Enforcing v alidation  
+Normally, if a value is required, Bravura Security Fabric  stops a request from proceeding if the user has
+not entered a correctly f ormatted  value. You can turn off v alidation  for an attribut e  or attribut e  group if
+an incorrectly entered value should not block a request. This can be useful, for example, if a user needs to
+create or update their pr ofile  but does not have complete in f ormation.   Built-in attribut e  groups
+The following attribut e  groups are included in Bravura Security Fabric :
+APP_BUILTIN
+Bravura Privilege  built-in attribut es,  used in the Privileged access  and Session monitor .
+▪Members  desc_app, notes_app, email_app ▪
+▪Access control  All authorizers (read), recipients (read), requesters ▪
+▪ Oper ations  Single account access, Temporary group membership, Account set access, View recorded ▪
+sessions, Search recorded sessions, Download recorded sessions
+APP_RECIPIENT
+Bravura Privilege  recipient attribut es,  used in the Privileged access .
+▪Members  recipient_app ▪
+▪Access control  All authorizers (read), recipients (read), requesters ▪
+▪ Oper ations  Single account access, Temporary group membership, Account set access ▪
+ARCHBASEATTR
+Bravura Privilege  request base attribut es,  used in check-out requests.
+▪Members  ppm_vie w_time_begin,  ppm_vie w_time_end,  use_dur ation,  dur ation_unit, ▪
+dur ation_in t er v al
+▪Access control  All authorizers, recipients (read), requesters ▪
+▪ Oper ations  Single account access, Temporary group membership, Account set access ▪
+ARCH_EXTEND_CHECKOUT
+Bravura Privilege  check-out extension details.
+▪Members  arch_extend_checkout_reason, dur ation_in t er v al,  e x t ension_dur ation_unit ▪
+▪Access control  All authorizers, recipients (read), requesters ▪
+▪ Oper ations  Extend a check-out ▪
+ARCH_REQ_GRP
+Bravura Privilege  group set attribut es,  used in the Privileged access .
+▪Members  account_target_list ▪
+▪Access control  All authorizers (read), recipients (read), requesters ▪
+▪ Oper ations  Temporary group membership ▪
+ARCH_REQ_SSH
+Bravura Privilege  SSH attribut es,  used in the Privileged access .▪Members  ar ch_oper ation_type,  ssh_auth_key ▪
+▪Access control  All authorizers (read), recipients (read), requesters ▪
+▪ Oper ations  Single account access, Generic PAM check-out request ▪
+BASEATTRIBUTE
+Base attribut es  for all user pr ofiles.
+▪Members  fir s t_name,  other_name, last_name, pr ofile_pic ▪
+▪Access control  All authorizers, implementers, requesters, and recipients of access change requests. ▪
+▪ Oper ations  View pr ofile,  Create user pr ofile,  Update pr ofile ▪
+SSH_PUBLIC_ATTRS
+SSH public key attribut es  for all user pr ofiles.  By default, this is not displayed to users.
+▪Members  ssh_public_keys ▪
+▪Access control  All authorizers (read), self ▪
+▪ Oper ations  View pr ofile,  Create user pr ofile,  Update pr ofile ▪
+CERT_ATTR_TO_DISPLAY
+When s t arting  a new certific ation  campaign, the Attribut es  to display in certific ation  campaign page
+shows the members of this attribut e  group by default.
+▪Members  email, pr ofile_pic ▪
+▪Access control  All reviewers (read) ▪
+▪ Oper ations  No oper ations  set ▪
+CERT_ORGCHART_MANAGER
+During a certific ation  campaign based on an OrgChart, this attribut e  group is used to determine OrgChart
+managers and is used in transfer requests.
+▪Members  orgchart_manager ▪
+▪Access control  All requesters, all recipients, all reviewers, all authorizers, all implementers ▪
+▪ Oper ations  No oper ations  set ▪
+MAQBASEATTR
+Bravura Privilege  account set access request attribut es  used for command e x ecution.
+▪Members  maqcmd_scope, maq_command ▪
+▪Access control  All authorizers, requesters and recipients ▪
+▪ Oper ations  Account set access ▪
+ORGCHART_DISPLAYDisplays attribut es  for each user on the Browse the OrgChart page. For example, add the EMAIL attribut e
+to display each user’s email address in the OrgChart structure.
+▪Members  pr ofile_pic ▪
+▪Access control  No access controls; visible to all users ▪
+▪ Oper ations  Oper ations  cannot be set, only for viewing on the Browse the OrgChart page ▪
+RBACENFORCEATTR
+Attribut es  used to place users in role-enforcement jurisdiction.
+▪Members  rbacenforce ▪
+▪Access control  All authorizers, implementers, and requesters ▪
+▪ Oper ations  View pr ofile,  Create user pr ofile,  Update pr ofile ▪
+REQUESTONLY
+Used only in the context of a request, and do not modify a user’s pr ofile.  By default, this is not displayed
+to regular users.
+▪Members  viewable_by_recipient ▪
+▪Access control  All authorizers, implementers, and requesters of access change requests ▪
+▪ Oper ations  No oper ations  set ▪
+SM_BROWSER_VIEW
+Bravura Privilege  recorded session meta data browser view limits.
+▪Members  sm_br o w ser_vie w_time_end,  sm_br o w ser_vie w_time_s t art ▪
+▪Access control  All authorizers (read), requesters ▪
+▪ Oper ations  View recorded sessions ▪
+SM_SEARCH
+Bravura Privilege  recorded session meta data browse limits.
+▪Members  sm_search_dest_managed_system, sm_sear ch_initia t or , ▪
+sm_search_managed_account, sm_sear ch_sear ch_time_end,
+sm_sear ch_sear ch_time_s t art,  sm_sear ch_sess_time_end,
+sm_sear ch_sess_time_s t art,  sm_search_source
+sm_search_source_account, sm_search_msps
+▪Access control  All authorizers (read), requesters ▪
+▪ Oper ations  Search recorded sessions ▪
+SM_VIEW
+Bravura Privilege  recorded session meta data view limits.▪Members  sm_event_type, sm_vie w_e xpir y_time ▪
+▪Access control  All authorizers (read), requesters ▪
+▪ Oper ations  VDownload recorded sessions ▪
+Getting  started
+You use the  Attribut e  group de finition  page to c on figur e  general attribut e  group in f ormation,  and to
+access additional  c on figur ation  settings.  To navigate to this page:
+1.Click Manage the system  > W orkflo w  > Attribut e  groups . 1.
+2.Create or select the group you want to de fine. 2.
+Cr eating  attribut e  groups
+To create an attribut e  group:
+1.Click Manage the system  > W orkflo w  > Attribut e  groups . 1.
+2.Click Add new... 2.
+Bravura Security Fabric  displays the Attribut e  Group de finition  page.
+3.Type a unique ID and Description . 3.
+4.Set rules for v alidation  enforcement: 4.
+▪Enforce v alidation  when cr eating  new accounts – Enable this if new account requests can only ▪
+proceed if correctly f ormatted  values are entered for this attribut e  group.
+▪ V alidation  behavior when updating  e xisting  accounts – Determine whether Bravura Security Fabric ▪
+should always validate values for this attribut e  group before proceeding with a request, or only if
+the values have been modified.
+5.If you want to provide additional  in f ormation  for end users, enter text in the Notes (above attribut es) 5.
+or Notes (below attribut es)  fields.
+These fields  support !!! tags  (on page 361) for in t ernationaliz ation  and HTML markup. See
+CUSTOMIZATION  (on page 3471) for detailed in f ormation.
+6.Click Add. 6.
+Next: 
+▪Add attribut e  group members  (on page 1308) ▪
+▪Assign read and write permissions  (on page 1309) ▪
+▪Determine how attribut es  are displayed  (on page 1309) ▪
+Adding attribut e  group members
+Pr ofile  and request attribut es  must be added to an attribut e  group before they can be used.
+It is recommended that you avoid making a single attribut e  a member of more than one attribut e  groups
+that might be used for the same operation.  If necessary, create specific  profile  and request attribut es  for
+each of the groups so that they can better  re flect  the attribut e  group to which they belong.To add attribut es  to a group:
+1.From the Attribut e  Group de finition  (on page 1308) page, click the Members tab. 1.
+2.Click Add to see a list of all attribut es. 2.
+3.Search for, or select the checkboxes next to the attribut es  you want to include. 3.
+4.Click Add. 4.
+To remove attribut es  from the attribut e  group, select the checkbox next to the attribut e  and click Delete .
+If required c on firm  your actions  (on page 360).
+To display group membership for a pr ofile  and request attribut e,  if any, select the pr ofile  and request
+attribut e,  then click the Attribut e  groups tab.
+Assigning read and write permissions
+To assign read and write permissions for an attribut e  group:
+1.From the Attribut e  Group de finition  (on page 1308) page, click the Access control tab. 1.
+2.If required, search to r e fine  the list of attribut es  displayed on the page. 2.
+3.Select Read and Write checkboxes as required. 3.
+By default, the checkboxes indicate allowed permissions. If Bravura Security Fabric  is c on figur ed  to
+display Allow and Deny columns, ensure that you select checkboxes in the appropriate columns. See
+c on figur ation  notes below.
+4.Click Update . 4.
+If you require users to be able to edit attribut es  with restricted or boolean values, you must assign
+them both read and write permissions.
+Notes about permissions 
+When assigning read and write permissions for an attribut e  group, consider the following:
+▪If an attribut e  group contains required attribut es  that can only be edited by authorizers, the ▪
+requirement is ignored until  the request reaches the authoriz ation  stage. If authorizers then fail to
+provide values for the required attribut es,  the request is aut omatic ally  denied.
+▪When a user group is assigned write-only permissions to attribut es  with restricted or boolean values, ▪
+they are aut omatic ally  granted read andwrite permissions since write-only permissions would prevent
+users from viewing or editing  attribut es.
+In some cases it may be easier to prevent certain users from accessing specific  objects, rather than trying
+to find a way to grant limited user access.
+Use the ACL DENY ENABLE setting  on the Manage the system > Policies > Options  page to allow console
+users to deny read and write permissions to objects.
+Determining how attribut es  are displayed
+To determine how a group of attribut es  is displayed to users:1.From the Attribut e  Group de finition  (on page 1308) page, click the Display criteria tab. 1.
+2.Determine the Display type . Select: 2.
+▪Main – to display the group and its attribut es  on users’ main pr ofile  page. ▪
+▪Subsidiary – to display the group’s attribut es  on a subsidiary page on users’ pr ofile  pages. ▪
+▪None – to hide the group and its attribut es  from users on their pr ofile  page. ▪
+3.Select the oper ations  for which the attribut es  are displayed. 3.
+4.Click Update . 4.
+Notes about display 
+▪Bravura Security Fabric  does not display empty groups (without attribut es)  to users. ▪
+▪Errors will occur if multiple  attribut e  groups contain the same attribut e  and are displayed on the main ▪
+page.
+▪The list of oper ations  does not apply to pr e-de fined  requests. ▪
+Determining attribut e  group display order
+To determine the order in which attribut e  groups are displayed to users:
+1.Click Manage the system  > W orkflo w  > Attribut e  groups . 1.
+2.Click Order... . 2.
+3.Drag and drop one of the double dir ection  arrows in the ID field  to change the attribut e  groups’ order 3.
+in the list.
+4.Click Update . 4.
+ About the r elativ e  display order 
+When you click Update , Bravura Security Fabric  aut omatic ally  adjusts the attribut e  groups’ Order values
+to increments of 10. This allows you to manipulate the group order without changing the full list. For
+example, to move the BASEATTRIBUTE (10) group between ARCHBASEATTR (20) and REQUESTONLY (30),
+set its r elativ e  order to 25.

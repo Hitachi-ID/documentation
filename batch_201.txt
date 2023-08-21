@@ -1,0 +1,336 @@
+...
+<Connector port="8080" protocol="HTTP/1.1"
+connectionTimeout="20000"
+redirectPort="8443" />
+<!-- A "Connector" using the shared thread pool-->
+<!--
+<Connector executor="tomcatThreadPool"
+port="8080" protocol="HTTP/1.1"
+connectionTimeout="20000"
+redirectPort="8443" />
+-->
+<!-- Define an SSL/TLS HTTP/1.1 Connector on port 8443
+This connector uses the NIO implementation. The default
+SSLImplementation will depend on the presence of the APR/native
+library and the useOpenSSL attribute of the AprLifecycleListener.
+Either JSSE or OpenSSL style configuration may be used regardless of
+the SSLImplementation selected. JSSE style configuration is used below.
+-->
+<Connector protocol="org.apache.coyote.http11.Http11NioProtocol"
+port="8443" maxThreads="200"
+scheme="https" secure="true" SSLEnabled="true"
+keystoreFile="ssl/keystore.jks" keystorePass="password123"
+clientAuth="false" sslProtocol="TLS"/>
+<!--
+<Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+maxThreads="150" SSLEnabled="true">
+<SSLHostConfig>
+<Certificate certificateKeystoreFile="conf/localhost-rsa.jks"
+type="RSA" />
+</SSLHostConfig>
+</Connector>
+-->
+...
+Save the file.
+22. Type exit to leave the guacamole container context. 22.
+23. Copy server.xml from the guacamole container. This will prevent the file from being 23.
+o v er written  every time  the guacamole container is built:
+podman cp guacamole:/usr/local/tomcat/conf/server.xml guacamole/usr/
+local/tomcat/conf/For future updates to the server.xml  file, edit the file from guacamole/usr/local/
+tomcat/conf/ instead of going into the container context. The latter  will be o ver written  should you
+rebuild the guacamole container.
+24. Restart the guacamole container. 24.
+podman restart guacamole
+25. Open a browser window on a system where the Guacamole server SSL certific a t e  is installed, and 25.
+access the Guacamole server using http s  and port 8443, ie:
+https://<DNSName-of-guacamole-server>:8443/pam-guacamole
+26. Con firm  that the Guacamole server is secured, as indicated by the lock on the address bar. 26.
+A black screen with the following message will be displayed, however this is expected at the setup
+stage:
+IMPORTANT! If you previously created a service for the podman pod using port 8080,
+you need to update the port number for the pod-guac service to use
+8443.
+27. Update the guacamole-url  for Guacamole access disclosure plugins  (on page 1989) to use port 27.
+8443.
+Troubleshoot c on figur ation  problems
+General ins t allation  issues
+▪If you cannot download packages, try r es t arting  the network or r es t arting  the system. ▪
+▪If you are unable to install any of the RPMs and/or their dependencies, run the following command▪
+and try to install the RPMs again.  
+yum clean all 
+▪If the Guacamole gateway is behind a fir e w all  and cannot install packages using yum due to ▪
+c onnection  issues, add the proxy to the yum c on fig  file. To do this, edit the yum.conf file:  
+vi /etc/yum.conf 
+Add a new line at the bottom  of the file with the proxy address:
+proxy=<proxy address> 
+General c onfigur ation  issues
+▪If you are launching a Guacamole disclosure plugin but it gives a c onnection  error: ▪▪Ensure that the guacd proxy and web applic ation  service are running. ▪
+▪Test the c onnection  from within the Guacamole server: ▪
+Using curl:
+curl -L --noproxy '*' localhost:<port>/pam-guacamole | less
+Using wget:
+wget --no-proxy localhost:<port>/pam-guacamole
+▪Ensure the fir e w all  on the Guacamole server is not blocking port 8080 (or 8443 for SSL ▪
+c onnections)
+▪Ensure that the Guacamole gateway can ping the Bravura Privilege  server and managed systems ▪
+prior to c onnecting  via access disclosure plugin, using the IP address, then the hostname. If the
+systems can be reached by IP address but not the hostname, add the hostname and corresponding
+IP address to the /etc/hosts file. If using Docker or Podman, you may need to add a hostname
+mapping to the docker-compose  file.
+▪For In-Browser RDP , ensure that the managed account that is used to launch the Guacamole▪
+session has remote access to the managed system. This can be v erified  by manually opening up a
+Remote Desktop Connection  session, or by using Remote Desktop disclosure ( pswxtsvc ) and
+logging in as the managed account.
+▪Ensure that the security protocol is correct for the managed system you are trying to connect to. As▪
+of Guacamole 1.3, ‘any’ should aut omatic ally  choose the correct protocol.
+▪If you’re trying to connect to a Windows system older than Windows 10, ensure that the proper lines▪
+are uncommented in the guacd 's Dock erfile.  Refer back to ins t allation  steps for Docker  (on page
+1981) or Podman
+▪If text is not displayed properly using Telnet or SSH, install a monospace font package for Telnet and▪
+SSH such as gnu-free-mono-fonts .
+▪If clipboard capture is not working for session monitoring, a required dependency may be missing.▪
+Ensure that freerdp-plugins is installed.
+▪You may find logging to be helpful in diagnosing Guacamole c onnection  problems. ▪
+▪Log files on a Docker-installed environment can be viewed by running:  ▪
+docker logs guacd 
+docker logs guacamole 
+▪Log files on a Podman-installed environment can be viewed by running:  ▪
+podman logs guacd 
+podman logs guacamole 
+▪Log files on a CentOS/RHEL environment where Guacamole RPM packages are installed manually ▪
+are located in:  
+/var/log/tomcat 
+/var/log/messages 
+Podman c onfigur ation  issues
+▪You may encounter the following error, despite c onnecting  with the correct security type: ▪This could be the result of c onnecting  to a managed system that does not require a proxy. If a proxy is not
+required to access the managed system, modify the no_proxy list in /etc/profile to include the
+managed system. You will need to source the file again, or log off and log back in to the Guacamole
+server for the proxy changes to come into e ff ect.  Alt ernativ ely ,  add --http-proxy=false  to the
+podman run commands. For example:
+podman run -d --pod guac --name guacd --http-proxy=false guacd
+podman run -d --pod guac --name guacamole --http-proxy=false guacamole
+SSL c onfigur ation  issues
+▪Ensure that the /bin/ setenv.sh  file contains the correct truststore, path and password. ▪
+▪Ensure that the /conf/ server.xml  file contains the correct keystore, path and password. ▪
+▪Ensure that the passwords for the keystore.jks  and truststore.jks  files are correct. ▪
+keytool -list -v -keystore <pathOfStoreFile>/<storeFileName>.jks
+▪If you update /conf/ server.xml  from within the guacamole  container context, ensure that ▪
+you copied it outside of the container or you will lose your changes if you rebuild the container.
+▪You must access the instance using the DNS name you provided in the SSL certific a t es.  Accessing it ▪
+using localhost, or an IP address will result in warnings.
+▪Ensure that the guacamole-url  for the Guacamole access disclosure plugin contains the exact DNS ▪
+name you provided for the Guacamole server SSL certific a t e.
+▪If you still receive security warnings accessing the Guacamole server, ensure that you installed the SSL ▪
+certific a t e  in the correct loc ation  (Trusted Root Certific ation  Authorities).
+▪If you are using self-signed certific a t es,  ensure that it is deployed on the system that will launch ▪
+Guacamole sessions .
+▪For self-signed certific a t es,  you may need to update the Guacamole access disclosure plugins to ignore ▪
+the SSL certific a t e.  (set the ignore-cert  disclosure attribut e  to True)
+Benchmarking metrics for Guacamole
+Objectiv e
+▪To determine the maximum number of concurrent Guacamole sessions based on the amount of▪
+memory (RAM) allocated on the Guacamole gateway in the worst case.
+▪To determine the amount of memory (RAM) to be allocated on the Guacamole gateway for a given▪
+number of concurrent Guacamole sessions in the worst case.
+In tr oductionThere are several factors that can a ff ect  the reliability of Guacamole. One of the major factors is memory
+usage on the Guacamole server. However, it can be difficult  to gauge how much memory Guacamole
+consumes. A single Guacamole session can initia t e  multiple  guacd  threads; each thread using varying
+amounts of memory. Plus, the amount of memory initially  consumed by a Guacamole session will
+gradually increase as the session persists. Also, depending on what is being performed on the remote
+desktop screen can also a ff ect  memory c onsumption,  as well as the display settings  for the remote
+desktop screen. Furthermore, RDP sessions consume more memory than SSH sessions.
+Test methodology
+To make things simple and consistent, 40 concurrent In-Browser RDP sessions will be launched. Each
+session will RDP to the same managed system using the same managed account, with the default display
+r esolution  of 1024x768 at 96 DPI (dots per inch), and will open a command line window upon login that
+covers most of the Remote Desktop screen, which will ping 3 reachable IP addresses every 2 seconds.
+This will simulate constant movement on the screen, which ideally would result in a more r ealistic  worst
+case scenario. It is assumed that in a normal case, users will periodically use the Guacamole sessions
+throughout the checkout dur ation,  and not on a regular basis.
+The terms “memory” and “RAM” will be used interchangeably.
+To get an idea of how much memory is consumed per Guacamole session, you need to determine the
+following metrics at each stage:
+1.The total RAM used on the Guacamole server before s t arting  Guacamole 1.
+2.The total RAM used on the Guacamole server after  s t arting  Guacamole 2.
+3.The total RAM used on the Guacamole server after  initiating  a single Guacamole session and leave it 3.
+running for at least 15-20 minutes – the longer the dur ation,  the better
+4.The total RAM used on the Guacamole server after  ending the activ e  Guacamole session (this number 4.
+will be diff er en t  than stage 2)
+The memory allocated when launching the initial  Guacamole session is typically larger than subsequent
+Guacamole sessions. This is because some guacd processes will remain activ e  even if all Guacamole
+sessions have terminated. Thus, the total RAM used at Stage 4 will diff er  from Stage 2. However, the
+memory consumed upon launching subsequent Guacamole sessions will be r elativ ely  consistent.
+A useful tool to measure this in f ormation  is htop , which can be installed on the Guacamole server using
+dnf install htop  (or yum install htop ). You can find more info at http s://h t op.de v
+A minimum 4 core processor is recommended for the Guacamole server. On htop , you can determine
+the CPU usage based on the “Load average” metric. There are 3 values: the fir s t value is the per minute
+average; the second value is the 5 minute average; and the third value is the 15 minute average. A value
+of 4.0 for a 4-core CPU would mean 100% utiliz ation.  If the Load Average consistently exceeds this
+number, it is an indic ation  that additional  cores need to be allocated to the Guacamole server based on
+the load.
+Test exclusionsSession monitoring is not included in this test. Based on Guacamole benchmarking tests conducted
+previously, there does not appear to be any noticeable  increase in memory usage when Session Monitor
+is enabled (screenshots, keystrokes and clipboard capture)
+Other Guacamole disclosure plugins such as In-Browser SSH, In-Browser VNC, In-Browser RemoteApp
+and In-Browser Telnet will not be included in this test. In-Browser VNC and In-Browser Remote App
+should have similar memory requirements as In-Browser RDP; and In-Browser SSH and In-Browser Telnet
+should both be comparable but use considerably less memory than In-Browser RDP .
+Test Environment
+▪Guacamole server▪
+▪OS: CentOS 8 Stream 64-bit (virtual machine)▪
+▪Internal memory: 6 GB RAM (recognized on system as 5.41 GB)▪
+▪Processor: Intel Core i7-4790 @3.60GHz (4 processors)▪
+▪Hard Drive: 12 GB▪
+▪Guacamole version: 1.3▪
+▪Installed using podman▪
+▪SSL enabled▪
+▪Bravura Privilege  instance server ▪
+▪OS: Windows 2022 64-bit (virtual machine)▪
+▪Internal Memory: 5GB RAM▪
+▪Processor: Intel Core i7-4790 @3.60GHz (2 processors)▪
+▪Hard Drive: 50 GB▪
+▪Privilege version: 12.3.5 (build 32487)▪
+▪Managed system▪
+▪OS: Windows 2022 64-bit (virtual machine)▪
+▪Internal Memory: 6 GB RAM▪
+▪Processor: Intel Core i7-4790 @3.60GHz (4 processors)▪
+▪Hard Drive: 50 GB▪
+▪Remote Desktop Services (Terminal Services) installed▪
+▪Remote Desktop session host c on figur ed  to allow an unlimited number of concurrent ▪
+c onnections
+▪At least one user is part of the Remote Desktop Users group▪
+Test Results
+The following test was performed:
+▪40 concurrent Guacamole In-Browser RDP sessions were launched▪
+▪Each RDP session runs the same scheduled task upon login to the managed system▪
+▪A scheduled task opens a command line window, set to the following:▪
+▪Font : Size: 28 ; Font: MS Gothic ▪▪Layout : Screen Buff er  Size: 65x9001 ; Window Size: 65x24 ; Window P osition:  10x10 ▪
+▪Colors (Screen Background): Selected Color Values: Red: 242 ; Green: 242 ; Blue: 242; Opacity: ▪
+86%
+▪The scheduled task executes a batch script that pings 3 diff er en t  IP addresses; 1 IP address is ▪
+pinged every 2 seconds
+▪The Guacamole sessions were left running for an 12 hour period, to ensure that no Guacamole ▪
+sessions unexpectedly terminated based on the environment specific ations  given
+▪The total memory usage for 40 Guacamole sessions was obtained after  the 12 hour period had ▪
+elapsed
+▪The memory usage per Guacamole session is based on the diff er ence  of the total memory usage ▪
+before a Guacamole session is closed and after  the Guacamole session is closed
+Observed memory usage
+Stage Description Total Memory Usage (GB) Total Memory Usage (MB)
+1 The total RAM used on the Guacamole server before s t arting  Guacamole 0.557 557
+2 The total RAM used on the Guacamole server after  s t arting  Guacamole 0.677 677
+The diff er ence  in total RAM used between Stage 1 and Stage 2 0.12 120
+3 The total RAM used on the Guacamole server after  initiating  a single Guacamole session and leave it
+running for 15-20 minutes0.926 926
+4 The total RAM used on the Guacamole server after  ending the initial  Guacamole session 0.81 810
+The diff er ence  between the total RAM used after  initiating  and t erminating  the initial  Guacamole
+session (Stage 4) and s t arting  the Guacamole service (Stage 2)0.249 249
+The total memory usage was gathered after  all 40 sessions were initia t ed  and left running for more than
+12 hours. One-by-one, each Guacamole session was terminated, and the updated total memory usage
+per x number of sessions was obtained. This is a more accurate measure of memory usage per
+Guacamole session instead of obtaining it immediately after  the Guacamole session is launched because
+the memory usage can still fluctua t e  as time  goes on.
+Average memory usage per Guacamole session (GB) Minimum memory usage per Guacamole session (GB) Maximum memory usage per Guacamole session (GB)
+0.0975 0.074 0.116
+Average memory usage per Guacamole session (MB) Minimum memory usage per Guacamole session (MB) Maximum memory usage per Guacamole session (MB)
+97.5 74 116The maximum memory usage for a Guacamole session will be used to calculate the worst case, in this
+case, 116 MB.
+Formula
+To get the minimum amount of RAM in GB for y number of sessions:
+z = (557 + 249 + xy) * 0.01
+Where :
+x = Amount of memory per Guacamole session (MB)
+y = Total amount of sessions
+z = Total memory (GB)
+▪557: The total RAM (MB) used in megabytes before s t arting  Guacamole on the Guacamole server ▪
+▪249: The additional  RAM (MB) needed to start the Guacamole service and the memory that remains ▪
+after  t erminating  the initial  Guacamole session (diff er ence  between Stage 4 and Stage 2)
+▪xy: The amount of RAM allocated per Guacamole session, multiplied  by the number of activ e  sessions ▪
+▪1GB = 1000 MB▪
+Examples
+For 10 Guacamole sessions:
+z = (557 + 249 + 116x) * 0.01
+z = (806 + 116(10)) * 0.01
+z = (806 + 1160)) * 0.01
+z = 1966 * 0.01
+z = 1.97 GB
+For 50 Guacamole sessions:
+z = (557 + 249 + 116x) * 0.01
+z = (806 + 116(50)) * 0.01
+z = (806 + 5800)) * 0.01
+z = 6606 * 0.01
+z = 6.61 GB
+For 100 Guacamole sessions:
+z = (557 + 249 + 116x) * 0.01
+z = (806 + 116(100)) * 0.01
+z = (806 + 11600)) * 0.01
+z = 12406 * 0.01
+z = 12.41 GB
+For 200 Guacamole sessions:z = (557 + 249 + 116x) * 0.01
+z = (806 + 116(200)) * 0.01
+z = (806 + 23200)) * 0.01
+z = 24006 * 0.01
+z = 24.01 GB
+To get the maximum number of Guacamole sessions for y GB of RAM allocated to the Guacamole server:
+x = floor((y – 557 – 249) / z)
+Where :
+x = Total amount of sessions
+y = Free memory (GB)
+z = Amount of memory per Guacamole session (MB)
+▪1GB = 1000 MB▪
+Examples
+For 5GB of memory:
+x = floor((y - 557 - 249) / 116))
+x = floor((y - 308) / 116)
+x = floor((5000 - 308) / 116)
+x = floor(4692 / 116)
+x = 40.44 sessions or 40 sessions.
+For 12 GB of memory:
+x = floor((y - 557 - 249) / 116)
+x = floor((y - 308) / 116)
+x = floor((12000 - 308) / 116)
+x = floor(11898 / 116)
+x = 102.57 sessions or 102 sessions.
+For 20 GB of memory:
+x = floor((y - 557 - 249) / 116)
+x = floor((y - 308) / 116)
+x = floor((20000 - 308) / 116)
+x = floor(19692 / 116)
+x = 169.76 sessions or 169 sessions.
+Other factors to consider
+▪Network latency : Depending on the network c onnection,  it’s possible that sessions may terminate if ▪
+the network is extremely slow (ie. latency is greater than 3000ms)▪CPU : It is best to c ontinuously  monitor the CPU usage on the Guacamole server. If you periodically ▪
+notice  some sessions t erminating  unexpectedly, especially when there is a lot of activ e  Guacamole
+sessions, ensure that the Load average has not been exceeded based on the number of CPU cores
+allocated for the Guacamole server.
+▪Screen r esolution  size : Setting  a larger display r esolution  size for the Guacamole window will increase ▪
+the memory usage, especially when work is being performed on the majority of the remote desktop
+screen.
+▪By default, Micr osoft  Edge Chromium, Google Chrome and Mozilla Firefox aut omatic ally  puts idle ▪
+browser tabs to sleep to reduce memory usage. If a Guacamole session terminates unexpectedly, it
+may be because the browser itself has not replied back to the Guacamole server in a sufficien t
+amount of time.
+Website access disclosure plugins
+Secure browser plugin: securebrowser
+The securebrowser access disclosure plugin provides users brokered access to a website without the
+need to enter the adminis tr ativ e  cr edentials  for the managed account and is c ompatible  with session
+recording.
+This requires ins t allation  of the Secure Browser  (on page 2317) app.
+The securebrowser  plugin is primarily used in c onjunction  with team management  (on page 2147).
+You can modify the following default attribut es  to control the behavior of securebrowser :
+▪ c on figur ation_file  The c on figur ation  file in JSON format. ▪
+▪webappjson_create If enabled, the user checking out the managed account can upload their own ▪
+website applic ations.  This is disabled by default.
+▪webappjson_search  By default, the user checking out the managed account has the ability to search ▪
+and select a desired website applic ation.
+The logutil utility  cannot capture securebrowser plugin activity .
+Web app privileged sign-on: pswxwebapp
+The pswxwebapp access disclosure plugin provides users brokered access to a website without the
+need to enter the adminis tr ativ e  cr edentials  for the managed account.
+This is c ompatible  with desktop Chrome browsers and requires ins t allation  of the Bravura Security
+browser extension.
+The pswxwebapp plugin is primarily used in c onjunction  with Team Management.
+You can modify the following default attribut es  to control the behavior of pswxwebapp :
+▪ c on figur ation_file  The c on figur ation  file in JSON format. ▪
+▪webappjson_create  If enabled, the user checking out the managed account can upload their own ▪
+website applic ations.  This is disabled by default.

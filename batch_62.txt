@@ -1,0 +1,253 @@
+Group attribut es
+The term group attribut es  refers to the attribut es  of groups on target systems.
+Each target system type has a diff er en t  list of group attribut es.  Each target system also has its own set of
+requirements for each of its group attribut es;  for example, an attribut e  may:
+▪Be required (it cannot be blank)▪
+▪Contain multiple  values ▪
+▪Be writable only by the underlying OS▪
+▪Have f ormatting  constraints (date, phone number, email) ▪
+▪Require a specific  data type (binary, boolean, character, memo, numeric) ▪
+▪Be dependent on other attribut es ▪
+Read this chapter to learn about how Bravura Security Fabric  handles group attribut es  and p seudo-
+attribut es  when managing groups on a target system, and how you can override its default c on figur ation.
+See also: 
+▪The Connector Pack Documen t ation  for in f ormation  about each target system. ▪
+▪The documen t ation  provided with your target system softw ar e  for more in f ormation  about attribut es ▪
+specific  to that system.
+Handling group attribut es
+Bravura Security Fabric  includes a “catalog” of shipped default attribut es  for each target system type. The
+catalog includes each attribut e’ s  nativ e  name, and default requirements, c on figur ed  actions,  and
+resource attribut e  mappings.
+Attribut e  inf ormation  may not be available for some target system types (Telnet, Win32 Console,
+database script target systems), this is because these target systems are generally custom applic ations
+unique to each environment.
+Bravura Security Fabric  uses the attribut e  catalog to determine rules for “handling” each attribut e  when
+managing groups on a target system. The catalog also determines which attribut es’  values should be
+loaded during auto discovery .
+Bravura Security Fabric  enables you to override the default rules for handling group attribut es.  Using the
+Manage the system  (PSA) module you can:
+▪Control how groups are created, updated, or deleted▪
+▪Determine which attribut es  to load during auto discovery ▪
+▪Add new attribut es ▪
+▪Map group attribut es  to resource attribut es,  or change e xisting  attribut e  mappings ▪Example: Mapping a group attribut e
+The following example demonstrates how to map a group attribut e  values pulled from an Activ e
+Directory target system to a resource attribut e  created in Bravura Security Fabric .
+This example assumes that an Activ e  Directory target system has been added with the List group
+attribut es  option  enabled, and that auto discovery  has been run.  
+Add a new resource attribut e  
+1.Click Manage the system > Resources > Resource attribut es . 1.
+2.Click Add new… 2.
+3.Enter the following values:3.
+ID GROUP_TYPE
+Description Group type
+Type String
+Minimum required number of values 1
+4.Add restricted values:4.
+a.Click the Restricted values tab. a.
+b.Type Security in the Actual value and Displayed value fields,  then click More . b.
+c.Type Distribution in the Actual value and Displayed value fields. c.
+d.Click Update . d.
+ Set resource attribut e  access controls 
+To set access controls for the new resource attribut e,  add it to a resource attribut e  group:1.Click Manage the system > Resources > Resource attribut e  groups . 1.
+2.Select GROUP_INFO_CREATE. 2.
+3.Click the Members tab. 3.
+4.Click Select… 4.
+5.Select the checkbox for GROUP_TYPE then click Select . 5.
+The resource attribut e  can now used in group cr eation  requests.
+Repeat this procedure for the GROUP_INFO_UPDATE resource attribut e  group if you want to allow users
+to update the attribut e.
+Map a group attribut e  to the new resource attribut e  
+Override the default action  for the Activ e  Directory target system’s _groupType attribut e:
+1.Click Manage the system > Resources > Group attribut es . 1.
+2.Select the Target system override level. 2.
+3.Select the Activ e  Directory target system. 3.
+4.Click the Defaults tab. 4.
+5.Search for and select the _groupType attribut e. 5.
+6.Click Override . 6.
+7.Set Action  when cr eating  group to ”Set to specified  value”. 7.
+8.Set Action  when updating  group to ”Set to specified  value when mapped pr ofile  attribut e  changes”. 8.
+9.Click the search 
+  icon in the Map group attribut e  to resource attribut e  field. 9.
+10. Select GROUP_TYPE . 10.11. Click Add. 11.
+12. Con firm  the attribut e  mapping changes. 12.
+The Activ e  Directory target system’s group attribut e  is now mapped to the Bravura Security Fabric
+resource attribut e.
+The following sections  describe options  and steps in more detail.
+Selecting  an override level
+There are two levels at which group attribut e  values can be overridden. Use the following override levels
+to modify attribut e  behavior:
+Target system Modify the attribut e  c on figur ation  for a specific  target
+system.
+Target system type Modify the attribut e  c on figur ation  for all target systems
+of a given type.
+Target-system level overrides take priority over target-system-type overrides. If you change the default
+action  for a target system type, and change the same action  for a specific  target system, the target-
+system level override determines the attribut e  action  when groups are created on the specified  target
+system. All other target systems of that target-system-type will use the target-system-type override.
+To select an override level:
+1.Click Manage the system > Resources > Group attribut es . 1.
+2.Select:2.
+▪Target system type , select the target system type from the drop-down list, then click Select . ▪▪Target system , then select the target system you want to modify. ▪
+Use the search function  if necessary.
+Bravura Security Fabric  displays the Group attribut e  page for the level. Attribut es  for which default
+settings  apply are listed in the Defaults tab. When you make changes to the group attribut e
+c on figur ation,  the attribut e  is listed in the Target system type level overrides or Target system level
+overrides  tab.
+Overriding default group attribut e  c on figur ation
+To override the default c on figur ation  for an individual group attribut e:
+1.Select an override level.1.
+2.Select the Defaults tab. 2.
+3.Browse to select the attribut e  you want to override. 3.
+Bravura Security Fabric  displays a page containing c on figur ation  in f ormation  for the attribut e.
+4.Click Override to display the override c on figur ation  page. 4.5.Click Add at the bottom  of the form. 5.
+Additional  c on figur ation  options  are now available to you.
+6.Proceed to:6.
+▪Changing the c on figur ed  action  (on page 616) ▪
+▪Modifying attribut e  value constraints  (on page 617) ▪
+▪Loading attribut es  (on page 617) ▪
+▪Mapping group attribut es  to resource attribut es  (on page 618) ▪
+▪Tracking group attribut e  changes  (on page 619) ▪
+▪Specifying attribut e  values  (on page 619) ▪
+▪ Deleting  specified  attribut e  values  (on page 619) ▪
+7. Con firming  and t esting  changes  (on page 619) 7.
+Changing the c on figur ed  action
+The c on figur ed  action  determines how Bravura Identity  should create the group attribut e  during the
+“create group” and “update group” oper ation.
+To change the c on figur ed  action  for individual group attribut es:
+1.Navigate to the override c on figur ation  page. 1.
+2.Select the appropriate action  from the Action  when cr eating  group drop-down list: 2.
+▪None – Ignore the attribut e  when setting  up a new group. ▪
+▪Set to specified  value – Set the attribut e  to specific  values or according to resource attribut es. ▪You cannot select an action  that is not supported for the attribut e.
+3.Select the appropriate action  from the Action  when updating  group drop-down list: 3.
+▪Set to specified  value – Set the attribut e  to specific  values or according to resource attribut es. ▪
+▪Set to specified  value when mapped pr ofile  attribut e  changes – Set the attribut e  to specific  values ▪
+or according to resource attribut es  only when the pr ofile  attribut e  has changed.
+▪None – Ignore the attribut e  when updating  the group. ▪
+You cannot select an action  that is not supported for the attribut e.
+4.Click Update . 4.
+ Next: 
+If the set action  for the attribut e  is Set to specified  value , do of the following:
+▪Specify a resource attribut e.  Proceed to Mapping group attribut es  to resource attribut es  (on page ▪
+618).
+▪Specify values in the “ Attribut e  value” column. Proceed to Specifying attribut e  values  (on page 619). ▪
+Modifying attribut e  value constraints
+Group attribut e  value constraints determine rules for attribut e- v alue  c omposition.  By default, attribut es
+are loaded as single-valued.
+Group attribut e  value constraints must be c ompatible  with the mapped resource attribut e  or the attribut e
+values you specify. For example, you cannot map a required group attribut e  to an optional  resource
+attribut e,  or a single-valued group attribut e  to a multi- valued  resource attribut e.
+To modify attribut e  value constraints:
+1.Navigate to the override c on figur ation  page. 1.
+2.Change the following fields  as required: 2.
+▪Minimum number of values – determines whether an attribut e  is required. Type 0 to make this ▪
+attribut e  optional  or type a number greater than zero to require a minimum number of values.
+▪Maximum number of values – determines whether more than one value is allowed. Type -1 to ▪
+indicate that there is no maximum or type a number greater than zero to set the maximum
+number of values.
+The maximum number of values must be at least as big as the minimum number of values.
+▪ Attribut e  type – select one of the following types: Binary, Boolean, String, Memo, Integer or File. ▪
+▪Encoding used to store value – select: No encoding, or Base 64. ▪
+3.Click Update . 3.
+Loading attribut es
+During auto discovery , Bravura Security Fabric  loads a list of groups on target systems into its internal
+database. By default, Bravura Security Fabric  also loads the most commonly used group attribut es.You can c on figur e  Bravura Security Fabric  to load group attribut es  at the target type or target override
+levels. To do this:
+1.Navigate to the override c on figur ation  page. 1.
+2.Enable the Load attribut e  values from target system checkbox. 2.
+3.Click Update . 3.
+Attribut es  must be listed before they can be loaded. If the List groups and List attribut es  options  are
+not enabled for a target system  (on page 480), you must provide a list.
+If you want users to be able to view or edit the attribut e  value, map the group attribut e  to a resource
+attribut e. The  Load attribut e  values from a target system option  is aut omatic ally  set when you map to a
+resource attribut e.
+Mapping a group attribut e  to a resource attribut e  will enable a user to edit the attribut e  value, and the
+value will be updated on the target system. However, only the values from the most commonly used
+group attribut es  are loaded from the target system back to Bravura Security Fabric.
+Mapping group attribut es  to resource attribut es
+Resource attribut es  allow any number of group attribut es  to be mapped to a single value in groups’ data.
+Several attribut es  are mapped by default; for example, the Activ e  Directory _container_dn attribut e
+is mapped to the GROUP_OU resource attribut e.  Attribut es  that are mapped to resource attribut es  are
+listed by default when the target system’s List group attribut es  setting  is enabled.
+In order to map an group attribut e  to a resource attribut e,  the attribut es’  requirements (number of
+values, attribut e  type, encoding) must be c ompatible.
+To map an group attribut e  to a resource attribut e:
+1. Selecting  an override level  (on page 614). 1.
+2.Select a group attribut e. 2.
+3.Choose the resource attribut e  to map to. You can either: 3.
+▪Search for the resource attribut e ▪
+▪Type the resource attribut e  ID in the Map group attribut e  to resource attribut e  field ▪
+The Populate mapped resource attribut e  with values from target system will aut omatic ally  be
+selected when the Map group attribut e  to resource attribut e  field  is filled  in and when the Load
+attribut e  values from target system has been checked. You can disable the mapping of attribut es
+by deselecting  this box.
+4.Click Update . 4.
+Mapping target system boolean attribut e  values
+Pr ofile  and resource attribut es  in Bravura Security Fabric  represent boolean values internally using T and
+F for true and false, r espectiv ely .  However, target systems may use values other than T and F to
+represent boolean attribut e  values. Use the c on figur ation  settings  Target system attribut e  value that
+represents [True]  and Target system attribut e  value that represents [False]  to ensure that target systemboolean attribut e  values are converted correctly to mapped pr ofile  or resource attribut es.  For example, if
+a target system attribut e  uses 1 for true and 0 for false, then set Target system attribut e  value that
+represents [True]  to 1 and Target system attribut e  value that represents [False]  to 0.
+Tracking group attribut e  changes
+Changes to group attribut e  values can be tracked.
+1.Navigate to the override c on figur ation  page. 1.
+2.Select the Track changes option. 2.
+3.Click Update . 3.
+Specifying attribut e  values
+Specifying fix ed  values will apply to group cr eation  and update.
+The steps to specify attribut e  values for the "set” action,  when not mapping them to resource attribut es,
+vary according to the attribut e  type.
+Values set for Map group attribut e  to resource attribut e  will override specified  values.
+To specify a character or number value for an group attribut e:
+1.Navigate to the override c on figur ation  page. 1.
+2.Set the Value type to Literal value or PSLang expression as appropriate. 2.
+3.Type a value in the field  under the Attribut e  value header. 3.
+For boolean type values, select True, False, or Unset from the drop-down list in the Attribut e  value
+column.
+For PSLang expressions, you can select an available expression from the aut o-c ompletion  list.
+4.Click Update . 4.
+If more than one value is allowed by the Maximum number of values , Bravura Security Fabric  adds
+more fields  below the one you just entered.
+5.If applicable, add more values, and click Update . 5.
+Deleting  specified  attribut e  values
+To delete an attribut e  value that you have specified:
+1.Navigate to the override c on figur ation  page. 1.
+2.Select the checkboxes next to the values you want to delete.2.
+3.Click Delete at the bottom  of the ”values” form. 3.
+Con firming  and t esting  changes
+After  you have made changes on the override c on figur ation  page:
+1.If required, c on firm  your changes. Click: 1.▪Yes (recommended), if you want to reload attribut e  values during the next auto discovery . ▪
+In this case, Bravura Security Fabric  updates the SQLite-based list files that correspond to the
+a ff ect ed  target systems (for example, WINDOWS1.db) with a full attribut e  list.
+▪No, if you want to reload attribut e  values only when the attribut e  changes on the target system. ▪
+This may help to speed up auto discovery ; however, it may also result in empty or out-of-date
+attribut es  in the Bravura Security Fabric  database.
+2.Click Back to return to the Group attribut es  page. 2.
+The attribut e  now appears in one of the level overrides tabs.
+3.If required, run auto discovery  to update your system. 3.
+4.Test your changes.4.
+Ensure that attribut e  in f ormation  can be listed (if applicable), and that groups can be created,
+updated, and deleted successfully.
+Adding group attribut es
+You can add a group attribut e  manually if the attribut e  you want to use is not included in the ”catalog” of
+shipped attribut es.  You can also add group attribut es  for custom applic ations  or systems with modifiable
+schemas. Adding an group attribut e  allows you to override the default action.
+To add a group attribut e:
+1.Select an override level  (on page 614). 1.
+2.Click Add new... at the bottom  of the Group attribut es  page. 2.
+Bravura Security Fabric  displays the c on figur ation  page.
+3.Type a descriptiv e  value in the Attribut e  name field. 3.
+4.If required, override the default settings.  See: 4.
+▪Changing the c on figur ed  action  (on page 616) ▪
+▪Modifying attribut e  value constraints  (on page 617) ▪
+▪Loading attribut es  (on page 617) ▪
+▪Mapping group attribut es  to resource attribut es  (on page 618) ▪
+▪Tracking group attribut e  changes  (on page 619) ▪
+▪Specifying attribut e  values  (on page 619) ▪
+▪ Deleting  specified  attribut e  values  (on page 619) ▪
+▪ Con firming  and t esting  changes  (on page 619) ▪
+5.Click Add. 5.
+Deleting  overrides and non-shipped attribut es
+To undo the changes you have made to a shipped group attribut e  and return it to its default setting ,  or to
+remove an attribut e  that was not shipped with Bravura Security Fabric  :
+1.Select an override level  (on page 614), then select the attribut e. 1.

@@ -1,0 +1,364 @@
+Criteria Description
+Attribut e Type the discovered system attribut e  name to search
+against.
+Value Type the discovered system attribut e  value to search
+against.
+Discovered system Search for or type the ID of one or more discovered
+systems to include in the report.
+Target systems
+Purpose : In f ormation  about c on figur ed  target systems.
+Executable : target
+Search Criteria:
+Criteria Description
+Target system ID Type a comma-and-space-delimited list of target system
+IDs for which you want to run the report. Alt ernativ ely ,
+you can search for one or more
+Target system description Type the description  of the target system to include in
+the report.
+Address Type the address of the target system to include in the
+report.
+Help URL Type the help URL of the target system to include in the
+report.
+Target system type Select one or more target system types to include in the
+report. The list includes only target system types in use
+with the instance.
+This field  is not displayed if there is no data available.
+Resource attribut e Select a target system resource attribut e  on which to
+filt er .  You can select up to four attribut es.  The union of all
+attribut es  c on figur ed  will be returned.
+Comparison This field  is displayed if the Resource attribut e  field  is
+something other than "Attribut e  not required".
+Comparators available depend on the resource attribut e
+type. Select:
+▪is empty  if you want to search on empty values. ▪
+▪is not empty  if you want to search on non empty ▪
+values.
+▪is equal to  if you want to search on values equal to a ▪
+specified  string.
+▪is not equal to  if you want to search on values not ▪
+equal to a specified  string.Criteria Description
+▪is less than  if you want to search on values that are ▪
+less than a specific  integer.
+▪is less than or equal to if you want to search on values ▪
+that are less than or equal to a specific  integer.
+▪is greater than  if you want to search on values that ▪
+are greater than a specific  integer.
+▪is greater than or equal to  if you want to search on ▪
+values that are greater than or equal to a specific
+integer.
+▪is later than today + N days  if you want to search on ▪
+dates that are later than N days after  today.
+▪is earlier than, or equal to, today - N days  if you want ▪
+to search on dates that are earlier or equal to N days
+before today.
+Value Type or select the value to compare. Required if Resource
+attribut e  field  is something other than Attribut e  not
+required, or Comparison field  is set to something other
+than is empty or is not empty.
+Resource attribut e  to display Choose which resource attribut es  to display alongside
+the target system.
+Target system group Select one or more target system groups to include in the
+report. The list includes only target system groups in use
+with the instance.
+This field  is not displayed if there is no data available.
+Report type Select a report type:
+▪Show summary: summarizes the report. In this mode,▪
+the report output includes target system in f ormation
+as well as the last successful list time,  and the total
+number of: accounts, managed groups, and
+authorizers assigned to each target system.
+▪Show accounts: shows the accounts on each target▪
+system.
+▪Show managed groups: shows the managed groups on▪
+each target system.
+▪Show authorizer: shows only the target systems that▪
+have authorizers assigned, and lists their authorizers.
+If you do not type any search criteria, Bravura Security Fabric  displays the summary report for all target
+systems.
+Roles and groups reports
+Role assignments
+Purpose : Provides in f ormation  about the users assigned to roles.Executable : roleassignment
+Search Criteria:
+Criteria Description
+Roles Select one or more roles to include in the report.
+User ID Type a pr ofile  ID to only display role assignments for the
+specified  user. Alt ernativ ely ,  you can search for one or
+more pr ofile  IDs.
+Role assignment attribut es  to display Select one or more role membership attribut es  to include
+in the report.
+Role assignment attribut es Select a role membership attribut e  on which to filt er .  You
+can select up to four attribut es.  The union of all
+attribut es  c on figur ed  will be returned.
+Summarize report Select this checkbox to show summary in f ormation  for
+each role.
+Minimum number of users Filter out rows that have less than the specified  threshold
+value for number of users with the role. This option  is
+only available if Summarize report  is selected.
+Graph type Select a type of graph to generate for the report. This
+option  is only available if Summarize report  is selected.
+None : no graph will be generated.
+Horizontal bar chart : a horizontal bar chart will be
+generated for the report.
+Number of rows for graph The maximum rows for graph to display. The selected
+rows will be displayed with the number of entitlemen ts
+in descending order.
+Role de finitions
+Purpose : Lists either the resources that are members of each role or authorizers that are assigned to
+each role.
+Executable : roledefinitions
+Search Criteria:
+Criteria Description
+Roles Select one or more roles to include in the report.
+Managed groups Type the long ID of one or more managed groups for
+which you want to run the report. Only roles that contain
+the specified  groups are included in the report. All groups
+are included by default. Alt ernativ ely ,  you can search for
+one or more managed groups.Criteria Description
+Template accounts Select one or more template accounts. Only roles that
+contain the specified  template accounts are included in
+the report.
+Sub-roles Select one or more sub-roles. Only roles that contain the
+specified  sub-roles are included in the report.
+Resource attribut e Filter results using a resource attribut e  and criteria. The
+type of criteria is dependent on the attribut e  selected.
+Up to four resource attribut e  filt er s  can be de fined.
+Resource attribut e  to display Choose which resource attribut es  to display.
+Necessity Select the necessity (Required, Optional,  Legacy), to only
+include role-members with the specified  necessity. The
+default is Show all.
+Show authorizer Select this checkbox if you want generate a report listing
+the authorizers for each matching role.
+Show deprecated Select this checkbox to include only deprecated roles in
+the report.
+Summarize report Select this option  to summarize the report.
+In this mode, the report includes a count of the number
+of members and authorizers for each matching role.
+If you do not specify any search criteria, the report output includes all (non-deprecated) roles and their
+members.
+If JavaScript is enabled, then Template accounts and Sub-roles only appear if they exist as role
+entitlemen ts.  For example, if a template account is added as a role entitlemen t,  then Template accounts
+option  appears for this report.
+Role e x ceptions
+Purpose : Lists approved e x ceptions  to role enforcement violations.
+Executable : roleexceptions
+Search Criteria :
+Criteria Description
+User ID Type a user’s pr ofile  ID to only list e x ceptions  that apply
+to that user. Alt ernativ ely ,  you can search for one or more
+pr ofile  IDs.
+Roles Select one or more roles to include in the report.
+Managed groups Type the long ID of one or more managed groups for
+which you want to run the report. Only e x ceptions  that
+apply to the specified  groups are included in the report.Criteria Description
+Alt ernativ ely ,  you can search for one or more managed
+groups.
+Templates accounts Select one or more template accounts. Only e x ceptions
+that apply to the specified  templates are included in the
+report.
+Show authorizer Select this checkbox if you want the report output to list
+the authorizers for each e x ception.
+Authorizer ID Type a user’s pr ofile  ID to list the e x ceptions  for which
+the user is an authorizer. Alt ernativ ely ,  you can search for
+one or more pr ofile  IDs. You must also select the Show
+authorizer checkbox.
+Role e x ception Select the type of e x ception  to include in the report:
+De ficit  or Surplus. The default is De ficit.
+Show summary Select this checkbox to summarize the report.
+In this mode, the report includes a count of the number
+of matching e x ceptions  for each user and role
+c ombination.
+Graph type Select a type of graph to generate for the summarized
+report. This option  shows when the Show summary
+option  is checked.
+None : no graph will be generated.
+Horizontal bar chart : a horizontal bar chart will be
+generated for the summarized report.
+Number of rows for graph The maximum rows for graph to display, the selected
+rows will be displayed with the number of requests in
+descending order. This option  will show when the
+Horizontal bar chart is selected as the graph type.
+Role history
+Purpose : Audit trail of changes to role de finitions.
+Executable : roleaudit
+Search Criteria:
+Criteria Description
+Roles Select one or more roles to include in the report.
+User ID Type in the console user to audit.
+Choose date range Choose one of the following options  to de fine  a date
+range for role oper ations:
+Date not required : Select this option  to create a report of
+all role history.Criteria Description
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.Criteria Description
+Option Description
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: Oper ations  are only included in the report output if
+their start time  falls within the selected r elativ e  date
+range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Oper ations  are only included in the report output if
+their start time  falls within the selected date and time.
+Use within the last N days : Oper ations  are only included
+in the report output if their start time  falls within the
+specified  last number of days.
+Use N or more days ago : Oper ations  are only included in
+the report output if their start time  was more than the
+specified  number of days ago.
+Oper ation Select one or more oper ations  that you want an audit
+report for. Default is all oper ations.
+Incomplete roles
+Purpose : Identif y  roles that have users with too many surpluses or de ficits.
+Which roles have many users that, in turn, have many out-of-role entitlemen ts?  How many out-of-role
+entitlemen ts  do users assigned each role have, on average? This suggests either incomplete role
+de finitions  (add entitlemen ts)  or users that do not fit well into a role model.
+Executable : roleincomplete
+Search Criteria :
+Criteria Description
+Roles Select one or more roles to include in the report.
+Minimum number of users Filter out rows that have less than the specified  threshold
+value for number of users with the role.
+Lower bound on the average number of out-of-role
+entitlemen ts  held by users in the roleFilter out rows that have less than the specified  threshold
+value for average number of out-of-role (surplus)
+entitlemen ts.
+Summarize report Select this checkbox to summarize the report details.Roles violating  segr eg ation  of duties  rules
+Purpose : Identif y  roles whose de finition  violates segr eg ation  of duties  rules.
+Executable : roledefviolatingsod
+Search Criteria :
+Criteria Description
+Roles Select one or more roles to include in the report.
+Segr eg ation  of duties  rules Select one or more SoD rules to include in the report.
+Groups
+Purpose : Provides details about membership and s t atistics  of managed groups. Also reports unmanaged
+groups.
+Executable : groupmembership
+Search Criteria :
+Criteria Description
+Group ID Search for the group you want to report on. Alt ernativ ely ,
+you can type the long ID of a group or a pattern  of group
+IDs using wildcard characters, ’*’ r epr esenting  any string
+of characters and ’?’ r epr esenting  any single character. All
+groups are included by default.
+Report type Select a report type:
+Show managed groups summary : Select this option  to
+only show groups that are managed, and the total
+number of members for each group. Selecting  this report
+type displays the Resource attribut e  to display input field.
+Show managed group and authoriz ation  summar y:
+Select this option  to only show groups that are managed.
+In this mode, the report output also includes the total
+number of members and authorizers for each group.
+Show managed group member s: Select this option  to
+only show groups that are managed, and to list their
+direct and indirect members (both accounts and child
+groups). Selecting  this report type displays the Include
+deleted memberships and Memberships deleted by:
+input fields.
+Show unmanaged groups : Select this option  to only
+show groups that are not managed.
+Show managed group authorizers : Select this option  to
+only show groups that are managed, and to list theirCriteria Description
+authorizers. The report includes all authorizers for all
+managed groups.
+Override authoriz ation  c on figur ation Select a override type:
+Show all : Only include managed groups regardless of
+authoriz ation  c on figur ation  inheritance.
+Only use inherited c on figur ation  Only include managed
+accounts groups that include only authoriz ation
+c on figur ation  from the target system.
+Do not inherit any c on figur ation  Only include managed
+groups that do not include any authoriz ation
+c on figur ation  inheritance set by the target system.
+Include inherited c on figur ation  Only include managed
+groups that include any authoriz ation  c on figur ation
+inheritance set by the target system.
+None Only include managed groups where the target
+does not include inheritance.
+Resource attribut e  to display Available for the all report types except Show
+unmanaged groups report type. Choose which resource
+attribut es  to display alongside the managed groups.
+Member type Only available for the Show managed group members
+report type. Select the member types to display:
+▪Account▪
+▪Group▪
+Leaving it blank is the same as selecting  all types.
+Minimum depth Only available for the Show managed group members
+report  type. The report will only output members that
+have a depth greater than or equal to this value. The
+default value is 1.
+Depth indicates what level of membership an account or
+group has to the managed group. A depth of 1 means
+they are a direct member of the group. A depth of 2
+means they are a member of a direct child group.
+Maximum depth (-1=in finit e) Only available for the Show managed group members
+report type. The report will only output members that
+have a depth less than or equal to this value. A value of
+-1 means it will output all members that have a depth
+greater than or equal to the Minimum depth. The default
+value is -1.
+Target system ID Type a comma-and-space-delimited list of target system
+IDs for which you want to run the report. Alt ernativ ely ,
+you can search for one or more target systems.
+Include invalid groups Include or exclude groups that may have become invalid
+during the last auto discovery.

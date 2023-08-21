@@ -1,0 +1,351 @@
+Advanced key Description
+description Description
+t ar g etid Target system ID
+targetgroup ID
+▪TEMPLATE▪
+Advanced key Description
+acc ountid Account to clone when cr eating  a new user
+address Address
+desc Template description
+id Template ID
+inv_type Inventory type
+loc ation Loc ation
+targetDesc Target system description
+t ar g etid Target system ID
+platform Target system type
+Dynamic group Description
+attrk e y Resource attribut e  keys
+▪UCPAUTORESVARIANCE▪
+Advanced key Description
+directmanager Direct manager
+groupsearch Group ID
+attrk e y Account attribut e
+userid User ID
+inreq With open requests to resolve
+name User name
+allmanagers Direct and indirect managers
+rolesearch Role ID
+hostsearch Target system ID
+▪USER▪
+Advanced key Description
+allmanagers Direct and indirect managers
+directmanager Direct manager
+groupsearch Group ID
+hostsearch Target system IDname User name
+rolesearch Role ID
+userid User ID
+Dynamic group Description
+pr ofileattr Pr ofile  attribut e  keys
+▪USERCLASS▪
+Advanced key Description
+description User class description
+explicit_user Explicit user ID
+group_id Group ID
+id User class ID
+num_explicit_users Number of explicit users
+num_participan ts Number of participan ts
+num_policies Number of policies
+policy Policy
+pslang PSLang expression
+Dynamic group Description
+pr ofileattr Pr ofile  attribut e  keys
+▪USERGROUP▪
+Advanced key Description
+privileges Privileges
+id Rule ID
+userclass User class
+description Rule description
+▪WORKSTATION▪
+Advanced key Description
+workstnid Managed system ID
+mode Mode
+desc Managed system description
+address Address
+▪WSTNBATCH▪Advanced key Description
+wstnname Managed system description
+mspdesc Managed system policy description
+mspid Managed system policy ID
+status Randomiz ation  results
+wstnid Managed system ID
+acc ountid Account
+▪WSTNBATCHACCOUNT▪
+Advanced key Description
+oper ation Oper ation
+resourcetype Object type
+objectid Object ID
+retcode Results
+t ar g etid Target system ID
+▪WSTNBATCHINFO▪
+Advanced key Description
+status Status
+enddate End date
+startdate Start date
+desc Initia t ed  from
+initia t or Initia t or
+▪WSTNPWD▪
+Advanced key Description
+acc ountid Account
+t ar g e t description Target system description
+targetaddress Target system address
+workstndesc Managed system description
+workstnid Managed system ID
+templateid Template ID
+platform type Platform  type
+▪WSTNPWDCICO▪
+Advanced key Description
+userid User ID
+acc ountid Accountwstnname Managed system description
+wstnid Managed system ID
+username User name
+▪WSTNPWDTYPE▪
+▪WSTNRECENTGSETREQ▪
+Advanced key Description
+wstnid Managed system ID
+wstnname Managed system description
+gsetid Group set ID
+gsetdesc Group set description
+▪WSTNSERVICE▪
+Advanced key Description
+group group
+svcname service
+▪comparator Must be one of: ▪
+▪"EQUAL" (or "EQ")▪
+▪"LESS_THAN" (or "LT")▪
+▪"LESS_THAN_OR_EQUAL" (or "LTE")▪
+▪"GREATER_THAN" (or "GT")▪
+▪"GREATER_THAN_OR_EQUAL" (or "GTE")▪
+▪"CONTAIN" (or "CT")▪
+▪"START_WITH" (or "SW")▪
+▪"IS"▪
+▪"ON"▪
+▪"BEFORE" (or "BF")▪
+▪"BEFORE_OR_ON" (or "BFO")▪
+▪"AFTER" (or "AF")▪
+▪"AFTER_OR_ON" (or "AFO")▪
+▪value What is compared by comparator. When comparator is "IS", <value> must be "SET" or "EMPTY". ▪
+When comparator is "CT" or "SW", <value> can contain wildcards "*" and "?". Otherwise, <value> is a
+wide string (can contain unicode characters).
+▪operator Required when "position"  is greater than 1. Must be "OR" or "AND". The logical operator is ▪
+applied before "filt er",  in order to logically connect "filt er"s  together, in order of "position"  value. AND
+always has precedence over OR.
+▪ field  Optional  key to specify field  when the key is not sufficien t;  for example, when dealing with ▪
+attribut es,  field  = attribut e  key; when dealing with resource groups, field  = resource group id.
+▪negate When "1", this generates the logical NOT of "filt er". ▪The following example of criteria instructs the search engine to find records such that:
+▪advanced key "userid" EQUALS string "ADMIN"▪
+OR
+▪advanced key "rolesearch" does NOT CONTAIN substring "MANAGER"▪
+"search" "" = {
+    "criteria" "" = {
+        "filter" "" = {
+            "position" = "1"
+            "key" = "userid"
+            "comparator" = "EQ"
+            "value" = "ADMIN"
+        }
+        "filter" "" = {
+            "operator" = "OR"
+            "position" = "2"
+            "key" = "rolesearch"
+            "negate" = "1"
+            "comparator" = "CT"
+            "value" = "MANAGER"
+        }
+    }
+}
+Group r ec ommendations
+If the searchType is MANAGEDGROUP , the search filt er  can also return a recommend KVGroup to the
+search engine:
+        "recommend" "" = {
+            "attributeGroup" = "<Attribute group ID>" #Existing profile attribute
+                 # group. If included, this overrides GROUP_APP_MATCHING_ATTRIBUTE_GROUP
+            "showOnly" = "0|1" #If enabled, filter out results where
+                 # matching users are less than the cutoff
+            "cutOff" = "<0..100>" #Sets the lower threshold to filter on.
+            #If included, this overrides SEARCH_FILTER_RECOMMENDATION_CUTOFF.
+        }
+.
+Search filt er  component extension
+This section  describes the shipped Python IDMLib library plugin extension for search filt er s.  The plugin is
+intended to be used via the component framework.Basic Usage
+Add the extension to the component manifest
+Add an extension to your component manifest as follows:
+    <extension type="plugin">
+        <filename>extension_script.py</filename>
+        <provides>SEARCH_FILTER_PLUGIN</provides>
+        <provides_for>
+            <searchtype>SEARCHTYPE</searchtype>
+        </provides_for>
+    </extension>
+▪SEARCHTYPE should be the type of search engine you want your filt er  to run for ▪
+▪extension_script.py  is the name of your search filt er  extension script ▪
+Determine the criteria class for the search engine
+The idmlib.plugins.sear ch filt er .crit eria  component contains classes pr e-c on figur ed  with the available
+search criteria for many common search engines. Look for the class with a _search_type  matching
+the engine you de fined  in the manifest.
+Using list criteria
+List criteria are a more limited interface that allows you to explicitly show (include) or hide (exclude)
+uniquely identified  objects from a particular  search. Although more limited, this method is much more
+performance e fficien t  if the logic required to filt er  the objects using standard search criteria would be
+very complex.
+Only certain search types support list criteria (generally only those where it is possible to uniquely
+identif y  every available object the search applies to), a given search criteria class supports list criteria if it
+has _supports_lists  as True. When passing criteria to list criteria methods, you must provide a
+value for all the keys in _key_fields , values for any other fields  will be ignored.
+To get an object you can pass to the list criteria methods you should use the instance method of your
+criteria class. You can pass the values for the required fields  either as keyword arguments to instance, or
+by setting  them as attribut es  after w ar ds.
+The two most important list criteria methods are include and exclude. Objects passed to include will be
+shown, and objects passed to exclude will be hidden. Here’s a short example:
+from idmlib.components.extension import ExtPlugin
+from idmlib.plugins.searchfilter import SearchFilter
+from idmlib.plugins.searchfilter.criteria import CriteriaRole
+class ListSearchFilter(ExtPlugin):
+    def __init__(self, plugin: SearchFilter, state: dict):
+        super().__init__()        self.plugin = plugin
+        self.state = state
+    def process(self):
+        for role in {"IT", "ADMIN", "MAINTENANCE"}:
+            self.plugin.include(CriteriaRole.instance(roleid=role))
+        for role in {"HR", "CUSTOMER\_SERVICE"}:
+            self.plugin.exclude(CriteriaRole.instance(roleid=role))
+Using search criteria
+Search criteria allow you to filt er  what is visible to the user using search queries. Individual criteria are
+simple: A field  to compare, a comparison to use, and a value to compare against. These individual criteria
+can be combined to build more complex queries, but the c ombination  is limited, groups of criteria will
+combine with AND, and diff er en t  groups will then be combined with OR. This limit ation  requires that you
+break down complex logic and think carefully about the result you want the sum of your criteria to have.
+Additionally ,  while powerful, search queries are not incredibly performant, if you find yourself emitting
+several hundred criteria for a particular  search engine, you may want to look at refactoring to use list
+criteria (if supported) as filt ering  on that many criteria will start to slow down the UI, and hurt the
+experience of the end user.
+Search criteria are created by oper ating  on the provided criteria class, or by calling methods named after
+the particular  comparison you want to use; for example: equals/==, less_than/before/<,
+is_/>>  and so on.
+from idmlib.components.extension import ExtPlugin
+from idmlib.plugins.searchfilter import SearchFilter
+from idmlib.plugins.searchfilter.criteria import CriteriaUser
+class MySearchPlugin(ExtPlugin):
+    def __init__(self, plugin: SearchFilter, state: dict):
+        super().__init__()
+        self.plugin = plugin
+        self.state = state
+    def process(self):
+        for target in {"AD", "AD_TWO", "EXTERNAL"}:
+            for group in {"GROUP_ONE", "GROUP_TWO"}:
+                self.plugin.builder.get(
+                    f"{target}-{group}-filter"
+                ).add(
+                    CriteriaUser.hostid == target,
+                    CriteriaUser.groupid == group,
+                    CriteriaUser.managerid == "ImportantManager",
+                )
+The r esulting  filt er  will display only Users where:▪HostID: AD, and GroupID: GROUP_ONE, and ManagerID: ImportantManager▪
+▪(or ) HostID: AD, and GroupID: GROUP_TWO, and ManagerID: ImportantManager▪
+▪(or ) HostID: AD_TWO, and GroupID: GROUP_ONE, and ManagerID: ImportantManager▪
+▪(or ) HostID: AD_TWO, and GroupID: GROUP_TWO, and ManagerID: ImportantManager▪
+▪(or ) HostID: EXTERNAL, and GroupID: GROUP_ONE, and ManagerID: ImportantManager▪
+▪(or ) HostID: EXTERNAL, and GroupID: GROUP_TWO, and ManagerID: ImportantManager▪
+Or 6 filt er s  (AD-GR OUP_ONE - filt er ,  AD-GR OUP_TW O- filt er ,  AD_TW O-GR OUP_ONE - filt er ,  ...) each
+containing 3 criteria, for a total of 18 criteria.
+Complete Interface
+The FilterBuilder interface
+The FilterBuilder is the core of how to build search filt er s.  It provides a single, r es trictiv e,  validated
+method for c ons tructing  search filt er s.
+A FilterBuilder with the correct search criteria v alidation  in f ormation  is created for you at plugin.builder
+during the cr eation  of the SearchFilter plugin object.
+The main logic of the FilterBuilder works as follows:
+▪Criteria under the same filt er  (with the same key/added to the same FilterEditor) are combined using ▪
+a logical AND
+▪ Diff er en t  filt er s  (groups of criteria using diff er en t  keys) are combined using logical OR ▪
+▪Because criteria are simple, criteria within a given filt er  can be reordered, and duplicate criteria ▪
+removed, and because separate filt er s  are combined with OR their order also does not matter .
+Example: (a and b) or (c and d and e) == (e and d and c) or (b and a)
+▪Users are expected to create/get a filt er  with a unique key, and then add/remove/replace criteria ▪
+within it using the FilterEditor interface
+FilterBuilder has the following public methods:
+▪valid_search_key(key: str, field: Optional[str] = None) -> bool▪
+▪Checks that a given key or k e y/field  c ombination  is available for the given run of the plugin, True if ▪
+available, False otherwise.
+▪Useful if you want to ensure that a given field  (Account/Resource Attribut e,  etc.) is available in the ▪
+product prior to filt ering  on it, as attempting  to filt er  on a non-existent crit eria/field  will cause the
+builder to throw an e x ception  when added.
+▪Example: if plugin.builder.valid_search_key('ma_attrkey', ▪
+'RESATTR_TEAM'): …
+▪create(key: str) -> FilterEditor▪
+▪Creates a filt er  for the given key, and returns a FilterEditor object with which to manipulate the ▪
+filt er .  (FilterEditor interface described later)
+▪Throws KeyError if you try to create a filt er  that already exists. ▪▪Example:▪
+plugin.builder.create('MY_FILTER').add(CriteriaClass.criteria ==
+True)
+▪get(key: str, create: bool = True) -> FilterEditor▪
+▪Retrieves a FilterEditor for an e xisting  filt er . ▪
+▪If create=True  (the default) creates a filt er  if it doesn’t already exist, returning a ▪
+FilterEditor for it.
+▪If create=False  throws KeyError if a filt er  with that key does not already exist. ▪
+▪Useful for updating / editing  an e xisting  filt er ,  or for cr eating  a filt er  if this may not be the fir s t ▪
+component to do so.
+▪Can be used to supply incremental criteria to common filt er s. ▪
+▪Example:▪
+plugin.builder.get('_NON_COMPONENT_ACCOUNTS_').add(CriteriaPAMResources.
+ma_attrkey.RESATTR_PERSONAL_OWNER >> 'EMPTY')
+▪remove(self, key: str) -> bool▪
+▪Removes a filt er ,  and all it’s criteria, from the builder. Returns True if something was removed, False ▪
+otherwise.
+▪search_regex(pattern: str) -> Iterable[Tuple[str, FilterEditor]]▪
+▪Retrieves the (key, filter_editor)  of any e xisting  filt er s  with keys matching the regular ▪
+expression pattern  string.
+▪Useful if you want to edit or remove multiple  filt er s  following a specific  naming c on v ention. ▪
+▪Example:▪
+for name, filter_editor in
+plugin.builder.search_regex('^REQUESTER_TEAM='):
+filter_editor.add(...)
+▪search_expressions( ⋆expressions: SearchExpression) -> ▪
+Iterable[Tuple[str, FilterEditor]]
+▪Retrieves the (key, filt er_edit or)  of any e xisting  filt er s  that contain all the criteria passed in. ▪
+▪Useful if you want to edit or remove any filt er s  acting  on certain c onditions. ▪
+▪Example:▪
+for name, filter_editor in list(plugin.builder.search_expressions
+((CriteriaClass.flag_one == True), (CriteriaClass.flag_two ==
+False))): plugin.builder.remove(name)
+The conversion to list (or some other container type) is required here, to avoid having the internals
+of the builder complain and throw RuntimeError: dictionary changed size
+during iteration  due to the call to remove.
+A FilterEditor is a c ollection  of SearchExpressions, with public methods for adding/removing/replacing
+individual expressions, and v alidation  logic to ensure an expression is valid for a given search. A
+SearchExpression is an individual criteria comparison, the result of using an operator on a SearchKey ,more details later, but the below examples should be good enough to get an idea of how to work with
+them.
+Any public method on a FilterEditor returns the same editor, so you can ’chain’ oper ations  together or
+store the editor for later use, add and remove also support any number of arguments, allowing you to
+pass multiple  SearchExpressions to them.
+It has the following public methods:
+▪add(self, *expressions: SearchExpression) -> Self▪
+▪Add the given expressions to the filt er ,  the provided expressions will be validated, and duplicate ▪
+expressions will be ignored.
+▪Throws ValueError on invalid expressions.▪
+▪Example: filter.add(CriteriaClass.criteria_one == ▪
+'value') .add(CriteriaClass.criteria_two == False)
+▪(equivalent) Example: filter.add(CriteriaClass.criteria_one == 'value', ▪
+CriteriaClass.criteria_two == False)
+▪remove(self, *expressions: SearchExpression) -> Self▪
+▪Remove the given expressions from the filt er ,  the provided expressions are validated, missing ▪
+expressions are ignored.
+▪Throws ValueError on invalid expressions. ▪
+▪Example: filter.remove(CriteriaClass.criteria_one == 'value') ▪
+▪replace(self, old: SearchExpression, new: SearchExpression) -> Self▪
+▪Replaces the old expression with a new expression, both expressions are validated.▪
+▪Throws a KeyError if the old expression is not in the filt er . ▪
+▪Throws ValueError on invalid expressions. ▪
+▪Example: filter.replace((CriteriaClass.criteria_two == False), ▪
+(CriteriaClass.criteria_two == True))
+The List Criteria interface
+▪exclude(self, *criteria: List[SearchCriteria.CriteriaDict], tag: str▪
+= DEFAULT_TAG)
+▪include(self, *criteria: List[SearchCriteria.CriteriaDict], tag: str▪
+= DEFAULT_TAG)
+List criteria passed to these methods are grouped with a ’tag’ (very similar to the builder’s filt er  groups).
+Criteria in diff er en t  tags is unioned together during plugin close. The methods can accept multiple  list
+criteria at once, making it easy to add a large number of criteria at one time.
+▪exclude_and(self, *criteria: List[SearchCriteria.CriteriaDict], tag:▪
+str = DEFAULT_TAG, add_if_empty: bool = False)
+▪include_and(self, *criteria: List[SearchCriteria.CriteriaDict], tag:▪
+str = DEFAULT_TAG, add_if_empty: bool = False)

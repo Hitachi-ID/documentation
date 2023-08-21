@@ -1,0 +1,376 @@
+▪Modules for external security question  sets should be set to the e ff ectiv e  setting ,  and all other ▪
+question  sets should be set to (None). These modules should also have the From all question  sets
+value set to (None).
+▪The external question  sets should be set to 0 when c on figuring  values for other question  sets, such as ▪
+those for the user -de fined  and pr e-de fined  question  sets.
+▪ Selecting  (None) for all of the question  sets for a module resets all of the values for the question  sets ▪
+to use the default question  set values.
+▪When c on figuring  a question  set, if you deselect the Ask users to answer questions  from this set ▪
+setting:
+▪Then the question  is no longer available for use with the default login authentic ation  chain. ▪
+▪External question  sets still work via legacy Front-end  c on figur ation. ▪
+▪If you add a new question  set, you may need to r ec on figur e  the response.pss module for an ▪
+authentic ation  chain. The new question  set is added to e xisting  response.pss modules for all
+authentic ation  chains with the value for the number of questions  to ask users/help desk set to the
+e ff ectiv e  setting.
+External program module (external.pss)
+The external program module runs the built-in external.pss  module, which interfaces with an
+external authentic ation  program.
+Bravura Security Fabric  ships with several sample scripts that can be used with this module, listed below:
+External authentic ation  plugin samples
+Sample script Description
+authplugin.psl A simple demons tr ation  of this kind of plugin.
+httpauth.psl  and
+httpauth.exeGeneric tools for web server (NTLM, SmartCard) authentic ation
+in t egr ation.
+authanonreg.psl Provides authentic ation  to anonymous users who do not have pr e-
+e xisting  cr edentials,  allowing them to submit pr e-de fined  requests for
+new users.
+authuserattr.psl Allows authentic ation  using pr ofile  attribut es,  such as date of birth and
+email address.
+These files are installed with a complete Bravura Security Fabric  ins t allation  or if you selected Sample
+files in a custom ins t allation.  See Authentic ation  Chains: Use Cases  (on page 867) and Authentic ation
+Chains: Plugins  (on page 981) for more in f ormation  on using these scripts.
+Set the following for the external program authentic ation  module:
+If module succeeds, bypass this module in failed
+attemp t  retriesThe module is not shown again for authentic ation  if the
+authentic ation  chain fails and is retried from a failed
+attemp t  and the module had succeeded in a previous
+attemp t.Increment lockout counter when this module fails Increments the global fail counter each time  a user fails
+authentic ation  for this module. It is enabled by default.
+The global fail counter is managed by the MAX
+USERAUTH FAILURE system variable. If the number of
+failed attemp ts  reaches MAX USERAUTH FAILURE, then
+the user is locked out.
+Note: If a product administrator helps another user via
+the HELPDESK_LOGIN chain, and the Increment lockout
+counter when this module fails option  is disabled for
+any of the modules in that chain, then the global fail
+counter will still increase if the product
+administratorfails to correctly answer any of the
+questions  during help desk authentic ation.  However,
+this does not cause the user to be locked-out, even if
+the number of failed attemp ts  reaches or exceeds the
+value set by MAX USERAUTH FAILURE.
+External program Must be set to a plugin name
+Target system to use for address and cr edentials This is the target system ID on which the user has an
+account.
+If the user does not have an account on the specified
+system the authentic ation  chain will not appear.
+Interface c ommunic ation  protocol Must be set to the protocol that matches the plugin you
+named as your external program:
+▪ Authentic ation  plugin ▪
+▪ Authentic ation  plugin/6.x(Legacy) ▪
+You can customize the user interface by modifying the authchain.m4  file and recompiling the skins.
+See the sample files and the CUSTOMIZATION  (on page 3471) for more in f ormation.
+Security questions  with answer scores module (scoreqna.pss)
+The score based challenge and response module runs the built-in scoreqna.pss  authentic ation
+program.
+This module prompts users for questions  from the user’s question  sets. Points are provided for correct
+answers, and penalties  are given for incorrect answers. The points are calculated to determine whether
+the user’s score passes the authentic ation  threshold. A passing score is required to authentic a t e
+successfully.
+If the user has not yet answered all questions,  but the total score has passed the threshold, then the
+module immediately passes authentic ation.
+If the user has answered some of the questions  incorrectly, and the total score for the remaining
+questions  cannot pass the threshold (even if all are answered correctly), then the module immediately
+fails.Set the following for the score based challenge and response module:
+If module succeeds, bypass this module in failed
+attemp t  retriesThe module is not shown again for authentic ation  if the
+authentic ation  chain fails and is retried from a failed attemp t  and the
+module had succeeded in a previous attemp t.
+Increment lockout counter when this module fails Increments the global fail counter each time  a user fails
+authentic ation  for this module. It is enabled by default. The global fail
+counter is managed by the MAX USERAUTH FAILURE system variable.
+If the number of failed attemp ts  reaches MAX USERAUTH FAILURE,
+then the user is locked out.
+Note: If a product administrator helps another user via the
+HELPDESK_LOGIN chain, and the Increment lockout counter when
+this module fails  option  is disabled for any of the modules in that
+chain, then the global fail counter will still increase if the product
+administrator fails to correctly answer any of the questions  during
+help desk authentic ation.  However, this does not cause the user to be
+locked-out, even if the number of failed attemp ts  reaches or exceeds
+the value set by MAX USERAUTH FAILURE.
+If a user does not have a valid security questions
+pr ofileDe fines  which action  to take when a user does not have a complete
+security questions  pr ofile.  If a user’s security question  pr ofile  is
+incomplete and this option  is set to:
+Abort login immediately  – The entir e  authentic ation  chain is not
+available as an authentic ation  method for the user and is not
+displayed.
+Fail this module  – The scoreqna.pss module is treated as a failure. If
+the Control type for this module is set to either:
+▪ sufficien t  or optional,  and the other modules in the authentic ation ▪
+chain are valid for the user, then the user can still authentic a t e
+using the other modules.
+▪binding, required or requisite then the entir e  authentic ation  chain ▪
+is not available as an authentic ation  method for the user and is
+not displayed.
+Bypass this module – The scoreqna.pss module is completely
+ignored regardless of Control type, even if set to required.
+CAUTION: If this option  is set and the module is bypassed, and the
+remaining modules are set to either sufficien t  or optional,  then
+access is not immediately granted. At least one of the remaining
+modules must pass in order to gain authentic ation.Number of questions  to ask during authentic ation Provides more control over how many questions  to ask from each
+question  set. If you do not change this setting ,  it defaults to the
+setting  for each individual question  set.
+You can choose:
+▪From all question  sets Choosing a number from this drop-down ▪
+list allows you to specify how many questions  the user is asked.
+The questions  are randomly selected from all available question
+sets. Setting  this value aut omatic ally  changes the value for
+individual question  sets to (None).
+Note:  This setting  is not intended to work for SecurID questions
+when the user’s token is in extended mode, such as the next token
+code or new pin mode.
+▪From [ < questionse t >] Each available question  set has a drop-down ▪
+list, allowing you to specify how many questions  the user is asked
+from each question  set.
+Changing this value aut omatic ally  changes From all question  sets
+to (None).
+Note:  If javascript is disabled, then you must manually set From all
+question  sets to (None) before changing the value for any of the
+individual question  sets.
+▪Display all questions  at once... By default, this option  is disabled, ▪
+which means that questions  are prompted one at a time  on their
+own screen. If this option  is enabled, then all questions  appear
+together on one single screen.
+Points for correct answers The number of points that are added to the score for each correctly
+answered question.
+You can choose:
+▪From all question  sets Choosing a number from this drop-down ▪
+list allows you to specify the number of points that are added to
+the score whenever a question  is answered correctly from all sets.
+This corresponds to the number of questions  that are prompted as
+specified  by From all question  sets in the Number of questions  to
+ask during authentic ation  section.
+This value is reset to 1 if the questions  are c on figur ed  to be
+prompted from the individual question  sets. The value is still
+specified,  but is not used.
+▪From [ < questionse t >] Each available question  set has a drop-down ▪
+list, allowing you to specify the number of points awarded for each
+correct answer to questions  from each question  set.
+When questions  are prompted from all question  sets, the settings
+for this option  will reset to the default value (set to 1) but are not
+used.P enalties  for incorrect answers The number of points that are deducted from the score as a penalty
+for each incorrectly answered question.
+You can choose:
+▪From all question  sets Choosing a number from this drop-down ▪
+list allows you to specify the number of points that are deducted
+from the score whenever a question  is answered incorrectly from
+all sets. This corresponds to the questions  that are prompted as
+specified  by From all question  sets in the Number of questions  to
+ask during authentic ation  section.
+This value is reset to (None) if the questions  are c on figur ed  to be
+prompted from the individual question  sets
+▪From [ < questionse t >] Each available question  set has a drop-down ▪
+list, allowing you to specify the number of points that are
+deducted from the score for each incorrect answer to questions
+from each question  set.
+When questions  are prompted from all question  sets, the settings
+for this option  will reset to the default value (set to (None)) but
+are not used.
+Authentic ation  thresholds ▪Passing score The value of the passing score indicates the number ▪
+of points that are required to pass authentic ation  for the score
+based challenge and response module. The passing score cannot
+be greater than the total number of points that can be achieved
+when correctly answering all of the available questions,  otherwise
+it would be impossible to pass authentic ation.
+▪Failing score The value for the failing score indicates the number ▪
+of points for the module to fail authentic ation.  The failing score
+cannot be less than the minimum number of total penalties  when
+answering all of the available questions.
+Con figur ation  notes for the Score base challenge and response module:
+▪ Selecting  "(None)” for all question  sets for a module resets all of the question  set values to the default ▪
+question  set values.
+▪When c on figuring  a question  set, if you deselect the Ask users to answer questions  from this set ▪
+setting ,  then the question  is no longer available for use with the default login authentic ation  chain.
+▪If you add a new question  set, you may need to r ec on figur e  the scoreqna.pss module for an ▪
+authentic ation  chain. The new question  set is added to e xisting  scoreqna.pss modules for all
+authentic ation  chains that have the value for the Number of questions  to ask during authentic ation
+set to the e ff ectiv e  setting.
+▪Use case: A question  set (for example, the pr e-de fined  set) is disabled and the Security questions  with ▪
+answer scores (scoreqna.pss) module is c on figur ed  for use with other question  sets (for example, the
+user -de fined  set).
+If the question  set that was previously disabled is now re-enabled, it cannot be used within the
+scoreqna.pss module until  the module has been r e-c on figur ed.  For example, a user would still only be
+prompted for questions  from the user -de fined  set after  the pr e-de fined  set has been re-enabled and
+before the scoreqna.pss module has been r e-c on figur ed.The scoreqna.pss module would have to be modified  in order to prompt for questions  from this newly
+enabled question  set.
+Other parameters such as the number of points for correct or incorrect answers and the values for the
+authentic ation  thresholds for the passing and/or failing score should also be adjusted accordingly to
+account for the newly added/enabled question  set.
+▪Use case: Both the user -de fined  and pr e-de fined  questions  sets are enabled and the Security ▪
+questions  with answer scores (scoreqna.pss) module for a custom authentic ation  chain is c on figur ed
+to use questions  from both of the question  sets.
+If one of the question  sets has been disabled, that particular  question  set will not be available for use
+with the scoreqna.pss module.
+The authentic ation  chain c on figur ed  with this module will also not be usable at all until  it has been r e-
+c on figur ed  to account for the missing question  set that was just disabled.
+Email/SMS PIN (emailsmspin.pss)
+The Email/SMS PIN module runs the built-in emailsmspin.pss  authentic ation  program. This module
+will send a random PIN to the user via an email-to-SMS gateway or to the users email address.
+Set the following for the Email/SMS pin authentic ation  module:
+Increment lockout counter when this module fails Increments the global fail counter each time  a user fails
+authentic ation  for this module. It is enabled by default.
+The global fail counter is managed by the MAX
+USERAUTH FAILURE system variable. If the number of
+failed attemp ts  reaches MAX USERAUTH FAILURE, then
+the user is locked out.
+Note: If a product administrator helps another user via
+the HELPDESK_LOGIN chain, and the Increment lockout
+counter when this module fails  option  is disabled for
+any of the modules in that chain, then the global fail
+counter will still increase if the product administrator
+fails to correctly answer any of the questions  during
+help desk authentic ation.  However, this does not cause
+the user to be locked-out, even if the number of failed
+attemp ts  reaches or exceeds the value set by MAX
+USERAUTH FAILURE.If user hasn’t registered an email/mobile phone
+number:De fines  which action  to take when a user does not have
+the required email, mobile phone number and/or SMS
+gateway attribut es  de fined:
+Show notice  – The user will be given a message
+indic ating  that they must enroll before using this
+authentic ation  chain.
+Abort login immediately  – The entir e  authentic ation
+chain is not available as an authentic ation  method for
+the user and is not displayed.
+Fail this module  – The emailsmspin.pss module is
+treated as a failure. If the Control type for this module
+is set to either:
+▪ sufficien t  or optional,  and the other modules in the ▪
+authentic ation  chain are valid for the user, then the
+user can still authentic a t e  using the other modules.
+▪binding, required or requisite then the entir e ▪
+authentic ation  chain is not available as an
+authentic ation  method for the user and is not
+displayed.
+Target system to use for address and cr edentials This is the target system ID on which the user has an
+account.
+If the user does not have an account on the specified
+system the authentic ation  chain will not appear.
+Email/SMS PIN settings will de fine  the c omposition  of the PIN and how the PIN
+will be delivered to the user.
+PIN length – The length of the randomly generated PIN
+that is sent to the user. Can be set from 4 to 32
+characters in length.
+Type of generated PIN – Choose Numeric , Upper and
+lowercase , or Alphanumeric for the PIN c omposition
+for the user.
+Time (in minutes) before PIN expires – The period of
+time  hat the PIN will be valid. The default is time  10
+minutes.
+PIN delivery method – Choose whether you want the
+PIN to be delivered via Email or Email/SMS gateway .
+Plugin to send the generated PIN – The plugin that will
+be used to send the generated PIN. The default is the
+GLOBAL MAIL PLUGIN .Attribut es de fines  what pr ofile  attribut es  will be used for sending
+of the PIN.
+Note:  In order for a pr ofile  attribut e  to be listed it must
+be c on figur ed  with Allow for authentic ation  chains
+selected.
+Pr ofile  attribut e  specifying email/mobile phone
+number – This attribut e  will determine what email
+address or mobile number will be used to send the PIN
+to the user.
+Pr ofile  attribut e  specifying mobile phone service
+provider – When the PIN delivery method selected is
+the Email/SMS gateway , this attribut e  will be set to the
+users mobile provider.
+Message settings de fines  the message content of the email being sent to
+the user.
+Sender email address for the PIN delivery message –
+The senders email address. The default is the SENDER
+EMAIL .
+PIN delivery message subject – The contents of the
+subject line being delivered to the user.
+PIN delivery message content – The contents of the
+email body being delivered to the user.
+PIN delivery message format – Choose the format of
+the email, Plain text or HTML .
+Connector package agent (agent.pss)
+The connector package agent module runs the built-in agent.pss  authentic ation  program. This
+module will allow for authentic ation  using either the user verify password or challenge response
+authentic ation  oper ations  directly for applicable connectors.
+Set the following for the connector package agent module:
+Increment lockout counter when this module fails Increments the global fail counter each time  a user fails
+authentic ation  for this module. It is enabled by default. The
+global fail counter is managed by the MAX USERAUTH
+FAILURE system variable. If the number of failed attemp ts
+reaches MAX USERAUTH FAILURE, then the user is locked
+out.
+Target system to use for address and cr edentials This is the target system ID on which the user has an
+account.
+If the user does not have an account on the specified  system
+the authentic ation  chain will not appear.Password v erific ation  oper ation This is the connector oper ation  that will be used for
+authentic ation  to the target system as noted above. It may
+be set to one of these two oper ations:
+User verify password – Authentic ation  will be done using the
+user verify password oper ation  for the target system.
+Challenge response authentic ation  – Authentic ation  will be
+done using the challenge response authentic ation  oper ation
+for the target system.
+Note: This may only be set for the target systems in which
+these are supported oper ations.  For example, a RADIUS
+Authentic ation  or RSA Authentic ation  Manager 7.1/8.2
+target system may be used for the challenge-response
+authentic ation.
+Authentic ation  chain selector (select_chain)
+The authentic ation  chain selector module ( select_chain ) can run a plugin to aut omatic ally  choose
+an authentic ation  chain to use to log in.
+Bravura Security Fabric  ships with two sample scripts that can be used with this module:
+▪chainselect.psl is a generic sample to demonstrate IP based chain selection ▪
+▪authselect.psl can be used to direct users to a single-page login page that includes ID and ▪
+password fields.
+For example, if the sample authselect.psl script is c on figur ed  for the DEFAULT_LOGIN
+authentic ation  chain, then it can be used to allow the user to enter both their user ID and password on
+the main page to log into the Front-end . If valid cr edentials  are used, then the default password.pss
+module is used for authentic ation  and the user is aut omatic ally  logged in.
+These sample files are installed with a complete Bravura Security Fabric  ins t allation  or if you selected
+Samplefiles in a custom ins t allation.  See Authentic ation  Chains: Use Cases  (on page 867) and
+Authentic ation  Chains: Plugins  (on page 981) for more in f ormation.
+Set the following for the authentic ation  chain selector module:
+Run this plugin to aut omatic ally  select a sub-chain Specify the name of the plugin to run to select
+authentic ation  chains. The plugin accepts in f ormation
+from the Front-end, such as HTTP headers, posted data,
+and authentic ation  chain in f ormation.
+If selected chain fails, aut omatic ally  try the same
+chain againEnable this checkbox to aut omatic ally  reload this
+authentic ation  chain if authentic ation  to the Front-end
+fails. If this option  is disabled (default), then users that
+fail authentic ation  are redirected to the main page.
+Allow plugin to skip chain selection  (plugin only) Select this checkbox if you specified  a plugin and you
+want to allow it to skip chain selection  for users who
+already meet authentic ation  requirements.Available chains Select the e xisting  authentic ation  chains from which
+end users can choose.
+You can customize the user interface by modifying the authchain.m4  file and recompiling the skins.
+See the sample files and the CUSTOMIZATION  (on page 3471) for more in f ormation.
+Mobile authentic ation  (mobileapp)
+The Mobile authentic ation  module will allow for authentic ation  using a QR Code that is scanned from the
+Bravura One  app that is registered for Bravura One  for the user for two factor authentic ation.
+Set the following for the Mobile authentic ation  module:
+QR code dur ations  (default 60 seconds) de fines  the amount of time  that a QR Code will be
+displayed to the user for authentic ation.
+See also: 
+▪ Con figur e  2-factor authentic ation  via Bravura One  app (on page 876) ▪
+▪See Mobile access  (on page 1444) for more in f ormation  about Bravura One  and the Bravura One  app. ▪
+Next: 
+▪Add another authentic ation  module  (on page 845) (optional) ▪
+▪Set authentic ation  module order  (on page 860) ▪
+▪Enable authentic ation  chains  (on page 861) ▪
+Setting  authentic ation  module order
+Once you have created an authentic ation  chain and added modules, you can change the order that
+modules are executed within an authentic ation  chain.
+To set the order of modules within an authentic ation  chain:
+1.Enter a number in the Order field  for each module in the authentic ation  chain; for example, if the 1.
+chain has four modules, then you could enter the numbers 1, 2, 3 and 4 to indicate the order for the
+modules to appear. The numbers do not have to start at 1; you could also use the numbers 2, 3, 4, and
+5. This could be helpful if you wanted to move the fir s t module into last position  without re-
+numbering each module.
+Each Order field  must contain a unique value. If you enter the same order number for multiple
+modules and click Order , the Order fields  revert back to their previous values.
+2.Click Order . 2.
+Next: 
+Enable the authentic ation  chain  (on page 861)

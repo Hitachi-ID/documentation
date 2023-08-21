@@ -1,0 +1,199 @@
+The plugin must be placed in the \<instance>\plugin\ directory and runs on the Bravura Security Fabric
+server. See W riting  plugins  for general requirements.
+Ex ecution  points
+This plugin is executed whenever the user runs a report with graphs. The graph is rendered, and its
+r esulting  .png file is copied into the <instance>\reports\spool directory.
+Report to pr e-de fined  request c ancellation  plugin
+You can specify a plugin to allow the c ancellation  of requests generated from reports. This is useful, for
+example, where a request to resolve a rule c on flict  has been marked as "acceptable" in the past. In this
+case, the plugin would return an ins truction  to Bravura Security Fabric  to not submit the request.
+To c on figur e  this plugin, type the plugin’s full name in the REPORT TO PDR REQUEST CANCELLATION
+PLUGIN field  on the Manage the system > Modules> Manage reports (RPT) page.
+A sample plugin, r eport_t o_pdr_r eques t_c ancellation_plugin.p y , is shipped with Bravura Security Fabric
+in the samples\plugin\ directory. See more in f ormation  about writing  a custom plugin
+Requirements
+The plugin must be placed in the \<instance>\plugin\ directory and runs on the Bravura Security Fabric
+server. See W riting  plugins  for general requirements.
+Ex ecution  points
+This plugin is executed whenever the user runs a report and enters required values in the Submit pr e-
+de fined  requests using report output  section.
+Input
+The following is a sample of the input expected for this plugin:
+# KVGROUP-V1.0
+   "" "" = {
+     "predefinedRequest" = "PDR1"
+     "reportId" = "a86318e2-0118-433f-bdf1-22226ce5fbf7"
+     "reportType" = "ACCOUNT"
+     "sessionid" = "S49f1159d-3d27-4b6d-bcd5-4acd61ba9da4"
+     "recipient" "user" = {
+       "id" = "aatest002"
+       "name" = "Celin Elaine Dion"
+     }
+     "request" "" = {
+       "reason" = "Submitted from report Accounts (account.exe) on 3/2/2018
+   2:52 PM"       "attribute" "FIRST_NAME" = {
+         "value" "" = {
+           "value" = "f"
+         }
+       }
+       "attribute" "LAST_NAME" = {
+         "value" "" = {
+           "value" = "l"
+         }
+       }
+       "resource" "" = {
+         "accountID" = "MTLDEV1\\aatest002"
+         "accountTarget" = "AD_ACME"
+         "operation" = "UPDT"
+         "userid" = "aatest002"
+       }
+     }
+     "requester" "user" = {
+       "id" = "superuser"
+       "name" = "superuser"
+     }
+     "similarRequests" "" = {
+       "request" "" = { #batch ID of similar request
+       }
+     }
+   }
+Output
+The expected KVG from plugin is:
+  # KVGROUP-V1.0
+  "output" "" = {
+    "ShouldRequestBeSubmitted" = "1"
+    "retval" = "0"
+  }
+.
+Report criteria plugin
+You can specify a plugin to control report search criteria. Users are presented with default search values,
+which they can not change, or are allowed to modify them.To c on figur e  this plugin, type the plugin’s full name in the REPORT CRITERIA PLUGIN field  on the Manage
+the system > Modules> Manage reports (RPT) page.
+There are no shipped plugins for the report criteria plugin point.
+Requirements
+The plugin must be placed in the \<instance>\plugin\ directory and runs on the Bravura Security Fabric
+server. See W riting  plugins  for general requirements.
+Ex ecution  points
+This plugin is executed whenever users, who are members of report-reading groups, run reports.
+View groups plugin
+You can specify a plugin to control users’ access to group reports via the Groups app  (on page 1204).
+To c on figur e  this plugin, type the plugin’s full name in the VIEW GROUPS PLUGIN field  on the Manage the
+system > W orkflo w  > Options  > Plugins  page.
+A built-in plugin, view_group_filter_and_clickable_link.py  is shipped with Bravura
+Security Fabric  in the samples\idmlib\plugin\ directory.
+Requirements
+The plugin must be placed in the \<instance>\plugin\ directory and runs on the Bravura Security Fabric
+server. See W riting  plugins  for general requirements.
+You must also use the GROUPAPP REPORT ACCESS field  on the Manage the system > Modules> Manage
+reports (RPT) to specify a user class to control who can access group reports from the Groups app.
+Ex ecution  points
+This plugin is executed whenever users log in.
+F eder ation  / Web Single Sign-On
+The F eder ation  / Web Single Sign-on  module provides c on figur ation  options  for the deployment of the
+Scenario.hid_saml_idp  component. See Authentic ation  chains: SAML  (on page 923) for details.Groups app
+Applies to Bravura Identity  
+ and Bravura Privilege 
+The Groups app allows users to request changes to group membership, or to create or update groups if
+they have assigned privileges.
+Access to Groups app options  is controlled by giving users access to applicable pr e-de fined  requests, as
+described below.
+Group members
+All end users can view their group membership and request changes to group memberships via the
+Groups  app. You can c on figur e  the Groups  app so that users see r ec ommendations  of group memberships
+(on page 1207) to add or delete, based on consistency among peers.
+Group ownersGroup owners can use the Groups  app update groups when they have access to the following pr e-de fined
+requests:
+P r e-defined  request Description
+_GROUP_ADD_MEMBERS_ Add accounts and child groups as members to multiple
+groups on target systems.
+_GROUP_ADD_OWNERS_ Add owners to multiple  groups on target systems.
+_GROUP_ADD_PARENTGROUPS_ Add parent groups to multiple  groups on target systems.
+_GROUP_DELETE_ Delete a group on a target system.
+_GROUP_DELETE_MEMBERS Delete members from multiple  groups.
+_GROUP_DELETE_OWNERS Delete owners from multiple  groups.
+_GROUP_DELETE_PARENTGROUPS Delete parent groups from a multiple  groups.
+_GROUP_UPDATE_ATTRS Update attribut es  on one or more groups.
+Product administrators must also c on figur e  group attribut es
+in the Resource attribut es  menu, as described in the
+example below  (on page 1209).
+_GROUP_UPDATE_MEMBERS Add or remove members from a group.
+_GROUP_UPDATE_OWNERS Add or remove owners from a group.
+_GROUP_UPDATE_PARENTGROUPS Add or remove parent groups from a group.Group creators
+Members of the _GROUP_CREATE_USERS_ user class  (on page 733) can use the _GROUP_CREATE pr e-
+de fined  request  (on page 1311) to create a group on a target system.
+Group report readers
+Users who belong to a user class set in system variable GROUPAPP REPORT ACCESS  (on page 1199) can
+view and run reports via the Groups app.
+In addition,  the Python sample script vie w_gr oup_filt er_and_click able_link.p y  must be copied to
+<instance>/plugin and set in the system variable VIEW GROUPS PLUGIN  (on page 1203).
+See also
+When Bravura Identity  is licensed, self-service users can also request changes to group membership via
+the View and update pr ofile  (on page 1178) menu.
+The examples below use settings  and users from a demons tr ation  environment. See end-user
+documen t ation  for more generic procedures for view and managing groups .Enabling group membership r ec ommendations
+You can c on figur e  the Groups  app and group request pages so that users see r ec ommendations  of group
+memberships to add or delete, based on consistency among peers.
+A peer group is a group of users with some attribut e  in common; for example, users working at the same
+loc ation  or department, or having the same manager.
+When enabled, group membership r ec ommendations  are displayed in the Groups  app and the Change
+group membership page in request wizards. R ec ommendations  are visually represented by a color bar
+with a number s t ating  the percentage of peers who are members. This can help the user to decide
+whether to add or delete membership. The r ec ommendations  color bar is:
+1.Red, where membership is not recommended; that is, most of a user’s peers are not members. 1.
+This is indicated where the number of users with the membership is between 0% and a lower
+threshold.
+2.Yellow, where membership is recommended: that is, some of the user’s peers are members.2.
+This is indicated where the number of users with the membership is between a lower threshold and
+an upper threshold.
+3.Green, where membership is strongly recommended; that is, most of a user’s peers are members.3.
+This is indicated where the number of users with the membership is between an upper threshold and
+100%.
+The following screenshot shows how r ec ommendations  are displayed in the request wizard:
+The display of r ec ommendations  is controlled by the following system variables in the Manage the
+system  > Modules  > Options  menu:GROUP APP MATCHING ATTRIBUTE GROUP The attribut e  group used to de fine  a peer group. If set,
+the Groups app includes a R ec ommendation  button
+that toggles the display of r ec ommendations.
+GROUP APP MATCHING USERS LOWER THRESHOLD 0-100 value r epr esenting  the recommended values
+(yellow threshold).
+GROUP APP MATCHING USERS UPPER THRESHOLD 0-100 value r epr esenting  the highly recommended
+values (green threshold).
+SEARCH FILTER RECOMMENDATION CUTOFF If the search filt er  plugin returns a ”showOnly” value of
+1, this sets the default 0-100 lower threshold to filt er
+on. Values less than this cut off  will be filt er ed  out by
+the plugin.
+Example: Group membership r ec ommendations
+This example illustrates how to set up the entitlemen t  consistency r ec ommendations  when certif ying
+group memberships. The peer group is users that have the same manager, calculated based on the
+ORGCHART_MANAGER attribut e,  which is a member of the CERT_ORGCHART_MANAGER group.
+Configur e  global settings  
+To c on figur e  global settings  for the r ec ommendation  engine:
+1.Click Manage the system  > Modules  > Options . 1.
+2.Set the following:2.
+GROUP APP MATCHING ATTRIBUTE GROUP CERT_ORGCHART_MANAGER
+GROUP APP MATCHING USERS LOWER THRESHOLD 20
+GROUP APP MATCHING USERS UPPER THRESHOLD 50
+3.Click Update 3.
+View group membership r ec ommendations  
+To view group membership r ec ommendations:
+1.Log into Bravura Security Fabric  as an end user. 1.2.From the main menu, click Groups . 2.
+3.Click the All filt er  in the Filter panel . 3.
+4.Click the 
+ icon in the top right corner to switch to Table view 4.
+5.Click R ec ommendation  in the middle panel. 5.
+R ec ommendations  are displayed.
+Example: Update group attribut es
+Group owners can use the Groups app to update the group description  and other attribut es  c on figur ed
+by product administrators.
+In this example, we add a resource attribut e  that can be updated by group owners using the standard
+_GROUP_UPDATE_ATTRS ( Update attribut es ) pr e-de fined  request. We map the resource attribut e  to an
+Activ e  Directory group attribut e,  so that updating  the attribut e  in Bravura Security Fabric  also updates
+the group in Activ e  Directory.
+Assumptions
+This example assumes:
+▪Bravura Workforce P attern  is installed. ▪
+▪The "AD" Activ e  Directory target system is c on figur ed  as a source of pr ofiles. ▪
+▪Group owners in AD are c on figur ed  as group managers in Bravura Identity . ▪
+Add a resource attribut e
+To add a resource attribut e:
+1.Log in to the Front-end (PSF) as superuser . 1.
+2.Click Manage the system > Resources > Resource attribut es . 2.

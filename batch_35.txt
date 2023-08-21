@@ -1,0 +1,342 @@
+WriteFile  columns set to True . Scrolling over to the ComponentOwnerFQN  field  shows it is
+c on figur ed  by the Functional.hid_policy_wfemail  component. This means the override
+needs to be applied to the Functional.hid_policy_w f email  component.
+Now that we have identified  the component to override, the specific  component file to override also
+needs to be determined. For data provided to ExtDB tables, this generally comes from .csv  files.
+Review default c onfigur ation  settings  for wfemail component
+To determine which specific  file and fields  we need to provide overrides for in the dev environment file:
+1.Navigate to the \<instance>\component\default\functional 1.
+\hid_policy_wfemail  directory.
+2.Open and inspect manifest.xml  for c on fig da t a  entries. 2.
+From the entries, we find the configdata  entry shows:
+<configdata
+component="Functional.hid_policy_wfemail.model.PolicyWFEmail">
+<filename>data\events.csv</filename>
+</configdata>
+From the placement within configdata  entries, it is shown that the file providing c on figur ation
+in f ormation  is \data\ events.csv . This in f ormation  is now used to start building a structure for
+the dev environment file.
+The / and \ are not equivalent; the slash used in the environment file must match the type used in
+manifest.xml .
+Create the dev environment file
+To create the dev environment file, if it does not already exist:
+1.Navigate to your \<instance>  directory. 1.
+2.If an \<instance>\environments  folder does not currently exist in the instance directory, 2.
+create one.
+3.Inside the \environments  directory, open an appropriate applic ation  (like Notepad++ ) to create 3.
+a new file called xyz-dev.json .
+This will act as the dev environment file. If this file exists already, you only need to add to it.
+Override the appropriate csv rows in the environment file
+To write the dev environment file:
+1.Edit the xyz-dev.json  file and add the 3 keys to indicate the component directories by enter the 1.
+following:
+{
+"Scenario": {},
+"Functional": {},"Data": {}
+}
+2.Now that there is a basic skeleton, it is known that the component of interest is in the2.
+\Functional  directory, so the override is added under the " Functional " key so the file now looks
+like:
+{
+"Scenario": {},
+"Functional": {
+"hid_policy_wfemail": {}
+},
+"Data": {}
+}
+3.The file being overridden from the component now needs to be specified.  It was determined above to 3.
+be \data\ events.csv , so that is added next.
+{
+"Scenario": {},
+"Functional": {
+"hid_policy_wfemail": {
+"data\\events.csv": {}
+}
+},
+"Data": {}
+}
+4. W riting  overrides for .csv  files is similar to how overrides are written  for .json  files,  but for .csv 4.
+files the specific  rows being altered need to be identified  in the environment file. For this example, the
+row in the events.csv  file where EventID  = _DEFAULT_POLICY  is being overridden, so the
+number of this row needs to be recorded in the environment file.
+5.To find the number of the row, open the \<instance>\component\Default\Functional 5.
+\hid_policy_wfemail\data\ events.csv  file and see which line EventID  =
+_DEFAULT_POLICY .
+Viewing the file shows the line with EventID  = _DEFAULT_POLICY  happens to be the fir s t item in
+the .csv . To specify the row in the environment file, its index (zero-indexed) needs to be added
+followed by the fields  you want to override for that row. Since EventID  = _DEFAULT_POLICY  is the
+fir s t row in the .csv , it has an index of ’0’. The xyz-dev.json  environment file then looks like:
+{
+"Scenario": {},
+"Functional": {
+"hid_policy_wfemail": {
+"data\\events.csv": {
+"[0]": {}
+}
+}
+},
+"Data": {}
+}
+6.The Functional.hid_policy_w f email  component by default c on figur es  both SendSMTP  and WriteFile 6.
+values to be set to True . Since the development environment is supposed to send emails to file only,
+the override required is setting  the SendSMTP  field  to FALSE . The environment file override entry in
+xyz-dev.json  then becomes:
+{
+"Scenario": {},
+"Functional": {
+"hid_policy_wfemail": {
+"data\\events.csv": {
+"[0]": {
+"SendSMTP": "FALSE"
+}
+}
+}
+},
+"Data": {}
+}
+With this change, when the xyz-dev.json  environment is loaded before installing the
+Functional.hid_policy_w f email  component, the fir s t row of the hid_policy_wfemail  policy table
+is c on figur ed  with SendSMTP  = FALSE . Thus, overriding the default value of SendSMTP  = TRUE  from
+the events.csv  file.
+Create the prod environment file
+Create the prod environment file if it does not already exist:
+1.Navigate to your \<instance>  directory. 1.
+2.If an \<instance>\environments  folder does not currently exist in the instance directory, 2.
+create one.
+3.Inside the \environments  directory, open an appropriate applic ation  (like Notepad++ ) to create 3.
+a new file called xyz-prod.json .
+This will act as our prod environment file. If this file exists already, you only need to add to it.
+Override the appropriate csv rows in the environment fileFollowing similar steps and logic to the dev environment file, the xyz-prod.json  file is written  to
+include an override that ensures email in the prod environment is set to SMTP only and not to file. This
+means the WriteFile  field  from the events.csv  must be overridden to equal FALSE .
+{
+"Scenario": {},
+"Functional": {
+"hid_policy_wfemail": {
+"data\\events.csv": {
+"[0]": {
+"WriteFile": "FALSE"
+}
+}
+}
+},
+"Data": {}
+}
+Load the dev environment file
+This example assumes the development server environment has Bravura Security Fabric  installed on the
+system without  the ins t allation  of the Functional.hid_policy_w f email  component.
+1.Navigate to the \<instance>  directory and create the \ environments  directory. 1.
+2.Copy your xyz-dev.json  file into that directory. 2.
+3.Launch a command prompt as an Administrator and navigate to the \<instance>  directory. 3.
+4.Run the command:4.
+instance.bat
+5.Navigate to the \<instance>\script  directory. 5.
+6.Load the environment file by running the commands: 6.
+manage_components.py load
+manage_components.py env load xyz-dev
+Install Functional.hid_poli cy_wf email  component
+To install the Functional_hid_policy_w f email  component:
+1.While still in the \<instance>\script  directory, list the components by running the command 1.
+(note: the component is case sensitiv e):
+Manage_components.py install Functional.hid_policy_wfemail
+You know that the command has run successfully if the command prompt shows the skins being built
+and installed.
+Additionally ,  you can check the hid_policy_wfemail  ExtDB table entries:2.Verify that the SendSMTP  value has been c on figur ed  as FALSE  by checking the value in the 2.
+hid_policy_wfemail  EXTdb table:
+a.Log in to Bravura Security Fabric  as superuser . a.
+b.Click Manage External Data Store . b.
+c.Navigate to the hid_policy_wfemail  table. c.
+d.Review the fir s t rule in the table where EventID  = _DEFAULT_POLICY  and ensure that the value d.
+for SendSMTP  = FALSE .
+Adding multiple  pieces of c onfigur ation  to an environment file
+Since environment files are just .json  files,  adding more c on figur ation  is as simple as adding a comma,
+and de fining  another item to override. To display this, we will extend our xyz-dev.json  to override
+the LENGTH  and TRIES  c on figur able  values provided by the Scenario.hid_authchain_emailpin component
+to GlobalConfiguration  to make the email PIN scenario easier to use in development
+environments.
+For reference, the manifest.xml  file for the Scenario.hid_authchain_emailpin component has
+GlobalConfiguration  data provided by the \data\ initial_data.csv  file. The default
+values in the \data\ initial_data.csv  file consist of:
+▪row 3 with LENGTH  = 5 ▪
+▪row 4 with TRIES  = 3 ▪
+In this example, an override is added to the xyz-dev.json  file so that:
+▪LENGTH  = 4 ▪
+▪TRIES  = 6 ▪
+W riting  the override into the e xisting  xyz-dev.json  file appears as:
+{
+"Scenario": {
+"hid_authchain_emailpin": {
+"data\\initial_data.csv": {
+"[2]": {
+"value": "4"
+},
+"[3]": {
+"value": "6"
+}
+}
+}
+},
+"Functional": {
+"hid_policy_wfemail": {"data\\events.csv": {
+"[0]": {
+"WriteFile": "FALSE"
+}
+}
+}
+},
+"Data": {}
+}
+Note, that just because the override has been added for the component
+Scenario.hid_authchain_emailpin to the xyz-dev.json  environment file, it does not mean an
+override needs to be added to other environment files.  For example, since the default values being
+provided by the component suit the needs of the pr oduction  environment, no further entries need to be
+added to the xyz-prod.json  file. The r esulting  xyz-prod.json  file will still appear as:
+{
+"Scenario": {},
+"Functional": {
+"hid_policy_wfemail": {
+"data\\events.csv": {
+"[0]": {
+"WriteFile": "FALSE"
+}
+}
+}
+},
+"Data": {}
+}
+Using Variables
+As environment files get larger and contain multiple  user classes, target addresses, and so on, it makes
+sense to de fine  variables at the top of the file to make the process scalable. It is not necessary to  use
+variables for a small set of environment file c on figur ations,  such as only having a single target as seen in
+the c on figur ation  example capturing idmc on fig  changes  (on page 335), but once you have ten or more
+targets, cr eating  variables is the optimal  approach.
+De fining  variables
+Variables are de fined  in order to replace default c on figur ation  values with values intended for multiple
+environments, such as in a base environment file, or to replace values for specific  environments. See
+Inheriting  environments  (on page 349) to understand how environment specific  files can be written  toinherit values from base environment files.  Variables are also used to replace the same value multiple
+times.
+To de fine  variables for an environment file, start by declaring them in an entry named _vars . This is
+usually at the top of the file:
+{
+"_vars": {
+"ad": {
+"address": "testad.local"
+}
+},
+Now that the variable has been de fined,  it can be accessed in the environment file using: $
+{_vars.ad.address}
+Building on the above example, an AD target address override using the variable would be written  as:
+{
+"_vars": {
+"ad": {
+"address": "testad.local"
+}
+},
+"Scenario": {},
+"Functional": {},
+"Data": {
+"hid_target_ad": {
+"ad.json": {
+"Fields": {
+"address": "{server=${_vars.ad.address};nameFormat=DN;}"
+}
+}
+}
+}
+}
+De fining  multiple  variables
+A common reason for de fining  variables in an environment file is unrolling a set of variables to numerous
+pieces of c on figur ation.  For example, multiple  target addresses can be de fined  within variables, and
+installing the Data.hid_target_ad  component can then trigger the cr eation  of multiple  AD targets
+with values pulled from the de fined  _vars . To do that:
+First, de fine  the variables:{
+"_vars": {
+"ad": [
+{
+"id": "AD",
+"name": "AD",
+"address": "{server=testad.local;nameFormat=DN;}",
+},
+{
+"id": "AD2",
+"name": "AD2",
+"address": "{server=testad2.local;nameFormat=DN;}",
+}
+]
+},
+Then, de fine  the Data.hid_target_ad component override:
+"Scenario": {},
+"Functional": {},
+"Data": {
+"hid_target_ad": {
+"ad.json": {
+"Fields": {
+"id": “${_vars.ad.id}",
+"address": “${_vars.ad.address}"
+}
+}
+}
+}
+}
+In this case, the _vars.ad  variable is unrolled from a two-value list into two separate pieces of
+c on figur ation.  When the Data.hid_target_ad component is installed with this c on figur ation,  two targets
+are created: AD and AD2  with their addresses set to their r espectiv e  values
+({server=testad.local;nameFormat=DN;}  and
+{server=testad2.local;nameFormat=DN;} ).
+In some situations,  you may not want the variable to expand into multiple  pieces of c on figur ation.  In
+those cases, the in_place  flag is used in environment files to control the expansion.Using the in_place flag
+The in_place  flag exists to allow environment files to apply variable expansions in diff er en t  ways,
+depending on the requirements of the person developing the environment. The most common place this
+is encountered is when dealing with IDMCon fig  data components to manipulate dependent objects
+inside the .json  data files.
+The previous section  went over variable unrolling and how you can use it to create multiple  pieces of
+c on figur ation  from a single set of override ins tructions  using a list of variables. For clarity sake, that
+expansion is equivalent to "in_place”: true  because we are unrolling that variable in place. By
+default, the Dependents  and Prerequisites  blocks will be handled as if the “_in_place”  flag is
+true . Thus, requiring you to de fine  it as false  if you need it to be treated diff er en tly .
+De fining  the “in_place”  flag as false  stops that expansion in the context of the c on figur ation  file
+being processed. This is useful for cases where you want multiple  objects created and each one has
+dependent objects, but you DON’T want those dependent objects to multiply .
+Inheriting  environments
+A particularly  useful use case for environments is inheritance, the ability to de fine  one base environment
+with many of the overrides in place so environments like: development, pr oduction,  or stage can easily
+be set up without needing to repeat entries many times.
+One of the most common use cases for this is having diff er en t  addresses for the AD target depending on
+the environment you have loaded. For this example company-base.json  will be used as the base
+environment, and both company-dev.json  and company-prod.json  that inherit from it.
+Using a Data.hid_target_ad component override as an example again, the company-base.json  file is
+written  as:
+{
+"Scenario": {},
+"Functional": {},
+"Data": {
+"hid_target_ad": {
+"ad.json": {
+"Fields": {
+"address": "{server=${_vars.ad.address};listNestedGrps=true}"
+}
+}
+}
+}
+}
+Then, other environment files are written  similar to this company-dev.json  file:
+{"_inherit" : ["company-base"],
+"_vars": {
+"ad": {
+"address": "development-address.domain"
+}
+}
+}
+or this company-prod.json :
+{
+"_inherit" : ["company-base"],
+"_vars": {
+"ad": {
+"address": "production-address.domain"
+}
+}
+}
+What this would do is make it so the replacement in the AD target address line depends on which of the
+two environment files (dev or prod) is loaded, without needing to explicitly override the address in both
+environments. Note that writing  your environments like this will make it so company-base.json
+cannot function  on its own, which is fine so long as it’s understood in your implemen t ation.

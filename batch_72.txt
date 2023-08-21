@@ -1,0 +1,389 @@
+GLOBAL_HELP_DESK De fines  privileges for basic, front-line help desk users. By default, the
+membership criteria for this user access rule is de fined  by the
+_GLOBAL_HELP_DESK_ user class.
+HELP_DESK_MANAGER De fines  privileges for all help desk managers.
+By default, the membership criteria for this user access rule is de fined  by the
+_HELP_DESK_MANAGERS_ user class.
+Note: The Unlock accounts , Manage tokens and Generate voice print
+enrollment PIN privileges all require c on figur ation.  If not yet c on figur ed,
+"(Disabled)” is displayed next to their name.
+The Update security questions , View security questions , and Bypass security
+questions  privileges have "(Disabled)” displayed next to their name, when the
+Update security questions  (PSQ) module is disabled.
+See User access rule privileges  (on page 714) for details on each privilege.
+▪Self-service rules▪
+▪Specify what self-service users can do for themselves.▪
+▪Apply to users in a single-participan t  user class - that is, individual users are included based on ▪
+an attribut e  or group membership.
+The default self-service rule is:
+ALL_SELF_REQUEST All self-service users who make requests for themselves. By default,
+membership is de fined  by the _ALLUSERS_ user class.
+The Unlock accounts , Manage tokens and Generate voice print enrollment PIN privileges all
+require c onfiguration.  If not yet c onfigured,  "(Disabled)” is displayed next to their name.
+The Update security questions  privilege has "(Disabled)” displayed next to it when the Update
+security questions  is disabled. If this privilege is not selected, users are not required to update their
+security questions  when logging in, and the link is not displayed on the main menu.
+See User access rule privileges  (on page 714) for details on each privilege.
+▪Delegated adminis tr ation  rules ▪
+ Applies to Bravura Identity
+▪Allow the same privileges as the global help desk rules.▪
+▪Include users based on a relational  user class – that is, there are multiple  participan ts  which are ▪
+de fined  as either requester or recipient. An example of this is a manager-subordinate
+r elationship.
+▪Specify what the requester can do for the recipient.▪
+▪Have no default rules de fined. ▪
+See User access rule privileges  (on page 714) for details on each privilege.
+See Example: Delegate a certific ation  segment when the reviewer is invalidBusiness requirement
+Or g aniz ations  require the ability to sign off on a certific ation  campaign when the initial  reviewer is
+no longer a valid user.
+Solution
+A superuser can create deleg ation  adminis tr ation  rules in Bravura Security Fabric  to enable a
+certific ation  segment to be delegated to a valid user. The valid user can then complete the
+certific ation  round.
+The following demonstrates how to c on figur e  delegated adminis tr ativ e  rules using the Deleg ation
+authority  privilege to delegate an invalid user’s certific ation  segment to a valid user.
+In this example, a superuser creates two delegated adminis tr ativ e  rules with the Deleg ation
+authority  privilege:
+▪One rule specifying NEWUSER  as the RECIPIENT. This rule enables the Delegate authority  link ▪
+under Other users .
+▪Another rule specifying ALLUSERS  as the RECIPIENT. This rule enables the Show invalid  icon 
+ ▪
+to display when selecting  the user whose authority you need to delegate.
+This setup is for demons tration  purposes only; in a production  environment it is recommended
+that you restrict access to the "Delegate authority" privilege to specific  users through a global
+helpdesk rule
+Pre-requisites
+This example assumes that:
+▪Bravura Security Fabric  and Connector Pack  installed. ▪
+▪An Activ e  Directory target system is added as a source of pr ofiles. ▪
+▪There is an activ e  certific a t e  segment where the reviewer has been deleted in the target system. ▪
+Configur e  the fir s t delegated adminis tr ativ e  rule:
+1.Log in to the front-end as superuser.1.
+2.Click Manage the system > Security > Access to user pr ofile s > Delegated adminis tr ation  rules . 2.
+3.Click Add new. 3.
+▪ID: Rule 1▪
+▪ Description:  Rule 1 ▪
+4.Select Delegate authority  for Allowed privileges. 4.
+Click Add.
+5.Click Membership criteria  tab. 5.
+Click Select.
+6.Select the _ALLUSERS_ user class.6.7.Select RECIPIENT  for P articipan t  mapping. 7.
+Click Select.
+8.Select the _ALLUSERS_ user class.8.
+9.Select REQUESTER  for P articipan t  mapping. 9.
+10. Set The participan ts  have to match which of the user classes to All of the user classes . 10.
+Configur e  the second delegated adminis tr ativ e  rule:
+1.Log in to the front-end as superuser.1.
+2.Click Manage the system > Security > Access to user pr ofile s > Delegated adminis tr ation 2.
+rules.
+3.Click Add new. 3.
+4.Click Add new. 4.
+▪ID: Rule 2▪
+▪ Description:  Rule 2 ▪
+5.Select Delegate authority  for Allowed privileges. 5.
+Click Add.
+6.Click Membership criteria  tab. 6.
+Click Select.
+7.Select the _NEWUSER_ user class.7.
+8.Select RECIPIENT  for P articipan t  mapping. 8.
+Click Select.
+9.Select the _ALLUSERS_ user class.9.
+10. Select REQUESTER for P articipan t  mapping. 10.
+11. Set The participan ts  have to match which of the user classes to All of the user classes . 11.
+Delegate an invalid user’s certific a t e  segment to an valid user:
+1.Log in to the front-end as an end user.1.
+2.Click Delegate authority  in the Other users section. 2.
+3.Click Show invalid . 3.
+4.Click the deleted reviewer link to open the deleg ation  page. 4.
+5.On the deleg ation  page, select a valid user as the delegate. 5.
+for an example.
+▪ Pr ofile  comparison rules ▪
+ Applies to Bravura Identity
+▪Are r elational,  and have multiple  participan ts  which are de fined  as requester, recipient, or ▪
+model user.▪Determine which requester can modify/create which recipient based on model user. They also▪
+de fine  which requester can use which model user.
+▪Have no default rules de fined. ▪
+▪Can only be de fined  by mapping participan ts  to user class. Privileges are determined by other ▪
+rules and user groups.
+3.Search for or select an e xisting  user access rule, or click Add new... 3.
+De fine:
+▪User access rule privileges  (on page 714) ▪
+▪Membership criteria  (on page 719) ▪
+If de fining  profile  comparison rules, you only define  membership criteria, and there is no need to
+select a rule. There is in e ff ect  one rule.
+User access rule privileges
+The following table describes all available user access rule privileges. It also includes the keyword, used in
+c on figur ation  files and plugin input/output – for each privilege. These privileges can only be granted to
+users who have an account on a Bravura Security Fabric  target system.
+Right Keyword Description
+Change passwords reset Self-service users can change their own
+passwords.
+Help desk users can change users’ passwords.
+Change and expire
+passwordsresetexpirepw Help desk users can change and expire users’
+passwords.
+Unlock encrypted systems/
+accountshdd Self-service users can unlock their own
+encrypted systems and accounts.
+Unlock accounts unlock Self-service users can unlock their own target
+system accounts.
+Help desk users can unlock users’ target system
+accounts.
+Enable/Disable user pr ofile pr ofileenable Help desk users can enable/disable users’
+pr ofiles.
+Unlock user pr ofile pr ofileunlock Help desk users can unlock users’ pr ofiles.
+View pr ofile view Self-service users can view their own pr ofile
+in f ormation.
+Help desk users can view the pr ofile  in f ormation
+of other users.
+View accounts viewacct Self-service users can view their own account
+and group in f ormation.
+Help desk users can view the account and group
+in f ormation  of other users.Right Keyword Description
+View roles viewrole Self-service users can view their own role
+in f ormation.
+Help desk users can view the role in f ormation  of
+other users.
+Update account (for pr ofile
+comparison)update Self-service users can edit their own pr ofile
+in f ormation  when comparing their pr ofile  with
+another user.
+Help desk users can update other users’ pr ofile
+in f ormation  when comparing the user’s pr ofile
+with another user.
+Add roles (for pr ofile
+comparison)addrole Self-service users can add roles when comparing
+their pr ofile  with another user.
+Help desk users can add roles when comparing
+pr ofiles.
+Delete roles (for pr ofile
+comparison)delrole Self-service users can delete when comparing
+their pr ofile  with another user.
+Help desk users can delete roles when
+comparing pr ofiles.
+Create account (for pr ofile
+comparison)create Self-service users can add new accounts when
+comparing their pr ofile  with another user.
+Help desk users can add accounts when
+comparing pr ofiles.
+Delete account (for pr ofile
+comparison)delete Self-service users can delete their accounts
+when comparing their pr ofile  with another user.
+Help desk users can delete accounts when
+comparing users.
+Manage group
+memberships (for pr ofile
+comparison)managegroups Self-service users can modify their own group
+memberships when comparing their pr ofile  with
+another user.
+Help desk users can modify users’ managed
+group membership when comparing pr ofiles.
+Check in access ppmreqrevoke Help desk users can check in another user’s
+privileged access.
+Rename account rename Self-service users can request to rename their
+own account ID.
+Help desk users can request to rename another
+user’s account ID.
+Rename pr ofile r enamepr ofile Self-service users can request to rename their
+own pr ofile  ID.
+Help desk users can request to rename another
+user’s pr ofile  ID.Right Keyword Description
+Move user from one
+context to anothermovectx Self-service users can move their accounts from
+one target system context to another.
+Help desk users can move users’ accounts from
+one target system context to another.
+View open requests viewreqopen Self-service users, including requesters,
+recipients, and authorizers, can view their open
+requests.
+Help desk users can view other users’ open
+requests.
+View archived requests viewreqclosed Self-service users can view their archived
+requests.
+Help desk users can view other users’ archived
+requests.
+View pr ofile  history viewhistory Self-service users can view their own pr ofile
+history.
+Help desk users can view other users’ pr ofile
+history.
+Delegate w orkflo w
+requestsdelegmang Help desk users can delegate the r esponsibilities
+of a user to another user.
+Manage w orkflo w  requests flo wmang Help desk users can act on individual
+authoriz ation  requests of other users.
+View w orkflo w  requests vie w w orkflo w Help desk users can view individual
+authoriz ation  requests of other users. This rule
+does not allow users to act on requests of other
+users.
+Delegate authority delegate Self-service users can delegate their own
+authority to another user.
+Help desk users can delegate other users’
+authority to another user.
+Update security questions editqa Self-service users can edit their own security
+question  pr ofiles.
+Help desk users can edit users’ security question
+pr ofiles.
+Question  sets must have their help desk
+permissions c on figur ed  so that they can be
+viewed by help desk users.
+The Update security questions  must be enabled.Right Keyword Description
+View security questions viewqa Help desk users can view users’ security
+question  pr ofiles.
+Question  sets must be have their help desk
+permissions c on figur ed  so that they can be
+viewed by help desk users.
+The Update security questions  must be enabled.
+Bypass security questions bypassqa Help desk users can bypass security question
+authentic ation  when helping a user.
+If a question  set requires authentic ation,  help
+desk users with this right are presented with a
+Skip authentic ation  button.  Help desk users
+who do not have this right must correctly
+authentic a t e  the caller before proceeding. This
+user access rule works in c onjunction  with
+ADMIN AUTHUSR MANDATORY.
+View answers to security
+questionsshowans Self-service users can view answers to security
+questions,  by clicking a Show answers  button,
+when viewing their own security question
+pr ofile.  Normally, answers are obscured.
+Help desk users can view answers to security
+questions,  by clicking a Show answers  button,
+when viewing a user’s security question  pr ofiles.
+Question  sets must be have their help desk
+permissions c on figur ed  so that they can be
+viewed by help desk users.
+The Update security questions  must be enabled.
+Attach  other accounts editids Self-service users can add or remove e xisting  IDs
+from their pr ofiles.
+Help desk users can attach  or detach accounts
+from users’ pr ofiles.
+Request access to network
+resourcesnetres Self-service users can request access to network
+resources for themselves.
+Help desk users can request access to network
+resources for others.
+Browse the OrgChart vieworg Self-service users can browse the OrgChart.
+This option  is not available for help desk users.
+View my subordinates manageorg Self-service users can use the OrgChart to
+attach,  detach, or transfer their subordinates to
+another manager.
+Help desk users can use the OrgChart to attach,
+detach, or transfer another user’s subordinates
+to another manager.Right Keyword Description
+Privileged access pwdaccess Self-service users can access the Privileged
+access to request and check out privileged
+access.
+Remove recorded session
+packagessmonremove Help desk users can remove recorded session
+packages created by other users.
+Request check-out
+extensionsextendcheckout Self-service users can request extensions to
+checked out privileged access.
+Manage recorded sessions smonmanage Self-service users can request the ability to
+search recorded sessions initia t ed  by a specified
+user.
+Pre-approved search of my
+recorded sessionssmonsearch Self-service users can search recorded sessions
+of initia t ed  by themselves, without r equesting
+authoriz ation.  In addition,  users will require the
+"Manage recorded sessions" privilege to access
+the Session monitor.
+Pre-approved search of all
+recorded sessionssmonsearchother Self-service users can search recorded sessions
+initia t ed  by any user, without r equesting
+authoriz ation.  In addition,  users will require the
+"Manage recorded sessions" privilege to access
+the Session monitor.
+Pre-approved download of
+recorded sessionssmonview Self-service users can download recorded
+sessions initia t ed  by themselves, without
+r equesting  authoriz ation.  In addition,  users will
+require the "Manage recorded sessions"
+privilege to access the Session monitor.
+Pre-approved view of
+recorded sessionssmonbrowserview Self-service users can view recorded sessions
+initia t ed  by themselves, in a browser, without
+r equesting  authoriz ation.  In addition,  users will
+require the "Manage recorded sessions"
+privilege to access the Session monitor.
+Enable password
+s ynchr oniz ationregister Self-service users can synchronize their
+passwords.
+This option  is not available for help desk users.
+Generate voice print
+enrollment PINivrreg Self-service users can generate their own voice
+print enrollment PIN.
+Help desk users can generate a voice print
+enrollment PIN for other users.
+Manage tokens token Self-service users can manage their own security
+tokens.
+Help desk users can manage other users’ tokens.Right Keyword Description
+Requests trackreq Self-service users can access the Requests to
+track and act on requests.
+Groups viewgroups Self-service users can access the Groups to view
+and request changes to group membership.
+Initia t e  a review of all
+entitlemen tsadhoccertif y Users can initia t e  a review of all entitlemen ts  for
+another user, to c on firm  or remove access
+privileges.
+Manage mobile devices mobile Self-service users can register and activ a t e  their
+own mobile devices.
+Help desk users can view and delete mobile
+devices on behalf of other users.
+Personal vault personalvault Self-service users can access a personal vault of
+account in f ormation  and passwords.
+De fining  membership criteria
+A user access rule can have one or more users as members. Membership criteria for a rule is de fined  by
+selecting  or cr eating  user classes. Users must be participan ts  of the selected user classes in order to have
+membership in the user access rule.
+See User Classes  (on page 733) for more details on user classes.
+To de fine  membership criteria for a user access rule:
+1.Navigate to the user access rule de finition  page  (on page 710) for the rule you want to de fine. 1.
+2.Click the Membership criteria tab to select or create user classes that de fine  user access rule 2.
+membership.
+This is not required for pr ofile  comparison rules, which are only de fined  by membership criteria.
+3.Add user classes to the rule. To de fine  rule membership criteria: 3.
+▪Select e xisting  user classes: Click Select and enable the checkboxes for the user classes you want to ▪
+add, then click Select .
+▪Create new user classes: Click Create a new user class . ▪
+Select and create user classes until  you have de fined  group membership.
+4. Con figur e  criteria for multiple  classes: 4.
+▪ De fine  whether users are required to match All of the user classes or Any of the user classes . ▪
+▪For a delegated adminis tr ation  rule, map user class participan ts  as either REQUESTER or ▪
+RECIPIENT . There must be at least one of each.
+▪For pr ofile  comparison rules, map user class participan ts  as either REQUESTER , RECIPIENT , or ▪
+MODELUSER .For example the user class _MANAGER_DIRECT_ links a manager and a subordinate; you can
+de fine  the manager as requester and the subordinate as the recipient or model user. Arrange user
+classes so you have a de fined  r elationship  between a requester and a recipient, and between a
+requester and a model user.
+5.Click Update to save your settings. 5.
+Once you have finished  de fining  membership criteria, you can click the Test tab to Test membership or
+List members .
+Membership of non-built-in user classes can be cached to improve performance. There are options  to
+recalculate or invalidate the cache on the user class c on figur ation  page.
+In a replicated environment, cache rec alculation  can only be performed on the instance which runs
+psupdate .
+Removing users from membership
+To remove users from rule membership, you can:
+▪Edit user classes  (on page 803) to change the participan ts. ▪
+▪Delete user classes from the membership criteria.▪
+a.From the membership criteria page, enable the checkbox next to the user classes you want toa.
+delete.
+b.Click Delete . b.
+Example: De fine  help desk rules
+This example shows you how to provide a group of users the appropriate access so they can assist users
+to change their passwords.
+Assumptions
+This example assumes that:
+▪Bravura Security Fabric  and Connector Pack  are installed. ▪
+▪The ins t allation  includes a Bravura Pass  license. ▪
+▪There is an Activ e  Directory target system set up as a source of pr ofiles. ▪
+▪A user group on Activ e  Directory has been mapped to the _GLOBAL_HELP_DESK_ user class. ▪
+▪A security question  set is set up to allow help desk users to authentic a t e  other users before helping ▪
+them.
+Steps
+Use the Access to user profiles  page to de fine  global help desk rules:
+1.Log in to the Front-end (PSF) as superuser . 1.
+2.Click Manage the system >  Security > Access to user pr ofiles . 2.
+3.Click Global help desk rules . 3.

@@ -1,0 +1,349 @@
+To de fine  questions  for a question  set:
+1.Click Manage the system > Policies > Question  sets . 1.
+2.Click:2.
+▪ Pr e-de fined  questions  to add questions  to a pr e-de fined  internal set. ▪
+or
+▪External questions  to add questions  to an external pr e-de fined  set. ▪
+3.Select the question  set that you want to add questions  to. 3.
+Bravura Security Fabric  displays the Question  set in f ormation  page.
+4.Select an e xisting  question,  or click Add new… in the Question  de finition  in f ormation  section. 4.
+5.Type the Question , Minimum length of answer , and Maximum length of answer in the appropriate 5.
+fields.
+See Suggested questions
+Following is a list of suggested questions:
+▪First school attended ▪
+▪Favorite board game▪
+▪Favorite song▪
+▪Favorite dessert▪
+▪Favorite book character▪
+▪Furthest place traveled▪
+▪Color of fir s t car ▪
+▪Birth city▪
+▪High school mascot▪
+▪Childhood street name▪
+▪Favorite actor/actress/celebrity is▪
+▪Last 6 digits of your SSN▪
+▪Favorite band▪
+▪Name of fir s t girlfriend/boyfriend ▪
+for some example question  text.
+6. (Optional)  Type a F ormatted  string of answer to de fine  a format string to which answers must 6.
+conform.
+See F ormatted  string help
+You can force answers to pr e-de fined  questions  to conform to a certain format:
+Character Meaning
+A Any alphabetic  characters
+C Any alphanumeric characters
+N Any numeric characters
+X Any charactersYou can also include literal characters and spaces in the f ormatted  string. For example:
+String Answer
+NNN NNN NNN 123 456 789
+NNN-NNNN 555-1234
+NNNN/NN/NN 1990/02/15
+to learn how to do this.
+7.Click Add. 7.
+If you specified  a f ormatted  string, Bravura Security Fabric  aut omatic ally  sets the minimum and
+maximum length of the answer to match the length of the string.
+Batch loading question  set data
+Normally, users enter their challenge-response data using the Update security questions . Alt ernativ ely ,  you
+can use the Bravura Security Fabric  remote API to batch-load users’ question  set data into the Bravura
+Security Fabric  database.
+A sample PSLang script, buildqa.psl , is available in the samples directory. The script can be used to
+load answers into security question  pr ofiles  from a tab-separated text file. It can load answers into
+internal, pr e-de fined,  or user -de fined  question  sets.
+See the Bravura Security Fabric  Remote API guide ( api.pdf ) for more in f ormation  about the
+QSe tQuestionsGet()  and UserAnswerSet() functions.
+External question  sets and authentic ation  plugins
+Bravura Security Fabric  can use external programs to retrieve security question  data, and to validate
+answers in order to authentic a t e  Bravura Security Fabric  users. This allows you to integrate Bravura
+Security Fabric  with human resources databases, or with external authentic ation  systems, such as token
+or smart card systems.
+This chapter shows you how to:
+▪Write a custom program to interface with an external security question  database  (on page 1033) or ▪
+authentic ation  system.
+▪Enable plugins for external question  (on page 1036) sets to look up and store security question  data ▪
+on an external system.
+▪Enable plugins for external authentic ation  (on page 1036) to look up and store security question  data, ▪
+and validate answers, on an external system.
+▪Use shipped plugin odbcqa.exe  (on page 1037), which looks up and stores security question ▪
+in f ormation  on an ODBC DSN c onnection  (Oracle or Micr osoft  SQL Server database).
+▪Use shipped plugin resextqa.exe  (on page 1039) which manages security questions  using SHA1 ▪
+hashing and stores security question  in f ormation  internally.
+▪Write a custom program to validate answers  (on page 1040). ▪
+See alsoAlt ernativ ely ,  you can c on figur e  a custom authentic ation  chain  (on page 841), using the Connector
+package agent module ( agent.pss ) with a suitable connector to perform a user verify or challenge-
+response oper ation.  See Use case: Adding RSA Authentic ation  method to Bravura Security Fabric  (on
+page 878).
+W riting  plugin programs for external security questions  and authentic ation
+Authentic ation  plugins allow Bravura Security Fabric  to interface with any authentic ation  system. Each
+plugin corresponds to a question  set c on figur ed  in the Bravura Security Fabric  system.
+An authentic ation  plugin is a PSLang script or console executable that writes input/output as plain text in
+KVGroup format. For more in f ormation  about PSLang see the PSLang Manual ( pslang.pdf ).
+CGI programs can execute the authentic ation  plugin to perform one of four tasks. The tasks that an
+authentic ation  plugin may be asked to perform depend on how the corresponding question  set is
+c on figur ed.  However, the plugin will only be required to perform one oper ation  each time  it is run.
+Bravura Security Fabric  can issue the following requests to the authentic ation  plugin:
+▪Request questions ▪
+Bravura Security Fabric  receives questions  from the authentic ation  plugin, and displays the questions
+to the user.
+▪Request questions  and answers ▪
+Bravura Security Fabric  reads the questions  and answers from the authentic ation  plugin and internally
+validates the responses from the user.
+The External program provides answers along with questions  option  must be enabled for the question
+set.
+▪Validate answers▪
+The authentic ation  plugin reads the responses provided by the user, and tells Bravura Security Fabric
+whether or not the answers are valid.
+The External program provides answers along with questions  option  must be disabled for the question
+set.
+▪Update questions  and answers ▪
+When users update e xisting  questions  and add new ones, their changes are forwarded to the external
+system.
+The Users allowed to edit questions/ ans w er s  option  must be enabled for the question  set.
+Input / output for authentic ation  plugins
+This section  details input / output requirements for authentic ation  plugins when:
+▪ R equesting  questions ▪
+▪ R equesting  questions  and answers ▪
+▪ V alidating  answers ▪
+▪ E diting  questions  and answers ▪R equesting  questions
+When the input in f ormation  from Bravura Security Fabric  includes a task action  of "questions",  the
+authentic ation  plugin should write a list of questions  back to the CGI program.
+Input:
+     "action" "questions" = {
+       "state" = "0"
+       "userid" = "USER"
+     }
+The "state" can be any integer.
+Output:
+     "action" "questions" = {
+       "returnval" = "RETURNVAL"
+       "qid" "QID1" = {
+         "question" = "QUESTION1"
+         "answer" = "ANSWER1" (optional)
+       }
+       "qid" "QID2" = {
+         "question" = "QUESTION2" (optional)
+         "answer" = "ANSWER2"
+       }
+       ...
+     }
+If the External program provides answers along with questions  box is not checked in the question  set
+c on figur ation  page, the answers will be ignored by the plugin.
+For external pr e-de fined  question  sets, the "qid" values are expected to be the same as in the qdef table.
+R equesting  questions  and answers
+If the External program provides answers along with questions  box is checked in the question  set
+c on figur ation  page, then the authentic ation  plugin must supply answers as well as questions.  The input /
+output will be the same as in the above example, but the "answer" value is required.
+V alidating  answers
+When the input includes a task action  of "validate", the authentic ation  plugin should accept a list of
+answers in the same form as above. The authentic ation  plugin receives an answer for every question  that
+it supplied.
+Input:
+    "action" "validate" = {       "state" = "STATE"
+       "qid" "QID1" = {
+         "answer" = "ANSWER1"
+       }
+       "qid" "QID2" = {
+         "answer" = "ANSWER2"
+       }
+       ...
+     }
+Output:
+    "action" "validate" = {
+      "returnval" = "RETURNVAL"
+       // the following are optional
+       "errmsg" = "ERRMSG"
+       "state" = "STATE"
+       "qid" "QID1" = {
+         "answer" = "ANSWER1"
+       }
+       "qid" "QID2" = {
+         "answer" = "ANSWER2"
+       }
+       ...
+     }
+Once the authentic ation  plugin receives all of the answers, it should check the answers for correctness. A
+"returnval" value of 0 means the answers are valid. Any other "returnval" value means the answers are
+not valid. The "errmsg" tag can be used to indicate the error for a failed oper ation.
+E diting  questions  and answers
+When input includes a task action  of "edit", the authentic ation  plugin should accept both questions  and
+answers.
+Input:
+    "action" "edit" = {
+      "qid" "QID1" = {
+        "question" = "QUESTION1"
+        "answer" = "ANSWER1"
+      }
+      "qid" "QID2" = {
+        "question" = "QUESTION2"
+        "answer" = "ANSWER2"      }
+      ...
+    }
+If both question  and answers are blank, it indicates that the security question  pair was removed. The
+questions  are not provided for pr e-de fined  question  sets.
+Output:
+    "action" "edit" = {
+      "returnval" = "RETURNVAL"
+     }
+A "returnval" value of 0 means the update was successful.
+Enabling plugins for external question  sets
+To c on figur e  a plugin to look up and store security question  data on an external source, but validate the
+responses in Bravura Security Fabric :
+1.Write a custom plugin  (on page 1033), or a c on figur ation  script for a plugin shipped with Bravura 1.
+Security Fabric . There are two shipped plugins:
+▪odbcqa.exe  (on page 1037) looks up and stores security question  in f ormation  on an ODBC DSN ▪
+c onnection.
+▪resextqa.exe  (on page 1039) manages security questions  using SHA1 hashing and stores ▪
+security question  in f ormation  internally.
+2.Ensure the program is located in the plugin directory on the Bravura Security Fabric  server. 2.
+If the program requires a script or c on figur ation  file, ensure that the file is also located in this
+directory.
+3.Add an external question  set (on page 1024). 3.
+4.Enable the authentic ation  method: 4.
+▪Using the Manage the system  > Modules  > Front-end  (PSF) menu: ▪
+▪Set PSF EXT to Security questions  or User selectable . ▪
+▪Ensure that PSFEXT VALUES includes response.pss . ▪
+or
+▪By adding a security question  authentic ation  module to an authentic ation  chain  (on page 841). ▪
+This method provides more fle xible  c on figur ation  options.
+Enabling plugins for external authentic ation
+To enable a plugin to look up and store security question  data, and validate responses on an external
+program:
+1.Write a custom plugin  (on page 1033). 1.
+2.Ensure the program is located in the plugin directory on the Bravura Security Fabric  server. 2.If the program requires a script or c on figur ation  file, ensure that the file is also located in this
+directory.
+3.If required, add an external question  set. 3.
+This is optional  if the external program can validate responses. You can add an external question  set if
+you want users to de fine  questions  or answers to complete their pr ofile.
+4.Enable the authentic ation  method: 4.
+▪Using the Manage the system  > Modules  > Front-end  (PSF) menu: ▪
+▪Set PSF EXT to Security questions  or User selectable . ▪
+You must select User selectable if you did not add a question  set.
+▪Add the plugin or script name to PSFEXT VALUES . ▪
+or
+▪By adding an external authentic ation  module to an authentic ation  chain  (on page 841). ▪
+This method provides more fle xible  c on figur ation  options.
+ODBC (odbcqa)
+The odbcqa external security questions  plugin program retrieves external question  and answer
+in f ormation  from an ODBC c onnection,  including Oracle and Micr osoft  SQL Server.
+To use this program:
+1. Con figur e  an ODBC c onnection  DSN. 1.
+To c on figur e  an ODBC c onnection  DSN:
+1.Open ODBC Data Source Administrator.1.
+From a 32-bit Windows server, go to S tart > Adminis tr ativ e  Tools > Data Sources (ODBC) . From a
+64-bit Windows server, run C:\windows\SysWOW64\odbcad32.exe to open the 32-bit ODBC Data
+Source Administrator.
+2.Select the System DSN  tab. 2.
+3.Click Add to add a new DSN. 3.
+4.Select one of the listed data sources (SQL Server Nativ e  Client, or Oracle client). 4.
+If you selected SQL Server Nativ e  Client:
+a.Provide the Name of the data source , for example EXTQA_DSN, and select a server from the drop- a.
+down list to choose a server to connect to, then click Next .
+b.Select With SQL Server authentic ation  using a login ID and password entered by the user.  Provide b.
+a valid login for the SQL Server you are c onnecting  to, and click Next .
+c.Click Next to use Default database. c.
+d.click Next to use default language. d.
+e.Click Finish to finish  adding the data source. e.
+f.Click Test Data Source  to test if the login provided is valid on the database server and then click OK f.
+to quit the program.If you selected Oracle Client:
+a.Provide a Data Source Name  (any name), Description  (any string), a valid TNS Service Name,  and a a.
+valid User ID on the database server.
+b.Click Test Connection  button  to test if the c onnection  to the server with provided cr edential  is b.
+valid;
+c.Click OK to finish  adding the Data Source. c.
+2. Con figur e  the database server (SQL or Oracle). 2.
+To c on figur e  the database server (SQL or Oracle):
+1.Create two new tables on the server with the following table name and fields: 1.
+Table name fields
+allo w edquestions question
+userqa pr ofileguid/pr ofilename,  question,  answer
+▪ allo w edquestions  stores all questions  that available for the user to authentic a t e. ▪
+▪userqa stores questions  and answers for individual users with pr ofileid/pr ofilename  specified. ▪
+Which column, pr ofileguid  or pr ofilename,  you add to userqa depends on which script you
+copied over.
+2.Insert the questions  into the allo w edquestions  table. 2.
+3.Edit the odbcqa.psl  file to suit your environment 3.
+Con figur e  the odbcqa plugin using a file called odbcqa.psl.  Copy the odbcqa_guid.psl file or
+odbcqa_name.psl file from the samples\ directory to the \<instance>\script\ directory, rename it to
+odbcqa.psl , and edit it to suit your environment.
+▪odbcqa_guid.psl  uses pr ofileguid  to identif y  user. Pr ofileguid  never changes once it is ▪
+assigned to a user.
+▪odbcqa_name.psl  uses pr ofilename  to identif y  user. Pr ofilename  is more user-friendly but it ▪
+does not stay constant. You will have to manually change the entries for any user that has had a
+pr ofilename  change
+The file is written  using the PSLang language. For more in f ormation,  see the PSLang Manual
+(pslang.pdf ).
+Functions
+The following function  must be included in the script:
+▪ g e tQuestions  Retrieve questions  from the database server ▪
+▪ g e tQuestionsAndAns w er s  Retrieve questions  and answers from the database server ▪
+▪ t ar g etid  return the target system ID for the ODBC database ▪
+▪validateAnswer validate that user’s answer is correct compared with the answer in the database. ▪
+.
+4.Add a NULL target system.4.Add a target system with the following c on figur ation:
+▪Target type : NULL target system ▪
+▪Target ID : by default, EXTQATARGET is de fined  in the odbcqa.psl  file ▪
+▪Address : same ID as the system DSN ID; for example, EXTQA_DSN ▪
+▪List accounts : unselected (disabled); ▪
+▪ Cr edentials : The valid database access ID/password provided when cr eating  the system DSN. ▪
+The rest of the settings  can be left as default.
+5. Optionally ,  add an external question  set, and set the External program  to odbcqa 5.
+Add an external question  set with the following c on figur ation:
+1.Click Manage the system > Policies > Question  sets . 1.
+2.Click External questions  (this includes external pr e-de fined  sets). 2.
+3.If Bravura Security Fabric  displays a list of e xisting  question  sets, click Add new… at the bottom  of 3.
+the list.
+4.Set appropriate options  for the new question  set. 4.
+▪Set External program  to odbcqa.exe . ▪
+▪External program provides questions  along with answers checkbox is deselected. ▪
+▪Ask user to answer questions  from this set  checkbox is selected. ▪
+5.Click Add. 5.
+6.Click Add new  at the bottom  of the page 6.
+7.Add questions  to the external question  set. 7.
+.
+6.Enable odbcqa as an authentic ation  method. 6.
+Enable the authentic ation  method:
+▪By adding a security question  authentic ation  module to an authentic ation  chain. ▪
+This method provides more fle xible  c on figur ation  options.
+Or,
+▪By c on figuring  the default authentic ation  menu ( Manage the system > Modules> Front-end (PSF) ): ▪
+▪Set PSF EXT  to Security questions  or User selectable . ▪
+▪Ensure that PSFEXT VALUES  includes response.pss . ▪
+SHA1 hashing (resextqa)
+The resextqa  is a shipped plugin program which is used to manage security questions  and answers by
+using SHA1 hash in external question  sets.
+To use this program, add an external question  set and set the External program  to resextqa.exe:
+1.Click Manage the system > Policies > Question  sets . 1.
+2.Click External questions  (this includes external pr e-de fined  sets). 2.3.If Bravura Security Fabric  displays a list of e xisting  question  sets, click Add new… at the bottom  of the 3.
+list.
+4.Set appropriate options  for the new question  set. 4.
+▪Set External program  to resextqa.exe . ▪
+▪External program provides questions  along with answers checkbox is deselected. ▪
+▪Ask user to answer questions  from this set  checkbox is selected. ▪
+5.Click Add. 5.
+6.Click Add new  at the bottom  of the page 6.
+7.Add questions  to the external question  set. 7.
+Security question  response v alidation
+The security question  response plugin provides additional  v alidation  logic of pr e-de fined  and user -
+de fined  questions  and answers. The plugin is executed when users are updating  their security question
+pr ofile.
+To c on figur e  this type of plugin:
+1.Click Manage the system > Policies > Question  sets . 1.
+2.Select or add a pr e-de fined  or user -de fined  question  set. 2.
+3.Set Plugin for v alidating  answers  to the name of your plugin. 3.
+4.Click Update 4.
+There is no shipped plugin in use with this plugin point. See more in f ormation  on writing  a custom plugin
+Requirements
+See W riting  plugins  for general requirements.
+Input
+The input KVGroup to the plugin is in the format:
+"qarule" "" = {
+   "qsid" = "<questionsetid>"
+   "sessionid" = "<sessionid>"
+   "<questionid_assigned_by_instance>" "" = {
+     "answer" = "<answer_to_test>"
+     "question" = "<human-readable question>"
+   }
+ }
+Where <questionsetid>  is the question  set ID, <answer_to_test> is the answer provided by the user, and
+<human-readable question>  is the question  being answered.
+Output

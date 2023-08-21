@@ -1,0 +1,296 @@
+A resource, for the purposes of role enforcement, is an account on a target system, a managed group, or
+a role. A user has a surplus violation  when they have access privilege to a resource that is not part of a
+role assigned to them. A surplus violation  can be resolved aut omatic ally  by:
+▪Removing the resource from the user’s pr ofile ▪
+▪ R equesting  an e x ception  to the enforcement rule ▪
+A user has a deficit  violation  when they do not have access privileges to a resource when they have a role
+that requires it. A role is considered in de ficit  if one or more role members are not privileged to the user.
+A role by itself cannot be a de ficit.  A de ficit  violation  can be resolved aut omatic ally  by:
+▪Adding a missing resource to the user’s pr ofile ▪
+▪ R equesting  an e x ception  to the enforcement rule ▪
+You can set the default action  to take for enforced users on a system-wide basis, and override the action
+for a role, group, or target system.
+Role enforcement in request w orkflo w
+If an entitlemen t  is added to a role that a user already has, the user can request the missing entitlemen t
+before the default action  is taken during auto discovery .
+When end users request entitlemen ts  they are notified  if the recipient is in violation  of an enforcement
+rule. They can use the request wizard to r ectif y  the violation  by the methods listed above.
+Implementing  role enforcement
+Before implementing  role enforcement, set up your, provisioning environment  (on page 2340); that is,
+add target systems and import users, c on figur e  email notific ation  and authentic ation.
+Your implemen t ation  of role enforcement may be based on a number of scenarios; for example, you
+could:
+▪Enable enforcement for roles, then incrementally add users to the enforcement jurisdiction.  You can ▪
+also c on figur e  e x ceptions  for individual resources.
+▪Add all users to the enforcement jurisdiction,  then incrementally apply enforcement rules to roles. ▪
+▪Add all users to the enforcement jurisdiction,  then incrementally apply enforcement rules to ▪
+individual resources. You can c on figur e  roles to inherit enforcement rules from member resources.
+To implement role enforcement, you must:
+▪Enable the role enforcement engine and set global role enforcement options  (on page 2412). ▪
+This includes default actions,  the w orkflo w  requester, and event triggers.
+▪Add roles  (on page 556). ▪
+▪ Con figur e  roles you want to enforce. ▪
+When a role is enforced, the rbacenforce  program lists users who belong to the role, and who do
+not have all required resources, including those within sub-roles. Optional  resources are not enforced.
+For users who are in the enforcement jurisdiction,  rbacenforce  r ectifies  a de ficit  violation,  either
+by adding the missing privilege, or r equesting  an e x ception.  You can c on figur e  roles to inherit thede ficit  action  from entitlemen ts,  in which case you must also enable and c on figur e  enforcement for
+each entitlemen t  that you want to have enforced.
+▪ Con figur e  target systems  (on page 527) and groups  (on page 585) you want to enforce. ▪
+When a target system or managed group is enforced, the rbacenforce  program lists users who do,
+and do not, have an account or direct membership.
+For users who are in the enforcement jurisdiction,  and belong to a role that includes the resource,
+rbacenforce r ectifies  a de ficit  violation,  either by adding the missing privilege, or r equesting  an
+e x ception.  This action  can be adopted from the resource’s parent role, or you can set it explicitly. You
+can also c on figur e  resources to inherit the de ficit  action  from the parent role, in which case you must
+also enable and c on figur e  enforcement for those roles.
+For users who are in the enforcement jurisdiction,  and do not belong to a role that includes the
+resource, rbacenforce r ectifies  a surplus violation,  either by removing the privilege, or r equesting
+an e x ception.
+▪Determine which users should be in the enforcement jurisdiction. ▪
+This is determined by the RBAC enforcement (rbacenforce) pr ofile  and request attribut e.  When users
+are fir s t loaded by auto discovery , the attribut e  is not set. When a new user is created or a access
+change request is issued for an e xisting  user, the attribut e  is set to true by default.
+CAUTION: By default, users can request a change to this attribut e,  to take a recipient
+out of enforcement jurisdiction.  Ensure that this change must be
+authorized, or validated using the attribut e  v alidation  plugin, or use the
+attribut e’ s  access controls to restrict changes.
+Setting  global role enforcement options
+To enable and c on figur e  RBAC default behavior:
+1.Click Manage the system  > Resources > Options 1.
+2.In the RBAC AUTO PROPAGATE REQUESTER field,  type the pr ofile  ID of the requester to use when 2.
+aut omatic ally  issuing enforcement violation  requests.
+It is recommended that you create a product administrator with specific  privileges for this.
+3.Select RBAC ENFORCEMENT ENABLED to enable role enforcement. 3.
+Enforcement rules for resources will not take e ff ect  until  you do this.
+4.If you want to change the default behavior of rbacenforce , set options  listed in Table Role based 4.
+access control options  (on page 2412) as required.
+5.If you want to trigger external programs when RBAC events occur, c on figur e  event options  listed in 5.
+Table Role-based access control events that launch interface programs  (on page 1531), Role-based
+access control events that launch interface programs  (on page 2413).
+6.Click Update at the bottom  of the form. 6.
+Role based access control optionsOption Description
+RBAC DEFICIT DEFAULT ACTION Select the default action  for resolving situations  where a user does not
+have enough entitlemen ts:
+▪Add resource if the user should aut omatic ally  be assigned missing ▪
+entitlemen ts.
+▪Request e x ception  if the user may be allowed an e x ception  to the rule. ▪
+RBAC ENFORCEMENT LIMIT CHECK To limit the load on the system, type the maximum number of users that
+the rbacenforce program should list during <UPDATE>. The default is
+1000.
+RBAC ENFORCEMENT LIMIT LIST To limit the load on the system, type the maximum number of violations
+that the rbacenforce program should list during auto discovery. The
+default is 100.
+RBAC ENFORCEMENT NIGHTLY LIST The rbacenforce program runs during auto discovery. Disable this option
+if you want to run the program manually.
+RBAC ENFORCEMENT NIGHTLY
+SUBMITWhen rbacenforce finds  violations  during auto discovery, it aut omatic ally
+submits enforcements to the Bravura Security Fabric  request w orkflo w
+system. Disable this option  if you want to submit requests manually.
+RBAC SURPLUS DEFAULT ACTION Select the default action  for resolving situations  where a user has too
+many access privileges:
+▪Remove resource if the surplus entitlemen t  should be aut omatic ally ▪
+removed from the user.
+▪Request e x ception  if the user may be allowed an e x ception  to the rule. ▪
+Role-based access control events that launch interface programs
+The following RBAC options  apply to all modules and can be accessed from Manage the system  >
+Maintenance > System variables  or Manage the system > Resources > Options :
+Option Description
+RBAC ENFORCEMENT LIST BEGIN The listing  of role enforcement violations  begins.
+RBAC ENFORCEMENT LIST END The listing  of role enforcement violations  ends.
+RBAC ENFORCEMENT SUBMIT The role enforcement requests are submitted  to request w orkflo w .
+Time-based role assignments
+Time-based role assignments use the concept of a role validity window. The role assignment status is
+considered "activ e"  or "inactiv e"  determined by the start and end dates de fined  in the role validity
+window. Based on the role assignment status, the RBAC engine will aut omatic ally  adjust the user's
+entitlemen ts.
+The following elements are used with time-based  role assignments:
+▪START_TIME The resource attribut e  that de fines  the start date for a role assignment. ▪
+▪END_TIME The resource attribut e  that de fines  the end date for a role assignment. ▪▪ROLE_VALIDITY The resource attribut e  group that includes START_TIME and END_TIME resource ▪
+attribut es.
+The role validity window determines the role assignment's status. The role assignment is considered
+"activ e"  during the dates specified,  otherwise, it is considered "inactiv e".
+When the start and end dates are not defined,  the role assignment is considered "active"  and the
+individual entitlemen ts  are applied immediately.
+▪IGNORE_VALIDITY_WINDOW  When enabled the role membership validity window will be ignored. - ▪
+This attribut e  allows for a manual override when a validity window is set by aut omation,  based off
+some SoR attribut es
+▪RBACENFORCE When this boolean attribut e  is set to true, the user is included in the role enforcement ▪
+jurisdiction.  When a new user is created, or an access change request is issued for an e xisting  user, the
+default value is true.
+It is included in the RBACENFORCEATTR  group.
+▪RBACENFORCEATTR The attribut e  group used to place users in role-enforcement jurisdiction ▪
+Time-based role assignments work with the following components:
+Components Purpose
+View and update pr ofile  (IDR) module Allows users to request changes to pr ofile  attribut es  or
+group membership.
+W orkflo w  Manager Service Handles requests too add or remove resources. The
+requests can be auto-approved or reviewed by
+authorizers.
+rbacenforce The rbacenforce program lists role-based access
+control (RBAC) violations  and issues w orkflo w  requests
+in order to correct variances.
+How time-based  role assignments work
+▪During PDR-initia t ed  requests, the role assignment itself takes place immediately, however the ▪
+individual entitlemen t  assignments based on the roles de finition  will only be added during the validity
+window.
+▪When a particular  role assignment is considered activ e,  rbacenforce  applies entitlemen t ▪
+assignment oper ations.
+▪When a role assignment is considered inactiv e,  rbacenforce  removes the entitlemen ts  from the ▪
+user's pr ofile.  The user retains the role membership itself (in inactiv e  status).
+Typically time-based  role assignments proceed in the following way:  
+User requests a change in role membership 
+1.The user submits a request to update their role membership.1.
+The request includes a start and end date.
+2.The role assignment itself takes place immediately.2.3.When the role assignment becomes "activ e"  and rbacenforce is run Bravura Security Fabric 3.
+aut omatic ally  submits additional  requests to add the resource entitlemen ts.
+4.When the role assignment becomes "inactiv e"  and rbacenforce is run, Bravura Security Fabric : 4.
+aut omatic ally  removes the resource entitlemen ts.
+Example: Adding a role with a start time
+In this example the role membership will have a start time  de fined.  When the request to change role
+membership is submitted,  the user will not get the role entitlemen t  immediately. The role entitlemen t  is
+handled by the nightly update. When the nightly update is run and the validity window is open, the
+entitlemen ts  will be changed in accordance with the new role.
+Requirements
+▪The CONTRACTOR role has the group "All users at ABC Inc" set to required▪
+▪The requester's pr ofile  has Role based access control enforcement set to "True". ▪
+See Example: Cr eating  a new user, adding a role  (on page 1320) for an example of how to set RBAC on
+pr ofiles.
+Enable RBAC enforcement on the entitlemen ts
+1.Log in to the web app as superuser1.
+2.Click to Manage the system > Resources > Options 2.
+3.Set the following:3.
+▪RBAC ENFORCEMENT ENABLED  Enabled ▪
+▪RBAC DEFICIT DEFAULT ACTION  Add resource ▪
+▪RBAC SURPLUS DEFAULT ACTION  Remove resource ▪
+▪RBAC AUTO PROPAGATE REQUESTER  a user ▪
+4.Click Manage the system > Resources > Groups 4.
+5.Select the AD target5.
+6.Search for and select All users at ABC Inc. 6.
+7.Click the Role enforcement  tab 7.
+8.Select Enabled 8.
+9.Click Update 9.
+Configur e  the PDR
+1.Manage the system > W orkflo w  > Pr e-de fined  requests 1.
+2.Search for and select the _UPDATE_ROLES_ PDR2.
+3.Click the Attribut es  tab 3.
+4.Click Select 4.
+5.Select the ROLE_VALIDITY attribut e  group 5.
+6.Click Select 6.Submit a request for a change in role membership with a start time
+1.Log in to the web app as a requester1.
+2.Click View and update pr ofile 2.
+3.Select the Change role membership PDR 3.
+4.Select the "Basic entitlemen ts  for all contractors" role and specify the current date as the Start Date 4.
+5.Click Submit 5.
+Check the request does not contain a role entitlemen t  assignment oper ation
+1.From the home page click  Requests 1.2.Click Recent  from the left panel 2.
+3.Select the latest request3.
+4.Click request  in the details panel 4.
+The request details page opens
+The request does not contain role entitlemen t  assignment oper ation
+Check the PSA role user page
+1.Log in to the web app as superuser1.
+2.Click Manage the system >Resources > Roles 2.
+3.Select the CONTRACTOR role3.
+4.Click the Users  tab 4.
+The requester has been added with a Start timeRun nightly update
+1.Run auto discovery1.
+By default, Bravura Security Fabric  runs auto discovery  every night at 1:30 am. Bravura Security Fabric
+aut omatic ally  schedules  (on page 2702) this "psupdate" job when you add your fir s t target system.
+To manually start auto discovery , from the Manage the system  (PSA) module, click Manage the system >
+Maintenance >  Auto discovery > Execute auto discovery , then click Continue . Bravura Security Fabric
+displays the Auto discovery  status page that indicates whether auto discovery  is running. Click Refresh
+to update the page.
+Each time  it is run, auto discovery  attemp ts  to verify that it is not already running on another server.
+Never run psupdate  on more than one replicated Bravura Security Fabric server at the same time.
+To run specific  tasks during auto discovery :
+1.Clear the All checkbox for Selected target systems . 1.
+2.Type, or search for, the IDs of the target systems you want to include.2.
+3.Select the tasks you want to include:3.
+Task Equivalent command
+List data from specified  target
+systems.psupdate.exe -target <target ID> -list
+Load data from specified  target
+systems into the databasepsupdate.exe -target <target ID> -
+loaddb
+You can also run auto discovery  for specific  targets on the target system in f ormation  page  (on page 489)
+or by na vig ating  to Manage the system > Resources > Target systems > <type> , selecting  targets and
+clicking Run discovery .
+Alt ernativ ely ,  you can start auto discovery  from the command line by running the psupdate  program.
+ 
+See psupdateThe psupdate program initia t es  and controls the auto discovery process. It is responsible for calling
+a series of programs and PSLang scripts, which in turn, control e x ecution  of each auto discovery task.
+These tasks include:
+▪Refreshing proxy servers▪
+▪ Listing  in f ormation  from managed systems ▪
+▪Evaluate the import rules on discovered systems and accounts and assign them to managed system▪
+policies
+▪Monitoring list file size ▪
+▪ Con figuring  listed computer objects as Bravura Privilege resources ▪
+▪ Updating  the Bravura Security Fabric database ▪
+▪ De t ecting  out-of-band changes ▪
+▪Cleaning up the database▪
+▪Checking inventory levels▪
+▪Loading user class cache▪
+▪ Submitting  aut omatic  assignment requests ▪
+▪Synchronize server files and registry keys ▪
+▪ Notif ying  the Bravura Security Fabric administrator of errors or warnings ▪
+▪ Cr eating  the default scheduled task to run psupdate ▪
+You can also run psupdate to update a single user.
+Never run psupdate on more than one replicated Bravura Security Fabric server at the same time
+In a replic ation  environment, the sending node creates additional  queue files in the <ins t anc e>/db/
+replic ation  directory. These are used to store the data to be sent to all replic ation  nodes. Once this
+data has been replicated to the nodes, these files are removed.
+Usage
+psupdate.exe
+   [-account <accountID>]
+   [-alltasks]
+   [-checkinv]
+   [-enforce_list <enforcement-list>]
+   [-enforce_submit <enforcement-list>]
+   [-forcerun]
+   [-import]
+   [-importlws]
+   [-list]
+   [-list_reset_threshold]
+   [-loaddb]
+   [-no-plugins]
+   [-profile <profileID>]   [-resattr <attrID>]
+   [-resattrvalue <attrVal>]
+   [-schedule]
+   [-status]
+   [-target <targetID>]
+   [-targetdiscovered]
+   [-targetmanual]
+   [-updproxy]
+   [-v|--version]
+Argument Description
+-updproxy Refresh proxy servers.
+-list Only list login IDs and supported in f ormation  from
+specified  target systems. At least one target must be
+specified.
+-list_reset_threshold Resets the recorded object count before listing.  This
+disables listthr esholdma xr elativ echang e  for that specific
+list.
+-loaddb Only load data from specified  target systems based on
+the e xisting  list files to the database. At least one target
+must be specified.
+-checkinv Check inventory levels.
+- alltasks Complete all tasks that are done during a full update
+even though specific  target systems are being listed
+and/or loaded.
+-import Evaluate all discovered objects from target systems
+against push mode import rules where they apply.
+Applies to the discovered computers from the target, and
+the subsequent discovered accounts from discovered
+systems that get managed.
+-importlws Evaluate all discovered objects from target systems
+against local service mode import rules where they apply.
+Applies to the local service mode discovered computers,
+and the subsequent discovered accounts from discovered
+systems that get managed.
+-no-plugins Run psupdate without e x ecuting  plugin scripts  (on
+page 2742) (*_pre.cmd, *_post.cmd).
+-enforce_list <enforcement-list> Run the rbacenforce program to list role
+enforcement violations.
+-enforce_submit <enforcement-submit> Run the rbacenforce program to submit requests
+role enforcement violations.

@@ -1,0 +1,254 @@
+Argument Description
+-pr ofile  <pr ofile  ID> Run psupdate for a single user de fined  by a Bravura
+Security Fabric pr ofile  ID. You can use this with the -target
+option  zero or more times  to specify the targets on which
+psupdate will update the accounts. When used without
+the -target option,  psupdate will update the accounts
+on all target systems.
+-account <pr ofile  ID> Run psupdate for a single user de fined  by an account
+ID on a single specified  target system. You must use the -
+target option  to specify the target system.
+-target <target ID> Specify a target system on which psupdate will list a
+single user. This option  must be used with the -pr ofile,  -
+account, -list or -loaddb option.
+-targetdiscovered Specify all discovered target systems.
+-targetmanual Specify all target systems that are manually de fined.
+-forcerun Force psupdate to have it c ontinue  even if it looks like
+psupdate is already running or scheduled to run on some
+other node.
+-r esattr Select target systems based on a specified  resource
+attribut e  ID. This option  must be used with the -
+r esattr v alue  and -target option.
+-r esattr v alue Select target systems that match a resource attribut e
+value. This option  must be used with the -r esattr  and -
+target option.
+-schedule Creates the default scheduled task to run psupdate if
+it does not already exist. No other tasks are run.Argument Description
+-status Returns the current status of the auto discovery process:
+▪No c on figur ation  changes can be made until  it is ▪
+completed %RUNNINGACTIONS%
+▪Running connector for target [%TARGETID%] (elapsed▪
+time:  %ELAPSEDTIME%)
+▪ Listing  files on proxy [%PROXYSERVER%] (elapsed ▪
+time:  %ELAPSEDTIME%)
+▪Loading staging table [%STAGETABLE%] (elapsed time: ▪
+%ELAPSEDTIME%)
+▪Running plug-in [%PLUGIN%] (elapsed time: ▪
+%ELAPSEDTIME%)
+▪Running stored procedure [%STOREDPROC%] (elapsed▪
+time:  %ELAPSEDTIME%)
+▪ R eplic ating  file [%REPLFILE%] to proxy ▪
+[%PROXYSERVER%] (elapsed time:  %ELAPSEDTIME%)
+▪ Updating  database (%ACTION%) ▪
+▪ Listing  target (%ACTION%) ▪
+▪ Updating  proxy (%ACTION%) ▪
+-v — --version Display version in f ormation.
+Examples
+1.To run auto discovery, as it would be run during the scheduled psupdate job, type:1.
+psupdate.exe
+2.To determine the current status of the auto discovery process, type:2.
+psupdate.exe -status
+3.To list in f ormation  from all manually added target systems, type: 3.
+psupdate.exe -targetmanual -list
+4.To list in f ormation  from the target system ADDOM, type: 4.
+psupdate.exe -target ADDOM -list
+5.To list in f ormation  without running plugin scripts, type: 5.
+psupdate.exe -targetmanual -targetdiscovered -list -no-plugins
+6.To list, load, and evaluate in f ormation  from all discovered target systems, type: 6.
+psupdate.exe -targetdiscovered -list -loaddb -import
+7.To update accounts for a single pr ofile  on all target systems, type: 7.
+psupdate.exe -profile <profile ID>
+8.To only list from specified  target systems that have "New York" as a value for resource attribut e 8.
+"Loc ation".
+psupdate.exe -list -resattr Location -resattrvalue "New York" -
+target TARGET1  -target TARGET2
+for command-line options  and examples.2.Log in to the web app as the requester2.
+3.Click Groups 3.
+4.Click My memberships  from the left panel 4.
+The All users at ABC Inc. group is now assigned to the requester4 Automated User Adminis tr ation
+You can use Bravura Security Fabric  to implement an automated user adminis tr ation  system, or a rules-
+based provisioning system. Bravura Security Fabric  can monitor an e xisting  system of record, such as a
+human resources system or corporate directory, track changes, and then aut omatic ally:
+▪Propagate changes to target systems by:▪
+▪ Cr eating  users ▪
+▪Changing user attribut es ▪
+▪Changing user group membership▪
+▪Changing user role membership▪
+▪ Deleting  e xisting  users ▪
+▪Submit access change requests via Bravura Security Fabric ’s authoriz ation  w orkflo w  system. ▪
+Authorizers are notified  by email, then use Bravura Security Fabric  to approve, modify, or deny the
+request. If approved, Bravura Security Fabric  aut omatic ally  applies the changes.
+Aut omation  occurs during auto discovery  and can be controlled by a script.
+Aut omation  is triggered based on tracking changes to user pr ofiles,  user accounts, user group
+membership, account or pr ofile  and request attribut es.  Tracked changes are stored in diff sets. By default
+the latest diff set is used, although older diff sets are retained and can be used as an alt ernativ e.
+Changes detected by Bravura Security Fabric  are passed through a data filt er ,  which removes users that
+are outside Bravura Security Fabric ’s scope. For instance, in a scenario where Bravura Security Fabric
+manages all users in one country, but the HR system is global, Bravura Security Fabric  would filt er  out
+changes to users from other countries.
+Automated user adminis tr ation  aggregates all changes to a given user and executes business logic, with
+the set of changes as input. This is best illustrated with some examples:
+Detected change Actions Net result
+New user appears in an HR
+applic ation.Look up appropriate role based on
+the user’s loc ation  and job code.
+Submit a change request to the
+Bravura Security Fabric w orkflo w
+engine, to create a new user, with the
+HR-provided identity  attribut es  and
+with resources specified  by the role.Auto-provisioning.Detected change Actions Net result
+New phone number detected on
+white pages directory.White pages has a higher priority for
+the phone number attribut e  than
+other systems.
+Submit a change request to the
+Bravura Security Fabric w orkflo w
+engine, to change the phone number
+in the user’s pr ofile.
+Once approved (most likely
+aut omatic ally),  the new phone
+number is mapped to other login IDs
+belonging to the user, and connectors
+are run to update this in f ormation  on
+other systems.Identity  s ynchr oniz ation.
+Change to t ermination  date is
+detected on the HR system.Using the identity  s ynchr oniz ation
+mechanism described above, set this
+date on the user’s pr ofile.
+A separate batch process periodically
+identifies  users with today or earlier
+t ermination  dates, and submits
+requests to disable all accounts for
+every matching userAutomated t ermination.
+User disappears from system of
+record (HR).Look up all of a user’s login IDs.
+Submit a “disable all accounts”
+change request to the Bravura
+Security Fabric  w orkflo w  engine.
+Given the source of the request
+(employee gone from HR), this type
+of change may be auto-approved.Automated t ermination  (2nd
+method).Detected change Actions Net result
+User was added to Administrators
+group on Activ e  Directory domain.Since the change was detected on AD,
+it follows that it was not initia t ed  by
+Bravura Security Fabric .
+Submit two change requests to the
+w orkflo w  engine:
+▪Remove the user from the▪
+Administrators group (this is an
+auto-approved change).
+▪Add the user from the▪
+Administrators group (requires
+approval).
+Submit a security alarm tick e t  to
+the help desk system.Detect unauthorized privilege
+esc alation.
+How automated user adminis tr ation  works
+Bravura Security Fabric  uses iddiscover  and idtrack  to communicate with the W orkflo w  Manager
+Service to propagate changes from an authorit ativ e  target system to other target systems.
+1.The iddiscover program compares the contents of new data, extracted from target systems into 1.
+SQLite .db files,  with the data in the Bravura Security Fabric  database. Depending on which tracking
+options  are turned on, the program creates a diff set with a globally unique identifier  (GUID) and a
+time  stamp.
+2.The idtrack program uses the diff sets to track changes to users, user attribut es,  and user group 2.
+membership on target systems.
+3.The idtrack program can then aut omatic ally  propagate user attribut e  changes to any managed 3.
+system.
+The idtrack program can generate a work file that only describes changes to user attribut es,  for
+t esting  or logging purposes. You can use this option  instead of, or in addition  to, e x ecuting  attribut e
+changes.
+4.An optional  idtrack.psl script can use any tracked change to perform any provisioning oper ation 4.
+supported by the API. The script is required when pr opag ating  user account and user group
+membership changes.
+Setting  up automated user adminis tr ation
+To set up automated user adminis tr ation:
+1.Determine what you want to track.1.
+At a minimum, track changes to user attribut es  either at the target system or pr ofile  and request
+attribut e  level. User attribut e  tracking is the only change that can be aut omatic ally  propagated
+without the use of a script.
+Track at least one change to:▪User accounts on target systems  (on page 480) ▪
+▪Account attribut es  (on page 566) ▪
+▪Group membership  (on page 585) ▪
+In addition  to a change tracking option,  managed groups also include an option  to detect out-of-
+band changes and aut omatic ally  submit requests to undo or redo them using Bravura Security
+Fabric  w orkflo w .
+You can track all managed groups by default by enabling the Manage the system > Resources >
+Options  > AUTO TRACK MGROUP setting.
+▪ Pr ofile  and request attribut es  (on page 1930) ▪
+2.Determine what changes you want to make to subordinate systems, attribut es,  or groups. 2.
+3.Set pr ofile  and request attribut e  logic  (on page 1302) settings  for aut omatic  pr opag ation  as required. 3.
+4.If required, write an idtrack.psl script that tells idtrack  (on page 2431)  which automated 4.
+provisioning tasks must be performed.
+The script is required to automate provisioning of changes to accounts, group memberships, or
+account attribut es.  It is optional  when tracking pr ofile  and request attribut es.
+It is not necessary to schedule idtrack as it is always executed during auto discovery .
+5.Set the KEEP DIFF DAYS variable in Maintenance > Options  if you want to limit the number of diff sets 5.
+stored in the database. By default Bravura Security Fabric  keeps them forever.
+6.Set up s t atic  authoriz ation  for aut omatic  or scripted pr opag ation  by assigning authorizers at the target 6.
+system level, or determine authoriz ation  dynamically with a plugin program.
+7. Con figur e  Automated w orkflo w  request options  (on page 2443). 7.
+Use cases
+This section  provides use cases to illustrate how automated user adminis tr ation  can be implemented
+with Bravura Identity .
+HR Database
+Existing  process 
+Case-1 Company currently uses a manual procedure for login ID additions  and changes. When a new
+employee is hired, Human Resource personnel enter data into a P eopleSoft  database. The employee’s
+manager must then ask individual security administrators to set up access on the following systems:
+▪Windows 2008 Activ e  Directory ▪
+▪Lotus Notes ID files ▪
+▪Lotus Notes Domino/HTTP▪
+▪Siebel CRM▪
+▪Oracle database applic ation ▪
+Requirements Case-1 Company needs to c ontinue  to use the e xisting  hiring and data input processes, and enhance
+them by pr opag ating  user in f ormation  and aut omating  the cr eation  of login IDs on target systems.  
+Solution  design 
+Bravura Identity  polls the e xisting  HR system (P eopleSoft)  for changes and automates standard
+adminis tr ation  tasks such as the cr eation  of login IDs.
+Case-1 will use its e xisting  process for input, r outing  and approval. New access request data will be
+entered into the P eopleSoft  applic ation,  including:
+▪The systems to which users should have access▪
+▪Details on the attribut es  required by other systems to create the new accounts ▪
+A process is implemented to extract data from P eopleSoft  and propagate it to target systems.
+The new process is as follows:
+1.Human Resource personnel enter data for new access request into P eopleSoft. 1.
+2.Bravura Identity  periodically checks the database for new access requests, and aut omatic ally  creates 2.
+accounts on systems managed by Bravura Identity .
+This process is illustrated below:
+Case study 1: Hiring processAccount s ynchr oniz ation
+Existing  process 
+Case-2 Company currently has manual processes for cr eating  accounts on Activ e  Directory and Solaris 8
+systems. The two systems use two diff er en t  c on v entions  for cr eating  login IDs.
+Requirements 
+Case-2 Company wants to synchronize user login IDs and passwords in Case-2’s Activ e  Directory and
+Solaris 8 environments. To ease the s ynchr oniz ation  for e xisting  users and new users, Case-2 requires a
+tool that can:
+▪Do a bulk s ynchr oniz ation  for users that currently exist in Activ e  Directory, but not Solaris 8. ▪
+▪Monitor new account cr eation  in Activ e  Directory and create an account in the Solaris 8 environment ▪
+with a synchronized ID on an on-going basis.
+▪Synchronize the users’ passwords after  the accounts have been provisioned. ▪
+Case-2 wants to combine the Activ e  Directory display name and phone number to create users’ full
+names on Solaris 8.  
+Solution  design 
+To resolve the requirements as described above, the company will:
+1.Manually rename e xisting  login IDs on Activ e  Directory to be consistent with the login ID naming 1.
+standard on Solaris.
+2. Con figur e  Bravura Identity  to target: 2.
+▪Windows 2008 Activ e  Directory - 1 domain; specific  OU’s only. ▪
+▪Solaris 8 - using standard PAM module “pam_unix_so.1”; in a non-NIS/NIS+ environment.▪
+3. Con figur e  Bravura Identity  to do a one-time  bulk cr eation  of accounts that exist on Activ e  Directory, 3.
+but not on Solaris.
+4. Con figur e  Bravura Identity  to monitor Activ e  Directory for new accounts on a c on figur able  schedule: 4.
+▪If a new login ID is detected, then the user’s in f ormation  is propagated, and a new account is ▪
+created in the Solaris environment.
+▪The account created on Solaris is initially  assigned a random password. ▪
+▪The Solaris user’s full name is formed from the Activ e  Directory display name and phone number ▪
+(for example: John Doe 555-555-1212).
+5.Inform users who have a new account on Solaris that they must change their password in Activ e 5.
+Directory before using their new Solaris account.
+6.Synchronize passwords on Activ e  Directory and Solaris using Bravura Pass ’s transparent password 6.
+s ynchr oniz ation  technology.
+Users now have a synchronized login ID and password on Activ e  Directory and Solaris. The process is
+illustrated below.
+Use case 2: Account s ynchr oniz ation  process

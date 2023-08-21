@@ -1,0 +1,323 @@
+Criteria Description
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: The report output only includes requests that were
+submitted  between the Earliest request submit date  and
+Latest request submit date .
+Use within the last N days : The report output only
+includes requests that were submitted  within the
+specified  last number of days.
+Use N or more days ago : The report output only includes
+requests that were submitted  more than the specified
+number of days ago.
+Minimum levels of deleg ation Specify a value for the minimum level of deleg ation/
+esc alation  to be included in the report. For example: a
+value of 1 includes all levels, a value of 3 only includes
+levels 3 and up. Deleg ation  levels indicate how many
+times  something has been delegated. For example, userA
+deleg ating  to userB, and then userB deleg ating  to userC
+is a level 2 deleg ation.
+Summarize report Select this checkbox to summarize the report details.
+Request popularity
+Purpose:  Analysis of the popularity of pr e-de fined  request types, managed resources, oper ations  and
+w orkflo w  participan ts.  Popularity is calculated by c ounting  and grouping requests by specified  criteria.
+Executable : requestpopularity
+Search Criteria:
+Criteria Description
+R eporting  mode Select a r eporting  mode:
+▪ Pr e-de fined  request types ▪
+▪ Oper ations▪
+▪Recipients pr ofiles ▪
+▪Requesters▪
+▪Authorizers▪
+▪Implementers▪
+▪Reviewers▪
+▪Target systems▪
+▪Groups▪Criteria Description
+▪Roles▪
+Resource type Select a resource type:
+▪Target system▪
+▪Template account▪
+▪Role▪
+▪Managed group▪
+▪Approved e x ception  to segr eg ation  of duties  rules ▪
+This option  is only displayed if R eporting  mode  is set
+to Oper ations .
+Target system ID Search for or type a target system ID. This option  is only
+displayed if Resource typ e is set to either Target system,
+Template account , or Managed group .
+Managed groups Search for or type a managed group ID. This option  is
+only displayed if Resource type  is set to Managed group ,
+or R eporting  Mode  is set to Groups .
+Submit date Choose one of the following options:
+Date not required:  This is the default setting.  Requests
+are reported regardless of when they were submitted.
+Use r elativ e  date :
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.Criteria Description
+Option Description
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+The report output only includes requests that were
+submitted  within the selected r elativ e  date range.
+Use selected date :
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+The report output only includes requests that were
+submitted  between the Earliest request submit date  and
+Latest request submit date .
+Submitted  during the last N days : The report output only
+includes requests that were submitted  within the
+specified  previous number of days.Criteria Description
+Minimum frequency Specify a value for the minimum number of times  that a
+specified  request value must be counted in order for it to
+be included in the report output. The minimum value is
+1; the default value is 2.
+Requests by status
+Purpose : Analysis of requests that have been processed by the Bravura Security Fabric .
+Executable:  requestsByStatus
+Search Criteria:
+Criteria Description
+Pr e-de fined  request ID Select one or more pr e-de fined  request IDs from the
+drop-down list to display in f ormation  related to specific
+pr e-de fined  requests in the report output.
+Check entry date Choose one of the following options:
+Date not required : This is the default setting.  Requests
+are reported regardless of when they were submitted.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.Criteria Description
+Option Description
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: The report output only includes requests that were
+submitted  within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: The report output only includes requests that were
+submitted  between the Earliest request submit date  and
+Latest request submit date .
+Use within the last N days:  The report output only
+includes requests that were submitted  within the
+specified  number of days.
+Use N or more days agoCriteria Description
+to specify the number of days ago for the report to
+begin searching from
+: The report output only includes requests that were
+submitted  beyond the specified  number of days.
+Requester ID Type a comma-and-space-delimited list of pr ofile  IDs that
+match the requesters for whom you want to generate the
+report. Alt ernativ ely ,  you can search for one or more
+requester pr ofile  IDs.
+Recipient ID Type a comma-and-space-delimited list of pr ofile  IDs that
+match the requesters for whom you want to generate the
+report. Alt ernativ ely ,  you can search for one or more
+requester pr ofile  IDs.
+Request status Select one or more requests statuses:
+▪ Calculating  authorizers ▪
+▪Needs authoriz ation ▪
+▪Approved▪
+▪Denied▪
+▪Canceled▪
+▪Unapproved▪
+▪Approved, performing requested oper ations ▪
+▪Processed▪
+▪On hold pending administrator in t er v ention ▪
+▪Request unposted▪
+Oper ation  result ▪Pending fulfilmen t ▪
+▪Abort▪
+▪Success▪
+▪ W aiting  to process request ▪
+▪Resource required due to role assignment▪
+▪Fail▪
+▪Processed▪
+Resources reports
+Inventory
+Purpose : Provides details about items in the inventory.
+Executable : inventory
+Search Criteria :Criteria Description
+Item type Select one or more item types to include in the report. All
+types are included by default.
+Loc ation Select one or more loc ations  to include in the report. All
+loc ations  are included by default.
+Item ID Type the ID of the item you want in the report.
+State Select a state to only show items that are in the specified
+state.
+Request ID Type a request ID to list the items that are associated
+with the request.
+Assigned user ID Type a user’s pr ofile  ID to list all the items that are
+assigned to the user. Alt ernativ ely ,  you can search for one
+or more pr ofile  IDs.
+Assigned user name Type a user name to list all the items that are assigned to
+the user.
+Authorizer ID Type an authorizer ID to list all the items for which the
+user is responsible (inventory manager). Alt ernativ ely ,
+you can search for one or more pr ofile  IDs.
+Summarize report Select this checkbox to summarize the report details.
+In this mode, the report output includes the total
+number of items and authorizers (inventory managers)
+for each type, loc ation,  and state c ombination.
+If you do not specify any search criteria, the report output includes all items in the inventory.
+Object types
+Purpose : Lists inventory types.
+Executable : inventorytypes
+Search Criteria:
+Criteria Description
+Item type ID Select one or more item types to include in the report. All
+types are included by default.
+Item type description Type the description  of the item type to include in the
+report.
+If you do not specify any search criteria, the report output includes all item types.
+Loc ations
+Purpose : Lists Loc ation  de finitions.
+Executable : locationsSearch Criteria:
+Criteria Description
+Loc ation  ID Type the ID of the loc ation  for which you want to run the
+report.
+Loc ation  description Type the description  of the loc ation  for which you want
+to run the report.
+If you do not specify any search criteria, the report output includes all loc ations.
+Resource enforcement
+Purpose : Lists the role enforcement status for resources.
+Executable : resenforce
+Search Criteria :
+Criteria Description
+Resource type Select a resource type:
+▪Template account▪
+▪Target system▪
+▪Managed group▪
+▪Role▪
+Template accounts Select one or more templates for which you want to run
+the report.
+Target system ID Search for one or more target systems for which you
+want to run the report. Alt ernativ ely ,  you can type a
+comma-and-space-delimited list of target system IDs.
+Show authorizer Select this option  to add the authorizers for each
+resource to the report output.
+Resource enforcement Select:
+▪Show all to include all matching resources regardless▪
+of their enforcement.
+▪Enforced to only include matching resources that are▪
+enforced.
+▪Not enforced to only include matching resources that▪
+are not enforced.
+Discovered systems attribut e
+Purpose : Lists attribut es  of discovered systems.
+Executable : discoversysattr
+Search Criteria:

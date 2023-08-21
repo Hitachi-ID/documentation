@@ -1,0 +1,280 @@
+    "retval" = "<N>" # 0 for success; non-zero on error
+    "password" = "<password value>" # Optional value for all resources
+    "strength" "<policy ID>" = {
+        "password" = "<password value>"
+    } # Optional; 0 or more groups for each password policy
+  }
+.
+Allowing users to specify a destination  container
+You can c on figur e  Bravura Security Fabric  to use a profile  and request attribut e  to prompt users for the
+destination  container when cr eating  or moving accounts on a target system that supports contexts, such
+as LDAP Directory Service, NDS, Exchange 2007/2010/2013/2016, and Activ e  Directory.
+When the Pr ofile/r eques t  attribut e  to use as the container DN option  is c on figur ed  on the Target system
+in f ormation  page ( Manage the system > Resources > Target systems ), users can:
+▪Set the destination  container when cr eating  new accounts. ▪
+Users do this by setting  the pr ofile/r eques t  attribut e  value in the request form. By default, Bravura
+Security Fabric  creates new accounts in the same container as the template. Without the pr ofile/
+r eques t  attribut e,  you may need to set up identic al  templates for each container.
+If enabled when setting  the target system address, Bravura Security Fabric  can also create a container
+if a non-e xisting  one is specified.
+▪Move e xisting  accounts on the target system to a diff er en t  container. ▪
+Users do this by setting  the To container value – which is actually the pr ofile/r eques t  attribut e,  but
+with a diff er en t  name – on the move accounts page. Bravura Security Fabric  only displays the move
+oper ation  (the Move button)  for users with accounts that can be moved between containers.
+To allow users to select a container for a create account or move context oper ation:
+1.Add a pr ofile  attribut e  to provide a place to prompt the user for this in f ormation. 1.
+It is recommended that you c on figur e  the pr ofile  attribut e  to have a set of restricted values, so that
+the requester or product administrator  can select from a drop-down list.
+2.Ensure that you set read/write permissions for the pr ofile  attribut e. 2.
+3.Provide a group of users the ”Move user from one context to another” rule.3.
+4.Update the Target system in f ormation  page ( Manage the system > Resources > Target systems ) by 4.
+typing the name of the pr ofile  attribut e  in the Pr ofile/r eques t  attribut e  to use as the container DN
+field.
+This allows Bravura Security Fabric  to use the pr ofile  attribut e  for this purpose.2 Implementers
+A request can be fulfilled  by a human agent, or implementer , rather than a connector program, where
+the implementer is notified  of a request for:
+▪An access change request, such as account cr eation,  and carries out the task on a target system. This ▪
+can be done, for example, during a phased deployment before automated w orkflo w  is fully
+implemented.
+▪An inventory item, and delivers the item to the recipient.▪
+▪An update on an uncommon target system that does not support some oper ations  using a connector. ▪
+▪An update on a target c on figur ed  as read-only. ▪
+▪An update on a third-party applic ation  that cannot be targeted directly. ▪
+Implementers log into Bravura Security Fabric  and access the Requests  app to act on a task after  a request
+has been approved. Once accepted, the implementer can carry out the task, then update its status in the
+Requests  app. Implementers can also:
+▪Update attribut es,  depending on their access controls ▪
+▪Decline the task and let another implementer complete it▪
+▪Mark the task as cannot be completed▪
+▪Delegate the task to another user▪
+When an implementer does not act on time  for a request/task assigned to him, depending on the
+c on figur ation  of the system, reminder emails are sent, and the request/task can be escalated to other
+users as determined by the esc alation  plugin  (on page 1386).
+An implementer who is also an inventory manager is responsible for assigning an inventory item as well
+as delivering it to the recipient.
+Implementers who are w orkflo w  managers can accept, update, or delegate tasks for any open request.  
+Determining implementers
+You can assign any user as an implementer for a resource request. Implementers who are also
+authorizers may have permission to approve requests and assign resources. Depending on their access
+rights (ACLs), they may be able to modify some pr ofile  and request attribut es  if, for example, values are
+not known until  the request is being fulfilled.
+You can assign implementers in the Resource oper ations  tab for target systems, managed groups, or
+template accounts.
+Alt ernativ ely  you can determine implementers dynamically by c on figuring  a plugin.
+To use a plugin to assign implementers to resources:
+1.Log into the Manage the system  (PSA) module and click W orkflo w  > Options  > Plugins . 1.
+2.Type the name of the plugin in the IDSYNCH IMPLEMENTER PLUGIN  field. 2.
+3.Click Update at the bottom  of the page. 3.There are no shipped plugins for use with this plugin point. A sample script, implementer.psl , is
+included in the samples\* directory. See more in f ormation  about writing  a custom plugin
+Requirements
+The input/output requirements are similar to the authorizer list plugin  (on page 1363). See W riting
+plugins  for general requirements.
+Ex ecution  points
+The plugin is run by the W orkflo w  monitor service ( idwfm ) .
+Input
+Input passed to the plugin is as follows:
+"" "" = {
+  "currentresource" = "<resource ID>" # resource ID to be evaluated by the plugin
+  "request" "" = { ... } # Request data
+  "requester" "user" = { ... } # Requester's data
+  "recipient" "user" = { ... } # Recipient's data
+}
+Output
+The output is returned in the following format:
+"" "" = {
+  "RunAgainInSecs" = "<N>" # Optional -
+ Secs to wait before running again
+  "errmsg" = ""
+  "retval" = "0 | <N>" # 0 = success !0 = fail
+  "resource" "<resource signature>" = {
+    "extras" = "false|true"
+  # false = only use implementers specified
+  # true = use in addition to implementers already specified
+    "implementer" = "<implementer ID>"
+    "implementer" = "<implementer ID>"
+  }
+}
+For example:
+"" "" = {
+  "errmsg" = ""
+  "retval" = "0"
+  "resource" "4F12FA11531BCBC574BC4C4295D4872E" = {    "extras" = "false"
+    "implementer" = "bob"
+    "implementer" = "frank"
+  }
+}
+.
+Assigning tasks to implementers
+The IDSYNCH IMPLTASK PLUGIN is run after  a request is approved and pending implemen t ation  by
+implementer or connector. The plugin output can determines if the resource oper ation  is performed by
+connector or implementer.
+To use a plugin to determine how a resource task will be completed:
+1.Log into the Manage the system  (PSA) module and click W orkflo w  > Options  > Plugins . 1.
+2.Type the name of the plugin in the IDSYNCH IMPLTASK PLUGIN  field. 2.
+3.Click Update at the bottom  of the page. 3.
+Shipped plugins
+There are no shipped plugins for use with this plugin point. See more in f ormation  on writing  a custom
+plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The plugin is run by the W orkflo w  monitor service.
+Input
+Input passed to the plugin is as follows:
+"" "" = {
+  "currentresource" = "<resource ID>" # resource ID to be evaluated by the plugin
+  "operation" = "<Operation ID>"
+  "request" "" = { ... } # Request data
+  "resop" "" = {
+    "platform" = "<PLATFORM TYPE>"
+    "target" = "<Target ID>"
+    "memberid = "<Member ID>"
+    "impltype" = "<IMPL|AGENT>"
+    "operation" = "<Operation ID>"
+  }}
+Output
+The output is returned in the following format:
+"" "" = {
+  "retval" = "0 | <N>" # 0 = success !0 = fail
+  "isimpltask" = "<true|false>"
+}
+For example:
+"" "" = {
+  "retval" = "0"
+  "isimpltask" = "true"
+}
+.
+Example: Con figuring  implementers
+Often  or g aniz ations  will have a Human Resource target that populates Bravura Security Fabric . For
+various security and privacy reasons, these targets usually do not not allow Bravura Security Fabric  to
+write back to them. However, or g aniz ations  still require an audit trail if the target is updated manually.
+In this example you will set up implementers to update a new employee’s in f ormation  on a HR system
+after  an account has been created on the AD target. Using Bravura Security Fabric  to initia t e  the request
+to an implementer will provide the required audit trail.
+Requirements
+This example assumes that:
+▪Bravura Security Fabric  is installed. ▪
+▪An Activ e  Directory target has been c on figur ed. ▪
+▪A template account for the AD target has been created.▪
+▪A target is c on figur ed  to retrieve data from a Human Resources system. ▪
+Configur e  an implementer target
+By default, all target system oper ations  are set to be carried out by a connector. You can override
+resource oper ations  at the target system, group, and template level. If the oper ation  is set at target-
+system-level to be carried out by an implementer, you must assign at least one implementer to the target
+system. If you do not do this, requests involving the target system will be put on hold unless
+implementers are dynamically assigned by a plugin.
+1.Log in to Bravura Security Fabric  as superuser. 1.
+2.Click Manage the system > Resources > Target systems > Manually de fined . 2.3.Select the Human Resources target.3.
+4.Under the Auto discovery  options  make sure the option  to Allow child resources, including templates 4.
+and managed groups, to inherit implemen t ation  c on figur ation  is enabled.
+5.Click Update . 5.
+6.Click the Resource oper ations  tab. 6.
+7.Select Implementer oper ation  for all listed oper ations. 7.
+8.Click Update . 8.
+Bravura Security Fabric  displays the "Insufficien t  implementers assigned" warning, and includes an
+implementers table below the oper ations  table.
+Assign individual implementersYou can add individual s t atic  implementers in the bottom  table on the Resource oper ations  page.
+Individual implementers assigned at the target system level are inherited by dependent template
+accounts and managed groups.
+To assign an individual implementer:
+1.In the Implementers  table, click Select… 1.
+2.Search
+  for and select a user. 2.
+3.Click Select . 3.
+Assign implementers by user class
+To assign implementers based on user class:
+1.On the Resource oper ations  page, click the User classes  sub-tab. 1.
+2.Click Select…2.
+3.Select the _GLOBAL_HELP_DESK_ class and click Select . 3.
+Bravura Security Fabric  displays an error because you have not mapped the participan ts  in the user
+class yet.
+4.Under P articipan t  mapping  for USERID, select IMPLEMENTER. 4.
+5.Click Update . 5.
+Now all members of the _GLOBAL_HELP_DESK_ user class are implementers on the HR system.
+Add a new employee
+A member of the human resources team logs into the or g aniz ations  HR system and creates a new user
+account.
+1.Log into the HR system as a user with privileges and create a new account.1.
+Bravura Security Fabric  will be triggered to create accounts on various targets. For example, an
+account on the Activ e  Directory target. As part of this process, an email address will be generated.
+A notific ation  will be sent to the implementers to update the HR system.
+Accept the implemen t ation  task
+You can now carry out the implemen t ation  tasks:
+1.Log in to Bravura Security Fabric  as an implementer. 1.
+2.Click the You have 1 request(s) a w aiting  your fulfillmen t  link or the Requests  link. 2.
+3.Click on the most recent request.3.
+4.Click the Tasks  button  on the action  panel. 4.5.Click Accept . 5.
+The task is now assigned to you.
+6.Click Home  to return to the main menu. 6.
+You should see that the task notific ation  is still there. It will remain until  you update the task’s status.
+Carry out the task and update the task status
+1.Log into the HR system as the implementer and add the new employee’s email account.1.
+2.Log in to Bravura Security Fabric  as the implementer again. 2.
+3.Click the There are 1 request(s) a w aiting  your fulfillmen t  link or the Requests  link. 3.
+4.Select the most recent request.4.
+5.Click Tasks . 5.
+6.Click Complete . 6.3 Role Enforcement
+Bravura Security Fabric  supports RBAC with role enforcement, to ensure that users have the correct
+access to specified  resources. The role enforcement feature works with the following softw ar e:
+Softw ar e Purpose
+View and update pr ofile  (IDR) module Allows users to request missing entitlemen ts  or
+request e x ceptions  for themselves or for other
+users.
+W orkflo w  Manager Service Handles requests to remove resources, or for SoD
+e x ceptions.  The requests can be auto-approved or
+reviewed by authorizers.
+rbacenforce Lists users who are in de ficit  for a role, and either
+adds resources or requests e x ceptions.
+You cannot enable role enforcement and aut omatic  assignment at the same time  for managed groups.
+Overview of role-based access control
+This section  outlines the c on figur able  elements of Bravura Security Fabric  that support role-based access
+control.
+Roles
+Roles de fine  requirements for specified  sets of users. Requirements can be mandatory or optional,  and
+may include template accounts, managed groups, and sub-roles. Assigning the role to a user allows the
+user to meet the requirements of the role, such as having accounts on certain target systems, or being a
+member of certain managed groups. Roles simplify the provisioning of a set of access privileges for
+members; for example:
+▪New users must have an account on the company’s Activ e  Directory domain. A template account is set ▪
+up as a resource member of a role.
+New users created and assigned this role have an account on the AD server aut omatic ally  created for
+them.
+▪Certain members of the Finance department need to be members of the Accounts Payable managed▪
+group.
+A role is created with this managed group c on figur ed  as a resource member. New users created and
+assigned this role are aut omatic ally  made a member of this group.Role enforcement
+The role enforcement engine can identif y  users who have excessive or insufficien t  access during auto
+discovery , and issue w orkflo w  requests to correct violations;  for example, the role enforcement engine is
+triggered where:
+▪A user has access to a database system that is role enforced, but has not been assigned the role. The▪
+engine can issue a request to remove the resource or grant the user an e x ception  to explicitly have the
+resource.
+▪Accountants have access to the finance  server, via being assigned a role. A new finance  server is ▪
+created, and added by the administrator to the role. Requests are then made to ensure that all users
+in the accountant role have the new system resource.
+When enabling role enforcement for managed groups, only direct group memberships can be
+enforced. The role enforcement engine cannot identif y  users with access due to indirect group
+membership, nor will it submit requests to correct any surpluses due to indirect group membership.
+Segr eg ation  of duties  rules
+Segr eg ation  of duties  rules are used to identif y  e x ceptions  to roles or possible access c on flicts.  Rules are
+created that specify c on flicting  resources that a user should not have simultaneous access to. Once the
+rules are in place, users in violation  of the rules are aut omatic ally  identified.  Permission to override the
+rule is granted on a case by case basis and must be approved.
+For example, rules can be set up so that:
+▪If a user is a member of two particular  managed groups, then they are in violation  of the rule. In this ▪
+case, the two managed groups are set up as resource members of the rule. Users that have
+membership in both managed groups will be flag g ed  as in violation  of the rule. Steps can then be
+taken to remedy the situation.
+▪A restricted set of users are assigned accounts on a particular  server; for example, only certain HR ▪
+s t a ff  may have access to the database that contains c on fidential  and sensitiv e  personnel documents.
+Nonetheless, there will be situations  where certain individuals require access to resources such that they
+violate a segr eg ation  of duties  rule. There is a process so that e x ceptions  to the rule can be applied for
+and managed. The e x ceptions  must be authorized and a record of the authoriz ation  is kept.  
+See also: 
+Aut omatic  resource assignment  (on page 2442) is another feature that supports role-based access
+control.
+How role enforcement works
+The Bravura Security Fabric  role enforcement engine can identif y  users who have excessive or insufficien t
+access during auto discovery , and issue w orkflo w  requests to correct violations.  The engine only enforces
+roles, resources, and users that are included in the enforcement jurisdiction . It can list unenforced users
+who are in violation,  but it takes no action.

@@ -1,0 +1,316 @@
+Example: Either/or rules for user class memberships
+This c on figur ation  example demonstrates the use case where a company wants to provide permissions to
+reset user passwords without requiring authentic ation  to users in the IT-HELPDESK-MANAGERS and HR-
+MANAGERS Activ e  Directory groups. A user from EITHER of these Activ e  Directory groups will be granted
+this permission. Therefore, a user group must be c on figur ed  with the required privilege and allow
+membership from ANY assigned user classes.
+The built-in HELP_DESK_MANAGER user group already has the required privileges to bypass
+authentic ation  to reset user passwords. To assign user classes to the user group, we must add the IT-
+HELPDESK-MANAGERS and HR-MANAGERS AD groups to separate user classes.
+This use case assumes an Activ e  Directory target called AD has been c on figur ed  and has both the IT-
+HELPDESK-MANAGERS and HR-MANAGERS groups managed.
+Add IT-HELPDESK-MANAGERS AD group to the built-in _HELP_DESK_MANAGERS_ user class
+1.As superuser, navigate to Manage the system > Policies > User classes . 1.
+2.Select the _HELP_DESK_MANAGERS_  user class. 2.
+We need to add membership criteria to this user class.
+3.Click the Criteria  tab. 3.
+4.In the group memberships table, click Add new. . .  . 4.
+5.In the Target system  field,  enter AD. 5.
+6.Click the search icon 
+  next to the Group:  field. 6.
+7.Search for and select 
+  the IT-HELPDESK-MANAGERS  group. 7.
+8.Click Add. 8.
+9.Click the Test tab and click List to see the users that are now members of the 9.
+_HELP_DESK_MANAGERS_  user class.
+10. Return to the General  tab and next to the option  for Membership cache valid  click Recalculate . 10.
+You may need to click the Recalculate  button  twice and refresh the window before it says the cache is
+valid.
+Users have been successfully added as members to the _HELP_DESK_MANAGERS_  user class.
+Add HR-MANAGERS AD group to a created HR-MANAGERS user class
+Now we need to de fine  and add a user class for the HR-MANAGERS activ e  directory group.
+1.As superuser, navigate to Manage the system > Policies > User classes . 1.
+2.Click Add new. . .  since we know the HR-MANAGERS  user class doesn't exist. 2.
+3.Enter the following:3.
+ID HR_MANAGERS
+Description  HR department managers
+Leave Types of policies where this user class is permitted  to be used  as the default value.4.Click Add. 4.
+This takes you to the P articipan ts  tab.
+5.Click Add new. . .  to de fine  participan ts  of the user class. 5.
+6.Enter the following:6.
+ID USERID
+Description  User ID
+7.Click Add. 7.
+This takes you to the Criteria  tab.
+8.In the group memberships table, click Add new. . . . 8.
+9.In the Target system  field,  enter AD. 9.
+10. Click the search icon 
+  next to the Group:  field. 10.
+11. Search for and select 
+  the HR-MANAGERS  group. 11.
+12. Click Add. 12.
+13. Click the Test tab and click List to see the users that are now members of the HR_MANAGERS  user 13.
+class.
+14. Return to the General  tab and next to the option  for Membership cache valid  click Recalculate . 14.
+You may need to click the Recalculate  button  twice and refresh the window before it says the cache is
+valid.
+Users have been successfully added as members to the HR_MANAGERS  user class.
+Assign both user classes to the HELP_DESK_MANAGER user group
+1.As superuser, navigate to Manage the system >  Security > Access to user pr ofiles  > Global help desk 1.
+rules .
+2.Select 
+  the HELP_DESK_MANAGER  user access rule. 2.
+The privileges are already set by default to allow help desk managers to see a user’s security questions
+for help desk question  set and bypass them without requiring authentic ation.  This is set by the view
+and bypass security questions  privileges.
+3.Click the Membership criteria  tab. 3.
+4.Ensure the _HELP_DESK_MANAGERS_  user class is already a member by default c on figur ation. 4.
+5.To add the HR-MANAGERS  user class as a member, click Add new. . . . 5.
+6.From the list of user classes, search for and select HR-MANAGERS . 6.
+7.Click Add. 7.
+8.Click the radio button  for Any of the user classes  on the Membership criteria  tab. 8.
+9.Click Update . 9.
+Now in order to be a member of the HELP_DESK_MANAGER  user group, a user can be a member of
+either the _HELP_DESK_MANAGERS_  or HR_MANAGERS  user class or both of them.
+10. Click the General  tab and click Recalculate  for Membership cache valid . 10.Through this c on figur ation,  permission to reset user passwords without requiring authentic ation  has now
+been given to users in the IT-HELPDESK-MANAGERS and HR-MANAGERS Activ e  Directory groups.
+E diting  and deleting  user classes
+You can edit user classes by:
+▪Adding and removing participan ts ▪
+▪ E diting  the description  and list expression for participan ts ▪
+▪Adding, editing  and removing membership criteria ▪
+▪Changing user class policies▪
+Default user classes should be edited during the initial  Bravura Security Fabric  setup and c on figur ation.
+For example, de fine  membership and assign user access rules to the _GLOBAL_HELP_DESK_ and
+_HELP_DESK_MANAGERS_ user classes to create a user base that can help regular users.
+There are r es trictions  to what type of changes you can make to a user class, limited by which policies
+have that user class in use. See the table below for details.
+The product administrator  doing the editing  must have the "Manage policies" adminis trative  privilege.
+R es trictions  for editing  user classes
+Status R es trictions
+Single policy user classes
+In use User classes that are in use by a single user class policy:
+▪Can be edited at the user class policy from which it was created▪
+▪Can also be edited from the Policies menu▪
+▪Cannot be deleted▪
+Not in use User classes that are not in use, and are only linked to one user class policy:
+▪Can only be edited from the Policies menu▪
+▪Can be deleted▪
+In use Shared user classes that are in use:
+▪Can only be edited from the Policies menu.▪
+▪Cannot be deleted.▪
+Not in use Shared user classes that are not in use:
+▪Can only be edited from the Policies menu.▪
+▪Can be deleted.▪
+You can remove or edit the de finition  of a user class as long as it has not been used in a certific ation
+campaign. If a user class has dependents, such as plugin points, it cannot be removed.
+For auditing  purposes, a user class cannot be deleted or changed after  it has been used. A “used” user
+class is indicated by the following fields  on the User class de finition  page:
+▪Date fir s t used in certific ation ▪
+▪Date most recently used in certific ation ▪T esting  and listing  members
+Once the criteria for a user class is de fined,  you can use the Test membership page to see if a specific
+User IDs matches the criteria, or to list the User IDs for the members of a user class.
+T esting  user classes
+You can test the segmen t ation  rules for any user class.
+To test the rules de fined  for a user class:
+1.Navigate to the User class de finition  (on page 737) for the user class you want to test. 1.
+2.Click the Test tab. 2.
+3.To test the rules de fined  for a: 3.
+▪Personal user class, Search for, or type the User ID of the user to evaluate, then click Test. ▪
+▪ R elational  user class, Search for, or type a User ID for each participan t  in the corresponding fields, ▪
+then click Test.
+The Test button  evaluates all criteria defined  for the user class, not just the criteria displayed on the
+page.
+Bravura Security Fabric  displays the test results, specifying whether the users satis fied  the criteria for the
+user class.
+Listing  members in a user class
+You can list members for any participan t  in any user class.
+In personal user classes, there is a single participan t,  so all members of the user class are listed.
+In r elational  user classes, members can be listed for one participan t,  and the other participan t  in the
+r elationship  must be specified.
+To list members in a user class:
+1.Navigate to the User class de finition  (on page 737) for the user class for which you want to list 1.
+participan t.
+2.Click the Test tab. 2.
+3.To list the participan t  within a: 3.
+▪Personal user class, click List. ▪
+▪ R elational  user class, select a participan t  from the List matching users drop-down menu, type in ▪
+User IDs for the other participan t,  then click List.
+The list of members is displayed. If no members are listed, then there are no users matching the
+criteria for the specified  participan t.
+Caching user classes
+User classes can be cached to improve performance for complex user classes and user class points.On the General tab for a user class de finition,  there is an option  to Recalculate  or Invalidate the user
+class cache. Membership cache valid indicates the current status of the cache Yes or No.
+If the status is Yes, then the user class is cached on the time  indicated by Date membership cache last
+updated . Users that are a member of the user class when it is cached will remain members until  the
+cache expires or is recalculated. Even if the member’s criteria changes, the pr ofile  will be considered a
+member until  either r ec alculation  is performed or no longer valid. When there is a cached user class then
+Invalidate and Recalculate are available.
+If the status is No, then the user class has no cached in f ormation.  Only Recalculate is available to load the
+cache in f ormation.
+In a replicated environment, cache rec alculation  can only be performed on the instance which runs
+psupdate .
+Only single-participan t  user class points can be cached. Built-in user classes cannot be changed and
+cached. This includes:
+▪_ALLUSERS_▪
+▪_UC_ATTR_AUTO_PROPAGATE_REQUESTER_▪
+▪_UC_RBAC_AUTO_PROPAGATE_REQUESTER_▪
+▪_USER_IS_MANAGER_▪
+These are directly evaluated and do not require caching.
+User class points that include only built-in user classes do not require any options  to cache them. Adding
+one or more user classes that are not built-in will allow caching to be calculated. When r ec alculating  a
+user class, any dependent user class points that are cached are also recalculated.
+The user class cache expiry time  is set by the USERCLASS CACHE EXPIRY variable at Manage the system >
+Policies > Options . Default is 72 hours.
+The psupdate program runs loaduccache at the end of the auto discovery process.
+The following user class options  are triggered by the Manage the system  (PSA) module, API Service, or
+directly by running the loaduccache program. They can be accessed from Manage the system >
+Policies > Options :
+User class cache events that launch interface programs
+Option Description
+LOADUCCACHE FINISH The loaduccache program finishes  loading caches.
+LOADUCCACHE START The loaduccache program starts to load caches.
+USERCLASS CACHE FAILURE A userclass fails to be cached.
+USERCLASS CACHE INVALIDATE
+SUCCESSA userclass’ cache is explicitly invalidated.
+USERCLASS CACHE SUCCESS A userclass is successfully cached.
+USERCLASS POLICY CACHE FAILURE A userclass policy fails to be cached.Option Description
+USERCLASS POLICY CACHE
+INVALIDATE SUCCESSA userclass policy’s cache is explicitly invalidated
+USERCLASS POLICY CACHE SUCCESS A userclass policy is successfully cached.
+Using user classes with plugin points
+User class de finitions  can be added to the following plugin points:
+▪Manage the system > W orkflo w  > Options  > Esc alation  > ESCALATION PLUGIN ▪
+▪Manage the system > W orkflo w  > Options  > Esc alation  > FIRST CHANCE ESCALATION PLUGIN ▪
+▪Manage the system > W orkflo w  > Options  > Plugins >  AUTHORIZATION DETAIL MASK PLUGIN ▪
+▪Manage the system  > Modules  > Options  > FILTER USER PLUGIN ▪
+▪Manage the system  > Modules  > Options  > KEEP USER PLUGIN ▪
+▪Manage the system  > Modules  > Options  > GENERATE USER PLUGIN ▪
+These plugin points include the Use user classes option,  which allows you to filt er  or generate lists of
+users based on user user classes.
+If you choose to use user classes, then you do not need to write a plugin. However, user classes can also
+be used in c onjunction  with a plugin.
+For example, if you:
+Use user classes then the specified  user classes are used to filt er  or generate lists of users.
+Use user classes and write a plugin then the specified  user classes and plugin script are both used to filt er  or
+generate lists of users, with the plugin taking its input from results
+provided by the user class.
+Write a plugin then the plugin is used to filt er  or generate lists of users.
+For details, see:
+▪Filter users  (on page 1049) to learn how to write a user filt er  or user ▪
+g ener ation  plugin
+▪About esc alation  (on page 1386) to learn how to write an esc alation ▪
+plugin
+▪Hiding authoriz ation  details  (on page 1428) to learn how to write an ▪
+authoriz ation  mask plugin.
+To c on figur e  the Use user classes option:
+1.Click Use user classes under the field  for the plugin point you want to modify. 1.
+A page loads related to the option  you are modifying. For example, if you are modifying FILTER USER
+PLUGIN, then the Filter Criteria filt er_user_plugin  page loads. If user class de finitions  already exist for
+this option,  they are listed.
+2. De fine  your user classes. You can choose e xisting  user classes, create new user classes, or both: 2.
+▪To select from e xisting  user classes: ▪i.Click Select... . i.
+ii.Enable the checkboxes next to the user classes you want to select, then click Select . ii.
+The list of user class members is displayed.
+iii.Complete the participan t  de finitions  for the newly added user classes by selecting  from the iii.
+drop-down menu.
+iv.Click Update . iv.
+▪To create a new user class:▪
+i.See Adding user classes  (on page 738) for details on how to create a user class. i.
+ii.Once created, complete the participan t  de finition  for your new user class by selecting  from the ii.
+drop-down menus.
+Once you’ve added at least one user class to the list of user class members, you can also:
+▪Delete user classes from the list.▪
+▪Update the participan t  de finitions  for the user classes in the list. ▪
+If you have multiple  user classes in the list of user class members, then The participan ts  have to
+match which of the user classes option  is displayed.
+This can be set so that:
+▪The participan ts  can match Any of the user classes listed ▪
+▪The participan ts  must match All of the user classes listed ▪
+Mapping participan ts  for authoriz ation
+Currently, participan t  mapping is required where user classes are used to de fine  the function  of policy
+participan ts.
+P articipan t  mapping uses user classes to de fine  complex r elationship s  by mapping the policy participan ts
+(recipient, requester, authorizer) to the user class participan ts :
+▪User class participan ts  – In personal user classes, the participan t  de fines  something about a user, such ▪
+as their loc ation.  For example, the class NEW_YORKER which has a single participan t  named
+“RESIDENT”.
+In r elational  user classes, the participan ts  de fine  the r elationship  between users. For example, a
+default user class that ensures one user is another user’s manager, _MANAGER_DIRECT_, has two
+participan ts:  SUBORDINATE and MANAGER.
+With both types of user class participan ts,  the function  for each participan t  is unde fined.  These user
+classes can be used with any policy. For example, they can be used when de fining  authorizers.
+▪Policy participan ts  – de fine  the function  for each user in the current policy. For example, the recipient, ▪
+the requester and the authorizer of a request are all possible policy participan ts.
+Personal user classes require you to map the single user class participan t.  R elational  user classes require
+you to map one or more policy participan ts.This functionality  is highly fle xible  and there are many c on figur ation  possibilities  depending on which
+user classes you select and how you map their participan ts.  However, all valid c on figur ations  require an
+authorizer.
+For example, when de fining  an authorizer using user classes, you could de fine  the r elationship  between
+the AUTHORIZER, REQUESTER, and RECIPIENT. The policy participan ts  determine who authorizes
+(AUTHORIZER) whose request (REQUESTER) on behalf of whom (RECIPIENT). To de fine  membership for
+each policy participan ts,  map user class participan ts  to each policy participan ts.
+Getting  started 
+To c on figur e  participan t  mapping:
+1.Navigate to the Authorizer user classes tab of the resource for which you want to c on figur e 1.
+authorizers.
+For example:
+▪Managed groups > Bravura Group >  General ▪
+▪ Segr eg ation  of duties  rules > <rule> > Authoriz ation ▪
+▪Managed system policies > <policy> > Authorizers: <type>▪
+2.Click the User classes sub-tab.2.
+Use Case 1: Manager must approve requests
+This use case ensures that a user’s manager must authorize requests before the user can receive access
+for a resource, regardless of who makes the request. This case involves two participan ts:  the recipient
+and the authorizer. The requester is irrelevant in this case.
+The default _MANAGER_DIRECT_ user class can be used to de fine  the required r elationship  between the
+recipient and the authorizer.  P articipan t  mapping 
+1.Navigate to the Authorizer user classes  page. 1.
+2.Add the default _MANAGER_DIRECT_ user class and c on figur e  mapping as follows: 2.
+▪MANAGER : Authorizer ▪
+▪SUBORDINATE : Recipient ▪
+Use Case 2: Printer access must be approved by a user’s manager
+In this use case, business rules require that a user’s manager must request access to printers on his
+behalf. For example, Joe wants access to a printer and speaks to Bob, his manager. Printer access is
+managed by membership to a managed group. Bob issues the request. Additionally ,  business rules
+require that Bob’s manager must authorize the request.
+P articipan t  mapping 
+1.Navigate to the Authorizer user classes  page. 1.
+2.Add the default _MANAGER_DIRECT_ user class and c on figur e  the mapping as follows: 2.
+▪MANAGER : Requester ▪▪SUBORDINATE : Recipient ▪
+This ensures that requests are being performed by the recipient’s manager.
+3.Add a second _MANAGER_DIRECT_ user class and c on figur e  the mapping as follows: 3.
+▪MANAGER : Authorizer ▪
+▪SUBORDINATE : Requester ▪
+This ensures that the authorizer is the requester’s manager.
+4. Con figur e  the user class matching as follows: 4.
+▪The participan ts  have to match which of the user classes : All of the user classes ▪
+Use Case 3: Department head must authorize all requests for a high security resource
+This use case ensures that a user’s department head must authorize all requests for access to a specific
+high-security resource.
+This case involves two participan ts:  the recipient of the request and the department head who must
+authorize the request.
+User class c onfigur ation  
+Create and c on figur e  a new user class to de fine  the r elationship:
+1.Create a new user class named DEPARTMENT_HEAD . 1.
+2.Create P articipan ts : 2.
+▪DPT_HEAD: The head of the department▪
+▪DPT_MEMBER: A member of the department▪
+3. Con figur e  Criteria : 3.
+▪Group criteria : Since all department heads are members of the Department Head group, add a ▪
+group criteria requiring that the DPT_HEAD participan t  is a member of the "DepartmentHead”
+managed group:
+▪ P articipan t : DPT_HEAD ▪
+▪Membership : Required ▪
+▪Target System : AD ▪
+▪Group : CN=DepartmentHead,OU=Company,DC=domain,DC=net ▪
+▪ Attribut e  criteria : In order to target the department head, add an attribut e  criteria to ensure that ▪
+the DEPARTMENT pr ofile  and request attribut e  is the same for both the user and the department
+head:
+▪ P articipan t : DPT_HEAD ▪
+▪ Attribut e : DEPARTMENT ▪
+▪ P articipan t ’ s  value must equal the value of this other participan t : DPT_MEMBER ▪
+ P articipan t  mapping 
+1.Navigate to the Authorizer user classes  page. 1.2.Add the new DEPARTMENT_HEAD user class and c on figur e  the mapping as follows: 2.
+▪DPT_HEAD : Authorizer ▪
+▪DPT_MEMBER : Recipient ▪

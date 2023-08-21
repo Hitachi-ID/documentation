@@ -1,0 +1,202 @@
+Example: Disclose website access to a user using the web app privileged sign-on method
+This example demonstrates how to disclose a website using the web app privileged sign-on disclosure
+method.
+Additional  requirements 
+This example assumes that:
+▪A managed account has been c on figur ed  to use the web app privileged sign-on disclosure method. ▪
+▪A user is a member of the team with requester privileges.▪
+▪The requester logs in to Bravura Security Fabric  using SSL (HTTPS). See SSL enforcement for details. ▪
+▪The Bravura Security browser extension is installed on a Chrome browser.▪
+Request, check out and disclose access
+1.Using a Chrome browser Log in to Bravura Security Fabric  as a user with requester privileges. 1.
+2.Click Privileged access . 2.
+3.Search and select the managed account.3.
+4.Click Request check-out . 4.
+5.Complete the request form and click Submit . 5.
+6.Wait for approval as required through your or g aniz ation’ s  process. 6.
+7.Click Ready to check out  from the left panel. 7.
+8.Select the managed account to check out.8.
+9.Click Check-out . 9.
+10. Click Web app privileged sign-on . 10.
+11. Search for, and select Con figur ation  file. 11.
+12. Click Login .  12.
+Pop-up blockers may prevent this feature from launching a new tab.
+A new tab will be launched in a secure session, using the in f ormation  in the website disclosure
+c on figur ation.
+Example: Audit recorded sessions
+Additional  requirements This example assumes that a  vault account has been checked out with the secure browser disclosure
+method, cr eating  a recorded session.
+Only screenshots are recorded.
+Configur e  session monitoring privileges
+1.Log in to the front-end as superuser.1.
+2.Click Manage the system > Security  > Access to user pr ofiles  > Self-service rules . 2.
+3.Select ALL_SELF_REQUEST.3.
+4.Add the Manage recorded sessions  privilege. 4.
+This will give all users the manage recorded sessions privilege. If you require specific  users from a user
+class to have access to the Session Monitor app, create a new self-service rule.
+5.Click Update . 5.
+6.Click Manage the system  > Privileged access  > Managed system policies 6.
+7.Select the managed system policy:7.
+▪ONBOARDED_ACCOUNTS for onboarded accounts▪
+▪VAULT_MSP for team vault accounts▪
+▪SYSTEM_VAULT_MSP for system vault accounts▪
+8.Click the Authorizers  tab. 8.
+9.Specify authorizers in Search recorded sessions  and Download recorded sessions  and/or View 9.
+recorded sessions.
+10. Click  Update. 10.
+Audit recorded sessions:
+1.Log in to Bravura Security Fabric  as an end user with session monitoring privileges. 1.
+2.Click Session monitor  under PRIVILEGED ACCESS TO MANAGED SYSTEMS. 2.
+The Session monitor app opens.
+3.Search for and select the session to view.3.
+4.Click Request view to request view access to the session. 4.
+Sessions can be in-process, in which case a short delay exists.
+5.Click Request download  to submit a request to download the package. 5.
+Searching, viewing, and downloading sessions are separate privileges that can be granted.
+To revoke access while viewing an in-progress session
+1.Log in to Bravura Security Fabric  asa help desk user with session monitoring and check-in access 1.
+privileges.s.
+The Session monitor app opens.
+2.Search for and select the vault account session.2.3.Click View . 3.
+4.Click Check in access . 4.
+5. Con firm  the check in. 5.
+SSL enforcement for secure browser
+By default, users can only use web app privileged sign-on or secure browser disclosures if accessing
+Bravura Security Fabric  using SSL (HTTPS). If the insecure HTTP method is used, the user will see a "This
+disclosure enforces SSL" message and will not be able to access the website disclosure c on figur ation.  This
+behavior is controlled by the PAM WEBAPP ENFORCE SSL system variable.
+T r oubleshooting
+Issue: Unable to connect to site using secure browser
+Fix: Update external address 
+Method 1:
+On the instance server, open the Windows Registry Editor and Update the registry under HKLM
+\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\, add new String Value:
+serveraddressexternal= <IP>.
+Method 2:
+1.Log in to Bravura Security Fabric  as superuser. 1.
+2.Click Manage the system > Maintenance > Database r eplic ation . 2.
+3.Select the node.3.
+4.Update External address  to <IP> . 4.
+5.Restart the Database Service.5.Privilege P attern:  Customize pr e-de fined  requests
+In most cases the pr e-de fined  requests provided with Bravura Privilege P attern  will be sufficien t.
+However, administrators can customize which pr ofile  and request attribut es  are exposed in the pr e-
+de fined  requests by editing  ExtDB tables.
+Example: Expose the ZONE attribut e
+When onboarding a system using the Onboard System PDR there may be times  an or g aniz ation  requires a
+connector proxy in order to connect to the system being onboarded. The built-in, optional  Zone attribut e
+is used to associate connector proxy server in f ormation  with an onboarded system. By default, this
+attribut e  is not exposed.
+This example demonstrates how to expose the ZONE attribut e  to allow a system trustee to specify a Zone
+associated with a connector proxy during the onboard system process.
+Requirements
+This example assumes:
+▪RefBuild.pam_team_management is installed.▪
+▪Scenario.pam_system_type_winnt is installed.▪
+▪A team administrator has been c on figur ed. ▪
+▪A team, with a system trustee, has been c on figur ed. ▪
+Expose the ZONE attribut e
+1.Log in as superuser.1.
+2.Click Manage external data store . 2.
+3.Select the hid_global_c on figur ation  table. 3.
+4.Add an entry for Zone attribut e  to be exposed: 4.
+▪Namespace : pam_pdr_onboard_system ▪
+▪ Setting : OPTIONAL_ATTRS ▪
+▪Key: ▪
+▪Value : ZONE ▪
+5.Click Update . 5.6.Click Manage external data store . 6.
+7.Select the pam_zone_inventory table.7.
+8.Add an entry to populate the Zone attribut e  in PDR. 8.
+Zone : Proxy for Non-domain servers
+ProxyList : <Proxy IP address>/<port the service is listening on>
+The <Proxy IP address> must be the IP address of a server hosting  the Connector Proxy service. The
+<port the service is listening on> must be the port specified  for the Connector Proxy server during
+ins t allation;  by default, this is TCP port 3344.
+9.Click Update . 9.
+Test the onboard system PDR
+1.Log in as a system trustee.1.
+2.Click Manage resources. 2.
+3.Click System: Onboard . 3.
+4.Select the System Type  and click  Next . 4.
+The Zone attribut e  is available.5.Select the Zone required.5.
+6.Click Submit . 6.
+Once the request has been approved, the system will be onboarded.
+Example: Expose the USE_MANAGED_CREDENTIALS attribut e
+This example demonstrates how to expose the USE_MANAGED_CREDENTIALS attribut e  so a system
+trustee does not need to manually enter the system's cr edentials  when onboarding a system; instead a
+Bravura Privilege managed account will be used, and when that managed account’s password is updated
+by Bravura Privilege, the cr edentials  used by the onboarded system will be too.
+Requirements
+This example assumes:
+▪An AD Target has been c on figur ed  as a managed system ▪
+▪An AD Target has been c on figur ed  as a source of pr ofiles. ▪
+▪Auto discovery has been run.▪
+▪RefBuild.pam_team_management is installed.▪
+▪Scenario.pam_system_type_winnt is installed.▪
+▪A team administrator has been c on figur ed. ▪
+▪A team, with a system trustee has been c on figur ed. ▪
+1.Log in as superuser.1.
+2.Click Manage the System > Privileged Access -> Managed System policies. 2.3.Select the PRODUCT_ADMIN_ACCOUNTS managed system policy.3.
+4.Click the Member systems  tab. 4.
+5.Click Add new.... 5.
+6.Select the AD managed system.6.
+7.Click Select . 7.
+8.Click the Managed accounts  tab. 8.
+9.Click Add new... . 9.
+10. Select an account that can be used as target administrator for the onboarded systems. 10.
+11. Click Select . 11.
+12. Click Home. 12.
+13. Click Manage external data store . 13.
+14. Select the hid_global_c on figur ation  table. 14.
+15. Add an entry for the USE_MANAGED_CREDENTIAL attribut e  to be exposed: 15.
+▪Namespace : pam_pdr_onboard_system ▪
+▪ Setting : OPTIONAL_ATTRS ▪
+▪Key: ▪
+▪Value :USE_MANAGED_CREDENTIAL ▪
+16. Click Update . 16.
+17. Update the following entry in the hid_global_c on figur ation  table to match the Value  of the managed 17.
+system policy you c on figur ed  above:
+▪Namespace : pam_system_management ▪
+▪ Setting : MANAGED_ADMIN_CREDENTIAL_POLICY ▪
+▪Key: ▪
+▪Value : PRODUCT_ADMIN_ACCOUNTS (or any other MSP which is applied to the managed target ▪
+admin account)
+Test the System: Onboard PDR
+1.Log in as a system trustee.1.
+2.Click Manage resources. 2.
+3.Click System: Onboard . 3.
+4.Select the System Type  and click Next. 4.
+The option  to select Connect using managed account  is available.Part VIII IDENTITYPart I User Provisioning
+User provisioning involves cr eating ,  maintaining, and t erminating  (or deprovisioning) users’ access to IT
+systems. In Bravura Security Fabric , user provisioning services are provided by Bravura Identity .
+Bravura Identity  simplifies  and automates the r outine  tasks of managing users across multiple  systems.
+You can c on figur e  Bravura Identity  to allow users to use the web interface to:
+▪Create and delete accounts▪
+▪Change the enabled / disabled status of e xisting  accounts ▪
+▪Change the login ID of an e xisting  account (rename user) ▪
+▪Read and set attribut es  of e xisting  user accounts ▪
+▪Modify membership in security groups▪
+▪Change the context of a user in a structured directory▪
+▪Request and assign inventory items▪
+▪Assign required resources to a set of users▪
+▪Apply segr eg ation  of duties  rules and grant e x ceptions  to the rules ▪
+The user provisioning feature works with the following softw ar e:
+Softw ar e Purpose
+View and update pr ofile  (IDR) module Empowers users to request access changes for
+themselves or for other users.
+Help users (IDA) module Allows help desk users to make changes to users’
+access.
+Requests app Enables users to view the status of their requests, and
+authorizers to review, then approve or deny requests.
+W orkflo w  Manager Service Receives requests for authoriz ation  w orkflo w .
+In most cases, user provisioning requests made through
+self-service require approval before they can be
+completed.
+Account cr eation
+Bravura Identity  can create accounts when new users are added, or for e xisting  user pr ofiles.  In general,
+the account cr eation  process works as follows when a new user pr ofile  is added in Bravura Identity :
+1.A requester logs into the Bravura Security Fabric  web applic ation  and selects a menu item which 1.
+allows him or her to create a new user pr ofile.  Depending on your current settings  or permissions
+Bravura Identity  might display a pr e-de fined  request selection.
+Bravura Identity  displays a form to collect user pr ofile  in f ormation.
+2.The requester types attribut e  values for the user; for example, the fir s t name and last name. 2.
+Bravura Identity  composes the new user’s Pr ofile  ID according to a c on figur able  standard.

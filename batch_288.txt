@@ -1,0 +1,284 @@
+The UPDATE SYSTEM AGENT COUNT option  also controls how many target systems can be listed
+simultaneously.
+Usage
+updproxy.exe -list | -refresh | -rotatelog <N> | -proxy <IP address>/<port>
+Argument Description
+-list Lists all proxy servers registered with the Bravura Security
+Fabric server.
+-refresh Copies the latest agents to all proxy servers.
+-rotatelog <N> Rotate the log folder for at most <N> rounds.
+-proxy <IP address>/<port> Specifies  which proxy servers to refresh.
+Unlike updinst , updproxy  cannot  be controlled using a c on figur ation  file. Proxies have diff er en t
+requirements compared to full instances. Currently updproxy works based on a hardcoded list of
+things that are relevant to proxy instances:
+▪Connector Pack (instance or global)▪
+▪Some utilities  (updsvcpass, pscp, logutil) ▪
+▪\<instance>\script\▪
+▪\<instance>\lib\▪
+▪\<instance>\idmlib\▪
+▪\<instance>\license\▪
+▪\<instance>\component\▪
+▪Services (idmlogsvc, psproxy)▪
+Examples
+1.To show a list of currently registered proxy servers, type:1.
+updproxy -list
+2.To update agents on all the proxy servers, type:2.
+updproxy -refresh
+3.To update agents on a specific  server, type: 3.
+updproxy -refresh -proxy <IP address>/<port>
+program, installed on the Bravura Security Fabric  server, pushes updates to the Proxy Service.
+▪The psproxycmd ▪
+Use the psproxycmd  program to communicate with a Bravura Security Fabric  proxy server which is
+running the psproxy  service.
+Usage
+psproxycmd.exe -server <server> -port <port> [-version] [-
+exist<filename>] [-list <filepattern>] [-listmd5 <filename>]
+[-download <localfile[remotefile]>] [-upload
+<localfile[remotefile]>] [-delete <filepattern>] [-run[i|o]
+<command>] [-timeout <seconds>]
+Argument Description
+-server <server> The name of the proxy server.
+-port <port> The port for the proxy server.
+-version Prints out the version of the psproxy service.
+-exist <filename> Checks if <filename>  exists, and returns the MD5 hash
+and last modified  time.
+-list <filepattern> Lists directory contents. Uses wildcards.
+-listmd5 <filename> Generates a list of MD5s for files and outputs to
+<filename>.  The generated file is located on the master
+server, and includes a list of proxy server files.  Use ’ -’ to
+pipe the list through stdin.
+-download < loc alfile  [r emot e file]> Downloads <r emot e file>  from the server and calls it
+<loc alfile>.  If <r emot e file>  is not specified,  the value is
+the same as <loc alfile>.
+-upload <loc alfile  [r emot e file]> Uploads <loc alfile>  to the server and calls it <r emot e file>.
+If <r emot e file>  is not specified,  the value is the same as
+<loc alfile>.
+-delete <filepattern> Deletes file(s)  from the server. Uses wildcards. The
+<filepattern>  must be the full file path with escaped
+backslashes.
+-run[i—o] <command> Runs <command> on the server. Use one or both i and o
+suffix es  to specify whether sending/receiving data
+through stdin/stdout r espectiv ely .
+-timeout  <seconds> Sets the timeout  period for the -run command.
+When using psproxycmd -run[i|o] to run programs, escape both quot ations  and slashes. For
+example:
+psproxycmd.exe -runo "\"C:\\Program Files\\Bravura Security\Bravura
+Security Fabric\\default\\service\\idmlogsvc.exe\" -rotatelog 3" -
+server mercury -port 3344
+When using psproxycmd -delete  to delete files,  escape slashes. For example:
+psproxycmd.exe -server mercury -port 3344 -delete "C:\\Program Files\
+\Bravura Security\Bravura Security Fabric\\default\\util\\a.txt"
+Examples
+1.Using the -exist argument:1.psproxycmd.exe -server mercury -port 3344 -exist "C:\Program Files
+\Bravura Security\Bravura Security Fabric\default\service
+\idmlogsvc.exe"
+2.Using the -list argument:2.
+psproxycmd.exe -server mercury -port 3344 -list "C:\Program Files
+\Bravura Security\Bravura Security Fabric\default"
+3.Using the -listmd5 argument, with filelis t. tx t  located on the master server, which includes proxy 3.
+server files:
+psproxycmd.exe -server mercury -port 3344 -
+listmd5 "C:\Program Files\Bravura Security\Bravura Security Fabric
+\default\filelist.txt"
+4.Using the -upload argument:4.
+psproxycmd.exe -server mercury -port 3344 -upload "C:\Program Files
+\Bravura Security\Bravura Security Fabric\default\service
+\idmlogsvc.exe"
+5.Using the -download argument:5.
+psproxycmd.exe -server mercury -port 3344 -
+download "C:\Program Files\Bravura Security\Bravura Security Fabric
+\default\service\idmlogsvc.exe"
+6.Using the -delete argument:6.
+psproxycmd.exe -server mercury -port 3344 -delete "C:\
+\Program Files\\Bravura Security\Bravura Security Fabric\\default\
+\util\\a.txt"
+7.Using the -run[i—o] argument:7.
+psproxycmd.exe -server mercury -port 3344 -run "C:\\Program Files\
+\Bravura Security\Bravura Security Fabric\\default\\service\
+\idmlogsvc.exe" -rotatelog 3
+program, installed on the Bravura Security Fabric  server, can communicate with and run commands
+through the Proxy Service.
+The service is aut omatic ally  installed and started on Bravura Security Fabric  proxy servers during setup.
+The psproxy program is also located in the service directory on the main Bravura Security Fabric
+server; however, it is not installed as a Windows service.
+Command-line options  for psproxy are listed below:
+psproxy service command-line options
+Argument Description
+-h Displays usage in f ormation.Argument Description
+-server Run the service in server mode.
+-start Starts the service.
+-stop Stops the server/service
+-port <N> The TCP port number on which Proxy Service should listen for incoming c onnections.  The default is 3344.
+-backlog <N> The number of pending c onnections  that are allowed before new c onnections  are refused. The default is 10.
+Persistent Connector Service (agtsvc)
+The Persistent Connector Service ( agtsvc ) runs connector programs that are enabled for persistent
+listing  (on page 510). Persistent listing  allows Bravura Security Fabric  to list changes as soon as they
+happen on the domain controller to which the Persistent Connector Service ( agtsvc ) connects.
+Persistent listing  is currently available on:
+▪ Activ e  Directory DN target systems ▪
+▪LDAP targets on Activ e  Directory (see samples \agtdap-adlds-per.cfg if your Bravura Security Fabric ▪
+ins t allation  included LDAP connector samples)
+The Persistent Connector Service ( agtsvc ) is dependent on the Database Service  (on page 2844)
+(iddb ). If you restart the database service, Bravura Security Fabric  will prompt to also restart the
+Persistent Connector Service.
+If the connector for Activ e  Directory ( agtaddn ) or LDAP ( agtldap ) is updated, either restart
+agtsvc_ <instance > or use the agtsvccli client utility  to restart with a full listing.
+The service is aut omatic ally  installed on the Bravura Security Fabric  server during setup.
+See Persistent Connector Service client utility  (agtsvccli ) usage and examples
+The agtsvccli program controls the Persistent Connector Service (agtsvc)  (on page 2874).
+Usage
+agtsvccli.exe <option>
+Argument Description
+-c --cookie Cookie value to send to connector. This argument is for
+developer use only.
+-debug Debug logging is enabled for additional  diagnostics.
+-full When s t arting  a list, do not c ontinue  the previous list.
+This will result in a full list and load of all data.
+-h --help Print out help/usage message and exit
+-hid --host <host> Agent service host.
+-infolist Shows s t atistic al  in f ormation  in kvgroup format for the
+currently running persistent list target.
+-i --listid  <ID> ID of the oper ation.Argument Description
+--loopcount Set a limit on list processing for the number of
+incremental in t er ations  up to the specified  loop count
+after  which persistent list will be terminated. Each
+it er ation  is determined by the ’Persistent list search wait
+time’  target address option.  If not specified,  the default
+is ’0’ to run inde finit ely .
+-p --port <port> Agent service port
+-showlists Show currently running lists.
+-startlist Start a list.
+-stoplist Stop a list.
+-t --t ar g etid  <target> Target system.
+-v --version Print out version and exit
+Examples
+1.To stop listing  on Activ e  Directory target system corpdirectory : 1.
+agtsvccli.exe  -endlist -t corpdirectory
+2.To make a new full list on corpdirectory : 2.
+agtsvccli.exe -startlist -t corpdirectory -full
+to control the service.
+Discovery service (iddiscover)
+The discovery service ( iddiscover ) is the principal service that
+▪Runs connector programs to list changes from systems▪
+▪Loads discovered data into the database via iddb . ▪
+▪Merges and acts on changes.▪
+The entities  that principally c ommunic ation  with iddiscover  include:
+▪The auto discovery nightly job that handles bulk listing  and discovery ( psupdate ) ▪
+▪Incremental discovery events that come from Activ e  Directory and LDAP targets when those ▪
+in t egr ations  are activ e.
+▪The Bravura Privilege  Local W ork s t ation  service that communicates over a proprietary HTTP API to ▪
+provide discovery in f ormation.
+▪The W orkflo w  Manager Service ( idwfm ) to propagate changes from an authorit ativ e  target system to ▪
+other target systems. See Automated user adminis tr ation  (on page 2424).
+The types of in f ormation  provided by discovery sources to the discovery service include:
+▪Accounts being created/updated/deleted▪
+▪Groups being created/updated/deleted▪
+▪Group memberships being created/updated/deleted▪▪Computers being created/updated/deleted▪
+▪Subscribers to privileged accounts being created/updated/deleted.▪
+This service runs aut omatic ally  and cannot be managed from the web interface.8 In t egr ating  instances
+The pxidm  program is shipped with Bravura Security Fabric  12.6 for use on an integrated instance of a
+Bravura Security  product older than 8.0; for example, on an ins t allation  of Bravura Pass  6.3. It synchronizes
+database changes r esulting  from certain events from another Bravura Security  product ins t allation  to
+ Bravura Security Fabric  12.6 ins t allation.
+For example, if a user is locked out of Bravura Pass  6.3 after  attempting  to log in with an incorrect
+password too many times,  he is also locked out of Bravura Security Fabric  12.6. A help desk user can then
+log into Bravura Pass  to unlock the user in both ins t allations.
+To use this program you must:
+1.Enable the Bravura Security  API Service  (on page 2846) ( idapi ) on the Bravura Security Fabric  12.6 1.
+server.
+The API Service enables external applic ations,  such as pxidm , to access Bravura Security Fabric  12.6.
+2.Install the Bravura Security  SOAP API on the Bravura Security Fabric 12.6 server. 2.
+See Bravura Security Fabric  Remote API ( api.pdf ).
+3. Con figur e  the other Bravura Security product server to integrate with the Bravura Security Fabric  12.6 3.
+SOAP API.
+4.Set up event actions  in the other Bravura Security product instance for the events that you want to 4.
+trigger changes in Bravura Security Fabric  12.6.
+Con figuring  the other Bravura Security product server
+Before you begin:
+▪Create a product administrator  on the Bravura Security Fabric  12.6 server to connect to the API Service ▪
+with, and note the user’s password.
+Ensure that the product administrator  has the IDAPI caller right.  (on page 699)
+▪Ensure that the API Service is running.▪
+Setting  up files  on the other Bravura Securityproduct server
+To set up the other Bravura Security  product server to use pxidm and the Bravura Security Fabric  SOAP
+API:
+1.Copy:1.
+▪pxidm from the addons directory on the Bravura Security Fabric  12.6 server to the interface ▪
+directory on the other Bravura Security  product server.
+▪setpxidm from the addons directory on the Bravura Security Fabric  12.6 server to the addons ▪
+directory on the other Bravura Security  product server.
+2.Set up registry entries that are used by pxidm to determine where the Bravura Security Fabric  12.6 2.
+idapi service is located and how to communicate with it.To do this, execute setpxidm using the following command line arguments:
+setpxidm -uri <SOAP Address> -apiuser <console ID> -
+password <password>  
+where:
+uri The HTTP(S) address of the SOAP API of the Bravura
+Security Fabric 12.6 server
+apiuser The product administratorID used to log into Bravura
+Security Fabric  12.6
+password The password for the product administrator
+See setpxidm
+Use the setpxidm program to manage c on figur ation  of pxidm access from the command line.
+This program c on figur es  the c onnection  in f ormation  on another Bravura Security product instance server
+to access the Bravura Security Fabric 12.6 SOAP API.
+Usage
+setpxidm.exe -uri <SOAP URL> -apiuser <console ID> -
+password <console password>
+Argument Description
+-uri The SOAP address to the Bravura Security Fabric 12.2.0
+SOAP API.
+-apiuser <console ID> The console ID to authentic a t e  to the Bravura Security
+Fabric 12.2.0 SOAP API.
+-password <password> The password to authentic a t e  to the Bravura Security
+Fabric 12.2.0 SOAP API.
+for more detail.
+Ex ecution  points
+It is recommended that you c on figur e  the following events in the other Bravura Security  product instance,
+to trigger pxidm :
+▪ADMIN DISABLE USER▪
+▪ADMIN ENABLE USER▪
+▪ADMIN UNLOCK USER▪
+▪ADMIN DELALIAS SUCCESS▪
+▪ADMIN DISABLE SUCCESS▪
+▪ADMIN ENABLE SUCCESS▪
+▪ADMIN UNLOCK ADMIN▪
+▪ADMIN UPDALIAS SUCESS▪
+▪PSL UPDATE SUCCESS▪▪PSL DELETE SUCCESS▪
+▪USER LOGIN LOCKOUT▪9 Maintenance options
+You can set the options  listed in Table General maintenance options  on the Manage the system >
+Maintenance > Options  menu.
+General maintenance options
+Option Description
+DB REPLICATION QUEUE DELAY
+THRESHOLDSet the threshold for r eplic ation  queue delay. Once the delay reaches the
+c on figur ed  value, the DB REPLICATION QUEUE DELAY PAST THRESHOLD
+event action  is triggered. See Recovery .
+FILE REPLICATION ARCHIVE DIR You can specify the directory for the File R eplic ation  Service to archive
+e xisting  files before o v er writing  them. The default is the Logs directory for
+the instance. See R eplic ation  and Recovery .
+FILE REPLICATION TIMEOUT Specifies  a timeout  value (in seconds) before the File R eplic ation  Service
+disconnects. See R eplic ation  and Recovery .
+INVALID USER DELAY DAYS Creates a delay between the day that a pr ofile’ s  last associated account is
+deleted and the day that the pr ofile  is invalidated. See In v alidating  users
+(on page 2741).
+KEEP DIFF DAYS Specifies  the number of days to keep a history of notific ation  reminders in
+the database. If unde fined  then no historical data is kept. Default value is
+999999.
+KEEP EMAIL HIST DAYS Specifies  the number of days to keep a history of emails sent. If unde fined
+then the history of emails is kept inde finit ely .
+KEEP HIST DAYS Specifies  the number of days to keep a history of notific ation  reminders in
+the database. If unde fined  then no historical data is kept. Default value is
+999999.
+KEEP INVALID USER DAYS Con figur es  the number of days to keep user pr ofile  data after  in v alidation.
+See Clearing invalid user data  (on page 2742).
+LICENSE EXPIRY WARN DAYS Con figur es  the number of days before license expiry that product
+administrator s are warned that the Bravura Security Fabric license is soon
+to expire. Product administrator s are notified  by email via auto discovery.
+The default value is 14 days.
+LOADDB NULL IS VALUE Normally, if a user has an account on a target system and that account has
+an account attribut e  value that is empty, Bravura Security Fabric will
+attemp t  to get an associated attribut e  value from another system. You can
+change this by enabling the Manage the system >  Maintenance > Options
+> LOADDB NULL IS VALUE  setting.  When this is enabled, Bravura Security
+Fabric considers the associated pr ofile  attribut e  value empty; it does not
+attemp t  to get an attribut e  value from another system.

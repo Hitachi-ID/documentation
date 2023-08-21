@@ -1,0 +1,250 @@
+▪EM_WORKFLOW_REQ_INITIAL_RECIPIENT_OOB_ADD_NOTICE▪
+▪EM_WORKFLOW_REQ_INITIAL_RECIPIENT_OOB_ADDBACK_NOTICE▪
+▪EM_WORKFLOW_REQ_INITIAL_RECIPIENT_OOB_DEL_NOTICE▪
+▪EM_WORKFLOW_REQ_INITIAL_RECIPIENT_OOB_DELBACK_NOTICE▪
+▪EM_WORKFLOW_REQ_INITIAL_RECIPIENT_OOB_NESTED_GROUP_ADD_NOTICE▪
+▪EM_WORKFLOW_REQ_INITIAL_RECIPIENT_OOB_NESTED_GROUP_ADDBACK_NOTICE▪
+▪EM_WORKFLOW_REQ_INITIAL_RECIPIENT_OOB_NESTED_GROUP_DEL_NOTICE▪
+▪EM_WORKFLOW_REQ_INITIAL_RECIPIENT_OOB_NESTED_GROUP_DELBACK_NOTICE▪
+ See also: 
+▪See Customizing w orkflo w  email using the Manage the system (PSA) module  (on page 423) for details ▪
+on email cus t omiz ation.
+▪See Automated w orkflo w  events that launch interface programs  (on page 1534), Automated w orkflo w ▪
+events that launch interface programs  (on page 2446)  for details on available event actions  for out-of-
+band changes to managed groups.
+Con figuring  group-level resource oper ations
+De fine  resource oper ations  for groups to:
+▪Determine whether Bravura Security Fabric  connectors aut omatic ally  fulfill  requests or whether ▪
+human agents will carry out tasks to fulfill  the requests.
+▪Add implementers to a group to de fine  who fulfills  requests based on the group if an Bravura Security ▪
+Fabric  connector is not used.
+You can override resource oper ations  at the target system and group level. If the oper ation  is set at either
+of those levels to be carried out by an implementer, you must assign at least one implementer. If you do
+not do this, requests involving the group will be put on hold unless implementers are dynamically
+assigned by a plugin.
+Inheriting  resource oper ation  c on figur ation  from the target system
+You can c on figur e  target systems so that managed groups inherit the resource oper ation  c on figur ation
+settings  of the target system. You can also override the c on figur ation  for a group, or add implementers.
+Enable inheritance by selecting  the Default authoriz ation  for child resources, including templates and
+managed groups, will be inherited from the target system option  on the relevant Target system
+in f ormation  page  (on page 494).
+To override or add to the c on figur ation  for a managed group:
+1.Navigate to the Managed group in f ormation  page  (on page 590). 1.
+2.Set Override implemen t ation  c on figur ation  to: 2.
+▪Use only inherited c on figur ation ▪
+▪Do not inherit c on figur ation ▪
+▪Add to inherited c on figur ation  (default) ▪3.Click the Resource oper ations  tab. 3.
+▪If you chose to not inherit c on figur ation,  then the page shows the resource oper ations  explicitly ▪
+setup for the managed group; no settings  from the target system should display.
+▪If you chose to add to inherited c on figur ation,  then the page displays settings  that are both ▪
+inherited and explicitly set for the group.
+4.Proceed to c on figur e  resource oper ations  as described in the rest of this section. 4.
+Determining override levels
+To set resource oper ation  override levels for a group:
+1.Navigate to the  Resource oper ations  page  (on page 590). 1.
+2.Select:2.
+▪No override – the oper ation  setting  is inherited from the connector or target system. ▪
+▪Connector oper ation  – the oper ation  will be connector enacted, regardless of the connector or ▪
+target system setting.
+▪Implementer oper ation  – the oper ation  will be implementer enacted, regardless of the connector ▪
+or target system setting.
+3.Click Update . 3.
+Assigning s t atic  implementers
+When the group-level oper ation  is carried out by an implementer, whether by inheriting  the setting  from
+the target system, or being explicitly set, an Implementers table is included on the Implementer
+oper ation  page. If implementers are assigned to the target system, they are inherited by the group. You
+can remove or keep the inherited implementer, or add new implementers for the group.
+If you chose to not inherit the c onfiguration  from the target system, you cannot assign the same
+implementer that is assigned at the target system level.
+To assign s t atic  implementers to a group:
+1.Navigate to the  Resource oper ations  page  (on page 590). 1.
+2.Click Select... at the bottom  of the Implementers table. 2.
+3.Search for, or select the checkboxes next to the implementers that you want to assign to the resource.3.
+4.Click Select at the bottom  of the page. 4.
+To remove s t atic  implementers from a group:
+5.Click Remove implementer in the same row as the user’s ID. 5.
+6.Click Update at the bottom  of the page. 6. See also: 
+▪ Con figuring  target-system-level resource oper ations  (on page 525) ▪
+Assigning implementers by user class
+To assign implementers to a group based on user class:
+1.Navigate to the  Resource oper ations  page  (on page 590). 1.
+2.Click the User classes sub-tab. 2.
+3.To de fine  membership criteria: 3.
+▪Select e xisting  user classes: Click Select... and enable the checkboxes for the user classes you want ▪
+to add, then click Select .
+▪Create new user classes: Click 
+ Add new… . See Adding user classes  (on page 738) for full details ▪
+on how to create a new user class.
+4. Con figur e  P articipan t  mapping for each user class that you add. 4.
+Select and create user classes until  you have de fined  membership.
+5.If your membership criteria includes multiple  user classes, de fine  whether users are required to match 5.
+All of the user classes or Any of the user classes .
+ Removing users from membershipTo remove users from membership, you can:
+1.Edit user classes to change the participan ts. 1.
+2.Delete user classes from the membership criteria.2.
+a.Navigate to the membership criteria  page where user classes are listed. a.
+b.Enable the checkbox next to the user classes you want to delete.b.
+3.Click Delete . 3.
+Con figuring  group-level role enforcement
+The role enforcement engine can identif y  users who have excessive or insufficien t  access, and issue
+w orkflo w  requests to correct variances.
+You cannot enable role enforcement and aut omatic  assignment at the same time  for managed groups.
+To set RBAC enforcement options  for groups:
+1.Navigate to the Managed group in f ormation  page  (on page 590). 1.
+2.Select the Role enforcement tab. 2.
+3.Select the Enabled checkbox. 3.4.If required, select a setting  for the R esolution  for de ficit  violation , to determine what action  Bravura 4.
+Security Fabric  takes when it discovers users who are not members of this group, when they have a
+role that requires it:
+▪Add resource▪
+▪Request e x ception ▪
+▪Use parent role setting ▪
+The default is to take the setting  from the group’s parent role. Selecting  ’Use parent role setting ’
+will cause an error if the parent role is c on figur ed  to ’Inherit enforcement from entitlemen t ’ .
+5.If required, select a setting  for the R esolution  for surplus violation , to determine what action  Bravura 5.
+Security Fabric  takes when it discovers users who are members of this group, but do not have a role
+that includes the group:
+▪Remove resource▪
+▪Request e x ception ▪
+The system default is displayed as the “E ff ectiv e  setting ” .6.Click Update . 6.
+Global RBAC enforcement options  must also be set before these settings  can take e ff ect.
+Gener ating  a pr ofile  s t atistics  report 
+To generate a simple report of users who have a de ficit  or surplus violation  for this group, click Generate .
+Bravura Security Fabric  does not issue violation  enforcement requests when you run this report. To see a
+more detailed report, see the REPORTS  (on page 2891). To list violations  and issue enforcement requests,
+run auto discovery  or use the rbacenforce  program.
+T esting  users 
+To determine whether an individual user has a de ficit  or surplus violation,  type the user’s Pr ofile  ID and
+click Test. The user’s RBAC enforcement pr ofile  and request attribut e  must be set to true.
+Con figuring  aut omatic  group assignment
+The aut omatic  assignment engine can aut omatic ally  add users that are members of a user class to a
+managed group.
+You cannot enable role enforcement and aut omatic  assignment at the same time  for managed groups.
+To set aut omatic  assignment options  for managed groups:
+1.Navigate to the Managed group in f ormation  page  (on page 590). 1.
+2.Select the Assignment tab. 2.
+3.Select or create to de fine  membership criteria. 3.
+4.Click Recalculate to calculate the membership cache. 4.
+In a replicated environment, cache rec alculation  can only be performed on the instance which runs
+psupdate .
+5.Select the Enabled checkbox. 5.
+Additional  options  are displayed.
+6.Set options  described in the table below to suit your needs. 6.
+7.Click Update . 7.
+Group assignment options
+Option Description
+Aut omatic ally  add users that satis f y
+the membership criteriaSelect this to allow the aut omatic  assignment program, autores , to add
+users that have membership in the specified  user class from the role during
+auto discovery
+Aut omatic ally  remove users that no
+longer satis f y  the membership
+criteriaSelect this to allow the aut omatic  assignment program, autores , to
+remove users that do not have membership in the specified  user class from
+the managed group during auto discovery.Option Description
+Aut omatic ally  remove child groups Select this if you want to remove all child groups from the managed group.
+Child groups do not have to be managed in order for them to be removed.
+You may want to enable this option  if you would like Bravura Security Fabric
+to have complete control over who has the rights and privileges of the
+managed group.
+Users who have membership to the child groups inherit the rights and
+privileges of the parent group, but the aut omatic  assignment program,
+autores , has no control over child group memberships.
+Ignore submission limit during auto
+discoverySelect this if you want this aut omatic  assignment to exceed the maximum
+allowed number of request submissions.
+This setting  overrides the global submission limit set by AUTO ASSIGNMENT
+MAXSUBMIT DEFAULT  (Manage the system > W orkflo w  > Options  >
+Aut omation) .
+Submit no requests if there are more
+than this many oper ations  detected
+in a single runSet a limit if you do not want autores to submit any requests if too many
+variances are detected. If this happens Bravura Security Fabric  sends an
+email to product administrators.
+ Gener ating  an assignment deficit  or surplus report 
+To generate a simple report of users that have a de ficit  or surplus for a managed group assignment, click
+the De ficit  or Surplus sub-tabs. Bravura Security Fabric  does not issue requests when you run this report.
+You can search for users that may be in de ficit  or surplus on these pages.
+Only direct group memberships are counted when c alculating  deficits  and surpluses.
+To see a more detailed report, run the Auto-assignment surplus and de ficit  report.
+To issue the requests, run the autores program.
+Remove orphaned group memberships 
+To allow for greater control of group memberships you may also want to remove orphaned accounts
+from the group. An orphaned group account is an account that is currently not associated to an e xisting
+pr ofile.
+To c on figur e  the aut omatic  removal of orphaned accounts:
+1.Click Manage the system > W orkflo w  > Options  > Aut omation . 1.
+2.Enable AUTO ASSIGNMENT GROUP DELETE ORPHAN ACCOUNT 2.
+3.Type the name of a valid pr ofile  ID in the AUTO ASSIGNMENT GROUP DELETE ORPHAN ACCOUNT 3.
+RECIPIENT field.
+4.Click Update . 4.
+During the scheduled psupdate job, requests will be generated to remove orphaned accounts
+discovered.  T esting  user classes You can verify that the user class de fined  will produce the correct list of users that will be aut omatic ally
+assigned this resource.
+To test the user class de fined:
+1.Navigate to the Assignment  page General tab. 1.
+2.Click the Test... button. 2.
+3.Type the User ID of the user to evaluate, then click Test. 3.
+The Test button  evaluates all criteria defined  for the user class, not just the criteria selected.
+Bravura Security Fabric  displays the test results, specifying whether the user satis fied  the criteria for the
+user class.
+To list members of the user class:
+1.Navigate to the Assignment  page General tab 1.
+2.Click the Test... button. 2.
+3.Click List. 3.
+The list of members is displayed. If no members are listed, then there are no users matching the
+criteria for the specified  participan t.
+Managing invalid groups
+If a group that is managed by Bravura Security Fabric  is deleted from the target system, then the group is
+listed as invalid the next time  auto discovery  runs. Bravura Security Fabric  remembers the group until  it is
+restored, or until  Bravura Security Fabric  aut omatic ally  stops managing the group. If a group is restored,
+then the group members are also restored.
+Depending on the target system, adding a new group with the same name may not necessarily restore
+the group.
+Once a group is listed as invalid, Bravura Security Fabric  aut omatic ally  stops managing the group after  30
+days by default. When Bravura Security Fabric  aut omatic ally  stops managing a group, it is removed from
+all roles, SoD rules, and pr e-de fined  requests.
+You can control the amount of time  that a group can be listed as invalid by changing the value of the
+KEEP INVALID MANAGED GROUP DAYS system variable.
+Bravura Security Fabric  administrators are notified  when:
+▪A managed group becomes invalid▪
+▪A managed group is restored▪
+▪Bravura Security Fabric  aut omatic ally  stops managing a group ▪
+The invalid status of a managed group is visible to product administrator  s and to requesters. Requesters
+are still able to create requests for invalid managed group s, but the requests cannot be completed until
+the group is restored.Managed group options  for invalid groups
+The following managed group options  can be accessed from Manage the system > Resources > Options :
+Option Description
+KEEP INVALID MANAGED GROUP DAYS Specify the number of days that must pass once a
+managed group becomes invalid before Bravura
+Security Fabric  aut omatic ally  stops managing the
+group. The default value is 30. If unde fined,  then
+data is kept inde finit ely .
+The following managed group events apply to all modules and can be accessed from Manage the system
+> Resources > Options :
+Option Description
+KEEP INVALID MGROUP INVALIDATED A managed group disappears from the target
+system.
+KEEP INVALID MGROUP RESTORED A managed group is restored on the target system.
+KEEP INVALID MGROUP UNMANAGED Bravura Security Fabric  aut omatic ally  stops
+managing a managed group.
+Deleting  unknown objects
+Group members and group owners are considered unknown when:
+▪They are not in the same OU as that of the managed group, or;▪
+▪They are of a type other than account or group; that is, contact or computer object.▪
+Bravura Security Fabric  detects unknown object types during auto discovery . You can view them using the
+Membership report. Click Manage reports > Reports > Roles and Groups > Membership . In the
+Membership type field,  select ”Unknown object”.
+Unknown objects can be deleted via the Bravura Security Fabric  API and the W orkflo w  Manager Service
+using:
+▪ Pr e-de fined  requests _GROUP_DELETE_MEMBERS_ and _GROUP_DELETE_OWNERS_ ▪
+▪ W orkflo w  oper ation  codes GRBD and GOOD ▪
+See the Bravura Security Fabric  Remote API ( api.pdf ) manual for more in f ormation  about using the API.
+Stopping management of all groups on a target system
+You can use the Target systems  page to stop managing all groups, in a single click, from all the selected
+targets:
+1.Click Manage the system > Resources > Groups . 1.
+Bravura Security Fabric  displays a list of e xisting  target systems.
+2.Select the checkboxes for the target systems on which you want to stop managing groups.2.3.Click Stop managing all groups . 3.
+In cases where the managed groups are being used elsewhere (roles, templates, and so on) Bravura
+Security Fabric displays an error message reporting  the number of groups that has failed to be
+unmanaged.

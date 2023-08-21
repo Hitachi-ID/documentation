@@ -1,0 +1,297 @@
+2.Click Delete at the bottom  of the form. If required c on firm  your actions. 2.
+Bravura Security Fabric  displays a c on firmation  page and asks you whether you want to:
+▪Reload all attribut e  values during the next auto discovery – click Yes (recommended). ▪
+In this case, Bravura Security Fabric  updates the SQLite-based list files that correspond to the
+a ff ect ed  target systems (for example, WINDOWS1.db) with a full attribut e  list.
+▪Reload attribut e  values only when the attribut e  changes on the target system – click No. ▪
+This may help to speed up auto discovery ; however, it may also result in empty or out-of-date
+attribut es  in the Bravura Security Fabric  database.
+If the attribut e  was shipped with Bravura Security Fabric  , the overrides for the current level are
+removed, and the attribut e  is re-listed under the Defaults tab. If the attribut e  was not shipped with
+Bravura Security Fabric  , it is deleted from the system.Template accounts
+Bravura Identity  uses template accounts to aut omatic ally  create new accounts based on the parameters
+of pr e-e xisting  accounts. In e ff ect,  Bravura Identity  implements a "clone user" oper ation.  Multiple
+template accounts can be de fined  for any given target system, r epr esenting  diff er en t  types of users,
+uniquely identified  by their group memberships, privileges, home directory loc ations,  and so on.
+Template accounts are typically dedicated to this task and do not represent real users.
+This chapter shows you how to use the Manage the system  (PSA) module to:
+▪Add template accounts▪
+▪ Con figur e  template-level authoriz ation ▪
+▪ Con figur e  template-level resource oper ations ▪
+Getting  started
+ Requirements for template accounts 
+Before you add templates for account provisioning:
+1.Set up model accounts on each target system to use as templates in Bravura Identity . 1.
+See the Connector Pack Documen t ation  for in f ormation  about cr eating  accounts on specific  systems.
+Ensure that you note the login ID of each model account.
+This is not necessary if new account requests will be fulfilled  by human implementers.
+It is recommended that you do not add template accounts to managed groups. Managed group
+memberships should be handled by including them in roles.
+2.Add target systems  (on page 480) to Bravura Identity . 2.
+3.Import accounts  (on page 538) from target systems. 3.
+Na vig ation  steps
+Use the Template in f ormation  page to c on figur e  general template in f ormation  and to access additional
+c on figur ation  settings.  To navigate to this page:
+1.Click Manage the system > Resources > Template accounts . 1.
+2.To de fine: 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab to c on figur e
+authoriz ation  settings  or the Resource oper ations  tab to c on figur e  overrides and implementers. To return
+to the template in f ormation  page, click the General tab.
+Adding templates
+To add a template account:1.Navigate to the Template inf ormation  page 1.
+Use the Template in f ormation  page to c on figur e  general template in f ormation  and to access
+additional  c on figur ation  settings.  To navigate to this page:
+1.Click Manage the system > Resources > Template accounts . 1.
+2.To de fine: 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab to c on figur e
+authoriz ation  settings  or the Resource oper ations  tab to c on figur e  overrides and implementers. To
+return to the template in f ormation  page, click the General tab.
+.
+2. Con figur e  the options  from the table below as required. 2.
+3.Click Add. 3.
+If you are implementing  a role-based access control system, it is recommended that template accounts
+are not themselves members of managed groups. This allows you to control group membership by
+including the group as a member of a role.
+Option Description
+ID A unique identifier  for the template.
+Description The description  to display to users.
+Target system ID Search for, or type the ID of the target system you want.
+The model account that you want to clone must exist on this target system.
+Account to clone when cr eating  a
+new userSearch for, or type the login ID of the account you want to use as a model
+or blueprint.
+This is required for account provisioning templates. It must be a valid
+account listed in the Bravura Identity  database.
+Password required Deselect this checkbox if accounts created from this template do not
+require a password..
+Used as pr ofile  comparison
+templateSelect this checkbox if this template is to be used when cr eating  a new user
+by copying entitlemen ts  from another user.
+Only one template account on each target system can be used for this
+purpose. When you add the fir s t template for the target system, this setting
+is aut omatic ally  selected. If you set another template as the pr ofile
+comparison template on the same target system, the setting  is deselected
+from the original template.
+Override authoriz ation
+c on figur ationDetermine whether to inherit authoriz ation  c on figur ation  from the target
+system, specify t empla t e-specific  authorizers, or a c ombination  of both.
+Override implemen t ation
+c on figur ationDetermine whether to inherit implemen t ation  c on figur ation  from the target
+system specify t empla t e-specific  implementers, or a c ombination  of both.Con figuring  template-level authoriz ation
+De fine  authoriz ation  in f ormation  for templates to:
+▪Set the number of approvals or denials required for requests involving the template.▪
+▪Assign s t atic  authorizers to de fine  who can approve account requests based on the template. ▪
+Users must be loaded into the Bravura Security Fabric database before you can de fine  them as
+authorizers.
+You must assign enough authorizers to meet the minimum number of authorizers requirement. If you do
+not do this, requests involving the resource are aut omatic ally  denied unless authorizers are assigned by a
+w orkflo w  plug-in.
+Inheriting  authoriz ation  c on figur ation  from the target system
+You can c on figur e  target systems so that templates inherit the authoriz ation  c on figur ation  settings  of the
+target system. You can also override the c on figur ation  for a template, or add authorizers.
+Enable inheritance by selecting  the Default authoriz ation  for child resources,including templates and
+managed groups, will be inherited from the target system option  on the relevant Target system
+in f ormation  page  (on page 494).
+To override or add to the c on figur ation  for a template:
+1.Navigate to the Template inf ormation  page 1.
+Use the Template in f ormation  page to c on figur e  general template in f ormation  and to access
+additional  c on figur ation  settings.  To navigate to this page:
+1.Click Manage the system > Resources > Template accounts . 1.
+2.To de fine: 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab to c on figur e
+authoriz ation  settings  or the Resource oper ations  tab to c on figur e  overrides and implementers. To
+return to the template in f ormation  page, click the General tab.
+.
+2.Set Override authoriz ation  c on figur ation  to: 2.
+▪Only use inherited c on figur ation ▪
+▪Do not inherit any c on figur ation ▪
+▪Add to inherited c on figur ation  (default) ▪
+3.Click the Authoriz ation  tab. 3.
+▪If you chose to not inherit authoriz ation,  then the page shows authoriz ation  explicitly setup for the ▪
+template; no authoriz ation  from the target system should display.▪If you chose to add to inherited authoriz ation,  then the page displays settings  that are both ▪
+inherited and explicitly set for the template.
+When you choose to add to inherited authoriz ation,  the minimum number of required authorizers
+will be determined by the larger value set for the template or target system.
+4.Proceed to c on figur e  authoriz ation  as described in the rest of this section. 4.
+Con figuring  phased authoriz ation
+If phased authoriz ation  is enabled, navigate to the template’s Authoriz ation  page then:
+▪Click Add new… if you want to add a phase. ▪
+▪To change the order of phases, change the numbers in the Authoriz ation  phase column and click ▪
+Update .
+▪Select a phase to de fine  authorizers and settings. ▪
+Determining number of required approvals
+To set authoriz ation  thresholds for a template:
+1.Navigate to the Template inf ormation  page 1.
+Use the Template in f ormation  page to c on figur e  general template in f ormation  and to access
+additional  c on figur ation  settings.  To navigate to this page:
+1.Click Manage the system > Resources > Template accounts . 1.
+2.To de fine: 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab to c on figur e
+authoriz ation  settings  or the Resource oper ations  tab to c on figur e  overrides and implementers. To
+return to the template in f ormation  page, click the General tab.
+.
+2.Click the Authoriz ation  tab. 2.
+Select a phase if phased authoriz ation  is enabled.
+3.Type a value for the:3.
+▪Minimum number of authorizers – A value of 0 means requests for the resource are auto- ▪
+approved.
+The default value is set by the MIN AUTHORIZERS  policy.
+▪Number of denials before a change request is terminated – A resource request is canceled when ▪
+this number of authorizers deny it, as long as the Minimum number of authorizers has not been
+reached.
+4.The default value is set by the MAX REJECTIONS  policy. 4.
+5.Click Update . 5.Assigning s t atic  authorizers
+To assign s t atic  authorizers to a template:
+1.Navigate to the Template inf ormation  page 1.
+Use the Template in f ormation  page to c on figur e  general template in f ormation  and to access
+additional  c on figur ation  settings.  To navigate to this page:
+1.Click Manage the system > Resources > Template accounts . 1.
+2.To de fine: 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab to c on figur e
+authoriz ation  settings  or the Resource oper ations  tab to c on figur e  overrides and implementers. To
+return to the template in f ormation  page, click the General tab.
+.
+2.Click the Authoriz ation  tab. 2.
+Select a phase if phased authoriz ation  is enabled.
+3.Click Select... at the bottom  of the Authorizers table. 3.
+4.Search for, or enable the checkboxes next to the authorizers that you want to assign.4.
+5.Click Select at the bottom  of the page. 5.
+Assigning authorizers by user class
+To assign authorizers to a template based on user class:
+1.Navigate to the Template inf ormation  page 1.
+Use the Template in f ormation  page to c on figur e  general template in f ormation  and to access
+additional  c on figur ation  settings.  To navigate to this page:
+1.Click Manage the system > Resources > Template accounts . 1.
+2.To de fine: 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab to c on figur e
+authoriz ation  settings  or the Resource oper ations  tab to c on figur e  overrides and implementers. To
+return to the template in f ormation  page, click the General tab.
+.
+2.Click the Authoriz ation  tab. 2.
+The Users must be in the following user classes table allows you to de fine  membership criteria.
+3.To de fine  membership criteria: 3.▪Select e xisting  user classes: Click Select... and enable the checkboxes for the user classes you want ▪
+to add, then click Select .
+▪Create new user classes: Click 
+ Add new… . See Adding user classes  (on page 738) for full details ▪
+on how to create a new user class.
+4. Con figur e  P articipan t  mapping for each user class that you add. 4.
+Select and create user classes until  you have de fined  membership.
+5.If your membership criteria includes multiple  user classes, de fine  whether users are required to match 5.
+All of the user classes or Any of the user classes .
+ Removing users from membership
+To remove users from membership, you can:
+1.Edit user classes to change the participan ts. 1.
+2.Delete user classes from the membership criteria.2.
+a.Navigate to the membership criteria  page where user classes are listed. a.
+b.Enable the checkbox next to the user classes you want to delete.b.
+3.Click Delete . 3.
+Con figuring  template-level resource oper ations
+You can de fine  resource oper ations  for template accounts to:
+▪Determine whether Bravura Security Fabric  agents aut omatic ally  fulfill  requests or whether human ▪
+agents will carry out tasks to fulfill  the requests.
+▪Add implementers to a template to de fine  who fulfills  account requests based on the template if an ▪
+Bravura Security Fabric  connector is not used.
+You can override resource oper ations  at the target system and template level. If the oper ation  is set at
+either of those levels to be carried out by an implementer, you must assign at least one implementer. If
+you do not do this, requests involving the template will be put on hold unless implementers are
+dynamically assigned by a plugin. See Determining implementers  (on page 2402) for details.
+Inheriting  resource oper ation  c on figur ation  from the target system
+You can c on figur e  target systems so that templates inherit the resource oper ation  c on figur ation  settings
+of the target system. You can also override the c on figur ation  for a template, or add implementers.
+Enable inheritance by selecting  the Default authoriz ation  for child resources,including templates and
+managed groups, will be inherited from the target system option  on the relevant Target system
+in f ormation  page  (on page 494).
+To override or add to the c on figur ation  for a template:
+1.Navigate to the Template inf ormation  page 1.
+Use the Template in f ormation  page to c on figur e  general template in f ormation  and to access
+additional  c on figur ation  settings.  To navigate to this page:1.Click Manage the system > Resources > Template accounts . 1.
+2.To de fine: 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab to c on figur e
+authoriz ation  settings  or the Resource oper ations  tab to c on figur e  overrides and implementers. To
+return to the template in f ormation  page, click the General tab.
+.
+2.Set Override implemen t ation  c on figur ation  to: 2.
+▪Use only inherited c on figur ation ▪
+▪Do not inherit any c on figur ation ▪
+▪Add to inherited c on figur ation  (default) ▪
+3.Click the Resource oper ations  tab. 3.
+▪If you chose to not inherit c on figur ation,  then the page shows the resource oper ations  explicitly ▪
+setup for the template; no settings  from the target system should display.
+▪If you chose to add to inherited c on figur ation,  then the page displays settings  that are both ▪
+inherited and explicitly set for the template.
+4.Proceed to c on figur e  resource oper ations  as described in the rest of this section. 4.
+Determining override levels
+To set resource oper ation  override levels for a template:
+1.Navigate to the Template inf ormation  page. 1.
+Use the Template in f ormation  page to c on figur e  general template in f ormation  and to access
+additional  c on figur ation  settings.  To navigate to this page:
+1.Click Manage the system > Resources > Template accounts . 1.
+2.To de fine: 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab to c on figur e
+authoriz ation  settings  or the Resource oper ations  tab to c on figur e  overrides and implementers. To
+return to the template in f ormation  page, click the General tab.
+2.Select the Resource oper ations  tab. 2.
+3.Select:3.
+▪No override the oper ation  is inherited from the target system. ▪
+▪Connector oper ation  – the oper ation  will be connector enacted, regardless of the target system ▪
+setting.▪Implementer oper ation  – the oper ation  will be implementer enacted, regardless of the target ▪
+system setting.
+4.Click Update . 4.
+Assigning s t atic  implementers
+When the template-level oper ation  is carried out by an implementer, whether by inheriting  the setting
+from the target system, or being explicitly set, an Implementers  table is included on the Implementer
+oper ation  page. If implementers are assigned to the target system, they are inherited by the template.
+You can remove or keep the inherited implementer, or add new implementers for the template.
+If you chose to not inherit the c onfiguration  from the target system, you cannot assign the same
+implementer that is assigned at the target system level.
+To assign s t atic  implementers to a template:
+1.Navigate to the Template inf ormation  page 1.
+Use the Template in f ormation  page to c on figur e  general template in f ormation  and to access
+additional  c on figur ation  settings.  To navigate to this page:
+1.Click Manage the system > Resources > Template accounts . 1.
+2.To de fine: 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab to c on figur e
+authoriz ation  settings  or the Resource oper ations  tab to c on figur e  overrides and implementers. To
+return to the template in f ormation  page, click the General tab.
+.
+2.Select the Resource oper ations  tab. 2.
+3.Click Select... at the bottom  of the Implementers table. 3.
+4.Search for, or select the checkboxes next to the implementers that you want to assign to the resource.4.
+5.Click Select at the bottom  of the page. 5.
+To remove s t atic  implementers from a template:
+1.Click Remove implementer in the same row as the user’s ID. 1.
+2.Click Update at the bottom  of the page. 2.Assigning implementers by user class
+To assign implementers to a template based on user class:
+1.Navigate to the Template inf ormation  page 1.
+Use the Template in f ormation  page to c on figur e  general template in f ormation  and to access
+additional  c on figur ation  settings.  To navigate to this page:
+1.Click Manage the system > Resources > Template accounts . 1.
+2.To de fine: 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab to c on figur e
+authoriz ation  settings  or the Resource oper ations  tab to c on figur e  overrides and implementers. To
+return to the template in f ormation  page, click the General tab.
+.
+2.Select the Resource oper ations  tab, then click the User classes sub-tab. 2.
+3.To de fine  membership criteria: 3.
+▪Select e xisting  user classes: Click Select... and enable the checkboxes for the user classes you want ▪
+to add, then click Select .

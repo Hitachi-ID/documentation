@@ -1,0 +1,326 @@
+1.Log into Bravura Security Fabric  as ABBIEL. 1.
+2.Click Attach  other accounts . 2.
+3.Enter adm  and the current password in the Account  and Password  fields. 3.
+4.Click Attach . 4.
+5. Con firm  that adm  has been added to attached  accounts and the proper Linux target is specified. 5.
+6.Return to the main user page by clicking the Home  icon. 6.
+7.Click Change passwords . 7.
+8.Enter a new password and c on firm.  Click Change passwords  to proceed. 8.
+9.Verify that both passwords on the AD and Linux target are changed.9.
+10. Log into Linux as adm to c on firm  that the password has been changed. 10.
+Detach account
+1.Log into Bravura Security Fabric  as the help desk user. 1.
+2.Click Help users . 2.
+3.Find and select ABBIEL . 3.
+4.Click Skip authentic ation  when prompted for a security question. 4.
+5.Click the Attach  other accounts  tab. 5.
+6.Click the checkbox next to adm  to detach the account. 6.
+7.Click Update . 7.
+8. Con firm  that adm is no longer attached  to ABBIEL. 8.
+Lab: Attach  account - advanced
+This scenario demonstrates the attachmen t  of an account from the Linux system to an e xisting  Activ e
+Directory account using the PSL advanced mode. The account will then be detached by the help desk
+user to reset.
+Configur ation
+1.Log in to the Front-end (PSF) as superuser . 1.
+2.Navigate to Manage the system > Modules > Attach  other accounts (PSL) . 2.
+3.Ensure that PSL ENABLED  is enabled. 3.
+4.Set PSL SIMPLIFIED  to disabled. 4.
+5.Click Update . 5.
+Method of Use
+This example demonstrates using the advanced mode to attach  the same adm account to ABBIEL.
+Attach  in advanced mode
+1.Log into Bravura Security Fabric  as ABBIEL . 1.2.Click Attach  other accounts . 2.
+3. Notice  that the Linux target is now specified.  Enter adm  and the password into the Account  and 3.
+Password  fields  for the Linux target row.
+4.Click Update . 4.
+5. Con firm  that adm has been added to attached  accounts and the proper Linux target is specified. 5.
+6.Return to the main user page by clicking the Home  icon. 6.
+7.Click Change passwords . 7.
+8.Enter a new password and c on firm.  Click Change passwords  to proceed. 8.
+9.Verify that both passwords on the AD and Linux target are changed.9.
+10. Log into Linux as adm to c on firm  that the password has been changed. 10.
+Detach account
+1.Log into Bravura Security Fabric  as the help desk user. 1.
+2.Click Help users . 2.
+3.Find and select ABBIEL.3.
+4.Click Skip authentic ation  when prompted for a security question. 4.
+5.Click the Attach  other accounts  tab. 5.
+6.Click the checkbox next to adm  to detach the account. 6.
+7.Click Update . 7.
+8. Con firm  that adm is no longer attached  to ABBIEL. 8.
+Lab: Attach  account as a help desk user
+In this scenario, the help desk user attaches  the adm account to abbiel. The account will remain attached
+for the following example.
+Attach  account
+1.Log into Bravura Security Fabric  as the help desk user. 1.
+2.Click Help users . 2.
+3.Find and select ABBIEL . 3.
+4.Click Skip authentic ation  when prompted for a security question. 4.
+5.Click the Attach  other accounts  tab. 5.
+6.Enter adm  in the Account field  for the Linux target row. 6.
+7.Click Update . 7.
+8. Con firm  that adm is now attached  to ABBIEL. 8.
+Lab: Account attachmen t  when account is already assigned
+In this scenario, there is an attemp t  to attach  the adm account to user ADAMC while it has already been
+attached  to ABBIEL.Attemp t  to attach  an assigned account
+1.Log into Bravura Security Fabric  as ADAMC . 1.
+2.Click Attach  other accounts . 2.
+3.Enter adm  and the password in the Account  and Password  fields  for the Linux target row. 3.
+4.Click Update . 4.
+5.Verify that the attemp t  to attach  the account fails with the following message: 5.
+Account adm on Linux is already attached  to someone else.
+Group memberships
+Most systems support the concept of groups. In its most basic form, a group is a c ollection  of accounts
+and possibly other groups. Access privileges for accounts are often  determined by their memberships in
+one or more groups.
+During auto discovery , Bravura Security Fabric  connectors list memberships in managed groups . If you
+want Bravura Security Fabric  to extract group memberships, you must fir s t select the groups that you
+want Bravura Security Fabric  to manage.
+By default, managed group membership is listed during auto discovery . You can disable this listing
+oper ation  can by disabling the List groups option  on the Target system in f ormation  page. This can be
+done to improve the performance of listing  oper ations.  However, disabling the List groups  option  does
+not remove any e xisting  managed groups; groups must be manually unmanaged.
+If any of a user’s accounts are listed as belonging to a managed group, this r elationship  is stored in the
+user’s pr ofile.  Bravura Security Fabric  also updates user pr ofiles  with changes to group memberships that
+are made from within Bravura Security Fabric .
+(on page 585)
+Account attribut es
+The term account attribut es  refers to the attribut es  of user accounts on target systems. For example,
+most systems store the “fir s t  name” and “last name” of the end users that own the accounts. Other
+examples of attribut es  include access controls, home drives, last logon times,  account and password
+expiry times.
+To list attribut es  for accounts on a particular  target system during auto discovery , the List attribut es  setting
+must be enabled for the target system. By default, this setting  is enabled, only lists account attribut es
+that are mapped to pr ofile  and request attribut es,  and loads all attribut es  as single-valued. You can
+override the behavior for individual account attribut es  (on page 566).
+Attribut e  lists can be very large. Bravura Security Fabric  supports incremental, or diff er ential,  listing  on
+some target system types, such as LDAP and Activ e  Directory. For these targets, once the initial  discovery
+has been run, Bravura Security Fabric  generates an incremental list on subsequent runs of auto discovery .
+You can generate a full list during the next auto discovery  by clicking Generate full list on the Target
+system in f ormation  page. You must c on firm  your request before the change takes e ff ect.Bravura Security Fabric  keeps a “catalog” of supported attribut es  for each target type. Some target
+systems support dozens of attribut es,  while other systems do not provide a default method for Bravura
+Security Fabric  to list attribut es.  Among other things, this cataloger controls which of the listed attribut es
+should be loaded into the Bravura Security Fabric  database during auto discovery .
+See also: 
+See more in f ormation  about Account  (on page 566)  attribut es  (on page 566).
+Example: Loading SSH public keys in pr ofiles
+Depending on the target system type, you can c on figur e  Bravura Security Fabric  to aut omatic ally  load
+users’ SSH public keys in their pr ofiles.
+See the Connector Pack Documen t ation  to determine which connectors have the option  to enable SSH
+key discovery.
+Only valid SSH public keys files on servers are loaded when running auto discovery. A SSH public key file
+must be less than the maximum file size to parse (default is 100,000 KB) and it must be in OpenSSH
+format in order to be valid.
+By default, the public_keys attribut e  is mapped to the built-in ssh_public_keys pr ofile  and request
+attribut e.
+To enable users to view and update their SSH public keys in their pr ofile:
+1.Click Manage the system > W orkflo w  > Attribut e  groups 1.
+2.Select the SSH_PUBLIC_ATTRS attribut e  group 2.
+3.Click Display criteria tab 3.
+4.Select ’Main’ or ’Subsidiary’ for Display type 4.
+5.Click Update 5.
+For security reasons, Bravura Security Fabric does not support modifying SSH public keys on the target
+system if updated from the user’s profile.
+Pr ofile  attribut es
+The term profile  and request attribut es  refers to the attribut es  of Bravura Security Fabric  user objects.
+In f ormation  for e xisting  users is often  built by auto discovery , which loads account attribut e  in f ormation
+into mapped pr ofile  and request attribut es.  Pr ofile  and request attribut e  in f ormation  can also be built by:
+▪A plugin that aut omatic ally  collects and/or validates in f ormation. ▪
+▪Users who enter the in f ormation  when r equesting  accounts for themselves or others. ▪
+▪Users who update the in f ormation  for themselves or others. ▪
+▪Automated user adminis tr ation. ▪Force users to update pr ofile  in f ormation
+You can force users to update pr ofile  in f ormation  as part of the enrollment process. You can c on figur e
+this individually for each pr ofile  and request attribut e.
+To force users to update their pr ofile  in f ormation:
+1.For each attribut e  for which you require users to provide values, set the Minimum required number 1.
+of values to 1 or greater.
+See more in f ormation  on de fining  pr ofile  and request attribut es  (on page 1270).
+2.Add the attribut e  to the BASE_ATTRIBUTES attribut e  group. 2.
+See more in f ormation  on attribut e  groups  (on page 1304).
+3. Con figur e  the Front-end  to redirect users to the View and update pr ofile  (IDR) module if they have not 3.
+provided values for required attribut es.
+To do this, include the idr value in PSF FORCE ENROLLMENT . See also Enforced enrollment  (on page
+1183).
+Access controls
+Users’ access in Bravura Security Fabric  is controlled by their permissions and c apabilities :
+▪Permissions are the rules that determine whether users can access certain objects, such as pr ofile  and ▪
+request attribut es  or Bravura Privilege  managed system policies.
+▪ Capabilities  are the tasks that individual users are permitted  to perform in Bravura Security Fabric . ▪
+Access controls a ff ect  API users as well as normal users.
+There are many ways to assign access controls in Bravura Security Fabric . Refer to:
+▪ Attribut e  groups  (on page 1304) to learn how to assign permissions to users. ▪
+▪User types and access rules  (on page 671) to learn how to assign product administrator  and authorizer ▪
+c apabilities  to users.
+▪ Authoriz ation  w orkflo w  options  (on page 1340) for more in f ormation  about how access controls can ▪
+be assigned to users dynamically.
+There are also ways to filt er  access without c on figuring  users’ access controls. Refer to:
+▪Resource filt ering  (on page 2354) for more in f ormation  about filt ering  objects available to users. ▪
+▪Plugins for more in f ormation  about r es tricting  the oper ations  that end users can request. ▪
+OrgChart data
+In general, or g aniz ational  chart data represents how authority and responsibility is distributed within an
+or g aniz ation.  Bravura Security Fabric  can store OrgChart data for each user, including who that user
+reports to, and who that user’s subordinates are.
+Bravura Security Fabric  implements OrgChart data by examining users’ pr ofile  and request attribut es  to
+determine their primary managers. If a suitable ”manager” attribut e  exists on a target system, Bravura
+Security Fabric  can import pr e-e xisting  OrgChart data during auto discovery .You can also leverage Bravura Security Fabric 's user interface to build upon or maintain OrgChart data, or
+to build an OrgChart from scratch.
+Security question  data
+Bravura Security Fabric  allows you to de fine  multiple  question  sets  (on page 1024) that can be used in a
+variety of ways: to gather in f ormation  from users, to authentic a t e  users when they attemp t  to log into
+Bravura Security Fabric  , or to authentic a t e  callers when they ask the help desk for assistance.
+Users can add security questions,  or just the answers to pr e-de fined  questions,  to their pr ofiles  in one of
+two ways:
+▪For themselves, using the Update security questions  (PSQ) module ▪
+▪Assisted by a help desk user , using the Help users  (IDA) module ▪
+Additionally  a plugin program can be c on figur ed  to de fine  users’ questions,  answers, or both in an
+external source.
+Forcing users to complete security questions
+When the PSF FORCE ENROLLMENT setting  (on page 1183) includes the psq value (default), users are
+redirected to the Update security questions  (PSQ) module to complete their security question  pr ofile  when
+they login. This is useful during the enrollment phase in particular .  If the psq value is removed from PSF
+FORCE ENROLLMENT , then this setting  is disabled.
+Inventory items
+Bravura Security Fabric  can track and manage inventory items, such as hardware tokens and office
+equipment. Inventory is assigned to users in the following ways:
+▪In batches using the manageinv  (on page 3613)  program ▪
+▪Using Bravura Identity ’s inventory provisioning process ▪
+Roles
+Roles provide a way of assigning requirements for a set of users. They are a part of a role-based access
+control system, along with segr eg ation  of duties  rules.
+Roles can be assigned to users via authoriz ation  w orkflo w ,  or in batches using the userrole  (on page
+3638) program.
+Forcing users to activ a t e  a mobile device
+You can force users to register and activ a t e  a mobile device as part of the enrollment process. Users are
+redirected to the Mobile devices page when forced enrollment for mobile devices has been enabled.
+To force users to activ a t e  a mobile device:
+▪Ensure that the Bravura Security Fabric  and Bravura One  proxy servers have been c on figur ed  for ▪
+Bravura One .See the Mobile access  (on page 1444) for more in f ormation  about how to c on figur e  the servers for
+Bravura One .
+▪Add the mobiledevice value to PSF FORCE ENROLLMENT  (on page 1183). ▪
+▪Ensure that a self-service rule has been c on figur ed  so that the users have the ”Manage mobile ▪
+devices” privilege. This may be c on figur ed  either for a new self-service rule or ALL_SELF_REQUEST for
+all users.
+Filtering users and accounts
+Bravura Security Fabric  uses ID filt ers  to include or exclude users (pr ofile  IDs) and accounts (long IDs)
+from a target system. The filt er s  are applied during the auto discovery  process when accounts are
+imported.
+For example, c on figur e  Bravura Security Fabric  to filt er  IDs if:
+▪You want to prevent Bravura Security Fabric  from cr eating  pr ofiles  for certain adminis tr ativ e  accounts. ▪
+▪The total number of pr ofile  IDs exceeds the number of users you are licensed for. ▪
+▪You want to prevent users from attaching  accounts that are used for specific  purposes on a system. ▪
+For example, you may want to prevent users from attaching  an nt_guest  account on a Windows NT
+system.
+▪You want to prevent Bravura Identity  from cr eating  users and accounts with certain IDs. ▪
+Default behavior is a ff ect ed  by the Use ID filt er s  to include only certain users and accounts checkbox,
+located on the Target system in f ormation  page .
+When the Use ID filt er s  to include only certain users and accounts option  is:
+▪Not selected – Bravura Security Fabric  imports all IDs except those that have been explicitly excluded ▪
+by an ID filt er .
+▪Selected – No accounts are imported. You must set up an ID filt er  to explicitly include certain IDs. ▪
+Use the Manage ID filt er s  page to identif y  account IDs that you want or don’t want managed by Bravura
+Security Fabric  , or to be included or excluded from a source of pr ofile  IDs.
+When filt ering  on target systems, you use the Include in system option  to create an inclusion or exclusion
+list.
+▪An ID is “excluded” if it matches a P attern  on the Manage ID filt ers  page and the corresponding ▪
+Include in system checkbox is not selected.
+Bravura Identity  prevents users from cr eating  accounts with an ID that matches an excluded ID
+pattern.▪An ID is “included” if it matches a P attern  on the Manage ID filt ers  page and the corresponding ▪
+Include in system checkbox is selected.
+When filt ering  on pr ofile  IDs, the Include in system option  does not apply. If Use ID filt er s  to include only
+certain users and accounts is selected for a target system, then the filt er  acts as inclusion list. If the
+setting  is not selected, then the filt er  acts as an exclusion list.
+See also: 
+You can also use a script to import a list of IDs to filt er  (on page 559).
+Including and excluding accounts
+To include or exclude users or accounts:
+1.Click Maintenance >  Auto discovery > Manage ID filt er s . 1.
+Bravura Security Fabric  displays the Manage ID filt er s  page.
+2.In the P attern  field,  type an ID or a regular expression that represents the users or accounts you want 2.
+to include or exclude. .
+Bravura Security Fabric preserves the case of account IDs; however, all profile  IDs are treated as c ase-
+insensitive.
+3.Select Regular expression if the pattern  is a regular expression. Otherwise, Bravura Security Fabric  will 3.
+treat the pattern  as an exact ID.
+4.Select Include in system if the filt er  should include matching account IDs. 4.
+5.If the Include in system option  is not selected, the matching IDs are always excluded. 5.
+6.Select a Filter on item to run the filt er  on all target systems, a single target system, or pr ofile  IDs. 6.
+Filters on ”(All target systems)” includes ”(Profile  ID)”. This means the filt er  will match all account IDs
+as well as Bravura Security Fabric Profile  IDs.
+7.Click Update . 7.
+The following are examples for filt ering  users and accounts:
+1.To exclude all accounts s t arting  with _service from an Activ e  Directory target system: 1.
+P attern ^_service
+Regular expression selected
+Include in system deselected
+Filter on ADDOMAIN
+2.To include the pr ofile  ID JANED from a target system with the Use ID filt er s  to include only certain 2.
+users and accounts checkbox selected:
+P attern janed
+Regular expression deselected
+Include in system selectedFilter on (Profile ID)
+T esting  filt er  rules
+Use the Test button  to test whether an ID will be imported to Bravura Security Fabric  based on the rules
+you have applied. You can test whether:
+▪An account will be imported from a particular  target system ▪
+▪An account ID will be included as a pr ofile  ID ▪
+To test your filt er  rules:
+1.On the Manage ID filt er s  page, type an ID in the Pr ofile  ID/Account field. 1.
+2.Select ”(Pr ofile  ID)” from the Test on drop-down list if you want to test whether the ID will be included 2.
+as a pr ofile  ID.
+or
+3.Select a target ID from the Test on drop-down list if you want to test whether the ID will be imported 3.
+from the selected target system.
+4.Click Test. 4.
+Bravura Security Fabric  displays the results at the top of the page.
+Using a script to import IDs to filt er
+You can use a script to import IDs that you want to filt er  from the Bravura Security Fabric  database. A
+sample Python script, idfilter_import.py , is provided in the samples directory. If you cannot find
+the sample file, try re-running setup to modify your ins t allation.  Sample files are aut omatic ally
+installed only with complete ins t allations.  You can select them in custom ins t allations.
+The script requires a file listing  IDs, one per line, that are to be filt er ed  out.
+Run the script from a Bravura Security Fabric  command prompt with elevated privileges:
+python idfilter_import.py -r <filename> | --file_name <filename> 
+For example:
+python idfilter_import.py -r users.rem 
+After  running the script, the IDs listed in the file should be listed in the Manage ID filt er s  page.
+See also: 
+You can also set a user filt er  plugin or a user list g ener ation  plugin  (on page 1049) to filt er  the users that a
+logged-in user can manage.
+Enabling and disabling users
+User pr ofiles  can be:Locked/Unlocked Lock oper ations  happen aut omatic ally  after  too many failed authentic ation
+attemp ts.  Pr ofiles  can be unlocked by help desk users.
+Disabled/Enabled Disabling a pr ofile  completely disables users’ access to Bravura Security Fabric  ,
+and terminates any single sign-on sessions activ e  for that user. For example, you
+could disable a pr ofile  to revoke access for an employee whose contract is being
+terminated. Disabled pr ofiles  can be enabled if required.
+Enabling or disabling a user’s profile  does not aff ect  their accounts.
+Disabling a user aut omatic ally  revokes access to any privileged accounts that they have checked out.
+The userunlock  (on page 3640) utility  can be used to unlock a profile  of a user that has locked themselves
+out. This utility  will not enable a user that has been explicitly disabled.
+You can explicitly enable/disable or unlock a user’s pr ofile  using the:
+▪ Pr ofile  status tab of the Help users  (IDA) module. ▪
+▪Manage the system  > Security > Access to product features  > Individual administrators  page if the ▪
+user is also a product administrator .
+Only users with accounts can be managed in the Help users  (IDA) module. To disable a user with console-
+only access you must use the Manage the system  (PSA) module.
+Disabled and locked-out users cannot access any Bravura Security Fabric functionality ,  regardless of
+whether they were disabled using the Help users  (IDA) module, Manage the system  (PSA) module, or locked-
+out after  too many failed authentic ation  attemp ts.
+You can also include enable/disable oper ations  in pr e-de fined  requests.
+Tracking user pr ofile  history
+Bravura Security Fabric  can track changes to user pr ofiles  to create a per-user history of events for each
+user. The following can be tracked and included in pr ofile  history:
+▪Accounts on target systems▪
+▪Managed group memberships▪
+▪Account attribut es ▪
+▪ Pr ofile  and request attribut es ▪
+▪Role memberships▪
+Only resources that have been c on figur ed  to track changes are available in the user pr ofile  history. You
+must enable the tracking on a per-resource basis. Roles are enabled for tracking by default.
+To enable tracking, use the:
+▪Track account changes option  on the Target system in f ormation  page  (on page 494) ▪
+▪Track changes to membership in this group option  on the Managed group in f ormation  page  (on page ▪
+590).
+▪Track changes to this account attribut e  option  on the Account attribut e  c on figur ation  page  (on page ▪
+572).

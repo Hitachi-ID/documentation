@@ -1,0 +1,211 @@
+▪Local service mode softw ar e  ins t allation  and keys ▪
+▪Push mode initial  r andomiz ation ▪
+▪Password r andomiz ation  intervals ▪
+▪ Authoriz ation  w orkflo w  check-in /check-out behavior ▪
+▪Session recording and access▪
+▪Triggers for external programs▪
+To do this:
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.Select the Options  tab, then the appropriate sub-tab. 2.
+3.Clear the Use system setting  checkbox to set an option  as required. 3.
+4.Click Update . 4.
+See Privileged access management options  (on page 1932) for more in f ormation  about the options.
+Assigning access controls
+Each managed system policy  has group access controls available on a per-group basis. These access controls
+de fine  the privileges that attribut e  and user group members have for that policy. Some access controls
+are only available if it applies to the authentic ation  type de fined  for the policy.
+When a managed system policy  is created, Bravura Privilege  assigns default access controls for the
+ALLRECIPIENTS, ALLREQUESTERS, and MSP_REPORT_USERS user groups.
+Regular users, via the built-in ALLREQUESTERS user group, by default have permission to:
+▪Request check-out of managed accounts (if the policy has the password or SSH key authentic ation ▪
+type)
+▪View in f ormation:  Managed systems/Managed accounts/Group sets/Account sets ▪
+▪Request check-out of group set s (if the policy has the group set authentic ation  type) ▪
+The permissions granted by a user group work in c onjunction  with adminis tr ativ e  privileges. product
+administrator s with the Manage managed system policies adminis tr ativ e  privilege have the right to
+manage managed system policies .
+To modify managed system policy  access controls:
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.Select the Access control tab. 2.
+3.Enable permissions for user groups as required.3.
+4.Click Update . 4.
+Scheduling push-mode password resets
+If the managed system policy  is a push mode managed system policy  with the password or SSH key
+authentic ation  type, you can specify the days and times  that password changes are allowed to occur. Thisis primarily used to ensure that password changes do not occur when users are accessing the managed
+systems.
+To schedule push mode password resets:
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.Click the Randomiz ation  schedule tab. 2.
+3.Select the checkboxes to specify the days.3.
+4.Specify time  intervals in HH:MM-HH:MM format during which password changes are allowed to occur. 4.
+More than one interval can be specified  (separated by commas). Not specifying an interval means that
+password change can occur at any time  during the day.
+5.Click Update . 5.
+Releasing managed system policies
+In order to change the service which manages a managed system policy, or delete a policy, you must fir s t
+release the policy from the service currently managing it. Before releasing the policy, all checked-out
+resources must be checked-in.
+A managed system policy cannot be released or deleted while access is checked out. However, you can
+switch the managing node of the policy to transfer ownership to the new service.
+▪Navigate to the Managed system policy in f ormation  page  (on page 1835). ▪
+▪Click Go the node assignments page . ▪
+▪Changing a managed system policy’s service ID▪
+Product administrators with the "Maintain servers and Manage managed system policies"
+adminis tr ativ e  privileges can quickly change the service ID for any managed system policy  in a
+r eplic ation  environment. You might need to do this in a recovery scenario; for example, when a
+r eplic ation  node goes offline  and its r esponsibilities  need to be moved to another service, but the
+offline  server is unable to release the managed system policy.
+Managed accounts (including account sets) and group sets are monitored by the managing node of
+the managed system policy  in which they reside. Each managed system policy  is linked to a Service ID of a
+managing node, which follows the format of <servername> _<instance name> . Changing the service ID
+of a managed system policy  moves the management responsibility to a new node. This change will a ff ect
+privileged access currently checked out from that policy or checked out later on.
+To change the service linked to a managed system policy :
+1.Click Manage the system > Privileged access > Node assignments > Node assignments . 1.
+2.For the managed system policy  you want to change, select its node. 2.
+3.Check the managed system policy  you want to change, and click Select . 3.
+The Privileged Access Manager Service page is displayed.
+4.Select a new node using the New Privileged Access service drop-down menu. 4.
+5.Click one of the following:5.▪Update , if the current managing node of the managed system policy is activ e,  and can be ▪
+contacted to transfer over r esponsibilities  to the new service.
+▪Force update , if the current managing node of the managed system policy is decommissioned ▪
+and will not be used again. This option  will immediately transfer over r esponsibilities  to the new
+service.
+If the managed system policy  is already in the “releasing” state when you change the node, it
+stays in this state momentarily even after  you change the node. This is because the “releasing”
+state is required to set the managed system policy  into the “unbound” state so that it can be
+removed.
+.
+To release a managed system policy :
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.From the General tab, click Release . 2.
+Once the policy is released, the Managed by field  includes a drop-down box listing  available services.
+On the managed system policies list page, the status is indicated as Unbound .
+If password resets are being processed for push mode systems, the managed system policy is released
+at the end of the Privileged Access Manager Service’s current database poll interval, when the service
+recognizes that the managed system policy is marked for release and releases it. Until  this happens,
+the Releasing status is indicated on the policy’s c on figur ation  page and in the Managed by
+column on the managed system policies list page. The poll interval is controlled by Minutes to wait to
+re-check database field  on the Privileged Access Manager Service’s c on figur ation  page.
+Once a managed system policy is released, it is not applied to managed systems or accounts.
+If for some reason the service is not released in a reasonable amount of time,  or if the service is
+bound but no longer exists, you can force an unbind. While the managed system policy is in the
+Releasing status, a Force release button  will be visible next to the Managed by field.
+ Next: 
+You can now:
+▪Select a service to manage the policy▪
+or
+▪Delete the managed system policy▪
+You can also change the Service ID associated to this policy.
+Changing a managed system policy’s service ID
+Product administrators with the "Maintain servers and Manage managed system policies" adminis tr ativ e
+privileges can quickly change the service ID for any managed system policy  in a r eplic ation  environment.
+You might need to do this in a recovery scenario; for example, when a r eplic ation  node goes offline  and
+its r esponsibilities  need to be moved to another service, but the offline  server is unable to release the
+managed system policy.Managed accounts (including account sets) and group sets are monitored by the managing node of the
+managed system policy  in which they reside. Each managed system policy  is linked to a Service ID of a
+managing node, which follows the format of <servername> _<instance name> . Changing the service ID of
+a managed system policy  moves the management responsibility to a new node. This change will a ff ect
+privileged access currently checked out from that policy or checked out later on.
+To change the service linked to a managed system policy :
+1.Click Manage the system > Privileged access > Node assignments > Node assignments . 1.
+2.For the managed system policy  you want to change, select its node. 2.
+3.Check the managed system policy  you want to change, and click Select . 3.
+The Privileged Access Manager Service page is displayed.
+4.Select a new node using the New Privileged Access service drop-down menu. 4.
+5.Click one of the following:5.
+▪Update , if the current managing node of the managed system policy is activ e,  and can be ▪
+contacted to transfer over r esponsibilities  to the new service.
+▪Force update , if the current managing node of the managed system policy is decommissioned and ▪
+will not be used again. This option  will immediately transfer over r esponsibilities  to the new
+service.
+If the managed system policy  is already in the “releasing” state when you change the node, it stays in
+this state momentarily even after  you change the node. This is because the “releasing” state is
+required to set the managed system policy  into the “unbound” state so that it can be removed.
+Deleting  managed system policies
+You cannot delete a push-mode or local service mode managed system policy until  it is released
+(unbound) from the Privileged Access Manager Service that they are managed by.
+You can delete a vault-mode managed system policy  at any time.
+WARNING! Deleting  a managed system policy causes users to lose access to all the
+passwords that were managed by the policy. Passwords can no longer be
+viewed, but can be recovered.
+You cannot delete a managed system policy if it has any checked-out passwords.
+To delete a managed system policy:
+1.Click Manage the system  > Privileged access  > Managed system policies . 1.
+2.Select the checkbox next to managed system policy you want to delete, then click Delete . 2.
+3.Click OK to c on firm  the deletion. 3.
+4.If required, reassign managed systems to other policies.4.
+A managed system must belong to at least one managed system policy in order for you to view or
+manage account passwords.Managed accounts
+product administrator  s can be granted access via user groups to view managed system in f ormation,  access
+current and old managed system passwords, modify groups, and modify managed system passwords.
+A superuser cannot access adminis tr ativ e  passwords on managed systems by default, but must be given
+the adminis tr ativ e  privilege explicitly.
+Getting  started
+To access and manage passwords for privileged accounts, from the main menu, click Manage the system
+> Privileged access , then:
+▪Managed accounts▪
+All managed accounts are displayed, included those within the HISTORICAL_DATA_GRP managed system
+policy .
+▪Managed systems , then select the managed system you want to view. ▪
+Click the Managed accounts tab to see all the accounts that are being managed on the managed
+system. These accounts may be subject to diff er en t  managed system policies.
+▪Managed system policies , then select a managed system policy . ▪
+Click the Managed accounts tab to see accounts being managed by the managed system policy  on
+member systems.
+See below for an example of how the Managed system inf ormation  page might look for a push-mode
+managed system . See also: 
+▪Managed Systems  (on page 1815) to learn how you can use the Update button  to modify managed ▪
+system in f ormation.
+▪ De fining  member systems  (on page 1838) to learn how you can use the Policies tab to add a managed ▪
+system  to managed system policies .
+This tab is only available from the Managed system inf ormation  page.Accessing adminis tr ativ e  passwords
+Product administrators, by default, are members of the ALLSUPERUSERS group which have the following
+hard coded r es trictions:
+▪Access to the "current password"is blocked on all managed system policies, regardless of whether the▪
+UI indicates the permission boxes are checked.
+▪Candidate passwords within the details view of a password c on flict  are blocked. ▪
+These hard coded r es trictions  are in place so that all password requests are made via the Requests  or
+OTPAPI to ensure an accurate audit trail. Product administrators can be granted access to passwords for a
+managed system policy in the rare case this is required. Product administrators must have the "Create
+managed systems"  adminis tr ativ e  privilege, and belong to a separate, non-ALLSUPERUSERS user group,
+with the following permissions on a given managed system policy :
+▪View pr operties  for this policy or Modify pr operties  for this policy ▪
+▪Pre-approved check-out of managed accounts▪
+It is recommended that you limit product administrator  access to passwords because it bypasses
+authoriz ation  workflo w  and does not leave an audit trail.
+Do not use superuser accounts to access privileged accounts once regular user access has been
+c onfigured,  as it can cause c onflicts  with normal user access.
+To access managed system passwords as a product administrator  :
+1.Navigate to the Managed accounts  page. 1.
+To access and manage passwords for privileged accounts, from the main menu, click Manage the
+system > Privileged access , then:
+▪Managed accounts▪
+All managed accounts are displayed, included those within the HISTORICAL_DATA_GRP managed
+system policy .
+▪Managed systems , then select the managed system you want to view. ▪
+Click the Managed accounts tab to see all the accounts that are being managed on the managed
+system. These accounts may be subject to diff er en t  managed system policies.
+▪Managed system policies , then select a managed system policy . ▪
+Click the Managed accounts tab to see accounts being managed by the managed system policy  on
+member systems.
+See below for an example of how the Managed system inf ormation  page might look for a push-mode
+managed system . See also: 
+▪Managed Systems  (on page 1815) to learn how you can use the Update button  to modify managed ▪
+system in f ormation.
+▪ De fining  member systems  (on page 1838) to learn how you can use the Policies tab to add a ▪
+managed system  to managed system policies .
+This tab is only available from the Managed system inf ormation  page.
+2.Select the account whose passwords you want to access.2.
+3.Access the password.3.Depending on c on figur ation,  you may be able to:Click View to reveal the password.
+This option  requires a browser with Activ eX  or JavaScript enabled. You have a limited time  to access
+the password.
+The Display disclosure must be c onfigured  to access the current password in order to view the
+password on this page. This disclosure will be unavailable if it was only c onfigured  to access SSH keys.
+The Current password status field  indicates whether the password has been updated on the managed
+system (password c on firmed)  or is a w aiting  a successful reset (password pending c on firm).
+4.If your permissions allow it, you can click the Show password history button  to display a list of 4.
+historical passwords for the account. Click Hide password history to close the list.
+The passwords are hidden behind Login , Copy , or View buttons.  Click on a button  to access the
+password.
+Any time  you reveal a password ensure that you are the only one who can see the screen.

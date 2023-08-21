@@ -1,0 +1,193 @@
+Option Description
+CERT SINGLE USER CONFIGURATION Type the ID of a saved certific ation  setup to load default attribut es  to
+display, and the r emediation  pr e-de fined  requests, when initiating  a review
+of all entitlemen ts  for a user from their pr ofile  page.
+CERT SIZE WARNING THRESHOLD Display a warning to the certific ation  campaign initia t or  if the number of
+selected items exceeds the threshold.
+CERT VALIDITY INTERVAL The in f ormation  being certified  is valid for this many days after  the
+certific ation  has finished,  with the e x ception  of self -certific ation,  which is
+not counted.
+If a new certific ation  campaign is started within this time  frame, the users,
+login IDs, and group memberships certified  in the previous campaign are
+identified  as certified.  The most recent certific ation  of any type is used
+when determining if the data is current; for example, if group memberships
+were certified  during a target certific ation,  those memberships are
+identified  as certified  if a group certific ation  is started within the validity
+interval.
+Items that are identified  as certified  can be optionally  r e-certified  to extend
+their validity.
+ORGCHART MODS FREEZE CERT
+SEGMENTSEnable this option  if you want to ensure that OrgChart modific ations,  such
+as transfers and new subordinates, do not cause changes to an ongoing
+certific ation  campaign process; for example, segments will not be
+reopened, and segments will not be added for new subordinate managers.
+When disabled, for example, segments for managers who are detached
+during a certific ation  campaign will be closed, and deleting  a sub-manager
+will cause esc alations.
+This option  is disabled by default.
+Do not enable or disable this option  during an activ e  certific ation  campaign;
+it will cause the behavior to change.
+Manage certific ation  process (CERT) events that launch interface programs
+The following certific ation  options  can be accessed from Manage the system  > Maintenance > System
+variables  or Manage the system  > Modules > Manage certific ation  process (CERT):
+Option Description
+CERT REMOVE USER SUCCESS A user is successfully removed during an access certific ation
+campaign.
+CERT SIGN OFF An access certific ation  campaign completes.
+CERT START ROUND FAILURE An access certific ation  campaign fails to start.
+CERT START ROUND SUCCESS An access certific ation  campaign starts successfully.
+View dashboards (DASH)
+This section  shows you how to c on figur e  the View dashboards (DASH) module to control dashboard-
+related intervals and delays.To c on figur e  the View dashboards (DASH) module:
+1.Click Manage the system  > Modules  > View dashboards ( DASH ). 1.
+2. Con figur e  the options  in Table View dashboards (DASH) module options  (on page 1162) as required. 2.
+3.Click Update to submit the changes. 3.
+View dashboards (DASH) module options
+Option Description
+DASH CERT CACHE MAX DELAY Certific ation:  Delay, in a range of 1 to 30 seconds, used by the
+certific ation  dashboard to determine whether data should be retrieved
+from a cache or recomputed. The value must be between 1 and 30.
+Default is 15.
+DASH CERT CACHE VALIDITY INTERVAL Certific ation:  Time span, in minutes, during which the certific ation
+dashboard considers that its cache is still valid. The value must be
+between 1 and 1440. Default is 60 minutes.
+DASH CERT INCLUDE SUBS Certific ation:  Include indirect subordinates while compiling s t atistics  for
+the certific ation  dashboard.
+DASH PSA CACHE MAX DELAY Enrollment: Delay, in a range of 1 to 30 seconds, used by the dashboard
+to determine whether data should be retrieved from a cache or
+recomputed. The value must be between 1 and 30. Default is 15.
+DASH PSA CACHE VALIDITY INTERVAL Enrollment: Time span, in minutes, during which the dashboard
+considers that its cache is still valid. The value must be between 1 and
+1440. Default is 60 minutes.
+DASH PSW CACHE MAX DELAY Privileged access: Delay, in a range of 1 to 30 seconds, used by the
+privileged access dashboards to determine whether data should be
+retrieved from a cache or recomputed. The value must be between 1
+and 30. Default is 15.
+DASH PSW CACHE VALIDITY INTERVAL Privileged access: Time span, in minutes, during which the privileged
+access dashboards considers that its cache is still valid. The value must
+be between 1 and 1440. Default is 60 minutes.
+DASH TIMEOUT DELAY Dashboard cache r ec alculation  maximum timeout,  in hours. If a refresh
+is older than the number of hours specified,  it will be removed and the
+refresh of the cache will be re-enabled. The value must be between 1
+and 24. Default is 6.
+DASH WORK CACHE MAX DELAY W orkflo w:  Delay, in a range of 1 to 30 seconds, used by the w orkflo w
+dashboard to determine whether data should be retrieved from a cache
+or recomputed. The value must be between 1 and 30. Default is 15.
+DASH WORK CACHE VALIDITY INTERVAL W orkflo w:  Time span, in minutes, during which the w orkflo w  dashboard
+considers that its cache is still valid. The value must be between 1 and
+1440. Default is 60 minutes. If this variable is set to 0 the default time
+will be used.
+See also: 
+See REPORTS  (on page 2891) for more in f ormation  about viewing the dashboards.External Data Store (DBE)
+The Manage external data store  (DBE) module allows product administrators to view and update data on
+external database tables on a SQLite c onnection.  The data can be accessed through an API Service
+(idapi ) function  call. This provides the ability to use external in f ormation  in plugin points and a means
+to maintain the external in f ormation.   
+Requirements 
+A SQLite file, named extdb.db , must be located in the <Program Files path>\Bravura Security\Bravura
+Security Fabric\<instance>\db\  directory of the instance.
+Tools from http:// sqlit e.or g  can be used to create the file and tables as required.
+Product administrators require the Manage external data store  privilege to access the Manage external data
+store  (DBE) module. Once the adminis tr ativ e  privilege is granted and the requirements are met, the
+Manage external data store  link is displayed on Front-end .
+Con figur ation
+By default, product administrator s can only view the table. You can allow product administrator s to update
+tables using one of two options  on the Manage the system  > Modules  > Manage external data store  (dbe)
+menu:
+▪DBE ACL PLUGIN – this plugin can grant write access to particular  product administrator s. ▪
+▪DBE DEFAULT ACL – allows product administrator s to update tables by default. ▪
+To enable the plugin, type the name of the plugin in the DBE ACL PLUGIN field.
+Once c on figur ed,  the plugin is executed when a product administrator  with the Manage external data store
+privilege accesses the Manage external data store  link. The output of the plugin script determines which
+tables the console user has access to update or read.
+If the user only has read access on the table, they can either specify a filt er  (where clause) or page
+through the rows of the table.
+If the user has read/write access, then they can filt er  the data shown (where clause) or page through to
+find the data they choose to update.
+If the DBE ACL PLUGIN is not c on figur ed  the default ACL is to prevent the user from viewing the tables.
+This can be changed with the DBE DEFAULT ACL system variable. If this system variable is enabled then
+any user with the Manage external data store  privilege will have full read and write access to all the tables.
+The DBE DATA MODIFIED field  allows you to trigger an external program when data is modified  within
+external database store. See Event actions  (on page 1523) for more in f ormation.
+Bravura Security Fabric  provides a sample plugin plugin-dbe-acl.psl  that is included in the
+<instance>\samples\ directory.
+See more in f ormation  on writing  a custom pluginEx ecution  points
+The plugin is run when the user selects the Manage external data store  link.
+Input
+Input to the plugin includes only the following:
+"" "" = {
+  "user" = "<Profile ID>"
+}
+Output
+The output includes the tables that are allowed to be accessed. Read or read/write access can be set for
+specific  tables. Access can also be granted to all tables with read/write access.
+The plugin returns the following in f ormation:
+"" "" = {
+  "retval" = "<N>" # O on success; Non-zero for failure
+  "errmsg" = "<Error message>" # Any error messages to return
+  "ACLS" "<ALLOW_ALL|
+>" = {  # The access controls to grant to the user.
+        # If ALLOW_ALL is set as the name, then all tables are given read/
+write access.
+         # Otherwise, key-value pairs are used.
+        "<table name>" = "<R|W>" # Grant read (R) or read/
+write (W) access on the table.
+  }
+}
+.
+Viewing and updating  Manage external data store tables
+Updates to the SQLite file can only be made by the instance that runs the PSUPDATE job. Only this node
+can allow changes to the file and will replicate this file out to all nodes during auto discovery.
+The data within the SQLite file can be accessed using the API Service ( idapi ) function  ExtDBQueryExec.
+The query and bind values provided will return result sets that can be used by the caller. This in f ormation
+can contain custom data that is used by exit traps or plugins for business logic decisions.
+The SQLite file is replicated between nodes using the File r eplic ation  service ( idfilerep ) (on page
+2862).
+With Manage external data store  (DBE) module:
+▪The SQLite file is updated on the node that runs the PSUPDATE task. ▪
+▪Changes made to the SQLite file will not be replicated to other servers until  PSUPDATE occurs ▪▪The SQLite file can be viewed on all other nodes in read-only mode. ▪
+With API Service:
+▪The ExtDBQueryExec function  can be used to run SQL statements ▪
+▪Results are returned from the SQL statement and can be used with-in plugins or exit traps to make▪
+business logic decisions.
+Bravura Security Fabric  does not enforce the constraint that only one server update the SQLite data file.
+To ensure consistent behavior across all servers in a replicated environment, avoid updating  extdb
+dynamically during runtime;  instead, update it only during auto discovery  before file r eplic ation  occurs.
+In a replicated environment where it is necessary to dynamically update extdb  without file r eplic ation
+following immediately after ,  all access to extdb should be made via API calls to the server responsible
+for updating  extdb .
+E diting  table values
+To edit external data store (extdb) tables:
+1.Log into Bravura Security Fabric  as a product administrator with the Manage external data store 1.
+privilege .
+2.From the main menu, click Manage external data store . 2.
+3.Search for or select the table you want to edit.3.
+Tables with many columns can be wide and require horizontal scrolling to edit. Paging na vig ation  is in
+the top right corner.
+Each column header has a "help" string accessible on-mouse-over the help icon 
+ .
+4.Browse the table rows, or use the Search field  on the top left side of the table view where you can add 4.
+SQL WHERE clauses to filt er  the records, for example:
+Attribute='TERM-STATE-CHANGE'
+or search for substrings
+Attribute like 'TERM-%'
+5.Once you identif y  the row, click the edit icon 
+  (at the start of each row) to edit tables in v ertic al 5.
+mode.Alt ernativ ely ,  you can use other tools, such as the free SqliteStudio, to edit the instance's db\extdb.db
+SQLite database use on the primary node server.
+Allowed IDs
+Each column can be c on figur ed  in the Manage external data store  (DBE) module to restrict the value to an
+ID within the product. An Allowed IDs drop box is available to superusers for each column. Once the
+Allowed IDs are set, any rows updated or added must match the specified  ID. product administrator s only
+see the setting  and cannot change the column setting.
+Foreign Keys
+When a table references foreign keys, all rows need to respect the foreign key r elationship.  If a table has
+foreign keys, a button  is available on the left of every row. Destination  or source tables can be viewed by
+clicking this button.
+If there is only one foreign key, the button  is named after  the table being referenced. Otherwise, the
+button  is named ”Foreign keys”, and clicking the button  brings up a pop-up that lists each foreign key.When a foreign key is selected, a query displays the rows in the referenced table that matches the source
+value.On a destination  table, columns that include a foreign key constraint display a magnifying glass to select
+the value from the source table.
+Changes are not c ommitted  until  Update is clicked.
+Removing a row from the source table might not be permitted  until  foreign key references are removed in
+destination  tables.

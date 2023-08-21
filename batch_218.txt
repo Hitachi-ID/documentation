@@ -1,0 +1,43 @@
+Click Next .
+6.Update group descriptions  as necessary. 6.Click Next .
+7.Assign or change the privileges assigned to each group.7.Click Next .
+8.Update the team trustee’s group membership if necessary.8.9.Click Submit . 9.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+10. Click the View request link at the top of the page to view the status of the request. 10.
+Once submitted  and approved, the group will be added or removed with the appropriate privileges that
+were selected.
+The request will not proceed if updating  a team results in none of the team groups having team trustee
+privileges.
+API aut omation  for team update
+Once the API has been c on figur ed  (See "SOAP API” in Bravura Security Fabric  Remote API ( api.pdf )), and
+your script has been authentic a t ed  to the API (Login or LoginEx API calls), the WF API calls can be used to
+create an API request to update a team.
+Use the WFPDRSubmit function  to create a w orkflo w  request and submit the request for publishing.
+When submitting  a request, use ”TEAM-UPDATE” as the PDR ID. At a minimum, the request requires the
+following attribut es:
+attrk e y value
+TC The name of the team.
+TC_DESC The description  of the team
+TC_GROUPS The team group name(s).
+*_PRIVILEGES The privileges  (on page 2140) for the team
+group, where * is the team group name.
+This needs to be de fined  for every team
+group in TC_GROUPS.
+*_MEMBERS The pr ofile  GUID of the user(s) for the
+team group, where * is the team group
+name. This only needs to be de fined  for
+team groups with the Team_Trustees
+privilege only.
+Changes made will override e xisting  attribut e  values for the team. You will need to specify the e xisting
+team groups, privileges and members in this request or it will be removed from the team.
+TEAM-UPDATE batch request sample
+"TC","TC_GROUPS","Group1_PRIVILEGES","Group2_PRIVILEGES","Group2_MEMBERS" 
+"TEAM-000000","Group1,Group2","Team_Trustees,Vault_Trustees","Team_Trustees","5A8598FA-
+BCB1-4C36-A504-03F1F0478138"
+Deleting  a team
+To delete a new team, log into Front-end (PSF) as a Team administrator and use the Team: Delete
+request. When selected, a wizard will guide you through the process of deleting  a team.Before you can delete a team, the team trustee must remove all managed systems and accounts from the
+team. This prevents managed systems and accounts from being orphaned with Bravura Security Fabric.
+1.From the home page, click Manage resources . 1.
+2.Click Team: Delete . 2.
+3.Select the team to be deleted.3.Click Next .4. Con firm  the deletion  and add notes if necessary. 4.

@@ -1,0 +1,103 @@
+▪Providing Blue Prism aut omation  targets with cr edentials. ▪
+The primary scenario shows how aut omation  processes can obtain cr edentials  from Bravura Privilege .
+These can be used to connect to accounts on systems where the cr edentials  are managed by Bravura
+Privilege .
+▪Running oper ating  system processes as part of Blue Prism aut omation. ▪
+Some actions  (typically calling command-line programs) can have cr edentials  passed directly into
+them on the command line or replaced in files immediately before the command is executed.
+▪Controlling and s t arting  Blue Prism aut omation  processes. ▪
+Blue Prism programs can accept cr edentials  on the command line. These can be started with
+cr edentials  stored by Bravura Privilege .
+In t egr ation  requirements
+The only requirements to access cr edentials  from Bravura Privilege  are an installed and c on figur ed
+pamutil  client and the Blue Prism Utility  Environment. The pamutil  client is ordinarily installed by
+the administrators of the resource PC.
+Initializ ation
+Before pamutil  can be used to retrieve cr edentials  it must be initializ ed.  In controlled environments
+this is normally a system adminis tr ation  task. To initializ e  a pamutil  environment you need:
+▪An initial  OTP API user to access the API. ▪
+These can be provisioned through a pr ede fined  request w orkflo w  or created on an individual basis by
+administrators. The OTP API user will also need permissions to access the resources and accounts it
+will need.
+Following is an example of an OTP API user:
+Using the API to retrieve adminis tr ativ e  passwords  (on page 1954) describes how to c on figur e  an OTP
+API user via the Manage the system (psa) module.
+Use case: Create an OTP API user  (on page 2279) describes how to create an OTP API user with
+Bravura P attern:  Privileged Access E dition.
+▪The pamutil  c on figur ation  file (by default, named c on fig.ini)  which specifies  the API c onnection ▪
+parameters and details.
+▪A prepared cr edentials  file which will contain the encrypted state and account cache in f ormation.  The ▪
+default name for this file is creds.ini.
+The command runwithpass  -initial  will prompt for the OTP API account’s initial  password, update
+the cr edentials  file and initializ e  the encr yption.  At this point Blue Prism can use cr edentials  stored
+within Bravura Privilege .
+Fing erprinting  callers
+The pamutil  client has the ability to "fing erprin t"  both the caller and the calling environment. This can
+help reduce the risk of unintended access disclosure – if the initializ ation  fing erprin t  is diff er en t  than the
+caller’s, then access to the cr edential  is denied. Fing erprinting  is optional  but it can be applied as
+necessary in high-risk environments. It can also help to prevent unintended c on figur ation  mishaps from
+occurring in dynamic large scale deployments.
+If you want to prevent cr edential  access from unauthorized systems that simply had copies of the
+creds.ini  file, you can add the line:
+usemachinekey=1
+to the config.ini  before it is initializ ed.  Callers on other machines will not be able to obtain the
+cr edentials  if the machine attribut es  (such as the MAC address) are diff er en t  than the one it was
+initializ ed  with.
+Similarly, the line:
+filekey=./config.ini
+Will prevent disclosure of cr edentials  when its own c on figur ation  has been modified.  In both cases,
+pamutil  needs to be r e-initializ ed  with a new OTP API password before cr edentials  can be retrieved.
+See Con figur ation  and cr edentials  files (on page 2051) for additional  methods of fing erprinting  pamutil
+callers in your version of Bravura Privilege .
+Obtaining cr edentials
+After  initializ ation,  Blue Prism developers can obtain the cr edentials  by calling runwithpass  from the
+"Utility  - Environment" "Start Process Read Stderr and Stdout" Action  as shown below:This will retrieve the password for the "dbapp1" account on the "VM031PROD" resource and places it
+into the data item "password."
+Additional  calling c onsider ations:
+▪ Multiple  names or loc ations  for the c on fig.ini  c on figur ation  file can be specified.  Each c on figur ation ▪
+specifies  the loc ation  of its cr edential  storage file creds.ini.
+▪You should avoid obtaining the cr edentials  as a data item unless it is absolutely necessary. The ▪
+runwithpass program can also execute commands directly without retrieving them.
+▪Obtain cr edentials  only immediately before they are used (as late as possible). If they are not used ▪
+again, then re-assign (or clear) the variable values after  use as a pr ec aution.
+▪In cases where it is necessary to obtain sensitiv e  in f ormation  from pamutil  then the Blue Prism ▪
+Password data type should be used.
+▪In pr oduction,  you may want to ensure that logging is turned off for this stage. This will help contain ▪
+the inadvertent release of sensitiv e  in f ormation  through diagnostic  channels.
+Use case
+The following steps demonstrate how to obtain cr edentials  using Blue Prism:
+1.Set up an OTP IDAPI caller.1.
+You can either use the Manage the system  (PSA) module or with request w orkflo w .
+2. Con figur e  pamutil  with the following command: 2.
+runwithpass.exe -initial
+3.Make sure runwithpass  can retrieve a managed account password correctly. 3.
+4.To use pamuti l in BluePrism, grab the en vir onmen t -utility  from 4.
+http s:// github.c om/blue-prism/ en vir onmen t -utility
+or use a business object that can read standard-out / standard-error.
+5.Create an Action  to use the business object to run runwithpass. 5.
+6. Con figur e  the business object to run runwithpass  as shown in the example below: 6.For the Business Object  "Utility  - Environment", use the Action  "Start Process Read Stderr and Stdout"
+with the inputs:
+Arguments  "-conf ""C:\pamutil\config.ini"" -res " & [target] & " -
+acct " & [username]
+Process name """C:\pamutil\runwithpass.exe"""
+We need to specify the path to runwithpass and the c on fig.ini  file, where:
+target is the managed system IDusername is the managed account
+target  and username  are in this format because they are Blue Prism Data Items and the & is used to
+concatenate the data item into the Arguments input.
+7.For the Outputs , store Standard Output and Standard Error into Data Items: 7.8.Once the action  is c on figur ed  with the business object to run runwithpass , we can set the Data items 8.
+for the inputs and run the process to verify that the password can be retrieved without errors.We can use the pamutil  / runwithpas s action  with other business objects or publish this
+business object to use with as a business object as a whole.
+In the following example, we show how we can use pamutil  to either login to a Bravura Security
+Fabric  instance or RDP into a w ork s t ation  using the managed account and its password:Running processes without handling cr edentials
+It is not always necessary to handle the cr edentials  themselves. Since runwithpass can send the
+cr edentials  into the command directly without retrieving them into data items, it can be used for simple
+tasks that require an account password. Here is an example that ensures that a drive mapping exists:runwithpass -res fs02 -acct bk01 -keyword X -- net use J: \\fs02\bak /
+user:bk01 X"
+St arting  Aut omation  Processes
+Some Blue Prism utilities  have command line arguments that accept cr edentials.  Instead of leaving the
+command line parameters exposed, the passwords should be stored in Bravura Privilege  and retrieved
+when the utility  is started.
+ runwithpass -conf config.ini -res rpc04 -keyword PWD -acct dw09 --
+ AutomateC.exe /run myprocess /resource rpc04 /user dw09 PWD
+In this example, pamutil  will retrieve the password for the dw09 account on the machine (or resource)
+rpc04 and call AutomateC to start "myprocess" replacing the PWD field  with the actual password.Part II Infrastructure Auto Discovery

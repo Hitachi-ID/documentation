@@ -1,0 +1,187 @@
+If you are installing multiple  instances on the same machine, you may be prompted to either reboot the
+system, or to shut down and restart the file replic ation  service before c ontinuing  the ins t allation.  This is
+because the file replic ation  service keeps certain DLL files open. You can avoid having to do this during
+ins t allation  by shutting  down all file replic ation  services before you begin.
+Preparing for ins t allation
+Before running setup , gather the following in f ormation  about your database server c on figur ation:
+▪IP address or DNS name of the database server.▪
+Verify that you can reach this address from the machine that will host Bravura Security Fabric .
+▪Name and password of a database administrator (DBA) (such as sa or SYS).▪
+▪The SQL database instance name.▪
+▪If you are using an e xisting  database, you will also need: ▪
+▪The name of the Bravura Security Fabric  database. ▪
+▪TCP port number (such as 1521) that the database is listening on.▪
+▪Name and password of the SQL dedicated user  (on page 178). ▪
+If you are installing the Analytics  app, gather the following in f ormation:
+▪The server name where SQL Server R eporting  Services (SSRS) resides ▪
+▪Report Server Web Service URL▪
+▪Name and password of service account▪
+▪If you are using an e xisting  report server database you will need that database name ▪
+▪If you are using an e xisting  report server user you will need that username and password ▪
+You can choose to set up the Analytics  app after  installing Bravura Security Fabric  softw ar e,  as
+documented in REPORTS  (on page 2891).
+Ins t allation  steps
+To install Bravura Security Fabric  products and features on a primary server or replicated server:
+1.Log in to the host Windows server as member of the Administrators group.1.
+If you plan to use a prec onfigured  database using windows authentic ation,  the ins t allation  of Bravura
+Security Fabric needs to be performed by the same account ID that will run the Bravura Security Fabric
+services.
+2.If required, download and unzip the Bravura Security Fabric  dis tribution  folder. 2.
+Contact your Bravura Security account r epr esen t ativ e  for details.
+3.Launch the setup located at the root of the dis tribution  folder. 3.
+4.If you already have a Bravura Security Fabric  instance installed on the Windows server, setup 4.
+displays the Select an instance to c on figur e  page.
+Click Install New to proceed.
+A list of available products is displayed.5.Select Bravura Security Fabric , then click Next . 5.
+The setup program displays a page to gather initial  instance in f ormation.
+6.Type a unique instance name; this creates a dedicated database instance for the product. Optionally , 6.
+enter a description.
+If the instance name exceeds 30 characters, ins t allation  will fail.
+All replicated servers must have the same instance name.
+Instance names cannot contain whitespace or the following characters: % \ / : ; ~ ' ` ,
+* ? " < > | & $
+Click Next .7.The setup  program performs a pr e-ins t allation  check and v erifies  all of the requirements for 7.
+ins t allation.
+The installer checks for Visual C++ Runtime  (x64) and Visual C++ Runtime  (x86). If either are missing,
+setup attemp ts  to install them. See Primary server requirements  (on page 197) for more
+inf ormation.
+8.If any of the pre-install checks produce warnings or errors, click:8.
+▪Report for details on all pre-install checks ▪
+or
+▪Messages... for details on a specific  pre-install check ▪
+You can ignore warnings about requirements for .NET Framework and WSE . That is pot entially
+required only if t argeting  an applic ation  that provides a SOAP web service.
+See T r oubleshooting , T r oubleshooting  for additional  tr oubleshooting  in f ormation.
+9.If all of the checks are successful, click Next to proceed with the ins t allation. 9.
+10. The Con figur e  a Dedicated Database User  page is displayed. 10.11. Choose your database user setup option,  then click Next . 11.
+a.If you chose to Create a new dedicated database user for the new instance , enter the database a.
+c onnection  and user in f ormation  By default, setup uses the same name as the product instance.
+b.Click Next .The setup  program creates the new database user. b.
+The setup program launches idm.msi to c on figur e  the softw ar e  ins t allation.  The welcome
+page is displayed:Click Next.
+12. Read and accept the license agreement. 12.
+Click Next .
+13. Type the loc ation  of the license file. 13.
+Alt ernativ ely ,  you can use the Browse button  to select the loc ation  of your license file.
+It is recommended that all replicated servers use the same license file.
+Click Next .
+The installer displays setup types for you to select from.
+14. Select: 14.
+▪Typical to install with default settings  for file loc ations,  ports, and web site. Proceed to Step 17. ▪or
+▪Custom to customize settings. ▪
+Files for all products are installed; however only those for licensed products are enabled for use.
+15. If you chose a custom ins t allation,  choose the Install loc ation . 15.
+It is recommended that you do not change the install loc ation.
+Click Next .
+16. If you chose a custom ins t allation,  choose the loc ations  for the: 16.
+Directory to store log files:  This directory should be unique for each instance. The default is
+<Program Files path>\Bravura Security\Bravura Security Fabric\Logs
+\<instance> .
+Directory for all instances to share lock files:  This directory should be shared by all instances. The
+default is <Program Files path>\Bravura Security\Bravura Security Fabric\Locks .
+Click Next .17. Type the Service user ID and Password . 17.
+This is the account Bravura Security Fabric  services will run as. If IIS is selected as your Web server, this
+is also the anonymous user for web access.
+You can use either a local or domain account for the Service user ID . The Password can be up to 64
+characters long.
+The default is psadmin . If you use the default account and the account does not already exist, the
+installer will create it with the specified  password on the Bravura Security Fabric  instance server. If a
+domain account is specified,  the installer validates the account and password before proceeding. An
+error message will display if the domain account can not be found or the password is incorrect.Denying in t eractive  log-on for service account is a recognized industry bes t -practic e  which is also
+suggested by Bravura Security Fabric. See Domain requirements  (on page 204) for more details on
+how to create a secure service account.
+Click Next .  
+See also:  In cases where the psadmin account is changed, you can use the serviceacct  utility  to
+make updates, as documented in Changes to the service account (psadmin)  (on page 2883).
+18. Type the c ommunic ation  key that will be used to encrypt c ommunic ation  between the Bravura 18.
+Security Fabric  server and other Bravura Security Fabric  sub-systems on the network.
+The key must only contain hexadecimal digits (0-9, a-f).
+You can also click Random Key to generate a random key.
+The same c ommunic ation  key must be applied to all sub-systems that share c ommunic ation.  It is
+strongly recommended that you note this key in a safe loc ation.
+Click Next .
+19. Type the database encr yption  key that will be used to encrypt sensitiv e  data stored in the Bravura 19.
+Security Fabric  database; for example, Bravura Security Fabric  uses the database encr yption  key to
+encrypt passwords.
+The key must only contain hexadecimal digits (0-9, a-f).
+You can also click Random Key to generate a random key.
+The same database encr yption  key must be applied to all Bravura Security Fabric servers in a replic ation
+environment and all sub-systems that share c ommunic ation.  It is strongly recommended that you note
+this key in a secure loc ation.
+Click Next .
+20. Type the w ork s t ation  authentic ation  encr yption  key that will be used to initializ e  the c ommunic ation  of 20.
+untrusted Bravura Security Fabric  services to Bravura Security Fabric  servers on the network. The
+w ork s t ation  authentic ation  encr yption  key is used by the w ork s t ation  service for either initial  r egis tr ation
+or key r e-neg otiation.
+The key must only contain hexadecimal digits (0-9, a-f).
+You can also click Random Key to generate a random key.
+The same work s t ation  authentic ation  encr yption  key must be applied to all Bravura Security Fabric servers
+in a replic ation  environment and all sub-systems that share c ommunic ation.  It is strongly
+recommended that you note this key in a secure loc ation.
+Click Next .
+21. Type the Connector encr yption  key that will be used to encrypt sensitiv e  data for c ommunic ation  with 21.
+the connectors; for example, Bravura Security Fabric  uses the Connector encr yption  key to encrypt and
+decrypt passwords and adminis tr ativ e  cr edentials  used by connectors and exit traps as well as all
+c ommunic ation  and oper ations  run by the connectors.
+The key must only contain hexadecimal digits (0-9, a-f).
+You can also click Random Key to generate a random key.The same Connector encr yption  key must be applied to all Bravura Security Fabric servers in a replic ation
+environment and all sub-systems that share c ommunic ation.  It is strongly recommended that you note
+this key in a secure loc ation.
+Click Next .
+22. Type the IDMLib encr yption  key that will be used to encrypt sensitiv e  data generated in IDMLib. 22.
+The key must only contain hexadecimal digits (0-9, a-f).
+You can also click Random Key to generate a random key.
+The same IDMLib encr yption  key must be applied to all Bravura Security Fabric servers in a replic ation
+environment and all sub-systems that share c ommunic ation.  It is strongly recommended that you note
+this key in a secure loc ation.
+Click Next . The order of next steps can vary depending on initial  setup choices.
+▪If you chose a custom ins t allation,  setup displays Custom port and web server settings ▪
+If you chose a custom ins t allation,  after  c on figuring  keys:
+1. De fine  port settings: 1.
+▪Database Service TCP port Number the port the Database Service will listen on, for database ▪
+r eplic ation.  The default is 5555  unless that port is already in use by another Bravura
+Security Fabric  instance.
+▪File R eplic ation  Service TCP port Number the File R eplic ation  Service ( idfilerep ) will ▪
+listen on, for file r eplic ation.  The default is 2380  unless that port is already in use by another
+Bravura Security Fabric  instance.
+▪ W orkflo w  Manager Service TCP port Number the W orkflo w  Manager Service ( idwfm ) will ▪
+listen on. The default is 2240  unless that port is already in use by another Bravura Security
+Fabric  instance.
+▪ T r ansaction  Monitor Service TCP port Number the T r ansaction  Monitor Service ( idtm ) will ▪
+listen on. The default is 2234  unless that port is already in use by another Bravura Security
+Fabric  instance.
+▪Password Manager Service TCP port Number the Password Manager service ( idpm ) will ▪
+listen on. The default is 3334  unless that port is already in use by another Bravura Security
+Fabric  instance.
+▪Session Monitoring Package Gener ation  Service TCP port Number the session monitoring ▪
+modules will listen on. The default is 2340  unless that port is already in use by another
+Bravura Security Fabric  instance.
+▪Discovery Service TCP port Number the Discovery service will listen on. The default is 2540 ▪
+unless that port is already in use by another Bravura Security Fabric instance.
+▪Privileged Access Manager Service TCP port Number the Privileged Access Manager Service ▪
+(idarch ) will listen on. The default is 6190  unless that port is already in use by another
+Bravura Security Fabric  instance.▪Persistent Connector Service TCP port Number the Persistent Connector Service ( agtsvc ) ▪
+will listen on. The default is 4567  unless that port is already in use by another Bravura
+Security Fabric  instance.
+Click Next .
+2.Select a Web server for this ins t allation . 2.
+If multiple  web servers are installed on your Bravura Security Fabric  server, select the one on
+which you want to install Bravura Security Fabric . IIS web servers are aut omatic ally  detected
+and c on figur ed.
+Type an email address to receive adminis tr ativ e  notific ations.   
+You can use the Manage the system  (PSA) module to set or change this later by modifying the
+RECIPIENT EMAIL option.
+Click Next .
+3. Con figur e  the following options  for your web server: 3.
+▪Base URL This is the URL of the Bravura Security Fabric  server. The installer aut omatic ally ▪
+detects the server name.
+▪Root virtual directory for this instance This is the name of the virtual directory that points to ▪
+the physical <instance>\cgi-bin\  directory.
+The default value is the name of the instance.
+Virtual directory paths cannot contain whitespace or the following characters:
+% \ / | @ ! # $ ^ & * < > ; : ' ' ? , [ ] { } + = `
+▪Web site for this ins t allation  If the web server for this ins t allation  is IIS, select the web site ▪
+you want Bravura Security Fabric  to use.
+▪Replace the default web page with the index page for this instance Enable this checkbox if ▪
+you want to replace the default web page with the index page for this instance. The index
+page aut omatic ally  redirects users to the Front-end .

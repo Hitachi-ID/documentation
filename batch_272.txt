@@ -1,0 +1,337 @@
+Argument Description
+-blank Completely delete the password tree of account
+specified.  Requires both -wstnid and -account.
+WARNING!: This action  will permanently clear the
+password history tree and cannot be recovered.
+Examples
+1.To list all accounts with passwords in c on flict  and save them to the database, type: 1.
+pwdconflicts.exe -list -save
+2.To aut omatic ally  resolve c on flicts  for accounts of a specific  managed system policy, type: 2.
+pwdconflicts.exe -resolve -policyid <policyID>
+3.To aut omatic ally  resolve c on flicts  for accounts with a specific  ID, type: 3.
+pwdconflicts.exe -resolve -account <accountID>
+4.To aut omatic ally  resolve c on flicts  for all accounts on a specific  system, type: 4.
+pwdconflicts.exe -resolve -wstnid <systemid>
+5.To aut omatic ally  resolve a c on flict  for a specific  account on a specific  system, type: 5.
+pwdconflicts.exe -resolve -wstnid <systemid> -account <accountID>
+6.To force r andomiz ation  for all accounts with passwords in c on flict,  type: 6.
+pwdconflicts.exe -randomize
+7.To aut omatic ally  resolve c on flicts  without further c on firmation,  type: 7.
+pwdconflicts.exe -resolve -force
+8.To aut omatic ally  resolve c on flicts  for a batch of 10 accounts, with subsequent batches worked on 8.
+every minute, type:
+pwdconflicts.exe -resolve -batchsize 10 -sleeptime 60000
+9.To delete the password tree of a specific  account on a specific  system, type: 9.
+pwdconflicts.exe -blank -wstnid <systemid> -account <accountID>
+for command-line usage and examples.
+rotatelog
+This job executes the idmlogsvc -rotatelog command. This command performs a backup and
+r ot ation  of the Logs directory. That is, it appends . <yyyy> -<mm> -<dd> -<hhmmss> .<SerialNo> to the old
+directory name and creates a new directory with the original name. See About the Bravura Security
+Fabric Log  (on page 2776) for more in f ormation  about log files.
+This job only rotates the logs on the Bravura Security Fabric server. Proxy logs are rotated by the
+rotatelog-proxy scheduled job.
+By default, this job is scheduled to run daily at 12:30 am on all Bravura Security Fabric  servers. It is
+aut omatic ally  created when you install Bravura Security Fabric . If scheduled r ot ation  fails, an email is sent
+to the Bravura Security Fabric  administrator. The job may fail if another program has opened the log file.
+You cannot delete this job, nor can you modify the Job to run or Directory to run job in settings.In addition  to the fields  described in Adding new jobs  (on page 2713) and Selecting  a server to run a job
+on (on page 2715), the following fields  appear on the schedule programs page for the rotatelog job:
+▪Number of rounds to keep – You can change the number of copies to keep by modifying this setting ▪
+(default is 7).
+▪Directory to be rotated – You can view, but you cannot modify this field.  Its value is determined by the ▪
+PSTempDir setting  (Maintenance > Options ).
+ See Logging Service  (on page 2854) for in f ormation  about the Logging Service (idmlogsvc) and its -
+rotatelog command.
+psdonechk
+The psdonechk  program checks the PSQ_DONE and PSL_DONE compliance tags for all users. This
+program is aut omatic ally  scheduled to run once when you modify:
+▪The minimum number of accounts each user must have across target systems.▪
+This is set by Manage the system > Modules > Attach  other accounts (PSL) > PSL MIN ACCOUNTS .
+▪The minimum number of security questions  that a user must answer from internal question  sets. ▪
+This is set by Minimum number of answered questions  per user for each question  set in the Manage
+the system > Policies > Question  sets menu.
+By default, the program is scheduled to run once at 2.30 am the following day.
+See psdonechk
+Usage
+psdonechk.exe -autocheck
+psdonechk.exe -psq_done
+psdonechk.exe -psl_done
+Argument Description
+-autocheck Checks compliance for all users for the PSQ_DONE and
+PSL_DONE tags.
+-psq_done Checks compliance for all users for the PSQ_DONE tag.
+-psl_done Checks compliance for all users for the PSL_DONE tag.
+for command-line usage.
+rotatelog-proxy
+This job executes the psproxy -rotatelog command. This command performs a backup and
+r ot ation  of the Logs directory on each proxy server. That is, it appends . <yyyy> -<mm> -<dd> -
+<hhmmss> .<SerialNo> to the old directory name and creates a new directory with the original name.
+See About the Bravura Security Fabric Log  (on page 2776) for more in f ormation  about log files.By default, this job is scheduled to run daily at 12:40 am on all Bravura Security Fabric  proxy servers. It is
+aut omatic ally  created when you c on figur e  a target to use a proxy. If scheduled r ot ation  fails, an email is
+sent to the Bravura Security Fabric  administrator.
+In addition  to the common scheduled job fields,  the following fields  appear on the schedule programs
+page for the rotatelog job:
+▪Number of rounds to keep – You can change the number of copies to keep by modifying this setting ▪
+(default is 7).
+▪Directory to be rotated – You can view, but you cannot modify this field.  Its value is determined by the ▪
+PSTempDir setting  (Maintenance > Options ).
+See Proxy Service (psproxy)  (on page 2870) for in f ormation  about the psproxy and its -rotatelog
+command.
+Adding new jobs
+To add a new job to run:
+1.Click Manage the system > Maintenance > Scheduled jobs , then click Add new … . 1.
+2. Con figur e  settings  as listed in Table Scheduled job settings  (on page 2713). 2.
+If JavaScript is enabled, options  are shown or hidden depending on the Repeat type .
+3.Click Add. 3.
+Bravura Security Fabric  also adds jobs to the Manage the system  > Maintenance > Scheduled jobs menu
+when you schedule user notific ations,  certific ation  rounds or reports.
+Scheduled job settings
+Option Description
+Job Type a unique identifier  for this scheduled job. This field  supports !!! tags for
+in t ernationaliz ation  (on page 3490).
+Command to run Type the command to execute, including the full path.
+Directory to run command in If the directory is not specified,  this value defaults to the directory where
+the program to run is located.
+Enabled Use this to turn on the scheduled job.
+Run this job on this Bravura Security
+Fabric serverIf you have multiple  and replicated Bravura Security Fabric  servers, select
+this radio button  if you want the job to run on the current server.
+Run this job on all Bravura Security
+Fabric serversSelect this radio button  if you have multiple  Bravura Security Fabric  servers
+and want the job to run on all servers.
+Run this job on the following
+Bravura Security Fabric serversSelect this radio button  if you want the job to run on a Bravura Security
+Fabric  server other than the current server.Option Description
+Repeat type Select the frequency of the scheduled job using the drop-down list.
+Depending on the repeat type, set scheduling options:
+▪Run once – you must select a Date and time  to run this job. ▪
+▪Daily – you must select which Days to run this job by selecting  either ▪
+Every day or Only on weekdays .
+▪Weekly – you must Choose the days of the week to perform this task . ▪
+▪Monthly – you must Choose the days of the month to perform this task ▪
+and Choose which months to perform this task . All months are selected
+by default.
+▪Quarterly – The task is started every three months after  the initial  run. ▪
+▪Semi-Annually – A new round is started every six months after  the initial ▪
+run.
+▪Annually – A new round is started every twelve months after  the initial ▪
+run.
+Period mode For jobs that are repeated quarterly, semi-annually, and annually, choose
+either:
+▪Start date - then Period start date and time ▪
+▪Month/week/day - then select the fir s t month, week of the month, and ▪
+day of the week to perform the task.
+The Choose the firs t month to perform this task  setting  is based
+on the current calendar year. For example if you set the firs t month
+for a quarterly job to January, and the current month is February,
+the task will start in April.
+Date and time  to run / Time to run All scheduled jobs time  to run is local to the server that runs the job. Except
+for jobs that are run once, the default time  to run is set by Manage the
+system  > Modules > Options  > DEFAULT SCHEDULED TIME .
+Last day of the month For monthly to annual schedules, use this setting  to avoid missed run times.
+For example, if you schedule a job quarterly, with a start date of August 31,
+the next run time  after  August 31 would be November 31, which does not
+exist. With this setting  enabled, the next round would start on the last day
+of the month, November 30.
+Job time  range Specify if you want your job to always run, to run for a specific  length of
+time,  or for a specific  number of it er ations  by selecting  one of the following
+from the drop-down list:
+▪Always run – Scheduled job always runs as specified. ▪
+▪From specified  start date to end date – Click the da t e/time  fields  to ▪
+select a date and hour for the Start date and End date . To edit the
+minutes enter a time  in the HH:MM format.
+▪For number of it er ations  from specified  start date – Click the da t e/time ▪
+field  to choose select a date and hour for the Start date . To edit the
+minutes enter a time  in the HH:MM format. Specify a Number
+ofit er ations  to run . Your job will only run for the number of it er ations
+you enter here.CAUTION: If you use a Repeat type of either Daily , Weekly or Monthly in
+c ombination  with a Job time  range set to From specified  start date toend
+date , ensure that the interval between the Time to run and the Enddate
+is shorter than the Scheduler Service Minutes to wait to re-check
+database interval. If this interval is not shorter, then unexpected results
+may occur.
+Bravura Security Fabric  v erifies  that program to run and the directory to run the job in exist. If either
+value is invalid, the job is not added.
+Selecting  a server to run a job on
+If you have multiple  and replicated Bravura Security Fabric  servers, you can set the job to run on a
+specific  server or on all servers. This behavior is controlled by the following radio buttons  on the schedule
+programs page:
+▪Run this job on this Bravura Security Fabric server▪
+▪Run this job on all Bravura Security Fabric servers▪
+▪Leave this job on its current Bravura Security Fabric server▪
+When you select to update an e xisting  job, the current status (or loc ation  to run the job) is displayed
+above the group of radio buttons.  When you make a change to the loc ation  to run a job, Bravura Security
+Fabric  aut omatic ally  r ec on figur es  each replicated server accordingly.
+To set a job to run on a specific  server, you must select the appropriate radio button  from the Manage the
+system  (PSA) module running on that server. The Leave this job on its current Bravura Security Fabric
+server radio button  is only displayed if the job is already set to run on another server.
+The Results of job e x ecution  section  on a scheduled task page lists the success or failures that occurred
+for the schedule task, and on which node the job was run.2 Auto Discovery
+The auto discovery  feature included with Bravura Security Fabric  extracts and imports in f ormation  about
+users and groups from target systems. During the auto discovery  process, Bravura Security Fabric  also
+performs several important maintenance tasks.
+Read this chapter to learn more about auto discovery , including how you start and control the auto
+discovery  process.
+About the auto discovery process
+Auto discovery is initia t ed  and controlled by the psupdate  program. This program calls a series of other
+programs, such as updproxy , that perform the actual work for most of these tasks.
+The auto discovery  process includes the following tasks:
+▪Refreshing proxy servers  (on page 2716) ▪
+▪ Listing  in f ormation  from target systems  (on page 2718) ▪
+▪Monitoring list file size  (on page 2719) ▪
+▪ Updating  pr ofiles  with alternate login IDs  (on page 2719) ▪
+▪ E v aluating  import rules  (on page 2719) ▪
+▪ Updating  the database  (on page 2719) ▪
+▪Cleaning up the database  (on page 2720) ▪
+▪Enforcing roles  (on page 2720) ▪
+▪Checking inventory levels  (on page 2721) ▪
+▪Loading user class cache  (on page 2722) ▪
+▪ Submitting  aut omatic  assignment requests  (on page 2723) ▪
+▪Synchronizing server files and registry keys  (on page 2725) ▪
+▪ Notif ying  the Bravura Security Fabric administrator  (on page 2730) ▪
+▪ Pr e v enting  idle c onnection  shutdown during auto discovery  (on page 2730) ▪
+▪ Gener ating  a c on figur ation  summary file (on page 2730) ▪
+Refreshing proxy servers
+If one or more of your target systems is set up to use a proxy server, the updproxy  program
+aut omatic ally  copies files that have been created or modified  to the proxy server.
+See updproxy
+The updproxy program, installed on the Bravura Security Fabric  server, works in c onjunction  with the
+psproxy service. It is used to update the list of proxy servers registered on the Bravura Security Fabric
+server, and to push any files necessary to run connectors and list utilities  to the proxy servers. This
+includes the Logging Service ( idmlogsvc ) being used on the proxy servers. Normally, updproxy is
+invoked as one of the fir s t steps in the auto discovery batch file.The UPDATE SYSTEM AGENT COUNT option  controls how many proxy servers can be updated
+simultaneously. The default value is 50. This option  can be set at Manage the system  > Maintenance >
+Options .
+The UPDATE SYSTEM AGENT COUNT option  also controls how many target systems can be listed
+simultaneously.
+Usage
+updproxy.exe -list | -refresh | -rotatelog <N> | -proxy <IP address>/<port>
+Argument Description
+-list Lists all proxy servers registered with the Bravura Security
+Fabric server.
+-refresh Copies the latest agents to all proxy servers.
+-rotatelog <N> Rotate the log folder for at most <N> rounds.
+-proxy <IP address>/<port> Specifies  which proxy servers to refresh.
+Unlike updinst , updproxy  cannot  be controlled using a c on figur ation  file. Proxies have diff er en t
+requirements compared to full instances. Currently updproxy works based on a hardcoded list of
+things that are relevant to proxy instances:
+▪Connector Pack (instance or global)▪
+▪Some utilities  (updsvcpass, pscp, logutil) ▪
+▪\<instance>\script\▪
+▪\<instance>\lib\▪
+▪\<instance>\idmlib\▪
+▪\<instance>\license\▪
+▪\<instance>\component\▪
+▪Services (idmlogsvc, psproxy)▪
+Examples
+1.To show a list of currently registered proxy servers, type:1.
+updproxy -list
+2.To update agents on all the proxy servers, type:2.
+updproxy -refresh
+3.To update agents on a specific  server, type: 3.
+updproxy -refresh -proxy <IP address>/<port>
+for details of this program.
+You can also refresh proxy servers manually. See Managing Proxy Servers  (on page 260) for details.Listing  in f ormation  from target systems
+Connector programs connect to target systems and extract in f ormation  about users (accounts) and other
+objects from those systems. Each connector is designed to target a specific  type of system. Depending on
+how Bravura Security Fabric  is c on figur ed  and the c apabilities  of the connector, Bravura Security Fabric
+may extract in f ormation  about: computer objects on the domain, service accounts, group memberships,
+per-user attribut es,  unassigned tokens, and OrgChart in f ormation.
+Connector programs write the extracted in f ormation  to SQLite database files in the <ins t ance>\p sc on fig\
+directory. In Bravura Security Fabric  these files are referred to as list files. A SQLite database list file is
+saved for each target system.
+The following is the schema for the connectors to use when writing  discovered objects:
+discobj ( stableid TEXT, type TEXT, longid TEXT, shortid  TEXT, displayid TEXT, sd TEXT ) 
+disc objattr  ( stableid TEXT, type TEXT, attrk e y  TEXT, attr v al  TEXT, seqno INTEGER ) 
+discobjrel ( parent_stableid TEXT, parent_type TEXT, reltype TEXT, child_stableid TEXT, child_type TEXT, child_name TEXT, child_sd TEXT )
+All data for a target system is stored according to the schema listed above.
+▪Groups, accounts, computers and subscribers are listed in the discobj table.▪
+▪ Attribut es  for each of these objects are listed in the disc obattr  table. ▪
+▪Group members (both group and account) are listed in the discobjrel table.▪
+▪Subscriber account associations  are listed in the discobjrel table. ▪
+▪During discovery, all data is loaded into generic Bravura Security Fabric  tables (targetobj, t ar g e t objattr ▪
+and targetobjrel).
+▪Computer objects and subscriber data are loaded into the new generic tables above, as well as▪
+foundcomputer, f oundc ompattr ,  foundaccountmgnobj and f oundobjattr  tables for use by import rules.
+Note the following about listing:
+▪Connectors are only run for target systems that are c on figur ed  to list accounts or other objects. ▪
+▪Account IDs and group IDs must be no longer than 200 characters.▪
+▪When infrastructure auto discovery  (on page 2081) options  are c on figur ed,  SQLite list files for ▪
+discovered target systems are placed within a <ins t ance>\p sc on fig\disc o v er ed \directory, with sub-
+directories for each discovered system. Each sub-directory is named after  the fir s t three characters of
+the discovered system. The discovered directory is not replicated by the file r eplic ation  program
+(updinst ).
+Normally, if a user has an account on a target system and that account has an <acc attr>  value that is
+empty, Bravura Security Fabric  will attemp t  to get an associated attribut e  value from another system. You
+can change this by enabling the Manage the system > Maintenance > Options  > LOADDB NULL IS VALUE
+setting.  When this is enabled, Bravura Security Fabric  considers the associated pr ofile  attribut e  value
+empty; it does not attemp t  to get an attribut e  value from another system.
+See Groups  (on page 585) for more in f ormation  about groups and Target sytems  (on page 480) for more
+in f ormation  about target systems.Monitoring list file size
+The "listing  in f ormation  from target systems" task is fail-safe; if lists extracted from a target system fail to
+return sufficien t  data, where the extracted list file size falls below the value listed for this option,  Bravura
+Security Fabric  discards the defunct lists and restores the previously-harvested lists.
+The Minimum list file size is set on each target system's c on figur ation  page  (on page 494).
+Updating  pr ofiles  with alternate login IDs
+Pr ofiles  containing alternate login ID can be updated by end-users using the Attach  other accounts  (PSL)
+module, or by help desk user s using the Manage the system  (PSA) module. You can also specify alternate
+login IDs for users and add them in batches using a text file <instance> \ p sc on fig \malias.txt. You might do
+this, for example, to minimize user enrollment time,  or where a source of pr ofiles  target system has no
+attribut es  to map to an easy-to-remember pr ofile  ID. The text file must be created manually, and use the
+following format:
+"<Target system ID> " "<Login ID> " " <Profile  ID>"
+For example:
+"ACTIVEDIRECTORY" "glorib" "glorib"
+"LINUX" "browng" "glorib"
+"LDAP" "gloria.brown" "glorib"
+"WEBAPP" "153029" "glorib" 
+The next time  auto discovery  is run, the alternate login IDs are associated with the specified  pr ofiles.
+The malias.txt  file has to remain in place in the psconfig\  directory in order for the associations
+to remain during further auto discovery  processes. If the file is removed, the associations  will also be
+removed the next time  auto discovery  is run.
+E v aluating  import rules
+If you have c on figur ed  import rules to be evaluated against discovered objects, psupdate evaluates:
+1.Target system import rules – to generate aut omatic ally  discovered target systems from discovered 1.
+computers.
+2.Managed systems import rules – to add discovered systems into the managed system policies as2.
+c on figur ed  for the import rules.
+3.Managed accounts import rules – to add discovered accounts in managed system policies as3.
+c on figur ed  for the import rules.
+See Infrastructure Auto Discovery  (on page 2080) for details about import rules.
+Updating  the database
+The iddiscover  service  (on page 2875) processes the in f ormation  stored in list files and loads it into
+the Bravura Security Fabric  database. During this task, new users are imported to Bravura Security Fabric ,e xisting  user pr ofiles  are updated, and inventories of available groups and unclaimed accounts are
+created.
+If iddiscover  discovers accounts that diff er  only in case on a c ase-sensitiv e  target system, it writes a
+warning to its log and notifies  the Bravura Security Fabric  administrator of a pot ential  security issue.
+Cleaning up the database
+The psupdate  program removes stale session keys from the database. This helps to ensure that the
+database does not grow too large.
+Enforcing roles
+If the RBAC ENFORCEMENT NIGHTLY LIST option  is enabled, Bravura Security Fabric  runs the
+rbacenforce  program to list role enforcement violations.  If the RBAC ENFORCEMENT NIGHTLY
+SUBMIT option  is enabled, Bravura Security Fabric  runs the rbacenforce  program to submit requests
+into w orkflo w  to r ectif y  the violations.  Both of these jobs are run at the end of auto discovery .
+Both of these options  are set in Manage the system > Resources > Options .
+See Role Enforcement  (on page 2409) for more in f ormation  about the options.
+See rbacenforce
+The rbacenforce program lists role-based access control (RBAC) violations  and issues w orkflo w
+requests in order to correct variances. The program is run by default by the psupdate program during
+auto discovery. This can be turned off by disabling the Resources > Options  > RBAC ENFORCEMENT
+NIGHTLY LIST  and RBAC ENFORCEMENT NIGHTLY SUBMIT  options.
+Usage
+rbacenforce.exe [ option  ]
+Argument Description
+-group Bravura Group Specify the group ID to check violations  on.
+-inputfile  <fileName> Input this KVGroup file with all requests to submit. The
+default is violation.kv g.
+-limitcheck <numUsers> Override the system c on figur ed  value to limit the number
+of users to check for violations.
+-limitlist <numViolations> Override the system c on figur ed  value to limit the number
+of violations  to list.
+-listfile  <fileName> Output the list of violations  to this file. The default is
+violation.kv g.
+-nolist Do not run the listing  of surplus and/or de ficit  violations.
+This option  can only be used with -submit.
+-norecordcheck Record that the user was checked. Users checked least
+recently are checked fir s t.

@@ -1,0 +1,317 @@
+3.To run proxy tests on computers discovered from "MYAD" and filt er  proxies based on 3.
+c omput erLoc ation  attribut e.
+proxydelaycalculator.exe -all -source MYAD -port 80 -timeout 60 -
+proxyfile proxylist.csv -locationattr computerLocation
+4.To run proxy tests on computers which don’t already have proxies assigned and are members of4.
+hostgroup "MYGRP":
+proxydelaycalculator.exe -all -hostgroup MYGRP -port 443 -
+timeout 60 -testunassigned -proxyfile myproxies.csv
+5.To run proxy tests on computers discovered from "MYAD", contained in the host file "hostfile. tx t",  and 5.
+filt er  proxies based on c omput erLoc ation  attribut e.
+proxydelaycalculator.exe -source MYAD -hostfile hostfile.ext -
+port 80 -timeout 60 -proxyfile proxylist.csv -
+locationattr computerLocation
+Failed c ommunic ation
+When the proxydelaycalculator  is unable to communicate with a proxy server found on the list,
+it will only attemp t  to set the proxy server list on systems that do not already have it c on figur ed.  It will
+not calculate and set all specified  target systems’ proxy lists. This is to prevent accidentally o v er writing
+the proxy list when a temporary network failure occurs, thus possibly causing a target system to be
+c on figur ed  with a sub-optimal  list.
+pstee
+Use pstee  to debug an executable by logging its stdin , stdout , and stderr tr a ffic.
+It is strongly recommended that you use this program only under the dir ection  of a Bravura Security
+support technician.psupdate
+The psupdate program initia t es  and controls the auto discovery process. It is responsible for calling a
+series of programs and PSLang scripts, which in turn, control e x ecution  of each auto discovery task.
+These tasks include:
+▪Refreshing proxy servers▪
+▪ Listing  in f ormation  from managed systems ▪
+▪Evaluate the import rules on discovered systems and accounts and assign them to managed system▪
+policies
+▪Monitoring list file size ▪
+▪ Con figuring  listed computer objects as Bravura Privilege resources ▪
+▪ Updating  the Bravura Security Fabric database ▪
+▪ De t ecting  out-of-band changes ▪
+▪Cleaning up the database▪
+▪Checking inventory levels▪
+▪Loading user class cache▪
+▪ Submitting  aut omatic  assignment requests ▪
+▪Synchronize server files and registry keys ▪
+▪ Notif ying  the Bravura Security Fabric administrator of errors or warnings ▪
+▪ Cr eating  the default scheduled task to run psupdate ▪
+You can also run psupdate to update a single user.
+Never run psupdate on more than one replicated Bravura Security Fabric server at the same time
+In a replic ation  environment, the sending node creates additional  queue files in the <ins t anc e>/db/
+replic ation  directory. These are used to store the data to be sent to all replic ation  nodes. Once this data
+has been replicated to the nodes, these files are removed.
+Usage
+psupdate.exe
+   [-account <accountID>]
+   [-alltasks]
+   [-checkinv]
+   [-enforce_list <enforcement-list>]
+   [-enforce_submit <enforcement-list>]
+   [-forcerun]
+   [-import]
+   [-importlws]
+   [-list]
+   [-list_reset_threshold]   [-loaddb]
+   [-no-plugins]
+   [-profile <profileID>]
+   [-resattr <attrID>]
+   [-resattrvalue <attrVal>]
+   [-schedule]
+   [-status]
+   [-target <targetID>]
+   [-targetdiscovered]
+   [-targetmanual]
+   [-updproxy]
+   [-v|--version]
+Argument Description
+-updproxy Refresh proxy servers.
+-list Only list login IDs and supported in f ormation  from
+specified  target systems. At least one target must be
+specified.
+-list_reset_threshold Resets the recorded object count before listing.  This
+disables listthr esholdma xr elativ echang e  for that specific
+list.
+-loaddb Only load data from specified  target systems based on
+the e xisting  list files to the database. At least one target
+must be specified.
+-checkinv Check inventory levels.
+- alltasks Complete all tasks that are done during a full update
+even though specific  target systems are being listed
+and/or loaded.
+-import Evaluate all discovered objects from target systems
+against push mode import rules where they apply.
+Applies to the discovered computers from the target, and
+the subsequent discovered accounts from discovered
+systems that get managed.
+-importlws Evaluate all discovered objects from target systems
+against local service mode import rules where they apply.
+Applies to the local service mode discovered computers,
+and the subsequent discovered accounts from discovered
+systems that get managed.
+-no-plugins Run psupdate without e x ecuting  plugin scripts  (on
+page 2742) (*_pre.cmd, *_post.cmd).
+-enforce_list <enforcement-list> Run the rbacenforce program to list role
+enforcement violations.Argument Description
+-enforce_submit <enforcement-submit> Run the rbacenforce program to submit requests
+role enforcement violations.
+-pr ofile  <pr ofile  ID> Run psupdate for a single user de fined  by a Bravura
+Security Fabric pr ofile  ID. You can use this with the -target
+option  zero or more times  to specify the targets on which
+psupdate will update the accounts. When used without
+the -target option,  psupdate will update the accounts
+on all target systems.
+-account <pr ofile  ID> Run psupdate for a single user de fined  by an account
+ID on a single specified  target system. You must use the -
+target option  to specify the target system.
+-target <target ID> Specify a target system on which psupdate will list a
+single user. This option  must be used with the -pr ofile,  -
+account, -list or -loaddb option.
+-targetdiscovered Specify all discovered target systems.
+-targetmanual Specify all target systems that are manually de fined.
+-forcerun Force psupdate to have it c ontinue  even if it looks like
+psupdate is already running or scheduled to run on some
+other node.
+-r esattr Select target systems based on a specified  resource
+attribut e  ID. This option  must be used with the -
+r esattr v alue  and -target option.
+-r esattr v alue Select target systems that match a resource attribut e
+value. This option  must be used with the -r esattr  and -
+target option.
+-schedule Creates the default scheduled task to run psupdate if
+it does not already exist. No other tasks are run.Argument Description
+-status Returns the current status of the auto discovery process:
+▪No c on figur ation  changes can be made until  it is ▪
+completed %RUNNINGACTIONS%
+▪Running connector for target [%TARGETID%] (elapsed▪
+time:  %ELAPSEDTIME%)
+▪ Listing  files on proxy [%PROXYSERVER%] (elapsed ▪
+time:  %ELAPSEDTIME%)
+▪Loading staging table [%STAGETABLE%] (elapsed time: ▪
+%ELAPSEDTIME%)
+▪Running plug-in [%PLUGIN%] (elapsed time: ▪
+%ELAPSEDTIME%)
+▪Running stored procedure [%STOREDPROC%] (elapsed▪
+time:  %ELAPSEDTIME%)
+▪ R eplic ating  file [%REPLFILE%] to proxy ▪
+[%PROXYSERVER%] (elapsed time:  %ELAPSEDTIME%)
+▪ Updating  database (%ACTION%) ▪
+▪ Listing  target (%ACTION%) ▪
+▪ Updating  proxy (%ACTION%) ▪
+-v — --version Display version in f ormation.
+Examples
+1.To run auto discovery, as it would be run during the scheduled psupdate job, type:1.
+psupdate.exe
+2.To determine the current status of the auto discovery process, type:2.
+psupdate.exe -status
+3.To list in f ormation  from all manually added target systems, type: 3.
+psupdate.exe -targetmanual -list
+4.To list in f ormation  from the target system ADDOM, type: 4.
+psupdate.exe -target ADDOM -list
+5.To list in f ormation  without running plugin scripts, type: 5.
+psupdate.exe -targetmanual -targetdiscovered -list -no-plugins
+6.To list, load, and evaluate in f ormation  from all discovered target systems, type: 6.
+psupdate.exe -targetdiscovered -list -loaddb -import
+7.To update accounts for a single pr ofile  on all target systems, type: 7.
+psupdate.exe -profile <profile ID>
+8.To only list from specified  target systems that have "New York" as a value for resource attribut e 8.
+"Loc ation".
+psupdate.exe -list -resattr Location -resattrvalue "New York" -
+target TARGET1  -target TARGET2queue flush
+Use the queueflush program to gracefully shut down all Bravura Security Fabric  services, with the
+e x ception  of Database Service ( iddb ) and Logging Service ( idmlogsvc ), on every r eplic ation  node (or
+a set list of servers). The command initia t es  the DB_COMMIT_SUSPEND state; in which database commits
+are suspended. This is followed by a flushing  of all data in r eplic ation  queues. The program will display
+the progress of the flushing  process.
+The standard way to reverse the DB_COMMIT_SUSPEND state is stop the Database Service on all nodes
+after  queueflush has done its work. If this is not done, you will encounter problems when s t arting
+the other services while still in DB_COMMIT_SUSPEND state.
+Usage
+queueflush.exe [ -cancel | -list |  -servers --servers <serverlist> ]
+Argument Description
+-cancel Cancel a flush  and lift DB_COMMIT_SUSPEND. See notes
+below.
+-list List servers in a r eplic ation  environment.
+-servers, --servers <serverlist> List of servers to flush  queues on. If this argument is not
+specified,  queues from all servers will be flushed.
+WARNING!: This option  is not recommended, as servers
+that are in a flush  state may still be receiving data from
+other servers that are not in a flush  state. Use at your
+own risk.
+Examples
+1.To flush  queues from all r eplic ation  nodes: 1.
+queueflush.exe
+This command shuts down the services (except the Database Service and Logging Service) and
+initia t es  the DB_COMMIT_SUSPEND state. No arguments are needed.
+2.To cancel an in-progress queue flush  initia t ed  flush  and DB_COMMIT_SUSPEND state: 2.
+ queueflush.exe -cancel
+3.To list all servers in a r eplic ation  environment: 3.
+ queueflush.exe -list
+Notes on -cancel argument  
+The queueflush.exe -cancel  command can be used to cancel the process initia t ed  by
+queueflush ; for example, if there is much more data in the r eplic ation  queues than expected and the
+queues will not be flushed  in reasonable time  for a change window, and there is a need to abort.
+For queueflush.exe -cancel  to work, the Database Service and Logging Service should be
+running. If the Database Service is not running, it will not work.When queueflush.exe -cancel  is executed (from a single node) it lifts the
+DB_COMMIT_SUSPEND state and gracefully starts all the Bravura Security Fabric  services on all replicated
+nodes in the instance.
+resetkey
+Use the resetkey program if you need to reset the c ommunic ation  key (on page 406) (or Master Key),
+Connector encr yption  key, or IDMLib encr yption  key in the registry.
+For example, if you have f or g otten  any of the encr yption  keys, or if you have a policy which requires you
+to change it on a regular basis.
+Updating  the registry must occur on all servers, including listeners, proxy servers, applic ation  instance
+servers, IDDB r eplic ation  nodes, and transparent password s ynchr oniz ation  triggers. If this change is not
+completed on all servers, then c ommunic ation  between these servers can fail. You can export the reset
+encr yption  keys to the idmsetup.inf  file, which is used to load in f ormation  during the initial
+ins t allations  on these servers.
+Usage
+resetkey.exe -type <keytype> -value <keyvalue>
+resetkey.exe -type <keytype> -export [-value <keyvalue>] [-file <file>]
+Argument Description
+-type <keytype> The key type for the encr yption  key that is being reset.
+Valid types are:
+commkey
+connectorkey
+idmlibkey
+restapikey (export only)
+-value <keyvalue> The hexadecimal key to set for the new value for the key
+as specified  for -type in the registry, idmsetup.inf file, or
+other specified  file. The specified  <keyvalue> must be 64
+hexidecimal characters in length.
+-export Copies the registry value for the specified  encr yption  key,
+encodes it, and writes it to the inf file.Argument Description
+- file <file> Allows you to specify the name and loc ation  of an
+alternate inf file to which to export the encrypted key
+value. The default name and loc ation  is <ins t ance>
+\p sc on fig\idmse tup.in f .  The encr yption  key value can be
+taken from the registry, or specified  using the -type and -
+value arguments.
+Examples
+1.To update the c ommunic ation  key (or Master Key), Connector encr yption  key, or IDMLib encr yption 1.
+key in the registry with a specified  hexidecimal key, type:
+resetkey -type commkey -value <64-character-key-value> 
+resetkey -type connectorkey -value <64-character-key-value> 
+resetkey -type idmlibkey -value <64-character-key-value>
+2.To update the c ommunic ation  key (or Master Key) in a file named idm-copy.inf, located in the current 2.
+directory, using the c ommunic ation  key (or Master Key) value from the registry, type:
+resetkey -type commkey -export -file idm-copy.inf
+The specified  inf file must be a valid setup file that follows the format of idmsetup.inf. It is
+recommended that you backup the inf file before e xporting  the current c ommunic ation  key (or Master
+Key) to the file.
+serviceacct
+Bravura Security Fabric  utiliz es  a service user (default psadmin ) account in various loc ations.
+Or g aniz ations  require the ability to rename this account, use a diff er en t  account or change the password.
+When changes are made to the Bravura Security service user (psadmin) account, such as renaming it,
+changing the password, or changing to a diff er en t  account, use the serviceacct program to update
+known loc ations  where the service user account is used.
+If you have multiple  instances using the same service account, you must run serviceacct under each
+instance when the service account is modified.  If the service account is a domain account, you must pre fix
+it with domain name "domain\user" when running the utility .
+See Changes to the service account  (on page 2883) for details.
+servicemove
+The servicemove failover program helps transfer a failed server’s workload to a secondary server.
+The program is run from the secondary server.
+For example, upon ins t allation,  each W orkflo w  Manager Service (idwfm) is assigned a unique ID on each
+server. Each W orkflo w  Manager Service (idwfm) handles only the IDs assigned to it. A w orkflo w  request,
+when created, is bound to one of these IDs. So if one of the servers goes down, servicemove can beused to transfer the down W orkflo w  Manager Service to an activ e  server, so that the requests bound to
+this W orkflo w  Manager Service service could be processed.
+Usage
+servicemove.exe [options] ...
+Argument Description
+-force Forces a move to occur even when the remote service
+appears to be running.
+-list <server ID> Specify a server ID to list services for that server, or you
+can specify "all" to list services for all servers.
+-move <service name> Moves the specified  service to this server.
+-release <service name> Releases the specified  service back to its home server.
+-server <serverID> Specifies  the home server of the service.
+Examples
+1.To list services on all servers:1.
+servicemove.exe -list all
+2.To make the secondary server take over running the Password Manager service (idpm) on behalf of a2.
+failed primary server, and put all the requests in queue:
+servicemove.exe -server <primary server id> -move idpm
+3.To force a secondary server to take over running the Password Manager service even though the3.
+primary server is currently running:
+servicemove.exe -server <primary server id> -move idpm -force
+4.To release the Password Manager service back to its home server:4.
+servicemove.exe -server <primary server id> -release idpm
+setup_iis
+Use setup_iis  to modify the Internet In f ormation  Services (IIS) c on figur ation  for a Bravura Security
+Fabric  instance. Normally, the installer for Bravura Security Fabric  will handle adding or removing the
+c on figur ation  when installing or uninstalling the product. However, in the event of an installer error,
+setup_iis  can be used to perform these oper ations.  In addition,  setup_iis  can be used to
+c on figur e  response headers using customized meta tags.
+setup_iis  must be run from within the directory of the installed instance.
+Usage
+setup_iis [-i] | -pwd <password> | -r
+Option Description
+-i Install oper ationOption Description
+-pwd Password of the account ID used to run Bravura Security
+Fabric services
+-r Remove oper ation
+Examples
+1.To install the IIS c on figur ation: 1.
+setup_iis -i -pwd accountpwd1234
+2.To uninstall the IIS c on figur ation: 2.
+setup_iis -r
+3.To c on figur e  response headers, copy the setupiis.cfg  file from the instance's samples directory 3.
+to its p sc on fig  directory. Open the copied setupiis.cfg  in a text editor, and modify it for the tags
+to be added. Then, run setup_iis  as you would to install the IIS c on figur ation.
+updextdb
+Use the updextdb  program to generate a new extdb.db  file, or upgrade an e xisting  file with internal
+tables.
+Usage
+ updextdb.exe [initrefbuild]
+Examples
+1.To create a new extdb.db file, or upgrade an e xisting  extdb.db file: 1.
+updextdb.exe
+2.To run reference build initializ ation  scripts for external data store, replacing e xisting  contents: 2.
+updextdb.exe -initrefbuild
+See:
+▪External Data Store  (on page 1163) for more in f ormation  about external data stores. ▪
+▪Components  (on page 312) for more in f ormation  about reference builds. ▪

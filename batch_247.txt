@@ -1,0 +1,323 @@
+Manual requests
+Manual onboarding requests are w orkflo w  requests initia t ed  by people logging into Bravura Security
+Fabric ’s portal and filling  out a request form with all the details necessary to create new accounts for
+users.
+In order to provide better  fle xibility  and control over the manual onboarding process, Bravura P attern
+includes two scenarios dedicated to this use case. They are described in sections  below.
+im_corp_manual_onboard_contractors
+Purpose:
+Implements a use case allowing requesters to submit onboarding requests for contractor type users via
+the NEW-CONTRACTOR pr e-de fined  request.
+Configur ation:
+External data store ( extdb ) tables containing c on figur ation  relevant to this scenario:
+▪ im_t ermination:  Dictates what happens with contractor users whose scheduled t ermination  date is ▪
+approaching or has passed.
+▪ hid_policy_attr v al_*:  Adds rules involving pr ofile  and request attribut es  c alculation  and v alidation,  so ▪
+that contractor onboarding requests can be processed successfully by the w orkflo w  engine.
+▪ im_policy_authoriz ation:  Adds an authoriz ation  rule to require a member of the CONTRACT-HIRE- ▪
+APPROVAL user class to approve contractor onboarding requests.
+im_corp_manual_onboard_employees
+Purpose:
+Similar to the automated onboarding process, this scenario provides all the necessary c on figur ation  to
+allow users to submit onboarding requests for new employees, using the NEW-EMPLOYEE pr e-de fined
+request.
+Configur ation:
+This scenario relies on c on figur ation  data located in the following external data store ( extdb ) tables:
+▪ im_policy_authoriz ation:  Adds an authoriz ation  rule to require a member of the HR team to approve ▪
+employee onboarding requests.
+▪ hid_policy_attr v al_*:  Adds rules involving pr ofile  and request attribut es  c alculation  and v alidation,  so ▪
+that employee onboarding requests can be processed successfully by the w orkflo w  engine.
+Supporting  scenarios
+Bravura P attern  includes a number of components which provide shared functionality  for other
+scenarios. We call these "supporting"  or "library" components.When the onboarding scenarios described above are installed, the supporting  scenarios described below
+are also installed as dependencies.
+im_corp_onboard
+Purpose:
+This scenario provides c on figur ation  data, library methods and scripted logic required by other scenarios
+which provide onboarding related functionality .  The scenario will be aut omatic ally  installed as a
+dependency along with other onboarding scenarios; it should never be installed on its own.
+hid_fir s t_login
+Purpose:
+This scenario provides all the c on figur ation  necessary to deploy a "fir s t  login" experience for newly
+onboarded users – or users accessing the system for the fir s t time.  As its pr e fix  suggests, this component
+can be installed in both Bravura Pass  and Bravura Identity  instances. Depending on the type of
+in f ormation  available, the scenario allows new users to authentic a t e  into the product’s portal by using
+some alternate authentic ation  factors such as PII in f ormation  or a PIN sent to their email address or their
+cell phone via SMS. Once authentic a t ed,  they have the option  to register security questions,  their mobile
+device and set an initial  password on their accounts. The hid_fir s t_login  scenario is often  installed
+alongside other onboarding scenarios in order to streamline the user onboarding experience and reduce
+the amount of manual work required for post-onboarding tasks.
+Configur ation:
+When installed, this scenario adds a number of new authentic ation  chains to the product instance.
+External data store ( extdb ) tables containing c on figur ation  relevant to this scenario:
+▪hid_authchain_select: Adds authentic ation  chains rules to allow users logging in for the fir s t time  to ▪
+authentic a t e  using an alternate factor, such values of their PII attribut es  or a PIN sent to their mailbox
+or mobile device via SMS. Where PII attribut es  are used, they are collected during onboarding and
+then discarded once the user has used them during authentic ation.
+im_corp_passgen
+Purpose:
+A supporting  (dependency) scenario for other onboarding scenarios, it implements a password
+g ener ation  plugin for new accounts using the default password policy c on figur ed  for the instance.
+Without this, requesters would be prompted to enter an initial  password for new accounts and
+automated onboarding requests would fail.
+hid_pr ofileid
+Purpose:Another scenario typically installed alongside other onboarding scenarios, it generates an attribut e  called
+PROFILEID when attribut e  v alidation  is run as part of onboarding requests. This attribut e  can then be
+referenced to reliably determine the pr ofile  ID for a user, even if their pr ofile  has not yet been created
+during onboarding requests.
+Configur ation:
+External data store ( extdb ) tables containing c on figur ation  relevant to this scenario:
+▪ hid_global_c on figur ation:  under the PDR setting ,  add or edit the comma-separated list of the IDs of ▪
+the PDRs for which this Scenario has to work
+▪ hid_policy_attr v al_*:  Adds rules for the setting  the PROFILEID attribut e  based on the FIRST_NAME, ▪
+LAST_NAME and OTHER_NAME pr ofile  attribut es.
+Attribut e  flo w
+Attribut e  flo w  is an aut omation  feature which allows administrators to leverage Bravura Identity  for
+pr opag ating  account attribut e  changes originating  on a monitored upstream SoR to multiple  destination
+(or downstream) target systems; for example a phone number update for a user in a HR database can be
+propagated to their Activ e  Directory and LDAP accounts aut omatic ally ,  without any human in t er v ention.
+im_c orp_aut oma t ed_attribut e_flo w
+Purpose:
+Implements an automated process for updating  account attribut es  on connected target systems based on
+changes detected on a monitored system of record (SoR).
+Configur ation:
+External data store (extdb) tables containing c on figur ation  relevant to this scenario:
+▪ hid_global_c on figur ation:  Adds ATTRIBUTE_* and UPDATE_ATTRS settings  under the AUTOMATION ▪
+namespace, to de fine  parameters such as the target ID for the SoR or the pr e-de fined  request to be
+used for automated attribut e  update requests.
+▪ im_policy_authoriz ation:  Adds an authoriz ation  rule to allow idtrack (aut omation)  requests to be ▪
+auto-approved so they can be fulfilled  immediately, without any manual in t er v ention.
+Rehire users
+Bravura Identity  has components that set default rules and thresholds for comparing identity  attribut es
+in requests to onboard new users with attribut es  of e xisting  users, in order to compute a likelihood that
+the proposed new hire is, in fact, a returning user with an e xisting  pr ofile.  Threshold values set by this
+component determine whether a given score merits a warning to the requester or should block an
+onboarding request, due to the high certainty that it is a returnee.
+Use caseOr g aniz ations  need to diff er entia t e  between new employees and employees that are being rehired.
+Employees that are being rehired should go through a diff er en t  process that could enable their previous
+resources or, in certain circumstances some employees maybe flag g ed  to not rehire.
+Solution
+Bravura Identity  is c on figur ed  to retain identity  in f ormation  for all users, even after  deactiv ation.  This
+means that user pr ofiles  are not deleted, but instead, deactiv a t ed.  Identity  attribut es  normally include
+name, date of birth and identifier s  such as a driver’s license number or social security number. Moreover,
+when a user is deactiv a t ed,  three t ermination-r ela t ed  attribut es  are populated: t ermination  date, reason
+for deactiv ation  and whether rehiring this user is allowed.
+When processing onboarding requests, regardless of whether they originate in a system of record (such
+as HR) or a request form, Bravura Identity  applies rules to score how closely the new identity  matches
+any identities  already known to the system. These rules work by matching diff er en t  sets of attribut es  –
+for example, fir s t name plus last name plus date of birth. How closely the new user matches an e xisting
+pr ofile  is used to compute a c on fidence  score. If the c on fidence  score is above one threshold, a warning
+is generated that the new hire may not actually be new. If the c on fidence  score is above another, higher
+threshold, then the request is blocked, because there is sufficien t  certainty that the new user is, in fact, a
+returning old user.
+When an onboarding request using a request form, closely matches an e xisting  pr ofile  , the following
+actions  can occur:
+▪Users of Bravura Identity  are either instructed to terminate the process, as the old user was flag g ed  as ▪
+do-not-rehire
+▪Users are instructed to r eactiv a t e  the old user pr ofile. ▪
+▪When an onboarding request closely matches an e xisting  pr ofile  from a Source of Records, the ▪
+following actions  can occur:
+▪The request is blocked with rehire not permitted. ▪
+▪The request is permitted  and a subsequent request is submitted  for someone to review the pot ential ▪
+c on flict.
+In no case should a new user pr ofile  be created for a returning old user.
+im_corp_detect_automated_rehire and im_corp_detect_rehire
+Purpose:
+These scenario components enable the product to detect whether a newly onboarded user is in fact a
+returning user with an e xisting  pr ofile.  This is done by comparing identity  attribut es  in onboarding
+requests with attribut es  of e xisting  users and determining the likelihood that the new user already has a
+pr ofile  in the system. In case of manual requests, the requester will get a warning on the request page
+when a pot ential  rehire is detected. Automated requests encountering a pot ential  rehire will be routed to
+a human implementer for fulfillmen t.  The automated rehire de t ection  component
+(im_corp_detect_automated_rehire) depends on im_corp_detect_rehire; the reverse is not true.Configur ation:
+Both of these scenarios rely on c on figur ation  data located in the following external data store ( extdb )
+tables:
+▪ hid_global_c on figur ation:  Adds c on figur ation  parameters for these scenarios under the ▪
+"im_policy_detect_rehire" namespace to control things like de t ection  threshold values, PDRs in scope
+for this feature or the attribut e  which flags  whether the user is even allowed to be rehired.
+▪ im_policy_authoriz ation:  Adds an authoriz ation  rule to allow idtrack (aut omation)  requests to be ▪
+auto-approved so they can be fulfilled  immediately, without requiring additional  authoriz ation.
+▪im_policy_implementers, hid_policy_request_chain: Only relevant for automated requests, these▪
+tables contain rules for r outing  and assigning human implementers to onboarding requests when the
+system detects a pot ential  rehire.
+▪im_policy_detect_rehire: Contains the list of attribut es  to be used for rehire de t ection  along with their ▪
+individual scores used to compute the recipient’s "rehire likelihood" score.
+Example: User flag g ed  as a rehire
+This example uses the Scenario.im_corp_detect_rehire scenario component that utiliz es  request forms in
+the way of PDRs. In this case, a user will be terminated urgently, setting  the REHIRE-ALLOWED flag to
+false. The attemp t  to rehire will be prevented.
+Requirements
+This example assumes that:
+▪Bravura Identity  and Connector Pack are installed. ▪
+▪An Activ e  Directory target is c on figur ed  and is a source of pr ofiles. ▪
+▪A HR target is c on figur ed  as a Source of Records. ▪
+Configur e  the scenario
+1.Log in to Bravura Identity  as a superuser. 1.
+2.Install the scenario.im_corp_detect_rehire scenario.2.
+This scenario component sets default rules and thresholds for comparing identity  attribut es  in
+requests to onboard new users with attribut es  of e xisting  users, in order to compute a likelihood that
+the proposed new hire is, in fact, a returning user with an e xisting  pr ofile.
+3.Navigate to the Manage external data store  to verify the following tables are available. The tables are 3.
+pr e-c on figur ed,  however, may require some cus t omiz ation  for your environment:
+▪ hid_global_c on figur ation  to c on figur e  rehire parameters. ▪
+▪im_policy_detect_rehire to set rehire de t ection  criteria. ▪
+4.Click Manage the system > W orkflo w  > Pr e-de fined  requests . 4.
+5.Customize PDRs as needed.5.
+The following PDRs have been pr e-c on figur ed  for the t ermination  scenario. You may want customize
+to your needs; for example, edit the access control or change the oper ations.▪REHIRE Used to enable user accounts after  they have been terminated. This pr e-de fined  request is ▪
+valid if the user is allowed to be rehired.
+▪RESTORE-TERMINATED-USER  Used to restore a user that was terminated. ▪
+Complete an urgent t ermination  (on page 2477) of a user using the URGENT-TERM PDR. The REHIRE-
+ALLOWED flag is is aut omatic ally  set to false.
+Attemp t  a rehire
+1.Log in to Bravura Identity  as a user. 1.
+2.Click Create a new user pr ofile . 2.
+3.Select the Hire a contractor  PDR. 3.
+4.Fill out the new user’s in f ormation  with duplicate in f ormation  that matches the terminated user. 4.
+5. Attemp t  to submit the request. 5.
+An error should appear s t ating  that a rehire of an e xisting  user is attemp t ed  and will be prevented.
+Example: User flag g ed  as a rehire on a SoR
+This example uses the Scenario.im_corp_detect_automated_rehire scenario. In this use case a user is
+flag g ed  as a rehire from a Source of Records.
+Requirements
+This example assumes that:
+▪Bravura Identity  and Connector Pack are installed. ▪
+▪An Activ e  Directory target is c on figur ed  and is a source of pr ofiles. ▪
+▪A HR target is c on figur ed  as a Source of Records. ▪
+Configur e  the scenario
+1.Log in to Bravura Identity  as superuser. 1.
+2.Install the Scenario.im_corp_detect_automated_rehire scenario.2.
+This scenario component will detect rehires being submitted  from the source of records and submit
+follow up requests for an implementer to review the new user being onboarded.
+3.Click Manage external data store  to verify the following tables are available. The tables are pr e- 3.
+c on figur ed,  however, may require some cus t omiz ation  for your environment:
+▪ hid_global_c on figur ation  to c on figur e  rehire parameters. ▪
+▪hid_policy_request_chain to submit a request to review new the hire.▪
+▪ im_policy_authoriz ation  to set authoriz ation  on the require de t ection  request. ▪
+▪im_policy_detect_rehire to set rehire de t ection  criteria. ▪
+▪im_policy_implementers to set implementers to review the pot ential  rehire. ▪
+4.Customize PDRs as needed.4.The following PDRs have been pr e-c on figur ed  for the t ermination  scenario. You may want customize
+to your needs; for example, edit the access control or change the oper ations.
+▪REHIRE  Used to enable user accounts after  they have been terminated. This pr e-de fined  request is ▪
+valid if the user is allowed to be rehired.
+▪NEW-EMPLOYEE▪
+5.Complete a scheduled t ermination  (on page 2477) of a user. 5.
+Attemp t  a rehire
+1.Add an account in Source of Records (SoR) target.1.
+2.Execute auto discovery.2.
+A request is submitted  and a child request is submitted  for review.
+3.Log in to Bravura Security Fabric  as a request implementer. 3.
+HR systems are usually set as read only targets and require an implementer to complete tasks as
+opposed to a connector aut omatic ally  c ompleting  the task.
+4.Verify that there are pending requests open to implement.4.
+Transfers
+Users sometimes  change department, loc ation,  or manager. This data may come from an SoR or be
+entered manually in Bravura Security Fabric . Transfers may require authoriz ation  and typically require
+changes to pr ofile  and account attribut es,  as well as management of change requests that a user was
+associated with before they were transferred. Bravura Security Fabric  can be c on figur ed  to aut omatic ally
+manage these requirements.
+Aut omation
+im_corp_automated_transfer
+Purpose:
+This scenario implements an automated transfer process for e xisting  users based on changes to the
+loc ation,  department or manager attribut es  detected on a monitored system of record (SoR).
+Configur ation:
+This scenario relies on c on figur ation  data located in the following external data store ( extdb ) tables:
+▪ hid_global_c on figur ation:  Adds TRANSFER_* settings  under the AUTOMATION namespace, to de fine ▪
+parameters such as the target ID for the SoR or the pr e-de fined  request to be used for automated
+transfer requests.
+▪ im_policy_authoriz ation:  Adds an authoriz ation  rule to allow idtrack (aut omation)  requests to be ▪
+auto-approved.
+▪ hid_policy_attr v al_*:  Adds rules for handling pr ofile  attribut es  such as the EMPLOYEE_TYPE and OU, ▪
+which may have to be updated as part of the transfer.Manual requests
+im_corp_manual_transfer
+Purpose:
+This scenario allows members of the HR team or managers to request the transfer of e xisting  users to
+another loc ation,  department or manager.
+Configur ation:
+This scenario relies on c on figur ation  data located in the following external data store ( extdb ) tables:
+▪ im_policy_authoriz ation:  Adds authoriz ation  rules for transfer requests so that they require approval ▪
+from members of the HR team, or auto-approve these types of requests if the requester is a member
+of the HR team.
+▪ hid_policy_attr v al_*:  Adds rules for handling pr ofile  attribut es  such as the     EMPLOYEE_TYPE and OU, ▪
+which may have to be updated as part of the transfer.
+Renames
+From time  to time,  users will change their names, commonly due to changes in marital status. At a
+minimum, a user’s new name should be r e flect ed  on any systems where the user’s name appears.
+If the user’s name was used to construct the user’s login ID or email address, a number of additional
+changes may have to be made if the login ID changes as a result of this name change.
+Change requests that include the user must also be updated so that they can still participa t e.  For this
+reason, it is preferable to assign login IDs that are not based on user names, or at least not based on
+surnames.
+Aut omation
+im_corp_automated_rename
+Purpose:
+This scenario implements an automated rename process for e xisting  users based on changes to name
+attribut es  detected on a monitored system of record (SoR).
+Configur ation:
+This scenario relies on c on figur ation  data located in the following external data store ( extdb ) tables:
+▪ hid_global_c on figur ation:  Adds RENAME_* settings  under the AUTOMATION namespace, to de fine ▪
+parameters such as the target ID for the SoR, the attribut es  whose change should trigger the rename
+process or the pr e-de fined  request to be used for automated rename requests.
+▪ im_policy_authoriz ation:  Adds an authoriz ation  rule to allow idtrack (aut omation)  requests to be ▪
+auto-approved.▪ hid_policy_attr v al_*:  Adds rules for handling pr ofile  attribut es  such as PROFILEID or EMAIL, which ▪
+may have to be updated as part of rename requests.
+Example: User name changes originating  in the System of Record
+This example shows you how to rename a user by changing his or her name on the System of Record
+(SoR).
+Requirements
+This example assumes that:
+▪You have installed Bravura Workforce P attern  or Scenario im_corp_automated_rename ▪
+▪You have c on figur ed  an SoR target system identified  by HRAPP . ▪
+Change name on the system of record (SoR)
+Change the First name, Middle name, or Last name of a user on the HRAPP target system.
+Run auto discovery
+Run auto discovery to load changes on the target system into the product database:
+1.Log in to Bravura Security Fabric  as superuser. 1.
+2.Navigate to Manage the system > Maintenance > Auto discovery > Execute auto discovery . 2.
+3.Click Continue . 3.
+4.Wait until  auto discovery completes. 4.
+Approve name change request
+To approve the name change request:
+1.Log in to Bravura Security Fabric  as one of the authorizers of the NAME-CHANGE  pr e-de fined  request. 1.
+2.From the main menu, click Requests.2.
+The Requests app opens.
+3.From the Results panel , select the request with the description  "Change of name" and requester 3.
+"Shipped user of the API".
+4.Bravura Security Fabric  displays the details in the Actions  panel  on the right. 4.
+5.Review the request.5.
+6.Click Approve  and c on firm  the approval by clicking the Approve  button  below the notes field. 6.
+Manual requests
+im_corp_manual_rename
+Purpose:This scenario allows individual users to initia t e  a request to change their name.
+Configur ation:
+This scenario relies on c on figur ation  data located in the following external data store ( extdb ) tables:
+▪ im_policy_authoriz ation:  Adds authoriz ation  rules for rename requests so that they require approval ▪
+from a member of the HR team.
+▪ hid_policy_attr v al_*:  Adds rules for handling pr ofile  attribut es  such as PROFILEID or EMAIL, which ▪
+may have to be updated as part of rename requests.
+Example: Submit a change of name request as an end user
+This example shows you how to rename a user using a pr e-de fined  request NAME-CHANGE.
+Requirements
+This example assumes that:
+▪You have installed Bravura Workforce P attern  or Scenario im_corp_manual_rename so the pr e-de fined ▪
+request (PDR) NAME-CHANGE  has been added.
+▪You have updated the im_policy_authoriz ation  rule for the PDR NAME-CHANGE . ▪
+Submit name change request
+To submit a name change request:
+1.Log in to Bravura Security Fabric  as an end user. 1.
+2.Click View and update pr ofile  from the My profile  menu. 2.
+3.Click Change of name . 3.
+4.Enter a new Last name . 4.
+5.Click Submit . 5.
+Approve the name change request
+To approve the request:
+1.Log in to Bravura Security Fabric  as one of the authorizers of the request. 1.
+By default, the authorizers are selected by the authoriz ation  plugin from members of the HR
+department. You can update the im_policy_authoriz ation  rule for the NAME-CHANGE PDR to assign
+authorizers.
+2.From the main menu, click Requests . The Requests app opens. 2.
+3.From the Results panel  select the request you want to review. 3.
+Bravura Security Fabric  displays the details in the Actions  panel  on the right.
+4.Review the request.4.
+5.Click Approve  and c on firm  the approval by clicking the Approve  button  below the notes field. 5.

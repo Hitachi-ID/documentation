@@ -1,0 +1,325 @@
+[root@bravura-guacamole certificates]# keytool -import -v -trustcacerts -alias bravurainst -file
+bravuracert.cer -keystore truststore.jks
+Enter keystore password:
+Re-enter new password:
+Owner: CN=fabric-svr1.bravura1.corp
+Issuer: CN=fabric-svr1.bravura1.corp
+Serial number: 16c6fd2eaee998ac4d24e204b4e035ee
+Valid from: Fri Feb 10 16:32:44 MST 2023 until: Sat Feb 10 16:52:44 MST 2024
+Certificate fingerprints:
+SHA1: E8:F4:C7:BC:CE:05:BD:B1:A3:B6:9D:33:28:B8:D6:41:5B:AC:F0:D4
+SHA256: 6F:C7:29:03:7B:24:2E:98:E1:B4:4A:E8:9C:C7:A7:86:16:87:D6:71:98:23:22:32:30:2F:83:6C:E5:BC:92:AD
+Signature algorithm name: SHA256withRSA
+Subject Public Key Algorithm: 2048-bit RSA key
+Version: 3
+Extensions:
+#1: ObjectId: 2.5.29.37 Criticality=false
+ExtendedKeyUsages [
+clientAuth
+serverAuth
+]
+#2: ObjectId: 2.5.29.15 Criticality=true
+KeyUsage [
+DigitalSignature
+Key_Encipherment
+]
+#3: ObjectId: 2.5.29.17 Criticality=false
+SubjectAlternativeName [
+DNSName: fabric-svr1.bravura1.corp
+]
+#4: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: E0 94 85 4D C7 03 D4 E5 95 EC 11 8F 7B D5 4A CB ...M..........J.
+0010: 0E A4 77 99 ..w.
+]
+]
+Trust this certificate? [no]: y
+Certificate was added to keystore
+[Storing truststore.jks]
+Once trusted, you should now see the truststore.jks  file in the certificates directory.Next steps
+▪Deploy SSL certific a t es  for the Guacamole server  (for self-signed certific a t es  only) ▪
+▪ Con figur e  Guacamole with SSL using Docker  (if Docker ins t allation  method was used) ▪
+▪ Con figur e  Guacamole with SSL using Podman  (if Podman ins t allation  method was used) ▪
+Self-signed certific a t es
+If you are using self-signed SSL certific a t es  for the Guacamole server, you will need to deploy these
+certific a t es  on any system that will be used to launch Guacamole sessions. If not installed, web browsers
+will return a ERR_CERT_AUTHORITY_INVALID  error message because it cannot validate the site’s SSL
+certific a t e.
+Perform the following steps as a user with adminis tr ativ e  permissions, for each system that will be used
+to launch Guacamole sessions. This is based on a Windows environment.
+1.For each system that will be used to launch Guacamole sessions, create a new directory to store the1.
+Guacamole certific a t e.  (ie. C:\guacamole_certificates )
+2.Copy over the guacamole.cer  file from the Guacamole server to the directory specified  in the 2.
+previous step.
+3.Close any open web browser windows.3.
+4.From the directory where the guacamole.cer  certific a t e  is located, double click on the file. 4.
+5.Click Install Certific a t e… 5.
+6.Choose the Store Loc ation  (default Current User) 6.
+It is recommended that the store loc ation  be set to Local Machine, otherwise each individual user on
+the system will need to install the certific a t e.
+7.Click Next 7.
+8.Select Place all certific a t es  in the following store 8.
+9.Click Browse… 9.
+10. Select Trusted Root Certific ation  Authorities 10.
+11. Click OK 11.
+12. Click Next 12.
+13. Click Finish 13.
+14. Click Yes to accept the security warning. 14.
+15. Click OK to close the import wizard. 15.
+16. Open a web browser, and specify the DNS name of the Guacamole server in the address bar: 16.
+https://<DNSName-of-guacamole-server>
+You should no longer see the ERR_CERT_AUTHORITY_INVALID  error message.
+Con figur e  Guacamole with SSL using Docker
+The following steps are based on a Guacamole ins t allation  using Docker  (on page 1981). All steps
+performed on the Guacamole server will be done as root user.1.Navigate to the idmunix-rhel-el7.x64/docker directory. 1.
+cd /root/idmunix-rhel-el7.x64/docker/
+2.Start the Docker container if not already done so:2.
+docker compose up -d
+3.From the same directory, modify docker-compose.yml , by adding port 8443 to the list of ports. 3.
+The file should look like this:
+version: "3"
+services:
+guacd:
+build:
+context: ./guacd
+image: guacd
+container_name: guacd
+deploy:
+replicas: 1
+restart_policy:
+condition: on-failure
+networks:
+- guac
+guacamole:
+build:
+context: ./guacamole
+image: guacamole
+container_name: guacamole
+deploy:
+replicas: 1
+restart_policy:
+condition: on-failure
+ports:
+- "8080:8080"
+- "8443:8443"
+networks:
+- guac
+networks:
+guac:
+Save the file.
+4.From the docker directory, navigate to the guacamole directory. 4.
+cd /root/idmunix-rhel-el7.x64/docker/guacamole
+5.Modify Dockerfile , by exposing port 8443. The file should look like this: 5.# Use args for Tomcat image label to allow image builder to choose alternatives
+# such as `--build-arg TOMCAT_JRE=jre8-alpine`
+#
+ARG TOMCAT_VERSION=9
+ARG TOMCAT_JRE=jre8
+FROM tomcat:${TOMCAT_VERSION}-${TOMCAT_JRE}
+COPY . /
+EXPOSE 8080
+EXPOSE 8443
+ENV GUACAMOLE_HOME /etc/guacamole/
+CMD ["catalina.sh", "run"]
+Save the file.
+6.Navigate to the  idmunix-rhel-el7.x64/docker/guacamole/usr/local/tomcat 6.
+directory:
+cd /root/idmunix-rhel-el7.x64/docker/guacamole/usr/local/tomcat
+7.Create 2 directories called conf and ssl : 7.
+mkdir conf
+mkdir ssl
+8.Copy over keystore.jks  and truststore.jks  to the ssl directory. 8.
+cp /root/certificates/truststore.jks /root/idmunix-rhel-el7.x64/
+docker/guacamole/usr/local/tomcat/ssl/
+cp /root/certificates/keystore.jks /root/idmunix-rhel-el7.x64/docker/
+guacamole/usr/local/tomcat/ssl/
+9.From the tomcat directory, navigate to the bin directory. 9.
+cd /root/idmunix-rhel-el7.x64/docker/guacamole/usr/local/tomcat/bin
+10. Modify  setenv.sh , by adding a line to include a line to the path of the truststore file and password: 10.
+export JAVA_OPTS="$JAVA_OPTS -Djavax.net.ssl.trustStore=/usr/local/tomcat/ssl/truststore.jks -Djavax.net.ssl.trustStorePassword=<password>"
+trustStore is the full path to the truststore.jks  file
+trustStorePassword is the password you provided for the truststore.jks  file. (replace
+<password> )
+Save the file.
+11. Enter the guacamole container context: 11.
+docker exec -it guacamole /bin/bash
+To c on firm  that you are in the guacamole container context, you will see:
+root@<containerid>:/usr/local/tomcat#
+Where <containerid>  is the Guacamole container ID.
+12. You will need to install a text editor to be able to edit the file from within the container; for example 12.
+nano :apt-get update
+apt-get install nano
+13. Open server.xml in the conf directory using nano : 13.
+nano conf/server.xml
+14. Modify  server.xml , by adding the connector de finition  for enabling ssl protocol. ie: 14.
+<Connector
+protocol="org.apache.coyote.http11.Http11NioProtocol"
+port="8443" maxThreads="200"
+scheme="https" secure="true" SSLEnabled="true"
+keystoreFile="ssl/keystore.jks" keystorePass="<password>"
+clientAuth="false" sslProtocol="TLS"/>
+keystoreFile is the loc ation  of the  keystore.jks  file within the guacamole container
+context.
+keystorePass is the password you provided for the keystore.jks  file (replace
+<password> )
+The file should look something like this:...
+<Connector port="8080" protocol="HTTP/1.1"
+connectionTimeout="20000"
+redirectPort="8443" />
+<!-- A "Connector" using the shared thread pool-->
+<!--
+<Connector executor="tomcatThreadPool"
+port="8080" protocol="HTTP/1.1"
+connectionTimeout="20000"
+redirectPort="8443" />
+-->
+<!-- Define an SSL/TLS HTTP/1.1 Connector on port 8443
+This connector uses the NIO implementation. The default
+SSLImplementation will depend on the presence of the APR/native
+library and the useOpenSSL attribute of the AprLifecycleListener.
+Either JSSE or OpenSSL style configuration may be used regardless of
+the SSLImplementation selected. JSSE style configuration is used below.
+-->
+<Connector protocol="org.apache.coyote.http11.Http11NioProtocol"
+port="8443" maxThreads="200"
+scheme="https" secure="true" SSLEnabled="true"
+keystoreFile="ssl/keystore.jks" keystorePass="password123"
+clientAuth="false" sslProtocol="TLS"/>
+<!--
+<Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+maxThreads="150" SSLEnabled="true">
+<SSLHostConfig>
+<Certificate certificateKeystoreFile="conf/localhost-rsa.jks"
+type="RSA" />
+</SSLHostConfig>
+</Connector>
+-->
+...
+Save the file.
+15. Type exit to leave the guacamole container context. 15.
+16. Navigate to the idmunix-rhel-el7.x64/docker directory. 16.
+cd /root/idmunix-rhel-el7.x64/docker/
+17. Copy server.xml from the guacamole container. This will prevent the file from being 17.
+o v er written  every time  the guacamole container is built:docker cp guacamole:/usr/local/tomcat/conf/server.xml guacamole/usr/
+local/tomcat/conf/
+For future updates to the server.xml  file, edit the file from guacamole/usr/local/
+tomcat/conf/ instead of going into the container context. The latter  will be o ver written  should you
+rebuild the guacamole container.
+18. Stop the Docker container. 18.
+docker-compose down
+19. Rebuild the Docker containers and image. 19.
+docker-compose up --force-recreate --build -d
+20. Open a browser window on a system where the Guacamole server SSL certific a t e  is installed, and 20.
+access the Guacamole server using http s  and port 8443, ie:
+https://<DNSName-of-guacamole-server>:8443/pam-guacamole
+21. Con firm  that the Guacamole server is secured, as indicated by the lock on the address bar. 21.
+A black screen with the following message will be displayed, however this is expected at the setup
+stage:
+22. Update the guacamole-url  for Guacamole access disclosure plugins  (on page 1989) to use port 22.
+8443.
+Con figur e  Guacamole with SSL using Podman
+The following steps are based on a Guacamole ins t allation  using Podman . All steps performed on the
+Guacamole server will be done as root user.
+1.Stop the guac pod. 1.
+podman pod stop guac
+2.Remove the guac pod. 2.
+podman pod rm guac
+3.Navigate to the idmunix-rhel-el8.x64/docker directory. 3.
+cd /root/idmunix-rhel-el8.x64/docker/
+4.From the same directory, modify docker-compose.yml , by adding port 8443 to the list of ports. 4.
+The file should look like this:version: "3"
+services:
+guacd:
+build:
+context: ./guacd
+image: guacd
+container_name: guacd
+deploy:
+replicas: 1
+restart_policy:
+condition: on-failure
+networks:
+- guac
+guacamole:
+build:
+context: ./guacamole
+image: guacamole
+container_name: guacamole
+deploy:
+replicas: 1
+restart_policy:
+condition: on-failure
+ports:
+- "8080:8080"
+- "8443:8443"
+networks:
+- guac
+networks:
+guac:
+Save the file.
+5.From the docker directory, navigate to the guacamole directory. 5.
+cd /root/idmunix-rhel-el8.x64/docker/guacamole
+6.Modify Dockerfile , by exposing port 8443. The file should look like this: 6.# Use args for Tomcat image label to allow image builder to choose alternatives
+# such as `--build-arg TOMCAT_JRE=jre8-alpine`
+#
+ARG TOMCAT_VERSION=9
+ARG TOMCAT_JRE=jre8
+FROM tomcat:${TOMCAT_VERSION}-${TOMCAT_JRE}
+COPY . /
+EXPOSE 8080
+EXPOSE 8443
+ENV GUACAMOLE_HOME /etc/guacamole/
+CMD ["catalina.sh", "run"]
+Save the file.
+7.Navigate to the  idmunix-rhel-el8.x64/docker/guacamole/usr/local/tomcat 7.
+directory:
+cd /root/idmunix-rhel-el8.x64/docker/guacamole/usr/local/tomcat
+8.Create 2 directories called conf and ssl : 8.
+mkdir conf
+mkdir ssl
+9.Copy over keystore.jks  and truststore.jks  to the ssl directory. 9.
+cp /root/certificates/truststore.jks /root/idmunix-rhel-el8.x64/
+docker/guacamole/usr/local/tomcat/ssl/
+cp /root/certificates/keystore.jks /root/idmunix-rhel-el8.x64/docker/
+guacamole/usr/local/tomcat/ssl/
+10. From the tomcat directory, navigate to the bin directory. 10.
+cd /root/idmunix-rhel-el8.x64/docker/guacamole/usr/local/tomcat/bin
+11. Modify  setenv.sh , by adding a line to include a line to the path of the truststore file and password: 11.
+export JAVA_OPTS="$JAVA_OPTS -Djavax.net.ssl.trustStore=/usr/local/tomcat/ssl/truststore.jks -Djavax.net.ssl.trustStorePassword=<password>"
+trustStore is the full path to the truststore.jks  file
+trustStorePassword is the password you provided for the truststore.jks  file. (replace
+<password> )
+Save the file.
+12. Navigate to the idmunix-rhel-el8.x64/docker directory. 12.
+cd /root/idmunix-rhel-el8.x64/docker/
+13. Build the guacd image: 13.
+podman build -t guacd ./guacd
+14. Build the guacamole image: 14.
+podman build -t guacamole ./guacamole
+15. Create the pod called "guac" (note the change in port): 15.podman pod create --name guac -p 8443:8443
+16. Add the guacd container to the guac pod: 16.
+podman run -d --pod guac --name guacd guacd
+17. Add the guacamole container to the pod: 17.
+podman run -d --pod guac --name guacamole guacamole
+18. Enter the guacamole container context: 18.
+podman exec -it guacamole /bin/bash
+To c on firm  that you are in the guacamole container context, you will see:
+root@guac:/usr/local/tomcat#
+19. You will need to install a text editor to be able to edit the file from within the container; for example 19.
+nano :
+apt-get update
+apt-get install nano
+20. Open server.xml  in the conf directory using nano : 20.
+nano conf/server.xml
+21. Modify  server.xml , by adding the connector de finition  for enabling ssl protocol. ie: 21.
+<Connector
+protocol="org.apache.coyote.http11.Http11NioProtocol"
+port="8443" maxThreads="200"
+scheme="https" secure="true" SSLEnabled="true"
+keystoreFile="ssl/keystore.jks" keystorePass="<password>"
+clientAuth="false" sslProtocol="TLS"/>
+keystoreFile is the loc ation  of the  keystore.jks  file within the guacamole container
+context.
+keystorePass is the password you provided for the keystore.jks  file (replace
+<password> )
+The file should look something like this:

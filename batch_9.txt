@@ -1,0 +1,363 @@
+▪Fix the following two issues a ff ect ed  the idapi methods CertStartSingleUserRound and ▪
+CertStartCertCampaign:
+▪The PDR specified  via the r emediation  type CERTATTRPDR was ignored and the default PDR was ▪
+used.
+▪The PDR specified  via the r emediation  type CERTNEWPDR was ignored and never included in the ▪
+certific ation  campaign.
+▪Improve accessibility of the table controls in certific ation  review page. ▪
+▪Users who have the adminis tr ativ e  privilege of Initia t e  a review of all entitlemen ts  or Initia t e ▪
+entitlemen t  certific ation  campaigns will have no access to menus of manage certific ation  process for
+campaigns they did not initia t e.
+▪ Certific ation  campaigns listed via the Initia t e  entitlemen t  certific ation  campaigns link should not ▪
+include campaigns initia t ed  by other users even if those campaigns include the user as a reviewer
+such as orgchart campaigns.
+▪The proper delegate will be assigned resources to review when using the certific ation  deleg ation ▪
+streaming plugin and the resources are in separate certific ation  segments.
+▪The performance of loading certific ation  review where there is consistency c alculation  has been ▪
+improved.
+▪Values of "Requests to be submitted"  and "Reviewer name" of pr ofile  attribut e  modific ation  are now ▪
+correct in summary page of certific ation  review.
+▪%completed is now correct in both certific ation  campaign and segment detail page of c on figur ation ▪
+certific ation.
+▪The following prompt will be provided when the manager in saved certific ation  setup is no longer ▪
+valid:
+"The following resources are no longer valid, so they have been dropped from the current certific ation
+campaign. The user "Manager" is no longer a manager in the OrgChart: the user may no longer have
+subordinates, or has been deleted from the IAM system or from sources of user pr ofiles."
+▪Bravura Security Fabric  now provides more details of the individual certific ation  items when a partial ▪
+deleg ation  is performed. Instead of just displaying the segment description,  the following will be
+displayed:
+▪ Certific ation  campaign: segment description ▪
+▪The certific ation  oper ation ▪
+▪Detail line 1 of the certific ation  item ▪
+▪Detail line 2 (if applicable)▪
+▪Detail line 3 (if applicable)▪
+▪When a reviewer selects multiple  items to delegate at the same time,  only 1 set of emails will be sent ▪
+to the reviewer and the delegate.
+▪Numbers are correct when there are revoked items without approval.▪
+▪Numbers are correct when one item has multiple  reviewed histories by one reviewer. ▪
+▪Numbers are correct when one item reviewed by diff er en t  reviewers reviewed aging is calculated ▪
+based on local time z one.
+▪"Age in days" in "Campaign s t atistics"  dashboard is now calculated based on local time z one. ▪▪The setting  ’ Allow in advanced search criteria:’ of pr ofile  attribut e  prevents the attribut e  from being ▪
+used to perform advanced searches on users in certific ation  setup process.
+▪The value of group entitlemen t  attribut e  will be present if the certific ation  campaign also includes a ▪
+Role or SoD section.
+▪Introduced a system variable CERT EMAIL CANCELLATION ESCALATES to control whether c ancelation ▪
+emails will be sent to escalated reviewers when a campaign is canceled. When it is Disabled, it will
+prevent c ancelation  emails from being sent to the escalated managers when the campaign is
+canceled.
+▪Corrected the Review certific ation  details report for r emediation  w orkflo w  requests: ▪
+▪Display the actual reviewer in the columns labeled "Reviewer by" and "Reviewer by name".▪
+▪Display the actual as well as assigned authorizers for the w orkflo w  request in the columns labeled ▪
+"Authorizer Id" and "Authorizer Name".
+▪ Con figur ation  certific ation  review page can be opened correctly through link in email notific ation. ▪
+▪Invalid entitlemen t  resources involved in an entitlemen t  certific ation  campaign has now been fix ed. ▪
+▪Group selection  panel in certific ation  c on figur ation  page now shows correct records according to ▪
+resource attribut e  setting.
+▪In the General tab of a certific ation  campaign,the prompt below the "Start date" has been fix ed  so ▪
+that it is not blank for a completed or canceled campaigns. It now contains the "End date" for a
+completed campaign or "Canceled on" for a canceled campaign.
+▪The Reviewed by field  in history popup in ht certific ation  review page now shows delegatee if item is ▪
+reviewed by the delegatee.
+▪Duplicate attribut e  values can be shown and modified  correctly in certific ation  campaign. ▪
+▪Consistency percentages are now rounded before being displayed.▪
+▪An item that has been certified  before will be locked from access if it’s involved in SoD in the current ▪
+certific ation  campaign.
+▪The approved e x ception  item will have the orange checkmark if it has been certified  in previous ▪
+campaign.
+▪Fixed an issue where end users could not access the product after  logging in. ▪
+▪"Current certific ation  campaigns initia t ed  by me" view in certific ation  dashboard runs consistently ▪
+regardless of whether the certific ation  campaign contains the initia t or .
+▪Disabled the icon to edit a pr ofile  attribut e  until  all items in pr ofile  attribut es  section  are loaded in ▪
+certific ation  campaign.
+▪Fixed an issue where partial  sign off of items belonging to the original reviewer using the "Only mine" ▪
+option  did not properly handle items that were previously certified  and considered as still valid.
+▪Reduce the log level of message "Wizard failed to load request..." from Error to Info when it failed to▪
+load request from session.
+Reports
+▪Fixed groups report to display the group’s authorizer full name instead of just the pr ofile  id. ▪
+▪Corrected stored procedures for the Auto-assignment policy compliance per user report to prevent▪
+duplic ation  of data in attribut e  columns.▪Fixed the Rights of specified  users report to correctly display the ALLSUPERUSERS privilege group. ▪
+▪Added Request ID and Authorizer ID columns to Managed account check-outs/check-ins report.▪
+▪Updated the "Managed account disclosures" report:▪
+▪Renamed report to "Sessmon sessions" as it r e flects  the current and historical usage and ▪
+t ermination  of sessmon sessions.
+▪Added access disclosure plugin filename  widget to the report filt er s,  and modified  the account ▪
+search filt er  to query on accounts (and not just managed accounts) to comply with group set
+sessions.
+▪Added access disclosure plugin details to the report results.▪
+▪Report results are now ordered by session start time  (descending). ▪
+▪Updated the "Sessions disconnected" report:▪
+▪Added access search widget to query on accounts.▪
+▪Report results are now ordered by session start time  (descending). ▪
+▪Corrected resource attribut es  and managed account attribut es  reports to properly display resource ▪
+attribut es  with multiple  values.
+▪Corrected managed account attribut es  report to include vault systems. ▪
+▪Fixed an issue in Managed account status report, so that report user is now able to see both managed▪
+and unmanaged discovered accounts if proper ACLs are assigned.
+▪The Managed account access check-out trend report no longer included an extra non-existent week.▪
+▪Fixed emails fields  to allow more than 254 characters in scheduled reports. ▪
+▪Date widget in reports now allows date range from 1970 to 2038.▪
+▪ R eporting  of pr ofile  attribut es  updated via certific ation  has been added to Certific ation  details report. ▪
+▪The entitlemen t  resource clickable in Approved e x ceptions  to rules violations  report is now linked to ▪
+the correct detail page.
+▪Event log report returns correct results with "Show only help desk events" checked.▪
+▪The correct result is returned for "Not reviewed" for "Pr ofile"  in the Entitlemen t  certific ation  coverage ▪
+report.
+▪ Deleg ations  from certific ation  which is "w aiting  for delegate acceptance" are listed in Review ▪
+certific ation  deleg ations  report.
+▪The search engine in Reports has been improved to correctly handle the "No match found" case.▪
+▪Improved the Pr ofiles  report to display managed group columns when "Show managed groups" ▪
+checkbox is selected.
+▪The Approved e x ceptions  to rules violations  report of both report types ’List of segr eg ation  of duties ▪
+rule e x ceptions’  and ’Detailed list of segr eg ation  of duties  rule e x ceptions’  now displays correctly valid
+and no-longer valid e x ceptions  to rules violations.
+▪Typos/mistakes are corrected in report ’ Question  set c on figur ations’ . ▪
+▪Unposted requests are now included in w orkflo w  reports. ▪
+▪Reports Review certific ation  details and Certific ation  details correct status and oper ation  results for ▪
+partially  delegated items that were signed off prior to the c ancellation  of the campaign.
+▪Corrects the request status when dealing with SoD r esolution  triggered from Certific ation. ▪▪Removed the "First login" column from the Certific ation  details report. ▪
+▪ Certific ation  details report shows "Status column in place of "Results" column. ▪
+Separ ation  of duties
+▪ Modified  separ ation  of duties  page (wizard) to handle e xisting  AESOD properly when removing/undo ▪
+removal of a violated resource.
+▪Fix the issue that past date can be selected for expiry date of SoD e x ception  request. ▪
+Password policy
+▪When "password rules apply to the fir s t N characters" policy is enabled, all other policy violations ▪
+within the fir s t N characters will also be displayed at the same time.
+▪When "have password rules apply to the fir s t N characters" and "not be an old password" policies are ▪
+enabled, historical comparisons are made on the fir s t N characters of the new password for the
+purposes of acceptance.
+Database
+▪Fixed dbe to display column description  pop-up notes for all users. ▪
+▪Fixed an issue when AcctAttrMer g e  stored procedure used a lot of tempdb disk space. ▪
+▪Corrected a pot ential  database error where the output field  was de fined  as 500 characters ▪
+(nosgroup.groupdesc) but the length of the source field  (managegrp.notes) was 1500 characters.
+▪Added upgrade script to clean up duplicate group entries (with same stableid and hostid). ▪
+▪Fixed a pot ential  failure in listaudit support regarding a limit ation  in the DATEDIFF SQL function. ▪
+R eplic ation
+▪Second instance in r eplic ation  node can now be upgraded even after  utility  updinst is run for the ▪
+fir s t instance on the primary node.
+▪Added a grace period for newly-created pr ofiles  so that they will not be deleted by the next ▪
+psupdate after  they are created.
+▪Fixed an in finit e  loop c ondition  when a r eplic ation  error occurs. ▪
+▪Added an error message on the database r eplic ation  page in case of a product version mismatch a ▪
+r eplic ation  environment.
+▪Added GenericUCPoint IDMCon fig  type for custom userclass points such that userclass point ▪
+c on figur ation  can be exported and imported via IDMConfig tool.
+▪Marked the ’searchcache’ table as a staging table so that it gets excluded in a database▪
+r es ynchr oniz ation.
+Group management
+▪Improve performance of RB A CSODR eques tViolationExis tsXML  when updating  group members through ▪
+Groups app.▪Fixed an issue that Group Management shell extension USERID not matching Pr ofile  ID. ▪
+▪Fixed an issue where quick add does not apply default entitlemen t  attribut e  values in Groups app. ▪
+▪Fixed the issue where, when selecting  one of several cr eation  options  in group applic ation  you were ▪
+returned to the home page.
+▪Fixed a problem where unknown objects no longer became known.▪
+Component framework
+Fixed an issue in component im_policy_authoriz ation  where the component used the wrong values from
+component table im_policy_authoriz ation  to calculate r elativ e  r elationship  between requester and
+recipient.
+▪Fixed an issue in component pam_authoriz ation_policy  where the component used the wrong values ▪
+from component table pam_authoriz ation_policy  to calculate r elativ e  r elationship  between authorizer
+and requester/recipient.
+▪Changed all "Proceed" fields  in component tables (extdb) to "SkipRemaining". ▪
+Before this change, the value of the "Proceed" field  will be either True or False. That meant all
+remaining rules in extdb table would be either skipped (Proceed=False) or proceeded (Proceed=True)
+once a rule is matched and applied.
+The new "SkipRemaining" field  can have three values:
+Empty Proceed all remaining rules
+Stage Skip rules from same stage and proceed rules in diff er en t  stages
+All Skip all remaining rules
+This will impact all items using rules; for example, authentic ation  that will use rules de fined  in extdb
+table hid_authchain_select.
+▪Fixed an issue where the network resource move oper ation  was not g etting  correctly applied to the ▪
+request when the home directory changed.
+▪Updated component Scenario.im_corp_hr_orgchart_manager to only submit MOVE-IN-ORG requests▪
+if manager is not self.
+▪Component upgrade paths are correctly calculated.▪
+▪Corrected policy matching criteria for WFEmail policy.▪
+▪Components can be reloaded for tables with foreign keys through environment files. ▪
+▪Updated component Functional.hid_policy_wiz ar d_pag e_c on tr ol  to control a page only when it is ▪
+de fined.
+▪Corrected issue so that batch requests preserves special characters from the input CSV file. ▪
+Bravura P attern  / Components
+▪Corrected issue so that the "Team: Manage Group Membership" PDR is successfully submitted  as a ▪
+team admin who is a trustee of a team other than the one the request is for.
+▪Fixed team create and update PDRs so that team groups are now c ase-sensitiv e.  Changes to upper/ ▪
+lower case of a team group will be considered a removal and r ecr eation  of that team group.
+▪Fixed source of pr ofile  user renames to retains their team privileges in team management. ▪▪Fixed the issue where check out extensions were aut omatic ally  denied. They can now be approved by ▪
+the team’s approvers.
+▪Fixed the Functional.hid_ba t ch_r eques t_submit  component to encrypt its sensitiv e  attribut es. ▪
+▪Removed erroneous HTML tag from all Team Management PDR names.▪
+▪Corrected stored procedure R esB yDelAttrSear ch  to properly handle wasn't.deleted=1 records. ▪
+▪Archived accounts no longer appear in Privileged access app.▪
+▪Fixed log error messages generated when details of the Vault Account: Update PDR were viewed in▪
+the Requests app.
+▪Corrected issue so that the Account: Update PDR wizard does not display Session Monitoring options ▪
+if the selected disclosure options  are not applicable.
+▪Fixed team management System: Offboar d  PDR disable action  to disable listing  of accounts, accounts ▪
+attribut es,  groups and group attribut es  for the selected system.
+▪The lookup table components have been enhanced to pick the closest match across criteria instead of▪
+the last matching criteria.
+▪Fixed issue that caused authoriz ation  rule for deleting  orphaned teams to apply to unrelated requests. ▪
+privilege
+▪ Modified  system onboard scenarios to escape JSON strings that could be passed into attribut es. ▪
+▪ICBC: Update System PDR not working for manually de fined  target system (Request Failed) ▪
+Corrected issue so that manually de fined  target systems can be assigned a team using the ’System:
+Update’ pr e-de fined  request.
+▪Corrected issue so that when systems are onboarded using a batch request on a non-primary node,▪
+the extdb modific ations  are performed on the primary node.
+▪Upgrade 11.1.3 -> 12.2: some account management disclosure components failed to be upgraded,▪
+now fix ed.
+Analytics
+▪List of diff er en t  image types to select is visible when sa ving / e xporting  analytics  image reports. ▪
+▪Overlapping data point in line graphs shows top level data and accessible drill-through reports in▪
+t ooltip.
+▪Warning messages about analytics  reports not uploaded to report server are now displayed in P os t - ▪
+Ins t allation  Tasks.
+▪Default analytics  reports on a Activ e  Directory target that has more than 26K user accounts, are now ▪
+rendered correctly in Analytics  UI page for SSRS versions 2014, 2016 and 2107.
+▪Fixed an issue so that only markers are highlighted when hovered over in analytics  line graph. ▪
+▪Component plugin ‘hid_policy_analytics_filt er ‘  now filt er s  individual users and group users that have ▪
+adminis tr ativ e  privileges correctly.
+▪ Utility  configureanalytics  -delete - file ‘  removes successfully reports files on report server. ▪
+▪No errors are logged when report server web service URL is changed from one value to another and▪
+back to the previous value with utility  setupanalytics.
+▪Added an error notice  to tell the user report export failed (either because expired, or else). ▪▪Cache-updated time  in dashboard is shown correctly in local time z one ▪
+▪Made analytics  default page an empty screen. ▪
+▪Added in f ormation  about custom files uploading successfully from instance server to report server ▪
+using utility  configureanalytics .
+▪Fixed cache icon overlap with other elements in dashboards.▪
+▪The saved file of a drill-down report in analytics  dashboard format has been fix ed. ▪
+▪Added update time  on the exported report that have caches. ▪
+▪Added a scroll bar to the filt er  panel of the Analytics  app, Groups app and Role app ▪
+Login Assistant / SKA
+▪Fixes local w ork s t ation  service CGI pamlws.exe crash caused by discovery service being unavailable. ▪
+▪Correct cr edential  tile language is displayed when the default language of Windows 10 has changed. ▪
+▪SKA now displays detailed error in f ormation  in multiple  languages when no c onnection  can be made ▪
+to the instance server.
+▪ Modified  the Login Assistant when entering the password for the network SSID in the prompt for a ▪
+wifi network c onnection  to provide a "Show password" checkbox to optionally  show the entered
+password as plain text.
+▪Fixed an issue with Login Assistant to improve the support for non-english language strings for the▪
+various SKA prompts and messages.
+▪Fixed an issue with Login Assistant and VPN c onnections  to ensure that the VPN program is closed ▪
+once the timeout  has been reached.
+▪Fixed an issue with Login Assistant to no longer allow the VPN c onnection  prompt to be closed and ▪
+will only allow for either a Cancel button  or the number of retries to timeout.
+▪Fixed an issue with Login Assistant where if the number of retries for VPN c onnections  was left blank it ▪
+would previously allow for near in finit e  retries. Now if is left blank there is only one retry for the VPN
+c onnection.
+IDMLib
+▪Updated idmlib to make copy of kvg node when appending as child to avoid double-free issue.▪
+▪Updated the loadDB function  in idmlib so that it will process all resources on a target regardless of ▪
+whether or not their acc oun ts/ attribut es  have seen changes over the previous discovery.
+▪Added LDEL AccountResource to idmlib so wfreq plugin can pass along account related fields  for the ▪
+detach account oper ation  properly.
+Ins t allation
+▪Fixed the installer to uninstall the product properly even when the database has been deleted.▪
+▪Fixed a problem in Bravura Security  Command Prompt which set current working directory to a wrong ▪
+loc ation.
+▪No pop-up appears in product ins t allation  in silent mode. ▪▪Fix an issue that runtime  ins t allation  dialog box is behind "Pr e-Ins t allation  Check" dialog box when ▪
+installing product.
+Logging
+▪Fixed problem when pstee logs were created in system temp folder instead of the correct folder ▪
+specified  by PsTempDir.
+▪Added log error message when sqlite.dll is invalid/missing.▪
+▪Log in t er activ e  voice response (IVR) authentic ation  events in idapi fix ed. ▪
+Mobile
+▪Fixed and issue where the text could not be updated when approving a request on Android mobile▪
+app.
+▪Screen readers will read out report contents in an acceptable manner.▪
+▪Update attribut es  page is now displayed correctly in mobile devices. ▪
+▪Enabled zooming in mobile app.▪
+Exit traps
+▪Added exit trap calling point for ’USER ATTR CHANGED’ under Bravura Pass  only install. ▪
+Performance
+▪Improved performance of the "RBACSODMemberList" stored procedure.▪
+▪ Optimiz ed  UCCacheValidityListForRequestNonUser stored procedure to only calculate nested groups ▪
+for the groups involved in the request.
+▪ Optimiz ed  UCCacheV alidityLis tDiff  stored procedure to calculate nested groups only based on the ▪
+groups changed in the current loaddb process.
+▪Fixed UCPCacheV alidityLis tDiff  stored procedure to check the proper group when listing  a ff ect ed  user ▪
+class points.
+▪User search performance has improved.▪
+▪Improved performance of the View and Update Pr ofile  page. ▪
+▪Improve performance of RequestUpdateApprovalStatus when approving a create new user request▪
+through the GUI.
+▪Improve performance of UCCacheValidityListForRequest when approving a create new user request▪
+through the GUI.
+▪Improve performance of UserAccountSearch when submitting  a create new user request through ▪
+WebGUI.
+Pr e-de fined  requests
+▪Fixed wizard to search is broken in "PSAVARIANCE_C_SELECT_VARIANCE" search engine.▪
+▪Fixed an issue where saved search was not working on the PSA role enforcement s t atistics  page. ▪ACLs
+▪Added tab warning when access rule user classes are mis-c on figur ed. ▪
+▪Fix the issue that the "Change passwords" privileges is available for all users in Bravura Pass . ▪
+Pr ofile  and Request attribut es
+▪Fixed a display issue for Pr ofile  attribut e’ s  restricted values to honor the case sensitiv e  / insensitiv e ▪
+setting.
+▪ Pr ofile,  Request, Resource and R elational  are are correctly exported when these attribut es  have ▪
+default values c on figur ed.
+▪Account attribut es  from a non-source of pr ofile  target that were mapped to pr ofile  attribut es  will now ▪
+remain mapped when the target c on figur ation  page is updated.
+▪Bravura Security Fabric  now sets account attribut es  for newly created accounts through implementer ▪
+task.
+▪Wizards can be submitted  successfully when inputting  a string that includes "{}" for an encrypted ▪
+attribut e.
+▪Fixed an issue to always re-load pr ofile  attribut es  if the priority of the mapped account attribut es  has ▪
+been changed.
+User interface
+▪Fixes made to tables with links and tables of subpage links so they behave correctly when they are▪
+clicked on.
+▪ Modific ations  for the user interface for references to email and plugin to remove the h yphenation. ▪
+▪Fixed restore and maximize buttons  and functionality  in secondary pop up in the change role ▪
+membership wizard.
+▪Fixed an issue where pressing enter to commit advanced search term refreshes page and looses▪
+advanced search.
+▪Correct cursor will now appear when hovering on clear icon [x] in drop-down field  in wizards. ▪
+▪Fixed an issue where language tags were limited to 1000 characters if text.▪
+▪Fixed an issue with the %EXPINFO% variable having an empty value when used in notific ation ▪
+messages.
+▪Date icon appears now in the left side of the string date range. ▪
+▪Fixed an issue with the Save dialog forms in update members and search members PDRs.▪
+▪Fixed the problem when the mobile device r egis tr ation  screen returned to the home page instead of ▪
+the r egis tr ation  screen after  the activ ation  period expired.
+▪Fixed the issue where checkbox can't be toggled by pressing the space bar.▪
+▪Fixed an issue where edit request function  is broken immediately after  approval in phased ▪
+authoriz ation.Proxy
+▪Proxy instances now ignore errors for c onnections  from target IP when IgnoreHSErrorIPs is set. ▪
+Upgrade improvements
+▪Customized idmlogsvc.cfg file is not replaced at upgrade. ▪
+▪Changed upgrades to not start secondary services until  user clicks [Next] button  on the post-upgrade ▪
+tasks dialog.
+▪Upgrades with a database backup can now be performed on an instance that resides on an Activ e ▪
+Directory Domain Controller.
+▪ Option  "Upgrade" is now available in the proxy instance installer. ▪
+▪Fixed post-upgrade task failure when there are attribut es  that are encrypted in piqueue ▪
+Usability
+▪Fix crash when trying to navigate to help-users as a help desk user when DUO authentic ation  is set for ▪
+help desk authentic ation.
+▪When overriding managed account passwords using the Privileged access app, the password policy▪
+de fined  by a plugin will be used instead of the one from the managed system policy.
+▪Fixed an issue with the show/hide buttons  when helpdesk administrators view the security questions ▪
+for other users.
+▪Corrected Privileged access app so that selecting  an account set filt er  in the Check outs group only ▪
+returns accounts.
+▪Updated pwdconflicts utility  to aut omatic ally  resolve c on flict ed  passwords for managed ▪
+accounts associated with target system cr edentials.
+▪Added ability to list, randomize or resolve c on flict ed  passwords based on wstnid using the ▪
+pwdconflicts utility .
+▪Corrected issue so that the Run command field  is updated with the correct command when toggling ▪
+between account sets in the Privileged access app.
+Search
+▪Fixed and issue where remove a part of a saved search criteria was causing a problem with how the▪
+remainder of the search criteria was displayed. Now the saved search will be showed as disabled.
+▪Roles that have sign "&" in their ROLEID can now be filt er ed  correctly by search filt er  plug-in. ▪
+▪Fix the issue that deleg ation  authority search only returns the fir s t set of results. ▪
+▪ Pr ofile  attribut es  can now be entered as search entries in advanced search. ▪
+▪Fixed PAMAppCheckout search engine to be able to search on resource attribut es  made visible via ▪
+plugin.
+▪Fixed PAMAppAccess and PAMAppCheckout search engines so that search values containing special▪
+characters can be used on extended columns.

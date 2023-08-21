@@ -1,0 +1,211 @@
+1.Select an entitlemen t  row to select the reviewer for the entitlemen t. 1.
+2.Search or browse the list to select the reviewer.2.
+For managed groups, the group authorizer is the reviewer by default.3.Click Next: Submit or another certific ation  tab to proceed. 3.
+Next: 
+Select peer groups for consistency c alculations.
+Randomly assigning entitlemen t  authorizers
+Bravura Security Fabric  can randomly assign an authorizer from a set of authorizers attached  to
+the entitlemen t  to be the reviewer of the segment if you:
+1. De fine  a string-type resource attribut e  in the CERT ATTRIBUTE CERTIFIER Manage certific ation 1.
+process (CERT) module setting.  The random selection  option  is enabled when the attribut e
+value is ’RANDOM’.
+2.Leave the reviewer field  for the resource empty when c on figuring  the campaign. During the 2.
+cr eation  of the campaign, the reviewer will be chosen dynamically.
+For example, to enable random resource reviewer assignment for a managed group:
+1. De fine  a resource attribut e: 1.
+a.Click Manage the system > Resources > Resource attribut es  > Add new... a.
+b.Enter the ID; for example RANDOM-CERTIFIER. b.
+c.Enter the description . c.d.Select Type : String. d.
+e.Click Add. e.
+f.Enter the Actual value ; RANDOM f.
+g.Enter the Displayed value ; for example ’Select reviewer from amongst the resource g.
+authorizers’.
+h.Click Update . h.
+i.Set the Default values for the attribut e : (None) . i.
+2. De fine  a resource attribut e  group: 2.
+a.Click Manage the system > Resources > Resource attribut e  groups  > Add new... a.
+b.Enter the ID; for example RANDOM-CERTIFIER-GROUP . b.
+c.Enter the Description . c.
+d.Select Type : Managed groups . d.
+e.Click Add. e.
+f.Click the Members tab. f.
+g.Click Select then select the resource attribut e  you created previously; for example g.
+RANDOM-CERTIFIER.
+3. Con figur e  the option  in the Manage certific ation  process  (CERT) module: 3.
+a.Click Manage the system  > Modules  > Manage certific ation  process  (CERT ). a.
+b.Type RANDOM-CERTIFIER in the CERT ATTRIBUTE CERTIFIER field. b.
+c.Type a user ID in the CERT DEFAULT CERTIFIER field  to specify the default reviewer in case c.
+the resource does not have any authorizer.
+4.Turn on the random reviewer option  for a managed group. 4.
+a.Click Manage the system > Resources > Groups . a.
+b.Select the target system.b.
+c.Select a managed group.c.
+d.Click Manage . d.
+e.Set the RANDOM-CERTIFIER drop-down to RANDOM . e.
+f.Click Update . f.
+Now, if you initia t e  a certific ation  campaign for the managed group by selecting  the entitlemen t
+authorizers method, Bravura Security Fabric  chooses the reviewer for the managed group
+randomly from the group’s set of authorizers. If the group has no authorizers, Bravura Security
+Fabric  chooses the user de fined  by CERT DEFAULT CERTIFIER .Note: If random selection  is enabled, you can still manually de fine  an
+entitlemen t ’ s  reviewer.  
+Next: 
+Select peer groups for consistency c alculations.
+Using a plugin to assign a reviewer and delegates
+Bravura Security Fabric  can use a plugin to assign a reviewer and delegates to the segment if
+you:
+1. De fine  a string-type resource attribut e  in the CERT ATTRIBUTE CERTIFIER Manage certific ation 1.
+process  (CERT) module setting.  The via plugin selection  option  is enabled when the attribut e
+value is ’VIAPLUGIN’.
+2.Write a plugin to supply the reviewer and delegates to the certific ation  segment 2.
+3.Leave the reviewer field  for the entitlemen t  empty when c on figuring  the campaign. During 3.
+the cr eation  of the campaign, the reviewer and the delegates will be supplied by the plugin
+dynamically.
+For example, to use a plugin to specify a reviewer and delegates for a managed group:
+1. De fine  a resource attribut e: 1.a.Click Manage the system > Resources > Resource attribut es  > Add new... a.
+b.Enter the ID; for example CERTIFIER-VIA-PLUG-IN. b.
+c.Enter the description . c.
+d.Select Type : String. d.
+e.Click Add. e.
+f.Enter the Actual value ; VIAPLUGIN f.
+g.Enter the Displayed value ; for example ’Select reviewer and delegates from plugin’. g.
+h.Click Update . h.
+i.Set the Default values for the attribut e : (None) . i.
+2. De fine  a resource attribut e  group: 2.
+a.Click Manage the system > Resources > Resource attribut e  groups  > Addnew... a.
+b.Enter the ID; for example CERTIFIER-VIA-PLUG-IN-GROUP . b.
+c.Enter the Description . c.
+d.Select Type : Managed groups . d.
+e.Click Add. e.
+f.Click the Members tab. f.
+g.Click Select then select the resource attribut e  you created previously; for example g.
+CERTIFIER-VIA-PLUG-IN.
+3.Write a plugin to supply the reviewer and delegates to the certific ation  segment. Save the 3.
+plugin file in the plugin directory.
+4. Con figur e  the option  in the Manage certific ation  process  (CERT) module: 4.
+a.Click Manage the system  > Modules  > Manage certific ation  process  (Cert ). a.
+b.Type CERTIFIER-VIA-PLUGIN in the CERT ATTRIBUTE CERTIFIER field. b.
+c.Type a user ID in the CERT DEFAULT CERTIFIER field  to specify the default reviewer in case c.
+the resource does not have any authorizer.
+d.Type plugin file name in the CERT DELEGATION PLUGIN field  to specify the plugin d.
+5.Turn on the via plugin option  for a managed group. 5.
+a.Click Manage the system > Resources > Groups . a.
+b.Select the target system.b.
+c.Select a managed group.c.
+d.Click Manage . d.
+e.Set the CERTIFIER-VIA-PLUG-IN drop-down to VIAPLUGIN . e.
+f.Click Update . f.
+Now, if you initia t e  a certific ation  campaign for the managed group by selecting  the entitlemen t
+authorizers method, Bravura Security Fabric  gets the reviewer and the delegates for the
+managed group from the plugin. If the plugin does not supply a valid reviewer, Bravura Security
+Fabric  chooses the user de fined  by CERT DEFAULT CERTIFIER .If via plugin is enabled, you can still manually define  an entitlemen t ’ s  reviewer.
+Next: 
+Select peer groups for consistency c alculations.
+▪ Certific ation  of entitlemen ts  by de fined  r elationship ▪
+When you use the certific ation  by de fined  r elationship  method, Bravura Security Fabric  can
+generate certific ation  segments and assign the appropriate reviewer to the segments based on
+the r elationship  between the reviewer and the users.
+It works on the same principle as the OrgChart managers method where Bravura Security Fabric
+creates segments and assigns the appropriate manager to each segment (manager-subordinate
+r elationship).
+The certific ation  by de fined  r elationship  method off er s  fle xibility  by allowing you to de fine  the
+r elationship  between the reviewer and the user by a tw o-participan t  user class.
+In this example, all the users whose fir s t name start with ”user” will be certified  by a user having
+membership in group X.
+1.Manage Group1, ensure that Group1 has this members: gr1_member1.1.
+2.Ensure that these users exist in Bravura Security Fabric : user1, user2, user3. 2.3.Add a tw o-participan t  user class, UC, as follows: 3.
+▪ P articipan t  P1 has group membership matching Group1 ▪
+▪ P articipan t  P2 has pr ofile  attribut e  matching: FIRST_NAME starts with ”user” ▪
+4.Create a new certific ation  campaign: 4.
+Entitlemen ts Select an Activ e  Directory target system
+Users All selected entitlemen ts
+Reviewers Certific ation  de fined  by r elationship:
+▪Select the user class UC de fined  in step 3. ▪
+▪Map participan t  P1 to CERTIFIER. ▪
+▪Map participan t  P2 from to USER_UNDER_REVIEW. ▪
+▪Click Update ▪
+▪Set a Default reviewer by clicking Select… and ▪
+choosing a user.
+Once you submit this campaign, Bravura Security Fabric  will create two certific ation  segments:
+▪First segment would include all the users whose fir s t name starts with ”user” (user1, user2, ▪
+user3). The reviewer of this segment is gr1_member1 (if Group1 has multiple  members, the
+fir s t member on the list is picked to be the reviewer).
+▪Second segment would include all the users whose fir s t name does not start with ”user”. The ▪
+reviewer of this segment is the default reviewer.
+Next: 
+Select peer groups for consistency c alculations.
+▪Orgchart managers for entitlemen ts ▪
+When you use the OrgChart method, the reviewers are determined by your or g aniz ational  tree.
+Each user is certified  by his or her direct manager, from the bottom  up. You only need to
+determine the highest level manager for the certific ation  campaign; for example, if you select Al
+Reese in the OrgChart below, then Dilber Smith certifies  Dan Singh, and Al Reese certifies  Dilber
+Smith and Bob Adams.
+Manager levels in an OrgChartTo select the manager at the top of the certific ation  campaign:
+1.Search or browse the list, then select 
+ the manager. 1.
+2.Click Next:Submit or another certific ation  tab to proceed. 2.
+Notes on OrgChart campaigns: 
+If a manager has one or more managers in their realm of responsibility, their certific ation  is not
+considered complete and cannot be signed off until  all managers beneath them have completed
+their own certific ation.
+The lowest-level managers are asked to certif y  their subordinates fir s t.  After  some delay the
+next level of managers is asked to certif y  their own subordinates. This c ontinues  until  all
+managers have been notified.
+By staggering the in vit ations,  Bravura Security Fabric  gives lower-level managers a chance to
+complete their certific ations  before it prompts their supervisors to certif y  them. You determine
+the notific ation  schedule when you start the campaign.
+If you select users individually to be included in an OrgChart campaign, and none of the selected
+users is in a given manager’s OrgChart, then that manager does not have to sign off an empty
+segment.
+If a manager has been deleted while an OrgChart campaign is still in progress, then the deleted
+manager’s segment will be escalated to the manager above them.  
+Next: Select peer groups for consistency c alculations.
+▪Select peer groups for entitlemen t  certific ation  campaigns ▪
+For entitlemen t  certific ation  campaigns, items for review can be marked with a consistency score, so
+that reviewers see r ec ommendations  of items to pay particular  attention  to. The consistency
+c alculation  (on page 2542) is based on the percentage of a peer group who share an item.
+A peer group is a group of users with some attribut e  in common; for example, users working at the
+same loc ation  or department, or having the same manager.
+Items can be aut omatic ally  certified  or identified  as candidates for r e v oc ation  based on a resource
+attribut e  comparison.
+When the global CERT CONSISTENCY CALCULATION setting  is enabled (default), consistency
+c alculations  are turned on for all campaigns. If disabled, click the Enable c alculating  entitlemen t
+consistency across peers checkbox to view more settings.
+Modify settings  to suit your campaign:
+1.Click the magnifying glass icon to select an Attribut e  group that collects users into peer groups . 1.
+The default value is set by the CERT CONSISTENCY ATTRIBUTE GROUP system variable.
+2.Edit the value for Minimum size of a user peer group . 2.
+If a peer group has fewer members than this, their entitlemen t  consistency will not be calculated.
+Instead, a help 
+  icon will be displayed in the consistency column for these users in the review.
+The default value is set by the CERT CONSISTENCY MINIMUM system variable.
+3.To determine how in-pattern  entitlemen ts  will be highlighted, edit the value for Mark items as 3.
+consistent if at least this percent of peers the item .
+By default, if consistency c alculations  are enabled and at least 80% of user share an entitlemen t,  is
+will be highlighted in the review. The default is set by the CERT CONSISTENCY USERS UPPER
+THRESHOLD system variable.
+4.To determine how out -of -pattern  entitlemen ts  will be highlighted, edit the value for Mark items as 4.
+inconsistent if fewer than this percent of peers share the item .
+By default, if consistency c alculations  are enabled and fewer than 20% of users share an
+entitlemen t,  it will be highlighted in the review. The default is set by the CERT CONSISTENCY USERS
+LOWER THRESHOLD system variable.
+5.If you want to aut omatic ally  certif y  consistent items: 5.
+a.Click the Automate certific ation  by resource attribut e  checkbox. a.
+b.Click the magnifying glass icon to select the Resource attribut e  to compare . b.
+c.Set the Comparison method . c.
+The methods available are determined by the resource attribut e  type.
+d.For date, string or integer type attribut es,  set the Resource attribut e  value . d.
+e.Edit the value for Aut omatic ally  certif y  items if at least this percent of peers share the item e.
+and aut o-certif y  attribut ee xpr ession  is met .This value must be equal to or greater than the value for Mark items as consistent if at least
+this percent of peers share the item .
+f.Edit the value for Include this note for aut omatic ally  certified  entitlemen ts  to suit your needs. f.
+Use the question  mark icon to view available variables.
+6.If you want to aut omatic ally  identif y  inconsistent items as candidates for r e v oc ation: 6.
+a.Click the Identif y  r e v oc ation  candidates by resource attribut e  checkbox. a.
+b.Click the magnifying glass icon to select the Resource attribut e  to compare . b.
+c.Set the Comparison method . c.
+The methods available are determined by the resource attribut e  type.
+d.For date, string or integer type attribut es,  set the Resource attribut e  value . d.
+e.Edit the value for Identif y  candidates for r e v oc ation  if fewer than this percent of peers share e.
+the item and auto-revoke attribut e  expression is met .
+This value must be equal to or less than the value for Mark items as inconsistent if fewer than
+this percent of peers share the item .

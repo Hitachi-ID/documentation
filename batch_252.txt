@@ -1,0 +1,188 @@
+out multiple  Org building rounds on diff er en t  sections  of the or g aniz ation  at the same time,  as long as
+those sections  of the or g aniz ation  do not overlap each other.
+You must be a product administrator  with the ”Start Org building rounds” capability.
+St arting  an Org building round
+To start an Org building round:
+1.Click Manage the OrgChart  > Org building rounds  > Add new... . 1.
+Or,
+Click Manage the OrgChart  > Update the OrgChart .
+2.Select 
+  the manager with whom you want to start the Org building round. 2.
+3.Click Start . 3.
+The Initia t e  Org building round  page loads.
+4. Optionally ,  update the notific ation  details: 4.
+a.Select the “Other” radio button  for the notific ation  detail you want to modify. a.
+b.Type the new notific ation  details. You can include the following variables, the values of which will b.
+be replaced in the actual notific ation  message:
+▪<DATETIME>▪
+▪<MANAGER_ID>▪
+▪<LINK >▪
+If you make changes, click Update .
+5.Click Continue . 5.
+Bravura Security Fabric  displays a summary of the descriptions.
+6.Click Submit . 6.
+Bravura Security Fabric  notifies  selected managers to start the process.
+Canceling an Org building round
+To cancel an Org building round:
+1.Click Manage the OrgChart  > Org building rounds . 1.
+2.Enable the checkbox for one or more rounds, then click Cancel . 2.
+Notes on OrgChart building rounds: 
+When a manager involved in an OrgChart building round has been removed, their segment will be
+escalated and the manager acting  as the delegate will now be able to sign-off  the round.
+Viewing the OrgChart structure
+You can view the OrgChart structure graphically by clicking Manage the OrgChart > Browse the OrgChart.
+The OrgChart structure displays the selected user, his manager, the peers in his branch, and hissubordinates. From here you can click the user’s name to view his pr ofile,  or click the arrow for a slide-
+out card to display additional  links.
+Con figur ation  notes
+▪To set up product administrator s with the rights to maintain the OrgChart, see Product administrators ▪
+(on page 672).
+▪The Detach all a ff ect ed  subordinates button  is not available by default. This behavior is controlled by ▪
+the IDG ALLOW DETACH TREE option  on the Modules > Manage the OrgChart (IDG)  page.
+▪To c on figur e  the Manage the OrgChart  (IDG) module, including the IDGALLOW DETACH TREE option,  see ▪
+Manage the OrgChart  (on page 1177).OrgChart management options
+This chapter shows you how to c on figur e  w orkflo w  options,  plugins, and events, related to or g aniz ation
+chart management.
+Before you start, you should read Implementing  Or g aniz ation  Chart Management  (on page 2497) for
+in f ormation  about implementing  or g aniz ation  management in Bravura Security Fabric .  
+Adding all pr ofiles  to the or g aniz ation  chart
+Use the ORGCHART SEARCH ALL setting  on the W orkflo w  > Options  > OrgChart page to allow Bravura
+Security Fabric  to aut omatic ally  add pr ofiles  from any target system to the OrgChart.
+By default, this setting  is turned off , and Bravura Security Fabric  only adds pr ofiles  attached  to accounts
+on target systems c on figur ed  to be a source of OrgChart data. You can still add pr ofiles  manually using
+the Manage the OrgChart  (IDG) module.
+Con figuring  w orkflo w  event actions
+OrgChart-related events can trigger external notific ation  programs. Click W orkflo w  > Options  > OrgChart
+to set event options,  listed in Table W orkflo w  OrgChart events that launch interface programs  (on page
+1534), W orkflo w  OrgChart events that launch interface programs  (on page 2513).
+See Event Actions  (on page 1524) for more in f ormation.
+The following w orkflo w  certific ation  options  can be accessed from Manage the system  > Maintenance >
+System variables  or Manage the system > W orkflo w  > Options  > OrgChart :
+W orkflo w  OrgChart events that launch interface programs
+Option Description
+ORG ROUND CANCEL An org building round was canceled.
+ORG ROUND FINISH An org building round finished.
+ORG ROUND START An org building round starts.
+ORG SEGMENT CANCEL An org building round segment was canceled.
+ORG SEGMENT FINISH An org building round segment finished.
+ORG SEGMENT START An org building round segment starts.
+USER TRANSFER FAILURE A subordinate failed to be transferred to another manager.
+USER TRANSFER PULL FAILURE A transfer initia t ed  by a new manager fails.
+USER TRANSFER PULL SUCCESS A transfer initia t ed  by a new manager succeeds.
+USER TRANSFER SUCCESS A subordinate is successfully transferred to another manager.
+Allowing product administrators to detach OrgChart trees
+You can allow product administrator s to detach a manager and all of that manager’s subordinates by
+enabling the IDG ALLOW DETACH TREE option  on the Modules > Manage the OrgChart (IDG)  page.When this options  is turned off , product administrator s are required to find new managers for the
+subordinates of the detached manager.Part IX Access Certific ationImplementing  access certific ation
+In many cases, government r egulations  and security policies require or g aniz ations  to report on the access
+privileges that users have to systems and data, and also to promptly remove privileges that are no longer
+appropriate. This process is known as access c ertific ation .
+This chapter demonstrates the Bravura Security Fabric  solution  to the challenges of access certific ation,
+and shows you how to set up and start the certific ation  process.
+Challenges with access certific ation
+Users often  have unique and changing business r esponsibilities,  so their access rights may be difficult  to
+represent by simple role or user class membership. Also, over time  users tend to accumulate login
+accounts and access privileges as they move through an or g aniz ation.  These processes make it
+challenging for an or g aniz ation  to model the appropriate access requirements.
+Access t ermination  is also a challenging process. It is not always clear when a user’s access to systems
+should be removed. Consider a user who moved from one department to another, but acts as a backup
+resource for his old responsibility for some limited period of time  after  the move. At what time  is it safe
+and appropriate to remove the user’s old access rights? Which of the old rights are required to perform
+the user’s new job?
+Access certific ation  features
+Bravura Security Fabric  addresses the problem of identif ying  and removing excess access rights by
+c oor dinating  and securing distributed review and cleanup of users and privileges.
+Bravura Security Fabric  periodically requires selected reviewers to use the self-service interface to view
+user entitlemen ts,  flag unneeded access rights for removal, and c on firm  remaining rights. The reviewers
+are required to sign off with an electronic signature to assure that the remaining entitlemen ts  are
+appropriate. The w orkflo w  engine routes change requests identified  during the certific ation  process (for
+example to delete accounts or group memberships) to suitable authorizers and completes change
+requests upon approval.
+Bravura Security Fabric  can also allow certain users to perform ad hoc quick reviews on individual users.
+The Bravura Security Fabric  c on figur ation  interface allows for a high degree of fle xibility  in how the
+review process is set up. A wizard-like series of c on figur ation  pages allows you to de fine:
+▪Resources on which users are to be certified ▪
+Resources, for the purposes of certific ation,  include:
+▪Target systems▪
+▪Managed groups▪
+▪ Segr eg ation  of duties  rules ▪
+▪Roles▪
+▪Users to be certified ▪
+You can include all users associated with a resource, select individual users, or a user class.▪ Pr ofile  and request attribut es  to be displayed ▪
+User in f ormation  de fined  by pr ofile  and request attribut es  can be viewed by reviewers to help them
+determine what action  to take.
+▪ R emediation  requests to be submitted ▪
+You can specify r emediation  requests to determine what happens when a review revokes an
+entitlemen t,  transfers a user, or resolves an SoD violation.
+▪ Certific ation  method ▪
+You can choose to have users reviewed by a single reviewer, or split the work among multiple
+reviewers according to:
+▪Segments de fined  by user class ▪
+Classes can be determined by attribut es,  groups, or PSLang expression.
+▪Resource managers▪
+Reviewers are assigned to each selected applic ation  or group to review users privileges. This is
+pr actic al  where the resources have few members.
+▪ Or g aniz ation  chart ▪
+This method begins with a simple premise: managers can recognize inappropriate rights assigned
+to their subordinates.
+Unlike other methods, the Bravura Security Fabric  administrator does not need to determine all
+reviewers, but only the manager whose branch of the or g aniz ational  tree is to be reviewed. Each
+manager below the level of the selected manager reviews their direct subordinates.
+This method is tigh tly  integrated with OrgChart data to identif y  managers and their subordinates.
+Once a certific ation  campaign has been c on figur ed,  it can be started immediately, and/or saved for later
+use. A certific ation  campaign c on figur ation  can be saved and exported into a data component, to made
+part of a reference implemen t ation.
+Certific ation  campaign s can be scheduled to start aut omatic ally  and at regular intervals, like a scheduled
+job.
+Certific ation  process
+The certific ation  process can vary depending on the method chosen, but generally proceeds as follows:
+1. Bravura Security Fabric product administrator  c on figur es  and starts the certific ation  process using the 1.
+Manage certific ation  process  (CERT) module.
+2.Bravura Security Fabric  notifies  reviewers that they need to review user privileges. 2.
+If the OrgChart method is used, Bravura Security Fabric  sends email to the lowest-level managers fir s t.
+After  a c on figur able  delay, to give these managers a chance to finish  their work, Bravura Security
+Fabric  sends email to the next level of managers. This c ontinues  in a bottom  up sequence until  all
+managers have been invited.
+3.Reviewers log into Bravura Security Fabric  and click a link to start their review process. 3.
+4.Reviewers can choose to review accounts or groups by user or by resource.4.Depending on the type and scope of the review, the reviewer can identif y  and flag for removal:
+a.Subordinates who no longer work for the or g aniz ation a.
+OrgChart managers can also transfer users who no longer report to them to other managers.
+b.Accounts which are no longer neededb.
+c.Inappropriate group membershipsc.
+d. Segr eg ation  of Duties  rule violations d.
+e.Inappropriate rolese.
+The reviewer is asked to sign, with a validated network or directory password, a statement to the
+e ff ect  that the certific ation  is complete.
+5.Bravura Security Fabric  bundles the changes identified  in Step 4 into access change requests to be 5.
+processed by the product’s w orkflo w  engine, where they can optionally  be subjected to an
+authoriz ation  process before they are fulfilled.
+When the OrgChart method is used, Bravura Security Fabric  collects certific ations  up through the
+or g aniz ation’ s  hierarchy. Manager A’s certific ation  is not considered to be complete, and cannot be
+signed off , until  all of the managers (B, C, …) that report to A, directly or indirectly, have completed their
+own certific ations.
+In the case of a quick or ad hoc certific ation,  the process is simpler:
+▪An end user (userX) logs into Bravura Security Fabric  and clicks View and update pr ofile , then selects ▪
+another user (userY).
+▪Bravura Security Fabric  applies a tw o-participan t  user class to evaluate whether userX is permitted  to ▪
+certif y  userY .
+▪If permitted,  then the Initia t e  a review of all entitlemen ts  option  is available for userX to initia t e  a ▪
+certific ation  of user Y . If not permitted,  the option  is not available.
+The access certific ation  feature works with the following components.
+Components Purpose
+Manage certific ation  process  (CERT) module Allows product administrator  s to c on figur e  and start
+access certific ation  campaigns.
+View and update pr ofile  (IDR) module Allows reviewers to review current access and
+request changes. Self-service users can also
+request a review of a single user.
+Requests applic ation Enables users to view the status of their requests.
+Allows authorizers to review and either approve or
+deny requests.Components Purpose
+W orkflo w  Manager Service Receives requests for authoriz ation  w orkflo w .
+In most cases, user provisioning requests made
+through self-service require approval before they
+can be completed.
+For screenshots and step-by-step details of certific ation  procedures, see Certific ation  Campaigns  in End
+User Documen t ation
+Certific ation  using the OrgChart method 
+Setting  up access certific ation
+In order to implement access c ertific ation  using Bravura Security Fabric , you must:
+1.Add target systems that you want to be able to include in the certific ation  process. 1.

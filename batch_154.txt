@@ -1,0 +1,344 @@
+Option Description
+LOADUCCACHE FINISH The loaduccache program finishes  loading caches.
+LOADUCCACHE START The loaduccache program starts to load caches.
+USERCLASS CACHE FAILURE A userclass fails to be cached.
+USERCLASS CACHE INVALIDATE
+SUCCESSA userclass’ cache is explicitly invalidated.
+USERCLASS CACHE SUCCESS A userclass is successfully cached.
+USERCLASS POLICY CACHE FAILURE A userclass policy fails to be cached.
+USERCLASS POLICY CACHE
+INVALIDATE SUCCESSA userclass policy’s cache is explicitly invalidated
+USERCLASS POLICY CACHE SUCCESS A userclass policy is successfully cached.
+Import rule events
+The following options  can be accessed from Manage the system  > Maintenance > System variables ,
+Manage the system > Resources > Options , or from the Import rules tab in Manage the system >
+Privileged access > Options :
+Import rule events that launch interface programs
+Option Description
+IMPORT RULE TRIAL RUN BEGIN An import rule trial starts.
+IMPORT RULE TRIAL RUN END An import rule trial ends.
+Managed group events
+The following Bravura Group options  apply to all modules and can be accessed from Manage the system
+> Maintenance > System variables  or Manage the system > Resources >  Options :
+Managed group events that launch interface programs
+Option Description
+KEEP INVALID MGROUP
+INVALIDATEDA managed group disappears from the target system.
+KEEP INVALID MGROUP RESTORED A managed group is restored on the target system.
+KEEP INVALID MGROUP
+UNMANAGEDBravura Security Fabric  aut omatic ally  stops managing a managed group.
+Role-based access control events that launch interface programs
+The following RBAC options  apply to all modules and can be accessed from Manage the system  >
+Maintenance > System variables  or Manage the system > Resources > Options :Option Description
+RBAC ENFORCEMENT LIST BEGIN The listing  of role enforcement violations  begins.
+RBAC ENFORCEMENT LIST END The listing  of role enforcement violations  ends.
+RBAC ENFORCEMENT SUBMIT The role enforcement requests are submitted  to request w orkflo w .
+W orkflo w  events
+The following general w orkflo w  options  can be accessed from Manage the system  > Maintenance >
+System variables  or Manage the system > W orkflo w  > Options  > General :
+W orkflo w  general events that launch interface programs
+Option Description
+APPROVED EXCEPTION ADD
+FAILUREAn e x ception  to a SoD rule fails to be added to the database.
+APPROVED EXCEPTION ADD
+SUCCESSAn e x ception  to a SoD rule is successfully added to the database.
+APPROVED EXCEPTION DEL FAILURE An e x ception  to a SoD rule fails to be deleted from the database.
+APPROVED EXCEPTION DEL SUCCESS An e x ception  to a SoD rule is successfully deleted from the database.
+EXCEPTION DEFICIT PRIVILEGE ADD A role-enforcement de ficit  e x ception  is approved.
+EXCEPTION DEFICIT PRIVILEGE DEL A role-enforcement de ficit  e x ception  is deleted.
+EXCEPTION SURPLUS PRIVILEGE
+ADDA role-enforcement surplus e x ception  is approved.
+EXCEPTION SURPLUS PRIVILEGE DEL A role-enforcement surplus e x ception  is deleted.
+GROUP GROUPADD SUCCESS A group has been successfully added to another group
+GROUP GROUPADD FAILURE A group has failed to be added to another group.
+GROUP GROUPDELETE SUCCESS A group has been successfully removed from another group.
+GROUP GROUPDELETE FAILURE A group has failed to be removed from another group.
+GROUP OWNER ADD SUCCESS A user is successfully made an owner of a group.
+GROUP OWNER DELETE SUCCESS A user’s ownership of a group is revoked.
+IDACCESS TOO MANY GROUPS A network resource plugin returns a number of groups greater than or
+equal to the value of the IDACCESS GROUPS THRESHOLD setting.
+IMPLEMENTER POPULATED Implementers are assigned to a resource.
+NR CREATE FAILURE Program to execute when a network resource failed to be created.
+NR CREATE SUCCESS Program to execute when a network resource is successfully created
+NR DELETE FAILURE Program to execute when a network resource failed to be deleted.
+NR DELETE SUCCESS Program to execute when a network resource is successfully deleted.
+NR MOVE FAILURE Program to execute when a network resource failed to be moved.
+NR MOVE SUCCESS Program to execute when a network resource is successfully moved.
+NR UPDATE FAILURE Program to execute when a network resource failed to be updated.Option Description
+NR UPDATE SUCCESS Program to execute when a network resource is successfully updated.
+PREQUEST USED A pr e-de fined  request is used.
+REMOVE ROLE FAILURE A role fails to be removed from a user.
+REMOVE ROLE SUCCESS A role is successfully removed from a user.
+USER CREATE FAILURE An account fails to be created.
+USER CREATE SUCCESS An account is successfully created.
+USER DELETE FAILURE An account fails to be deleted
+USER DELETE SUCCESS An account is successfully deleted.
+USER DISABLE FAILURE An account fails to be disabled.
+USER DISABLE SUCCESS An account is successfully disabled.
+USER ENABLE FAILURE An account fails to be enabled.
+USER ENABLE SUCCESS An account is successfully enabled
+USER GROUPADD FAILURE A user fails to be made a member of a group.
+USER GROUP ADD SUCCESS A user is successfully made a member of a group.
+USER GROUPDELETE FAILURE A user fails to be removed from a group.
+USER GROUPDELETE SUCCESS A user is successfully removed from a group.
+USER MOVECTX FAILURE An account fails to be moved to another context.
+USER MOVECTX SUCCESS An account is successfully moved to another context.
+USER UPDATE FAILURE An account fails to be updated.
+USER UPDATE SUCCESS An account is successfully updated.
+WF MODELAFTER USED A request has been submitted  using pr ofile  comparison.
+WF MODELAFTER VIEW A model user has been selected for pr ofile  comparison.
+WF REQUEST ACTION FINALIZED Some actions  in a request have been finaliz ed.
+WF REQUEST COMPLETED A request has been completed. No more actions  are to be taken.
+WF REQUEST DECIDED A request has been fully decided. All actions  have been approved, denied,
+or canceled.
+WF REQUEST ONHOLD A request has been put on hold.
+WF REQUEST POSTED A request has been posted to w orkflo w .
+WF REQUEST POST FAILURE A request has failed to be posted to w orkflo w .
+W orkflo w  manager service (idwfm) events that launch interface programs
+Option Description
+IDWFM EVENT ABORT W orkflo w  Manager Service aborts a w orkflo w  event.
+IDWFM EVENT EMAIL MISSING W orkflo w  Manager Service detects the email address is missing for the
+email recipient.
+IDWFM EVENT FAILURE W orkflo w  Manager Service fails to execute a w orkflo w  event.Option Description
+IDWFM EVENT RETRY W orkflo w  Manager Service retries a w orkflo w  event.
+IDWFM EVENT START W orkflo w  Manager Service starts a w orkflo w  event.
+IDWFM EVENT SUCCESS W orkflo w  Manager Service succeeds in e x ecuting  a w orkflo w  event.
+Manage certific ation  process (CERT) events that launch interface programs
+The following certific ation  options  can be accessed from Manage the system  > Maintenance > System
+variables  or Manage the system  > Modules > Manage certific ation  process (CERT):
+Option Description
+CERT REMOVE USER SUCCESS A user is successfully removed during an access certific ation
+campaign.
+CERT SIGN OFF An access certific ation  campaign completes.
+CERT START ROUND FAILURE An access certific ation  campaign fails to start.
+CERT START ROUND SUCCESS An access certific ation  campaign starts successfully.
+The following w orkflo w  certific ation  options  can be accessed from Manage the system  > Maintenance >
+System variables  or Manage the system > W orkflo w  > Options  > OrgChart :
+W orkflo w  OrgChart events that launch interface programs
+Option Description
+ORG ROUND CANCEL An org building round was canceled.
+ORG ROUND FINISH An org building round finished.
+ORG ROUND START An org building round starts.
+ORG SEGMENT CANCEL An org building round segment was canceled.
+ORG SEGMENT FINISH An org building round segment finished.
+ORG SEGMENT START An org building round segment starts.
+USER TRANSFER FAILURE A subordinate failed to be transferred to another manager.
+USER TRANSFER PULL FAILURE A transfer initia t ed  by a new manager fails.
+USER TRANSFER PULL SUCCESS A transfer initia t ed  by a new manager succeeds.
+USER TRANSFER SUCCESS A subordinate is successfully transferred to another manager.
+Automated w orkflo w  events that launch interface programs
+The following w orkflo w  options  can be accessed from Manage the system > W orkflo w  > Options  > Aut omation  or
+Manage the system  > Maintenance > System variables :
+Option Description
+ACCOUNT GROUP CHANGES The auto discovery process discovers that groups have been added to or
+removed from a target system since the previous auto discovery run.Option Description
+AUTO ASSIGNMENT INVALID CACHE The aut omatic  assignment c alculation  was skipped due to an invalid cache
+of the dynamic members.
+AUTO ASSIGNMENT INVALID
+CONFIGThe aut omatic  assignment c alculation  was skipped due to an invalid
+c on figur ation  of the dynamic members.
+OOB REQ GROUPJOIN FAILURE An attemp t  to submit an automated w orkflo w  request to add a user or a
+group to a group, where the request is to undo or redo an out-of-band
+change, failed.
+OOB REQ GROUPJOIN SUCCESS An automated w orkflo w  request to add a user or a group to a group, where
+the request is to undo or redo an out-of-band change, failed.
+OOB REQ GROUPLEAVE FAILURE An attemp t  to submit an automated w orkflo w  request to remove a user or
+a group from a group, where the request is to undo or redo an out-of-band
+change, failed.
+OOB REQ GROUPLEAVE SUCCESS An automated w orkflo w  request to remove a user or a group from a group,
+where the request is to undo or redo an out-of-band change, failed.
+Inventory events
+The following inventory options  can be accessed from Manage the system  > Maintenance > System
+variables  or Manage the system > Inventory > Options  :
+Inventory events that launch interface programs
+Option Description
+INVOBJ STATE CHANGE The state of an inventory item
+has been changed.
+Module events
+The following Browse the OrgChart  (IDO) module options  can be accessed from Manage the system  >
+Maintenance > System variables  or < Manage the system  > Modules  > Browse the OrgChart  (IDO):
+Browse the OrgChart  (IDO) module events that launch interface programs
+Option Description
+IDO ATTACH SUBORDINATE A user attaches  a subordinate in an or g aniz ation  chart when using the
+Browse the OrgChart module.
+IDO DETACH SUBORDINATE A user detaches a subordinate in an or g aniz ation  chart when using the
+Browse the OrgChart module..
+IDO TRANSFER SUBORDINATE A user transfers a subordinate in an or g aniz ation  chart when using the
+Browse the OrgChart module..
+IDO TRANSFER SUBORDINATE A user transfers a subordinate from another manager in an or g aniz ation
+chart when using the Browse the OrgChart module..View and update pr ofile  (IDR) module events that launch interface programs
+The following View and update pr ofile  (IDR) module options  can be accessed from Manage the system  >
+Maintenance > System variables  or Manage the system  > Modules  > View and update pr ofile  (IDR):
+Option Description
+USER ATTR CHANGED A user successfully changes an attribut e.
+Update security questions  (PSQ) module events that launch interface programs
+The following Update security questions  (PSQ) module options  can be accessed from Manage the system
+> Modules  > Update security questions  (PSQ)  or Manage the system  > Maintenance > System variables :
+Option Description
+PSQ ADD FAILURE A user tries to add one or more new question/ ans w er  pairs, but fails for
+some reason.
+PSQ ADD SUCCESS A user de fines  one or more new question  / answer pairs, then submits the
+changes for the question  set.
+PSQ DELETE SUCCESS A user deletes one or more e xisting  question  / answer pairs, then submits
+the changes for the question  set.
+PSQ DONE A user successfully completes the minimum number of questions  and
+answers as specified  for each question  set.
+PSQ NOT DONE A user fails to complete the minimum number of questions  and answers as
+specified  for each question  set.
+PSQ UPDATE FAILURE A user tries to change one or more e xisting  question  / answer pairs, but fails
+for some reason.
+PSQ UPDATE SUCCESS A user changes one or more e xisting  question  / answer pairs, then submits
+the changes for the question  set.
+Attach  other accounts  (PSL) module events that launch interface programs
+The following Attach  other accounts (PSL) module options  can be accessed from Manage the system  >
+Maintenance > System variables  or Manage the system  > Modules  > Attach  other accounts (PSL) :
+Option Description
+PSL DELETE FAILURE A user tries to delete a login ID from their pr ofile,  but fails for some
+reason.
+PSL DELETE SUCCESS A user deletes a login ID for themselves on some system – showing that
+they now have a standard-name login account on that system.
+PSL DONE A user successfully attaches  the minimum number of accounts specified  by
+the PSL MIN ACCOUNTS option.
+PSL DUPLICATE ALIAS An advanced mode user tries to attach  an alternate login ID that has
+already been assigned, and so is denied the ID.Option Description
+PSL NOT DONE A user fails to attach  the minimum number of accounts specified  by the
+PSL MIN ACCOUNTS option.
+PSL UPDATE FAILURE A user tries to change an account in their pr ofile,  but fails for some reason.
+PSL UPDATE SUCCESS A user changes an alternate login ID for themselves on at least one system.
+PSL VERIFY FAILURE A user tries to modify an ID in their pr ofile  (add, update or delete), but
+fails because the password provided for the login on that system could not
+be v erified.
+PSL VERIFY LOCKOUT A user gives an invalid password too many times  for an alternate login ID
+and is now locked out of Bravura Security Fabric .
+User notific ations  (PSN) module events that launch interface programs
+The following User notific ations  (PSN) module options  can be accessed from Manage the system  >
+Maintenance > System variables  or Manage the system  > Modules > User notific ations  (PSN) :
+Option Description
+AUP DONE A user accepts an acceptable use policy.
+AUP NOT DONE A user declines an acceptable use policy.
+Change passwords  (PSS) module events that launch interface programs
+The following Change passwords (PSS) module options  can be accessed from Manage the system  >
+Maintenance > System variables  or Manage the system  > Modules  > Change passwords (PSS) :
+Option Description
+PSS CGI PLUGIN RUN The S CHANGE EXT or S STATUS EXT external HTML plugin is run.
+PSS RESET FAILURE Bravura Security Fabric  fails to change at least one password for a user in
+the Change passwords.
+PSS RESET START An authorized user requests one or more password changes on their own
+account.
+PSS RESET SUCCESS Bravura Security Fabric  successfully changes a set of passwords for a user in
+the Change passwords.
+F eder ation  / Web Single Sign-on events that launch interface programs
+Bravura Security Fabric  supports a number of event options  that are specific ally  invoked by federated
+login. For more in f ormation  on event c on figur ation,  see Event actions  (exit traps)  (on page 1523).
+The following F eder ation  / Web Single Sign-On options  can be accessed from Manage the system  >
+Maintenance > System variables  or Manage the system  > Modules  > F eder ation  / Web Single Sign-on :
+F eder ation  / Web Single Sign-On eventsOption Description
+FEDIDP IDENTIFY SUCCESS The SamlRequest web parameter, passed during federated login, is
+successfully parsed by Bravura Security Fabric . This event contains the
+following data:
+▪The SAML request issuer.▪
+▪The sp_folder used by the request.▪
+▪Remote IP address details.▪
+FEDIDP IDENTIFY FAILURE The SamlRequest web parameter, passed during federated login, could not
+be parsed by Bravura Security Fabric . This can occur if the SamlRequest or
+RelayState web parameters passed by the service provider are empty or
+invalid. This event contains the following data:
+▪The sp_folder used by the request.▪
+FEDIDP AUTH SUCCESS The SAML response assertion  is successfully signed and generated by the
+fedidp_response plugin, following a successful federated authentic ation.
+This event contains the following data:
+▪The user’s pr ofile  ID. ▪
+▪The sp_folder used by the request.▪
+▪Which authentic ation  chain was used. ▪
+▪The initia t or  of the request, either _IDP_LOGIN_ or the SP name. ▪
+FEDIDP AUTH FAILURE The SAML response assertion  could not be successfully signed or generated
+by fedidp_response. The most common causes of this include:
+▪The Bravura Security Fabric ’s c on figur ation  for that service provider is ▪
+invalid.
+▪The service provider’s template file in <Instance>\idp\<SP folder> is ▪
+invalid.
+▪The user is prohibited from accessing the service provider.▪
+▪The fedidp_response plugin failed to respond.▪
+▪The SAML signing certific a t e  is invalid. ▪
+This event contains the following data:
+▪The user’s pr ofile  ID. ▪
+▪The sp_folder used by the request.▪
+▪Which authentic ation  chain was used. ▪
+▪The initia t or  of the request, either _IDP_LOGIN_ or the SP name. ▪
+The reason for failure, one of:
+▪ Authentic ation  failure. ▪
+▪Sp_access violation. ▪
+▪ Assertion  c ons truction. ▪
+▪ Assertion  signing. ▪Option Description
+FEDIDP SSO SESSION CREATE This event is triggered when a new single sign-on session is created by
+fedidp-assert following a successful federated login. The event contains the
+following data:
+▪The generated SSO session ID.▪
+▪The time  and date the session was created. ▪
+▪The ID of the web cookie created for this session.▪
+▪The full chain used to authentic a t e  this user. ▪
+▪The IP address from which the request originated▪
+▪The initia t or  of the request, either _IDP_LOGIN_ or the SP name. ▪
+FEDIDP SSO SESSION DESTROY An SSO session is terminated, and the session data is removed from the
+database. The event contains the following data:
+▪The a ff ect ed  session ID ▪
+▪The time  and date of t ermination ▪
+▪The session key for the a ff ect ed  session ▪
+▪The IP address from which the request originated.▪
+Requests app events that launch interface programs
+The following Requests app options  can be accessed from Manage the system  > Maintenance > System
+variables  or Manage the system  > Modules > Requests:
+Option Description
+IDP APPROVE FAILURE An authorizer’s attemp t  to approve a request fails.
+IDP APPROVE SUCCESS An authorizer’s attemp t  to approve a request succeeds.
+IDP REJECT FAILURE An authorizer’s attemp t  to deny a request fails.
+IDP REJECT SUCCESS An authorizer’s attemp t  to deny a request succeeds.
+IDS DELETE FAILURE A user’s attemp t  to delete their request fails.
+IDS DELETE SUCCESS A user’s attemp t  to delete their request succeeds.
+Privileged access  app events that launch interface programs
+The following Privileged access app options  can be accessed from Manage the system  > Maintenance >
+System variables  or Manage the system  > Modules  > Privileged access:
+Option Description
+PAM CHECKIN FAILURE A generic access check-in has failed.
+PAM CHECKINOPERATION FAILURE An oper ation  ran as part of a generic access check-in has failed. This event
+is pr e-c on figur ed  to run pxnull with the c on figur ation  file pxnull-pam-
+cico.cfg.
+PAM CHECKIN OPERATION SUCCESS An oper ation  ran as part of a generic access check-in is successful.
+PAM CHECKIN PARTIAL A generic access check-in is only partially  successful.
+PAM CHECKIN SUCCESS A generic access check-in is successful.Option Description
+PAM CHECKOUT EXPIRY A generic access check-out expires.
+PAM CHECKOUT FAILURE A generic access check-out has failed.
+PAM CHECKOUT LIMIT REACHED The check-out limit is exceeded for generic access check-outs.
+PAM CHECKOUT OPERATION
+FAILUREAn oper ation  ran as part of a generic access check-out has failed.
+PAM CHECKOUT OPERATION
+SUCCESSAn oper ation  ran as part of a generic access check-out is successful.
+PAM CHECKOUT PARTIAL A generic access check-out is only partially  successful.
+PAM CHECKOUT SUCCESS A generic access check-out is successful.
+PAM CONFLICTED PASSWORDS
+UPDATEDCon flicting  passwords are discovered and updated.
+PSW MSP CHANGE A managed system policy was directly modified  by a product administrator.
+RES GSET CHECKIN GRP NOT FOUND A group cannot be located during a group-set check-in.
+RES GSET CHECKIN GRP NO SUCH
+MEMBERAn account is not a member of a group during a group-set check-in.
+RES GSET CHECKIN RETRY FAILURE An overdue temporary group membership fails to be removed after
+e xhausting  all retries.
+RES GSET CHECKIN RETRY SUCCESS An overdue temporary group membership is successfully removed after
+subsequent retries.
+RES PAMLWS OGRUA The local w ork s t ation  service detects an out-of-band group membership
+addition.
+Recorded session events
+The following Session monitor  app events can launch interface programs and can be accessed from
+Manage the system  > Maintenance > System variables  or Manage the system  > Modules  > Session
+monitor:
+Option Description
+SMON ADMIN SESS TERM An administrator terminates the session recording
+SMON ADMIN SESS TERM REQ An administrator terminates the session recording
+request.
+SMON EVT PARSE ERR A damaged or unparsable event is received.
+SMON PKG DOWNLOAD A recorded session package is downloading.
+SMON PKG FAILED An error occurs in g ener ating  the recorded session
+package.
+SMON PKG REQ St arting  the recorded session package request.
+SMON PKG SUCCESS A recorded session package is successfully generated.
+SMON SEARCH St arting  the recorded session search.

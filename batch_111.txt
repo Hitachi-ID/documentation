@@ -1,0 +1,339 @@
+hasaccount Users must have accounts
+id Target system ID
+platform Target system type
+rbacenforce Role enforcement
+source Source of pr ofile  IDs
+targetsysgrp Target system group
+url Help URL
+Dynamic group Description
+attrk e y Resource attribut e  keys
+▪IDPMQUEUE▪
+Advanced key Description
+platform Target system type
+sourceacct Trigger account
+longid Account
+lasterr Recent errors
+reqby Requester
+numtries Total attemp ts
+userid User
+hostid Target system ID
+queued Queued
+ne xttr y Next attemp t
+sourcehost Trigger target system ID
+▪IMPORTRULE▪
+Advanced key Description
+autodisc Aut omatic ally  import during auto discovery
+req Condition  ID
+desc Description
+policy Managed system policy ID
+template Template target system
+cr edential New system c onnection  cr edentials
+mngsystype Dir ection  of target system in t egr ation
+ruleusage Action  to perform on matching objects
+srctype Strategy for selecting  source systems
+id ID
+reqmatch Condition  match▪IMPORTRULETEST▪
+Advanced key Description
+source Source system
+result Results
+name Name
+userhost Source system
+acc ountid Account
+hostid Target system ID
+▪INVMGR▪
+Advanced key Description
+directmanager Direct manager
+groupsearch Group ID
+userid User ID
+loc ation Loc ation  ID
+attrk e y Account attribut e
+type Object type ID
+name User name
+allmanagers Direct and indirect managers
+rolesearch Role ID
+hostsearch Target system ID
+▪LOCATION▪
+Advanced key Description
+country Country
+id ID
+description Description
+areacode Area code
+state State/Province
+▪MANAGEDACCOUNT▪
+Advanced key Description
+acc ountid Account
+policyid Managed system policy ID
+wstnname Managed system description
+Dynamic group Description
+acc oun t attrk e y Account attribut e  keysf oundc ompattrk e y Discovered computer attribut e  keys
+f oundsub scriber attrk e y Discovered subscriber keys
+ma_attrk e y Managed account resource attribut e  keys
+ms_attrk e y Managed system resource attribut e  keys
+▪MANAGEDGROUP▪
+Advanced key Description
+authorizer The c on figur ed  authorizer
+groupname Group description
+groupid Group ID
+grouptype Group type
+indirectmember Indirect membership
+issecurity Is security group
+parentgroupid Parent group ID
+RB A Cflag Role enforcement
+targetdesc Target System description
+t ar g etid Target System ID
+url Help URL
+valid Valid
+Dynamic group Description
+attrk e y Resource attribut e  keys
+▪MANAGER▪
+Advanced key Description
+directmanager Direct manager
+groupsearch Group ID
+userid User ID
+attrk e y Account attribut e
+name User name
+allmanagers Direct and indirect managers
+rolesearch Role ID
+hostsearch Target system ID
+▪MAQ▪
+Advanced key Description
+id ID
+creator Creator
+policyid Managed system policy IDdesc Description
+▪MAQCMD▪
+Advanced key Description
+maqid Account set ID
+createdate Create date
+command Commands
+shared Shared
+creator Creator
+▪MAQEXECMD▪
+Advanced key Description
+r ecipientid Recipient ID
+numtries Total attemp ts
+result Command result
+acc ountid Account
+cmd Commands
+desc Managed system description
+workstnid Managed system ID
+reqdate Request date
+queued Queued
+▪MAQMBR▪
+Advanced key Description
+wstnid Managed system ID
+wstnname Managed system description
+acc ountid Account
+▪MAQPWD▪
+Advanced key Description
+wstnid Managed system ID
+wstnname Managed system description
+acc ountid Account
+▪MAQRECENTREQ▪
+Advanced key Description
+desc Account set description
+policyid Managed system policy ID
+id Account set ID▪MAQREQPWD▪
+Advanced key Description
+acc ountid Account
+workstnid Managed system ID
+desc Managed system description
+▪MOBILEDEVICE▪
+Advanced key Description
+info Device in f ormation
+▪MSPPARENT▪
+Advanced key Description
+id ID
+desc Description
+▪NOSGROUP▪
+Advanced key Description
+child_groups Child groups
+groupid Group ID
+groupname Group description
+grouptype Group type
+issecurity Is security group
+managed Managed
+members Accounts
+parent_groups Parent groups
+parentgroupid Parent group ID
+RB A Cflag Role enforcement
+targetdesc Target system description
+t ar g etid Target system ID
+url Help URL
+used In use
+valid Valid
+Dynamic group Description
+attrk e y Resource attribut e  keys
+▪NOTIFY▪
+Advanced key Description
+compplugin Pluginid ID
+batplugin Plugin
+severity Severity
+desc Description
+▪ORGROUND▪
+Advanced key Description
+desc Round description
+certifierid Manager ID
+certifiername Manager name
+pendingsignoff s Pending sign-off s
+topmanagername Top manager name
+topmanagerid Top manager ID
+initia t orid Initia t or  ID
+initia t orname Initia t or  name
+▪PAACCESS▪
+▪PAMPASSWORDHISTORY▪
+Advanced key Description
+passworddate Date of password change
+▪PREQ▪
+Advanced key Description
+attr gr oup Attribut e  group ID
+certific ation Accessible from certific ation
+deprecated Deprecated on
+description Pr e-de fined  request description
+enabled Enabled
+group Group ID
+id Pr e-de fined  request ID
+oper ation Oper ation
+r emediationT ype R emediation  type
+report Accessible from report
+request Accessible to requesters
+role Role ID
+target Target system ID
+template Template ID
+type Intended recipients
+▪PREQUEST▪Advanced key Description
+description User class description
+explicit_user Explicit user ID
+group_id Group ID
+id User class ID
+num_explicit_users Number of explicit users
+num_participan ts Number of participan ts
+num_policies Number of policies
+policy Policy
+pslang PSLang expression
+Dynamic group Description
+pr ofileattr Pr ofile  attribut e  keys
+▪RESATTRDEF▪
+Advanced key Description
+id ID
+valmin Minimum required number of values
+desc Description
+valmax Maximum allowed number of values
+type Attribut e  type
+valfxed Are there restricted values?
+▪RESATTRGRP▪
+Advanced key Description
+FIELD_DISPTYPE Display type
+FIELD_DESC Resource attribut e  group description
+FIELD_RESATTR Resource attribut e
+FIELD_RESTYPE Resource type
+FIELD_ID Resource attribut e  group ID
+FIELD_USRGRP User groups: Access to resource attribut es
+▪ROLE▪
+Advanced key Description
+assignable Assignable
+description Role description
+deprecated Deprecated on
+enabled Enabledid Role ID
+rbacenforce Role enforcement
+user User ID
+Dynamic group Description
+attrk e y Resource attribut e  keys
+entitlemen t Role entitlemen t  member keys
+▪SAVEDCERTROUND▪
+Advanced key Description
+description Certific ation  setup description
+method Certific ation  method
+certtype Certific ation  type
+role Role ID
+pas t certifier Past reviewer ID
+shared Shareable
+sod Segr eg ation  of duties  rule ID
+target Target system ID
+id Certific ation  setup ID
+lastrun Last run date
+group Group ID
+resourcetype Entitlemen t  type
+savedby Owner
+certifier Con figur ed  reviewer ID
+▪SCHEDULEDJOB▪
+Advanced key Description
+jobcommand Command to run
+scheduleid Job
+r epeattype Repeat type
+laststatus Last run status
+whereruns Server
+enabled Enabled
+lastfin Last finish  time
+laststart Last run time
+▪SESSION▪
+Advanced key Description
+oper ation_c ode Oper ation  coderequestername Requester name
+result Results
+startdate Request date
+oper ation_desc Oper ation  description
+requesterid Requester ID
+▪SMONREQSESSION▪
+Advanced key Description
+desc Description
+initid Monitored user
+date Request date
+recipid Recipient ID
+▪SMONSESSION▪
+Advanced key Description
+systemid Managed system
+sessid Session ID
+initia t or Monitored user
+s t arttime Start da t e/time
+batchid Request ID
+privaccount Access
+endtime End da t e/time
+systemid Managed system
+sourceaccount User login
+sourceid User device
+eventvalue Session matching contents
+state Session status
+▪SOD▪
+Advanced key Description
+description Segr eg ation  of duties  rule description
+deprecated Deprecated
+id Segr eg ation  of duties  rule ID
+e x ceptions_allow ed Allows e x ceptions
+entitlemen t Entitlemen ts
+enabled Enabled
+▪SSOINSTKEY▪
+Advanced key Descriptionarch Ins t allation  type
+e xptime Expire time
+expired Expired
+expcount Remaining installs
+desc Description
+▪SUBORDINATE▪
+Advanced key Description
+directmanager Direct manager
+groupsearch Group ID
+attrk e y Account attribut e
+userid User ID
+name User name
+allmanagers Direct and indirect managers
+rolesearch Role ID
+hostsearch Target system ID
+▪SYSTEMMSP▪
+Advanced key Description
+workstnid Managed system ID
+platform type Platform  type
+desc Description
+▪TARGET▪
+Advanced key Description
+desc Target system description
+aut oassocia t eattr Account attribut e  to aut omatic ally  attach  accounts to
+user pr ofiles
+targetsysgrp Target system group
+platform Target system type
+url Help URL
+rbacenforce Role enforcement
+id Target system ID
+address Address
+adminid Administrator ID
+aut oassocia t e flag Aut omatic ally  attach  accounts
+hasaccount Users must have accounts
+source Source of pr ofile  IDs
+▪TARGETGROUP▪

@@ -1,0 +1,260 @@
+3.Click Customize ins t allation . 3.
+4.Use all Optional  Features . 4.5.On the Advanced Options  screen, select Install for all users , and ensure that the path is correct in the 5.
+Custom install loc ation .6.Click Install . 6.
+Support for virtual machines
+Bravura Security Fabric  is c ompatible  with VMware, Xen Project, Micr osoft  Hyper-V and Oracle VirtualBox
+virtual machine platforms.  It can also be deployed on IaaS, including AWS. It generally works well with
+other virtualiz ation  platforms,  but Bravura Security primarily tests with these. Bravura Security officially
+supports running Bravura Security Fabric  on these virtual servers and will make a best e ff ort  to support
+customers who run on other hypervisors.
+So long as the database server that hosts the Bravura Security Fabric  back-end has access to reasonably
+fast I/O (e.g., NAS or similar) and so long as c onnectivity  between the Bravura Security Fabric  applic ation
+sever and the database is fast and low latency (e.g., 1Gbps/1ms) there should is no adverse performance
+impact when comparing Bravura Security Fabric  installed on hardware vs. Bravura Security Fabric
+installed on a similarly-equipped virtual server.
+The key point above is to ensure sufficien t  I/O capacity for the database (MSSQL). If the database server
+is virtualized, using network attached  storage (NAS) is recommended, as virtualized I/O (files  such as
+VMDK’s emulating  an HDD image) is often  sub s t antially  slower than physical I/O.Even where customers choose to deploy the main Bravura Security Fabric  servers on raw hardware,
+virtual machines are an excellent platform  for proxy servers, test servers, development servers and
+model PCs.
+A related question  is often  “how large can the deployment get before we have to move from a VM to
+hardware?” Unfortunately, there is no simple, universal answer:
+1.Virtual servers vary in c apabilities  – they may have a 32-bit or a 64-bit CPU, may have 1, 2, 4 or 8 CPU 1.
+cores allocated, may have diff er en t  amounts of memory and may link to diff er en t  types of storage
+infrastructure.
+2.The load created by the applic ation  also varies – is there complex business logic? Do users access the 2.
+applic ation  at random times  or all at once? Are there just a few or thousands of in t egr ations?
+This variability means that the safest bet is to use benchmark results, using a c on figur ation  as similar as
+possible to the pr oduction  setup, to gauge the performance of Bravura Security Fabric on r epr esen t ativ e
+physical and virtual servers.
+As a general standard, the r atio  of vCPU to CPU (core) is 3:1. Therefore the actual vCPU performance will
+be 33% of the actual CPU. If the Bravura Security Fabric  is deployed in a virtualized environment, and the
+general r atio  on the hypervisor is 3:1, then a virtualized setup would require 6vCPU to match the minimal
+2 CPU physical CPU requirement.
+Domain requirements
+While Bravura Security Fabric  servers are capable of oper ating  as domain members, we suggest you take
+the following into c onsider ation:
+▪Security / limited accessibility:▪
+If the Bravura Security Fabric  server is part of the domain, then other adminis tr ativ e  users from the
+domain (who may not be Bravura Security Fabric  administrators) can gain adminis tr ativ e  logon access
+to the server and can then access (encrypted) cr edentials  for target systems other than the domain.
+A policy of segr eg ation  of duties  suggests that it is preferable to eliminate the ability of administrators
+of one system to access privileged accounts for another system and since Bravura Security Fabric
+houses such cr edentials,  it makes sense to avoid domain membership.
+▪Secure service account:▪
+Bravura Security Fabric  requires a service account which Bravura Security Fabric  services will run as. It
+is recommended to restrict the service account’s abilities  to in t er activ ely  log on to networks when a
+domain account is used. This is a recognized industry bes t -pr actice  and it can be c on figur ed  by using
+group policy.
+See Cr eating  a secure service account  (on page 205) for more details.
+▪Windows cr edential  c on flicts: ▪
+To change/verify passwords on an Activ e  Directory domain, Bravura Security Fabric  uses ADSI, which
+may connect a named pipe to a share on a domain controller, such as the NETLOGON share.
+If an adminis tr ativ e  user logs in to the Bravura Security Fabric  server console and makes a similar
+c onnection  but using his personal cr edentials  (not those encoded into Bravura Security Fabric ), then
+the Windows network provider may produce a cr edential  c on flict  error. This can interrupt BravuraSecurity Fabric ’s ability to manage user objects on the domain, for the dur ation  of the in t er activ e  login
+session.
+If Bravura Security Fabric  is not a domain member, then the set of administrators who are able to
+inadvertently cause this error c ondition  is signific an tly  reduced and so Bravura Security Fabric
+oper ation  is more reliable (less prone to human-induced errors).
+▪Password r andomiz ation: ▪
+Cr edential  problems can also occur if the Bravura Privilege  server is also a Domain Controller, and
+Bravura Privilege  is used to manage the administrator account used to target the system. When the
+administrator account has its password randomized, the target system administrator cr edentials  may
+not be updated.
+Cr eating  a secure service account
+The following steps for cr eating  a secure service account are demonstrated on Windows Server 2019:
+1.Launch Activ e  Directory Users and Computers . 1.
+2.Create an OU.2.
+3.In the OU, create an account as the service account and add it to the Administrators group. When you 3.
+run the installer, the default account name is psadmin .
+4.Give the new account the "Logon as a service" right under Local Security Policy  settings. 4.
+5.Add a security group.5.
+6.Add the service account as a member of the security group.6.
+7.Launch Group Policy Management Console (GPMC) . 7.
+8.Create a new group policy.8.
+9.Right click on the group policy, then click on Edit... to launch Group Policy Management Editor , 9.
+c on figur e  the group policy with following settings:
+▪Navigate to Computer Con figur ation  > Policies > Windows Settings  > Security Settings  > Local ▪
+Policies > User Rights Assignments
+▪Select Deny log on locally and enter the security group created previously. ▪
+▪Select Deny log on through remote desktop services and enter the security group created ▪
+previously.
+▪Exit from Group Policy Management Editor . ▪
+10. Back to Group Policy Management Console (GPMC) , click the Scope tab to ensure the GPO is set to 10.
+authentic a t ed  users.
+11. Link the GPO to any OUs containing machines which you want to stop the service account from being 11.
+able to log on to in t er activ ely ,  or the domain level for all machines.
+12. If you have more than one domain, you can put groups from the trusted domain in the GPO. However, 12.
+you might want to make a GPO like this on both sides (in case of two-way trusts).
+13. Reboot or run command gpupdate.exe /force  on the machines to apply the GPO. 13.
+14. Test to ensure the service account is not allowed to log on the machines where the GPO is applied. 14.Database server
+Bravura Security Fabric  requires Micr osoft  SQL Server 2019  (recommended), Micr osoft  SQL Server 2017 ,
+Micr osoft  SQL Server 2016 SP2 , or Micr osoft  SQL Server 2014 SP3 , typically with one database instance per
+applic ation  server. In most environments, the Micr osoft  SQL Server softw ar e  is installed on the same
+hardware or VM as the Bravura Security Fabric  softw ar e,  on each Bravura Security Fabric  server node.
+This reduces hardware cost, eliminates network latency and reduces the security surface of the
+combined solution.
+Be sure to install the following services and tools that come with SQL Server:
+▪Database Engine Services▪
+▪Client Tools Connectivity ▪
+▪Management Tools - Basic▪
+▪Management Tools - Complete▪
+Database I/O performance on a virtualized file system (e.g., VMDK or equivalent) is slow. If the database
+server softw ar e  runs on a VM, please use a fast, nearby NAS or SAN to store the actual data files.
+Bravura Security Fabric  can leverage an e xisting  database server cluster, but Bravura Security  recommends
+a dedicated database server instance, preferably one per Bravura Security Fabric  applic ation  server,
+installed on the same OS image as the core applic ation.
+1.The data managed by Bravura Security Fabric  is extremely sensitiv e,  so it is desirable to minimize the 1.
+number of DBAs who can access it, despite use of encr yption.
+2.SQL Server has limited features to isolate workloads between database instances on the same server.2.
+This means that a burst of activity  from Bravura Security Fabric  (as happens during auto-discovery)
+would cause slow responses in other applic ations.  Conversely, other applic ations  experiencing high DB
+load would slow down Bravura Security Fabric .
+3.Bravura Security Fabric  already includes r eal-time,  fault-tolerant, WAN-friendly, encrypted database 3.
+r eplic ation  between applic ation  nodes, each with its own back-end database. Use of an expensive DB
+server cluster is neither required nor bene ficial.
+4.Deploying the database to localhost has performance advantages (minimal packet latency from the4.
+applic ation  to its storage).
+5.Allowing Bravura Security Fabric  administrators full control over the database simplifies  performance 5.
+and related diagnostics  and tr oubleshooting ,  especially when we consider that database
+administrators in most or g aniz ations  are few in number and very busy.
+6. Eliminating  reliance on shared database infrastructure also eliminates the need to coordinate events 6.
+such as database version upgrades, which involve reboots. Some Bravura Security  customers who
+leverage a shared database infrastructure have experienced applic ation  disruption  due to
+unscheduled and un-communicated database outages and restarts.
+See Installing Database and Database Client Softw ar e  (on page 172) for details.Replicated server requirements
+Requirements for replicated servers are the same as for a primary server  (on page 197). Bravura Security
+strongly recommends that you install at least three replicated Bravura Security Fabric  servers for fault
+tolerance and back up. Con figur ation  of replicated servers is detailed in the R eplic ation  and Recovery
+Guide .
+All replicated servers must be created with the same instance name. It is recommended that all
+replicated servers be created with the same Bravura Security Fabric  license, and use the same type of
+Connector Pack . All server clocks must be synchronized.
+Proxy servers
+In some cases, the c onnection  to a target system may be slow, insecure or blocked. This may be because
+the c onnection  spans multiple  data centers or uses an insecure network protocol.
+To address such c onnectivity  problems, Bravura Security Fabric  includes a connector proxy server. When
+a proxy server is deployed, the main Bravura Security Fabric  server ceases to make direct c onnections  to
+some target systems and instead forwards all c ommunic ation  to those systems through one or more
+connector proxies, which are co-located with the target systems in question.
+Communic ation  from the main Bravura Security Fabric  server to the connector proxy is encrypted and
+works well even when there is low bandwidth or high packet latency. It uses a single, arbitrarily-
+numbered TCP port number. Connections  are established from the main Bravura Security Fabric
+applic ation  server to the proxy server. A single TCP port supports an arbitrarily large number of target
+systems at the connector proxy’s loc ation.
+It is simple for fir e w all  administrators to open a single TCP port per proxy server. Since c onnections  are
+e fficien t  and encrypted, there are usually no objections  to doing so.
+Communic ation  between the proxy server and target systems c ontinues  to use whatever protocol each
+system supports nativ ely .  This c ommunic ation  is c on fined  to a physically secure data center with a high-
+bandwidth, low-latency local network.
+See Managing Proxy Servers  (on page 260) for more in f ormation.
+Cryptographic certific a t es
+Bravura Security  strongly  recommends that users access Bravura Security Fabric  using SSL (HTTPS). To do
+this:
+1.Assign a fix ed  IP address to each Bravura Security Fabric  server. 1.
+2.Assign a single DNS host name to all Bravura Security Fabric  servers. 2.
+3.Install the web server (IIS).3.
+4.Create a certific a t e  signing request (CSR) file. 4.
+5.Submit the CSR file to a certific a t e  authority such as Verisign. 5.
+6.Receive and install a signed certific a t e. 6.The SSL/TLS, is all c on figur ed  and managed by IIS. For detailed in f ormation  for using IIS, consult
+Micr osoft's  documen t ation.
+Once you have c on figur ed  IIS the following settings  should be updated so that the product communicates
+via the new, http s  url.
+1.Click Manage the system > W orkflo w . 1.
+2.Update BASE IDSYNCH URL  with the FQDN of the instance server; for example, https:// 2.
+idm1.bravura1.corp.
+3.Click Update . 3.
+4.Update the various end points to the HTTPS URL that you may have previous c on figur ed;  for example, 4.
+if you are using the API SOAP service, edit the idapisoap  services endpoints. See API SOAP Service
+(idapisoap)
+The API SOAP Service ( idapisoap ) provides access to the Bravura Security Fabric  API Service
+(idapi ) with the WWS web service API. It is installed and started on the Bravura Security Fabric
+server during setup.
+Some or g aniz ations  use the SOAP API to build their own customized front-end to Bravura Security
+Fabric .
+Refer to the Bravura Security Fabric  Remote API ( api.pdf ) for detailed reference in f ormation.
+The API SOAP Service ( idapisoap ) requires:
+▪Windows Server 2012, or▪
+Windows Server 2012 R2
+▪ Micr osoft  .NET Framework 4.5+ ▪
+The API SOAP Service is dependent on the API Service ( idapi ). The PSLang API, IIS.NET API, and
+WWS API call into this service.
+Configur ation
+The service is aut omatic ally  installed and started on the Bravura Security Fabric  server during setup.
+You can modify the following parameters related to the API SOAP Service on the Service in f ormation
+page:
+idapisoap service options
+Option Description
+Endpoints for the IDAPI SOAP nativ e
+serviceThe URL that the API SOAP Service will listen in on.
+An optional  port can be appended to the host and
+preceded by a colon. Multiple  endpoints can be
+de fined  in a comma separated list. To secure the
+endpoint, c on figur e  it to listen on http s.Option Description
+Use system setting: Will be set to the following:
+http://<IP>/default/idapi,http://
+localhost/default/idapi, http://
+<IP-fqdn>/default/idapi
+The "server" URL fragment must be the IP , hostname or FQDN (fully qualified  domain name) of the
+server. If the c onnection  is secured with TLS (http s  protocol), only an FQDN listed in the TLS server
+c ertific at e  used on the IIS server will allow a secure remote c onnection.
+Command-line options  for idapisoap are listed below:
+idapisoap service command-line options
+Argument Description
+-h Displays usage in f ormation.
+-v Displays version number only.
+-binding <binding> Specify the binding type:
+– basicHttpBinding
+– w sHttpBinding  (default)
+-endpoint <endpoint> The endpoint that this SOAP service listens on
+-mextype <mextype> The metadata exchange method:
+– None
+– Me xHttpGe t
+– Mex (only for w sHttpbinding)
+– HttpGe t  (default). The default is suited for most applic ations.
+-c on fig Displays service c on figur ation  in f ormation.
+-server Run the service in server mode.
+-start Starts the service.
+-stop Stops the server/service
+To c on figur e  wsbinding and mex, set the service like this:
+idapisoap -binding 1 -mextype 2
+where the API service class can be generated from <endpoint>; for example, http://<IP  or fqdn>/hiim/
+idapi.
+To c on figur e  httpbinding  and HttpGe t,  set the service like this:
+idapisoap -binding 0 -mextype 4
+where the API service class can be generated from the WSDL <endpoint>/wsdl; for example,
+http://<IP  or fqdn>/hiim/idapi/wsdlChanging the SOAP c onnection  type by using the "binding" and "mextype" arguments is only required
+if the remote SOAP tooling used requires it. Do not change the default c onnection  type if t esting  the
+c ollection  of the WSDL using a browser, otherwise you will receive a generic server error (HTTP 500)
+instead of the WSDL.
+.
+Browser support
+The following browsers are supported:
+▪Edge Chromium.▪
+▪Google Chrome.▪
+▪Mozilla Firefox.▪
+Font downloads must be enabled in the browser to allow Bravura Security Fabric  to use Font Awesome.
+Some plugins require that you c on figur e  Activ eX  security.
+HTTPS settings
+As of version 12.1.1 Bravura Security Fabric  adds the ”Strict-Transport-Security” header to IIS for all
+resources. What this means is that if you have c on figur ed  your site to use SSL and if you have accessed
+your site using HTTPS protocol, the browser will cache that the site supports HTTPS and prevents the
+browser from using HTTP . This keeps your site secure but occasionally in t esting  there will be a need to
+downgrade the browser security to allow accessing your site via HTTP . In order to do this you must clear
+the HSTS settings  in the browsers.
+These links show how to clear the HSTS settings  in the browsers:
+▪ http s://w w w . thessls t or e.c om/blog / clear -hs ts-settings-chr ome- fir e f o x/▪
+▪ http s://tinsle yne t.c o.uk/2017/hs ts/▪
+Using setup to install Bravura Security Fabric
+You can use setup , located at the root of the dis tribution  folder, to install one or more Bravura Security
+Fabric  instances. For example, you can have Bravura Security Fabric  instances r epr esenting  target systems
+and users in diff er en t  geographical regions, or have separate instances with diff er en t  password rules for
+diff er en t  sets of users or clients.
+The setup program requires Windows Installer version 3.0.1 or later. This program should be run by a
+member of the Windows Administrators group.
+Before you begin, ensure that the server that will host Bravura Security Fabric meets the minimum system
+requirements and that all required software  is installed. See Server requirements  (on page 196) for
+details.
+Ensure that your back-end database and dedicated user are set up according to Installing database and
+Database Client Softw ar e  (on page 172).

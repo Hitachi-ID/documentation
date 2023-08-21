@@ -1,0 +1,302 @@
+4.Proceed to c on figur e  authoriz ation  as described in the rest of this section. 4.
+Con figuring  phased authoriz ation
+If phased authoriz ation  is enabled, navigate to the template’s Authoriz ation  page then:
+▪Click Add new… if you want to add a phase. ▪
+▪To change the order of phases, change the numbers in the Authoriz ation  phase column and click ▪
+Update .
+▪Select a phase to de fine  authorizers and settings. ▪
+Determining number of required approvals
+To set authoriz ation  thresholds for a template:
+1.Navigate to the Inventory template inf ormation  page 1.
+Use the Inventory template inf ormation  page to c on figur e  general inventory template in f ormation  and
+to access additional  c on figur ation  settings.  To navigate to this page:
+1.Click .1.
+2.To de fine  Manage the system > Inventory > Template accounts : 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab (on page 2669) or
+the Resource oper ations  tab (on page 2673). To return to the template in f ormation  page, click the
+General tab.
+.
+2.Click the Authoriz ation  tab. 2.
+Select a phase if phased authoriz ation  is enabled.
+3.Type a value for the:3.
+▪Minimum number of authorizers – A value of 0 means requests for the resource are auto- ▪
+approved.
+The default value is set by the MIN AUTHORIZERS  policy.
+▪Number of denials before a change request is terminated – A resource request is canceled when ▪
+this number of authorizers deny it, as long as the Minimum number of authorizers has not been
+reached.
+4.The default value is set by the MAX REJECTIONS  policy. 4.
+5.Click Update . 5.
+Assigning s t atic  authorizers
+To assign s t atic  authorizers to a template:
+1.Navigate to the Inventory template inf ormation  page 1.Use the Inventory template inf ormation  page to c on figur e  general inventory template in f ormation  and
+to access additional  c on figur ation  settings.  To navigate to this page:
+1.Click .1.
+2.To de fine  Manage the system > Inventory > Template accounts : 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab (on page 2669) or
+the Resource oper ations  tab (on page 2673). To return to the template in f ormation  page, click the
+General tab.
+.
+2.Click the Authoriz ation  tab. 2.
+Select a phase if phased authoriz ation  is enabled.
+3.Click Select... at the bottom  of the Authorizers table. 3.
+4.Search for, or enable the checkboxes next to the authorizers that you want to assign.4.
+5.Click Select at the bottom  of the page. 5.
+Assigning authorizers by user class
+To assign authorizers to a template based on user class:
+1.Navigate to the Inventory template inf ormation  page 1.
+Use the Inventory template inf ormation  page to c on figur e  general inventory template in f ormation  and
+to access additional  c on figur ation  settings.  To navigate to this page:
+1.Click .1.
+2.To de fine  Manage the system > Inventory > Template accounts : 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab (on page 2669) or
+the Resource oper ations  tab (on page 2673). To return to the template in f ormation  page, click the
+General tab.
+.
+2.Click the Authoriz ation  tab. 2.
+The Users must be in the following user classes table allows you to de fine  membership criteria.
+3.To de fine  membership criteria: 3.
+▪Select e xisting  user classes: Click Select... and enable the checkboxes for the user classes you want ▪
+to add, then click Select .
+▪Create new user classes: Click 
+ Add new… . See Adding user classes  (on page 738) for full details ▪
+on how to create a new user class.4. Con figur e  P articipan t  mapping for each user class that you add. 4.
+Select and create user classes until  you have de fined  membership.
+5.If your membership criteria includes multiple  user classes, de fine  whether users are required to match 5.
+All of the user classes or Any of the user classes .
+ Removing users from membership
+To remove users from membership, you can:
+1.Edit user classes to change the participan ts. 1.
+2.Delete user classes from the membership criteria.2.
+a.Navigate to the membership criteria  page where user classes are listed. a.
+b.Enable the checkbox next to the user classes you want to delete.b.
+3.Click Delete . 3.
+Con figuring  template-level resource oper ations
+You can de fine  resource oper ations  for inventory templates to:
+▪Determine whether Bravura Security Fabric  agents aut omatic ally  fulfill  requests or whether human ▪
+agents will carry out tasks to fulfill  the requests.
+▪Add implementers to a template to de fine  who fulfills  requests based on the template if an Bravura ▪
+Security Fabric  connector is not used.
+You can override resource oper ations  at the target system and template level. If the oper ation  is set at
+either of those levels to be carried out by an implementer, you must assign at least one implementer. If
+you do not do this, requests involving the template will be put on hold unless implementers are
+dynamically assigned by a plugin. See Determining implementers  (on page 2402) for details.
+Inheriting  resource oper ation  c on figur ation  from the target system
+You can c on figur e  target systems so that templates inherit the resource oper ation  c on figur ation  settings
+of the target system. You can also override the c on figur ation  for a template, or add implementers.
+Enable inheritance by selecting  the Default authoriz ation  for child resources,including templates and
+managed groups, will be inherited from the target system option  on the relevant Target system
+in f ormation  page  (on page 494).
+To override or add to the c on figur ation  for a template:
+1.Navigate to the Inventory template inf ormation  page 1.
+Use the Inventory template inf ormation  page to c on figur e  general inventory template in f ormation  and
+to access additional  c on figur ation  settings.  To navigate to this page:
+1.Click .1.
+2.To de fine  Manage the system > Inventory > Template accounts : 2.
+▪A new template – click Add new… ▪▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab (on page 2669) or
+the Resource oper ations  tab (on page 2673). To return to the template in f ormation  page, click the
+General tab.
+.
+2.Set Override implemen t ation  c on figur ation  to: 2.
+▪Use only inherited c on figur ation ▪
+▪Do not inherit any c on figur ation ▪
+▪Add to inherited c on figur ation  (default) ▪
+3.Click the Resource oper ations  tab. 3.
+▪If you chose to not inherit c on figur ation,  then the page shows the resource oper ations  explicitly ▪
+setup for the template; no settings  from the target system should display.
+▪If you chose to add to inherited c on figur ation,  then the page displays settings  that are both ▪
+inherited and explicitly set for the template.
+4.Proceed to c on figur e  resource oper ations  as described in the rest of this section. 4.
+Determining override levels
+To set resource oper ation  override levels for a template:
+1.Navigate to the Inventory template inf ormation  page 1.
+Use the Inventory template inf ormation  page to c on figur e  general inventory template in f ormation  and
+to access additional  c on figur ation  settings.  To navigate to this page:
+1.Click .1.
+2.To de fine  Manage the system > Inventory > Template accounts : 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab (on page 2669) or
+the Resource oper ations  tab (on page 2673). To return to the template in f ormation  page, click the
+General tab.
+.
+2.Select the Resource oper ations  tab. 2.
+3.Select:3.
+▪No override the oper ation  is inherited from the target system. ▪
+▪Connector oper ation  – the oper ation  will be connector enacted, regardless of the target system ▪
+setting.
+▪Implementer oper ation  – the oper ation  will be implementer enacted, regardless of the target ▪
+system setting.
+4.Click Update . 4.Assigning s t atic  implementers
+When the template-level oper ation  is carried out by an implementer, whether by inheriting  the setting
+from the target system, or being explicitly set, an Implementers  table is included on the Implementer
+oper ation  page. If implementers are assigned to the target system, they are inherited by the template.
+You can remove or keep the inherited implementer, or add new implementers for the template.
+If you chose to not inherit the c onfiguration  from the target system, you cannot assign the same
+implementer that is assigned at the target system level.
+To assign s t atic  implementers to a template:
+1.Navigate to the Inventory template inf ormation  page 1.
+Use the Inventory template inf ormation  page to c on figur e  general inventory template in f ormation  and
+to access additional  c on figur ation  settings.  To navigate to this page:
+1.Click .1.
+2.To de fine  Manage the system > Inventory > Template accounts : 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab (on page 2669) or
+the Resource oper ations  tab (on page 2673). To return to the template in f ormation  page, click the
+General tab.
+.
+2.Select the Resource oper ations  tab. 2.
+3.Click Select... at the bottom  of the Implementers table. 3.
+4.<Search>for, or select the checkboxes next to the implementers that you want to assign to the4.
+resource.
+5.Click Select at the bottom  of the page. 5.
+To remove s t atic  implementers from a template:
+1.Click Remove implementer in the same row as the user’s ID. 1.
+2.Click Update at the bottom  of the page. 2.Assigning implementers by user class
+To assign implementers to a template based on user class:
+1.Navigate to the Inventory template inf ormation  page 1.
+Use the Inventory template inf ormation  page to c on figur e  general inventory template in f ormation  and
+to access additional  c on figur ation  settings.  To navigate to this page:
+1.Click .1.
+2.To de fine  Manage the system > Inventory > Template accounts : 2.
+▪A new template – click Add new… ▪
+▪An e xisting  template – search for, or select the template you want to view or modify. ▪
+From an e xisting  template’s in f ormation  page, you can click the Authoriz ation  tab (on page 2669) or
+the Resource oper ations  tab (on page 2673). To return to the template in f ormation  page, click the
+General tab.
+.
+2.Select the Resource oper ations  tab, then click the User classes sub-tab. 2.
+3.To de fine  membership criteria: 3.
+▪Select e xisting  user classes: Click Select... and enable the checkboxes for the user classes you want ▪
+to add, then click Select .▪Create new user classes: Click 
+ Add new… . See Adding user classes  (on page 738) for full details ▪
+on how to create a new user class.
+4. Con figur e  P articipan t  mapping for each user class that you add. 4.
+Select and create user classes until  you have de fined  membership.
+5.If your membership criteria includes multiple  user classes, de fine  whether users are required to match 5.
+All of the user classes or Any of the user classes .
+ Removing users from membership
+To remove users from membership, you can:
+1.Edit user classes to change the participan ts. 1.
+2.Delete user classes from the membership criteria.2.
+a.Navigate to the membership criteria  page where user classes are listed. a.
+b.Enable the checkbox next to the user classes you want to delete.b.
+3.Click Delete . 3.
+Deleting  templates
+When you delete a template in the Manage the system  (PSA) module, it is flag g ed  as disabled in the
+Bravura Security Fabric  database. It is maintained for audit purposes.
+Once a template is flag g ed  as disabled in the Bravura Security Fabric  database, you can delete objects
+associated with the template; for example, authorizers, target systems.
+Con figuring  resource attribut es
+It is possible to add resource attribut es  to this resource type; you can use resource attribut es  to create
+and set attribut e  values for individual resources. Before you can do this, you must add the resource
+attribut es  to at least one resource attribut e  group, and c on figur e  access to resource attribut es.Inventory Objects and States
+Bravura Identity  manages inventory by:
+▪Maintaining a list of inventory items – This list can be used for provisioning or internal purposes. It ▪
+includes the identif ying  in f ormation,  loc ation,  type, and state of each item.
+One way to create the initial  inventory list, or to keep it up-to-date, is to assign inventory managers
+and have them do the work using the Bravura Security Fabric  web interface.
+▪Provisioning inventory items to users – In general, Bravura Identity facilitates the provisioning of items ▪
+by allowing users to submit requests for new items, r outing  request to authorizers for approval (if
+applicable), and notif ying  the appropriate people when items need to be delivered, shipped, or
+recovered.
+The process for r equesting  an inventory item is similar to the process for r equesting  a new account.
+For example, to request a new wireless device, users select an inventory template named smartphone
+to which the individual devices are mapped.
+Bravura Identity  keeps track of inventory items by altering their state in f ormation  (available, reserved,
+assigned). Inventory managers and product administrator  s can also manually change the state of an item.
+The list of possible inventory states is pr e-de fined  in Bravura Identity . Some states must be enabled
+before they can be used.
+The list of inventory items includes the identif ying  in f ormation,  loc ation,  type, and state of each item.
+You can load an e xisting  inventory list into Bravura Identity , or update an e xisting  list, using the
+manageinv  program to import inventory in batches. See manageinv usage in f ormation
+Use the manageinv program to add, remove, and update inventory items.
+manageinv may be used to import assigned and unassigned inventory items from RSA Authentic ation
+Manager 7.1/8.2 and Vasco IDENTIKEY Server target systems.
+Usage
+manageinv [-nooverwrite] -add -id <itemID> -type <type> -
+location <location> [-user <userID>] [-notes "<notes>"] [-
+target <target>] [-state <state>] [-desc "<description>"]
+manageinv -rm -id <itemID> -type <type>
+manageinv -rm [-type <type>] | [-location <location>] | [-
+user <userID>] | [-target <target ID>]
+manageinv -add|-rm [<arguments>] -f <filename>
+manageinv -add|-rm -target <target> -type <type> -
+location <location> [-state <state>] -listfile <filename>
+Commands are de fined  using the following arguments:Argument Description
+-add Adds inventory items to the database, or updates e xisting
+entries.
+-rm Removes inventory items from the database.
+-nooverwrite Checks if the item being added to the inventory already
+exists or not. If the item already exists then the record is
+not updated.
+-id <ItemID> The item ID in Bravura Identity .
+-type <type> The type as de fined  in Bravura Identity . The <type> must
+be entered in uppercase; for example, -type TOKEN.
+-loc <loc ation> The loc ation  as de fined  in Bravura Identity .
+-user <userID> The ID of the user assigned to the item.
+-notes <notes> In f ormation  to be read by Bravura Identity  users. Must be
+enclosed in double quotes.
+-desc <description> Optional  description  of the item.
+-state <state> The state of the item (see list of available states below).
+-target <target ID> Bravura Security Fabric  target system the item belongs
+to. The <target ID> must be entered in upper case; for
+example, -target RSAAM.
+-f <t e xtfile> Uses a file listing  inventory items to be acted upon. See
+Adding multiple  items.
+-listfile  <t e xtfile> Uses a list file from an inventory type target system for
+items assigned to users or from a listing  file generated by
+listunassigned for unassigned items. See Adding multiple
+items.
+Adding a single item
+To add a single item, the item’s ID, type, and loc ation  are required. For example:
+manageinv -add -id 0000000111 -type TOKEN -loc NY
+Optional  arguments include:
+   [-state <state> | -desc <description> | -notes ‘‘<notes>'' | -user
+   <user> |  -target <target>]
+Adding multiple  items
+To add multiple  items, either the -f or -listfile  options  may be specified.   Specifying the -f option:    When
+using -f, only this option  is required. For example:
+manageinv -add -f items.txt
+The text file must be in the format:   itemid type location state description notes user target
+Where <state> can be any of:
+▪N - Available▪
+▪V - In stock▪
+▪R - Reserved▪
+▪U - Undelivered▪
+▪A - Assigned▪
+▪O - Outstanding▪
+▪P - Approved purchase▪
+▪o - Ordered▪
+▪D - Permanently damaged▪
+▪L - Lost/Stolen▪
+▪r - In repair▪
+▪d - Disposed▪
+▪T - In transit to user▪
+▪C - Received by user▪
+Use "" for any blank fields.  For example, the following text file row adds an unassigned item:
+00000000111 TOKEN CALGARY A "rsa token" "Notes for Calgary token" "" TOKEN1
+If you specify any of the values for -type, -loc ation,  -user, -notes, or -target, those values can be skipped
+in the text file. For example, if you use the options:
+-add  -type TOKEN  -notes "" -f items.txt
+then the text file would be in the format:
+itemid location user target
+Specifying the -listfile  option:   
+When using the -listfile  option,  the -target, -type, and -loc options  are also required.
+The -listfile  option  uses the <target>.db listing  file from an inventory type target system to add items that
+are assigned to users (such as for RSA Authentic ation  Manager 7.1/8.2 or for Vasco IDENTIKEY Server).
+For example:
+After  setting  up an RSA Authentic ation  Manager 7.1/8.2 target system, run auto discovery. Use the
+r esulting  list file to populate the Inventory items list with the assigned tokens:
+manageinv -add -target RSAAM -type TOKEN -loc NY -state A -
+listfile ..\psconfig\RSAAM.db
+The listing  file for unassigned items may also be used to add items from a listing  file generated by
+listunassigned  (on page 3611).

@@ -1,0 +1,54 @@
+Bravura Security Fabric  has issued the request and is w aiting  on approval from CELESH.
+7.Wait 10 seconds.7.
+8.View request details and authorizers.8.
+After  every 10 seconds the request will show CELESH’s authoriz ation  delegated further and further up
+the management chain in the order: LESLIP , CORDEH, HANKB, and BRYANW.
+Even after  the request authoriz ation  is escalated up several levels of management, any one of the
+original authorizers or new authoriz ation  escalates can approve the request. In this case, CELESH,
+LESLIP , CORDEH, HANKB, and BRYANW all have the ability to approve/deny the request.9.Open the Mail folder in the <Program Files path>\Bravura Security\Bravura Security Fabric\Logs9.
+\<instance> directory.
+You should see e-mail messages sent to BILLIG and CELESH when the request was issued labeled with
+"Request submitted ..." and " Please approve ...", r espectiv ely .  Additional  messages are
+shown to have been sent in order to LESLIP , CORDEH, HANKB, and BRYANW with the subject line of
+"Escalation ..." when the request was escalated every ten seconds after .
+Act as a delegate
+Open a new tab and as CORDEH, approve the request on behalf of the group’s manager:
+1.Log in to the Front-end (PSF) as CORDEH  with password North*1 . 1.
+2.Click the link: There are 1 request(s) a w aiting  your approval  as a delegate. 2.
+3.Select the request.3.4.Click Approve . 4.
+Con firm  the action  by clicking Approve again.
+5.Return to the browser tab where BILLIG is logged in.5.
+6.Click Refresh  
+ to view the request details. 6.
+You can now see that the request has been approved and processed.Update esc alation  timeout
+Now that you have seen how esc alation  works, the esc alation  timeout  will be adjusted to a more r ealistic
+value of 1 hour.
+1.Log in to the Front-end (PSF) as superuser .. 1.
+2.Click Manage the system > W orkflo w  > Options  > Esc alation . 2.
+3.Change the ESCALATION TIMEOUT  to 3600 . 3.
+4.Click Update . 4.
+Example: Delegate a single request
+The Scenario.im_c orp_deleg a t e_filt er_or g chart  component provides functionality  which filt er s  the list of
+available users who may be delegated authoriz ation  authority based on their level in the OrgChart.
+This implements an OrgChart-based filt ering  of pot ential  delegates. When installed, it allows a primary to
+delegate only to someone on the same level (same manager) or higher on the OrgChart.
+This example assumes that:
+▪Bravura Workforce P attern  and Connector Pack are installed. ▪
+▪There is an Activ e  Directory target system set up as a source of pr ofiles. ▪
+▪The Activ e  Directory target is c on figur ed  to create the OrgChart based on the manager attribut e. ▪
+▪User Adam is the manager of the IT-DB-READWRITE group.▪
+▪The OrgChart looks something like the following:▪Delegate a single request
+Login as Debbie to request to join the IT-DB-READWRITE group.
+1.Log in to Bravura Security Fabric  as Debbie. 1.
+2.Click View and update pr ofile  in the My pr ofile  section. 2.
+3.Click Change group membership  near the bottom  of the page. 3.
+4.Search for and check the box for the IT-DB-READWRITE group.4.
+5.Click Submit . 5.
+Adam is the authorizer. Login as Adam, then check the request and search for a possible delegate. You
+will find all the users in the or g aniz ation  are listed.
+1.Log in to Bravura Security Fabric  as Adam. 1.
+2.Click the There are 1 request(s) a w aiting  your approval  link or click Requests  in the Requests  section. 2.
+The Requests app opens.3.Click the request and click Delegate . 3.
+4.Search for the Delegate . Note the search finds  all the users in the or g aniz ation. 4.
+Install the Scenario.im_c orp_deleg a t e_filt er_or g chart  component
+To install the component:

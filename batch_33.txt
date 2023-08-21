@@ -1,0 +1,305 @@
+To filt er  the list, type any part of the component name or description;  for example, type: wizard  to list
+only components whose names include the string wizard .
+The status markers have the following meaning:
+A Available
+M Manual install
+D Dependency install
+M* or D* Disabled
+Installing from the command line
+Unlike using the web interface, using the manage_components.py  script from the command line
+allows you to install data components, such as a component that contain data for a pr ofile  attribut e.
+To install a component from the command line:
+1.Launch a command prompt as an Administrator and navigate to the script directory, as described in1.
+Setting  up the component management command-line program  (on page 319).
+2.List components as described in Listing  from the command line  (on page 320). 2.
+You can shorten the list by typing part of the component name to search for.
+3.Type the number of the component you want to install.3.
+4.Type:  4.
+install The component management program installs the component along with its dependencies. You
+should see its status change to an M on the listing  page.
+Alt ernativ ely ,  if you know the name of the component, you can type the command:  
+manage_components.py install <component_name> 
+Removing from the command line
+Components can only be removed if they have the removable flag in their manifest.xml  file set
+to ”true”.
+To remove a component from the command line:
+1.Launch a command prompt as an Administrator and navigate to the script directory, as described in1.
+Setting  up the component management command-line program  (on page 319).
+2.List components as described in Listing  from the command line  (on page 320). 2.
+3.Type the number of the component you want to remove.3.
+4.Type:  4.
+remove 
+Alt ernativ ely ,  if you know the name of the component, you can type the command:  
+manage_components.py remove <component_name> 
+Only the specified  component will be removed. You must remove each of its dependencies individually.
+Components that were installed as a result of being a dependency will have a status of D.
+Enabling or disabling from the command line
+Disabling a component prevents any scripts associated with that from e x ecuting.  If you are unable to
+remove a component it is recommended that you disable the component instead.
+Take care when disabling dependency components; other installed components may also rely on them.
+To enable or disable a component from the command line:
+1.Launch a command prompt as an Administrator and navigate to the script directory, as described in1.
+Setting  up the component management command-line program  (on page 319).
+2.List components as described in Listing  from the command line  (on page 320). 2.
+3.Type the number of the component you want to enable or disable.3.
+To enable a component type:  
+enable 
+or
+To disable a component type:  
+disable Working on multiple  components at the same time
+The install, remove, enable, disable options  can take a list of components; for example: 
+manage_components.py install <component_name_1> ... <component_name_n> 
+The above command attemp ts  to perform the install action  on all components listed in the command. If
+an action  fails, manage_components outputs an error message but c ontinues  to the next item.
+Additional  in f ormation
+One advantage of using the manage_component.py  program to manage components is that it
+allows us to install Data components; for instance, a pr ofile  attribut e:
+manage_components.py install Data.hid_attribute_personal_email
+When working with custom components, it is often  required to refresh the component database; for
+instance, after  cr eating  a new component:
+manage_components.py load
+If any installed components contain a UI element, you can use the --patch  parameter with
+manage_components.py  to reload the component database and rebuild the skins at the same time.
+manage_components.py load --patch
+Replicated instances and component ins t allation
+Component install does not replicate in a multi-node  instance. In such cases, where a component has to
+install something on the server outside the product instance directory (for example, a service or a python
+module), it is recommended to complete the following steps:
+1.On the Primary node, disable the Task Scheduler> Library> HID External database replicator task. 1.
+2.Run manage_components.py  on every node and ensure it was successful. 2.
+3.Enable the task disabled in step 1 above.3.
+T r oubleshooting
+ "manage_components.py list all" command isn’t working 
+1.If the command is c ontinuously  returning the help message and not e x ecuting  the ”list all” option 1.
+then try running the command preceded by ”python”:  
+python manage_components.py list all 
+2.If the command prompt is not returning any component list try loading the components fir s t with the 2.
+command:  
+manage_components.py load 
+ RuntimeErr or:  Attemp t ed  to load a 64bit idmlib.dll 
+When you are listing  or installing components you may run into this error:RuntimeErr or:  Attemp t ed  to load a 64bit idmlib.dll using a 32bit python interpreter. Try again using a
+64bit python interpreter.
+This occurs if you installed Python 3 earlier in order to install Bravura Security Fabric  on your server
+(Earlier versions of Bravura Security Fabric  downloaded and installed the 32-bit version of Python by
+default). To fix this, visit http s://w w w .p y thon.or g /do wnloads/  and find the 64-bit version of the latest
+Python 3 release. Once you download and install it, replacing your 32-bit Python files,  try running the
+component commands again.
+Install oper ation  failure
+Sometimes,  during component install, if something causes the install script to fail, the framework
+aut omation  may still report success and mark the component as "installed" even though it or some of its
+dependencies were not actually successful.
+If the "install" oper ation  fails or there are Traceback entries in idmsuite.log  from
+manage_components  or component __init__.py  scripts:
+1.Edit the instance's db\components.db with a sqlite3 client like SqliteStudio . 1.
+2.Search the Data of the components table for the name of the failed component(s).2.
+3.If they are marked "installed"='1', flip that flag to 0 (zero) and save the database. 3.
+4.Close the sqlite3 editor.4.
+5.Solve the erroneous situation  that failed a script (data, environment c on fig ,  permissions, etc). 5.
+6.Run the install oper ation  again on the failed component. 6.
+7.Search for Traceback errors in idmsuite.log  or another in t egr ation  failure. 7.
+8.Test component functionality  in the product or in t egr ation. 8.
+Workaround for dealing with UTF-8 BOM encoding
+Issue:
+When a file is opened in Python it may either contain invisible characters (reading as text), have a bad/
+unexpected name for the fir s t column (reading as CSV), or fail to parse (reading as JSON).
+Solution:
+It is likely that the file you are reading was encoded as a variant of UTF-8 that Python refers to as UTF-8-
+SIG but is also known as UTF-8-BOM or UTF-8 with BOM. This causes the file to have a leading set of non-
+printing  characters (the Byte Order Mark or BOM), and Python’s default utf-8  encoding will not strip out
+these leading characters. It is possible to have these files read correctly in Python by setting  the encoding
+to utf-8-sig  when opening the file handle in Python, but it is recommended that you instead fix the file
+encoding. The UTF-8 BOM is a Windows only feature that Micr osoft  themselves are slowly depr ec ating.  If
+you have files encoded in UTF-8-BOM they likely came from an older version of Windows, commonly
+created with either Windows Notepad or Powershell.
+Windows Notepad prior to Windows 10 1903 (and up to windows server 2016), Notepad defaults to ANSI
+encoding and only has a single UTF-8 encoding, which emits a BOM. In Windows 10 1903+ (andequivalent Windows Server versions), Windows Notepad now defaults to UTF-8 encoding and
+distinguishes  between UTF-8 and UTF-8 with BOM, using Save As you can change the encoding to UTF-8
+to strip out the BOM if a file was previously encoded using UTF-8 with BOM.
+Powershell below version 6 will always emit UTF-8 encoded text output with a BOM. In Powershell 6+
+direct text output should have no BOM aut omatic ally ,  but for other output it’s not so simple, details (and
+pot ential  workarounds for Powershell 5.1+) here .
+If you are still on an older windows version, almost any third party text editor should be able to re-save
+the file without the BOM, but you may need to manually change the encoding.
+Exporting  component c on figur ation  and data
+You can migrate component c on figur ation  and data using the following methods:
+▪Replacing an instance’s c on figur ation  using environment files ▪
+▪ Migr ating  using export_data_components.py ▪
+See Migr ating  component c on figur ation  and data  in the Upgrade and Migration  Guide  for details.Environment Files
+It is Bravura Security's recommended best pr actice  to have three environments set up when deploying
+Bravura Security Fabric : development , QA/UAT/Test  and production  . These environments
+often  require diff er en t  values for many components, such as a specific  targets, addresses, security
+groups, userclass-criteria...etc. Instead of altering data components so they have diff er en t  values in each
+of these environments, the product components framework provides the ability to de fine  environment
+files that contain the en vir onmen t -specific  c on figur ation  in f ormation  for components. These
+environment .json  files are stored within the <instance>\environments directory and are applied to the
+product instance using the command prompt prior to a relevant component ins t allation.
+As an example, target addresses and external database entries are en vir onmen t -specific  c on figur ations
+that can be de fined  within environment files and applied during component ins t allations.  For a
+development environment, this would input the target addresses used in development directly into the
+product during component ins t allation  and add external database c on figur ation  entries to relevant policy
+tables.
+Business requirement and solution
+During an implemen t ation,  components are created or modified  to contain all of the c on figur ation
+in f ormation  for the product. This greatly speeds up the ins t allation  and c on figur ation  processes needed
+during an implemen t ation.  It also ensures c on figur ations  are not missed between development, QA, test
+and pr oduction  environments.
+For example, a target system will have an address that is diff er en t  in the development environment
+compared to the one in pr oduction,  even if they are essentially  r epr esenting  the same exact in t egr ation.
+Without environment files,  we would need to create separate data components for the same target in
+each environment, to account for these c on figur ation  discrepancies. This would make component sets
+challenging to keep track of and any common c on figur ation  changes made in one environment’s
+component set would then need to be propagated to all other environment component sets. Tracking
+c on figur ation  changes that need to be applied to individual or all environment component sets becomes
+difficult  to manage and would involve complicated change control procedures.
+Environment files provide a solution  to install components with the environment specific  c on figur ation
+values (like target addresses, user class group membership criteria, extdb values, and so on). The specific
+c on figur ation  values applied depend on the environment file (development, QA, test, UAT, pr oduction)
+selected through the manage_components.py  command before installing the components.
+When to make an environment file
+When an implementor determines that c on figur ation  settings  need to be specified  during product
+ins t allation,  they fir s t determine if a component containing those c on figur ation  settings  exists within the
+<instance>/component/Default  components. As a general rule, if a component does not exist,
+it is exported as a data component and used in the <instance>/component/Custom/  directory. If
+the component does exist in /Default/  components, it can be o v er written  in the environment file(s)
+or via cr eating  a "Custom" version of the "Default" component.For /Default/Functional/  components, use the following guidelines to determine whether to
+customize the component or use an environment file::
+▪only Data changes are required (.json or .csv), they go in an environment file. ▪
+▪changes to (py, ps) code are needed, they are made in the /Custom/  component. ▪
+▪data changes exist, but they are NOT en vir onmen t -specific,  they are made in the /Custom/ ▪
+component.
+It is possible to create the entir e  instance c on figur ation  directly in an environment file, however, for
+readability and cen tr aliz ation  purposes, environment files use templates for component overrides,
+variables, and other tricks. This allows implementors to change some data, structure or values in one
+place, and have them apply elsewhere.
+Making an environment file
+To create a new environment file:
+1.Navigate to the <instance>\environments  folder. If the environments  folder does not 1.
+exist, create it.
+2.Once in the folder, create a new .json  file with the name of the company the environment file is 2.
+being created for followed by the name of the environment the file will be used in.
+In other words, the syntax of the environment file name will be <company>-
+<environment>.json . For example, an environment file is being created for ABC company for
+their development environment. The environment file is then called abc-dev.json . This naming
+scheme is recommended as a way to keep track of which environment file is intended for a particular
+environment and/or company.
+A good s t arting  point for adding content to the new, currently empty, abc-dev.json  environment file
+is to reference the default.json  sample file from the <instance>\component\Default
+\Scenario\hid_env_default  directory and copy/paste needed portions  from that sample into
+your abc-dev.json  environment file. If you decide to use the full contents of the default.json
+sample as your new environment file, it is advised that you make a copy of the default.json  sample
+and rename it to the desired environment name. That way, the original default.json  sample
+remains for future reference.
+Overriding c on figur ation
+Bravura Security Fabric  default ins t allation  c on figur ation  captured in components is overridden by
+declaring entries in the environment’s .json  file.
+The base of writing  an environment file should be a dictionar y  with three keys: Scenario, Functional,  and
+Data, so the fir s t thing added to an empty environment file is:
+{
+"Scenario": {},
+"Functional": {},
+"Data": {}}
+This structure de fines  three keys with empty dictionaries  that correspond to the three types of product
+components.
+Keys not being used can be omitted,  but all components can be categorized into these three keys and so it
+is recommended to leave them in the file in the event future c onfigurations  are added.
+From here, the component to be overridden needs to be determined, and the ConfigData  entries for
+that component de fined.
+Finding c on fig da t a  component files
+For this discussion the Data.hid_target_ad component is used as the desired component to override. The
+Data.hid_target_ad component is responsible for installing the default Activ e  Directory target with most
+reference build component ins t allations.
+From the component fully qualified  name (fqname for short) of Data.hid_target_ad, it is deduced that
+this override should go under the Data key. So, adding the component name (without the type) to the
+Data dictionar y ,  gives the environment file entry:
+{
+"Scenario": {},
+"Functional": {},
+"Data": {
+"hid_target_ad": {
+}
+}
+}
+Now the name of the file that the configdata  entries exist in for this component needs to be
+determined. To do so, navigate to the directory of the component in question  and open the
+manifest.xml  file. In the manifest file there is a specific ation  for configdata  that includes a
+filename.  The name of the file in that section  of the manifest file is what you are looking for.
+For the Data.hid_target_ad  component:
+1.Open the \<instance>\component\default\Data\  directory. 1.
+2.Search through the list of Data components and locate the hid_target_ad  component folder. 2.
+3.Inspect the manifest.xml  file within the \<instance>\component\Default\Data 3.
+\hid_target_ad  directory.
+4.Its contents contain lines similar to:4.
+<component>
+<description>
+Provides the Active Directory target system configuration
+</description>
+...<configdata
+component="Functional.hid_configuration.json_loader.ConfigHook">
+<filename>ad.json</filename>
+<priority>50</priority>
+</configdata>
+</component>
+It becomes clear that the ad.json  file is the one containing configdata  entries due to its placement
+in the configdata  portion  of the manifest.
+Since only the filename  is needed, you may wonder why it's necessary to look in the manifest file. This is
+because had the ad.json  file been nested in a directory, the type of slash (\ or /) indicated in the
+manifest file matter s  to the environment file script.
+Meaning:
+<filename>files/ad.json</filename>
+is not the same as:
+<filename>files\ad.json</filename>
+When writing  the environment file override, the same type of slash needs to be specified  in the
+environment file as in the manifest file.
+Now that the name of the file is known, adding it to the environment file looks like:
+{
+"Scenario": {},
+"Functional": {},
+"Data": {
+"hid_target_ad": {
+"ad.json": {}
+}
+}
+}
+Past this point, the override syntax in the environment file depends on the type of c on figur ation  being
+overridden. Types of overrides include c on figur ation  object (IDMCon fig)  and policy table (ExtDB)
+overrides.
+IDMCon fig  override
+IDMCon fig  handles all c on figur ation  you would do inside of the product, from things like Account
+Attribut e  De finitions,  to Target addresses, and System Variables, IDMCon fig  handles reading the data
+from a .json  file and loading it into the product so it can be leveraged.
+To override IDMCon fig  data, the replacement in the environment file is written  in a similar way to the
+structure in the .json  component file. Building on the Data.hid_target_ad  example from before,the ag enttime  field  of our target c on figur ation  is accessed by looking through the ad.json  file and
+loc ating  the "ag enttime"  row of the file.
+Opening the ad.json  file shows top lines:
+"Fields": {
+"address": "{server=demo.local;listNestedGrps=true}",
+"adminclaimhide": true,
+"adminresethide": false,
+"adminunlockhide": false,
+"agenttime": 300,
+...
+}
+Adding the ag enttime  field  override to the environment file so that the ag enttime  target
+c on figur ation  option  is overridden to 600  uses the syntax:
+{
+"Scenario": {},
+"Functional": {},
+"Data": {
+"hid_target_ad": {
+"ad.json": {
+"Fields": {
+"agenttime": 600
+}
+}
+}
+}
+}
+External data store override
+The other common type of c on figur ation  to override is data provided from components to External Data
+Store tables (ExtDB). These are overridden similarly to the IDMCon fig  data shown before, but with a few
+slight diff er ences  that allow the writer to override specific  rows and columns in the csv c on figur ation  data
+that may be included with a particular  component.
+For this discussion, the steps necessary to override the value for the association_attr s  c on figur ation
+setting  in the hid_global_configuration  ExtDB policy table are detailed. The default value of
+association_attr s  is employeeNumber  and will be overridden in an environment file to be mail
+instead.

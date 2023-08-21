@@ -1,0 +1,347 @@
+▪Added a new language tag "__MULTI_RECIPIENTS__" which displays text for multi-r ecipien t  requests. ▪
+▪Added entitlemen t  attribut e  support in the managed group wizard page. ▪
+▪You can now add functioning  mailto links that open an email app by modifying the UI in m4 and KVG ▪
+files.
+▪Added placeholder text Comments... to request action  fields. ▪
+▪The attribut e  v alidation  plugin can now display a warning or info message to be shown to the ▪
+requester when submitting  a request, and to the authorizer when approving the request.
+▪Added the ability to add external links to the main menu. Custom links open in a new tab.▪
+▪The target attribut e  in HTML links can be used to open external links in either a new tab or the same ▪
+tab.
+▪A ’Development mode’ tag is added on the screen when skins are built in debug mode.▪
+▪Updated skins to use Angular 8.2.14.▪
+▪Added support for Node.js 12.14.1 to build skins.▪
+▪ Additional  advanced search criteria "Current members" and "Pending members" have been added to ▪
+the Groups app wizard.
+▪The phrase "Delete group memberships" is renamed to "Leave groups" in the Groups app.▪
+▪The phrase "Add group memberships" is renamed to "Join groups" in the Groups app.▪
+▪An "expand"/"collapse" icon was added in the Required entitlemen ts  column on the role selection ▪
+page to allow users to expand the list of entitlemen ts  of each role.
+Usability
+▪Help desk users now can only detach source of pr ofile  accounts if that target system has the ▪
+permission set for help desk users to attach  accounts.
+▪Added ability to aut omatic ally  populate password fields  with a chosen suggested password. ▪
+▪ Modified  links to ensure that they are now self evident as to their purpose from the link text or an ▪
+associated mechanism.
+▪Improved labeling and screen reader accessibility in multiple  areas and inputs such as text and drop- ▪
+down boxes.
+▪Added a feature to allow wizard dialog to be resized and maximized.▪
+API
+REST API
+▪Added a component, Functional.hid_r es t_api,  to provide REST API functions. ▪
+▪ Optional  basic authentic ation  has been added to the REST API login process. ▪
+SOAP API
+▪Added the new API functions  deleg ationLis t  and deleg ationCancel  to clean up deleg ations  (too many ▪
+deleg ations,  delagatees had left or g aniz ation,  etc).▪Added a new API CertStartSingleUserRoundForGroups to create a cert campaign to review the group▪
+memberships for a specific  user. The review method is by resource authorizer, which in this case will
+be the group owner. If there are more than one owner,the reviewer is chosen randomly from the set
+of owners, then the other owners will be made delegates to the selected owner.
+▪Added schema-id to the output of API call InstanceStatus.▪
+▪Updated R esB yAttrSear ch()  sproc so that the API call R esour ceFindB yAttr  can support da t e/time ▪
+comparisons.
+▪Added functionality  to request checkout extension through the WFRequest API functions. ▪
+▪Added API function  RetrieveCheckoutPassword to retrieve a managed account password currently ▪
+checked out as an API user who is also the recipient of the request.
+▪Added API function  GetRequestCheckoutID to get the checkout ID of a request as an API user who is ▪
+also the recipient of the request.
+▪Added an API function  to trigger a certific ation  campaign for any type of certific ation  method. ▪
+▪Updated function  discoveryWait to take a timeout  parameter and show more iddiscover job status. ▪
+▪The WFRequestCreate IDAPI function  can now accept an optional  topics input. ▪
+▪Added a new User Description  attribut e  to the WFRequestCreate IDAPI function. ▪
+▪Added v alidation  for target type entitlemen t  attribut es  in idapi calls. ▪
+API account
+▪Local API callers must now provide a valid password when authentic ating  to an _API_USER account ▪
+that only allows local c onnections.  API calls from shared memory are still able to connect without a
+password, however.
+▪Removed the IDAPI registry c on figur ation  key DisallowLocal, as this behavior is now enabled by ▪
+default.
+API logging
+▪Added request verb (POST, GET, etc) to PerfAjax log message.▪
+API plugin
+▪Added plugin point API_ADMIN_PLUGIN that filt er s  API function  calls made by API users. ▪
+▪Added ability to set the number of hours between password r andomiz ations  for OTP users. ▪
+▪Hid option  to de fine  network addresses for remote API access for product administrators unless the ▪
+user is an IDAPI caller.
+See "Bravura Security Fabric Remote API" ( api.pdf ) for more in f ormation  about API features.
+Accessibility
+▪Alt attribut es  have been added to in f ormation  bubbles in system logs, user pr ofile  pictures in ▪
+certific ation,  and the company logo in Activ eX  installer pop-ups, altering screen reader output for
+each.▪Labels allowing for screen reader functionality  have been added to bread crumbs, main menu link ▪
+containers, and datatable show/hide buttons.
+▪The main menu link containers should no longer read out extraneous in f ormation  such as the number ▪
+of children within a container.
+▪The individual column buttons  under the show/hide button’ s  drop-down menu can now be toggled ▪
+and can also be activ a t ed  with the [space bar] and [Enter] keys.
+▪Changed the footer text color from white to black.▪
+Authentic ation
+Authentic ation  chains
+▪Added a feature that allow the HTTPAUTH authentic ation  chain to be used as an authentic ation  chain ▪
+for SAML.
+▪Updated the "Authentic ation  Chain Selector" module, allowing it to select the built-in authentic ation ▪
+chains as valid options.
+▪Fixed the issue when authentic ation  chain plugins were not able to set arbitrary parameters on ▪
+output.
+▪Updated the AuthChainEvaluate plugin object to identif y  both accounts involved when a help desk ▪
+user authentic a t es  another end user through the Help Users page.
+Password policy
+▪Updated the password rule to allow customized dictionar y  words in a custom file dictionar y ▪
+\cus t om.da t.
+▪Change to allow setting  MIN DICTWORD LENGTH to one character - dictionar y  words can now be two ▪
+letter s  in length.
+Security questions
+▪Added detailed feedback for end users while t esting  security questions. ▪
+▪Changed user’s security questions  from plain text to hidden when a help desk manager views the ▪
+questions.
+Auto discovery
+▪Added new discovered system object ’compNotConnectedIntervals’ that gets incremented by one for▪
+every 10 days the discovered system fails to be contacted.
+▪Added c on figur able  guards to listing ,  which are off by default. Server administrators can c on figur e  by ▪
+cr eating  and setting  the appropriate lis thr esholdr elativ echang e_*  and/or listthr esholdma x objects_*.
+▪New list_reset_threshold parameter added to psupdate utility  to disable r elativ e  change max for one ▪
+run.
+▪Removed "Maximum change in discovered computer count" which has been related by r elativ e ▪
+change maximum.
+▪Added DiscoveryTemplate and Disc o v er yT empla t eCr edential  IDMCon fig  types. ▪▪All of the discovered data added into a new SQLite db file instead of the old list files (target.db) in the ▪
+\<instance > \p sc on fig\  folder.
+▪Added a computer attribut e  compNotConnectedPastThreshold for push mode discovered systems. ▪
+Added a system variable, PUSH COMP NOT CONNECTED THRESHOLD VALUE , for setting  the threshold
+value for the number of days since the last successful c onnection  (default is 30 days).
+▪Added the ability to aut omatic ally  clean up local service mode systems that were never managed and ▪
+have not polled in a long time  (default is one year). This can be modified  using the PSW CLEAN NEVER
+MANAGED LWS DELAY system variable.
+▪Added the following triggeringEvents to auto-discovery global mail plugin (wfemail) KVGroup input:▪
+▪EVENT_LICENSE_ERROR (Use expired license)▪
+▪EVENT_INSUFFICIENT_DISK_SPACE (Copy files until  there is no disk space) ▪
+▪EVENT_PSUPDATE_ERROR (Expired license or no disk space)▪
+▪EVENT_INVALIDATED_MANAGED_GROUPS (When not enough disk space for list file) ▪
+▪EVENT_RESTORED_MANAGED_GROUPS (normal psupdate after ▪
+INVALIDATED_MANAGED_GROUPS event)
+▪EVENT_AUTO_DISCOVERY_ERROR (hrapp target not c on figur ed) ▪
+▪The psupdate program now supports the de t ection  of objects of type member and owner from a ▪
+diff er en t  AD target system, which appear as member or owner in an AD target system on which auto
+discovery is run. These objects, which are called unknown member or owner, can be removed by API
+requests.
+▪Added a page for viewing and searching all discovered subscriber objects. This new page can be found▪
+in Manage the system → Resources → Discovered objects → Subscribers.
+▪Improved general usability of import rules, to make them easier to enable/disable, view c onditions  on ▪
+the main page, and added option  to force re-evaluate and apply all enabled import rules on next auto
+discovery.
+▪The AUTORES scheduled task is disabled and added autores.exe e x ecution  at the end of PSUPDATE ▪
+process.
+Bravura Privilege
+Team management
+▪Added a help desk trustee user class. Members of help desk can submit account, system, vault, vault▪
+account onboar d/ offboar d/upda t e  PDRs, as well as team update/manage group membership and OTP
+API user create.
+▪Added ability to clean up users from team management if it has been deleted from the source of▪
+pr ofile  target.
+▪An email is now sent to the team administrator if a team is orphaned as a result of a missing team▪
+trustee.
+▪Added team management data export/import support to migratedata . ▪Health check
+▪Added health check component that reports the number of password c on flicts. ▪
+Access disclosure
+▪Added the ability for users to select a domain member computer to connect to when disclosing▪
+domain account passwords using the Remote Desktop / RemoteApp access disclosure plugins.
+▪Added disclosure attribut e  ’f ormatted  title’  for the Browser Driver access disclosure plugin that ▪
+manipulates the browser window title string to use a certain format.
+▪An end user using the RDP disclosure can unlock a session by selecting  [shift]+[righ t  click] on the RDP ▪
+icon on the taskbar and selecting  the reconnect option.
+▪Added ability to prevent Browser Driver access disclosure plugin from aut omatic ally  submitting  the ▪
+form.
+▪Added a "f ormatted  username" disclosure attribut e  for the Browser driver access disclosure plugin. ▪
+▪Added ability to install Guacamole using a Docker image.▪
+▪Added Guacamole access disclosure plugin for RemoteApp.▪
+▪Upgraded Guacamole to version 1.1.0.▪
+▪Removed Guacamole support for CentOS 6.7.▪
+▪Added ability to display user interface controls to the browser window for Browser Driver control▪
+(pswxdom) access disclosure plugin.
+▪Added "Notes" column to Command e x ecution  results page. ▪
+▪End users can now save and use shared commands.▪
+Session monitoring
+▪Added a button  to view request details for Session Monitor package download requests in the Actions ▪
+panel of the Session Monitor app.
+▪Added "Viewable" filt er  to the Session monitor app under SESSIONS to list all sessions user has view ▪
+access to.
+▪Removed managed system policy ID requirement when r equesting  to search for sessions. ▪
+▪Added ability to view and interact with "as-live" video of activ e  in-browser sessions in the Session ▪
+Monitor app. (20 second delay)
+▪Added system variables SMON KEYSTROKE SPLIT ENTER, SMON KEYSTROKE SPLIT ESC, SMON▪
+KEYSTROKE SPLIT TAB, SMON KEYSTROKE SPLIT LMB that when enabled, will generate a new keystroke
+event when the Enter key, Esc key, Tab key or left mouse button  is pressed.
+▪The pswxdom disclosure plugin is now able to match HTML elements based on class name.▪
+▪The pswxdom disclosure plugin now fir es  the onkeyup Javascript event when entering text into fields. ▪
+▪Added a new info-level log message triggered during privileged access disclosure to report that▪
+RES_NOTIFY_IMMINENT_CHECKIN_INTERVAL was unde fined,  and the default value will be used.Local w ork s t ation  service
+▪Added RES CONFIG UPDATE INTERVAL system variable to allow the ability to control how often  local ▪
+w ork s t ation  clients request c on figur ation  updates from the server.
+▪Added support for identif ying  unmanaged local service mode systems that have not been discovered ▪
+in a long time.
+▪Added support for c omputing  the compNotDiscoveredPastThreshold attribut e  for local service mode ▪
+systems. Added LWS COMP NOT DISCOVERED THRESHOLD system variable for modifying the threshold
+value.
+Managed systems
+▪Added SOURCE_TARGET parameter to the pam_system_type scenario components to specify the▪
+target from which a particular  computer comes from.
+▪Added two new PAM scenario components:▪
+▪ Scenario.pam_s y s t em_aut oma t ed_offboar d  and Scenario.pam_s y s t em_aut oma t ed_deletion, ▪
+which adds RMS rules that will aut omatic ally  offboar d  inaccessible accounts and systems after  30
+days, and aut omatic ally  delete offboar ded  systems after  370 days.
+Managed accounts
+▪Added the ability to archive accounts from a managed system’s accounts page.▪
+▪Enhanced the managed accounts page on vault systems to not show the Add new... button  unless the ▪
+adminis tr ativ e  user has the "Modify pr operties  for this policy" access control for the system’s policy.
+▪Added ability to aut omatic ally  populate password fields  when a suggested password is selected to ▪
+override a managed account.
+One-time  passwords
+▪Added system variable OTP MAXIMUM, that sets the maximum number of one-time  passwords issued ▪
+by API Service (idapi) that can be owned by a single user.
+P amutil
+▪Added ability to trigger r andomiz ation  and override through pamutil and runwithpass . ▪
+▪ Simplified  the c on figur ation  for pamutil so that library paths no longer need to be specified. ▪
+Privileged access app
+▪Added support for displaying alert and warning icons in the Privileged access app when the check-out▪
+age or time  remaining exceeds specific  threshold values.
+▪Added support for unapproving check-out extensions in the Privileged access app.▪
+▪Check-out in f ormation  available in managed system and managed account links now include check- ▪
+outs using SSH key authentic ation.
+▪Added more functionality  to Action  panel of PRIVILEGED ACCESS heading for checked out access. ▪▪Added ACCESS ACCOUNTSETS USERCLASS and ACCESS GROUPSETS USERCLASS options  to control who ▪
+has access to account set and group set options  in the Privileged access app, r espectiv ely .
+▪Added PSW RECENT ACCESS system variable for setting  the number of days to display recently ▪
+accessed accounts, account sets, and group sets in the Privileged access app.
+▪Added system variables, PAM ACTION CO RETRY INTERVAL and PAM ACTION CI RETRY INTERVAL, for▪
+determining how often  to aut omatic ally  retry failed generic access check-outs and check-ins.
+▪Users are now able to manually retry failed SSH key check-outs in the Privileged access app.▪
+Performance
+▪Discovered system attribut es  that store c onnection  details are now updated by iddiscover, to reduce ▪
+the frequency of replicated database oper ations.
+▪Added support for cookie-based session persistence to the Local W ork s t ation  Service, Session ▪
+Monitor, and P amUtil.
+Report to pr e-de fined  request
+▪ Pr e-de fined  requests submitted  from reports can now be used to offboar d  managed systems. ▪
+R eporting
+▪Enhanced the r eporting  of automated password resets to be more in f ormativ e. ▪
+Personal vaults
+▪Improved usability in the Personal vault app by adding a c on firmation  prompt to prevent accidentally ▪
+closing the pop-up when adding an account.
+Bravura Identity
+Certific ation
+▪Add saved search capability to the certific ation  setup. ▪
+▪The Continue  button  on the Submit tab is renamed Launch campaign. ▪
+▪On the Items to review tab, clicking Managed groups will expose the managed groups section  directly. ▪
+▪ Certific ation  segment in f ormation  is added to the input of the esc alation  plugin as below: ▪
+{
+segment "" = {
+segment = <%segment id%>;
+certround = <%certround id%>;
+description = <%segment description%>;
+startDate = <%startDate%>;
+endDate = <%endDate%>;certifier = <%user id%>;
+};
+▪A system variable CERT_REVOKE_CASCADING is added to control whether aut omatic  cascading of ▪
+revoke oper ations  will occur. It is enabled by default. If the system variable is set to disabled then
+aut omatic  cascading of revokes is disabled.
+▪Added a feature to aut o-certif y  items in a certific ation  campaign based on c alculating  a consistency ▪
+score and resource risk score.
+▪Made nosgroup shortid  accessible via macro RESOURCE_ID for segment description  and certific ation ▪
+emails when the review method is entitlemen t  authorizers.
+▪Added certific ation  app support for encrypted attribut es,  including pr ofile/r eques t  attribut es  and ▪
+resource attribut es.
+▪Any manager (included in the main OrgChart or not) can now be selected as the top manager for an▪
+OrgChart certific ation  campaign.
+▪In the certific ation  app interface, pressing [Enter] adds a new line in a text area. ▪
+▪Keyboard shortcuts can be used to act on highlighted items:▪
+▪c to certif y  items ▪
+▪r to revoke items▪
+▪d to delegate items▪
+▪n to go to the next selection ▪
+▪p to go to the previous selection ▪
+▪Added new views current and pending for wizard search pages.▪
+▪Added a system variable ORGCHART MODS FREEZE CERT SEGMENTS. Enable this option  if you want to ▪
+ensure that OrgChart modific ations,  such as transfers and new subordinates, do not cause changes to
+an ongoing certific ation  campaign process; for example, segments will not be reopened, and
+segments will not be added for new subordinate managers.
+This is disabled by default.
+▪In entitlemen t  certific ation  c on figur ation,  a resource type criteria was added to the advanced search ▪
+facility on the Resource attribut es  to display page.
+▪Delegatees are sorted by pr ofile  name in the certific ation  in vit ation  detail page. ▪
+▪The modified  attribut es  in certific ation  review page are highlighted with the bright yellow background. ▪
+▪The certific ation  app heading Child group membership has changed to Groups in groups, and Account ▪
+group membership has changed to Accounts in groups.
+▪Enhanced the ability to update the certific ation  notes in bulk. ▪
+▪ Certific ation  consistency c alculation  can be set at the campaign level. A search engine was added to ▪
+select the attribut e  group used for c alculation  during certific ation  initiation.  Added a system variable
+CERT CONSISTENCY CALCULATION to turn on/ off  consistency c alculation.  Renamed "CERT MATCHING
+*" system variables to "CERT CONSISTENCY *"
+▪In the process of s t arting  a certific ation  campaign, selected entitlemen ts  will keep being checked ▪
+when users go back to the entitlemen t  selection  page with the browser’s back button.
+▪CERT VALIDITY INTERVAL c on figur ation  can be overridden at certific ation  campaign initiation  time. ▪▪Added a new sysvar CERT REQUIRES COMMENT TO CERTIFY , which can be enabled to force reviewers▪
+to provide a comment when certif ying  an item.
+▪Added campaign level c on figur ation  for c alculating  entitlemen t  similarity across peers. ▪
+▪Resource type column is shown in Resource attribut es  to display tab fir s t,  followed by ID and ▪
+description.
+▪Password requirement can be overriden at the certific ation  campaign level. ▪
+▪Removed the built-in pr e-de fined  request Default r emediation  for adding a new user pr ofile  in ▪
+certific ation.  As a result, there is no New user button  in cert review by default.
+▪Added a new utility ,  certapitest, to start a certific ation  campaign by using a saved certific ation  setup. ▪
+▪New policy table has been added that will detect attribut e  changes and generate a pr ede fined  request ▪
+or a certific ation  round as a side e ff ect.
+Roles
+▪Implementers can be assigned to roles via the implementer plugins.▪
+▪Added role membership attribut es  to w orkflo w . ▪
+▪Role assignment entitlemen t  attribut es  can be displayed in the certific ation  app. ▪
+▪Added role membership attribut e  support in En tAttr s*  API calls. ▪
+▪Updated role assignment report to show role membership attribut es. ▪
+▪Entries in the en t attr v al  table are removed when r elationship s  no longer exist. ▪
+▪Added an experimental Roles app, which is disabled by default.▪
+Bravura Pass
+SAML
+▪The Bravura Security Fabric SAML IdP can now be c on figur ed  to sign either the entir e  SAML response, ▪
+or the just the SAML assertion  element.
+▪Added the Functional.hid_policy_auth entic ation_r esponse  component, which enables the use of ▪
+customized SAML responses through a policy table.
+Simplified  authentic ation  c on figur ation
+▪Added the STANDARD_TWO-PHASE_LOGIN_CHAIN authentic ation  chain, which controls the tr ansition ▪
+from user identific ation  to user authentic ation  that occurs during login.
+▪Added "Allow caching of this chain’s module results" setting  to all authentic ation  chains. Enabled for ▪
+most chains by default, this option  controls whether the authentic ation  chain’s results are cached
+after  c ompletion.
+▪Added a new unc onditional_jump  parameter to the chain select authentic ation  module that controls ▪
+whether the chain select module that controls whether to check that the selections  de fined  for this
+module are valid for the current user.
+▪Removed support for pr e-authoriz ation  plugins, which removes the SELF_PREAUTH_LIST and ▪
+SELF_PREAUTH_PLUGIN system variables. A new pre-upgrade check warns customers to translate
+these requirements to authentic ations  if either of these variables are set.▪Removed userident.cfg sample file, as this functionality  is now handled by the component framework. ▪
+Login Assistant / SKA
+▪Added the ability for Login Assistant  (on page 1587) to be able to specify an SSID and password for a ▪
+hidden wifi c onnection.
+▪Added a new property DDLU to the SKA Login Assistant to allow users the option  to display the ▪
+username of the last logged-in account on the main logon screen.
+▪Added w ork s t ation  lock down support to plugin cgilocalr. ▪
+Bravura IVR
+▪Bravura IVR now returns success instead of "no more items" when checking the user’s account status.▪
+▪Bravura IVR now supplies the authentic ating  user’s account status as a return parameter during login. ▪
+See the "Bravura IVR Con figur ation  Guide" for more in f ormation  on c on figuring  and using this feature.
+Notific ation
+▪Added "X-Hitachi-ID-triggerEvent" trigger event to the generic email header.▪
+▪Removed "Invalid managed groups have been restored" notific ation  email completely. ▪
+▪The "Invalid managed groups found" notific ation  email are now only sent if the event a ff ects  resource ▪
+groups or user classes when the iddiscover job runs.
+▪The following variables are added for batch notific ations: ▪
+%MGRID%
+The user ID of current user’s direct manager
+%MGRNAME%
+The full name of current user’s direct manager
+%MGREMAIL%
+The email of current user’s direct manager
+%EXPACCTHOST%
+The target system of the account that triggered this notific ation
+%EXPACCTLONGID%
+The name of the account that triggered this notific ation
+These new variables are also displayed in the list of available variables when writing  a batch
+notific ation.  They are not fully supported for use in anything outside of batch notific ations.
+▪Added support for mobile device enrollment in user notific ations. ▪
+Password reset
+▪Added a new Password Manager service event IDPM_GROUP_FIRST_TRY_DONE to execute when all▪
+password oper ations  in a request have been attemp t ed  once.
+▪Improved the product’s accessibility while using a screen reader to read notific ations  when they are ▪
+displayed.

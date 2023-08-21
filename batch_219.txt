@@ -1,0 +1,141 @@
+5.Click Submit . 5.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+6.Click the View request link at the top of the page to view the status of the request. 6.
+Once the request has been approved, the team will be deleted from Bravura Security Fabric .
+API aut omation  for team delete
+Once the API has been c on figur ed  (See ”SOAP API” in Bravura Security Fabric  Remote API ( api.pdf )), and
+your script has been authentic a t ed  to the API (Login or LoginEx API calls), the WF API calls can be used to
+create an API request to offboar d  an account.
+Use the WFPDRSubmit function  to create a w orkflo w  request and submit the request for publishing.
+When submitting  a request, use ”TEAM-DELETE” as the PDR ID. At a minimum, the request requires the
+following attribut es:
+attrk e y value
+TC The name of the team.
+TEAM-DELETE batch request sample
+TC 
+TEAM-000000Privilege P attern:  Self-service system management
+Users with the System Trustees privilege can use self-service requests to onboard, update, and offboar d
+systems managed by Bravura Privilege .
+System trustees have access to the following pr e-de fined  requests:
+▪System: Onboard  (on page 2183) ▪
+▪System: Update  (on page 2190) ▪
+▪System: Offboar d  (on page 2195) ▪
+Onboarding a system
+Users assigned as system trustees can use the System: Onboard request to onboard a system.
+1.From the home page, click Manage resources . 1.
+2.Click System: Onboard . 2.
+3.Select a System Type from the drop-down menu. 3.
+Valid system types depend on the scenario components installed, and can include:
+▪CentOS▪
+▪Windows Server▪
+▪Oracle▪
+▪MSSQL▪
+▪Vault System▪
+▪Red Hat Enterprise Linux▪
+▪SUSE Linux▪
+▪Solaris 10+ Server▪
+Vault systems are null targets that can be used to simulate a target system that cannot be targeted
+another way.Click Next .
+4.Enter system onboarding details. including the System Team ; the team that will be able to access the 4.
+system. Depending on the system type, other attribut es  may include:
+▪System FQDN The system’s fully qualified  domain name ▪
+▪System Team the team that will be able to access the system ▪
+▪System Instance ID (Oracle) ▪
+▪System Port Format: 1-65535 ▪
+▪Zone The proxy zone or network (Windows, optional);  for example Toronto DMZ ▪
+The values are pulled from the pam_zone_inventory table in the Manage external data store  (dbe)
+module.▪Use a Managed Account cr edential  for target cr edentials (Windows) ▪
+Click Next .
+5.Enter System onboarding cr edentials  as required. 5.
+For Windows systems, if Use a Managed Account cr edential  for target cr edentials  was selected, you
+must enter the account ID to use for target system cr edentials.6.Click Submit . 6.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+7.Click the View request link at the top of the page to view the status of the request. 7.
+Once the request has been approved, account trustees can manage accounts on this system. Systems are
+onboarded in real time;  there is no need to wait for auto discovery  to load the system into the database.API aut omation  for system onboard
+Once the API has been c on figur ed  (See Bravura Security Fabric  Remote API ( api.pdf )), and your script has
+been authentic a t ed  to the API (Login or LoginEx API calls), the WF API calls can be used to create an API
+request to onboard a system.
+Use the WFPDRSubmit function  to create a w orkflo w  request and submit the request for publishing.
+When submitting  a request, use ”ONBOARD_SYSTEM” as the PDR ID. The request uses the following
+attribut es:
+attrk e y value
+FQDN The fully qualified  domain name of the system to be
+onboarded.
+USE_MANAGED_CREDENTIAL T to use a managed cr edential,  F to use system
+cr edentials.
+ADMIN Administrator ID of the system. If
+USE_MANAGED_CREDENTIAL is set to T, the format of
+the managed account must be
+<managedsystemid> :<managedaccountguid> .
+ADMIN_PASS Administrator password of the system.
+SYSTEM_TYPE The system type:
+▪CENTOS for CentOS ▪
+▪WINNT For Windows Server ▪
+▪ORACLE for Oracle ▪
+▪MSSQL  for SQL Server ▪
+▪SYSTEM VAULT for Vault System ▪
+▪REDHAT for Red Hat Enterprise Linux ▪
+▪SUSE for SUSE Linux ▪
+▪SOLARIS for Solaris 10+ Server ▪
+INSTANCE System Instance ID (Oracle system type only)
+PORT System port (format: 1-65535)
+ZONE Proxy zone (Optional)
+MS_TEAM The team that the system will be assigned to
+REQUEST_TEAM The team in which its system trustee(s) will be used to
+authorize the request.
+SYS_UUID A universally unique identifier  that will be used as the
+target ID of the onboarded system (Optional).
+See REQUEST_TEAM
+The REQUEST_TEAM attribut e  is the team in which its system trustee(s) will be used to authorize the
+request. This can be a diff er en t  value depending on which PDR is used. In some cases, the value is auto
+filled  and in other cases, a value is not required.PDR ID API submittable REQUEST_TEAM
+requiredREQUEST_TEAM aut o-
+filled
+BATCH_REQUEST No N/A N/A
+CREATE_LARGE_CREDENTIAL No N/A N/A
+UPDATE_LARGE_CREDENTIAL No N/A N/A
+WEBAPP_DISCLOSURE_CREATE No N/A N/A
+WEBAPP_DISCLOSURE_DELETE Yes No N/A
+WEBAPP_DISCLOSURE_UPDATE No N/A N/A
+TEAM-CREATE Yes Yes Yes
+TEAM-DELETE Yes Yes Yes
+TEAM-MEMBERS Yes Yes Yes
+TEAM-UPDATE Yes Yes Yes
+CREATE_VAULT_SYSTEM Yes Yes Not required
+ARCHIVE_VAULT_SYSTEM Yes Yes Yes
+UPDATE_VAULT_SYSTEM (1 - same team) Yes Yes Yes
+UPDATE_VAULT_SYSTEM (2 - transfer) Yes Yes YesPDR ID API submittable REQUEST_TEAM
+requiredREQUEST_TEAM aut o-
+filled
+CREATE_VAULT_ACCOUNT (1 - team vault) Yes Yes Yes
+CREATE_VAULT_ACCOUNT (2 - system vault - same team) Yes Yes Yes
+CREATE_VAULT_ACCOUNT (3 - system vault - diff er en t
+team)Yes YesYes 
+ARCHIVE_VAULT_ACCOUNT Yes Yes Yes
+UPDATE_VAULT_ACCOUNT (1 - team vault) Yes Yes Yes
+UPDATE_VAULT_ACCOUNT (2 - system vault - same team) Yes Yes Yes
+UPDATE_VAULT_ACCOUNT (3 - system vault - transfer) Yes YesYes 
+ONBOARD_SYSTEM Yes Yes, but not enforced No
+ARCHIVE_ONBOARDED_SYSTEM Yes Yes, but not enforced No
+UPDATE_ONBOARDED_SYSTEM Yes No If the destination  team is
+unset or the destination
+team is the same as the
+source team
+ONBOARD_ACCOUNT Yes Yes, but not enforced No
+OFFBOARD_ACCOUNT Yes Yes Yes
+UPDATE_ONBOARDED_ACCOUNT Yes Yes, but not enforced No
+CREATE_PAMUTIL_API_USER Yes No Not required
+ improper display of the team in update/archive when the destination  team's vault trustee is not in a
+team owning the vault system. This will be fix ed  in a future release.for more in f ormation  about the REQUEST_TEAM attribut e.
+ONBOARD_SYSTEM batch request sample
+"ADMIN","ADMIN_PASS","SYSTEM_TYPE","FQDN","USE_MANAGED_CREDENTIAL","ZONE","MS_TEAM","REQUEST_TEAM","SYS_UUID"
+"Administrator","F00bar123","WINNT","AMS-
+WIN8-7M9.corp1.domain","F","none","TEAM-000000","TEAM-000000","d39b55f0-7a6a-487a-abe4-
+bd8c9ec1679c"
+Migr ating  a system to another team
+Users who are system trustees of multiple  teams can use the System: Update  request to migrate a
+system to another team.
+1.From the home page, click Manage resources . 1.
+2.Select the System: Update request. 2.
+3.Select a managed system.3.

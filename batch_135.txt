@@ -1,0 +1,135 @@
+Types of authoriz ation  w orkflo w
+Two types of authoriz ation  are available within Bravura Security Fabric ’s w orkflo w  engine:
+St atic  authoriz ation Requests involving resources (target systems, templates, roles, or groups) are routed
+to pr e-de fined  authorizers mapped directly to the objects.
+This type of authoriz ation  is s t atic  because the list of authorizers is c on figur ed  in
+advance. It is generally not used in Bravura Privilege  implemen t ations.
+Dynamic authoriz ation Authorizers are determined and assigned at the time  the request is submitted,  using
+criteria based on pr operties  of the request (r elationship  to the recipient, value of a
+particular  request attribut e,  access requested, and so on).
+This type of authoriz ation  is dynamic because the list of authorizers changes
+depending on details of the request. Authoriz ation  for managed resources is generally
+determined by c on figur ation  at the resource object level.
+St atic  authoriz ation  is simple to c on figur e,  but requires manual maintenance. In Bravura Identity
+implemen t ations,  it is usually sufficien t  for small to medium-size or g aniz ations  where a small number of
+employees are responsible for reviewing and authorizing requests to a resource. In Bravura Privilege
+implemen t ations,  Bravura Privilege P attern  makes it easier to use team management (which uses
+dynamic w orkflo w).
+In large enterprise environments, the selection  of resource authorizers is more complex. St atic
+authoriz ation  is not feasible; the maintenance required would make it impr actic al.  Dynamic authoriz ation
+addresses this challenge and also off er s  more fle xibility  in how the w orkflo w  is c on figur ed.  Many
+businesses implement a c ombination  of both s t atic  and dynamic authoriz ation.  You can apply r elational
+user classes and security rules so that the authorizer is determined by the type of request, the resources
+associated with the request, as well as who is making the request, and for whom.
+You can also use plugins to dynamically assign authorizers instead of, or in addition  to, s t atic  authorizers.
+In some enterprise environments, the authoriz ation  process is serial; for example the request is fir s t
+reviewed by the employee’s manager, followed by a security group member or resource owner. The
+authoriz ation  engine is fle xible  enough to accommodate most authoriz ation  scenarios.
+Single resource approval
+It is possible to c on figur e  the w orkflo w  so that it sends parts of the request for fulfillmen t  as soon as they
+are approved. This is controlled via the IDP APPROVE SINGLE RESOURCE  (on page 1438) option  (disabled
+by default). When enabled, an approved oper ation  is immediately actioned,  without w aiting  for the
+entir e  request to be approved; for example, where a request is submitted  to add a user to three groups,
+as soon as group owner one approves their part, the user gets added to group one and that state is
+r e flect ed  on the authoriz ation  status page.
+See Act on individual entitlemen ts  in the end user documen t ation  for more.
+Lab: Con figuring  s t atic  authoriz ation
+Any regular user with a valid pr ofile  can be assigned as a s t atic  authorizer. St atic  authorizers can be
+mapped directly to resources or policies.The types of requests that s t atic  authorizers can review, and the actions  they can take, depend on the
+privileges granted to them by user access rules.
+Requirements
+This use case assumes that:
+▪There is an Activ e  Directory target system set up as a source of pr ofiles. ▪
+▪The Activ e  Directory target system is c on figur ed  so that groups with owners are aut omatic ally ▪
+managed by Bravura Security Fabric , to be moderated by owners. This means that Bravura Security
+Fabric  assigns the owners of those groups as the authorizers.
+Configur e  s t atic  authorizers for groups
+You can assign s t atic  authorizers to a resource in the c on figur ation  settings  for the resource.
+The AD target system is c on figur ed  so that groups with owners are aut omatic ally  managed by Bravura
+Security Fabric , to be moderated by owners. This means that Bravura Security Fabric  assigns the owners
+of those groups as the authorizers.
+In this example, you will add one extra s t atic  authorizer for the ENG-MANAGERS-owners group:
+1.Log in to the Front-end (PSF) as superuser . 1.
+2.Click Manage the system > Resources > Group s. 2.
+3.Select the AD target system to view its listed groups.3.
+4.Search for and select the ENG-MANAGERS-owners  group and take note of its settings. 4.
+5.Click the Authoriz ation  tab. 5.
+6.Set the Minimum number of authorizers  to 1 if it is not set to 1 already. 6.
+This means that any one of the authorizers you map to this target may approve the request.
+7.Set the Number of denials before a change request is terminated  to 1 if it is not set to 1 already. 7.
+This means that a change to an e xisting  account is canceled if one of the authorizers deny the request.
+8.In the Authorizers  table, click Select… . 8.
+You will notic e  that MOHAMD has already been added as an authorizer because he is the owner of the
+ENG-MANAGERS-owners group.
+9.Search for and select HARRYJ.9.
+10. Click Select . 10.
+The ENG-MANAGERS-owners group now has one additional  authorizer added so that requests to join or
+leave the group can be approved or denied by either one of the two authorizers listed; MOHAMD or
+HARRYJ.Configur e  authorizers from the w orkflo w  menu
+All authorizers that are mapped to resources are listed in Manage the system > W orkflo w  > Authorizers .
+From here, you can select individual authorizers to c on figur e  notific ation  and additional  security settings,
+and view the resources to which they are assigned.
+Let’s assume you want to give the company president, BRYANW  additional  authority when assigned as
+authorizer:
+1.Click Manage the system > W orkflo w  > Authorizers . 1.
+Bravura Security Fabric  displays a list of authorizers. So far, all group authorizers are listed.
+2.Search for and select BRYANW.2.3.Select the Denial blocks entir e  request  checkbox to allow the authorizer to be able to block an entir e 3.
+request, rather than just part of a request.
+4.Select the Input is required before request can be approved  checkbox to require the authorizer’s 4.
+approval before any request to which he or she is assigned can proceed, regardless of the number of
+authorizers who have already approved the request.
+5.Click Update . 5.For the requests that BRYANW is an authorizer on, the request will not be approved until  BRYANW has
+provided his authoriz ation.  If BRYANW denies the request the whole request will be denied instead of
+only the part that required his authoriz ation.
+Here is an example of how the denial process works for this advanced privilege:
+1.DARAK puts in a request to join the following groups:1.
+Group Authorizer
+ENG-QA-GENERAL No approval required
+FIN-GENERAL TRAVIC
+EXEC BRYANW
+2.Even though the ENG-QA-GENERAL group does not require authoriz ation,  the membership is not 2.
+added until  the authorizers for other groups approve or deny the request.
+3.TRAVIC decides to approve the request. The membership for the FIN-GENERAL group is also not added3.
+yet because the request is still w aiting  for approval from BRYANW.
+4.BRYANW denies the request and so none of the three group memberships are added.4.If we were to consider the alt ernativ e  scenario where BRYANW approves the request and TRAVIC denies
+it, you will see how the denial privilege is only partial  for TRAVIC. Here is the same example, but with
+BRYANW approving the request and TRAVIC denying it:
+1.DARAK puts in a request again to join the following groups:1.
+Group Authorizer
+ENG-QA-GENERAL No approval required
+FIN-GENERAL TRAVIC
+EXEC BRYANW
+2.Even though the ENG-QA-GENERAL does not require authoriz ation,  the membership is not added until 2.
+the authorizers for other groups approve or deny the request.
+3.BRYANW decides to approve the request. The memberships for the EXEC and ENG-QA-GENERAL3.
+groups are not added yet because the request is still w aiting  for a response from TRAVIC.
+4.TRAVIC denies the request, so only the membership for the FIN-GENERAL group that he is responsible4.
+for gets denied. This demonstrates how regular authorizers only partially  deny requests where there
+are multiple  authorizers required, since they only deny the resources that they are authorizers of.
+Both the ENG-QA-GENERAL and EXEC group memberships get added successfully as only approval
+from BRYANW is necessary.Lab: Con figuring  dynamic authoriz ation
+In this example, you will set up authorizers for the target systems, so that when a user requests a change
+to an e xisting  account, the recipient’s direct or indirect manager can authorize the request. An indirect
+manager could be the manager’s manager, and so on, up the chain of command.
+Requirements
+This use case assumes:
+▪Bravura Workforce P attern  is installed. ▪
+▪There is an Activ e  Directory target system set up as a source of pr ofiles. ▪
+▪User BERNAP manages user DARAK.▪
+▪BRYANW's input is required for any group requests to which he in assigned, as c on figur ed  in Example: ▪
+Con figur e  s t atic  authoriz ation  (on page 1341)
+Assign dynamic authorizers to resources
+To set up authorizers for e xisting  accounts:
+1.Log in to the Front-end (PSF) as superuser . 1.
+2.Click Manage the system > Resources > Target systems > Manually de fined . 2.
+3.Select the AD target. 3.
+4.Click the Authoriz ation  tab. 4.
+5.Change the Minimum number of authorizers  to 1. 5.
+6.Change the Number of denials before a change request is terminated  to 1. 6.
+7.Click Update  for the updated section. 7.
+8.In the user classes table at the bottom  of the form, click Select… . 8.
+9.Select the checkbox for _MANAGER_INDIRECT_ , and click Select . 9.
+Bravura Security Fabric  displays an error because you have not mapped the participan ts  in the user
+class yet.
+10. Under P articipan t  mapping  for MANAGER, select AUTHORIZER . 10.
+11. Under P articipan t  mapping  for SUBORDINATE, select REQUESTER . 11.

@@ -1,0 +1,348 @@
+Value: "c ommandfilename"  Description:  File where the output from runcommand() oper ation  is
+written  to.
+▪$KeyCompression▪
+Value: "compression" Description:  SSH address attribut e  to compress the data tr ansmitted.
+▪$KeyFalse▪
+Value: "false" Description:  String used for boolean address and account attribut es.
+▪$KeyFullName▪
+Value: "fullname" Description:  Description  attribut e  of an account.
+▪$KeyGroup▪
+Value: "group" Description:  Single sub KV of a group on the target.
+$KeyGroupID
+Value: "groupid" Description:  Identifier  for the group.
+▪$KeyGroupName▪
+Value: "groupname" Description:  Name of the group.
+▪$KeyGroups▪
+Value: "groups" Description:  List of groups.
+▪$KeyHostID▪
+Value: "hostid"  Description:
+▪$KeyHostKeysDenyUnmatched▪
+Value: "DenyUnmatch" Description:  Tells the SSH library to connect ONLY if the host key matches an
+e xisting  one.
+▪$KeyHostKeysUpdate▪
+Value: "AllowUpdate" Description:  Allows the SSH c onnection  to update the host key if one already
+exists (unsafe).
+▪$KeyHostKeysAppend▪
+Value: "AllowAppend" Description:  Tells the SSH libary to add the host key if it is missing, but refuse if
+it does not match.
+▪$KeyInteger▪
+Value: "integer" Description:  Integral address attribut e  type.
+▪$KeyKvgroup▪
+Value: "kvgroup" Description:  Address attribut e  type.
+▪$KeyManagedGroup▪
+Value: "managedGroup" Description:
+▪$KeyModelUID▪
+Value: "modeluid" Description:  Account to use as a template when cr eating  a new user.
+▪$KeyNewPW▪Value: "newpw" Description:  Password for the new account or the new password when r esetting  an
+e xisting  account.
+▪$KeyNoPTY▪
+Value: "nopty" Description:
+▪$KeyOldPW▪
+Value: "oldpw" Description:  Current password for an account.
+▪ $K e yOper ation▪
+Value: "oper ation"  Description:  The action  that is currently underway.
+▪$KeyPort▪
+Value: "port" Description:  IP port to connect to on the target.
+▪ $K e yP osition▪
+Value: "position"  Description:
+▪$KeyReadOnly▪
+Value: "readonly" Description:  Address attribut e  that is not modifiable  by the user.
+▪$KeyResource▪
+Value: "resource" Description:
+▪$KeyResourceAddress▪
+Value: "resourceaddress" Description:
+▪$KeyResourceType▪
+Value: "resourcetype" Description:
+▪$KeyRestricted▪
+Value: "restricted" Description:  Address attribut e  type of restricted values.
+▪$KeyRestrictedValue▪
+Value: "restrictedvalue" Description:  Key for the chosen restricted address attribut e  value.
+▪$KeyRestrictedValueText▪
+Value: "restrictedvaluetext" Description:  Display value for a restricted address attribut e  value.
+▪$KeyRestart▪
+Value: "restart" Description:
+▪$KeyRevision▪
+Value: "rev" Description:
+▪$KeyScript▪
+Value: "script" Description:  Address attribut e  type.
+▪$KeyFile▪
+Value: "file"  Description:  Address attribut e  type.
+▪$KeyDir▪
+Value: "dir" Description:  Address attribut e  type.
+▪$KeyPath▪Value: "path" Description:  Address attribut e  type.
+▪$KeyServer▪
+Value: "server" Description:  Address attribut e  containing the target to connect to.
+▪$KeyServerInfo▪
+Value: "serverinfo" Description:  Oper ation  to query the target for version and status in f ormation.
+▪ $K e ySettings▪
+Value: "settings"  Description:
+▪$KeyShortID▪
+Value: "shortid"  Description:  User’s ID
+▪$KeySSL▪
+Value: "SSL" Description:  Address attribut e  determining if encrypted telnet should be used.
+▪$KeyString▪
+Value: "string" Description:
+▪$KeySysID▪
+Value: "sysID" Description:  Username for secondary login to the target (e.g. sudo).
+▪$KeySysPassword▪
+Value: "syspassword" Description:  Password for the secondary login to the target.
+▪$KeyTerm▪
+Value: "terminal" Description:  Address attribut e  determining the terminal type for the telnet
+c onnection.
+▪$KeyTimeout▪
+Value: "timeout"  Description:  Address attribut e  de fining  how long the agent should wait for
+c onnection  to complete.
+▪$KeyTrue▪
+Value: "true" Description:  String used for boolean address and account attribut es.
+▪ $K e yW rit eOption▪
+Value: "writ eoption"  Description:  Address attribut e  determining the terminal type for the telnet
+c onnection.
+Live debugging
+You can use the termdebug KVGroup to in t er activ ely  monitor what is sent and received by agent scripts
+over raw TCP c onnections,  SSL raw c onnections  (not http/http s),  telnet and SSH c onnections.  To do this,
+add a supplemental termdebug KVGroup to the agent input. For example:
+# KVGROUP-V1.0
+"" "" = {
+  "address" = "telnet_unix.psl"
+  "adminid" = "root"
+  "adminpw" = "<encrypted password value>"  "hostid" = "SSH1"
+  "listfilename" = "C:\\listing-test.txt"
+  "instance" = "globoco"
+  "listresource" "" = {
+  }
+  "operation" = "list"
+  "timeout" = "30"
+     "termdebug" "" = {
+       ## mandatory configurations
+         "address" = "127.0.0.1"
+          #String representation of the
+          #address of the interface to listen to.
+         "port" = "3210"
+          #string representation of the TCP port to listen to.
+          #agtssh listens to this port on IDM Suite server
+         "command" = "c:\\windows\\system32\\telnet.exe localhost 3210"
+          #Command line to run with full executable path and parameters
+          #Quotes and backslashes need to be escaped with \.
+          #See below for more info.
+       ## optional configurations
+         "interactive" = "1"
+           #0=no 1=yes
+           #If 1, shows a dialog box with the string to
+           # be sent, and waits for OK before it is sent.
+         "waitforjointimeout" = "10000"
+           #Timeout, in milliseconds, of the agent waiting
+           # for a client connection.
+         "sendtimeout" = "1000"
+           #Timeout, in milliseconds, of sending data back to the
+           # client.
+       }
+}
+Data seen on the debug port is raw decrypted data.
+Command options
+The command value can take Cygwin telnet.exe, or nc.exe, or a tn3270/tn5250 client as required, for
+example:
+ "command" = "c:\\cywgin\\bin\\bash -c \"/bin/telnet.exe localhost 3210 | tee /tmp/
+log1; sleep 3600\""To prevent the window closing after  the debug port closes, include cmd.exe /k telnet ...  for
+telnet, or sleep for Cygwin telnet.exe or nc.exe.
+For non-in t er activ e  debugging, the command can be something like:
+ "command" = "c:\\windows\\system32\\cmd.exe /c telnet localhost 3210 >> c:\\debuglog.txt 2>&1"
+In t er activity  options
+When in t er activity  is turned on ("in t er activ e"  = "1" ) the script waits for one of the following inputs
+before proceeding:
+ok = next step
+cancel = skip next questions,  run all steps aut omatic ally  without any more pr ompting
+If the original agent script or the target itself has very strict timeouts,  it is recommended that you do not
+use the in t er activ e  option,  or cancel it before the section  with critic al  timing.
+Adding the termdebug KVGroup to input
+You can add the termdebug KVGroup to the agent input by:
+▪Capturing agent input using the pstee program, then manually adding the inner KVGroup.▪
+▪Wrapping the actual agent in an agtdos script as described in the PSLang Manual ( pslang.pdf ) . ▪
+The script should:
+1.Read $_inVars1.
+2.Replace its address ( "address" = "doswrapper.psl" ) with the telnet or ssh address line, 2.
+then add the termdebug KVGroup
+3.Call the original agent with this group (converted to string) as input. It could also log the new modified 3.
+agent input for debugging the PSLang wrapper script.
+This method is more complicated, but has the advantage of working for every agent call and not
+replaying oper ations.See  the PSLang Manual ( pslang.pdf ) for more in f ormation  about KVGroup functions,
+and system() calls.
+Sanitizing  input variables and recommended ID filt er s
+Since the inputs into the agttelnet , agtssh and agtdos scripted connectors can come from
+untrusted external sources, Bravura Security  recommends putting  in safe guards to mitig a t e  the risk of
+injection  attack s.  The script writer should take extra care to both filt er  out pot entially  nefarious user IDs
+as well as properly escaping input variables before passing them to shell commands.
+Characters such as:
+   ;&|<>'"()*#
+should be looked for in user IDs and filt er ed  out during listing  so they don’t even make it to the Bravura
+Security Fabric  system. In addition  (or if these characters are required), the SSH script should ensure that
+they are properly escaped before passing them into the shell. This will avoid injection  attack s  which could
+compromise your system.expression that invokes the USERCLASSUSERFOUND() function  once for each pr ofile  ID to include in the
+class. If it needs to obtain the pr ofile  IDs from another source, it is recommended to do so in a loop as
+per the following example.
+#Example: Include all users that have an account on the target
+"AD_HELPDESK_USERS":
+#
+function fn() {
+var $arr = getUsersByTarget("AD_HELPDESK_USERS");
+for(var $i=0; $i < size($arr); $i++) {
+UserclassUserFound( $arr[$i] );
+};
+return 0;
+}
+fn()
+See also:
+See more in f ormation  on writing  PSLang expressions
+PSLang is a scripting  language with a syntax much like C, but with a large set of built-in functions.
+You can use PSLang expressions to de fine:
+▪account attribut e  values (other than boolean types) ▪
+▪The format of pr ofile  IDs ▪
+▪User classes▪
+▪Managed system policy memberships and managed accounts▪
+PSLang expressions let you use the value of a profile  attribut e  indirectly. That is, you can modify them,
+add them to another fix ed  value, or combine them with another pr ofile  attribut e.   
+Syntax
+An expression is some sequence of oper ations  that yields a result. A literal value, a variable, or a function
+by themselves can be an expression. The following are valid expressions:
+5
+"3"
+m y function(  1 )
+5+3
+5 + "3"
+"5" + "3"
+"5" + m y function(  innerfunction()  - 6 )
+$x + $y + $zA PSLang expression can include a sequence of variable declar ations  (including initializ er s)  and function
+calls. The final  statement  must be an expression; its value is taken as the overall result.
+Here is a sequence of statements:
+var $a = "hello";
+var $b = ", world";
+var $c = strlen( $a );
+$a + $b + " - length: " + $c
+This is acceptable as a PSLang expression because the last statement is itself a normal expression. The
+result here would be: hello, world - length: 5 .
+In the Bravura Security Fabric  GUI, the same sequence of statements would be written  on one line:
+var $a = "hello"; var $b = ", world"; var $c = strlen( $a ); $a + $b + " - length:" + $c
+Types of expressions
+PSLang supports the following types of expressions:
+Oper ation Description
+<string literal > string literal
+<integer literal > integer literal
+- <integer literal > negate an integer
+< floating-poin t  literal > floating-poin t  literal
+- < floating-poin t  literal > negate a floating-poin t  literal
+$var the value of the variable
+$var[expr] string and array indexing
+(expr ) for clarity or to change order of e v aluation
+expr + expr addition  or string c onc a t enation
+expr - expr sub tr action
+expr * expr multiplic ation
+expr ∕ expr division
+expr % expr modulus
+expr isin expr is left a substring of right?
+expr == expr equality
+expr ! = expr inequality
+expr ≤ expr left is less than or equal to right?
+expr < expr left is less than right?
+expr ≥ expr left is greater than or equal to right?
+expr > expr left is greater than right?
+~expr bitwise neg ationexpr & expr bitwise and
+expr — expr bitwise or
+expr && expr logical and
+expr—— expr logical or
+$var++ post increment operator
+$var– post decrement operator
+! expr logical neg ation
+func(...) function  call
+iif( test, true_part , false _part ) ternary operator
+A boolean expression yields an integer result, where zero is interpreted as false , and any value other than
+zero is interpreted as true.
+Bitwise operators (~, &, —) must not be confused with logical operators ( !, &&, ——). Although PSLang
+does not support “^”, the bitwise exclusive or operator ( xor), you can achieve the same results using:
+( A & ~B ) | ( ~A & B ) .
+The PSLang + operator can be used with numerical values, or to append string values. In an expression
+such as  x+y , where x is a string and y is a number, y is converted to a string and appended to x.
+The ternary operator works the same way as the C++ ternary operator ( ?:). The test expression is
+evaluated, and if the result is non-zero, the true_part expression is evaluated and returned. Otherwise,
+the false _part expression is evaluated and returned.
+Order of e v aluation
+The order of e v aluation  proceeds according to the precedence of the operators in the expression. The
+following table lists the precedence of the operators, with the highest priority at the top of the list.
+Precedence Level Operators
+1 [ ]
+2 ! ~
+3 * ∕ %
+4 + -
+5 isin
+6 ≤  ≥  <  >
+7 == ! =
+8 &
+9 |
+10 &&
+11 ||
+12 parenthesesE v aluation  of the expression moves left to right and stops at the earliest possible pass/fail decision;
+unnecessary c onditions  are not evaluated.
+PSLang aut o-c ompletion
+The user interface can be c on figur ed  to off er  aut o-c ompletion  of variable or function  calls when writing
+PSLang expressions. Enabling auto-complete provides quick access to help and f ormatting  in f ormation.
+Only the PSLang functions  that are in the string, time,  and misc sections  are available for aut o-
+c ompletion.
+The auto-complete drop-down list appears as you type a valid expression into a PSLang text area. Only
+variables, functions  and c ompletion  options  that match what you are typing are displayed. For detailed
+in f ormation,  click the ? link to the right of each listed item.
+To see the complete drop-down list of all available options:
+▪Click in an empty PSLangtext field. ▪
+▪Press the [ ↓] key at a word break while typing an expression in a PSLang text area. ▪
+▪Press the [ ↓] key mid-word while typing an expression that does not match any of the available ▪
+expressions.
+Na vig ation  through the list can be done with the mouse, or using the [ ↑] and [ ↓] keys. Selections  can be
+made using the [Enter] or [Tab] keys. The [Esc] key closes the menu.
+The PSLang aut o-c ompletion  functionality  can be disabled or enabled by clicking disable auto c ompletion
+or enable auto c ompletion  beneath any PSLang text area.
+The default settings  for the PSLang auto-complete functionality  are controlled by the config.js
+script, located in the \<instance>\design\src\js\ directory. In this script, the AutoCompletePslang group
+has the following options:
+<PSLANG>PSLang auto-complete options  inc on fig.js
+Option Description
+enabled Controls whether the script is available to users.The
+default value is true.
+initiallyOff Controls whether PSLang aut o-c ompletion  is
+enabled when a page loads. The default value is
+false. If set to true, then PSLang aut o-c ompletion  is
+off by default when a page loads..
+Default expressions
+This section  illustrates the use of <PSLANG> expressions by explaining expressions used by default by
+Bravura Security Fabric .
+Each of these expressions use an iif() function,  which takes 3 parameters –iif(boolean expression, "true-part", "false-part" )
+It evaluates the boolean expression, and when it’s true, it returns the true-part. Otherwise, it returns the
+false-part.
+In PSLang, a variable is pr e fix ed  by $. The variables discussed in this chapter represent a string of
+characters, or an array of strings.
+The characters [n] are placed after  variable names to index the nth character in a string, or the nth
+value in an array, s t arting  from 0. This is used with pr ofile  attribut es,  which can have multiple  values. The
+fir s t of an array of values is represented by $ATTRIBUTE[0] , the second by $ATTRIBUTE[1] , and so
+on.
+All built-in attribut es  must be expressed as an array. That is – $FIRST_NAME[0] , $OTHER_NAME[0] ,
+$LAST_NAME[0]
+IDSYNCH ID PLUGIN MASK
+The default function  for the IDSYNCH ID PLUGIN MASK is:
+iif( (size($LAST_NAME) > 0 && size($FIRST_NAME) > 0),
+substr($LAST_NAME[0], 0, 5) + substr($FIRST_NAME[0],
+0, 1),
+""
+)
+First, the boolean expression ensures that there are values for $FIRST_NAME  and $LAST_NAME . If
+check is successful, then it takes the 0-5 characters (fir s t  6) of LAST_NAME and the 0-1 characters (fir s t
+2) of FIRST_NAME and put them together to form a user’s <PROFILEID>.
+If the safety check fails, then it returns an empty string.
+FULLNAME
+This is used for the value of many target attribut es  (e.g., displayName on Activ e  Directory):
+iif( size($OTHER_NAME) > 0,
+$FIRST_NAME[0] + " " + $OTHER_NAME[0] + " " +
+$LAST_NAME[0],
+$FIRST_NAME[0] + " " + $LAST_NAME[0]
+)
+This fir s t checks whether $OTHER_NAME has any values. If it does, then it composes a string such as
+“John Angus Doe”. If $OTHER_NAME does not have any values (the user has no middle name) then it
+composes a string such as “Bill Smith”.
+MIDDLE INITIAL
+This PSLang expression, also used for the value of target attribut es  (e.g., initials  on Activ e  Directory),
+contains more than one statement:

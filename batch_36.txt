@@ -1,0 +1,149 @@
+Part IV GETTING STARTED1 Logging into Bravura Security Fabric
+This chapter shows you how to log into the Bravura Security Fabric  web interface using the front-end
+login page. This chapter also describes the format of the Bravura Security Fabric  URL and how you can
+choose a language at login.  
+See also: 
+For more in f ormation  about how users log into Bravura Security Fabric  using the Front-end , or to learn
+how to c on figur e  authentic ation  in general see Login and authentic ation  (on page 820).
+Front-end login
+The steps that you take to authentic a t e  and then carry out tasks can vary according to how your
+or g aniz ation  customizes the interface between Bravura Security Fabric , the corporate intranet, and other
+applic ations.
+In general, the front-end login process works as follows:
+1.Click the appropriate link on your corporate intranet, or type the URL (on page 353) for the front-end 1.
+login page in your browser.
+On your Bravura Security Fabric  server, you can also access the login page through the Start  menu by
+searching for Self Service Login .
+2.At the login page, type your:2.
+▪Login ID on a system on which you have an account (for example, your Windows user name)▪or
+▪ Pr ofile  ID (this is your unique ID in Bravura Security Fabric ) ▪
+If you have not yet set up any additional  product administrator s, this is the pr ofile  ID for the
+applic ation  administrator (superuser) that you created during ins t allation.
+Depending on the c on figur ation,  you might be able to select a system from a drop-down list.
+3.Click Continue . 3.
+4. Authentic a t e  to Bravura Security Fabric . 4.
+Depending on c on figur ation  and your access privileges, Bravura Security Fabric  may display a list of
+authentic ation  methods to choose from, or direct you to a particular  method.
+5.Select a task from the main menu.5.
+The Bravura Security Fabric URL
+You can access the login page for the Front-end  by including the full path to the virtual directory in the
+URL:
+http[s]:// <host name >/<virtual directory >
+where:
+▪ http[s]:  If your web server is c on figur ed  to use a secure c onnection  type https . If not, type http . ▪
+Note: For security purposes, HTTPS should be used at all times.  This is especially
+recommended for pr oduction  environments.
+▪<host name>: This is your domain name, or Bravura Security Fabric  server name or IP address ▪
+▪<virtual directory>: If Bravura Security Fabric  was installed using the default instance name, this is ▪
+default ; otherwise, this is the non-default instance name.
+You can supply additional  arguments, such as language preference, by including a question  mark (?) in
+the Bravura Security Fabric  URL. Separate multiple  arguments using an ampersand ( &). For example:
+https://idm-server/default/?LANG=fr-ca&USERID=bobsmith
+Note: For security reasons, arguments other than language and skin will be only
+be acknowledged when included in URLs for the root virtual directory or
+in URLs that redirect the user to the root virtual directory. In all other
+URLs, all arguments except language and skin will be ignored.
+If the index page for your Bravura Security Fabric  instance is set up (during ins t allation)  as your web
+server’s default web page, you can access the Front-end  login page simply by typing the web server’s URL
+in a browser. For example:
+https://idm-server.example.com
+R edir ecting  to a specific  module or page
+If a URL includes the path for a particular  page, the user is redirected to that page after  successful
+authentic ation  via the Front-end . Users who have not logged in, or whose user pr ofiles  are locked or
+invalid, are not able to access any page they would not be able to navigate to manually.For example, to have an end user directed to the w orkflo w  dashboard, change the URL to:
+https://idm-server/<VIRTUALDIR>/view-dashboards/workflow
+Alt ernativ ely ,  you can pass the Front-end  an optional  argument, JUMPTOCGI=<module> , so that the
+user is redirected to a particular  module after  successful authentic ation.
+For example, to have an end-user directed to the Change passwords  (PSS) module, change the URL to
+either:
+https://idm-server/<VIRTUALDIR>/change-passwords
+or
+https://idm-server/<VIRTUALDIR>/?JUMPTOCGI=PSS
+If a user accesses a module in this way, and their session fails for any reason, they are returned to the
+Front-end .
+Note: You can no longer redirect users to a particular  module by specifying the
+module name directly, for example:
+https://idm-server/default/pss.exe
+Instead, use the URL of the module or pass the Front-end (PSF) the
+argument JUMPTOCGI=<module> .
+Desktop and mobile view
+Most browsers will default to the correct view for Bravura Security Fabric  aut omatic ally .  However, a link is
+available on the login page to switch views if necessary.
+Click Switch to mobile view to view Bravura Security Fabric  on a mobile device. The mobile view displays
+a mobile-friendly version of Bravura Security Fabric , optimiz ed  specific ally  for browsers on mobile
+devices.Click Switch to desktop view to view Bravura Security Fabric  on a desktop machine. The desktop view
+has been designed for accessing Bravura Security Fabric  on a desktop or laptop computer.
+The selected view will be remembered for that browser, until  the browser cache is cleared.
+Choosing a language
+Bravura Security Fabric  can determine your language preference by reading a value in the URL; for
+example, en-us  for American English.
+If no language is specified  in the URL, Bravura Security Fabric  checks the browser for your language
+preferences. If no exact match is found among the installed languages, Bravura Security Fabric  uses the
+closest related language. For example, if Portuguese/Portugal (pt-pt) and French/France (fr-fr) language
+packs are installed for Bravura Security Fabric  and your browser preferences are set to French/Canada (fr-
+ca), Bravura Security Fabric  displays text in French/France (fr-fr). If a related language cannot be found,
+Bravura Security Fabric  defaults to English/United States (en-us).  
+Using the language selector If multiple  languages have been installed, a language selector is available in the top right hand corner of
+the login page. Click the language selector drop-down menu to display the available languages, then
+select the language you want to use.
+To access the language selector after  you have logged in, click the 
+  icon fir s t,  then scroll down to the
+language selector. The available languages are displayed. You can then select the language you want to
+use.
+ See also: 
+To learn how to c on figur e  language display and install new languages, see CUSTOMIZATION  (on page
+3471).2 Na vig ating  and updating  in f ormation  in the web interface
+This chapter shows you how to navigate web pages and update in f ormation  in Bravura Security Fabric .
+The user interface is designed to work at a screen size of 1024x768 or larger, although it may be resized
+smaller than that if necessary. All menus fit correctly down to a width of 900px.
+Using the na vig ation  bar
+Bravura Security Fabric  web page icons 
+Bravura Security Fabric  web pages include the following na vig ation  icons in the top left menu:
+Display a side menu of module options.
+Return to the Front-end main menu.
+Bravura Security Fabric  web pages include the following action  icons in the top right menu:
+Update in f ormation  that could have changed since you fir s t visited  Bravura Security
+Fabric  web page.
+For example, click Refresh on the Request status page to see if an authorizer has
+responded to a request.
+Options  to pin items to customize your menu.
+User pr ofile  status and logout.
+Na vig ating  with breadcrumbs
+Most Bravura Security Fabric  web pages include breadcrumbs on the left of the screen under the
+na vig ation  bar. Breadcrumbs are a list of pages that show the path from the home page to the current
+page. This path represents the hierarchical or g aniz ation  of the web pages rather than the path the user
+took to arrive at the current page.
+Click on a link in the breadcrumbs to be taken to that page.
+Selecting  from a menu table
+When presented with a menu table, you can navigate to the page for a particular  object or action  by
+clicking anywhere in the row, except for a hyperlinked item . This action  requires that JavaScript is enabled
+for the web browser. If JavaScript is not enabled, you can click the 
+  button.
+Similarly, if your cursor is in a text field  in a row with a 
+  button,  you can press [Enter] to select the
+item.Embedded links: Viewing in f ormation  about an object
+Most lists or tables of object have an Embedded links option  that turns the text of objects into
+hyperlinks, indicated by underlined text when hovering.
+When clicked, a pop up window opens. If the user has appropriate permission, the window displays extra
+in f ormation  about that item.Column display
+Most tables have a Show/hide columns option  that allows you to choose which columns to display.
+When clicked, a drop down menu displays. Click on the column labels in the drop down menu to either
+view or hide the columns.Types of messages
+When you navigate or update in f ormation,  Bravura Security Fabric  provides feedback of various types:
+This icon … Indicates this type of message …
+Status in f ormation  and tip s
+Cautions  and warnings
+Error messages
+Tasks
+Adding and modifying in f ormation
+When you add a new object or modify an e xisting  object or setting ,  you must submit your changes before
+na vig ating  to a new page. You do this by clicking Add, Update , or a similar button  at the bottom  of each
+form.
+Failure to submit your changes before you click Back , select a menu item, or close your browser, will
+result in your changes being lost.
+When you add objects, such as target systems, templates, item types, loc ations,  you can click Add new…
+on the web form to add another object.
+Con firming  your actions
+Bravura Security Fabric  requires you to c on firm  actions  that are irreversible or may be slow to complete.
+After  clicking Delete or a button  with similar consequences, you are presented with a c on firmation  dialog
+box. Click OK to c on firm  your action.

@@ -1,0 +1,372 @@
+▪The asterisk character stays on the same line as the attribut e  name under the Pr ofile  in f ormation  and ▪
+entitlemen ts  table on mobile platform.
+▪Scrolling and swiping work correctly in portrait and landscape mode on Android and iOS mobile▪
+devices.
+▪Improved the display and usability of adminis tr ativ e  options  in mobile layout. ▪
+Network resources
+▪Fixed access to network resources page so that the selected row of a network resource is kept in view▪
+between clicks and its access table is positioned  next to the right side of the selected row.
+▪Fixed the issue where a c on firmation  pop-up did not appear when a user request access to a shared ▪
+folder using the shell extension.
+Notific ation
+▪ Clarified  notific ation  for diff er en t  types of deleg ation,  such as ALL, Authorizers, Certific ation, ▪
+Implement. Email notific ation  will not be sent to people who are not supposed to receive it.
+▪Fix to make the notific ation  client install correctly again. ▪
+▪Improved the Query USERSTAT tag plugin to determine compliance for user notific ation  so that the ▪
+query is case insensitiv e.  Improved the description  of the plugin to clarify that users who do not
+match the criteria are notified.
+▪Fixed an issue with batch notific ations  when the schedule is set for Weekly and when all days are ▪
+checked.
+▪Fixed an issue that it was impossible to disable mail groupings.▪
+▪User attribut es  are available in the EM_WORKFLOW_REQ_MULTI_MULTI_ALL_CONTENT notific ation ▪
+when used in certific ation  context.
+▪Fixed some wrong steps stated in mail message help link for batch notific ation. ▪
+▪Pending password expiry web notific ations  no longer show for deleted accounts. ▪
+▪The web notific ation  client properly displays pending notific ations  fir s t on the initial  page before ▪
+asking for login cr edentials.  Refreshing the initial  page of the notific ation  client will also now properly
+reload the page without error.
+▪Changing and expiring a user’s password by help desk now properly sets the expiry.expdate field  in the ▪
+database to the current time  instead of NULL.
+▪Ensures that forced notific ations  cannot be escaped by using the task manager to kill the notific ation ▪
+process.
+▪Batch notific ation  emails are properly displaying text values when language tags are used in the ▪
+subject line.
+▪Fixed an issue when request details were missed in the email notific ation  that inform primary ▪
+authorizers that the deleg ation  takes e ff ect.
+▪Fixed an issue where users did not receive an email notific ation  about the general deleg ation  for all ▪
+certific ation  work.
+▪Target system description  is now added to notific ation  emails when iddiscover.exe fails. ▪▪Fixed an issue that was r es tricting  the ’reason for disabling a user’ from being displayed in the ▪
+notific ation.
+▪Primary ID is included in deleg ation  notific ation  messages. ▪
+▪Fixed an issue in itsm to allow HTML mail to send out properly.▪
+▪The EVENT_AUTH_REASON_UPDATE event, when c on figur ed,  will send emails when the authorizer ▪
+updates the authorizer Notes.
+OrgChart
+▪A delegated OrgChart building round can be accessed by clicking a notific ation  link in the Front-end ▪
+(psf).
+Multiple  deleg ations  of OrgChart building rounds work well.
+▪The link to delegated Orgchart Building round in email leads to the correct page.▪
+▪Fixed OrgChart transfers to properly modify the OrgChart Manager’s pr ofile  attribut e  when it is ▪
+mapped to account attribut e.
+▪Input box for manager in wizard is empty when user has no manager.▪
+▪Corrected the delegate description  for OrgChart building rounds. ▪
+Password reset
+▪Enhanced stored procedure PasswordHistoryList to have better  performance. ▪
+▪Fixed an issue so that password expiry notific ation  emails always show the e xpir ation  date. ▪
+▪Fixed the intcpt-x64.msi  repair option  to correctly remember the selected Long ID from the ▪
+drop-down list.
+Password policy
+▪Password policy rule "have at most N characters" is required and set to 150 characters for▪
+PAM_DEFAULT and PERSONAL_VAULT password policies.
+▪If the password policy rule "not have been changed by you in the last N hours" is set and a user’s▪
+password is changed by the help desk, Bravura Security Fabric allows the user to change the password
+again immediately.
+▪Reverted the password strength rule that merged all of the dictionar y  rules together. Dictionar y  rules ▪
+now have fiv e separate options.
+▪Enhanced the default password policies to disallow users from deleting  the PAM_DEFAULT, as well as ▪
+DEFAULT and PERSONAL_VAULT policies.
+Performance
+▪Improved the performance by added new indexes and changed email plugin interface to send out▪
+multiple  emails at once.
+▪Improved performance of Segr eg ation  of Duties  rules. ▪
+▪Improved performance of user pr ofile  and pr ede fined  request pages. ▪▪The W orkflo w  Manager and Asynchronous Request Service can handle requests with large amount of ▪
+oper ations.
+▪Improved the handling of pr e-e xisting  error messages on attribut es  and wizard pages; minimized the ▪
+back-end runs.
+▪Fixed a jquery datatable issue that makes rendering a list table slow.▪
+Modified  widget cache to also remember whether or not a file exists.
+▪Improved Angular performance to handle server response properly and remove unused notific ation. ▪
+▪Improved performance of fetching results from the database.▪
+▪Improved performance for a pair of stored procedures used in PAM password r andomiz ation. ▪
+Plugins
+▪Cleaned filt er  plugin code to make it work properly in new release. ▪
+▪ Deleg ation  plugin input is proper for implementer tasks when initia t ed  from the Requests app. ▪
+Pr e-de fined  requests
+▪ Pr e-de fined  requests that employ user classes which have apostrophes in their names are accessible ▪
+to users and work as expected after  upgrade.
+▪ Pr e-de fined  requests can handle oper ations  in multiple  pages. ▪
+▪Console-only users are disallowed to access end-user modules.▪
+▪Display warning when a pr e-de fined  request (PDR) is c on figur ed  in an invalid way. ▪
+Privileged access c on figur ation
+▪Corrected issue so that data does not get out of sync when an account check-in occurs before an▪
+account check-out in a r eplic ation  environment.
+▪Corrected issue so that duplicate managed system policies do not appear after  moving services using ▪
+the servicemove utility .
+▪Fixed Bravura Privilege P attern  so that teams can be deleted after  account and system resources are ▪
+moved from the team or archived.
+▪Corrected issue so that subscriber trustees de fined  from a child group properly receives subscriber ▪
+v alidation  requests.
+▪ Modified  the pswxcopy access disclosure plugin so that the countdown timer  is not shown if the ▪
+"erase" disclosure attribut e  is set to False.
+▪Extended wait time  to 1 second to prevent double clicks on disclosures. ▪
+▪Removed over-license check from idarch when randomizing passwords. ▪
+▪Enhanced the per-account notices  to include the number of accounts actually randomized. ▪
+▪The Oracle SQL Developer disclosure plugin properly passes in address parameters from Oracle▪
+Database systems onboarded using team management.
+▪Adjusted the maximum password length to 150 characters, when cr eating  and updating  vault ▪
+accounts through team management.▪Adjusted the HTTP timeout  for Guacamole c onnections  to the Bravura Privilege server based on the ▪
+value of the SMON_HTTP_TIMEOUT system variable (default set to 30 seconds).
+▪Added support for the down arrow key in esc alation  sequence for Oracle SQL Developer disclosure ▪
+plugin.
+The sequence \v inserts a down arrow key.
+▪Fixed an issue where a user may not see all applicable authorizers assigned to an account access▪
+request if they are also an authorizer.
+▪Fixed session monitoring to stop the HTTP queue when monitoring is shut down even if dialog boxes▪
+have been left open.
+▪Resolved an issue where managed accounts were not moved to the historical policy when their▪
+managed host systems were unbound from their managed system policy.
+▪The "password must be changed every N days" option  is removed in Bravura Privilege password ▪
+policies and in managed system policies.
+▪Corrected issue so that local service mode systems that were never managed are re-discovered after ▪
+deletion.
+▪Corrected issue so that deleted local service mode managed systems that are re-managed retain the▪
+correct mode type.
+▪Updated idmc on fig  to enable import and management of local w ork s t ation  systems. ▪
+▪Corrected issue so that reviewed subscribers do not get un reviewed if there is format or casing▪
+changes to the subscriber account, but the account remains the same.
+▪Fixed the INF file for Local w ork s t ation  service to use the current BASE IDSYNCH URL value at the time ▪
+of download.
+▪Resolved an issue where warning a user that their checkout is about to expire could produce▪
+unintended error messages in the logs if the RES_NOTIFY_IMMINENT_CHECKIN_INTERVAL system
+variable was unde fined.
+▪Corrected issue so that access disclosure plugin attribut es  that contain variables are properly replaced ▪
+with sub stitution  values when accessing password history from the Privileged access app.
+▪Removed the "encr yption"  attribut e  for the pswxtsvc access disclosure plugin. ▪
+▪Corrected issue so that pamutil no longer modifies  the permissions of the creds.ini file. ▪
+▪Fixed pamutil for Linux systems so that if a pamutil process is terminated it will not hold onto ▪
+semaphores on the system.
+▪Pamutil on Linux previously used a random function  for determining sleep times  between ▪
+attemp ts  to acquire the lock file which was insufficien tly  random for multiple  runs within the same
+second. This has been changed so that sleep timer s  are now more random.
+▪Fixed so that pamutil no longer hangs if the c on figur ation  file loc ation  points to a directory instead ▪
+of a file on Linux.
+▪Enhanced the c on flict ed  passwords aut o- v erifier  to contact the managing node from other r eplic ation ▪
+nodes to verify and attemp t  to aut omatic ally  resolve the c on flict ed  passwords.
+▪Fixed issue where cr edentials  imported from a source system were not updated when the target ▪
+cr edentials  c on figur ed  for the source system have changed.
+▪Corrected issue where target system descriptions  did not appear in trial run results for import rules. ▪▪Adjusted the default values for ’locksleep’ and ’locktries’ c on figur ation  settings  for pamutil . ▪
+▪The used attribut es  field  for import rule c onditions  is properly saved when added or updated. The ▪
+field  would previously become blank after  any changes were made to it.
+▪Recipients no longer require the "Request check-out extensions" privilege to request check-out▪
+extensions for their own check-outs.
+▪Fixed issue where users with the "Request check-out extensions" privilege could not extend check-▪
+outs for others.
+▪Enhanced video playback for Guacamole sessions in the Session monitor app.▪
+▪Removed requirement for target system administrators to have a valid password before linking▪
+account cr edentials  from Privileged Access Manager.
+▪Removed the "View all account sets in this policy" privileged access permission as it is no longer▪
+needed in the product.
+▪Resolved an issue where historical audit data could be lost when an import rule is deleted.▪
+▪An API user no longer needs to be c on figur ed  for Guacamole. ▪
+▪The guac amole.pr operties  file no longer needs to be modified. ▪
+▪Fixed in issue where disclosure plugins could not connect to a managed system with the same ID as a▪
+deleted target system.
+▪Improved the default c on figur ation  files included in Windows and Unix pamutil packages. ▪
+▪Fixed the pamutil -replace option  to properly replace a keyword in a large input file. ▪
+▪Session monitor c onnectivity  messages c on figur ed  in Bravura Security Fabric now appear in ▪
+Guacamole sessions.
+▪Corrected issue where messages for disclosure plugins were not translated properly for non-English▪
+languages.
+▪An email is sent to the requester of a group set request if the "Notif y  requesters of groups from this ▪
+set that do not exist on the managed system they have selected" option  is enabled for the group set.
+▪Session recording icon is now displayed for Guacamole access disclosure plugins when the▪
+SMON_DISPLAY_RECORDING_ACTIVE_TASK_BAR_ICON system variable is enabled.
+▪Account check-outs using SSH key authentic ation  can now be revoked through the Session monitor ▪
+app.
+▪Turned off by default the "Personal vault" privilege from self-services (ALL_SELF_REQUEST) rule. ▪
+▪Added info message to check log for possible runtime  errors when the pwdconflicts utility  is ▪
+executed from the GUI.
+▪The Display disclosure plugin now supports showing non-ASCII characters.▪
+▪The BYPASS SCHEDULE FOR PRIORITY RANDOMIZATIONS system variable now supports immediately▪
+randomizing passwords when offboar ded  managed accounts are onboarded again later on.
+▪Fixed the access disclosure attribut e  description  to properly escape HTML on the attribut e ▪
+c on figur ation  screen.
+▪idmconfig omits deleted managed systems when dumping the c on figur ation  of managed systems. ▪
+▪Fixed ManagedSystemToPolicyLink idmc on fig  type to check whether the target system is associated to ▪
+a managed account or whether one of its managed accounts or group sets are currently checked out
+before unbinding the managed system from the managed system policy.▪Corrected issue where check-outs that can no longer be extended appeared in the Extendable filt er  of ▪
+the Privileged access app.
+▪Group set and SSH key authentic ation  types no longer appear in the UI when using a limited Bravura ▪
+Privilege license.
+▪The Creator, when using this account set setting  is respected when specifying a saved command ▪
+during account set r equesting.
+Privileged access usability
+▪Fixed issue so that PAM OTP API user passwords do not get randomized upon check-out, and also▪
+when check-out expires.
+▪Added advanced search option  "inactiv e"  to W ork s t ationSear ch  to be used by search filt er  plugins to ▪
+display only managed systems in the HISTORICAL_DATA_GRP managed system policy.
+▪Corrected issue so that session monitor sessions can be viewed and downloaded from all r eplic ation ▪
+nodes.
+▪Requests are not blocked by unsupported file type attribut es. ▪
+▪Corrected an issue where a group set is requested and a plugin is executed, r esulting  in the request ▪
+appearing twice in the Privileged access app.
+▪The Remote Desktop access disclosure plugin window maximizes to the correct monitor in a multi- ▪
+monit or  setup.
+▪Fixed team management so that a team vault cannot be created or updated without a specified ▪
+System Team.
+▪Corrected issue so that the resource team for team vaults is properly updated when the team name is▪
+changed.
+▪Fixed an issue where a user can submit the Team:Delete pr e-de fined  request without c on firmation. ▪
+Now the user is not allowed to submit the request without c on firming.
+▪Expired checked-out accounts can be checked-in even if idarch is not running.▪
+▪Fixed an issue so that team names cannot be updated with a team name that already exists.▪
+▪Invalid accounts no longer appear in search results when using the Bravura Privilege team▪
+management wizard to onboard accounts.
+▪Fixed an issue where user was allowed to create a vault account and update a vault account when the▪
+password requirements were not met. Now user is prompted with a "Password does not match
+"VAULT_MSP password policy" error in that situation.
+▪Fixed an issue where the "X" button  was not fully visible in the UI when a group with a long name was ▪
+selected as a chosen value in team management.
+▪Corrected and issue so that the Check out button  does not appear on the Privileged access app for ▪
+managed system/group set pairs not intended to be checked out.
+▪Resolved an issue where local service mode could stop unexpectedly when recovering client systems▪
+with mismatched times t amp s.
+▪Corrected issue so that if a privileged access check-out expires, an error message is displayed and▪
+checkout extension and disclosures are not displayed.▪Corrected issue where a group set is requested and a plugin is executed, r esulting  in the request ▪
+appearing twice in the Privileged access app.
+▪Fixed unexpected cache exceeded warning when searching text captured from recorded sessions.▪
+▪When disclosure policy rules are c on figur ed  from a disclosure filt er  component, none of the disclosure ▪
+plugins c on figur ed  through the managed system policy should be displayed during privileged access
+check-out if none of the policy rules are met.
+▪Added ability for browser driver access disclosure plugin to submit forms when button  calls a ▪
+JavaScript method on event.
+▪Enhanced recording of password c on flict  r esolutions  that are not done through an adminis tr ativ e ▪
+pr ofile.
+▪Enhanced password c on flict  r esolution  so that if a w s tnp w dmanualv erific ation  does not exist actions ▪
+are not enabled for the c on flict ed  account.
+▪Fixed issue where language tags sometimes  did not get loaded when launching disclosures in the ▪
+Privileged access app.
+▪Enhanced the Privileged access app request search filt er  by removing a redundant target system ▪
+search item in favor of managed system ID and managed system description.
+▪Improved the logging for nativ e  disclosure plugins to display the hostname or program name if it is ▪
+inaccessible.
+▪Guacamole monitored sessions return the correct status when access is checked in by a help desk▪
+user.
+▪Password expiry in f ormation  is no longer displayed for vault-only mode accounts. ▪
+▪The Check-outs tab for managed system and managed account clickable links now sort check-outs by▪
+"Check-in time".
+▪Privileged access app users can set discovered system and manageable account type request▪
+attribut es  as part of their requests.
+▪Improved some group set pages by displaying managed system in f ormation  instead of target system ▪
+in f ormation.
+▪Fixed an issue where additional  disclosures appeared in the Privileged access app when the managed ▪
+system policy had both password and SSH key authentic ation  types.
+▪Check in account set and Account set check-out extension are now both available as options  when ▪
+selecting  multiple  accounts to check out.
+▪Improved the Privileged access app by adding a ’Request unapproved’ status in the privileged access▪
+search engine.
+▪Corrected issue so that end users can create account sets for accounts in managed system policies▪
+that have both "Password" and "SSH key" authentic ation  types.
+▪Go to my check-out and Go to approved request options  are now shown if a user has e xisting  check- ▪
+outs or requests with SSH key authentic ation.
+▪Forced r andomiz ation  in the p w dc on flicts  utility  is now blocked when password r andomiz ation  is ▪
+disabled.
+▪Corrected issue so that text in the "Status" column of the "Incomplete r andomiz ation  r esolution" ▪
+c on flicting  passwords page is wrapped.▪Fixed clickable link for group sets to display both explicitly attached  groups and groups added from ▪
+inclusion rules.
+▪ Clarified  the statuses in the PRIVILEGED ACCESS filt er  of the Privileged access app. ▪
+Attribut es
+▪Fixed a display issue for pr ofile  attribut es’  restricted values to honor the case sensitiv e  / insensitiv e ▪
+setting.
+▪Fixed agent input to only pull attribut es  from the blackboard if those attribut es  were actually written ▪
+to the blackboard.
+▪Fixed an issue where the maximum length check was applied to irrelevant data types.▪
+▪Entering a decimal number into an integer pr ofile  attribut e  now shows an error below the input field ▪
+and disables the Submit button.
+▪The CIDR value for API users can be set with either ’ProductAdministrator’ or ’Pr ofileAttrV alue’ ▪
+idmc on fig  types.
+▪Removed the admin.cidr column.▪
+▪An error message is displayed when a pr ofile  and request attribut e  is added or updated with a ▪
+Maximum field  length value of more than 450.
+▪ Entitlemen t  attribut es  will now correctly be shown for both account and child group memberships. ▪
+▪Updated the w orkflo w  requirements plugin ( wfreq ) so that it can properly handle attribut es  for all ▪
+resource types.
+▪The w orkflo w  manager helps users to login quickly when there are large amount of requests pending ▪
+for authoriz ation.
+▪Fixed an issue where "delete role" or "request e x ception"  oper ation  to resolve enforcement variances ▪
+is dropped when processing enforcement page.
+▪Fixed wizard sidebar to update "Account modific ations"  section  properly when removed account is ▪
+added back on enforcement page.
+▪Fixed an issue where users could not search and select a user from the User Resource attribut e. ▪
+▪Disallowed file-type  attribut es  from having pr e-de fined  defaults. Added an ins truction  message to the ▪
+pdr default c on figur ation  page to inform users if "default values are c on figur ed,  they will be set in
+requests regardless of the recipient’s e xisting  values."
+▪Restricted values for pr ofile  and request attribut es  are validated and sent to the restricted values ▪
+plugin in the proper case when they are c ase-insensitiv e.
+▪The "@accountEnabled" value can be populated into pr ofile  attribut es. ▪
+▪Fixed AUTH_IDENTITY_ATTRIBUTES to successfully prompt the user to select their user pr ofile  from a ▪
+list in the event that multiple  users share the same pr ofile  attribut e  value.
+▪Resolved an issue where user attribut es  were not loaded from associated accounts if those accounts ▪
+were loaded before the user pr ofile  was created.
+▪Only proper resource attribut es  are listed after  the group attribut e  mapping page is refreshed. ▪Personal vaults
+▪Resolved an issue where product upgrade could fail if the database contained deleted user pr ofiles ▪
+with personal vault data.
+▪Personal vaults without passwords can now be deleted.▪
+▪Custom filt er s  are now removed when deleting  personal vaults. ▪
+Provisioning
+▪ Modified  the listunassigned.exe utility  to be able to output to the new SQLite list file format ▪
+and for manageinv.exe  to be able to read from this format for importing  inventory items.
+▪OrgChart manager selection  works correctly in the Update attribut es  pop-up of a request generated ▪
+from user comparison.
+▪Fixed the issue when auto assignment request is created for the non-managed group.▪
+▪Fixed the Change of Name details displayed under Accounts to be updated in the approved request to▪
+use the correct Account ID.
+▪Implementer task is not triggered when the user already has the role resource.▪
+PSLang
+▪Updated PSLang function  g e tUserAttrV alueFir s t  so that it will return user name instead of user GUID. ▪
+R eplic ation
+▪Fixed a race c ondition  with persistent listing  enabled in a replicated environment. ▪
+▪Resolved an issue where automated requests were not being distributed among available replicated▪
+instances.
+▪Updated the method to reliably identif y  r eplic ation  node, so that r egis tr y/files  will not be replicated ▪
+from other node to a primary node.
+▪Fixed an issue where the Database Service (iddb) replicates its own new service entry.▪
+▪Corrected an issue with inconsistent license counts between r eplic ation  nodes. After  finishing  auto- ▪
+discovery, the updated license records did not replicate from the primary node to other nodes in time.
+▪Resolved an issue where file r eplic ation  could encounter c onnection  issues when transferring large ▪
+numbers of files.
+▪Fixed the issue with copying a SQLite database file, that is in activ e  use, from one instance to another. ▪
+▪Updated updinst to avoid pr opag ating  registry entry IDAPISOAP\endpoints to other r eplic ation  nodes. ▪
+▪For jobs that are scheduled to run on all nodes, the scheduled jobs page will now list the status▪
+in f ormation  for the latest job to run across all nodes.
+▪Enhanced updinst.exe to avoid database error when tr ansmitting  extdb.db file to r eplic ation ▪
+node while the file is in use.
+▪Groups r eporting  and group oper ations  work as expected. ▪Reports and dashboards
+▪Added PYTHONIOENCODING environment variable so plugins can change encoding from utf-8  to ▪
+cp1252.
+▪ Certific ation  dashboard s t atistics  will change as users are transferred in Orgchart manager certific ation ▪
+campaigns.
+▪Resolved an issue where the Account set access and commands usage report would fail to display the▪
+managed system policy for accounts that had never been checked out.
+▪Performance of the Group report has been improved.▪
+▪The following reports types of the Group’s report have been renamed:▪
+▪Show managed groups to Show managed group and authoriz ation  summary. ▪
+▪Show managed group member summary to Show managed groups summary.▪
+▪The status "Review not required" is provided in certific ation  reports for invalid entitlemen t  entries. ▪
+▪Report engines have been optimiz ed  for speed on large data. ▪
+▪Fixed an issue where the Resource attribut es  report produces no results when criteria are de fined. ▪
+▪Fixed an report macros error where there are invalid characters in the file name. ▪
+▪Improved the result style for Session activity  report. ▪
+▪Corrected Password change history report so that it includes password changes for vault-only▪
+accounts.
+▪Proper results are reported with "Membership deleted by" filt er  in the Groups report. ▪
+▪Report Entitlemen t  certific ation  coverage shows certific ation  reviewer’s self-reviewed items. ▪
+▪Incomplete role reports can be sorted on user ID.▪
+▪Changed report2pdr behaviors to skip the nonsense oper ations  and carry on with the valid oper ations ▪
+in the request when a pr e-de fined  request has multiple  oper ations.
+▪Improved the submission of report2pdr requests:▪
+▪The "magnifying glass" icons are shown as the result rows get created, when the page is manually▪
+refreshed.
+▪Added better  progress r eporting  to the top page message section.  The message is constantly auto- ▪
+refreshed, and reports the number of records currently processed.
+▪The role oper ation  "deprecate" now is added in the Role history report. ▪
+▪Fixed the issue of an empty pop up window when Requester or recipient is set to "Recipient" in the▪
+Requester and recipient a ffinity  report
+▪ W orkflo w  managers can open the request detail page by clicking the link of the request in the ending ▪
+request box in the w orkflo w  dashboard.
+▪In the ADD mode, the Account Change History report shows the expected value when the user▪
+account was added.
+▪Updated the Import rule binding failures report to no longer track managed objects marked as▪
+"deactiv a t ed";  this report now tracks managed objects that were unbound because they no longer
+matched their import rule.
+▪Improved scability of import rules with 15 or more c onditions. ▪

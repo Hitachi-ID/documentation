@@ -1,0 +1,350 @@
+ii.Enable the checkboxes next to the user classes you want to select, then click Select . ii.
+The list of user class members is displayed.
+iii.Complete the participan t  de finitions  for the newly added user classes by selecting  from the iii.
+drop-down menu.
+iv.Click Update . iv.
+▪To create a new user class:▪
+i.See Adding user classes  (on page 738) for details on how to create a user class. i.
+ii.Once created, complete the participan t  de finition  for your new user class by selecting  from the ii.
+drop-down menus.
+Once you’ve added at least one user class to the list of user class members, you can also:
+▪Delete user classes from the list.▪
+▪Update the participan t  de finitions  for the user classes in the list. ▪
+If you have multiple  user classes in the list of user class members, then The participan ts  have to
+match which of the user classes option  is displayed.
+This can be set so that:
+▪The participan ts  can match Any of the user classes listed ▪
+▪The participan ts  must match All of the user classes listed ▪
+.
+FILTER USER PLUGIN  and KEEP USER PLUGIN  take precedence over GENERATE USER PLUGIN  if they are
+both in use. For example, if  GENERATE USER PLUGIN  is set to list User01 and User02, but FILTER USER
+PLUGIN  is set to filt er  out all users, then no users are listed.
+Con figur e  one of the following plugins via the Manage the system > Modules > Options  menu.
+FILTER USER PLUGIN
+There are no shipped plugins for use with the FILTER USER PLUGIN  point.
+Advanced sample plugin scripts, filter-user.psl  and filter-user-callback.psl  are
+located in the samples\plugin directory. See more in f ormation  about writing  a custom plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The plugin is called by the View and update pr ofile  (IDR) module and Help users (IDA) modules before the
+user list is displayed. It is called multiple  times  if there are more users than the value of the RECORDS PER
+PAGE setting.  The plugin runs with the number of users determined by the RECORDS PER PAGE at a time.
+Filter plugins operate diff er en tly  from most plugins, which are synchronous. All filt er  plugins support
+asynchronous calling. There are two forms of asynchronous calling:▪Standard input/output mode that processes standard filt er  plugin input/output ▪
+In standard input/output (stdio) mode, filt er  plugins work in the following way:
+1.An event triggers a CGI program to call the plugin program or script and sends it standard user1.
+data.
+2.The calling program c ontinues  to stream input from stdin, one item at a time  until  there are no 2.
+more items.
+3.For each item, the plugin returns the filt er  result to stdout. 3.
+4.The calling program receives the final  standard output and c ontinues. 4.
+Input
+Input is similar for all resource filt er  plugins. The plugin fir s t receives standard data in the format:
+"" "" = {
+  "sessionid" = "<session ID>" # The session ID of the request.
+  "module" = "<idr|ids|idp|idwfm>"
+  "accountID" = "<account ID>" # The account ID of the recipient.
+  "template = "<template ID>" # The selected template ID.
+  "targetid" = "<target ID>" # The target ID for the recipient.
+  "navigation" "" = { ... } # User navigation data
+  "recipient" "<user|empty>" = {
+     # The "recipient" group contains standard information about the
+     # subject of the request.
+   }
+  "viewer" "user" = {
+     # The "viewer" group contains standard information about the
+     # person using the CGI.
+   }
+  "request" "" = {
+     # The "request" group contains standard information about the
+     # the request.
+   }
+ }
+Some of the values above may be empty, due to the stage and type of the request.
+The plugin then receives a series of KVGroups; one for each item. For example:
+"user" "" = {
+    "id" = "Dave-Appla"
+    "name" = "Dave Appla"
+    "filter" = "<true|false>"
+    # true, if the user has been excluded by this plugin    # false, otherwise
+}
+See User data  (on page 1514) for a description  of the user KVGroup.
+Output
+For each item, one output KVGroup is expected on stdout, with an optional  "filt er"  = "true" pair to
+indicate that the item should not be displayed:
+"" "" = {
+    "filter" = "true|false"
+           # If false, the user is displayed
+           # If true, the user is not displayed
+    "retval" = "<#>"
+           # Optional, if non-zero returned, abort the plugin
+    "needitemdetail" = "1|0"
+           # If 1, all details are displayed in the input of the next user.
+           # If 0, only ID is displayed in the input of the next user. By
+           # default, it is set to 1.
+}
+A plugin that encounters errors in its processing can add standard output pairs for individual items,
+which should cause the plugin e x ecution  to be aborted.
+.
+▪Callback mode that uses two functions  to process the input/output ▪
+In callback mode the user filt er  plugin uses two functions:
+OnFilterInit(const $inkvg, output $detail)  This function  is called once to initializ e  the environment
+based on the cgi user.
+▪$inkvg – the viewer▪
+▪$detail – if 0, no detail provided on input kvg for each user▪
+– if 1, detail is provided on input kvg for each user
+– can also be expressed as a KVGroup, see the example below
+OnItemFilter(const $inkvg, output $msg, output $allow)  This function  is called once per item to
+determine who the user can view or manage.
+▪$inkvg – the user to filt er ▪
+▪$msg – error message▪
+▪$allow – if 1, this user is displayed and available▪
+– if 0, this user is not displayed and is unavailable  
+Examples1.Using integer for $detail:  1.
+ function OnFilterInit( const $inkvg, output $detail ) 
+ { 
+    $detail = 0; // 0 means no need for detail info, if 1, detail info will be in inkvg for OnItemFilter 
+ } 
+ function OnItemFilter( const $inkvg, output $msg, output $allow ) 
+ { 
+     $allow = 0; 
+     var $id; 
+     kvgGetValue( $inkvg, "id", $id ); 
+     if( $id[0] == "w" ) 
+     { 
+         $allow = 1; 
+     } 
+     return 0; 
+ }  
+2.Using KVGroup for $detail:  2.
+function OnFilterInit( const $inkvg, output $detail ) 
+{ 
+    $detail = kvgCreate( "", "" ); 
+    kvgAddValue( $detail, "needitemdetail", "1" ); 
+} 
+function OnItemFilter( const $inkvg, output $msg, output $allow ) 
+{ 
+    $allow = 0; 
+    var $id; 
+    kvgGetValue( $inkvg, "id", $id ); 
+    if( $id[0] == "w" ) 
+    { 
+        $allow = 1; 
+    } 
+    return 0; 
+}  
+.
+This mode can be used to reduce processing time  in environments with large numbers of users.
+.
+KEEP USER PLUGIN
+There are no shipped plugins for use with the KEEP USER PLUGIN  point. See more in f ormation  about
+writing  a custom pluginRequirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The plugin is called by the View and update pr ofile (IDR) module and Help users  (IDA) module before the
+user list is displayed. It is called multiple  times  if there are more users than the value of the RECORDS PER
+PAGE setting.  The plugin runs with the number of users determined by the RECORDS PER PAGE at a time.
+Filter plugins operate diff er en tly  from most plugins, which are synchronous. All filt er  plugins support
+asynchronous calling. There are two forms of asynchronous calling:
+▪Standard input/output mode that processes standard filt er  plugin input/output ▪
+In standard input/output (stdio) mode, filt er  plugins work in the following way:
+1.An event triggers a CGI program to call the plugin program or script and sends it standard user1.
+data.
+2.The calling program c ontinues  to stream input from stdin, one item at a time  until  there are no 2.
+more items.
+3.For each item, the plugin returns the filt er  result to stdout. 3.
+4.The calling program receives the final  standard output and c ontinues. 4.
+Input
+Input is similar for all resource filt er  plugins. The plugin fir s t receives standard data in the format:
+"" "" = {
+  "sessionid" = "<session ID>" # The session ID of the requester.
+  "module" = "<idr|ids|idp|idwfm>"
+  "navigation" "" = { ... } # User navigation data
+  "recipient" "<user|empty>" = {
+     # The "recipient" group contains standard information about the
+     # subject of the request.
+   }
+  "viewer" "user" = {
+     # The "viewer" group contains standard information about the
+     # person using the CGI.
+   }
+  "request" "" = {
+     # The "request" group contains standard information about the
+     # the request.
+   }
+ }
+Some of the values above may be empty, due to the stage and type of the request.The plugin then receives a series of KVGroups; one for each item. For example:
+"user" "" = {
+    "id" = "Dave-Appla"
+    "name" = "Dave Appla"
+    "filter" = "<true|false>"
+    # true, if the user has been excluded by this plugin
+    # false, otherwise
+}
+See User data  (on page 1514) for a description  of the user KVGroup.
+Output
+For each item, one output KVGroup is expected on stdout, with an optional  "keep" = "true" pair to
+indicate that the item should be displayed:
+"" "" = {
+    "keep" = "true|false"
+           # If false, the user is displayed
+           # If true, the user is not displayed
+    "retval" = "<#>"
+           # Optional, if non-zero returned, abort the plugin
+    "needitemdetail" = "1|0"
+           # If 1, all details are displayed in the input of the next user.
+           # If 0, only ID is displayed in the input of the next user. By
+           # default, it is set to 1.
+}
+A plugin that encounters errors in its processing can add standard output pairs for individual items,
+which should cause the plugin e x ecution  to be aborted.
+.
+▪Callback mode that uses two functions  to process the input/output ▪
+In callback mode the keep user plugin uses two functions:
+OnKeepInit(const $inkvg, output $detail)  This function  is called once to initializ e  the environment
+based on the cgi user.
+▪$inkvg – the viewer▪
+▪$detail – if 0, no detail provided on input kvg for each user▪
+– if 1, detail is provided on input kvg for each user
+– can also be expressed as a KVGroup, see the example below
+OnItemKeep(const $inkvg, output $msg, output $allow) This function  is called once per item to
+determine who the user can view or manage.▪$inkvg – the user▪
+▪$msg – error message▪
+▪$allow – if 1, this user is displayed and available▪
+– if 0, this user is not displayed and is unavailable  
+Examples
+1.Using integer for $detail:  1.
+ function OnKeepInit( const $inkvg, output $detail ) 
+ { 
+    $detail = 0; // 0 means no need for detail info, if 1, detail info will be in inkvg for OnItemKeep 
+ } 
+ function OnItemKeep( const $inkvg, output $msg, output $allow ) 
+ { 
+     $allow = 0; 
+     var $id; 
+     kvgGetValue( $inkvg, "id", $id ); 
+     if( $id[0] == "w" ) 
+     { 
+         $allow = 1; 
+     } 
+     return 0; 
+ }  
+2.Using KVGroup for $detail:  2.
+function OnKeepInit( const $inkvg, output $detail ) 
+{ 
+    $detail = kvgCreate( "", "" ); 
+    kvgAddValue( $detail, "needitemdetail", "1" ); 
+} 
+function OnItemKeep( const $inkvg, output $msg, output $allow ) 
+{ 
+    $allow = 0; 
+    var $id; 
+    kvgGetValue( $inkvg, "id", $id ); 
+    if( $id[0] == "w" ) 
+    { 
+        $allow = 1; 
+    } 
+    return 0; 
+}  
+.This mode can be used to reduce processing time  in environments with large numbers of users.
+.
+GENERATE USER PLUGIN
+There are no shipped plugins for use with the GENERATE USER PLUGIN  point. See more in f ormation
+about writing  a custom plugin.
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The plugin is called by the View and update pr ofile  (IDR) module and Help users  (IDA) module before the
+user list is displayed. It is called once when a user select page is fir s t rendered. Users that are returned by
+the plugin are only available for selection.  If the set of users is empty, the end user is not able to submit a
+request for anyone.
+User list g ener ation  is similar to the filt er  plugins. This plugin supports support synchronous calling. There
+are two forms of synchronous calling:
+▪Standard input/output mode that processes standard filt er  plugin input/output ▪
+In standard input/output (stdio) mode, a synchronous list g ener ation  plugin works in the following
+way:
+1.An event triggers a CGI program to call the plugin program or script and sends it standard use data.1.
+2.When the CGI program is ready to receive an object, it sends an empty KVGroup ( "" "" = { }) 2.
+to the plugin program.
+3.The plugin program sends a KVGroup that includes an object ID, or is empty to indicate end of list.3.
+4.Steps 2 and 3 c ontinue  until  the plugin sends an empty KVGroup to indicate end of list, or the 4.
+objects generated reaches the limit required by the calling program.
+Input
+Input sent to the plugin is as follows:
+"" "" = {
+  "module" = "<idr|psw|ida>"
+  "navigation" "" = { ... } # User navigation data  (on page 1521).
+  "recipient" "<user|empty>" = {
+     # The "recipient" group contains standard information about the
+     # subject of the request.
+   }
+  "viewer" "<user|admin>" = {
+     # The "viewer" group contains standard information about the
+     # person using the CGI.   }
+ }
+Output
+The list of users is passed from the plugin on stdout. A KVGroup is sent for each user.
+The output KVGroup sent from the plugin must be as follows:
+"" "" = {
+  "userid" = "<profile ID>"
+      # Optional; This indicates the next user to add to the list of users
+      # If omitted, this indicates there are no more users to add.
+  "abort"  = "<true|
+false>" #If true, bypass the list generation plugin
+  "errmsg" = "<text message>" # A message sent on an error
+  "retval" = "0" # Mandatory; non-zero indicates failure
+}
+.
+▪Callback mode that uses two functions  to process the input/output ▪
+In call back mode, the user generator uses two functions:
+OnGeneratorInit(input $inkvg)  This function  is called once to initializ e  the environment based on the
+cgi user.
+▪$inkvg – the viewer and module▪
+GetGenList( output $list )  This function  returns users that the user is able to view or manage.
+▪$list – the array of user pr ofile  IDs  ▪
+Example
+  function OnGeneratorInit( input $inkvg )
+  {
+      log( "inkvg: " + kvgToString($inkvg ));
+  }
+  function GetGenList( output $list )
+  {
+      var $include_user[]
+      $include_user[ size( $include_user ) ] = "AUSER1";
+      $include_user[ size( $include_user ) ] = "AUSER2";
+      $include_user[ size( $include_user ) ] = "AUSER3";
+      $list = $include_user;
+  }
+.This mode can be used to reduce processing time  in environments with large numbers of users.
+See also: 
+Filter resources  (on page 2354) show you how to write and c on figur e  plugins to filt er  resources such as
+template accounts and groups.
+Filter pr e-de fined  requests
+Bravura Security Fabric  can filt er  pr e-de fined  requests so that requesters only see requests that are
+relevant to them. Bravura Security Fabric  can run a request filt er  plugin when users select options  to
+request new resources or update their or another user’s pr ofile.
+This plugin is set by the Modules > Options  > FILTER PREQUEST PLUGIN field.
+It also a ff ects  the pr e-de fined  requests that product administrator s are allowed to manage if the PSA
+FILTERING option  is enabled in the Modules > Manage the system  (PSA) module menu.  
+There are no shipped plugins in use with this plugin point. See more in f ormation  about writing  a custom
+plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+This plugin is run by the View and update pr ofile  (IDR) module.
+Filter plugins operate diff er en tly  from most plugins, which are synchronous. All filt er  plugins support
+asynchronous calling. There are two forms of asynchronous calling:
+▪Standard input/output mode▪
+In standard input/output (stdio) mode, filt er  plugins work in the following way:
+1.An event triggers a CGI program to call the plugin program or script and sends it standard user1.
+data.
+2.The calling program c ontinues  to stream input from stdin, one item at a time  until  there are no 2.
+more items.
+3.For each item, the plugin returns the filt er  result to stdout. 3.
+4.The calling program receives the final  standard output and c ontinues. 4.
+Input
+Input is similar to resource filt er  plugins. The plugin fir s t receives standard data in the format:
+"" "" = {
+       "recipient" "user" = {
+           # The "recipient" group contains standard information about the

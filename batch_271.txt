@@ -1,0 +1,301 @@
+Part IX MAINTENANCE1 Scheduling maintenance
+Product administrators use the Maintenance > Scheduled jobs menu to schedule programs or jobs to run
+on one or more Bravura Security Fabric  servers.
+You require the Maintain servers adminis tr ativ e  privilege in order to access the Maintenance menu.
+Scheduled jobs are executed by the Scheduler Service. The service checks for new or updated jobs to run
+at specified  intervals (default is 10 minutes). You can c on figur e  this interval, or start and stop the service,
+by accessing the Scheduler Service page from the Maintenance > Services  menu.
+The Scheduler Service  (on page 2869) is started and c onfigured  aut omatic ally  when Bravura Security
+Fabric is installed. In order for a job to execute, the service must be running.
+You can also click Run now on the Scheduled job in f ormation  page to immediately launch a scheduled
+job.  
+About the default scheduled jobs
+Bravura Security Fabric  creates some jobs aut omatic ally ,  including:▪Clean session data files (on page 2703) ▪
+▪Dashboard s t atistics  daily update  (on page 2703) ▪
+▪autores  (on page 2704) ▪
+▪psupdate  (on page 2705) ▪
+▪ p w dc on flicts  (on page 2710) ▪
+▪rotatelog  (on page 2711) ▪
+▪psdonechk  (on page 2712) ▪
+▪rotatelog-proxy  (on page 2712) ▪
+Clean session data files
+This job runs the cleansessdata  utility  to removed session files older than the greater of
+DEFAULT_EXPIRY_SECONDS or DEFAULT_API_SESS_EXPIRY_SECONDS. If neither system variable is set, it
+will use the DEFAULT_EXPIRY_SECONDS default, which is 600.
+See cleansessdata
+The cleansessdata program is run nightly by the Scheduler Service ( psscheduler ) to removed
+session files older than the greater of DEFAULT_EXPIRY_SECONDS or
+DEFAULT_API_SESS_EXPIRY_SECONDS. If neither system variable is set, it will use the
+DEFAULT_EXPIRY_SECONDS default, which is 600.
+You can modify the scheduled job at Manage the system > Maintenance > Scheduled jobs .
+Usage
+cleansessdata.exe [-h] [-v] [-debug]
+for command-line usage.
+Dashboard s t atistics  daily update
+This job runs the dashboardstats  utility  to calculate cached data for dashboards. By default it is
+scheduled to run daily at 11:00 pm on the primary Bravura Security Fabric  server.
+You can modify the Job to run to suit your environment. A separate scheduled job must be created if the
+dashboardstats  utility  is run more than once a day.
+See dashboardstats
+Use the dashboardstats program to recalculate the cached data for dashboards regardless of the
+Manage the system  > Maintenance > System variables  > DASHBOARD CACHE VALIDITY INTERVAL  or
+DASHBOARD CACHE MAX DELAY system variables.
+The following dashboards have cached data and will be a ff ect ed  by the dashboardstats program:
+▪Manage the system▪
+▪Privileged access▪
+▪Manage certific ation  process ▪
+▪View w orkflo w  dashboard ▪This does not a ff ect  Bravura Group .
+Usage
+dashboardstats.exe [-forcerun]
+Examples
+1.To recalculate the dashboard caches:1.
+dashboardstats.exe
+2.To recalculate the dashboard caches on a node other than the primary server:2.
+dashboardstats.exe -forcerun
+for command-line usage.
+autores
+ Applies to Bravura Identity  
+ Applies to Bravura Privilege
+This job executes the autores -all -submit command. The command will calculate the
+aut omatic  assignment  (on page 2442) for c on figur ed  roles and groups and submit requests based on
+results.
+By default, this job is scheduled to run daily at 03:30 am on one Bravura Security Fabric  server.  
+See autores
+Use the autores program to determine the aut omatic  role and group de ficits  and surpluses and issue
+requests. When aut omatic  assignment is c on figur ed,  the program is run aut omatic ally  at the end of the
+auto discovery process.
+Usage
+autores.exe -all [-submit | [-limitsubmit <max submissions> | -
+outfile <outfile> ] | -listfile <listfile> ] [-threshold <N>]
+autores.exe -group <targetid> <groupid> [-submit | [-
+limitsubmit <max submissions> | -outfile <outfile> ] | -
+listfile <listfile> ] [-threshold <N>]
+autores.exe -role <role id> [-deleteonly | -submit | [-
+limitsubmit <max submissions> | -outfile <outfile> ] | -
+listfile <listfile> ] [-threshold <N>]
+autores.exe -inputfile <inputfile> [-submit | [-
+limitsubmit <max submissions> | -outfile <outfile> ] | -
+listfile <listfile> ] [-threshold <N>]
+Option Description
+-all Act on all resources.
+-group <t ar g etid>  <groupid> Act on the specified  target system group.Option Description
+-role <role id> Act on the specified  role.
+-deleteonly Aut omatic  unassignment to a specified  role.
+-inputfile  <inputfile> File containing changes to submit.
+-submit Submit the requests for changes.
+-limitsubmit <max submissions> Limit the number of requests generated. Will override
+AUTO ASSIGNMENT MAXSUBMIT DEFAULT setting.
+-listfile  <listfile> File to output violations  to (default is autores.kvg).
+-outfile  <outfile> Output file for printing  all violations  that did not get
+submitted  along with the error message returned.
+(default is aut or es-unsubmitted.kv g)
+-threshold <N> Do not submit any request if number of requests to be
+submitted  exceeds <N>. If N= 0, no threshold. Using this
+setting  overrides the AUTO ASSIGNMENT THRESHOLD
+system variable.
+Examples
+1.To evaluate all the resources with aut omatic  assignment c on figur ed  and submit requests 1.
+autores.exe -all -submit
+2.To evaluate all the resources with aut omatic  assignment c on figur ed,  output to a dryrun.kvg file 2.
+without submitting  requests
+autores.exe -all -listfile dryrun.kvg
+3.To submit the dryrun.kvg file 3.
+autores.exe -submit -inputfile dryrun.kvg
+4.To evaluate the role with aut omatic  assignment c on figur ed  and submit requests 4.
+autores.exe -role GENERAL -submit
+5.To evaluate the role with aut omatic  unassignment c on figur ed  and submit requests 5.
+autores.exe -role GENERAL -deleteonly -submit
+6.To evaluated a group with aut omatic  assignment c on figur ed  and submit requests 6.
+autores.exe -group AD FINANCE -submit
+7.To evaluate multiple  groups and roles with aut omatic  assignment c on figur ed  and submit requests 7.
+autores.exe -group AD FINANCE -group AD HR -role GENERAL -
+role HELPDESK -submit
+for command-line usage.
+psupdate
+This job runs the psupdate program, which initia t es  and controls the auto discovery  process  (on page
+2716). By default, this job is scheduled to run daily at 1:30 am. Bravura Security Fabric  aut omatic ally
+creates the psupdate job when you add your fir s t target system, and c on figur es  it to run on the serverfrom where you added the target system. You cannot delete this job, nor can you modify the Job to run
+or Directory to run job in  settings.
+In a replicated environment, it is aut omatic ally  set to run only on the fir s t server on which auto discovery
+is run. It should never be run on two servers at the same time.  Before running, psupdate will check
+whether it is scheduled to run on some other node, and will abort if so. Psupdate cannot be reassigned
+to other nodes while auto discovery or persistent listing  are currently running.
+The psupdate program also executes the autores -all -submit  command. The command will
+calculate the aut omatic  assignment  (on page 2442) for c on figur ed  roles and groups and submit requests
+based on results.
+Note: You can change the server  (on page 2715) that the psupdate job is run on;
+however, do not c on figur e  it to run on multiple  servers.   
+See psupdate
+The psupdate program initia t es  and controls the auto discovery process. It is responsible for calling a
+series of programs and PSLang scripts, which in turn, control e x ecution  of each auto discovery task.
+These tasks include:
+▪Refreshing proxy servers▪
+▪ Listing  in f ormation  from managed systems ▪
+▪Evaluate the import rules on discovered systems and accounts and assign them to managed system▪
+policies
+▪Monitoring list file size ▪
+▪ Con figuring  listed computer objects as Bravura Privilege resources ▪
+▪ Updating  the Bravura Security Fabric database ▪
+▪ De t ecting  out-of-band changes ▪
+▪Cleaning up the database▪
+▪Checking inventory levels▪
+▪Loading user class cache▪
+▪ Submitting  aut omatic  assignment requests ▪
+▪Synchronize server files and registry keys ▪
+▪ Notif ying  the Bravura Security Fabric administrator of errors or warnings ▪
+▪ Cr eating  the default scheduled task to run psupdate ▪
+You can also run psupdate to update a single user.
+Never run psupdate on more than one replicated Bravura Security Fabric server at the same time
+In a replic ation  environment, the sending node creates additional  queue files in the <ins t anc e>/db/
+replic ation  directory. These are used to store the data to be sent to all replic ation  nodes. Once this data
+has been replicated to the nodes, these files are removed.
+Usagepsupdate.exe
+   [-account <accountID>]
+   [-alltasks]
+   [-checkinv]
+   [-enforce_list <enforcement-list>]
+   [-enforce_submit <enforcement-list>]
+   [-forcerun]
+   [-import]
+   [-importlws]
+   [-list]
+   [-list_reset_threshold]
+   [-loaddb]
+   [-no-plugins]
+   [-profile <profileID>]
+   [-resattr <attrID>]
+   [-resattrvalue <attrVal>]
+   [-schedule]
+   [-status]
+   [-target <targetID>]
+   [-targetdiscovered]
+   [-targetmanual]
+   [-updproxy]
+   [-v|--version]
+Argument Description
+-updproxy Refresh proxy servers.
+-list Only list login IDs and supported in f ormation  from
+specified  target systems. At least one target must be
+specified.
+-list_reset_threshold Resets the recorded object count before listing.  This
+disables listthr esholdma xr elativ echang e  for that specific
+list.
+-loaddb Only load data from specified  target systems based on
+the e xisting  list files to the database. At least one target
+must be specified.
+-checkinv Check inventory levels.
+- alltasks Complete all tasks that are done during a full update
+even though specific  target systems are being listed
+and/or loaded.
+-import Evaluate all discovered objects from target systems
+against push mode import rules where they apply.
+Applies to the discovered computers from the target, andArgument Description
+the subsequent discovered accounts from discovered
+systems that get managed.
+-importlws Evaluate all discovered objects from target systems
+against local service mode import rules where they apply.
+Applies to the local service mode discovered computers,
+and the subsequent discovered accounts from discovered
+systems that get managed.
+-no-plugins Run psupdate without e x ecuting  plugin scripts  (on
+page 2742) (*_pre.cmd, *_post.cmd).
+-enforce_list <enforcement-list> Run the rbacenforce program to list role
+enforcement violations.
+-enforce_submit <enforcement-submit> Run the rbacenforce program to submit requests
+role enforcement violations.
+-pr ofile  <pr ofile  ID> Run psupdate for a single user de fined  by a Bravura
+Security Fabric pr ofile  ID. You can use this with the -target
+option  zero or more times  to specify the targets on which
+psupdate will update the accounts. When used without
+the -target option,  psupdate will update the accounts
+on all target systems.
+-account <pr ofile  ID> Run psupdate for a single user de fined  by an account
+ID on a single specified  target system. You must use the -
+target option  to specify the target system.
+-target <target ID> Specify a target system on which psupdate will list a
+single user. This option  must be used with the -pr ofile,  -
+account, -list or -loaddb option.
+-targetdiscovered Specify all discovered target systems.
+-targetmanual Specify all target systems that are manually de fined.
+-forcerun Force psupdate to have it c ontinue  even if it looks like
+psupdate is already running or scheduled to run on some
+other node.
+-r esattr Select target systems based on a specified  resource
+attribut e  ID. This option  must be used with the -
+r esattr v alue  and -target option.Argument Description
+-r esattr v alue Select target systems that match a resource attribut e
+value. This option  must be used with the -r esattr  and -
+target option.
+-schedule Creates the default scheduled task to run psupdate if
+it does not already exist. No other tasks are run.
+-status Returns the current status of the auto discovery process:
+▪No c on figur ation  changes can be made until  it is ▪
+completed %RUNNINGACTIONS%
+▪Running connector for target [%TARGETID%] (elapsed▪
+time:  %ELAPSEDTIME%)
+▪ Listing  files on proxy [%PROXYSERVER%] (elapsed ▪
+time:  %ELAPSEDTIME%)
+▪Loading staging table [%STAGETABLE%] (elapsed time: ▪
+%ELAPSEDTIME%)
+▪Running plug-in [%PLUGIN%] (elapsed time: ▪
+%ELAPSEDTIME%)
+▪Running stored procedure [%STOREDPROC%] (elapsed▪
+time:  %ELAPSEDTIME%)
+▪ R eplic ating  file [%REPLFILE%] to proxy ▪
+[%PROXYSERVER%] (elapsed time:  %ELAPSEDTIME%)
+▪ Updating  database (%ACTION%) ▪
+▪ Listing  target (%ACTION%) ▪
+▪ Updating  proxy (%ACTION%) ▪
+-v — --version Display version in f ormation.
+Examples
+1.To run auto discovery, as it would be run during the scheduled psupdate job, type:1.
+psupdate.exe
+2.To determine the current status of the auto discovery process, type:2.
+psupdate.exe -status
+3.To list in f ormation  from all manually added target systems, type: 3.
+psupdate.exe -targetmanual -list
+4.To list in f ormation  from the target system ADDOM, type: 4.
+psupdate.exe -target ADDOM -list
+5.To list in f ormation  without running plugin scripts, type: 5.
+psupdate.exe -targetmanual -targetdiscovered -list -no-plugins
+6.To list, load, and evaluate in f ormation  from all discovered target systems, type: 6.
+psupdate.exe -targetdiscovered -list -loaddb -import
+7.To update accounts for a single pr ofile  on all target systems, type: 7.
+psupdate.exe -profile <profile ID>8.To only list from specified  target systems that have "New York" as a value for resource attribut e 8.
+"Loc ation".
+psupdate.exe -list -resattr Location -resattrvalue "New York" -
+target TARGET1  -target TARGET2
+for command-line usage and examples.
+p w dc on flicts
+This job runs the pwdconflicts utility  to list accounts with passwords in c on flict.  By default it is
+scheduled to run weekly at 01:00 am on Sunday on the primary Bravura Security Fabric  server.  
+See p w dc on flicts
+Use the pwdconflicts program to list accounts with passwords in c on flict.  You can then choose to
+aut omatic ally  resolve these c on flicts  or force a r andomiz ation  for the a ff ect ed  accounts.
+Usage
+pwdconflicts.exe
+        [-list | -randomize | -resolve] [-force][-save]
+    [-policyid <policy ID>] [-account <account ID>] [-batchsize
+    <batch size>] [-sleeptime <sleep time>] [-wstnid <workstation ID>]
+[-blank]
+Argument Description
+-account <account ID> Only act on accounts with a specific  ID.
+-batchsize <batch size> The maximum amount of accounts to act on. The default
+is 5.
+-force Allow r esolution  or r andomiz ation  to proceed without
+further c on firmation.  Requires one of -randomize or -
+resolve.
+-list List all accounts with passwords in c on flict.
+-policyid <policy ID> The managed system policy ID. When used in
+c ombination  with -list, -randomize, or -resolve, only
+accounts in this policy will be acted on.
+-randomize Force randomize accounts with passwords in c on flict.
+Forced r andomiz ation  will not occur if password
+r andomiz ation  is disabled on the managed system policy
+to which the managed account is bound.
+-resolve Attemp t  to resolve accounts with passwords in c on flict
+aut omatic ally .
+-save Save the list of c on flict ed  accounts to the database.
+Requires one of -list, -randomize, or -resolve.
+-sleeptime  <sleep time> The dur ation  (in milliseconds) to wait between batches.
+-wstnid <system ID> Only act on accounts from this managed system.

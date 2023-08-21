@@ -1,0 +1,222 @@
+Option Description
+PAMSA ORCHESTRATION END SUCCESS Subscriber or ches tr ation  is completed successfully.
+This trap is used for the Bravura Privilege P attern.
+PAMSA ORCHESTRATION START FAILURE Subscriber or ches tr ation  fails to start.
+This trap is used for the Bravura Privilege P attern.
+PAMSA ORCHESTRATION START SUCCESS Subscriber or ches tr ation  starts successfully.
+This trap is used for the Bravura Privilege P attern.
+PAMSA SUBSCRIBER NOTIF FAILURE Subscriber notific ation  plugin requests password r andomiz ation  to be
+blocked.
+This trap is used for the Bravura Privilege P attern.
+RES CONFIRM PASSWORD FAILURE A managed system fails to change the password for the managed
+user.
+RES CONFIRM PASSWORD SUCCESS A managed system successfully changes the password for the
+managed user.
+RES DEL WSPW FAILURE A user fails to be removed from the list of managed system users.Option Description
+RES DEL WSPW SUCCESS A user is removed from the list of managed system users. The trap is
+triggered when an account is deleted from a list of managed
+accounts. The trap is not triggered when a managed system policy is
+deleted, even though the policy contains managed accounts and
+those accounts are deleted as well.
+RES PASSWORD PUSHED A password on a managed account is changed on a push-mode
+managed system
+RES PASSWORD SYNCHRONIZATION
+FAILUREA password on a managed account is changed on a push-mode
+managed system
+RES PASSWORD SYNCHRONIZATION
+SUCCESSA password is successfully synchronized on all managed systems in a
+managed systems policy.
+Data provided here include the ResGroup, acc ountid  (if
+s ynchr oniz ation  scope is set to “Synchronize accounts with same ID"),
+password used, and when the s ynchr oniz ation  was attemp t ed.Option Description
+RE SRESET PASSWORD FAILURE A product administrator fails to override a managed system
+password.
+RES RESET PASSWORD SUCCESS A product administrator overrides a managed system password.
+RES WRITE PASSWORD FAILURE A managed system user password fails to be c ommitted  to the
+database.
+RES WRITE PASSWORD SUCCESS A managed system user password is c ommitted  to the database.Option Description
+SERVER INFO FAILURE An T r ansaction  Monitor Service (idtm) server in f ormation  oper ation
+fails.
+This trap is used for the Bravura Privilege P attern.
+SERVER INFO SUCCESS An T r ansaction  Monitor Service (idtm) server in f ormation  oper ation
+succeeds.
+This trap is used for the Bravura Privilege P attern.
+UPDATE RESOURCE FAILURE An T r ansaction  Monitor Service (idtm) server update resource
+oper ation  fails.
+This trap is used for the Bravura Privilege P attern.
+UPDATE RESOURCE SUCCESS An T r ansaction  Monitor Service (idtm) server update resource
+oper ation  succeeds.
+This trap is used for the Bravura Privilege P attern.
+Privilege account access request eventsthat launch interface programs
+The following settings  relate to account access request events and can be set in the Account access
+request  tab:Option Description
+RES ACCESS REVOCATION CHECKIN Program to execute when an account access check-in
+action  has failed.
+RES CHECKIN FAILURE A password check-in action  has failed.
+RES CHECKIN SUCCESS A password check-in action  is successful.
+RES CHECK OUT EXPIRY A checked out password expires.
+RES CHECKOUT FAILURE A password check-out action  has failed.
+RES CHECKOUT LIMIT REACHED The check-out limit is exceeded.
+RES CHECKOUT SUCCESS A password check-out action  is successful.
+In f ormation  passed to this exit trap includes the
+status of all requests on the password.
+RES REQUEST PASSWORD FAILURE <idarchive> fails to generate a random password.
+RES REQUEST PASSWORD SUCCESS <idarchive> generates a random password.
+RES VIEW PASSWORD A product administrator requests access to a
+privileged account on a managed system.
+RES VIEW PASSWORD HIS A product administrator requests to access privileged
+account access history on a managed system. The
+trap is triggered when a user views the access history
+of a managed account. The account can viewed from
+either the Managed system policies or Managed
+systems menus. Viewing a privileged account’s
+access history from either loc ation  triggers the exit
+trap.
+Privilege account set events that launch interface programs
+The following settings  relate to account set requests and can be set in the Account access request  tab:
+Option Description
+RES MAQ ACCESS REVOCATION
+CHECKINAn account set access is checked in by another user.
+RES MAQ CHECKIN FAILURE An account set access check-in has failed.
+RES MAQ CHECKIN SUCCESS An account set access check-in is successful.
+RES MAQ CHECKOUT EXPIRY A checked out account set access expires.
+RES MAQ CHECKOUT FAILURE A checked out account set access has failed.
+RES MAQ CHECKOUT LIMIT
+REACHEDAn account set access check-out limit has exceeded.
+RES MAQ CHECKOUT PARTIAL An account set access check-out is partially  successful.
+RES MAQ CHECKOUT SUCCESS An account set access check-out is successful.
+Privilege  group set request events that launch interface programs
+The following settings  relate to group set requests and can be set in the Group set access request tab:Option Description
+RES GSET ACCESS REVOCATION
+CHECKINA group set access check-in action  has failed.
+RES GSET CHECKIN FAILURE A group set check-in action  has failed.
+RES GSET CHECKIN PARTIAL A group set check-in action  is partially
+successful.
+RES GSET CHECKIN SUCCESS A groupset check-in action  is successful.
+RES GSET CHECKOUT EXPIRY A checked out group set request expires.
+RES GSET CHECKOUT FAILURE A group set check-out action  has failed.
+RES GSET CHECKOUT LIMIT
+REACHEDA group set check-out limit has been
+exceeded.
+RES GSET CHECKOUT PARTIAL A group set check-out action  is partially
+successful.
+RES GSET CHECKOUT SUCCESS A group set check-out action  is successful.
+Activ ating  event action  options
+Before you start, ensure that you have carried out steps listed in Pr epar ation  (on page 1527).
+Getting  started
+Locate the event system variable on the appropriate c on figur ation  page,
+System variables are listed in Manage the system > Maintenance > System variables , and also various
+c on figur ation  menus listed in System options  that can trigger external programs  (on page 1529). The
+description  for c on figur able  events begins with "Program to execute …" , and each one has a
+Con figur e  event button.
+You can use the Con figur e  event  (ITSM) module  (on page 1556) to c on figur e  certain tick e t  target updates
+and email notific ation,  or simply add the name of the program for scripted c on figur ation  (on page 1566).
+Using the Con figur e  event (ITSM) module
+The Con figur e  event  (ITSM) module provides a GUI for c on figuring  event actions.  All events that can be
+c on figur ed  have a Con figur e  event button  that connects to the console, where you can use a template to
+create email or add a program to run.
+Certain tick e t  system interfaces can be c on figur ed  using this console, without the need to edit a PSLang
+c on figur ation  script. When you use the Con figur e  event  (ITSM) module, Bravura Security Fabric
+aut omatic ally  modifies  the appropriate sample c on figur ation  file and copies it to the script directory. This
+applies if you want to:
+▪Send email▪
+▪Update tick e ts ▪Bravura Security Fabric  currently supports c on figur ation  via the Con figur e  event  (ITSM) module for
+Remedy Action  Request System 7.5.x, 7.6.x and 8.0 For other interface programs, you can use the
+Con figur e  event  (ITSM) module to activ a t e  the event action  option,  then write a c on figur ation  script for
+the program. You can c on figur e  multiple  programs for the same event.
+Only super users or product administrator s with the “Con figur e  modules” privilege can access the Con figur e
+event  (ITSM) module. See Pr epar ation  (on page 1527) for other requirements.
+The interface is provided by the itsm  program, included in the <instance>\cgi-bin\  directory. Unlike other
+web modules the itsm console does not allow or require any c onfiguration  via the modules menu in the
+Manage the system  (PSA) module. It is not related to Remedy Action  Request System ITSM, which is
+supported by the agtrem-itsm  connector.
+You access the console by clicking the Con figur e  event button  for the event options  found in loc ations
+listed here  (on page 1529), or in Manage the system > Maintenance > System variables. An example is
+shown below.
+A separate window opens for the Con figur e  event  (ITSM) module (options  vary depending on your
+c on figur ation):
+Next: 
+Now you can:
+▪ Con figur e  tick e t  updates  (on page 1558) for certain target types ▪
+▪Add email support  (on page 1562) if tick e t  updates are not required ▪
+▪Add programs to run  (on page 1566) for systems for which aut omatic  c on figur ation  is not supported ▪
+Con figuring  tick e t  updates
+You can use the Con figur e  event  (ITSM) module to quickly c on figur e  your event actions  to integrate with
+Remedy AR (Action  Request) System 7.5.x, 7.6.x, 8.0.x
+Pr epar ation
+Before c on figuring  an event action  for Remedy AR System 7.5.x, 7.6.x, 8.0.x:
+1.Target a Remedy AR System 7.5+ (Ticket) system.1.
+On the Target system in f ormation  page, select the appropriate target listed under IT Service
+Management Systems . Note the target system ID.
+2.Use the schmrem program, located in the <Program Files path>\Bravura Security\Bravura Security Fabric 2.
+\<instance>\ util\ directory, to generate the schema file following the syntax:  
+schmrem*.exe -l <outputFile> -s <server>[:<port>] -u <userid> -
+p <password> 
+For example:
+schmrem.exe -l REMTICKET.scm -s 10.10.60.65 -u remadmin -
+p rempassword
+generates a file REMTICKET.scm in the util directory, where REMTICKET has the same target system ID
+as c on figur ed  in Step 1.
+3.Copy the generated scm file to the pscfg directory. 3.
+See schmrem
+The schmrem program is used to generate a file containing the schema in f ormation  for the forms on
+the Remedy ARS server.
+This program is useful in the c on figur ation  of exit traps for events on Remedy ARS targets. The schema
+in f ormation  file is also used by the Con figur e  event (itsm) module.
+The form’s field  names, and the following data when available, are extracted for each field:
+▪Default value▪
+▪Help text▪
+▪Requirement (optional  or required only) ▪
+▪Type▪
+▪Limits▪
+▪ Enumer ation  list ▪Only optional  or required modifiable  fields  are extracted. All other fields  are ignored and not written  to
+the file.
+Requirements
+schmrem is Win32 executable and is run on the Bravura Security Fabric  server. The Remedy ARS server
+must already be available.
+To enable logging for schmrem , you must add a system environment variable, IDM_SUITE_INSTANCE, to
+de fine  the instance on which to log; for example: IDM_SUITE_INSTANCE = default. See your oper ating
+system documen t ation  to learn how to do this. The program will be logged in
+<Program Files path>\Bravura Security\Bravura Security Fabric\Logs\<instance> idmsuite.log
+Usage
+schmrem.exe -l <outputFile> -s <server>[:<port>] -u <userid> -
+p <password>
+Argument Description
+-l <output filename> The name of the file to which the schema in f ormation
+will be written  in KVGroup format.
+-s <server>[:<port>] The Remedy ARS server (port).
+-u <userid> Remedy ARS administrator ID.
+-p <password> Remedy ARS administrator password.
+Examples
+Use the following command to send the schema in f ormation  from your server to a file.
+  schmrem.exe -l REMTICKET.scm -s 10.10.60.65 -u remadmin -
+p rempassword
+This generates REMTICKET.scm in the util directory.
+The following is an example of format of entries in the file:
+     "Priority" "Priority" = {
+       "default value" = "1"
+       "helptext" = "Priority of the approval detail record.  This priority
+                     is primarily used to determine which set of escalation
+                     conditions attached to the process record will be used."
+       "requirement" = "required"
+       "type" = "enumeration"
+       "enum" "" = {
+       "0" = "Urgent"
+       "1" = "Normal"
+       "2" = "Low"
+       }     }
+for more in f ormation.
+Con figuring  events for Remedy Action  Request System
+To c on figur e  an event action  to integrate with Remedy AR System 7.5.x, 7.6.x, 8.0.x, using the Con figur e
+event  (ITSM) module:
+1.In the Con figur e  event (ITSM) module  (on page 1556), select the target system ID in the Con figur e 1.
+tick e t  update row.
+The Ticket update: <event>(<target>)  page is displayed:
+2.Select the target system’s schema table that you want to update when this event occurs, then click2.
+Continue .
+3.Update fields  as appropriate by selecting  from the Field data drop-down lists for each field  name. 3.
+If you want to specify data that is not in the drop-down lists, select Specify manually and type the
+data in the Custom data field.  Fields marked with a red asterisk are required.
+Any of the variable strings listed in Table Event action  variable strings  (on page 1563) can be used in
+the custom data field.
+4.Click Update . 4.

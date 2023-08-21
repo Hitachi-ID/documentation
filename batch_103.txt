@@ -1,0 +1,353 @@
+       "BACKWARD_UNAME" = ""
+       "BACKWARD_UNAME_WITHIN" = ""
+       "DICTWORD" = ""
+       "DICTWORDWITHIN" = ""
+       "FIRSTLETTER" = ""
+       "FORWARD_UNAME" = ""
+       "FORWARD_UNAME_WITHIN" = ""
+       "MAINFRAME" = ""
+       "MATCH_N_UNAME" = ""
+       "MAXLOWER" = ""
+       "MAXPAIR" = "2"
+       "MAXPASSLENGTH" = ""
+       "MAXPUNCTUATION" = ""
+       "MAXUPPER" = ""
+       "MINDIGITS" = "3"
+       "MINDIGITSINSIDE" = ""
+       "MINLETTERS" = "10"
+       "MINPASSLENGTH" = "20"
+       "MINPUNCTINSIDE" = ""
+       "MINPUNCTUATION" = ""
+       "NOCHAROCCUR_NUM" = ""
+       "NONPRINTABLE" = ""
+       "NOSTRIPDICTWORD" = ""
+       "PERMUTEDDICTWORD" = ""
+       "PERMUTED_UNAME" = ""
+       "PLUGINCHECK" = ""
+       "PLUGINGENPWD" = "myrandomizer.psl"
+       "PLUGINWARNPWD" = ""
+       "SIGNIFICANTNUM" = ""
+       "UPPERANDLOWER" = ""
+     }
+   }
+If a password rule has not been de fined  in Manage the system (psa) module, its value is empty in the
+input.
+Output
+The plugin outputs the r esulting  random passwords, one password per-line; for example:
+   "" "" = {
+     "retval" = "0"
+     "randompasswords" "" = {       "password" = "ru12"
+       "password" = "ru637acotdereodicUci123"
+       "password" = "ru637acotdereodicUci1234"
+     }
+   }
+.
+See also: 
+You can also use the GET PASSWORD EXT plugin point ( Manage the system > Policies > System
+interfaces ) to generate pr e-de fined  passwords when help desk user s assist users with password changes.
+See Keeping passwords secret from product administrators  (on page 836).
+You can enable a JavaScript option  to aut omatic ally  populate password fields  when a suggested password
+is selected. To do this, enable the UseSuggestedPassword option  in the config.js script. See
+Modifying JavaScript behavior  (on page 3518) for more in f ormation.
+Add a customized message to users
+In Bravura Security Fabric ’s user interface, password policy rules are displayed by default on password
+cr eation/r ese t  pages. A list of complex rules can be difficult  to read. You can add to or replace the list of
+rules with a message that is simpler and easier to understand.
+To add a customized message:
+1.On the policy’s Password policy tab, type your customized message in the Message displayed to users 1.
+when changing passwords section.
+Any text in the Message field  will be displayed as a single paragraph. If you would like more
+f ormatting ,  create a tag and use HTML f ormatting.  See the CUSTOMIZATION  (on page 3471) for more
+in f ormation.
+2.If you do not want any of the rules displayed, select Only display this message . 2.
+Users will still be informed by a warning message if their chosen password does not adhere to the
+password policy rules.
+Alt ernativ ely  you can hide individual rules by selecting  the Hide description  checkbox for the rule.
+3.Click Update . 3.T esting
+Gener ating  passwords
+You can test whether Bravura Security Fabric  can generate an adequate number of random passwords
+based on the current password policy. To do this:
+1.Click Manage the system > Policies > Password policies . 1.
+2.Select the policy for which you want to de fine  rules. 2.
+3.Select the Password policy tab. 3.
+4.Scroll to the Test password policy form at the bottom  of the page. 4.
+5.Type the number of random passwords for Bravura Security Fabric  to generate. 5.
+This value must be between 100 and 1000. The default is 100.
+6.Click Test. 6.
+Bravura Security Fabric  displays the number of passwords that satis f y  the password policy, out of the
+total number of passwords generated. If the success rate is too low, it may indicate that your password
+policy is too complex.
+Checking passwords against strength rules
+You can test whether a password conforms to all the c on figur ed  password strength rules on the Test
+password tab for a password policy. This is useful to determine whether or not the rules you have
+de fined  may be too complex for end users, or if they will meet the needs of your or g aniz ation.
+To test a password:
+1.Click Manage the system > Policies > Password policies . 1.
+2.Select the policy for which you want to de fine  rules. 2.
+3.Select the Test passwords tab. 3.
+Bravura Security Fabric  displays the Test passwords page, which simulates the password strength rules
+and messages displayed to users when they are asked to create new passwords.
+4.Type the password in the New password field  and click Test. 4.
+Bravura Security Fabric  displays the results of the test.Question  sets
+Security questions  can be used in three basic ways:
+1.As an authentic ation  factor for end users, either as stand-alone (not recommended) or used in 1.
+c ombination  with another factor, in a 2FA/MFA type setup.
+2.Assist help-desk users in identif ying  callers by asking them to answer some of their previously de fined 2.
+questions.
+3.Allow help-desk users access to pr ofiles  without authentic ating  callers, but allow them to see 3.
+questions  and answers for informal authentic ation.
+Bravura Security recommends security questions  as an authentic ation  factor for Bravura Pass and
+Bravura Identity  deployments, but not for Bravura Privilege.
+Bravura Security recommends c on figuring  at least two question  sets for enhanced security:
+▪ Question  set 1 used by end users to authentic a t e  themselves. No other users will have access to this ▪
+question  set in any way.
+▪ Question  set 2 used by help desk users to authentic ation  end users. ▪
+You can de fine  and use c ombinations  of question  sets that include:
+User -de fined  questions Users create their own questions  and answers.
+Bravura Security Fabric  includes a default user -de fined
+question  set, DEFAULT_USERQSET.
+Pr e-de fined  questions Users provide answers to pr e-de fined  questions  that
+they choose from a list.
+Bravura Security Fabric  includes a default pr e-de fined
+question  set, DEFAULT_PREDEFQSET, which contains
+sample questions.  product administrator s de fine
+additional  questions.
+External questions Questions,  or both questions  and answers, are stored in
+an external source, such as RSA Authentic ation
+Manager or LDAP directory, and retrieved by a plugin.
+If you are using security questions  as an authentic ation  method, ensure that the Update security questions
+(PSQ) module  (on page 1193) is enabled, otherwise users cannot complete their security question
+profiles.
+Adding question  sets
+To add a question  set:
+1.Click Manage the system > Policies > Question  sets . 1.
+2.Click the appropriate link for the type of question  set that you want to add: 2.
+▪ User -de fined  questions , ▪
+▪ Pr e-de fined  questions  (internal), or ▪▪External questions  (this includes external pr e-de fined  sets). ▪
+3.If Bravura Security Fabric  displays a list of e xisting  question  sets, click Add new… at the bottom  of the 3.
+list.
+4.Set appropriate options  for the new question  set. 4.
+5.Click Add. 5.
+Question  set options
+The following options  apply to question  sets:
+Note: Options  marked with ⋆ are for pr e-de fined  question  sets only.
+Options  marked with † are for external question  sets only.
+Question  set options
+Option Description
+ID (Required) A unique identifier  for the new question  set.
+Description (Required) The description  that Bravura Security Fabric displays to users.
+Enabled Select this checkbox to enable the question  set for use with Bravura Security Fabric. This is
+enabled by default.
+⋆  Users allowed to edit answers Select this checkbox to allow regular users to edit answers in a pr e-de fined  question  set. This is
+enabled by default. If disabled, this question  set will not be accessible through the Update
+security questions  (PSQ) module.
+†  Users allowed to edit questions/
+ans w er sSelect this checkbox to allow regular users to edit questions  and answers in an external
+question  set. If disabled, this question  set will not be accessible through the Update security
+questions  (psq) module.
+Minimum number of answered
+questions  per user(Required) The number of questions  to which a user must provide answers. Set the value to 0
+to make a question  set optional.
+When you change this setting ,  Bravura Security Fabric aut omatic ally  schedules the
+psdonechk program to run once to check compliance. To modify the scheduled job, click
+Manage the system  > Maintenance > Scheduled jobs , then select PSDONECHK .
+Answers in the set must be unique Select this checkbox to prevent users from giving the same answer to two diff er en t  questions.
+Help-desk permissions Select a value to control how help-desk users can interact with questions  and answers in this
+set:
+▪Not allowed to view security questions ▪
+▪Requires authentic ation  with security questions ▪
+▪Allowed to view security questions ▪
+See Help-desk permissions  (on page 1027) for details.
+Ask users to answer questions  from
+this setSelect this checkbox to prompt users to answer questions  from this set during authentic ation.
+Ask telephone users to answer
+questions  from this setSelect this checkbox to prompt Phone Password Manager users to answer questions  from this
+set during in t er activ e  voice response (IVR) authentic ation.Option Description
+Plugin for v alidating  answers (Optional)  The plugin to test the strength of questions  and answers when a user is updating
+their Question  sets.
+This option  is available in user -de fined  and pr e-de fined  question  sets.
+Number of questions  to ask during
+authentic ation(Required) Set the number of questions  to randomly draw from this set to ask a user during
+authentic ation.
+The number of questions  to ask cannot exceed the Minimum number of questions  user
+pr ofiles  should contain . For an external question  set, set this number to -1 if you want to get
+all questions  from the external source..
+Page number for question  set to be
+displayed in(Required) Users may be prompted to answer questions  in a sequence of authentic ation  pages.
+Type an integer in this field  to make questions  in this set appear before or after  questions  in
+other sets.
+The page number must be unique for external question  sets.
+Algorithm to match answers during
+authentic ationSelect the algorithm to use when comparing the answers  (on page 1028) typed during
+authentic ation  to the answers stored in the user’s pr ofile:
+▪Exact string match▪
+▪ Case-insensitiv e▪
+▪Only alpha characters▪
+▪Soundex algorithm▪
+▪One extra character▪
+▪N extra characters▪
+†  External program (Required) The name of the external program, or authentic ation  plugin , to run.
+See External question  set plugin tasks  (on page 1030) for details on the authentic ation  plugin
+and how to correctly c on figur e  the question  set according to your needs and the c apabilities  of
+the program.
+This option  is only available for external question  sets.
+†  Check that user has an account
+on target systemDetermines how Bravura Security Fabric identifies  users on an external system.
+See Identif ying  users on external systems  (on page 1030) for details.
+†  External program provides
+answers along with questionsSelect this checkbox if an external program will provide both questions  and answers for Bravura
+Security Fabric to display and validate.
+If this checkbox is not selected, then the program will accept answers from Bravura Security
+Fabric and validate them.
+This option  is only available for external question  sets.
+See External question  set plugin tasks  (on page 1030) for details.
+Note the following:
+▪ Questions  from any of the question  sets can only appear in the default security questions  if the value ▪
+for Number of questions  to ask during authentic ation  is greater than 0 and Ask users to answer
+questions  from this set is checked.
+▪To prevent the order of questions  in a selected set from being randomized, set Number of questions ▪
+to ask during authentic ation  to -1. This is required for multi-s t ag e  question  sets, since the order of
+entries is often  required to be shown in a particular  order.▪If you enable, disable, or modify the Ask users to answer questions  from this set option  in a question ▪
+set that is part of any custom authentic ation  chains, then you must also modify the chains. See Using
+question  sets with authentic ation  chains  (on page 1028)  for details.
+Help-desk permissions
+The possible values for the Help-desk permissions option  are as follows:
+Select this value … So that help desk user s …
+Not allowed to view security questions Are not prompted to answer questions  from this set
+when the HELPDESK_LOGIN authentic ation  chain is
+disabled.
+This is regardless of their user access rules.
+Requires authentic ation  with security questions Can be prompted to answer questions  from this set
+before being allowed to view a user’s pr ofile  in the Help
+users (IDA) module when the HELPDESK_LOGIN
+authentic ation  chain is disabled.
+Disabling the HELPDESK_LOGIN authentic ation  chain
+and using this option  can be done for legacy / backward
+c ompatibility .
+help desk users with the Bypass security questions
+right can choose to skip this step.
+Allowed to view security questions Can view or edit the answers for a user’s question  set
+after  clicking on the Security questions  tab from the
+user’s pr ofile.
+help desk users are not prompted to answer questions
+from this set when the HELPDESK_LOGIN
+authentic ation  chain is disabled.
+Note: The global help desk rule is also required to have:
+▪The ’View security questions’  privilege enabled in ▪
+order to view the answers for the user’s questions.
+▪The ’Update security questions’  privilege enabled in ▪
+order to edit the user’s questions  and/or answers.
+Help desk users are only able to view users’ answers in plain-text if:
+▪The help-desk permissions setting  for the question  set is set to ’ Allowed to view security questions’ ▪
+and,
+▪The global help desk rule is c on figur ed  so that the ’View security questions’  privilege is allowed. ▪If either the help-desk permissions setting  is set to anything else or if the global help desk privilege is not
+enabled, then the help desk user  will not be able to view the answers for the questions.
+help desk user s will only be able to update the questions  and/or answers for a users if:
+▪The help-desk permissions setting  for the question  set is set to ’ Allowed to view security questions’ ▪
+and,
+▪The global help desk rule is c on figur ed  so that the ’Update security questions’  privilege is allowed. ▪
+If either the help-desk permissions setting  is set to anything else or if the global help desk privilege is not
+enabled, then the help desk user  will not be able to update the user’s questions  and/or answers.
+Algorithm for comparison of answers
+The possible values for the Algorithm for comparison of answers option  are as follows:
+Select this value … So that …
+Exact string match Answers must match the stored pr ofile  character-for-
+character.
+Case-insensitiv e Uppercase and lowercase letter s  are treated alike.
+Only alpha characters Characters other than letter s  (digits, punctuation
+marks, spaces) are ignored when comparing what the
+user typed to the Bravura Security Fabric  answers in
+this question  set.
+Soundex algorithm What the user typed must sound like what the pr ofile
+contains.
+One extra character What the user typed can diff er  from the stored answer
+by at most one character (missing, added or changed).
+N extra characters What the user typed can diff er  from the stored answer
+by at most N characters (missing, added or changed),
+where N is the smallest integral value not less than 5%
+of the length of the stored answer.
+Using question  sets with authentic ation  chains
+It is recommended that you modify and re-save any custom authentic ation  chain (if it includes a module
+that uses security questions)  whenever a question  set is enabled, disabled, or modifies  the Ask users to
+answer questions  from this set option.  This causes the authentic ation  chain module to use the updated
+settings  from the question  set. If the custom authentic ation  chain and associated security question
+modules are not modified  after  the question  set changes, then there can be c omplic ations  (described
+below).
+If the Ask users to answer questions  from this set option  is deselected for one of the question  sets, then
+that question  set cannot be used for authentic ation  to the Front-end  using the default login
+authentic ation  chain.For example, if an enabled question  set has the Ask users to answer questions  from this set option
+deselected, and an authentic ation  chain module is c on figur ed  for use with a custom authentic ation
+chain, then that chain cannot be used for authentic ation  unless it is c on figur ed  to not use any questions
+from the set with this option  deselected. Instead, users see an error message s t ating  that that the
+authentic ation  method is not accepted by the system. Authentic ation  is still possible using the built-in
+security questions  authentic ation  method, but users are only prompted with questions  from valid
+question  sets. Any questions  from the set that has the Ask users to answer questions  from this set
+option  deselected are not included in the authentic ation  process. If all question  sets have this option
+deselected, then users cannot log into the Front-end  using any authentic ation  method that involve
+security questions,  including any custom authentic ation  chains that require them. Only methods that do
+not involve security questions  (such as password.pss ) would be available for authentic ation  in this
+case.
+If a question  set that is in use by an authentic ation  chain is disabled or enabled, then the authentic ation
+chain module which uses this question  set needs to be modified  and re-saved before the new question
+set settings  can be applied. Also, depending on what was modified,  the module might need to be
+r ec on figur ed  to prompt for a diff er en t  number of questions  from the available question  sets.
+For example, if a question  set is disabled, this could lower the number of questions  available to an
+authentic ation  chain c on figur ed  to use that set. An error message appears if a user reaches a point in a
+custom authentic ation  chain where a module is c on figur ed  for security questions  and one of the question
+sets is disabled. If that module is the score based challenge and response module, then the module itself
+is also unusable until  it is r ec on figur ed  for the custom authentic ation  chain. Once the module is modified,
+the values of its settings  are aut omatic ally  adjusted based on the question  sets that are available. If the
+question  set is re-enabled before the custom chain is modified,  then the user is prompted with the
+number of questions  de fined  within the set.  
+T r oubleshooting  question  sets and authentic ation  chains 
+If the custom authentic ation  chain and associated security question  modules are not modified  after  the
+question  set is modified  as described above, then the following can occur:
+▪When the module is viewed in the authentic ation  chain, the hover text for the parameters: ▪
+▪ Still displays the old values from a pr e viously -de fined  question  set before it was disabled. ▪
+▪Does not display values for a question  set that has been re-enabled, since it is using the default ▪
+question  set values.
+▪When viewing the settings  for the module without fir s t disabling the chain, which is essentially  a read- ▪
+only format:
+▪A disabled question  set is no longer shown in the section  for c on figur ed  question  sets. ▪
+▪A re-enabled question  set is shown in the section  for c on figur ed  question  sets, and is reset to Use ▪
+question  set setting .
+▪If a user attemp ts  to use an authentic ation  chain that contains a security questions  module with a ▪
+disabled question  set, then they will be unable to use the chain and will be presented with an error
+message s t ating  that the authentic ation  method is not accepted by the system. This also applies to
+help desk authentic ation  if the chain is c on figur ed  in the same way and a help desk user chooses this
+chain when authentic ating  on behalf of another user.▪If a user attemp ts  to use an authentic ation  chain that contains a security question  module with a re- ▪
+enabled question  set, then they will be prompted for the number of questions  as previously de fined
+by the re-enabled question  set. This also applies to help desk authentic ation  if the chain is c on figur ed
+in the same way and a help desk user chooses this chain when authentic ating  on behalf of another user.
+Identif ying  users on external systems
+When using an external question  set, users must be properly identified  on the external system. This
+external authentic ation  plugin is only available to users who have an account on the specified  target
+system; and is not displayed otherwise.
+Enabling the Check that user has an account on target system option  causes Bravura Security Fabric  to
+verify that the user has an account on the specified  target system.
+If the specified  target system is a source of pr ofile  IDs, then the user’s pr ofile  ID can be used to identif y
+them on the external system.
+However, if the specified  target system is not a source of pr ofile  IDs and does not use standard IDs, then
+the user’s pr ofile  ID cannot be used to identif y  them on the external system, which is pr oblematic.  If both
+of these are true, then using the Check that user has an account on target system option  passes the
+user’s target system login ID instead of the user’s pr ofile  ID, allowing them to be properly identified  on
+the external system.
+External question  set plugin tasks
+The external question  set plugin program can interface with Bravura Security Fabric  and the external
+system in several diff er en t  ways. Depending on your question  set c on figur ation,  a plugin can:
+▪Provide questions  – Bravura Security Fabric  displays the questions  provided by the plugin to users. ▪
+▪Provide both questions  and answers – Bravura Security Fabric  displays the questions  provided by the ▪
+plugin to users. Additionally ,  Bravura Security Fabric  internally validates the users’ responses against
+the answers provided by the external program. In order for this to work, the External program
+provides answers along with questions  checkbox must be selected.
+▪Validate answers – The external system, rather than Bravura Security Fabric , determines whether ▪
+users’ responses are valid. In order for this to work, the External program provides answers along
+with questions  checkbox must not be selected.
+▪Update users questions  and answers on the external source – When users edit their questions  and ▪
+answers, the authentic ation  plugin forwards their changes to the external source. In order for this to
+work, the Users allowed to edit questions/ ans w er s  option  must be selected.
+See also: 
+See Adding to the authentic ation  menu  (on page 3507) for more in f ormation  about adding custom
+authentic ation  methods to the Front-end  Select an authentic ation  method  page.
+De fining  questions
+You can add or modify questions  for pr e-de fined  internal and external question  sets.

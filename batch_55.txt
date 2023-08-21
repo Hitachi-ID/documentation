@@ -1,0 +1,213 @@
+Aut omatic ally  attaching  accounts to Pr ofile  IDs
+By default, account association  is based on account names (short IDs) matching Bravura Security Fabric 's
+pr ofile  IDs, which assumes that integrated systems use the same naming c on v ention.  If some or all of
+your target systems use standard IDs, you can c on figur e  Bravura Security Fabric  to aut omatic ally  attach
+accounts on these systems to a pr ofile  ID. When a target system is created, this is set by the
+Aut omatic ally  attach  accounts checkbox on the target system's General  page  (on page 494).
+Certain integrated systems may use a diff er en t  naming c on v ention,  or sometimes  it is just certain
+accounts that use a diff er en t  naming c on v ention  and therefore, cannot be associated based on account
+name match. You can specify an Account attribut e  to aut omatic ally  attach  accounts to user pr ofiles ,
+rather than use the short ID. If the target system is a:
+▪Source of pr ofile  IDs, this is the attribut e  value that other systems can match against when attaching ▪
+accounts; for example, a mail attribut e  or employee ID
+▪Non-source, this is the attribut e  that matches the format of the pr ofile  ID; for example, where login ▪
+IDs on your source of pr ofile  IDs target system are in the format jsmith@example.com, which matches
+the value of InternetAddress on a Lotus Domino target system.
+Make sure the chosen attribut e  is loaded from the target system and that it is populated for all accounts;
+the accounts for which this attribut e  is blank or doesn’t exist won’t be attached  to any pr ofile.  If the
+attribut e  has the same value for more than one account, all of those accounts will be attached  to a single
+pr ofile.
+Where aut omation  is not possible or limited, users can use a manual process to attach  alternate accounts
+(on page 547).
+Con figuring  attribut e-based  account attachmen t  using the loaddb component
+The technique that associates users' accounts with Bravura Security Fabric  pr ofile  IDs based on attribut e
+match  (on page 541) uses a p seudo-attribut e,  typically called "assocID", which is generated as part of
+every auto discovery. This attribut e  is composed of multiple  values, providing association  link for those
+accounts that will match either one of the values. All of those attribut es  with their values must be
+available on the source of pr ofiles.
+Bravura Security Fabric  ships the Scenario.im_corp_loaddb component as part of the standard
+deployment. This component provides a plug-in with pr e-c on figur ed  settings  designed to aut omatic ally
+generate the "assocID" p seudo-attribut e  and use it for aut omatic  accounts association.The plug-in assumes that the source of profiles  target is called "AD". If the target name is diff eren t,  then
+the standard Scenario.im_corp_loaddb component will not be applicable.
+Install the Scenario.im_corp_loaddb component from the web portal using the Manage components
+menu  (on page 315).
+Alt ernativ ely ,  the component can be installed from the command line using the following commands:
+cd "C:\Program Files\Bravura Security\Bravura Security Fabric
+\<instance>"
+\>instance.bat
+\>python script\manage_components.py install Scenario.im_corp_loaddb
+See Aut omatic  account attachmen t  examples  (on page 543) for c on figur ation  details.Aut omatic  account attachmen t  examples
+The following use cases show you how to c on figur e  targets systems and a scenario component to achieve
+aut omatic  account association  (on page 541).
+Account name on the secondary target matches the user pr ofile  ID
+In this example, Activ e  Directory is c on figur ed  as a source of pr ofiles  and a Linux system is c on figur ed  as a
+secondary (non-source of pr ofiles)  target system. The Activ e  Directory account name is "johndoe", and
+the Linux target account name is "johndoe".
+No additional  c on figur ation  is required for this scenario. Run auto discovery to associate accounts with
+user pr ofiles.  Click Manage the system > Maintenance > Auto discovery > Execute auto discovery .
+Account name on secondary target matches account attribut e  on source of pr ofiles
+In this example, Activ e  Directory is c on figur ed  as a source of pr ofiles  and LDAP is c on figur ed  as a
+secondary target. Activ e  Directory accounts have an email address stored in the "mail" account
+attribut es,  whereas LDAP target uses the same email address as an account name.
+▪AD account name: johndoe ▪
+▪Email address stored in the "mail" attribut e  of the AD account: john.doe@organization.com ▪
+▪LDAP account name: john.doe@organization.com ▪
+Configur e  the AssocID attribut e
+1.Log in to the Front-end (PSF) as superuser . 1.
+2.Install the Scenario.im_corp_loaddb component  (on page 541). 2.
+3.From the main click Manage external data store . 3.
+4. Con figur e  the assocID attribut e  in the hid_global_c on figur ation  extdb table as shown below. 4.Configur e  the Activ e  Directory mail account attribut e
+1.Navigate to Manage the system > Resources > Account attribut es  > Target system > AD > Defaults. 1.
+2.Find the "mail" account attribut e. 2.
+3.Click Override . 3.
+4.Enable the Load attribut e  values from target system  option. 4.
+5.Click Update to save the changes. 5.
+6.Run auto discovery to associate accounts with user pr ofiles.  Click Manage the system > Maintenance 6.
+> Auto discovery > Execute auto discovery .
+Account attribut e  on the secondary target matches an account attribut e  value on source of pr ofiles
+In this example, Activ e  Directory is c on figur ed  as a source of pr ofiles  (non-source of pr ofiles)  and LDAP is
+c on figur ed  as a secondary target. Activ e  Directory accounts have an employee ID stored in the"employeeID" account attribut e,  whereas the LDAP target has the same attribut e  value in the
+"employeeNumber" account attribut e.
+▪AD account name: johndoe ▪
+▪Employee ID stored in the employeeID attribut e  of the AD account: 123456 ▪
+▪LDAP account name: jdoe ▪
+▪Employee ID stored in the employeeNumber attribut e  of the LDAP account: 123456 ▪
+Configur e  the AssocID attribut e
+1.Log in to the Front-end (PSF) as superuser . 1.
+2.Install the Scenario.im_corp_loaddb component  (on page 541). 2.
+3.From the main click Manage external data store . 3.
+4. Con figur e  the assocID attribut e  in the hid_global_c on figur ation  extdb table as shown below. 4.Configur e  the mail attribut e  on Activ e  Directory
+1.Navigate to Manage the system > Resources > Account attribut es  > Target system > AD > Defaults. 1.
+2.Find the "employeeID" account attribut e. 2.
+3.Click Override . 3.
+4.Enable the Load attribut e  values from target system option. 4.
+5.Click Update to save the changes. 5.Configur e  the employeeNumber attribut e  on LDAP
+1.Navigate Manage the system > Resources > Account attribut es  > Target system > LDAP . 1.
+2.Click Add new  on the Target system level overrides  tab. 2.
+3.Set the attribut e  ID to employeeNumber . 3.
+4.Enable the Load attribut e  values from target system  option. 4.
+5.Click Update to save the changes. 5.
+Configur e  the LDAP target association  setting
+1.Navigate to Manage the system > Resources > Target systems > Manually de fined  > LDAP . 1.
+2.Set the Account attribut e  to aut omatic ally  attach  accounts to user pr ofiles  parameter to 2.
+employeeNumber.
+3.Click Update to save the changes. 3.
+Run auto discovery to associate accounts with user pr ofiles.  Click Manage the system > Maintenance >
+Auto discovery > Execute auto discovery .
+T r oubleshooting  aut omatic  account assignment
+In any of the above scenarios, if account association  fails for any reason after  running auto discovery, use
+the following command "force" the account association  r ec alculation.  From the util directory:
+dbcmd -call -p LoaddbResyncAdd -param "\"A\" \"AD\" \"\" \"\" \"\" \"\"
+\"\" \"\""
+Note that the command is not supposed to return any message, unless there was an error.
+This command should be used only once; it should raise an internal flag for the Bravura Security Fabric  to
+clear any caches and skip any standard performance optimiz ation  logic the next time  it runs the auto
+discovery. if after  the next auto discovery account association  is not established, contact Bravura Security
+support .
+Manually attaching  accounts
+Bravura Security Fabric  can assign alternate accounts from multiple  systems to a single user through a
+manual process to attach  other accounts.
+When targets are not set to aut omatic ally  attach  accounts  (on page 541) during discovery, Bravura
+Security Fabric  allows for user-directed or help desk attachmen t  of accounts to the proper users through
+the use of the Attach  other accounts  (PSL) module  (on page 1185).
+Allowing other users to attach  aut omatic ally  attached  accounts
+To allow a user to attach  a non-standard login ID that is associated with another user, enable the Allow
+other users to attach  auto-associated IDs setting  on the target system’s Target system in f ormation  page.A user can only attach  an account that is associated with another user if the account exists on an auto-
+associated target system. A user cannot attach  an account that has been manually attached  to another
+user’s pr ofile.
+In the Attach  other accounts  (PSL) module’s default simplified  mode, users cannot attach  accounts that
+exist on a target system that is a source of profile  IDs.
+Allowing users to detach accounts
+Set the default behavior for detaching accounts by enabling or disabling the PSL ALLOW DELETE option
+on the Attach  other accounts  (PSL) module c on figur ation  page.
+You can override the default behavior for individual target systems. To do this, set the Allow users to
+detach manually -attached  accounts option  on the Target system in f ormation  page. Select:
+▪Yes to allow users to detach accounts. ▪
+▪No to prevent users from detaching accounts. ▪
+Users cannot detach auto-associated accounts from their profiles.
+Forcing users to attach  accounts
+You can enable the Users must have accounts setting  for a target system so that if the Attach  other
+accounts  (PSL) module is enabled (it is by default), the user must either already have an account
+associated with this target system or must attach  an account on this target system before other self-
+service functionality  is made available.
+When the PSF FORCE ENROLLMENT setting  includes the psl value (default), users are redirected to the
+Attach  other accounts  (PSL) module to complete their pr ofile  when they login. This is useful during the
+enrollment phase in particular .
+If this setting  is disabled for the Attach  other accounts  (PSL) module by removing the psl code from PSF
+FORCE ENROLLMENT , users are reminded that they require an account on the specified  target system,
+but compliance is not enforced.
+Enforcing a minimum number of accounts
+You can set a minimum number of accounts that users must have registered in their pr ofiles  by typing an
+appropriate value in the PSL MIN ACCOUNTS field.
+If users have not registered enough accounts, Bravura Security Fabric  can enforce this requirement by
+dir ecting  users to the Attach  other accounts  (PSL) module  (on page 1183) after  they log in, and displaying
+an error message.
+When you change this setting ,  Bravura Security Fabric  aut omatic ally  schedules the psdonechk  program
+to run once to check compliance. To modify the scheduled job, click Manage the system > Maintenance
+> Scheduled jobs , then select PSDONECHK .Pr e v enting  invalid claims on accounts
+To prevent users from attempting  to attach  accounts that do not belong to them, the logged-in user is
+locked out of Bravura Security Fabric  after  a pr e-de fined  number of password authentic ation  failures. An
+authentic ation  failure is counted only if an ID/password pair fails to match any account. For example, if
+there are two accounts called “user1” on diff er en t  systems, and the password “mypassword” succeeds
+on one account but not the other, no authentic ation  failure is counted. If the password does not succeed
+on both accounts, an authentic ation  failure is counted.
+This is controlled by the PSL VERIFY COUNTS  option,  which is enabled by default. If you disable this
+option,  no failure is counted when an ID/password pair fails for all claimed accounts, and users are not
+locked out of Bravura Security Fabric .
+Manual account attachmen t  examples
+When users have account names on systems that do not align with their chosen pr ofile  ID, you may need
+to develop a process to manually associate accounts from those multiple  targets with the single user.
+For the following examples it is assumed:
+▪Bravura Security Fabric  is installed and includes a Bravura Pass  license. ▪
+▪An Activ e  Directory target system is added as a source of pr ofiles. ▪
+▪A Linux target system is also added that is not a source of user pr ofiles  and does not aut omatic ally ▪
+attach  accounts.
+Batch loading
+Attaching  other accounts can be achieved by use of a text file that maps the accounts to each other.
+During discovery, a check of the presence of <instance>\psconfig\malias.txt  will be made
+and accounts will be attached  according to the contents of that file.
+For this example, we will be assigning the adm account from the Linux target to the user abbiel from the
+AD target.
+Account entries in the malias.txt  file must be made in the following format:
+"<Target system ID>" "<Login ID>" "<Profile ID>"
+So for this example, enter the following into the text file:
+"AD" "abbiel" "abbiel"
+"LINUX" "adm" "abbiel"
+Attach  using text file
+1.Log in to the instance server as an administrator.1.
+2.Navigate to the \<instance>\psconfig\  directory. 2.
+3.Open a text editor and enter the account entries described above.3.
+4.Save the file as <instance>\psconfig\malias.txt. 4.5.Log in to the Bravura Security Fabric  server as a superuser . 5.
+6.Navigate to Manage the system > Maintenance > Auto discovery > Execute auto discovery. 6.
+7.Click the Continue  button  and wait until  discovery is completed. 7.
+8.Log into Bravura Security Fabric  as ABBIEL. 8.
+9.Click Attach  other accounts . 9.
+10. Con firm  that adm has been added to attached  accounts and the proper Linux target is specified. 10.
+11. Return to the main user page by clicking the Home icon. 11.
+12. Click Change passwords . 12.
+13. Specify a new password and c on firm.  Click Change passwords  to proceed. 13.
+14. Verify that both passwords on the AD and Linux target are changed. 14.
+15. Log in to Linux as adm to c on firm  that the password has been changed. 15.
+Now we will use the help desk user to detach the adm account to set up the next example.  (on page 550)
+Detach account
+1.Log into Bravura Security Fabric  as the help desk user. 1.
+2.Click Help users . 2.
+3.Find and select ABBIEL.3.
+4.Click Skip authentic ation  when prompted for a security question  and click Continue . 4.
+5.Click the Attach  other accounts  tab. 5.
+6.Click the checkbox next to adm to detach the account.6.
+7.Click Update . 7.
+8. Con firm  that adm is no longer attached  to ABBIEL. 8.
+Lab: Attach  accounts - simplified
+This example demonstrates the attachmen t  of an account from the Linux system to an e xisting  Activ e
+Directory account using the PSL simplified  mode. Unlike the advanced mode example  (on page 551), the
+simplified  mode does not require in f ormation  about the target for the attached  account to proceed.
+Configur ation
+1.Log in to the Front-end (PSF) as superuser . 1.
+2.Navigate to Manage the system > Modules > Attach  other accounts (PSL) . 2.
+3.Ensure that PSL ENABLED  and PSL SIMPLIFIED  are set to Enabled . 3.
+4.Click Update  if any changes are made to the settings. 4.
+For this example, a user with an AD account named ABBIEL will add an account named "adm" on the
+Linux system to their attached  accounts. The account will then be detached by the help desk user to reset
+for the advanced example  (on page 551).
+Attach  in simple mode

@@ -1,0 +1,314 @@
+Criteria Description
+Option Description
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: Managed system in f ormation  is only included in the
+report output if the last c onnection  date falls within the
+selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Managed system in f ormation  is only included in the
+report output if the last c onnection  date falls within the
+Start date range. Use the fir s t da t e/time  field  to select
+the earliest time  to include, and the second da t e/time
+field  to select the latest time  to include.
+Use within the last N days : Managed system in f ormation
+is only included in the report output if the last
+c onnection  date falls within the specified  last number of
+days.
+Use N or more days ago : Managed system in f ormation  is
+only included in the report output if the last c onnection
+date was more than the specified  number of days ago.
+Choose initial  date This is the date that the managed system was added to
+Bravura Security Fabric . Choose one of the following
+options  to de fine  a start date:
+Date not required : This is the default setting.  Managed
+system in f ormation  is listed regardless of start time.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.Criteria Description
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: Managed system in f ormation  is only included in the
+report output if the start time  falls within the selected
+r elativ e  date range.
+Use selected dateCriteria Description
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Managed system in f ormation  is only included in the
+report output if the start time  falls within the Start date
+range. Use the fir s t da t e/time  field  to select the earliestCriteria Description
+time  to include, and the second da t e/time  field  to select
+the latest time  to include.
+Use within the last N days:  Managed system in f ormation
+is only included in the report output if the start time  falls
+within the specified  last number of days.
+Use N or more days ago : Managed system in f ormation  is
+only included in the report output if the start time  was
+more than the specified  number of days ago.
+Discovered subscribers
+Purpose : Show discovered subscribers and its attribut es.
+Executable : discoveredsubscribers
+Search Criteria :
+Criteria Description
+Report type Select the type of report to run:
+Domain account : Domain accounts running local ser v er/
+w ork s t ation  objects
+Local account : Local accounts running ser v er/w ork s t ation
+objects
+Subscriber not associated : Objects not currently
+associated to a target system
+Associated target system ID Type a comma-and-space-delimited list of IDs of target
+systems from which accounts are associated. For local
+accounts, this is also where the objects are associated
+from.
+Alt ernativ ely ,  search for target systems.
+Discovered target system Type a comma-and-space-delimited list of target systems
+from which objects are run by domain accounts.
+Alt ernativ ely ,  search for target systems.
+Observed account Type the observed account ID to include in the report.
+The ID must exactly match the format that was provided
+to the object.
+Object type Select one or more object types to include in the report:
+▪Used to run a service▪
+▪Used in IIS Applic ation  Pool, Virtual Directory or FTP ▪
+Site
+▪Used to run a scheduled task▪
+▪Used as identity  for a DCOM object ▪
+▪Custom account usage▪
+▪Sharepoint service account▪Criteria Description
+Object name Type the name of the object.
+Associated account Type the short ID of an account to include in the report.
+Associated account status Select the type of accounts to include:
+(All): managed and unmanaged accounts
+Managed : managed accounts only
+Unmanaged : unmanaged accounts only
+Last load time Specify a date range the object was last loaded.
+Subscriber attribut es Select one or more subscriber attribut es  to include in the
+report.
+Account set access log
+Purpose : History of account set access.
+Executable : maqlog
+Search Criteria :
+Criteria Description
+Account set ID Type a comma-and-space-delimited list of account set IDs
+to include in the report. Alt ernativ ely ,  search for one or
+more account set IDs. Leave blank if you want to search
+for all account sets.
+Managed system policy ID Type a comma-and-space-delimited list of managed
+system policy IDs to include in the report. Alt ernativ ely ,
+search for one or more managed system policy IDs. Leave
+blank if you want to search all managed system policy
+IDs.
+Shared When queries are created, they can be shared with other
+users, or kept personal. Choose one of the following
+options:
+(All): all queries (default)
+Yes: shared queries only
+No: personal queries only
+Oper ation Choose one or many (hold down the Ctrl key to select
+more than one) of the following options:
+Add an account set . This will display account sets that
+were created.
+Account set access r e v oc ation . This will display account
+set access requests that were revoked.
+Check in account sets . This will display account set access
+request check-ins.Criteria Description
+Check out account set access . This will display account
+set access request check-outs.
+Delete an account set . This will display account sets that
+were deleted.
+Update an account set . This will display account sets that
+were updated.
+Oper ation  date This is the date the oper ation  was run. Choose one of the
+following options  to de fine  the query date:
+Date not required : This is the default setting.  In f ormation
+is listed regardless of the oper ation  date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.Criteria Description
+Option Description
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: Oper ation  in f ormation  is only included in the report
+output if the start time  falls within the selected r elativ e
+date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Oper ation  in f ormation  is only included in the report
+output if the start time  falls within the Start date range.
+Use the fir s t da t e/time  field  to select the earliest time  to
+include, and the second da t e/time  field  to select the
+latest time  to include.Criteria Description
+Use within the last N days : Oper ation  in f ormation  is only
+included in the report output if the start time  falls within
+the specified  last number of days.
+Use N or more days ago : Oper ation  in f ormation  is only
+included in the report output if the start time  was more
+than the specified  number of days ago.
+User ID Type a comma-and-space-delimited list of user IDs to
+include in the report. Alternately, search for one or many
+user IDs.
+Account set c on figur ation
+Purpose : Allows you to query on the current c on figur ation  of e xisting  account sets (both manually and
+aut omatic ally  created). In the Request privileged access (PSW) module, the account set c on figur ation  is
+displayed within 3 tabs: "General", Explicitly attached  accounts", and "Account inclusion rule". This
+report displays the account set in f ormation  using three diff er en t  modes, one for each Request privileged
+access (psw) module tab in f ormation.
+Most of the fields  displayed in the Request privileged access (PSW) module account set tabs are r e flect ed
+in the filt er s  and output from the report.
+Account sets deleted from the system are not returned in the report. Furthermore, when deleting  a
+managed system policy associated to an account set, the account set is aut omatic ally  deleted.
+Executable : maqconfiguration
+Search Criteria :
+Select the "report type" firs t (at the bottom  of the search criteria). The search criteria will change based
+on the "report type" you select.
+Criteria Description
+Report type There are three types of reports to select from:
+Details . All e xisting  account sets should be returned in
+this mode.
+Explicitly attached  accounts . Only e xisting  account sets
+with explicitly attached  accounts should be returned in
+this mode.
+Account inclusion rule and c onditions . Only e xisting
+account sets with an account inclusion rule should be
+returned in this mode. The rule may or may not have
+c onditions  attached.
+Account set ID Type a comma-and-space-delimited list of account set IDs
+to include in the report. Leave the field  blank to return all
+of the account sets or alt ernativ ely ,  search for one or
+more account set IDs.

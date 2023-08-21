@@ -1,0 +1,162 @@
+Option Description
+PROXY_AUTODETECT 0|1 Enable or disable proxy to use "Aut omatic ally  detect
+settings".
+PROXY_AUTOCONFIGURATION_ENABLE 0|1 Enable or disable proxy to use "Use aut omatic ally
+c on figur ation  script".
+PROXY_AUTOCONFIGURATION_URL Use this to set the URL of an aut omatic  c on figur ation
+script.
+PROXY_URL Use this to set the proxy server’s address.
+PROXY_PORT Use this to set the proxy server’s port number.
+The following parameters are available with ADDLOCAL=CREDPROV for Windows:
+ska.msi / ska-x64.msi CREDPROV pr operties
+Property Description
+HIDEFASTUSERSWITCHING 0|1 Hides Fast User Switching on this machine,
+pr e v enting  multiple  concurrent logins. The default is 1.
+This property is no longer used and will be removed in
+future releases. Fast User Switching must be enabled.
+USECLASSICLOGON 0|1 Provides a more tr aditional  interface for login (rather
+than individual tiles)  for users. It prompts for a user ID
+and a password.
+The default is 1.
+ 
+See Installing add-on softw ar e  (on page 240) for general requirements for using a client MSI installer, and
+ins tructions  for aut omatic  ins t allation  using a group policy.
+Manual ins t allation
+To manually install or upgrade Login Assistant on a w ork s t ation:
+1.Copy the ska.msi installer, or ska-x64.msi  installer for 64-bit systems, from the addon 1.
+directory to a scratch directory (C:\temp) on the local w ork s t ation  or to a publicly accessible share.
+2.Launch the installer.2.Click Next .
+3.Read and accept the license agreement.3.
+Click Next .
+4.Click Typical , then click Next . 4.5. Con figur e  the Login Assistant: 5.
+▪URL of the Bravura Pass  server  The full path to the Bravura Pass  server. The URL can include skin ▪
+name or other parameters. Do not set this URL to a redirect page.
+▪Timeout This is the maximum amount of time  the Login Assistant secure kiosk account can be used ▪
+before it aut omatic ally  closes. Default is 15 minutes.
+▪Enable the language bar in the Login Assistant Select this option  if you want users to be able to ▪
+select a diff er en t  language while using the Login Assistant.
+▪Use a VPN c onnection  Select this option  if you want to establish a VPN c onnection  before opening ▪
+the Bravura Pass  login page in a kiosk browser.
+▪Allow users to connect from remote loc ations  Select this option  if you want users to be able to ▪
+connect from remote loc ations,  using direct c onnection,  WiFi hotspot, or AirCard. This is generally
+used along with a VPN c onnection.
+▪Use a proxy for c onnection  Select this option  if you want the secure kiosk account browser to use ▪
+the Edge proxy server to connect to the Bravura Pass  instance. You can c on figur e  settings  for the
+proxy later.
+Click Next .
+6.Set up the help account.6.
+Type the User ID  (default is help ). The help account is used to login and launch runurl .Use the format <User ID>@<Domain>  or <Domain>\<User ID> if the help account is a
+domain user.
+If the Use random password for this account checkbox  is selected, you do not need to enter a
+password. A random password will be used instead. You must specify a password if you are only
+installing the Login Assistant and not the Cr edential  Provider, or if you are using a domain account.
+Click Next .
+7. Con figur e  a VPN c onnection  program if you selected that option  earlier 7.
+▪ Connection  program:  Name and full path of the program to run in order to establish a VPN ▪
+c onnection.
+▪ Connection  program arguments:  Command-line arguments for the VPN connect program; for ▪
+example -u %USERID% -p %PASSWORD% .
+▪ Disc onnection  program:  Name and full path of the program to run to disconnect from the VPN. ▪
+▪ Disc onnection  program arguments:  Command-line arguments for the VPN disconnect program; for ▪
+example -u %USERID% -p %PASSWORD% .
+▪User ID:  To be used with the VPN connect and disconnect programs. ▪
+▪Password: For the VPN user ID. ▪▪Timeout: The period in seconds that the runurl  program should wait before checking to see if ▪
+c onnectivity  has been established after  the VPN connect program has run. Default value is 30.
+▪Retries: Number of times  to test for c onnectivity  after  the VPN connect program has run. If this ▪
+value is blank, there will only be one retry attemp t.  Default value is 3.
+▪VPN test page URL: This option  may be used when the Bravura Pass  server is in a SaaS ▪
+environment and accessible directly from the internet and the VPN must still be established. This
+would be for a case such as c onnecting  to an Activ e  Directory server that is behind the VPN and is
+required by the local reset extension when r esetting  a user's password using the Cr edential
+Provider. If this URL cannot be reached by the SKA / Cr edential  Provider, then a VPN c onnection  will
+be established to access it. For example, a Bravura Pass  server may exist behind the VPN.
+▪VPN test page search words (multiple  sets of search words allowed, separated by \n):  This is a ▪
+marker that is in the HTML source code for what to search for in the page from VPN test page URL.
+For example, if there is a Pass server behind the VPN, you can search for an HTML tag that contains
+a GUID that can be used for the search such as:
+SKA MARKER 81A84EBD-2CE5-4794-8341-E1828711FFBC.
+If you are using a Cisco anyConnect VPN c onnection,  there are additional  settings  that can only be
+set by running the MSI on the command line
+If you are using a Cisco anyConnect VPN c onnection,  the following additional  settings  that can only
+be set by running the msi on the command line:
+VPN_CONNECT_STDINPUT  is a [~]  separated list of lines that go to standard input. The value is
+written  as a registry entry with multi-s tring  value called vpn-connect-stdinput . It does not
+allow for empty lines as the registry value type does not either.
+Run vpncli.exe  manually and in t eractively  to determine what input is needed. Input lines will
+replace % USERID%  with the VPN userid and %PASSWORD%  with the VPN password; for example:
+▪<vpn profile> ▪
+▪%USERID%▪
+▪%PASSWORD%▪
+▪y▪
+The <vpn profile>  should be replaced with VPN connect profile,  and the y is to accept VPN terms of
+use. This translates into the following MSI command line parameter:
+VPN_CONNECT_STDINPUT="profile[~]%USERID%[~]%PASSWORD%[~]y"
+VPN_CONNECT_TERMINATE  is to optionally  terminate any running programs before trying to
+launch the VPN client, as Cisco anyConnect will fail if vpncli.exe  or vpnui.exe  are running.
+The value is written  as a registry entry called vpn-connect-terminate . This is optional  but
+recommended. The value is a comma-separated list of process names; for example:
+VPN_CONNECT_TERMINATE="vpncli.exe,vpnui.exe"
+VPN_HIDE_WINDOW  is used to hide the pop-up console window that vpncli.exe  starts. This is
+written  as a registry entry called vpn-hide-window . By default, it is off , as the showing of the
+console window is the default behavior and is required for some VPN clients. To disable set:
+VPN_HIDE_WINDOW = 1
+For other SKA installer command-line options,  see Add-on ins t allation  command-line options  (on
+page 245).
+.
+Click Next .
+8. Con figur e  the remote account access if you selected that option  earlier. 8.
+▪External URL to test for c onnectivity  This will be the URL of a website that used to determine if the ▪
+computer is connected to the Internet, or still behind a r egis tr ation  screen or c aptiv e  portal. This
+defaults to w w w .msftncsi.c om/ncsi. tx t.
+▪Data expected from URL  This is a string that is expected from the above website. It should be ▪
+unique enough to ensure that a r egis tr ation  page will not have the data, but always present on the
+external URL. The default is Microsoft NCSI .▪Program to use to create a c onnection  If users will be using an AirCard or Internet stick,  this is the ▪
+name of the program to run in order to connect. This program will be run from the Login Assistant
+to allow the user to connect.
+▪Main window title of program  If the Program to use to create a c onnection  is used, this is the ▪
+main window title of the program when run. In AirCard, this is listed under the Task column on the
+Applic ations  tab.
+▪ Captiv e  portal time  limit (seconds)  Specify the length of time  to wait to see if a c onnection  has ▪
+been established by the c aptiv e  portal used to create a c onnection.
+The time  limit may be set between 0 and 600 seconds. The default is 300.
+▪Address of the VPN server / Port of the VPN server If specified  these allow the remote Login ▪
+Assistant to test a c onnection  to the VPN server to see if it can be accessed before s t arting  the
+VPN. This can help with better  diagnosis and faster c onnection  times.
+Click Next.
+9.If you chose to use a proxy for c onnection  earlier, c on figur e  the Edge proxy server for the secure kiosk 9.
+account. These settings  match those set in Edge > Internet Options  > Local Area Network (LAN)
+Settings:
+▪ Aut omatic ally  detect proxy settings  Sets Edge proxy server to "Aut omatic ally  detect settings". ▪
+▪Use aut omatic  c on figur ation  script  Sets the proxy server to use "Use aut omatic  c on figur ation ▪
+script".▪Use a proxy server  Sets proxy server to use a manually de fined  proxy server. ▪
+Click Next .
+10. Select the languages to be displayed by the Login Assistant. 10.Click Next .
+11. Once you have finished  c on figuring  the various ins t allation  options,  you are prompted to start the 11.
+ins t allation.
+Click Install .
+The installer begins copying files to your computer. The  Ins t allation  Complete dialog appears after  the
+softw ar e  has been successfully installed.
+12. Click Finish to exit. 12.
+Depending on your ins t allation  options,  you may be prompted to restart Windows.
+Uninstalling
+Upon uninstall, the help account and the associated pr ofile  folder will be deleted, but the registry hive
+still be present, especially if there were options  added manually. Before installing another version of
+Login Assistant, check that the:
+▪Key HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\ is deleted in the w ork s t ation’ s ▪
+registry
+and
+▪Folder C:\Program Files\Bravura Security\Bravura Security Fabric\ is deleted from the w ork s t ation’ s ▪
+file systemT r oubleshooting
+If you see the following errors when installing the Login Assistant:
+▪Failed to open token for user help. Error 1385 . Review the group policies on the domain controller to ▪
+ensure that users can log into a local w ork s t ation  before and after  joining a domain.
+▪Installer service failed to respond.  Review the group policies on the domain controller to ensure that ▪
+users can log into a local w ork s t ation  before and after  joining a domain.
+▪Failed to open token for user help. Error 1314.  A required privilege is not held by the client.  Ensure ▪
+that ska.msi is run with elevated privileges  (on page 242).
+▪The system does not allow you to logon in t er activ ely  Ensure that the help user is able to log in ▪
+locally. In some situations  Windows may apply domain policies upon reboot that cancel this right for
+local users.
+See also
+▪You can use the logutil  program to enable logging  (on page 257), for debugging purposes. ▪
+▪You can use the debugska  registry setting  to improve logging  (on page 1633) for SKA remote access. ▪

@@ -1,0 +1,312 @@
+Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Users are only included in the report output if their
+update time  falls between the Earliest last update time
+and Latest last update time.
+Use within the last N days : Users are only included in the
+report output if their update time  falls within the
+specified  last number of days.Criteria Description
+Use N or more days ago : Users are only included in the
+report output if their update time  was more than the
+specified  number of days ago.
+Summarize report Select this checkbox to summarize the report details.
+Depending on your search criteria, in this mode, the
+report output contains the number of subordinates who
+report to each manager, or the number of OrgChart
+orphans.
+Selecting  this causes unnecessary search options  to be
+hidden.
+If you do not apply any search criteria, the report lists all managers who have subordinates and who are
+connected to the main OrgChart tree.
+Org building rounds
+Purpose : Con figur ation  of and progress in OrgChart building processes.
+Executable : orground
+Search Criteria :
+Criteria Description
+Campaign status Select a round status:
+All rounds : all OrgChart rounds that have been started,
+regardless of their status. This is the default setting.
+Activ e  rounds : only the OrgChart rounds that are
+currently open, but have not yet been completed by the
+managers.
+Completed rounds : only the OrgChart rounds where all
+managers in the round are signed off .
+Canceled rounds : only the OrgChart rounds that have
+been canceled by a product administrator.
+Round description Type a round description  of one or more OrgChart rounds
+to only include those rounds in the report. Alt ernativ ely ,
+you can search for one or more OrgChart rounds.
+Manager ID Type the pr ofile  ID for one or more managers to only
+include those managers in the report. Alt ernativ ely ,  you
+can search for one or more manager IDs.
+Show summary of these oper ations Select one or more oper ations  to filt er  search results by
+oper ation.
+Start date range The start date is when the round was initia t ed.  Choose
+one of the following options  to de fine  a date range for
+the OrgChart rounds:Criteria Description
+Date not required : This is the default setting.  Rounds are
+reported regardless of their start time.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.Criteria Description
+Option Description
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: Rounds are only included in the report output if their
+start time  falls within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Rounds are only included in the report output if their
+start time  falls between the Earliest Org building round
+start date and Latest Org building round start date.
+Use within the last N days : Rounds are only included in
+the report output if their start time  falls within the
+specified  last number of days.
+Use N or more days ago : Rounds are only included in the
+report output if their start time  was more than the
+specified  number of days ago.
+Report type Select a report type:
+Summary : report uses block format and only shows high-
+level OrgChart round in f ormation.
+Oper ations  summary : report separates the in f ormation
+by oper ation  code and status (denied, open, and
+approved).
+Detailed : report includes all available details.
+Privileged access c on figur ation  reports
+Imported target systems
+Purpose : Target systems that were added using an import rule.
+Executable : importtargets
+Search Criteria :
+Criteria Description
+Discovered target system Type a comma-and-space-delimited list of IDs of auto-
+discovered target systems to include in the report.Criteria Description
+Alt ernativ ely ,  search for one or more discovered target
+systems.
+Target systems rule ID Type a comma-and-space-delimited list of IDs of target
+system import rules to include in the report.
+Alt ernativ ely ,  search for one or more import rules.
+New system c onnection  cr edentials Select cr edentials  to be used to connect to the target
+systems:
+▪Create new cr edentials  on managed system ▪
+▪Use valid cr edential  from template target system ▪
+▪Use cr edentials  from source system ▪
+Imported managed systems
+Purpose : Managed systems that were added using an import rule.
+Executable : importsystems
+Search Criteria :
+Criteria Description
+Discovered managed system Type a comma-and-space-delimited list of IDs of
+managed systems to include in the report. Alt ernativ ely ,
+search for one or more discovered managed systems.
+Managed systems rule ID Type a comma-and-space-delimited list of IDs of target
+system import rules to include in the report.
+Alt ernativ ely ,  search for one or more import rules.
+Managed system policy ID Type a comma-and-space-delimited list of IDs of
+managed system policies to include in the report.
+Alt ernativ ely ,  search for one or more managed system
+policies.
+Imported managed accounts
+Purpose : Managed accounts that were added using an import rule.
+Executable : importaccounts
+Search Criteria :
+Criteria Description
+Discovered account Type the ID of a managed account to include in the
+report.Criteria Description
+Discovered managed system Type a comma-and-space-delimited list of IDs of
+managed systems to include in the report. Alt ernativ ely ,
+search for one or more managed systems.
+Managed accounts rule ID Type a comma-and-space-delimited list of IDs of
+managed account import rules to include in the report.
+Alt ernativ ely ,  search for one or more import rules.
+Managed system policy ID Type a comma-and-space-delimited list of IDs of
+managed system policies to include in the report.
+Alt ernativ ely ,  search for one or more managed system
+policies.
+Discovered system status
+Purpose : Displays the status of discovered systems (managed or unmanaged).
+Executable : discoveredsystemstatus
+Search Criteria :
+Criteria Description
+Status Select a status to run:
+▪All▪
+▪Managed▪
+▪Unmanaged▪
+Discovered system name Type a comma-and-space-delimited list of discovered
+system names to include in the report. Alt ernativ ely ,
+search for one or more users.
+Address Enter the address of the discovered system.
+Display attribut e Select one of the attribut es  from the drop-down list. The
+value of that attribut e  will be displayed in the report.
+Filter attribut e Select one of the attribut es  from the drop-down list. The
+value specified  by the corresponding Filter value: will act
+as a search filt er  in the report.
+Filter value Value associated with the preceding filt er  attribut e:
+which will act as the search filt er .
+Last connect time Choose one of the following options:
+Date not required : This is the default setting.  In f ormation
+is listed regardless of start date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. ThisCriteria Description
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.Criteria Description
+Option Description
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: In f ormation  is only included in the report output if the
+start date falls within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.Criteria Description
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: In f ormation  is only included in the report output if the
+start date and time  falls within the Start date range . Use
+the fir s t set of date / time  controls to select the earliest
+time  to include, and the second set of date / time
+controls to select the latest time  to include.
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Managed system status
+Purpose : Status of managed systems, including number of managed accounts, last c onnection  time  and
+failure counts.
+Executable : managedsystemstatus
+Search Criteria :
+Criteria Description
+Report type Select a report type from the drop-down list:
+▪View updated systems▪
+▪View systems that were not updated▪
+In t egr ation  dir ection Select one of the options  from the drop-down list:
+▪Push mode▪
+▪Local service mode▪
+Managed system ID Type a comma-and-space-delimited list of IDs for
+managed systems you want to include in the report. This
+field  is only visible when Trend by  is set to Account or
+Managed system. Alt ernativ ely ,  you can search for one or
+more managed systems.
+Status Select one of the options  from the drop-down list:
+▪All▪

@@ -1,0 +1,243 @@
+f.Select each user, computer, or group for which you want to apply the group policy. Under thef.
+permissions for this object, select the Allow checkbox for the Apply Group Policy permission.
+g.Click OK to return to the Group Policy Management snap-in. g.
+9.Select the group policy you want to modify, then click Edit… . 9.
+The Group Policy Management Editor snap-in displays.
+10. Expand Computer Con figur ation  > Policies > Softw ar e  Settings . 10.
+11. Right-click Softw ar e  ins t allation  and select New > Package… . 11.
+The Open dialog box appears.
+12. Browse to the shared folder (UNC path) where you copied the MSI, select the file, then click Open . 12.
+The Deploy Softw ar e  dialog appears.
+13. Choose Advanced , then click OK. 13.
+The pr operties  dialog for the package appears.
+14. Select the Modific ations  tab. Click Add. In the Open dialog box, browse to the transform file (.mst ), 14.
+then click Open .
+15. Click OK. 15.
+The package is assigned immediately. The ins t allation  is performed when it is safe to do so, typically
+when the computer starts up.
+16. Close the Group Policy Management Editor and the Group Policy Management snap-in. 16.
+Customizing the Shell Extension installer
+The following options  for the Shell Extension client installer can be set on the command-line (quiet
+install), contained in a Windows Installer Transform file, or modified  with an MSI editor such as Orca.
+Shell  Extension custom ins t alloptions
+Option Description
+SHEXTURL URL path, including server
+in f ormation,  to the root virtual
+directory on the
+Bravura Security Fabric  server
+(http://<ser v er>/<ins t ance>/).
+SHEXTTARGET Name of the Activ e  Directory target
+system in Bravura Security Fabric.
+Example silent install command
+msiexec /i hidshext.msi SHEXTURL=http://<server>/<instance>/
+SHEXTTARGET=AD /quiet
+Modifying the ins t allation  pr operties  with an MSI editor Obtain an MSI editor such as Orca. Orca is a table editing  tool that can be used to edit .msi files.
+In f ormation  on how to use Orca and where to download it can be found at:
+http s://docs.micr osoft.c om/ en-us/window s/desk t op/msi/ or c a-e x e .
+To modify the pr operties  with an MSI editor:
+1.Use the editor to open the MSI installer.1.
+2.Select the Property table.2.
+3.If the property already exists, select it and edit its value. If the property does not exist, add the3.
+property and set its value.
+4.Save the MSI installer package.4.
+Advanced c on figur ation
+In the Windows registry, there are two registry entries to control the Shell Extension:
+▪ c on fig  (on page 3532) ▪
+▪disable  (on page 3532) ▪
+WARNING!Ensure that you are comfortable and knowledgeable in the mechanics of
+the registry before you attemp t  to change any c on figur ation  settings.
+ 
+c on fig
+The Shell Extension gives you the option  to change the URL for the Front-end  module.
+To change the URL, modify the following registry key:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\Shell
+Extension 
+The registry key contains an entry named IDAccessURL . If you modify this entry, the change takes
+e ff ect  once you log out and log back into the w ork s t ation.
+Entry name Shell Extension
+Value Data IDAccessURL
+Data Type REG_SZ
+Default Value http:// <server >/<instance >/?LANG=en-
+us&JUMPTOCGI=IDR&LINK= >
+NETWORKRESOURCES&NETRES_HOSTID= <AD name >
+For Example:
+http://10.0.61.5/idmsuite/?LANG=en-
+us&JUMPTOCGI=IDR&LINK= >
+NETWORKRESOURCES&NETRES_HOSTID=AD
+ 
+disable
+You have the option  to disable the Shell Extension without removing the softw ar e.To disable, modify the following registry key:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\Shell
+Extension 
+The registry key contains an entry named DisableHidShExt . If you modify this entry, the change
+takes e ff ect  once you log out and log back into the w ork s t ation.
+Entry name DisableHidShExt
+Value Data 0|1
+▪If set to 0 (false) Shell Extension is enabled▪
+▪If set to 1 (true) Shell Extension is disabled▪
+Data Type REG_DWORD
+Default Value 0
+ McAfee ePolicy Orchestrator extension
+Bravura Security Fabric  can provide McAfee ePolicy Orchestrator (ePO) with in f ormation  regarding
+privileged access, certific ation  and w orkflo w  events to display in ePO dashboards. You set this up by
+providing ePO with access to the API Service (idapi), and installing an extension, shipped with Bravura
+Security Fabric , on the ePO server.
+To allow ePO access to the API Service (idapi):
+1.Create an individual administrator with the ”IDAPI caller” privilege, for example _EPO_USER . 1.
+Ensure the CIDR mask is set.
+2.Create a user class for the ePO API account.2.
+3.Create an administrator group with the ”Run Reports” privilege and use the user class created in3.
+step 2 to de fine  the group membership.
+To install the Bravura Security Fabric  ePO extension:
+1.Contact support@bravurasecurity.com  to obtain the HitachiIDSuiteExt.zip file. 1.
+2.Copy the HitachiIDSuiteExt.zip file to the ePO server. 2.
+3.Log into the ePO console as the administrator.3.
+4.Install the extension.4.
+5.Register the Bravura Security Fabric  server using the API Service endpoint; for example: 5.
+http://idm_server/instance/idapi
+6.Create a task to import the Bravura Security Fabric  data. 6.
+7.Run the task or wait for the scheduled e x ecution. 7.
+The McAfee ePolicy Orchestrator and extension can only target a single Bravura Security Fabric
+instance.
+The dashboards supplied are samples of what can be displayed. You can modify, add, or remove
+dashboards using ePO softw ar e.  Refer to the McAfee ePolicy Orchestrator documen t ation  for ins tructions
+on how to customize the dashboards.Part IV UTILITIES
+Using Bravura Security Fabric  utilities
+Bravura Security Fabric  includes a large c ollection  of tools to assist Bravura Security Fabric  administrators
+with server maintenance and advanced adminis tr ation  tasks. These tools are all Win32 executable
+programs and are located in the util directory of your ins t allation.
+Some of these programs can damage your instance or file system if used incorrectly. Ensure that you have
+followed all of the ins tructions  carefully before you start using these tools.
+Using the command line
+All of the Bravura Security Fabric  tools are executed from a command-line interface. That is, you type
+ins tructions  at command prompt, rather than using your mouse to select GUI elements such as buttons
+or icons.
+One such command-line interface is the Bravura Security Fabric Command Prompt, which is the Windows
+Command Prompt pr ec on figur ed  for the Bravura Security Fabric  environment.
+Launching the Bravura Security Fabric  Command Prompt
+To open a new instance of the command prompt, search cmd  and select Bravura Security Fabric
+Command PromptA window appears with a blinking cursor in the Bravura Security Fabric  instance directory.
+You can now type an MS-DOS command at the prompt (>). To navigate to the util directory, use the cd
+(change directory) command. For example, type:
+cd util
+See your Windows documen t ation  for more in f ormation  about MS-DOS commands.Using an alt ernativ e  command-line interface
+You may choose to use a custom command-line interface, such as the Bash Shell (bash.exe) provided with
+Cygwin, instead of the Windows Command Prompt (cmd.exe). Be aware that some command-line
+interfaces interpret special characters ("\/|.$) diff er en tly .
+Unless otherwise stated, all examples in this manual assume that you are e x ecuting  the program from a
+Windows 200x Command Prompt. If you use a custom command-line interface, you may need to modify
+some of the examples to work properly.
+Common arguments: help and version
+Getting  help in f ormation
+To display the usage summary and version in f ormation  for  Bravura Security Fabric  tool, run the program
+with the -h option.  For example, to display the usage for the psupdate program, type:
+   psupdate.exe -h
+Getting  version in f ormation
+To only display version in f ormation  for  Bravura Security Fabric  tool, run the program with the -v
+option.  For example, to display the usage for the psupdate program, type:
+...psupdate.exe -v
+Authentic ation  chain utilities
+authcfg
+Use the authcfg program to import, export, and reset authentic ation  chain settings.
+Usage
+authcfg.exe [-export [<file>]] | [-import <file>] | [-reset]
+Argument Description
+-export <filename> Export the current authentic ation  chain settings  to a file.
+If a file name is not specified,  then the exported file is
+named by the current date and time;  for example,
+authcfg-20100421-123425.exp
+By default, the file is written  to the current directory.
+-import <filename> Import authentic ation  chain settings  from a specified  file.
+The e xisting  authentic ation  chain settings  are
+aut omatic ally  exported to a backup file before the
+specified  settings  are imported. The exported backup file
+is named by the current date and time;  for example,
+authcfg-20100421-123425.expArgument Description
+By default, the backup file is written  to the current
+directory.
+The new imported settings  completely overwrite the
+e xisting  authentic ation  chain settings.
+-reset Reset the authentic ation  chain settings  to the original
+default values.
+The e xisting  authentic ation  chain settings  are
+aut omatic ally  exported to a backup file before they are
+reset to the default values. The exported backup file is
+named by the current date and time;  for example,
+authcfg-20100421-123425.exp
+By default, the backup file is written  to the current
+directory.
+The default settings  completely overwrite the e xisting
+authentic ation  chain settings.
+Examples
+1.To export the e xisting  authentic ation  chain c on figur ation  to a file: 1.
+authcfg.exe -export
+2.To export the e xisting  authentic ation  chain c on figur ation  to a specified  file name: 2.
+authcfg.exe -export authchainconfig.cfg
+3.To import authentic ation  chain settings  from an e xisting  file: 3.
+authcfg.exe -import authcfg-20100421-123425.exp
+4.To reset the authentic ation  chain settings  to the original default values: 4.
+authcfg.exe -reset
+f edidp-util
+Use the fedidp-util  program to generate certific a t e  and metadata files used for cr eating  SAML
+assertions.
+Usage
+fedidp-util.exe -makecert [-pfx <pfxfile> -pass <password> -cert-
+subject <subject> -root-subject <subject> -years <years>]
+fedidp-util.exe -metadata [-pfx <pfxfile> -pass <password> -]
+Argument Description
+-cert-subject <subject> Subject of the SAML document signing certific a t e  (e.g.
+"Bravura Security") (required).
+-certfile  <filename> Public certific a t e  output filename  (.cer format).Argument Description
+-echopwd Report back (on standard out) the encrypted pfx
+password.
+-idpurl <url> Public facing URL of IdP (e.g. http s://hids.c ompan y .c om/
+de f ault/  ).
+-makecert Create a new root and document signing certific a t e.
+-mdfile  <filename> Output filename  to store metadata.
+-metadata Generate IDP meta-data
+-pass <password> The encr yption  password used by the PFX (Personal
+In f ormation  Exchange) file.
+-pfx <p fxfile> Signing certific a t e  in PFX (Personal In f ormation  Exchange)
+format (REQUIRED)
+-root-subject <subject> Subject of the self-signed root certific a t e  (e.g. "Bravura
+Security Root")
+-years <years> The number of years the generated PFX file is valid for.
+-silent Supress success messages.
+Examples
+1.Generate a new PFX:1.
+fedidp-util.exe -makecert -pfx saml.pfx -cert-subject SAML -root-
+subject "Bravura Security" -pass p455w0rD -years 3
+2.Generate IDP metadata and public certific a t e  from the PFX: 2.
+fedidp-util.exe -metadata -pfx saml.pfx -mdfile mdoutput -
+pass p455w0rD -idpurl 10.0.1.68 -cert-subject SAML -
+certfile public.cer
+See also
+See Authentic ation  chains: SAML  (on page 923) for more in f ormation  on the SAML authentic ation
+framework.
+Certific ation  utilities
+certscheduler
+Bravura Security Fabric  uses the certscheduler program to start c on figur ed  certific ation  campaigns.
+Usage
+certscheduler.exe -conf <configuration ID> [-email <email address>] [-
+dry-run]Argument Description
+-conf <sa v edCertCon figID> The ID for the saved certific ation  c on figur ation.
+-email <email-address> The address to receive notific ations  of problems with the
+scheduling of the campaign. If not specified  the
+RECIPIENT EMAIL address is used.
+-dry-run Tests the validity of the saved c on figur ation  but does not
+initia t e  a round.
+Example
+To initia t e  a saved certific ation  campaign:
+certscheduler.exe -conf cert1
+certapitest
+The certapitest utility  reads a saved certific ation  setup and uses the API to construct and initia t e  a
+certific ation  campaign.
+Usage
+certapitest.exe -conf <savedCertConfigID> -owner <profilename>
+Argument Description
+-conf <sa v edCertCon figID> The ID for the saved certific ation  setups.
+-owner <pr ofilename> The certific ation  campaign’s owner
+Example
+To initia t e  a saved certific ation  campaign:
+certapitest.exe -conf "Simple Cert" -owner "John"
+Database utilities

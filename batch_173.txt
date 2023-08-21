@@ -1,0 +1,300 @@
+        capath = "/etc/certs";
+▪cert When c ommunic ating  to the API SOAP Service over SSL, a client-side certific a t e  can be provided. ▪
+If there is a passphrase as part of the certific a t e  it needs to be specified  as well.
+Example:
+        cert = "/etc/certs/hipmcert.pem:apassphrase";
+▪ignore When c ommunic ating  to the API SOAP Service over SSL, the certific a t e  check can be ignored. If ▪
+0, the check is not ignored. If 1, the check is ignored.
+Example:
+        ignore = "1";
+▪language The language set in this value will be used when fetching the password rules. By default is it ▪
+is en-us. The language packs must be installed in order to retrieve rules in other languages.
+Example:
+        language = "fr-fr";
+▪fail-if-unavailable Specifies  the action  to take if the password oper ation  fails and the Password ▪
+Manager service cannot be contacted. The default behavior is to fail the oper ation  if the Password
+Manager service is unavailable.
+Example:
+        fail-if-unavailable = "true";
+Password Manager Service c on figur ation  (idpm)
+The pushpass file is used to c on figur e  the Password Manager service (idpm). The options  are as
+follows:
+▪ t ar g etid  If you are using aliasing, this option  is used to specify the ID of the target. ▪
+Example:
+        targetid = "UNIXSERVER";
+▪hostname The hostname option  is used to specify the loc ation  of the Password Manager service ▪
+service to be used by pspasswd. This can either be an IP address or a hostname.
+Example:
+        hostname = "UNIXSERVER";
+▪port The port option  is used to specify the port that the Password Manager service is running on. The ▪
+default value for the Password Manager service is 3333.
+Example:
+        port = "3333";
+▪ timeout  Specifies  the timeout  (in seconds) that should be used when c ommunic ating  with Password ▪
+Manager service. The default value is set to 10 seconds.
+Example:
+        timeout = "10" ;▪fail-if-unavailable Specifies  the action  to take if the password oper ation  fails and the Password ▪
+Manager service cannot be contacted. The default behavior is to fail the oper ation  if the Password
+Manager service is unavailable.
+Example:
+        fail-if-unavailable = "true";1The actual name of the filt er  varies depending on the target system type. See the appropriate section  for
+details.LDAP trigger
+This chapter shows you how to set up transparent password s ynchr oniz ation  with an LDAP Directory
+Service trigger system.
+Before you begin, ensure that you have researched and carried out the steps outlined in Implementing
+Transparent Password S ynchr oniz ation  (on page 1659).
+Bravura Pass  can intercept password changes on Unix-based LDAP servers using a pre-change and post-
+change strength filt er ,  psldap * 1.
+You can install the LDAP password filt er  plugin ( psldap ) on the following Unix-based servers:
+▪Sun ONE Directory Server (v5.x), Oracle DSEE and Red Hat Directory Server▪
+▪OpenLDAP v2.2.x▪
+▪IBM Directory Server▪
+To set up transparent password s ynchr oniz ation  with an LDAP Directory Service trigger system:
+1.Ensure that a c ompatible  version of OpenSSL (1.1.x) is installed on the LDAP system. 1.
+2.Install the LDAP password filt er  plugin. 2.
+3. Con figur e  the Password Manager ( idpm ) service. 3.
+4. Con figur e  your LDAP ins t allation  to use the plugin. 4.
+5. Optional:  Filter password change requests to include certain users, groups and domains. 5.
+These steps are detailed in the following sections.
+WARNING! Ensure that your LDAP client does not hash new passwords before
+sending requests to the LDAP server. If you do not want passwords to be
+tr ansmitted  in plaintext, it is highly recommended that you enable SSL on
+the LDAP server.
+Installing the LDAP password filt er  plugin
+To install the LDAP password filt er  plugin (psldap) on a Unix-based LDAP server:
+1.If you did not select Unix Ins t allation  Packages  when you installed the Connector Pack, run setup on 1.
+the Bravura Security Fabric  server to modify your Connector Pack ins t allation.
+Ensure that appropriate Unix package is selected on the component selection  page.
+Click Next , then complete the ins t allation  procedure.
+See Install the psunix ins t allation  package  (on page 1707) for more detail.
+2.Copy the psunix-<os>.<cpu>.tar.gz  file from the unix directory to a scratch directory (such 2.
+as /tmp) on the Unix server.
+3.Log into the LDAP server with adminis tr ativ e  privileges, and extract the files from the psunix 3.
+archive.For example, type:  
+   cd /tmp 
+   tar -zxvf psunix-linux-glibc-2.28.x64.tar.gz  
+4.Run install.sh  and select LDAP Transparent Synch  option. 4.
+   sh install.sh [ -inf <path>/idmsetup.inf ]  
+5.Follow the ins tructions  displayed by the installer script. 5.
+In the ins t allation  process, follow the ins tructions  and input the in f ormation  prompted by each input
+field.  To skip a field,  press [Enter]  to use the default value.
+6.Verify that the following shared object files are copied to /usr/local/psunix/default/. 6.
+The psldap * shared object files are named using the format:
+psldap-<ldap-type>.so
+Where the <ldap-type> is:
+▪sunldap if you are running Oracle DSEE, Sun ONE Directory Server, or Red Hat Directory Server ▪
+▪openldap if you are running OpenLDAP ▪
+▪ibmldap if you are running IBM Directory Server ▪
+7.Ensure that the psunix folder and all files and plugins inside are readable and executable. 7.
+For example, run the following commands: 
+     chmod -R a+rx /usr/local/psunix/ 
+     chmod a+rx /usr/local/psunix/default/psldap-openldap.so  
+8.Also ensure that /etc/psunix.cfg  and /etc/psunix.d/  have read and execute permissions: 8.
+     chmod a+rx /etc/psunix.cfg 
+     chmod -R a+rx /etc/psunix.d/  
+9.Stop the LDAP service.9.
+10. Start the LDAP service. 10.
+Con figuring  the Password Manager service for transparent s ynchr oniz ation
+To allow external servers access to the Password Manager service  (on page 2820) (idpm) on the primary
+Bravura Security Fabric  server you must also add a CIDR mask address for the trigger system.
+1.Click Manage the system > Maintenance > Services . 1.
+2.Select Bravura Security (idpm) Password Manager Service . 2.
+3.Add a CIDR mask address for the trigger system in the following setting: 3.
+Comma-delimited list of IP addresses with CIDR bitmask that are allowed to send socket requests
+Con figur e  your LDAP ins t allation  to use the LDAP password filt er  plugin
+Refer to the appropriate sub section:
+▪Oracle DSEE, Sun ONE Directory Server (v5.x), or Red Hat Directory Server  (on page 1725) ▪
+▪OpenLDAP v2.2.x  (on page 1726) ▪▪IBM Directory Server  (on page 1727) ▪
+Oracle DSEE, Sun ONE Directory Server (v5.x), or Red Hat Directory Server
+Note: The following ins tructions  are intended for Sun ONE Directory Server
+(formerly Netscape/iPlanet Directory Server) v5.x. Details may vary
+depending on your version of the softw ar e.
+Sun ONE Directory Server is more currently known as Oracle Directory
+Server Enterprise E dition  (Oracle DSEE).
+CAUTION: For Sun ONE Directory Server, stop the directory server before making
+these changes, otherwise the changes will be o v er written.
+To c on figur e  Sun ONE Directory Server to use LDAP password filt er  plugin:
+1.Find the dse.ldif file. 1.
+The file is usually located in <slapd-ser v ername>/ c on fig.
+2.Edit the file by appending the following two sections:   2.
+   dn: cn=Psynch Check Password,cn=plugins,cn=config 
+   objectclass: top 
+   objectclass: nsSlapdPlugin 
+   objectclass: extensibleObject 
+   cn: Hitachi ID Check Password 
+   nsslapd-pluginPath: /usr/local/psunix/default/psldap-sunldap.so 
+   nsslapd-pluginInitfunc: prepasswd_init 
+   nsslapd-pluginType: preoperation 
+   nsslapd-pluginEnabled: on 
+   nsslapd-pluginarg0: -cfg 
+   nsslapd-pluginarg1: /usr/local/psunix/default/psldap.cfg 
+   nsslapd-pluginID: password-preop 
+   nsslapd-pluginVersion: none 
+   nsslapd-pluginVendor: Hitachi ID 
+   nsslapd-pluginDescription: Transparent Password Strength plugin 
+   dn: cn=Psynch Synchronize Password,cn=plugins,cn=config 
+   objectclass: top 
+   objectclass: nsSlapdPlugin 
+   objectclass: extensibleObject 
+   cn: Hitachi ID Synchronize Password 
+   nsslapd-pluginPath: /usr/local/psunix/default/psldap-sunldap.so 
+   nsslapd-pluginInitfunc: postpasswd_init 
+   nsslapd-pluginType: postoperation 
+   nsslapd-pluginEnabled: on 
+   nsslapd-pluginarg0: -cfg 
+   nsslapd-pluginarg1: /usr/local/psunix/default/psldap.cfg    nsslapd-pluginID: password-postop 
+   nsslapd-pluginVersion: none 
+   nsslapd-pluginVendor: Hitachi ID 
+   nsslapd-
+pluginDescription: Transparent Password Synchronization plugin  
+If the c on figur ation  file is not specified  for Unix-based servers, the default is /etc/psunix.cfg.
+3.Save and close the file. 3.
+4.Create a new directory, /usr/local/psunix/default/64/ and copy psldap-sunldap.so into the 64/ folder.4.
+For example:  
+   cd /usr/local/psunix/default/    mkdir 64 
+   cp psldap-sunldap.so 64/  
+Note: On 64-bit systems, the value of the nsslapd-pluginPath is entered
+as /usr/local/psunix/default/psldap-sunldap.so ; but
+the actual plugin, however, should be located in the /usr/local/psunix/
+default/64 directory.
+OpenLDAP
+Note: Only OpenLDAP versions 2.2.x or later are supported.
+The following ins tructions  are intended for OpenLDAP v2.2.x. Details may
+vary depending on your version of the softw ar e.
+Before you begin, note the following:
+▪When installing OpenLDAP 2.2.x, ensure that the --enable-modules=yes  and --enable- ▪
+slapi=yes  c on figur e  options  are set.
+▪The plugin will only work if clear-text passwords are sent to the server.▪
+▪The plugin will not work if the▪
+LDAPv3 Password Modify (RFC 3062)extended operation  is used.
+CAUTION: Stop the directory server before making these changes, otherwise the
+changes will be o v er written.
+To c on figur e  OpenLDAP for transparent password s ynchr oniz ation:
+1.Find the slapd.conf c on figur ation  file. 1.
+2.The file is usually located in /etc/openldap/. 2.
+3.Edit the c on figur ation  file, and add the following two lines:  3.
+  plugin preoperation "<path-to-psldap>"  prepasswd_init ["-
+cfg" "<path-to-config-file>"] 
+  plugin postoperation "<path-to-psldap>"  postpasswd_init ["-
+cfg" "<path-to-config-file>"]  
+For example:   plugin preoperation "/usr/local/psunix/default/psldap-
+openldap.so" prepasswd_init "-cfg" "/usr/local/psunix/default/
+psunix.cfg" 
+  plugin postoperation "/usr/local/psunix/default/psldap-
+openldap.so" postpasswd_init "-cfg" "/usr/local/psunix/default/
+psunix.cfg"  
+If the c on figur ation  file is not specified  for Unix-based servers, the default is /etc/psunix.cfg.
+4.Save and close the file. 4.
+IBM Directory Server
+The following ins tructions  are intended for IBM Tivoli server. Details may vary depending on your version
+of the softw ar e.
+To c on figur e  IBM Directory Server for transparent password s ynchr oniz ation:
+1.Find the ibmslapd.conf c on figur ation  file. 1.
+2.Edit the c on figur ation  file, and add the following two lines:  2.
+  ibm-slapdPlugin: preoperation <path-to-psldap> prepasswd_init ["-
+cfg" "<path-to-config-file>"] 
+  ibm-slapdPlugin: postoperation <path-to-psldap> postpasswd_init ["-
+cfg" "<path-to-config-file>"]
+For example: 
+  ibm-slapdPlugin: preoperation /usr/local/psunix/default/psldap-
+ibmldap.so prepasswd_init "-cfg" "/usr/local/psunix/default/
+psunix.cfg" 
+  ibm-slapdPlugin: postoperation /usr/local/psunix/default/psldap-
+ibmldap.so postpasswd_init "-cfg" "/usr/local/psunix/default/
+psunix.cfg"
+If the c on figur ation  file is not specified  for Unix-based servers, the default is /etc/psunix.cfg.
+3.Save and close the file. 3.
+Filtering password change requests on a LDAP Directory Service trigger system
+You can c on figur e  the LDAP password s ynchr oniz ation  to include certain users, groups, and domains
+when they make password change requests on LDAP Directory Service trigger systems.
+To c on figur e  the user filt er s:
+1.Modify the psldap c on figur ation  file in /usr/local/psunix/default/psunix.d/ . 1.
+2.Uncomment the following lines:  2.
+      #    filter-dn-include = { 
+      #       "ou=finance,dc=example,dc=com";       #       "ou=hr,dc=example,dc=com"; 
+      #    };  
+3.Edit the filt er s  with specific  UIDs, OUs, and DCs to include in password change requests. 3.
+Filters are in the following syntax: 
+      "uid=<userid>,ou=Bravura Group,dc=<domain>,dc=<com>";  
+Multiple  filt er s  can be used, with diff er en t  levels of specificity .  Users that pass any one of the filt er s
+will be included in password change requests.
+For example: 
+      filter-dn-include = { 
+         "dc=mydomain,dc=net"; 
+         "ou=people,dc=example,dc=com"; 
+         "uid=testuser,ou=finance,dc=example,dc=com"; 
+      };  
+4.Save the file and restart the LDAP service. 4.2The actual name of the filt er  varies depending on the target system type. See the appropriate section  for
+details.OID-LDAP trigger
+This chapter shows you how to set up transparent password s ynchr oniz ation  for an Oracle Internet
+Directory LDAP (OID-LDAP) trigger system.
+Before you begin, ensure that you have researched and carried out the steps outlined in Implementing
+Transparent Password S ynchr oniz ation  (on page 1659).
+Bravura Pass  can intercept password changes on OID-LDAP trigger systems using a pre-change and post-
+change strength filt er ,  psldap*  2 for:
+Unix-based OID-LDAP servers
+Before you start, you should have the encrypted c ommunic ation  key (COMMKEY), or a copy of the
+idmsetup.inf  c on figur ation  file. The idmsetup.inf c on figur ation  file is located on the Bravura
+Security Fabric  server in the p sc on fig  directory.
+To install the OID-LDAP password filt er  plugin (psldap.so) on a Unix-based OID-LDAP server:
+1.If you did not select Unix Ins t allation  Packages  when you installed the Connector Pack, run setup on 1.
+the Bravura Security Fabric  server to modify your Connector Pack ins t allation.
+Ensure that the appropriate Unix package is selected on the component selection  page. Click Next ,
+then complete the ins t allation  procedure.
+2.Copy the psunix-<os>.<cpu>.tar.gz file from the unix directory to a scratch directory (such 2.
+as /tmp) on the OID-LDAP server.
+3.Log into the LDAP server with adminis tr ativ e  privileges, and extract the files from the psunix archive. 3.
+For example, type:  
+   cd /tmp 
+   tar -zxvf psunix-solaris9.sparc64.tar.gz  
+4.Run install.sh and select LDAP Transparent Synch option.   4.
+   sh install.sh -c 4 [ -inf <path>/idmsetup.inf ]  
+5.Follow the ins tructions  displayed by the installer script. 5.
+In the c on figur ation  process, verify that the script correctly identifies  your oper ating  system type. If
+not, override it.
+In the ins t allation  process, follow the ins tructions  and input the in f ormation  prompted by each input
+field.  To skip a field,  press [Enter]  to use the default value.
+6.Verify that the psldap-oidldap.so  shared object file is copied to /usr/local/psunix/default/. 6.
+7.Ensure that /etc/psunix.cfg  and / etc/psunix.d/ c on figur ation  files are readable by the 7.
+Oracle account:  
+   chmod a+rx /etc/psunix.cfg 
+   chmod -R a+rx /etc/psunix.d  
+8.Stop the OID-LDAP Applic ation  Server. 8.9.Copy the psldap-oidldap.so file from the /usr/local/psunix/default/ directory to: $ORACLE_HOME/lib 9.
+on the database server as psldap.so. You can place this binary somewhere else, but you must edit files
+in the next steps accordingly.
+ORACLE_HOME is the destination  directory specified  during the Oracle Applic ation  Server
+Infrastructure ins t allation.
+For example: 
+     cp /usr/local/psunix/default/psldap-oidldap.so u01/app/
+oracle/lib/psldap.so  
+10. Edit the listener.ora file in $ORACLE_HOME/network/admin to permit access to the shared object. 10.
+Add the path to the library to the oracle environment variable EXTPROC_DLLS. This must match the
+path to the psldap.so  binary.
+For example:
+  SID_LIST_LISTENER = 
+    (SID_LIST = 
+      (SID_DESC = 
+        (SID_NAME = PLSExtProc) 
+        (ORACLE_HOME = /u01/app/oracle) 
+        (PROGRAM = extproc) 
+        (ENVS="EXTPROC_DLLS=/u01/app/oracle/lib/psldap.so") 
+      ) 
+    )
+11. Edit psldap-oidldap-plugin.sql, in the psunix-<os>.<cpu>/addon/transparent-synch/ldap directory to 11.
+set the path to the library in the plugin. This must match the path to the psldap.so  binary.
+For example:
+  CREATE OR REPLACE LIBRARY psldap_lib AS 
+  '/u01/app/oracle/lib/psldap.so'; 
+  / 
+  SHOW ERRORS
+12. Install psldap-oidldap-plugin.sql. This file contains stored procedures needed for the plugin. You can 12.
+install it, for example, by e x ecuting  the command:  
+  sqlplus ods/<odspassword> @<pathto psldap-oidldap-plugin.sql>  
+on the database server, where ods is the OID Database Schema owner
+For example: 
+  $ORACLE_HOME/bin/sqlplus ods/mypass @psldap-oidldap-plugin.sql  
+13. Set up the plugin in the LDAP server. This can be done either from the GUI by hand, or using the 13.
+supplied pluginreg.dat. Using pluginreg.dat from the LDAP server, run the command:  
+  ldapadd -p <portnum> -h <hostname> -D cn=orcladmin \ 
+        -w <orcladminpassword> -v \ 
+        -f <pathto psldap-oidldap-pluginreg.dat>  

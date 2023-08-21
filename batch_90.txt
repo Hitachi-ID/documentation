@@ -1,0 +1,77 @@
+extension. There  should not be any password change requirements on the domain administrator
+account used to sync the directory. If the domain administrator  password expires or changes, you will
+need to r e-c on figur e  the Azure AD connect sync agent with the new cr edential  To download the Azure AD
+Connect applic ation,  navigate to: Azure portal > Directory Overview > Azure AD Connect > Download
+Azure AD Connect .
+Once Azure AD connect sync has been successfully c on figur ed  on the local AD server, and all users on the
+local AD server have been synced successfully to the Azure AD tenant, you will see those synced accounts
+added to the Azure ADThe "Directory Synced" column indicates which accounts originated from the local
+AD server.Because the local AD server has no public domain name, a custom domain is not used when user
+accounts are synced to the Azure AD. All user accounts are synced to the Azure AD under the default
+domain name "w ork e x ample.onmicr osoft.c om"  of the Azure . For example, user1 on the local AD server
+will be synced to the Azure AD as user1@w ork e x ample.onmicr osoft.c om.  Users that were synced to the
+Azure AD can also log on the Azure AD portal. Once MFA is enabled for them, those users will be
+instructed to register MFA on the Micr osoft  Authentic a t or  app at the next Azure portal login in order to
+receive MFA push notific ations.Once the Azure AD connect sync has been successfully c on figur ed,  it should normally show "Healthy"
+status on the Azure AD connect cloud sync page. Sometimes  it might show an error status like
+"Quar antined  may appear" when the network c onnection  is broken or has some other err. It should go
+back to "Healthy" aut omatic ally  at the next sync. Error status can also be cleared manually by an admin.
+Once Azure AD connect cloud sync is working well, any change to user accounts on the local AD server
+will be aut omatic ally  synced to the Azure AD.
+Network Policy Server (NPS) with NPS extension for Azure MFA
+The Network Policy Server acts as a RADIUS bridge between the Bravura Security Fabric  instance and the
+Azure AD, passing authentic ation  requests from the Bravura Security Fabric  instance to the Azure MFA for
+approval.
+NPS is available to Windows servers with the "Network Policy and Access Services" role enabled. The NPS
+role can be added to the AD server, but it's better  to add it to a diff er en t  windows server computer.
+Before adding the Network Policy and Access Services server role to a machine that is not your local AD
+host, ensure the Windows server has joined to the domain of the local AD server.
+To add NPS server role, see "Install Network Policy Server" in this link for details:
+http s://docs.micr osoft.c om/ en-us/window s-ser v er/r emot e/r emot e-access/vpn/ alw a y s-on- vpn/deplo y/
+vpn-deplo y -np s .
+After  the NPS server role has been added, c on firm  that the NPS server is registered with the local AD
+server:1.Launch Network Policy Serve r from Tools  menu on the Server Manager 1.
+2.Right click on the NPS node, and select the Register server in Activ e  Directory  menu if it is not 2.
+registered yet. This option  will be grayed out if it has been registered already.The NPS extension for Azure MFA uses winhttp  to communicate with Azure AD, and the required port
+443 may be blocked by your or g aniz ation.  In this case, you may need to set a winhttp  proxy to allow
+the c ommunic ation  to work between the NPS extension and the Azure AD.You can use following command to set winhttp  proxy on the NPS server before installing the NPS
+extension for Azure MFA:
+netsh winhttp set proxy "http://your-proxy-address:80" "<local>"
+and you can use this command to show current winhttp  proxy settings:
+netsh winhttp show proxy
+After  the winhttp  proxy has been c on figur ed,  reboot the NPS server to allow services/apps to use new
+winhttp  proxy settings.
+The ins t allation  of NPS extension for Azure MFA onto the NPS server asks for the following in f ormation:
+1.The tenant ID of the Azure AD1.
+2.A work or school account with admin rights.2.
+Each Azure AD tenant has a tenant ID, so you can find and copy its tenant ID at Azure portal.
+If you created a cloud-only global administrator account on the Azure AD tenant, that account can be
+used as a work/school account. If you created a new Azure account for a free trial license, that account is
+not a work or school account.
+To Install the NPS extension, see the "Install the NPS extension" section  here:
+http s://docs.micr osoft.c om/ en-us/ az ur e/ activ e-dir ect or y/ authentic ation/ho w t o-m f a-np s-e x t ension
+After  the NPS extension for Azure MFA has been installed, and before running the c on fig  script for NPS
+Extension in the folder "C:\Program Files\Micr osoft\Az ur eMf a\Con fig",  you may need to run the
+following powershell command to set security protocol fir s t,  otherwise the c on fig  script may not run
+successfully.
+[Net.ServicePointManager]::SecurityProtocol =
+[Net.SecurityProtocolType]::Tls12
+To allow the NPS server to accept RADIUS requests from the Bravura Security Fabric  instance, you also
+need to add a new RADIUS client to the NPS server:
+1.In the Network Policy Server window, right-click on RADIUS Clients, then click New . 1.
+2.Specify the address of the Bravura Security Fabric  instance and a shared secret on the RADIUS client 2.
+pr operties  window. You can leave other settings  with default values.3.Expand the Policies  tree, and set the authentic ation  policy to Accept users without v alidating 3.
+cr edentials.Because our example AD only has a local domain name (CorpAD.local) and no public domain name,
+there is no custom domain c on figur ed  on Azure AD for users synced from the local AD server. As a
+result, users on AD server are synced to Azure AD under the Azure AD default domain (i.e.w ork e x ample.onmicr osoft.c om).  This means that the domain name of the users on the AD server is
+diff er en t  from the domain name of the synced users on Azure AD, and usernames in the MFA requests
+received from Bravura Security Fabric  instance (i.e. user1@CorpAD.local) is diff er en t  from UPN
+(Universal Principal Name) of the synced user on Azure AD (i.e.
+user1@w ork e x ample.onmicr osoft.c om).
+Azure MFA uses the UPN of the synced user to send push notific ations  send push notific ations.
+The NPS extension for Azure MFA provides a solution  to use an alt ernativ e  user attribut e  as Azure MFA
+login attribut e.  This alt ernativ e  user attribut e  can be specified  using a registry key. Normally you
+would use the user's email attribut e  on the local AD server, so you can update the user's email
+address to the user's matching UPN on the Azure AD.
+4.On the NPS server with NPS extension for Azure MFA installed, set the registry value of "HKLM 4.
+\SOFTW ARE\Micr osoft\Az ur eMf a\LD AP_AL TERNA TE_L OGINID_A T TRIBUTE"  to "mail".

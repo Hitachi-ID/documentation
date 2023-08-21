@@ -1,0 +1,279 @@
+Network resource management options
+This chapter shows you how to c on figur e  processes and options  related to network resource
+management; including w orkflo w  options,  event triggers, and group owner selection.
+See also
+Network resources  (on page 575) shows you how to add and filt er  network resources.
+Con figuring  w orkflo w  options
+To c on figur e  w orkflo w  options  for Bravura Group :
+1.Click W orkflow  > Options  > General . 1.
+2. Con figur e  the following options  as required: 2.
+▪ENABLE DELETE OTHER OWNER▪
+If your target system and plugin program support multiple  owners, you can enable this option  to
+allow group owners to delete other owners of the same group. By default, group owners cannot
+delete other owners.
+▪IDACCESS GROUPS THRESHOLD▪
+If the number of groups with access to a network resource is greater than or equal to this
+threshold, consider the resource pr oblematic.  This value is used by the IDACCESS TOO MANY
+GROUPS option.
+For example, too many groups with access to a resource may indicate an infrastructure
+management issue. The exit program set by IDACCESS TOO MANY GROUPS can check to see if the
+pr oblematic  resource has been reviewed before, and if not, send in f ormation  about the resource to
+the system administrator.
+3.If required, c on figur e  event options  such as GROUP OWNER ADD SUCCESS , that trigger external 3.
+notific ation  programs  (on page 1523).
+4.Click Update . 4.
+Group owner selection  using a plugin
+Generally, Bravura Group  determines the owners of a particular  group by examining the group’s
+c on figur ation  on the target system. This is done in real time  using a network resource plugin such as
+nrsmb  or nrcifs .
+You can also write a group owner selection  plugin to do the following:
+▪Replace the assigned owners returned by nrsmb or nrcifs . ▪
+▪Add additional  owners for the user to select. ▪
+▪Set owners for resources that have no owners assigned.▪
+Any owner returned by the plugin will have the same requirements of an authorizer. If the owner is new,
+Bravura Group  adds the owner as a s t atic  authorizers and maps him to the Bravura Group object.Do not specify a user that is already a owner of a group. This will create duplicate owner entries for the
+group.
+Group owners are not necessarily the users who will authorize requests for a group. The IDSYNCH AUTH
+CRITERIA MOD PLUGIN may be c onfigured  to alter the list of authorizers at the time  that the W orkflo w
+Manager Service processes a request.
+To use a group owner selection  plugin:
+1.Click W orkflo w  > Options  > Plugins . 1.
+2.Type the name of the plugin program or PSLang script in the IDACCESS OWNERS PLUGIN  field. 2.
+3.Click Update . 3.
+There are no shipped plugins to use with this plugin point. A sample script, idaccessauthmod.psl ,
+is included in the samples\ directory. See more in f ormation  on how to write your own plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The plugin is run by View and update pr ofile  (IDR) module when users view resource details or submit
+requests to modify group memberships in Bravura Group .
+Input
+Input passed to the plugin is as follows:
+"" "" = {
+  "requester" = "<profile ID>" # The profile ID for the person submitting the request.
+  "resourceid" = "<resource ID>" # The resource ID of the resource being viewed.
+  "resourceunc" = "<network path>" # The UNC network path that is the groups are a part of.
+  "group" "<long ID of the group>" = {
+    "desc" = "<group desc>" # Description of the group
+    "hassubgroups" = "<true|
+false>" # Indicates if the group has members that are groups.
+    "member" = "<true|
+false>"  # Indicates the recipient's current membership status.
+    "owners" "" = { # Existing owners
+      "owner" = "<profile ID>" # 0 or more
+    }
+    "perm" "" = { # Permissions of the group for the resource selected.
+      "read" = "true" # present if the group has read permission to the resource.
+      "write" = "true" # present if the group has write permission to the resource.
+    }
+  } # 0 or more  "recipient" "<profile ID>" = {  # The recipient of the request.
+    "account" = "<account ID>" # The account ID that the groups could effect.
+  }
+}
+The following is an example of the input sent to the plugin program:
+"" "" = {
+  "requester" = "CLARKDAV"
+  "resourceid" = "PUB"
+  "resourceunc" = "\\\\ADSRV1\\PUB\\LEGAL"
+  "group" "CN=Management,OU=Groups,OU=IDM,DC=example,DC=local" = {
+    "desc" = ""
+    "hassubgroups" = "true"
+    "member" = "false"
+    "owners" "" = {
+      "owner" = "BanksH"
+    }
+    "perm" "" = {
+      "read" = "true"
+    }
+  }
+  "group" "CN=Sales,OU=Groups,OU=IDM,DC=example,DC=local" = {
+    "desc" = ""
+    "hassubgroups" = "false"
+    "member" = "false"
+    "owners" "" = {
+    }
+    "perm" "" = {
+      "read" = "true"
+    }
+  }
+  "recipient" "CLARKDAV" = {
+    "account" = "ClarkDav"
+  }
+}
+Output
+With the addition  of extra or replacement owners, the output should mirror the input to the plugin. The
+plugin output only a ff ects  the owners assigned to the r espectiv e  group.
+Output passed from the plugin is as follows:"" "" = {
+  "errmsg" = "<message>" # Error message returned by the plugin
+  "retval" = "0"  # Mandatory; zero is success and non-zero is failure.
+  "group" "<long ID of the group>" = {
+    "desc" = "<group desc>" # Description of the group
+    "hassubgroups" = "<true|
+false>" # Indicates if the group has members that are groups.
+    "member" = "<true|
+false>"  # Indicates the recipient's current membership status.
+    "owners" "" = { #  KVGroup that overrides the list of owners for the group
+      "owner" = "<profile ID>"   # Each owner is listed once.
+    }
+    "perm" "" = { # Permissions of the group for the resource selected.
+      "read" = "true" # present if the group has read permission to the resource.
+      "write" = "true" # present if the group has write permission to the resource.
+    }
+  } # A group for each one sent on input.
+}
+The following is an example of the expected output:
+"" "" = {
+  "errmsg" = ""
+  "retval" = "0"  # Success
+  "group" "CN=Management,OU=Groups,OU=IDM,DC=example,DC=local" = {
+    "desc" = ""
+    "hassubgroups" = "true"
+    "member" = "false"
+    "owners" "" = {
+      "owner" = "BanksH"
+      "owner" = "SMITHBO"
+    }
+    "perm" "" = {
+      "read" = "true"
+    }
+  }
+  "group" "CN=Sales,OU=Groups,OU=IDM,DC=example,DC=local" = {
+    "desc" = ""
+    "hassubgroups" = "false"
+    "member" = "false"
+    "owners" "" = {
+      "owner" = "SMITHBO"    }
+    "perm" "" = {
+      "read" = "true"
+    }
+  }
+}
+.
+Identif ying  the group owner to users
+Group owners are listed by user name and pr ofile  ID. You can change this, for example, to list only pr ofile
+ID, by editing  the value of REQ_NETRESOURCE_GROUP_AUTHOR_ENTRY in the access.m4  file.
+Con figur able  values are %AUTHOR_USERID% and %AUTHOR_USERNAME% .
+See the CUSTOMIZATION  (on page 3471) for more in f ormation  about editing  m4 files.Part VIII OrgChartImplementing  OrgChart management
+In general, OrgChart data represents how authority and responsibility is distributed within an
+or g aniz ation.  OrgChart data supports such processes as:
+▪Request Authoriz ation  W orkflo w ▪
+Managers can be asked to approve changes in access privileges for their subordinates.
+▪Automated Esc alation ▪
+When managers or applic ation  owners fail to respond to a request to authorize access changes, their
+managers may be asked to respond in their place.
+▪Access Certific ation ▪
+Managers may be periodically required to review a list of their direct subordinates and their
+r espectiv e  access rights. This process can identif y  and remove stale accounts and privileges that do
+not represent current business needs. Periodic audits are essential  for compliance with privacy and
+corporate governance legislation.
+An identity  management system using OrgChart data
+Problems with or g aniz ation  chart maintenance processes
+Unfortunately, tr aditional  methods of gathering and maintaining OrgChart data are often  inadequate for
+the needs of an identity  management system. T r aditional  methods include:
+▪HR applic ations: ▪
+Human resource applic ations  normally have a place to store OrgChart in f ormation,  including the
+identity  of each employee’s manager. Unfortunately:
+▪Whole classes of users, such as contractors and vendors, are usually not entered into the HR▪
+applic ation.
+▪Data in the HR applic ation  may be stale – having been entered at the date an employee was hired ▪
+and never updated.
+▪Data in the HR applic ation  may be incomplete – available for some employees, but not others. ▪
+In other words, having a place to house this data is no guarantee of having good quality data, with
+complete coverage over the user population.
+▪Manual maintenance:▪
+It is certainly possible to hire a team of consultants to work with HR and interview managers, in order
+to construct OrgChart data centrally. This approach has problems:
+▪It can be costly, requiring a lengthy c onsulting  engagement. ▪
+▪OrgChart data collected at the start of the project may be obsolete by the end of the project.▪
+▪There is no way to keep the data complete and accurate after  the project is over. Instead, the ▪
+OrgChart data collected represents a “window in time” .
+▪ Existing  OrgChart softw ar e: ▪
+Commercial programs are available to construct and maintain OrgChart data, but they are used
+primarily to construct a graphical chart , with pictures, names, and r eporting  lines.
+Existing  programs do not address the need to build data about the primary managers for thousands of
+users, and to maintain this data over time.
+Maintaining OrgChart data with Bravura Security Fabric
+Bravura Security Fabric  includes a system for c ons tructing  and maintaining comprehensive OrgChart data,
+for employees, contractors, and vendors, across an enterprise-scale or g aniz ation.  It is designed to
+support identity  management system deployment and oper ation.
+The Bravura Security Fabric  r epr esen t ation  of an OrgChart, referred to as the OrgChart , identifies  the
+primary manager or supervisor for every person in an or g aniz ation.  While many people have “ dotted
+line” r elationship s  with multiple  managers, in most or g aniz ations  every person has a primary manager,
+with authority to review access rights, to terminate the employee or contractor, and to review
+performance and pay.
+When you fir s t install Bravura Security Fabric , the OrgChart contains no data and must be built from
+scratch. The Bravura Security Fabric  administrator is responsible for initializing  either a manual
+c ons truction  process, where OrgChart in f ormation  is entered using the Bravura Security Fabric  interface;or an aut omatic  c ons truction  process, where preliminary OrgChart data is imported from an e xisting  HR
+system.
+The work of building and updating  the OrgChart is distributed among managers. By dis tributing  the work
+of maintaining OrgChart data to every manager in an or g aniz ation,  this in f ormation  can be collected and
+maintained more quickly, more reliably, and less expensively than using a centralized process.
+OrgChart maintenance works as follows:  
+Manual OrgChart c ons truction  
+1.The Bravura Security Fabric  administrator c on figur es  target systems, email settings,  and other options 1.
+for OrgChart maintenance.
+2.Bravura Security Fabric  gathers an inventory of users from target systems during auto discovery . 2.
+3.A Bravura Security Fabric  administrator (a product administrator ) logs in to the Manage the OrgChart 3.
+(IDG) module and identifies  the top-level manager in the or g aniz ation,  also known as the “root node”.
+4.The Bravura Security Fabric  administrator identifies  the top-level manager’s subordinates until  enough 4.
+levels of the OrgChart have been created to begin the c ons truction  process.
+5.Product administrators c ontinue  to identif y  subordinates, or managers log into the Browse the OrgChart 5.
+(IDO) module to identif y  their own subordinates, and to indicate which of their subordinates are
+managers.
+6.Bravura Security Fabric  invites managers identified  in Step 5 to log in to Bravura Security Fabric  and 6.
+identif y  their own subordinates.
+The process c ontinues  until  all managers’ lists are complete.
+ Aut omatic  OrgChart c ons truction  
+1.The Bravura Security Fabric  administrator c on figur es  target systems, account attribut e  mappings, 1.
+email settings,  and other options  for OrgChart maintenance.
+2.During auto discovery , Bravura Security Fabric  gathers an inventory of users from target systems. 2.
+Bravura Security Fabric  examines users’ attribut e  values to build the initial  OrgChart from pr e-e xisting
+data.
+3.The Bravura Security Fabric  administrator logs into the Manage the OrgChart  (IDG) module, then v erifies 3.
+and corrects some or all of the imported data.
+Managers could also log into the Browse the OrgChart  (IDO) module to identif y  their own subordinates,
+and to indicate which of their subordinates are managers.
+Setting  up OrgChart management
+Con figur e  the following to set up OrgChart maintenance with Bravura Security Fabric .
+1. Optional:  Account attribut e  mapping for aut omatic  OrgChart c ons truction  and pr opag ation: 1.
+If you want Bravura Security Fabric  to build the initial  OrgChart aut omatic ally ,  or if you want it to
+propagate changes to target systems when the OrgChart is updated, you must c on figur e  an
+appropriate target attribut e.
+See Mapping attribut es  for or g aniz ation  chart management  (on page 2500) for details.2.Product administrators:2.
+Create an administrator to oversee and manage OrgChart c ons truction.  The administrator must be a
+Product administrator with the right to ”Manage the Orgchart”.
+See Cr eating  an OrgChart manager  (on page 2501) for details.
+Mapping attribut es  for OrgChart management
+To illustrate how attribut e  mapping can be used, this section  shows you how to map an account attribut e
+to a pr ofile  attribut e  in order to build OrgChart data. This data can be used to escalate w orkflo w  requests
+or c on figur e  certific ation  campaigns.
+Map an account attribut e  if you want Bravura Security Fabric  to:
+▪Build the initial  OrgChart aut omatic ally ▪
+▪Propagate changes to target systems when the OrgChart is updated▪
+The account attribut e  (on page 553) that you c on figur e  must contain the long ID of the user’s primary
+manager. Bravura Security Fabric  uses the built-in ORGCHART_MANAGER pr ofile/r eques t  attribut e  to
+determine each user’s primary manager. The attribut e  can also be used to directly update a user’s
+primary manager. Ensure that your ”manager” account attribut e  is c on figur ed  to be loaded during auto
+discovery .
+CAUTION: Bravura Security Fabric  allows exactly one OrgChart. If Bravura Security
+Fabric  detects multiple  trees in your pr e-e xisting  data, it uses the largest
+tree as the basis for your OrgChart.
+If there are multiple  trees with the same size, then Bravura Security Fabric  chooses the tree with the
+greatest depth. Finally, if there are multiple  trees with equal depth, then it chooses the fir s t tree that it
+encountered.
+If you want Bravura Security Fabric  to propagate OrgChart changes to target systems, ensure that
+your ”manager” account attribut e  can be set.
+CAUTION: After  the initial  OrgChart has been imported, if Bravura Security Fabric  is
+still set up to load the ”manager” account attribut e,  but is not set up to
+propagate OrgChart changes back to the target system, any changes made
+to the OrgChart using Bravura Security Fabric  will be o v er written  during
+the next auto discovery.
+To c on figur e  an Activ e  Directory or LDAP Directory Service account attribut e  for OrgChart management:
+1.Click Resources > Account attribut es  > Target system , then select 
+  the appropriate target. 1.
+Alt ernativ ely ,  you can c on figur e  account attribut es  at the target type level.
+2.Click the Defaults tab. 2.
+3.Override the default account attribut e  c on figur ation. 3.
+To do this, for an:
+▪LDAP Directory Service target, select 
+  the manager  attribut e. ▪

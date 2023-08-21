@@ -1,0 +1,309 @@
+Option Description
+SMON SESSION END A session recording ends.
+SMON SESSION START A session recording starts.Unlock accounts  (PSK) module events that launch interface programs
+The following Unlock accounts (PSK) module options  can be accessed from Manage the system  >
+Maintenance > System variables or Manage the system  > Modules > Unlock accounts (PSK):
+Option Description
+PSK UNLOCK FAILURE An authorized user has failed to unlock one or more of the accounts that
+they own.
+PSK UNLOCK START An authorized user attemp ts  to unlock one or more accounts that they
+own.
+PSK UNLOCK SUCCESS An authorized user successfully unlocks all selected accounts that they
+own.
+Password s ynchr oniz ation  r egis tr ation  (PSR) module events that launch interface programs
+The following Password s ynchr oniz ation  r egis tr ation  (PSR) module options  can be accessed from Manage the
+system  > Maintenance > System variables or Manage the system  > Modules > Password s ynchr oniz ation
+r egis tr ation  (PSR) :
+Option Description
+PSR CANCELLATION SUCCESS A user disables transparent password s ynchr oniz ation  for themselves.
+PSR REGISTRATION FAILURE A user tries to register for transparent password s ynchr oniz ation,  but fails
+for some reason.
+PSR REGISTRATION SUCCESS A user registers for transparent password s ynchr oniz ation.
+Manage tokens  (PSP) module events that launch interface programs
+The following Manage tokens (PSP) module options  can be accessed from Manage the system  >
+Maintenance > System variables  or Manage the system  > Modules  > Manage tokens (PSP) :
+Option Description
+PSP CLEAR PIN FAILURE A user fails to clear the PIN associated with a SecurID token on the RSA
+Authentic ation  Manager database.
+PSP CLEAR PIN SUCCESS A user clears the PIN associated with a SecurID token on the RSA
+Authentic ation  Manager database.
+PSP DISABLE FAILURE A user tries to disable a token, but fails for some reason.
+PSP DISABLE SUCCESS A user successfully disables a SecurID token.
+PSP EMERGENCY OFF FAILURE A user fails to disable emergency access mode for a token.
+PSP EMERGENCY OFF SUCCESS A user disables emergency access mode for a token.
+PSP EMERGENCY ON FAILURE A user fails to activ a t e  emergency access mode.
+PSP EMERGENCY ON SUCCESS A user successfully sets a token to emergency access mode, and receives
+some emergency access numbers.
+PSP ENABLE FAILURE A user tries to (re)enables a token, but fails for some reason.Option Description
+PSP ENABLE SUCCESS A user successfully (re)enables a SecurID token.
+PSP RESYNCHRONIZE FAILURE A user fails to resynchronize a token with the RSA Authentic ation  Manager.
+PSP RESYNCHRONIZE SUCCESS A user resynchronizes a token with the RSA Authentic ation  Manager.
+PSP SETPIN FAILURE A user fails to set a new PIN for a SecurID token on the RSA Authentic ation
+Manager database.
+PSP SETPIN SUCCESS A user sets a new PIN for a SecurID token on the RSA Authentic ation
+Manager database.
+Help users  (IDA) module events that launch interface programs
+The following Help users (IDA) module options  can be accessed from Manage the system  > Maintenance
+> System variables  or Manage the system  > Modules > Help users (IDA):
+Option Description
+ADMIN AUTH USR FAILURE A help desk user fails to correctly answer authentic ation  questions  on
+behalf of a caller.
+ADMIN AUTH USR SUCCESS A help desk user correctly answers authentic ation  questions  on behalf of a
+caller, or bypasses the security questions.
+ADMIN CGI PLUGIN RUN The external HTML plugin, specified  by A RESET EXT, is run.
+ADMIN DELALIAS FAILURE A help desk user fails to delete a user’s account.
+ADMIN DE ALIAS SUCCESS A help desk user successfully deletes a user’s account.
+ADMIN DISABLE USER A help desk user disables a user’s login ID.
+ADMIN DUPLICATE ALIAS A help desk user tries to attach  an account for a user when the account is
+already in use.
+ADMIN ENABLE USER A help desk user enables a user’s login ID
+ADMIN QAADD FAILURE A help desk user tries to add one or more new question/ ans w er  pairs for a
+user, but fails for some reason.
+ADMIN QAADD SUCCESS A help desk user de fines  one or more new question/ ans w er  pairs for a
+user, then submits the changes for the question  set.
+ADMIN QADELETE SUCCESS A help desk user deletes one or more e xisting  question/ ans w er  pairs for a
+user, then submits the changes for the question  set.
+ADMIN QAUPDATE FAILURE A help desk user tries to change one or more e xisting  question/ ans w er
+pairs for a user, but fails for some reason.
+ADMIN QAUPDATE SUCCESS A help desk user changes one or more e xisting  question/ ans w er  pairs for a
+user, then submits the changes for the question  set.
+ADMIN RESET FAILURE A help desk user with the ”change password” privilege fails to change a
+user’s password.Option Description
+ADMIN RESET START A help desk user with the ”change password” privilege starts to change a
+user’s password.
+ADMIN RESET SUCCESS A help desk user with the ”change password” privilege successfully
+changes a user’s password.
+ADMIN SEARCH FAILURE A caller account is not found in a search using the Help users.
+ADMIN SEARCH SUCCESS A caller account is successfully found in a search using the Help users.
+ADMIN UNLOCK FAILURE A help desk user fails to unlock a user.
+ADMIN UNLOCK START A help desk user starts to unlock a user.
+ADMIN UNLOCK SUCCESS A help desk user successfully unlocks a user.
+ADMIN UNLOCK USER A user unlocks another user.
+ADMIN UPDALIAS FAILURE A help desk user fails to update a user’s accounts.
+ADMIN UPDALIAS SUCCESS A help desk user successfully updates a user’s accounts.
+Manage the OrgChart  (IDG) module events that launch interface programs
+The following Manage the OrgChart  (IDG) module options  can be accessed from Manage the system  >
+Maintenance > System variables  > or Manage the system  > Modules >  Manage the OrgChart  (IDG):
+Option Description
+IDG ATTACH SUBORDINATE A user attaches  a subordinate in an or g aniz ation  chart when using the
+Manage the OrgChart module.
+IDG DETACH SUBORDINATE A user detaches a subordinate in an or g aniz ation  chart when using the
+Manage the OrgChart module.
+IDG TRANSFER SUBORDINATE A user transfers a subordinate in an or g aniz ation  chart when using the
+Manage the OrgChart module.
+IDG TRANSFER SUBORDINATE A user transfers a subordinate from another manager in an or g aniz ation
+chart when using the Manage the OrgChart module.
+Manage the system  (PSA) module events that launch interface programs
+The following Manage the system (PSA) module options  can be accessed from Manage the system  >
+Maintenance > System variables  or Manage the system  > Modules  > Manage the system (PSA) :
+Option Description
+ADMIN DISABLE SUCCESS A product administrator successfully disables another product
+administrator ’s user ID.
+ADMIN ENABLE SUCCESS A product administrator successfully enables another product
+administrator ’s user ID.
+ADMIN UNLOCK ADMIN A product administrator unlocks another product administrator .
+RESOURCE AUTHORIZER ADD An authorizer is added to a resources.
+RESOURCE AUTHORIZER DEL An authorizer is removed from a resources.Option Description
+RESOURCE IMPLEMENTER ADD An implementer is added to a resources.
+RESOURCE IMPLEMENTER DEL An implementer is removed from a resources.
+Digital ID events
+The following Digital ID  (DID) module options  can be accessed from Manage the system  > Maintenance >
+System variables  or Manage the system  > Modules  > Digital ID (DID) .
+Option Description
+DID REGISTER FAILURE A digital ID fails to register.
+DID REGISTER SUCCESS A digital ID is successfully registered.
+DID SEND SUCCESS A digital ID is successfully uploaded.
+DID UPDATE SUCCESS A digital ID is successfully updated (after  a password change using the Lotus
+Notes client).
+Database r eplic ation  events
+The following database r eplic ation  options  can be accessed by na vig ating  to Manage the system  >
+Maintenance > System variables  or Manage the system > Maintenance > Options :
+Database r eplic ation  events that launch interface programs
+Option Description
+DB COMMIT RESUME Database commits have been resumed on this node after  a DB
+COMMIT SUSPEND event. Either the queue limit has been
+adjusted, space has been freed on the disk, or activity  on the
+server has slowed to allow the queue to flush.
+This event is pr ec on figur ed  to run pxnull with the
+c on figur ation  file pxnull-replication.cfg.
+DBbCOMMITbSUSPEND A server has failed to send data to another server too many
+times,  causing the send queue to be full. Database commits
+have been suspended on this node.
+This event is pr ec on figur ed  to run pxnull with the
+c on figur ation  file pxnull-replication.cfg .
+DB FAILED PROC RECORDED A server has failed to insert data into the sending queue, or
+has failed to run procedures from the receive queue during
+r eplic ation.
+This event is pr ec on figur ed  to run pxnull with the
+c on figur ation  file pxnull-replication.cfg .Option Description
+DB QUEUE INSERT FAILURE Data could not be inserted into the send queue or receive
+queue of a remote r eplic ation  node.
+This event is pr ec on figur ed  to run pxnull with the
+c on figur ation  file pxnull-replication.cfg .
+DB REPLICATION CONN FAILURE A local r eplic ation  node lost c onnectivity  to a remote server
+during a periodic check of availability. The system retries
+c onnecting  to the disconnected node once every 30 seconds.
+This exit trap will run once every 10 minutes.
+This event is pr ec on figur ed  to run pxnull with the
+c on figur ation  file pxnull-replication.cfg .
+DB REPLICATION CONN RESTORED A r eplic ation  node successfully connects to a remote server
+that it had previously failed to contact.
+This event is pr ec on figur ed  to run pxnull with the
+c on figur ation  file pxnull-replication.cfg .
+DB REPLICATION TRANS FAILURE The database service on a r eplic ation  node failed to transmit
+data to a connected remote node. The transmission will be
+retried.
+This event is pr ec on figur ed  to run pxnull with the
+c on figur ation  file pxnull-replication.cfg .
+DB REPLICATION QUEUE DELAY PAST
+THRESHOLDThe queue delay of receive queues is larger than the value of
+DB REPLICATION QUEUE DELAY THRESHOLD.
+DB REPLICATION WATERMARK
+WARNThe amount of data in a r eplic ation  queue (to the local
+database or associated with a remote node) has passed a
+threshold. The threshold is set by Warn when percentage of
+maximum queue size used is, in terms of percent of disk or
+MB, on the Manage the system > Maintenance > Database
+r eplic ation  menu.
+This event is pr ec on figur ed  to run pxnull with the
+c on figur ation  file p xnull-r eplic ation.cf g.
+File r eplic ation  events
+The following file r eplic ation  options  can be accessed by na vig ating  to Manage the system  >
+Maintenance > System variables  or Manage the system > Maintenance > Options :
+File r eplic ation  events that launch interface programs
+Option Description
+FILE REPLICATION FAILURE An error occurs during the file
+r eplic ation  process.Connector events
+The following r eplic ation  options  can be accessed by na vig ating  to Manage the system  > Maintenance >
+System variables  or Maintenance > Connector behavior >  Options :
+Connector behavior events that launch interface programs
+Option Description
+AGENT TIME OUT The Bravura Security Fabric  stops a connector
+running after  the amount of time  set by a target
+system’s Connector timeout  setting.
+Service events
+The following Password Manager service options  can be accessed by clicking Manage the system  >
+Maintenance > System variables  or Maintenance > Services > select Password Manager service :
+Password Manager service events that launch interface programs
+Option Description
+IDPM FIND USER FAILURE The Password Manager service attemp ts  to
+check a password against password strength
+rules, and does not find the user in the
+Bravura Security Fabric  database.
+IDPM GROUP FAILURE The Password Manager service attemp ts  to
+synchronize a group of passwords for a user,
+and fails on at least one of the passwords
+after  the specified  sequence of retries.
+IDPM GROUP FIRST TRY DONE All password oper ations  in a request have
+been attemp t ed  once.
+IDPM GROUP NOOP Transparent s ynchr oniz ation  request is
+received for a user that does not have any
+other accounts to synchronize.
+IDPM GROUP SUCCESS Every password is synchronized for a user by
+the Bravura Security Fabric  interceptor
+service.
+IDPM REQUEUE A single password change fails, and is queued
+for retries on the Bravura Security Fabric
+server.Option Description
+IDPM SINGLE FAILURE The Password Manager service attemp ts  to
+change a single password for a user, and fails
+after  the specified  sequence of retries.
+IDPM SINGLE SUCCESS A single password is changed for a user by
+the Password Manager service.
+IDPM STRENGTH FAILURE The Password Manager service rejects a
+user’s password, because it failed at least one
+password policy rule. This exit point is useful
+for aut omatic ally  sending the user a reminder
+describing the password policy.
+IDPM STRENGTH SUCCESS A password strength check is successful.
+T r ansaction  Monitor Service events that launch interface programs
+The following T r ansaction  Monitor Service (IDTM) options  can be accessed by clicking Manage the
+system  > Maintenance > System variables  or Manage the system > Maintenance > Services  and select
+T r ansaction  Monitor Service :
+Option Description
+IDTM GROUP FAILURE One or more actions  in a w orkflo w
+request fails.
+IDTM GROUP SUCCESS All actions  in a w orkflo w  request
+succeed.
+IDTM SINGLE FAILURE An action  fails on a target system.
+IDTM SINGLE SUCCESS An action  succeeds on a target
+system.
+Privileged access management events
+The following options  can be accessed from:
+▪The Con figur e  event  (ITSM) module ▪
+or
+▪Manage the system > Privileged access > Options ▪
+or
+▪Manage the system  > Privileged access  > Managed system policies  
+ <managed system policy> > ▪
+Options .Managed system policy exit points do not override global settings  and vice versa; however, in the case
+where an exit point is c on figur ed  to run the same program from both loc ations,  only one instance of the
+program is run.
+The following settings  relate to general privileged access management events and can be set in the
+Managed system policies tab:
+Privileged managed systems policies events that launch interface programs
+Option Description
+RES ADD WSTN FAILURE A system fails to be added to the list of managed
+systems.
+RES ADD WSTN SUCCESS A system is successfully added to the list of
+managed systems.
+RES DEL GROUP FAILURE A policy fails to be removed from the list of
+managed system policies.
+RES DEL GROUP SUCCESS A policy is removed from the list of managed
+system policies.
+RES DEL WSTN FAILURE A managed system fails to be removed from the
+list of managed systems.
+The trap is triggered when:
+▪A system (push, local service, or user▪
+managed) is successfully deleted from the list
+of managed systems.
+▪The Aut omatic ally  create a Privileged Access ▪
+Manager managed system option  is
+unchecked on the Target system in f ormation
+page for a push mode managed system.
+▪The push mode managed system is deleted▪
+from the list of target systems.
+RES DEL WSTN SUCCESS A system is removed from the list of managed
+systems.
+RES GROUP WSTN FAILURE A system fails to be added to a managed system
+policy.Option Description
+RES GROUP WSTN SUCCESS A system was successfully added to a managed
+system policy.
+The exit point is triggered when:
+▪A managed system is manually added to a▪
+managed system policy. A managed system
+can be added to a policy from either the
+Managed systems  menu or the Managed
+system policies  menu. The exit point is
+triggered in both scenarios.
+▪A local service mode system successfully adds▪
+itself as a managed system.
+▪A PSLang expression or plugin is used to add▪
+a managed system to a managed system
+policy.
+RES ID CONFLICT Local service mode managed systems with
+c on flicting  system identifier s  are detected. The
+Privileged Access Manager Local W ork s t ation
+Service (hipamlws) on the a ff ect ed  system will
+be shut down.
+RES REINSTALL A local service is reinstalled.
+RES UNGROUP WSTN FAILURE A managed system is successfully removed from
+a managed system policy.
+The trap is not triggered when a managed
+system is deleted from the list of managed
+systems, even though that also removes the
+system from all the policies it belongs to.
+RES UNGROUP WSTN SUCCESS The c on figur ation  settings  of a managed system
+fail to be updated from the Request privileged
+access (PSW) module.
+RES UPDATE WSTN FAILURE A managed system fails to be removed from a
+managed system policy.
+RES UPDATE WSTN SUCCESS The c on figur ation  settings  of a managed system
+are successfully updated from the Request
+privileged access (PSW) module.
+Privilege password r andomiz ation  events that launch interface programs
+The following settings  relate to password r andomiz ation  events and can be set in the Password
+r andomiz ation  tab
+Option Description
+PAMSA ORCHESTRATION END FAILURE Subscriber or ches tr ation  is completed with failures.
+This trap is used for the Bravura Privilege P attern.

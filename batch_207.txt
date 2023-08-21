@@ -1,0 +1,337 @@
+# Code Meaning
+61 GENERAL_OUT_OF_RANGE The general error code was either
+neg ativ e  or larger than the largest
+known code.
+62 UNKNOWN Unknown/OS error; consult logs for
+more in f ormation
+63 ENCRYPTION_FAILURE Failed to encrypt
+64 FAILED_GET_SEMAPHORE Failed acquiring semaphore
+65 FAILED_RELEASE_SEMAPHORE Failed releasing semaphore
+66 USER_EMPTY The user field  was empty
+67 PASSWORD_EMPTY The password field  was empty
+68 MANAGEDACCOUNTRANDOMIZEPASSWORD_FAILED ManagedAccountRandomizePassword
+failed
+69 MANAGEDACCOUNTOVERRIDEPASSWORD_FAILED ManagedAccountOverridePassword
+failed
+70 MANAGEDACCOUNTRANDOMIZEPASSWORD_MULTIPLE_RES ManagedAccountRandomizePassword
+returned multiple  results
+71 MANAGEDACCOUNTOVERRIDEPASSWORD_MULTIPLE_RES ManagedAccountOverridePassword
+returned multiple  results
+72 NON_NUMERIC_INPUT_SYNCHRONOUSWRITE Non-numeric value specified  for
+'synchronouswrite'
+73 LARGECREDENTIALGET_FAILED Lar g eCr edentialGe t  failed
+74 LCINFOFILE_PATH_REQUIRED A path to a large creds info file is
+required
+75 DUPLICATE_ATTRKEY A duplicate 'attrk e y'  entry was
+encountered
+76 DUPLICATE_FILENAME A duplicate 'filename'  entry was
+encountered
+77 DUPLICATE_LCHASH A duplicate 'lchash' entry was
+encountered
+Common return values
+Below are some error codes of note, either because they are commonly encountered or should be
+handled by scripts:
+Return codes
+Code Meaning Notes
+0 No errors. A fresh password was
+retrieved from the Bravura Privilege
+server.Code Meaning Notes
+-2147483648 No errors. A password was retrieved
+from the cache.Since the password was retrieved
+from the cache, there is a chance that
+it is now incorrect. Be prepared to
+retry any oper ations  involving this
+password. Do not proceed on this
+error code if your applic ation  cannot
+tolerate incorrect passwords. In such
+cases, you should use the
+expirecache argument to
+prevent usage of the cache.
+-2097119174 Error calling KMKeyGetByAccount on
+the API Service. The API Service
+returned 58
+(ERR_PASSWORD_CHANGE_IMMINENT).
+A cached password was retrieved.The Bravura Privilege  server is
+currently in the process of changing
+the requested password and the
+cache is likely to be stale now or in
+the very near future. Your applic ation
+should wait and retry. Do not use the
+cached password unless it is critic al
+that e x ecution  proceed.
+50364474 Error calling KMKeyGetByAccount on
+the API Service. The API Service
+returned 58
+(ERR_PASSWORD_CHANGE_IMMINENT).
+A cached password was not retrieved.The Bravura Privilege  server is
+currently in the process of changing
+the requested password and the
+cache has expired. Your applic ation
+must wait and retry.
+61898752 Error calling the API Service. There
+was an error attempting  to send the
+SOAP request. A cached password was
+not retrieved.Typically this error is caused by a
+network problem; for example, if
+pamutil cannot resolve the
+hostname provided in config.ini ,
+if the curl library could not be loaded
+on systems running psunix , or if the
+API Service’s SSL certific a t e  was
+rejected.
+33579008 Failed to decrypt a password in the
+creds file. A cached password was not
+retrieved.This error can be caused by changes in
+the composite key, or tampering of
+the creds file.
+-2098167805 Error logging in to the API Service. The
+API Service returned error code 3
+(ERR_NOT_LOGGED_IN). A cached
+password was retrieved.The API user cr edentials  were
+successfully decrypted (or were not
+encrypted) but were rejected by the
+API Service. If the password in the
+creds file has not recently changed,
+immediate action  should be taken.
+This error may mean that your API
+account has been compromised.
+49315843 Error logging in to the API Service. The
+API Service returned error code 3The API user cr edentials  were
+successfully decrypted (or were not
+encrypted) but were rejected by theCode Meaning Notes
+(ERR_NOT_LOGGED_IN). A cached
+password was not retrieved.API Service. If this instance of
+pamutil has never successfully
+logged in, it is likely that the password
+was mistranscribed into the creds file.
+If this instance of pamutil was
+previously working immediate action
+should be taken. This error may mean
+that your API account has been
+compromised.
+39874560 Retry limit exceeded when trying to
+lock the lock file. A cached password
+was not retrieved.This error may occur when multiple
+pamutil instances are sharing the
+same c on fig.  It may be indic ativ e  of
+another pamutil instance
+misbehaving and starving other
+instances. If your applic ation
+encounters this error occasionally, it is
+safe to retry. If it happens frequently,
+you may want to in v estig a t e  what is
+locking the lockfile  for long periods of
+time,  or increase the locktries or
+locksleep values in the c on fig  file.
+-2107609088 Retry limit exceeded when trying to
+lock the lock file. A cached password
+was retrieved.Same as above.
+72384698 Error calling
+ManagedAccountOverridePassword
+on the IDAPI service. The API Service
+returned 186
+(ERR_PASSWORD_FAILED_STRENGTH_CHECK)The password the user specified  did
+not meet the complexity
+requirements for this account and was
+rejected.
+Functions
+Ge tP amUtilCon fig
+To obtain in f ormation  from the c on figur ation  file.
+int GetPamUtilConfig( const char* cfgFilePath,
+                      struct PamUtilConfig** config
+                    );
+where:
+▪cfgFilePath [in]: File name to open and read c on figur ation  settings  from ▪
+▪ c on fig  [out]: Pointer to a pointer that will point to the allocated P amUtilCon fig  struct ▪
+This function  parses the c on figur ation  file and returns its content in a P amUtilCon fig  struct. The struct is
+allocated so you must call Fr eeP amUtilCon fig  when you have finished  with struct.Fr eeP amUtilCon fig
+Clear the struct allocated by Ge tP amUtilCon fig.
+int FreePamUtilConfig( struct PamUtilConfig* config );
+where:
+▪ c on fig  [in]: Pointer that was allocated by Ge tP amUtilCon fig ▪
+GetPassword
+To obtain a password from the cache and/or web service, with full locking, caching and OTP management
+semantics:
+ int GetPassword( const char* cfgFilePath,
+                  char* errmsg,
+                  unsigned int errmsg_bufsz,
+                  int expirecache,
+                  const char* resourceId,
+                  const char* accountId,
+                  int argc,
+                  char** argv,
+                  const char* userkey,
+                  char* password,
+                  unsigned int password_bufsz
+                );
+where:
+▪cfgFilePath [in]: File name to open and read c on figur ation  settings  from ▪
+▪errmsg [out]: Pointer to a buff er  to place an error message in ▪
+▪errmsg_bufsz [in]: Size of the errmsg buff er ▪
+▪expirecache [in]: Whether to treat the cache as expired and force a fetch of the password▪
+▪resourceId [in]: Name of the managed system to retrieve a password for▪
+▪accountId [in]: Name of the account to retrieve a password for▪
+▪argc [in]: The number of elements in argv. Ignored if useargskey=0▪
+▪argv [in]: An array of null-terminated strings which will be incorporated into the encr yption  key. ▪
+Ignored if useargskey=0
+▪userkey [in]: An unencrypted null-terminated string to add to the encr yption  key ▪
+▪password [out]: Pointer to a buff er  to place the retrieved password in ▪
+▪password_bufsz [in]: Size of the password buff er ▪
+Bravura Security recommends that you always place command-line arguments for programs using the
+pamutil shared library in the argc and argv parameters, even if you don’t intend to use them. Ifuseargskey is unset in c on fig.ini,  the library will ignore these parameters. You can subsequently enable
+the useargskey option  without needing to recompile the program.
+RandomizePassword
+To set the password of an account to a random value.
+int RandomizePassword( const char* cfgFilePath,
+                       char* errmsg,
+                       unsigned int errmsg_size,
+                       const char* resourceId,
+                       const char* accountId,
+                       int argc,
+                       char** argv,
+                       const char* userkey
+                     );
+where:
+▪cfgFilePath [in]: File name to open and read c on figur ation  settings  from ▪
+▪errmsg [out]: Pointer to a buff er  to place an error message in ▪
+▪errmsg_bufsz [in]: Size of the errmsg buff er ▪
+▪resourceId [in]: Name of the managed system to retrieve a password for▪
+▪accountId [in]: Name of the account to retrieve a password for▪
+▪argc [in]: The number of elements in argv. Ignored if useargskey=0▪
+▪argv [in]: An array of null-terminated strings which will be incorporated into the encr yption  key. ▪
+Ignored if useargskey=0
+▪userkey [in]: An unencrypted null-terminated string to add to the encr yption  key ▪
+Bravura Security recommends that you always place command-line arguments for programs using the
+pamutil shared library in the argc and argv parameters, even if you don’t intend to use them. If
+useargskey is unset in c on fig.ini,  the library will ignore these parameters. You can subsequently enable
+the useargskey option  without needing to recompile the program.
+OverridePassword
+To set the password of an account to a specified  value.
+int OverridePassword( const char* cfgFilePath,
+                      char* errmsg,
+                      unsigned int errmsg_size,
+                      const char* resourceId,
+                      const char* accountId,
+                      const char* overridenPassword,
+                      int argc,                      char** argv,
+                      const char* userkey
+                    );
+where:
+▪cfgFilePath [in]: File name to open and read c on figur ation  settings  from ▪
+▪errmsg [out]: Pointer to a buff er  to place an error message in ▪
+▪errmsg_bufsz [in]: Size of the errmsg buff er ▪
+▪resourceId [in]: Name of the managed system to retrieve a password for▪
+▪accountId [in]: Name of the account to retrieve a password for▪
+▪overridenPassword [in]: The specified  value to set the password as ▪
+▪argc [in]: The number of elements in argv. Ignored if useargskey=0▪
+▪argv [in]: An array of null-terminated strings which will be incorporated into the encr yption  key. ▪
+Ignored if useargskey=0
+▪userkey [in]: An unencrypted null-terminated string to add to the encr yption  key ▪
+Bravura Security recommends that you always place command-line arguments for programs using the
+pamutil shared library in the argc and argv parameters, even if you don’t intend to use them. If
+useargskey is unset in c on fig.ini,  the library will ignore these parameters. You can subsequently enable
+the useargskey option  without needing to recompile the program.
+Se tInitialP ass w or ds
+To set initial  passwords as encrypted in the creds.ini file.
+int SetInitialPasswords( const char* cfgFilePath,-
+                         const char* userkey,
+                         const char* adminid,
+                         const char* adminpw,
+                         const char* proxyid,
+                         const char* proxypw,
+                         int argc,
+                         char** argv,
+                         char* errmsg,
+                         unsigned int errmsg_bufsz
+                        );
+where:
+▪cfgFilePath [in]: File name to open and read c on fig  settings  from ▪
+▪userkey [in]: An unencrypted null-terminated string to add to the encr yption  key ▪
+▪adminid [in]: An unencrypted null-terminated string to set the __OTP__ cr edential  ID to ▪
+▪adminpw [in]: An unencrypted null-terminated string to set the __OTP__ cr edential  password to ▪
+▪proxyid [in]: An unencrypted null-terminated string to set the __PROXY__ cr edential  ID ▪▪proxypw [in]: An unencrypted null-terminated string to set the __PROXY__ cr edential  password to ▪
+▪argc [in]: The number of elements in argv. Ignored if useargskey=0▪
+▪argv [in]: An array of null-terminated strings which will be incorporated into the encr yption  key. ▪
+Ignored if useargskey=0
+▪errmsg [out]: Pointer to a buff er  to place an error message in ▪
+▪errmsg_bufsz [in]: Size of the errmsg buff er ▪
+GetErrorMessage
+To obtain a complete error message from a pamutil  return code, including whether the password was
+cached and the IDAPI error number:
+int GetErrorMessage( int error,
+                    char* output,
+                    unsigned int outputlen
+                   );
+where:
+▪error [in]: The error returned by pamutil ▪
+▪output [out]: Pointer to a buff er  to place the error message in ▪
+▪outputlen [in]: Size of the error message buff er ▪
+Returns a pamutil  error code with only specific  and general fields  set.
+Ge tSpecificErr orMessag e
+To obtain the specific  error message from a pamutil  return code:
+const char* GetSpecificErrorMessage( int error );
+where:
+▪error [in]: The error returned by pamutil ▪
+Returns a pointer to the error message associated with the specific  field  of error (ignoring all other
+fields),  or null if there is no message associated with that code.
+GetGeneralErrorMessage
+To obtain a general error message from a pamutil  return code:
+const char* GetGeneralErrorMessage( int error );
+where:
+▪error [in]: The error returned by pamutil ▪
+Returns a pointer to the error message associated with the general field  of error (ignoring all other
+fields),  or null if there is no message associated with that code.You do not need to free the returned string from either Ge tSpecificErr orMessag e  or
+GetGeneralErrorMessage.
+The error messages returned by GetGeneralErrorMessage and Ge tSpecificErr orMessag e  are the same as
+those used by GetErrorMessage, except it dynamically creates an error message using every field  of the
+error code, thus requires an output buff er  to be allocated by the caller and may fail if this buff er  is not
+large enough. You can use Ge tSpecificErr orMessag e  to determine why GetErrorMessage failed. A
+common error is "53547008: insufficien t  output buff er  size".
+Disabling caching
+It is possible to fetch a password from the API or command-line and find that it did not work – perhaps
+the password was (incorrectly) cached and you really need to fetch a new one from the API, skipping the
+cache.
+To force the password to come from the Bravura Privilege  web services API and not from the local cache,
+set expirecache to 1 if using the API or use the -expirecache argument to runwithpass.
+In this case, the cache will still be written  to.
+Returning invalid cache contents
+If either the library or program attemp ts  to contact the web service, but it is unreachable, they will still
+return cached material if it is available, along with an error message. This is intended to improve service
+availability, even in cases where Bravura Privilege  is unreachable.
+Using useargskey to tie API account, managed account, and command together
+Enabling useargskey in the config.ini  file provides higher security by tying one Bravura Privilege
+API account, one managed account, and one command together. By default, this key is set to 1. When
+enabled, the command line to runwithpass is included in the encr yption  key, pr e v enting  it from
+being used to run any other program. Ensure that you give an absolute path to runwithpass , so the
+command lines are consistent between runs.
+Some command line arguments are excluded from the encr yption  key. This includes -v, -
+expirecache , and -initial .
+If the useargskey key is set and creds.ini  is to be shared between runwithpass and a
+program using the dynamic library:
+1.Set the argv argument to an array of strings where each string is one argument passed to runwithpass,1.
+including the command used to run runwithpass.
+2.Set argc to the size of the array.2.
+3.Set userkey to NULL.3.
+For example:
+ argv = {"C:\runwithpass.exe", "-conf", "config.ini", "-res", "SSH",
+ "-acct", "psadmin"} argc = 7Blue Prism In t egr ation
+Bravura Security Fabric  can be used to secure cr edentials  from Blue Prism processes used to automate
+BPA tasks and has multiple  options  for securing callers of cr edential  access requests.
+Architecture
+Blue prism in t egr ation  leverages the pamutil  (on page 2057) c ollection  of libraries and utilities  that
+mediate access to Bravura Privilege  servers.
+One or more pamutil  clients need to be installed on resource PCs where cr edentials  will be used.
+The Blue Prism Utility  Environment can be used to call the runwithpass executable provided as part
+of the pamutil package.
+In the above diagram:
+▪Blue Prism resources execute processes.▪
+▪A Blue Prism process requests cr edentials  from pamutil. ▪
+▪The "fing erprin t"  of the r equesting  caller/environment is obtained. ▪
+▪Bravura Privilege  returns cr edentials  to process through pamutil. ▪
+▪Blue Prism processes can automate logins into applic ations  with cr edentials. ▪
+System requirements
+In t egr ation  of Blue Prism with Bravura Privilege  requires a minimum of:
+▪Bravura Security Fabric  version 9.x or higher. ▪
+▪Blue Prism 6.x▪
+Usage scenarios
+The following are typical scenarios for Blue Prism in t egr ation:

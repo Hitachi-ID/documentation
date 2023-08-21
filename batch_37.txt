@@ -1,0 +1,164 @@
+This functionality  requires JavaScript to be enabled. If JavaScript is not enabled, a checkbox will appear
+next to the button.  You must select this checkbox before clicking the button.
+Entering multi-languag e  descriptions
+Wherever you enter a description  that Bravura Security Fabric  displays to end-users (target descriptions,
+question  set descriptions,  question  de finitions)  you can type a multi-languag e  tag, rather than the
+v erbatim  English text. When users view the description  in a self-service module , Bravura Security Fabric
+replaces the multi-languag e  tag with text in the language selected by the user.
+In the Manage the system  (PSA) module, you write multi-languag e  tags in the format !!! <tag name> . For
+example, Bravura Security Fabric  creates the default pr e-de fined  question  set (DEFAULT_QSET)  with
+the description  !!!DEFAULT_QSET_DESC .
+In order to use a custom multi-languag e  tag, you must fir s t create a de finition  in the appropriate file,
+then rebuild the skin files.
+See the CUSTOMIZATION  (on page 3471) for more in f ormation.3 Searching
+This chapter explains:
+▪Searching within a page  (on page 362) ▪
+▪Saved searches  (on page 365) ▪
+Searching within a page
+When you perform a task that requires you to select an object, such as a user, group, or target system,
+you may need to narrow down the list to find the object you are looking for.
+When accessed from a report page, some searches behave somewhat diff eren tly  from the rest of Bravura
+Security Fabric. See REPORTS  (on page 2891) for details.
+Basic searching
+You can narrow down the list of objects using a basic search. To do this, use the Search field  to include
+only objects that contain the string of characters.
+When performing a basic search:
+▪Bravura Security Fabric  can match on more than one column. ▪
+▪All matches are c ase-insensitiv e  (unless otherwise indicated). ▪
+▪Use the drop down menu next to Records to change how many records are displayed on each page. ▪
+▪If a checkbox is available in the top row, you can use this to select all records displayed on the page.▪
+You can perform an advanced search to locate objects with values or pr operties  that are not displayed on
+the page.Advanced searching
+You can submit an advanced search query by combining up to fiv e search expressions. The query can be
+c on figur ed  to match any or all search expressions.
+The advanced search engine displays a list of relevant search criteria. Depending on the initial  criterion
+selected, c onditional  drop-down boxes provide a second list of possible comparators, such as ”contains”
+or ”starts with”. You can combine these lists to form complex search expressions.
+Additionally ,  the advanced user search engine can search on:
+▪User ID – the ID for one or more users▪
+▪User name – the user name for one or more users▪
+▪Target system ID – list of users that have an account on one or more matching target system IDs▪
+▪Group ID – list of users that have group membership for one or more managed groups▪
+▪Role ID – list of users that are assigned to one or more roles▪
+▪Direct manager – users that have the specified  user as a direct manager in the OrgChart ▪
+▪Direct and indirect managers – users that have the specified  user as a direct or indirect manager in the ▪
+OrgChart
+▪ Pr ofile  attribut es  – list of users that have a specific  attribut e  set to a matching value ▪
+The advanced field  search form is a query builder form; query fields  and their values are dynamically
+generated and become available for selection  depending on previously selected fields.
+To create an advanced search query:
+1.On the object list page, click the advanced search icon 
+ next to the Search button. 1.
+2.Select an attribut e  from the fir s t drop-down list. 2.
+3.Select a comparator from the second drop-down list.3.
+4.If applicable, enter a value in the input field. 4.
+This could mean typing text for integers and strings, selecting  from a drop-down list, or selecting  a
+date from a calendar. There is no third field  for boolean (true/false) input types.
+5.Click the ” Add c ondition”  icon 
+ . 5.
+6.Repeat steps 2 through 5 if you want to add more search expressions.6.
+7.If you have multiple  search expressions, select whether the query should match Any or All search 7.
+expressions.See also: 
+You can also save your search criteria to use later. See Saved searches  (on page 365) for details.  
+Notes on search terms 
+▪Some fields  can only match a list of restricted values. Fields with restricted values are presented in ▪
+drop-down menus.
+▪Search attribut es  that are built-in / shipped and use the !!! tags cannot be searched on using the ▪
+displayed values for these attribut es  and may only be searched on using the tag name.
+▪If a search term is invalid (for example, a required comparison method or search value is missing),▪
+then that term will be removed and will not be included in the advanced search.
+▪If a search attribut e  (such as an optional  pr ofile  attribut e  for example) does not have a value de fined, ▪
+then that search attribut e  will not appear in the advanced search results when using comparison
+methods such as: ”is less than”, ”is less than or equal to”, ”is greater than”, and ”is greater than or
+equal to”. For this case, the ”is empty” comparator must also be specified.
+Con figur ation  notes
+▪The number of matches displayed is limited to 10,000 by default. If there are more matches, Bravura ▪
+Security Fabric  warns users to r e fine  their search criteria. You can change this limit by modifying
+Manage the system  > Modules  > Options  > SEARCH MAX RESULTS .
+▪You can change the default options  for Records per page by modifying Manage the system  > Modules ▪
+> Options  > RECORDS PER PAGE LIST .
+RECORDS PER PAGE must be one of the values in RECORDS PER PAGE LIST . For example; the default
+RECORDS PER PAGE LIST is 10, 20, 50, 100 and the default RECORDS PER PAGE is 20. This provides 20
+records per page and the option  to show 10, 20, 50 or 100 search result records per page.
+▪The pr ofile  and request attribut es  option  Allow in advanced search criteria controls whether or not ▪
+the attribut e  shows in the advanced search attribut e  list. See De fining  pr ofile  and request attribut es
+(on page 1270).▪‘ORGCHART_MANAGER’ is not included in the list of pr ofile  attribut es  listed in Advanced search . Use ▪
+‘Direct manager’ and ‘Direct and indirect managers’ instead.
+Regular users can normally use advanced search c apabilities  to find e xisting  users on request pages.
+By default, if Bravura Security Fabric finds  more than one match for the search terms, it displays a list and
+allows the requester to make a selection.
+You can disable this behavior if you want to prevent Bravura Security Fabric from displaying a list of users
+or accounts, and if you want Bravura Security Fabric to only match on exact search terms. To disable
+advanced search c apabilities,  enable the following options  in Manage the system  > Modules  > Options :
+▪<IDR > and update pr ofile  (IDR) >  IDR DISABLE ACCOUNT SEARCH ▪
+▪View and update pr ofile  > and update pr ofile  (IDR) >  IDR DISABLE USER SEARCH ▪
+▪<REQ> >  IDP DISABLE USER SEARCH ▪
+▪<REQ> > IDS DISABLE USER SEARCH▪
+▪<REQ> >  IDV DISABLE USER SEARCH ▪
+Saved searches
+If you have a lot of records to search through, and you complete the same search regularly, you may find
+it useful to save your own filt er s  as a saved search and re-use it.
+There are many cases where users can do a search, save it, then re-use it either to find s tuff  again quickly,
+or in terms of controlling other business logic, such as being able to easily find:
+▪Target systems of a certain type▪
+▪Subordinates of a user▪
+▪Users in a certain department▪
+▪Users of a certain team▪
+Types of saved search
+Saved searches can be:
+▪My Searches : Users can create saved searches from the user interface. My saved searches cannot be ▪
+shared across users.
+▪Searches : Product administrators can use plugin to create saved searches. Searches can be shared for ▪
+all users.
+Saved search logic
+Saved searches are shared across all engines that derived from the same base engine; for example, saved
+searches for accounts are shared across all engines that derived from the account base engine class.
+Saved search works with advanced search. Any search engine that supports advanced search will support
+saved searches except for some (older style) advanced search pages in the Manage reports (RPT)
+module. In addition,  saved search that are shared across engines will be disabled if the criteria within the
+saved search is missing in the engine; for example, if one account engine can search on First Name andanother cannot, then any saved search containing First Name will be disabled on the second engine. This
+functionality  works the same for criteria that have been removed from the system entir ely;  for example,
+pr ofile  attribut es  and resource attribut es.
+The pr e-de fined  label ”Everything” is the default for all search engines that support saved searched.
+When a user selects another saved search and then switches back to ”Everything”, all results will be
+returned in the page.
+Cr eating  and deleting  My Searches
+To save an advanced search query:
+1.On the object list page, click the advanced search icon 
+  next to the Search button. 1.
+2.Enter your search criteria.2.
+See Advanced searching  (on page 363) for details.
+3.Click the ” Add c ondition”  icon 
+ . 3.
+4.Click the ”Save search” 
+ icon. 4.
+5.Enter a name for the new search.5.
+6.Click Create . 6.
+Once it is saved, you will see it from the saved search drop-down list in the My Searches section.
+You can delete your saved search at any time  by clicking the saved search drop-down list and clicking
+the ”trash can” icon 
+  on the right of the saved search. You will be prompted to c on firm  the deletion.Cr eating  and deleting  Searches
+Product administrators can use a plugin program to add or remove saved searches for users, based on
+the type of search engine. See Con figur e  saved search plugin  (on page 1123) for details on how to write
+and c on figur e  this plugin.
+Example: General usage of saved search
+The following examples demonstrate how users can create a saved search, delete a saved search as well
+as add more filt er s  to an e xisting  saved search and save as a new saved search.
+Create a saved search 
+To create a saved search:
+1.As an end user, from the main menu , click View and update pr ofile  under Other users . 1.
+2.On the Users  page, click the advanced search icon 
+  next to the Search button. 2.3.Create some search filt er s. 3.
+4.Click Save search and enter a name for saved search. 4.5.Click Create . 5.
+The saved search named User name contains psadmin is created.
+ Delete a saved search 
+To delete a saved search:
+1.As an end user, from the main menu , click View and update pr ofile  under Other users . 1.
+2.Select the drop-down list and click the ”trash can” icon 
+ . 2.
+3.Click the OK button. 3.
+The save search is deleted.
+ Modify a saved search 
+To add more filt er s  to an e xisting  saved search and save as a new saved search:
+1.As an end user, from the main menu  click View and update pr ofile  under Other users . 1.
+2.Select a saved search.2.

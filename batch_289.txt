@@ -1,0 +1,260 @@
+Option Description
+PSUPDATE FILE REPLICATION Synchronizes files between instances. See R eplic ation  and Recovery .
+PSUPDATE INSTDUMP Generates a c on figur ation  summary file during auto discovery. See
+Gener ating  a c on figur ation  summary file (on page 2730).
+PSUPDATE LOADUCCACHE THREADS Number of threads loaduccache should use during auto discovery.
+The default is 4.
+UPDATE SYSTEM AGENT COUNT Controls parallel listing  during auto discovery. Default is 50 simultaneous
+connectors. This also controls how many threads to run when updating
+files on proxy servers and r eplic ation  nodes. See Con figuring  parallel listing
+(on page 2741).
+USER PROFILE DIFF ENABLED Track user pr ofile  changes during auto-discovery.
+LICENSE TARGET Percentage of licensed targets that exist before Bravura Security Fabric
+warns administrators. See Con figuring  licensing notific ations  (on page
+2740).
+LICENSE TARGET IDARCHIVE SERVER Percentage of licensed managed servers that exist before Bravura Security
+Fabric warns administrators. See Con figuring  licensing notific ations  (on
+page 2740).
+LICENSE TARGET IDARCHIVE
+WORKSTATIONPercentage of licensed managed w ork s t ations  that exist before Bravura
+Security Fabric warns administrators. See Con figuring  licensing
+notific ations  (on page 2740).
+LICENSE USER Percentage of licensed users that exist before Bravura Security Fabric
+warns administrators. See Con figuring  licensing notific ations  (on page
+2740).
+LICENSE USER IDARCHIVE SERVER Percentage of licensed managed server passwords that exist before
+Bravura Security Fabric warns administrators. See Con figuring  licensing
+notific ations  (on page 2740).
+LICENSE USER IDARCHIVE
+WORKSTATIONPercentage of licensed managed w ork s t ation  passwords that exist before
+Bravura Security Fabric warns administrators. See Con figuring  licensing
+notific ations  (on page 2740).
+PSLockDir Controls the loc ation  of the lock files directory. If unde fined,  this defaults
+to the PSTempDir. See Con figuring  target system oper ation  locking  (on
+page 530).
+PSTempDir Controls the loc ation  of the temporary directory. By default, this is set to:
+<Program Files path>\<CompanyDirBravura Security Fabric\Logs
+\<instance>\10 System variables
+All Bravura Security Fabric  system variables can be set in the various feature options  pages, or on the
+Manage the system  > Maintenance > System variables  page. System variables that are set in the registry
+are listed after  those recorded in the database.11 Changes to the service account (psadmin)
+Bravura Security Fabric  utiliz es  a service user (default psadmin ) account in various loc ations.
+Or g aniz ations  require the ability to rename this account, use a diff er en t  account or change the password.
+When changes are made to the Bravura Security service user (psadmin) account, such as renaming it,
+changing the password, or changing to a diff er en t  account, use the serviceacct program to update
+known loc ations  where the service user account is used.
+If you have multiple  instances using the same service account, you must run serviceacct under each
+instance when the service account is modified.  If the service account is a domain account, you must prefix
+it with domain name "domain\user" when running the utility .
+Usage
+Before running serviceacct , navigate to the \<instance>\ directory and run instance.bat to c on figur e
+necessary environment variables.
+serviceacct.exe [-account] [-password] [-restart] [-noverify]
+Argument Description
+-account Prompt for a new account ID
+-noverify Skip verifying the supplied cr edentials
+This is only used when the utility  v erific ation  process
+failed and you know the new account/password are valid
+-password Prompt for a new password (will not be echoed)
+-restart Restart all running services
+Examples
+1. After  changing the password of the current service user account, run the following command to 1.
+update all known loc ations  where the account is used:
+   serviceacct -password 
+   <NEWPASSWORD>
+2. After  changing the user ID of current service user account, run the following command to update all 2.
+known loc ations  where the account is used:
+  serviceacct -account 
+   <NEWUSERID>
+3. After  swapping to a new service user account, run the following command to update all known 3.
+loc ations  where the account is used:
+   serviceacct -account -password 
+   <NEWACCOUNTNAME> 
+   <PASSWORD>It is recommended to restart all services related to the Bravura Security Fabric instance to make sure
+everything is working properly after  you run the utility .
+The serviceacct programs stops and starts all currently running services when used with the -
+restart option.
+Known loc ations
+The following are known loc ations  where the service user (psadmin) account will be updated by
+serviceacct :
+▪All services related to the Bravura Security Fabric  instance ▪
+▪The applic ation  and <instance>\docs virtual directories in IIS ▪
+▪The registry key value:▪
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>
+\User
+▪"USERID" and "PASSWORD" values in idmsetup.inf▪
+▪Windows scheduled jobs created during the ins t allation  of Bravura Security Fabric , including HID ▪
+Health Check and HID External Data Store Replicator
+Use case 1: Change to a new local service account (Used SQL Server logins to connect with SQL
+server)
+This use case demonstrates the processes when swapping to a new local Bravura Security service user
+(psadmin) account when using SQL Server logins to connect with SQL server:
+1.Create a new local service account and add it to the Administrators group. 1.
+2.Give the new account the "Logon as a service" right under Local Security Policy  settings. 2.
+3.Run serviceacct from the command line to update the known loc ations  where the account is 3.
+used with the new service account in f ormation.
+a.Open the command line as administrator.a.
+b.Go to <Program Files path>\Bravura Security\Bravura Security Fabric\<instance>\ util\. b.
+c.Run:c.
+serviceacct -account -password -restart
+d.Input the new account name and password.d.Use case 2: Change to a new domain service account (Used SQL Server logins to connect with
+SQL server)
+This use case demonstrates the processes when swapping to a new domain Bravura Security service user
+(psadmin) account when using SQL Server logins to connect with SQL server:
+1.Create a new domain service account and add it to the Domain admins  group. 1.2.Give the new account the "Logon as a service" right under Local Security Policy settings. 2.
+3.Run serviceacct from the command line to update the known loc ations  where the account is 3.
+used with the new service account in f ormation.
+a.Open the command line as administrator.a.
+b.Go to <Program Files path>\Bravura Security\Bravura Security Fabric\<instance>\ util\. b.
+c.Run:c.
+serviceacct -account -password -restart
+d.Input the new account name (pr e fix  it with domain) and password. d.
+Use case 3: Change to a new local service account (Used Windows authentic ation  to connect
+with SQL server)
+This use case demonstrates the processes when swapping to a new local Bravura Security service user
+(psadmin) account when using Windows authentic ation  to connect with SQL server. The Bravura Security
+Fabric  instance and the database must be on the same server:
+1.Create a new local service account and add it to the Administrators group. 1.
+2.Give the new account the "Logon as a service" right under Local Security Policy settings. 2.
+3.Add a new user account into the database:3.
+a.Start Micr osoft  SQL Server Management Studio and connect to the server as a system a.
+administrator.
+b.Create a new login as the new account and set it in the database, according to install ins tructions b.
+Bravura Security Fabric  requires a dedicated database, user and schema in SQL Server  in order to
+connect to a database and install schema objects.
+You can allow Bravura Security Fabric  setup to do this for you, as described in Using setup to
+create a new dedicated database user, or use the following ins tructions  to set up the user and
+schema yourself.
+To create the user and c on figur e  its permissions:
+1.Start Micr osoft  SQL Server Management Studio. 1.
+2.Connect to the server as a system administrator (sysadmin role).2.
+You can do this using SQL Server authentic ation  and the sa account, or using Windows
+authentic ation  if the Windows user has the sysadmin role.
+For example, to connect to the server using the sa account, set:
+Server type : Database Engine
+Server name: <host name or IP address> \<instance>
+Authentic ation:  SQL authentic ation
+Login:  sa
+Password <password for sa>
+Click Connect .3.Create a new database for Bravura Security Fabric : 3.
+a.In the Object Explorer (left)  pane, right-click Databases , then click New Database… . a.
+b.Type the Database name . b.
+c.Click Options . c.
+d.Select Recovery model and choose Simple . d.
+Ensure that an appropriate database backup policy is in place. See http://
+t echne t.microsoft.c om/ en-us/librar y/ms189275.asp x  for more inf ormation.
+e.Select Compatibility  level and ensure that this is set to a minimum value of SQL Server 2014 e.
+(120) . The c ompatibility  level for the installed version of Micr osoft  SQL Server is suitable.
+f.Select Auto Create St atistics  and choose True . f.
+g.Select Auto Update St atistics  and choose True . g.
+h.Select Auto Update St atistics  asynchronously and choose False . h.
+i.Click OK. i.
+4.Create a new login:4.
+a.In the Object Explorer pane, expand Security . a.
+b.Right-click Logins , then click New Login… . b.
+c.On the General page, type the Login name . c.
+d.Select:d.
+▪SQL Server Authentic ation ▪
+Type and c on firm  the password for the new login. Deselect the User must change
+password at next login and Enforce password e xpir ation  checkboxes.
+Or
+▪Windows authentic ation ▪
+Pick a local or domain account or group.
+e.Set Default database to the database that you created in step 3. e.
+f.Click OK. f.
+5.Create a new schema in the database:5.
+a.In the Object Explorer pane expand Databases > <Newdatabase > >Security . a.
+Where <New database> is the database that you created in step 3.
+b.Right-click Schemas , then click New Schema… . b.
+c.Type the Schema name . c.
+d.Click OK. d.
+6.Set the user in the database:6.
+a.In the Object Explorer pane, expand Databases > <Newdatabase > >Security . a.
+Where <New database> is the database that you created in step 3.
+b.Right-click Users , then click New User… b.c.Type the User name . c.
+d.Set the Login name to the user you created in step 4. d.
+e.Set the Default schema to the schema you created in step 5. e.
+f.In the Database role membership area, enable: f.
+▪db_datareader▪
+▪db_datawriter▪
+▪db_ddladmin▪
+▪db_owner▪
+g.Click OK. g.
+7.Close the c onnection  to the schema by collapsing the database tree and highlighting  the root of 7.
+the SQL Server management interface.
+This ensures that the database can be locked to perform the following oper ation.
+8.Alter the database c ollation: 8.
+a.In the toolbar, click New Query . a.
+b.In the new query window, type the following:  b.
+ALTER DATABASE <database name>  SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+ALTER DATABASE <database name>  COLLATE Latin1_General_BIN 
+ALTER DATABASE <database name>  SET ALLOW_SNAPSHOT_ISOLATION ON 
+ALTER DATABASE <database name>  SET READ_COMMITTED_SNAPSHOT ON 
+ALTER DATABASE <database name>  SET MULTI_USER
+ALTER DATABASE <database name>  SET NEW_BROKERALTER DATABASE <database name>  SET ENABLE_BROKER WITH ROLLBACK
+IMMEDIATE  
+If the database name is ”default”, enclose it in square brackets: [default] .
+c.Click Execute . c.
+9.Exit SQL Server Management Studio.9.
+Note the database name, and the name and password of the login that you create. You will
+need these values, as well as the in f ormation  you gathered earlier, when you install Bravura
+Security Fabric .
+, steps 4 and 6f.
+c.Verify that you can login from the Bravura Security Fabric  server to the database successfully with c.
+the DBUser cr edential  pair (account, password).
+4.If the password is changed, run iddbadm 4.
+Use the iddbadm program to modify and c on figur e  the cr edentials  used by iddb to connect to the
+database backend.
+Usage
+Run iddbadm with the following arguments:
+  iddbadm.exe -instance <bravura_instance> -dbtype MSSQL
+   [-database <database>] [-dbserver <dbserver>]
+   -dbuser <bravura_dbuser>  -password <password>
+   [-iddbport <iddbport>] 
+   [-integrated]
+Argument Description
+-database <database> The MSSQL database name
+-dbserver <dbserver> The MSSQL database server or instance c onnection  string
+-iddbport <iddbport> The database service TCP port
+-dbtype <dbtype> The database type (MSSQL)
+-dbuser <dbuser> The ID of the user that connects to the database
+-instance <instance> The Bravura Security Fabric  instance name
+-password <password> The database server user password
+-integrated Use Windows Integrated Authentic ation  instead of a
+password
+-sho w c on fig  <sho w c on fig> Show current DBMS backend c on figur ation
+Example
+1.To change the dbms cr edentials  for a MSSQL server: 1.iddbadm -dbtype MSSQL -dbuser mssqluser -instance idminstance -
+password 
+dbuserpassword -database dbname -dbserver dbserver.com 
+2.To change the authentic ation  mode for a MSSQL server from SQL Server authentic ation  to windows 2.
+authentic ation:
+iddbadm -integrated
+to update the cr edential  used by iddb  in the registry key HKLM\SOFTWARE\Bravura Security\Bravura
+Security Fabric\<instance>\MSSQL.
+Alt ernativ ely ,  if only the account name changed and it is simpler and privileges available allow it,
+update the account name (DBUser value) in the registry directly.
+5.Run serviceacct  from the command line to update the known loc ations  where the account is 5.
+used with the new service account in f ormation.
+a.Open the command line as administrator.a.
+b.Go to <Program Files path>\Bravura Security\Bravura Security Fabric\<instance>\ util\. b.
+c.Run:c.
+serviceacct -account -password -restart
+d.Input the new account name and password.d.
+Use case 4: Change to a new domain service account (Used Windows authentic ation  to connect
+with SQL server)
+This use case demonstrates the processes when swapping to a new domain Bravura Security service user
+(psadmin) account when using Windows authentic ation  to connect with SQL server:
+1.Create a new domain service account and add it to the Domain admins  group. 1.
+2.Give the new account the "Logon as a service" right under Local Security Policy settings. 2.
+3.Add the new user account into database3.
+a.Start Micr osoft  SQL Server Management Studio and connect to the server as a system a.
+administrator.
+b.Create a new login as the new account and set it in the database.b.
+4.Run serviceacct from the command line to update the known loc ations  where the account is 4.
+used with the new service account in f ormation.
+a.Open the command line as administrator.a.
+b.Go to <Program Files path>\Bravura Security\Bravura Security Fabric\<instance>\ util\. b.
+c.Run:c.
+serviceacct -account -password -restart
+d.Input the new account name (pr e fix  it with domain) and password. d.

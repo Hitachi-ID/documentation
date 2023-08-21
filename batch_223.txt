@@ -1,0 +1,107 @@
+Click Next .
+4. Con firm  that you want to proceed. 4.5.Click Submit . 5.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+6.Click the View request link at the top of the page to view the status of the request. 6.
+API aut omation  for account offboar d
+Once the API has been c on figur ed  (See ”SOAP API” in Bravura Security Fabric  Remote API ( api.pdf )), and
+your script has been authentic a t ed  to the API (Login or LoginEx API calls), the WF API calls can be used to
+create an API request to offboar d  an account.
+Use the WFPDRSubmit function  to create a w orkflo w  request and submit the request for publishing.When submitting  a request, use ”OFFBOARD_ACCOUNT” as the PDR ID. The request uses the following
+attribut es:
+attrk e y value
+HOSTID The ID of the system on which the
+account resides.
+ACCOUNT The ID of the account.
+CONFIRM_ACTION T to c on firm,  F to cancel.
+OFFBOARD_ACCOUNT batch request sample
+"ACCOUNT","HOSTID","CONFIRM_ACTION" 
+"account01","D39B55F07A6A487AABE4BD8C9EC1679C","T"Privilege P attern:  Self-service vault management
+Users with the Vault Trustees privilege can create team vaults to store account data as if it was a
+managed account. There is no c ommunic ation  between Bravura Security Fabric  and the managed
+account; all in f ormation  is stored manually. A team vault is linked to a single team. The password policy
+for vault accounts is simple; requiring one or more characters.
+Vault trustees have access to the following pr e-de fined  requests:
+▪Team Vault: Create  (on page 2224) ▪
+▪Vault Account: Create  (on page 2226) ▪
+▪Vault Account: Update  (on page 2232) ▪
+▪Team Vault: Update  (on page 2240) ▪
+▪Team Vault: Archive  (on page 2242) ▪
+▪Vault Account: Archive  (on page 2244) ▪
+Cr eating  a team vault
+Users assigned as vault trustees can use the Team Vault: Create request to create a team vault.
+1.From the home page, click Manage resources . 1.
+2.Select the Team Vault: Create request. 2.
+3.Enter a team vault ID and name, and select the team that will access the vault.3.4.Click Submit . 4.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+5.Click the View request link at the top of the page to view the status of the request. 5.
+Once created, the vault is added to the VAULT_MSP vault-only managed system policy.API aut omation  for team vault cr eation
+Once the API has been c on figur ed  (See Bravura Security Fabric  Remote API ( api.pdf )), and your script has
+been authentic a t ed  to the API (Login or LoginEx API calls), the WF API calls can be used to create an API
+request to create a team vault.
+Use the WFPDRSubmit function  to create a w orkflo w  request and submit the request for publishing.
+When submitting  a request, use ”CREATE_VAULT_SYSTEM” as the PDR ID.
+The request uses the following attribut es:
+attrk e y value
+MS_ID The ID of the team vault.
+MS_NAME The name of the team vault.
+MS_TEAM The team that the team vault will be
+assigned to.
+CREATE_VAULT_SYSTEM batch request sample
+"MS_ID","MS_NAME","MS_TEAM" 
+"VAULT-000000","VAULT-000000","TEAM-000000"
+Cr eating  a vault account
+Users assigned as vault trustees can use the Vault Account: Create request to create a vault account.
+1.From the home page, click Manage resources . 1.
+2.Select the Vault Account: Create request. 2.
+3.Select a vault.3.Click Next .
+4.Enter the Account Name and Account Password . 4.5.Specify the Maximum Concurrent Checkout  for the account. If unspecified,  this is set to 1. 5.
+6.Click Submit . 6.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+7.Click the View request link at the top of the page to view the status of the request. 7.
+View and copy disclosure plugins are enabled for a vault account by default. Once created, you can
+update the account's password and disclosure attribut es  (on page 2232).
+API aut omation  for vault account cr eation
+Once the API has been c on figur ed  (See ”SOAP API” in Bravura Security Fabric  Remote API ( api.pdf )), and
+your script has been authentic a t ed  to the API (Login or LoginEx API calls), the WF API calls can be used to
+create an API request to create a vault account.
+Use the WFPDRSubmit function  to create a w orkflo w  request and submit the request for publishing.
+When submitting  a request, use ”CREATE_VAULT_ACCOUNT” as the PDR ID. The request uses the
+following attribut es:
+attrk e y value
+MS_NAME The name of the system the vault
+account will be added to.
+MA_NAME The name of the account to be
+created.
+MA_PASSWORD The password of the account to be
+created.
+MA_TEAM The team that the vault account will
+be assigned to.
+MA_RES_CHECKOUT_LIMIT The number of concurrent checkouts
+for the account.
+REQUEST_TEAM The team in which its system
+trustee(s) will be used to authorize
+the request.
+See REQUEST_TEAM
+The REQUEST_TEAM attribut e  is the team in which its system trustee(s) will be used to authorize the
+request. This can be a diff er en t  value depending on which PDR is used. In some cases, the value is auto
+filled  and in other cases, a value is not required.
+PDR ID API submittable REQUEST_TEAM
+requiredREQUEST_TEAM aut o-
+filled
+BATCH_REQUEST No N/A N/APDR ID API submittable REQUEST_TEAM
+requiredREQUEST_TEAM aut o-
+filled
+CREATE_LARGE_CREDENTIAL No N/A N/A
+UPDATE_LARGE_CREDENTIAL No N/A N/A
+WEBAPP_DISCLOSURE_CREATE No N/A N/A
+WEBAPP_DISCLOSURE_DELETE Yes No N/A
+WEBAPP_DISCLOSURE_UPDATE No N/A N/A
+TEAM-CREATE Yes Yes Yes
+TEAM-DELETE Yes Yes Yes
+TEAM-MEMBERS Yes Yes Yes
+TEAM-UPDATE Yes Yes Yes
+CREATE_VAULT_SYSTEM Yes Yes Not required
+ARCHIVE_VAULT_SYSTEM Yes Yes Yes
+UPDATE_VAULT_SYSTEM (1 - same team) Yes Yes Yes
+UPDATE_VAULT_SYSTEM (2 - transfer) Yes Yes Yes
+CREATE_VAULT_ACCOUNT (1 - team vault) Yes Yes Yes

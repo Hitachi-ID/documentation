@@ -1,0 +1,361 @@
+ }
+▪ ConnectionCr edential  a KVGroup containing in f ormation  about target administrator cr edentials  and ▪
+system cr edentials  (for reset oper ations).
+The general format of the KVGroup is as follows:
+"ConnectionCredential" "" = {
+  "AdminCredential" "" = {
+    "admin1" = "{AES}@KK|dE]=GqX=zqJyTIgqL]XCyECV?AsAJ[O?
+vBJGpAaEGgfK"
+    "admin2" = "{AES}e[LkiHEv?=iAGTD|ZA^cKCYJCb?
+[tByFDp_=e]EhWDkgHzmD"
+   }
+  "SysCredential" "" = {
+    "sysadm1" = "{AES}fN=>rLOB?^gDICJfc@fYLB@@COGlv=H@IFc@EW?
+XBJTwFEXB"
+   }
+ }
+Return codes
+The return codes for user -de fined  functions  (with the e x ception  of listmembermethod() ) for agtdos ,
+agttelnet , and agtssh are as follows:
+Code Value Description
+ACSuccess 0 The oper ation  was successful.
+ACUnknownError 1 The oper ation  failed with an unknown error.
+A C Oper ationNotSupport ed 2 The oper ation  is not supported by the target system.
+ACNotConnected 3 Can be used in the c onnecttar g e t()  function  if a
+c onnection  could not be established.
+ACAlreadyConnected 4 Can be used in the c onnecttar g e t()  function  if an attemp t
+is made to connect to a target that already has a
+c onnection.
+ACInvalidServer 5 Can be used in the c onnecttar g e t()  function  if the target
+address is invalid.
+ACObjectAlreadyExists 6 The object to create (for example, user or group) already
+exists.
+ACInvalidUser 7 The user account is invalid or does not exist.
+ACInvalidModelUser 8 The template account is invalid or does not exist.
+ACUserNotInGroup 9 The user is not in the specified  group.
+ACTimeout 10 The oper ation  timed  out.
+ACAccessDenied 11 The target system administrator could not logon due to a
+bad ID/password pair, account r es trictions,  and so on.Code Value Description
+ACInvalidGroup 12 The group is invalid or does not exist.
+ACUserAlreadyGroupMember 13 The user is already a member of the specified  group.
+ACVerifyFailed 14 The password could not be v erified.  Use this code ONLY
+when the specified  password is not correct.
+ACInitFailed 15 The oper ation  failed to initializ e.
+ACLockFailed 16 The oper ation  failed to get a lock on a file while reading
+or writing.
+ACScriptError 17 The oper ation  encountered an error in the script.
+ACNotLicensed 18 The oper ation  is not licensed.
+ACLogFileFailure 19 Failed to write to the log file.
+ACImplementerFailure 20 The implementor failed to perform the oper ation.
+ACAdminLocked 21 The target system administrator account is locked.
+ACInvalidPasswd 22 The password is invalid.
+ACDelayLoadError 23 The oper ation  encountered an error loading a dll or
+function  point.
+ACReadOnlyResource 24 The oper ation  could not write to a resource because it
+was read only.
+ACPluginAborted 25 The plugin failed.
+ACPasswordLocked 26 The password is locked.
+ACPasswordExpired 27 The password has expired.
+ACAccountExpired 28 The account has expired.
+ACAccountDisabled 29 The account is disabled.
+A C Oper ationR olledback 30 The oper ation  was rolled back.
+A C Oper ationAbort ed 31 The oper ation  was aborted.
+A C Oper ationR ollbackF ailed 32 The rollback oper ation  has failed.
+ACEndOfFile 33 The oper ation  has reached the end of file.
+ACGroupAlreadyGroupMember 34 The group is already a group member.
+ACGroupNotInGroup 35 Group is not a member of group.
+ACNull 0xff ff A null code.
+Built-in Functions
+Apart from the standard PSLang built-in functions,  there are several built-in agent functions  available to
+the agents.
+You call the following built-ins from within functions  r epr esenting  agent oper ations  in order to
+communicate the results of the oper ation  back to the agent:
+▪agentError reports an error message. ▪▪agentWarning reports a warning message. ▪
+▪agentInfo reports an in f ormation  message. ▪
+▪agentListUser is called once for each user during the list oper ation. ▪
+▪agentListGroup (or agentListGroupSID ) is called once for each group during the list oper ation. ▪
+▪ ag en tLis tAttribut e  is called once for each attribut e  during the list attribut e,  create, and update ▪
+oper ations.
+▪agentListResourceComputer is called once for each computer object during the list resource ▪
+oper ation.
+▪agentListResourceAccount is called once for each account object during the list resource oper ation. ▪
+▪agentIsEnabled tells the agent whether or not the given user is enabled. ▪
+▪agentIsLocked tells the agent whether or not the given user is locked out. ▪
+▪agentIsPassExpired tells the agent whether or not the given user’s password has expired. ▪
+▪agentIsAcctExpired tells the agent whether or not the given user’s account has expired. ▪
+▪agentLongId provides the long ID of the user during create, update, rename, or move context ▪
+oper ations.
+▪agentShortID provides the short ID of the user during create, update, rename, or move context ▪
+oper ations.
+▪agentGroups provides the list of groups to which a user belongs. ▪
+▪agentOutput can return IP in f ormation  on reset using agentOutput. The keys are ip-address and dns- ▪
+host-name. This in f ormation  is used by Bravura Privilege  to load current in f ormation  when the reset
+occurs. This is included in the agtssh-simple.psl sample. By default it is disabled. It can be enabled with
+the $emit_info at the top of the script by setting  it to non-zero.
+See the PSLang Manual ( pslang.pdf ) for more in f ormation  about these built-in functions.
+Global variables
+In any agent script, input passed to the agent is stored in the $_inVars  "hidden" global variable. You
+can declare and de fine  additional  global variables for use throughout the script.
+Following is an example of the contents of the $_inVars KVGroup when performing a list oper ation:
+   "" "" = {
+     "address" = "agtdos.psl"
+     "adminid" = "null"
+     "adminpw" = "<encrypted password value>"
+     "hostid" = "DOS"
+     "listdbfilename" = "C:\\Program Files\\Hitachi ID\\IDM Suite\
+\default\\psconfig\\AGTDOS.db"
+     "operation" = "listobj"
+     "platformname" = "Win32 Console Script"
+     "timeout" = "-1"
+    "listattributes" "" = {
+     }   }
+Built-in variables
+The following built-in variables are available for use with PSLang scripts:
+▪$KeyAccounts▪
+Value: "accounts" Description:  List of accounts.
+▪$KeyAcctID▪
+Value: "acctid"  Description:  Name of the target account to operate on.
+▪ $K e yAction▪
+Value: "ACTION" Description:  Action  to do to the attribut e.
+▪ $K e yActionCopy▪
+Value: "COPY" Description:  Action  to do to the attribut e.
+▪ $K e yActionIgnor e▪
+Value: "IGNORE" Description:  Action  to do to the attribut e.
+▪ $K e yActionR eplace▪
+Value: "REPLACE" Description:  Action  to do to the attribut e.
+▪ $K e yActionV alue▪
+Value: "VALUE" Description:  Value of the attribut e.
+▪$KeyAddress▪
+Value: "address" Description:  The address line to use to connect to the target.
+▪$KeyAddrComps▪
+Value: "addresscomponents" Description:  Key to the sub-array containing the address elements
+already split.
+▪$KeyAdminID▪
+Value: "adminid" Description:  Name of the account to connect to target as.
+▪$KeyAdminPW▪
+Value: "adminpw" Description:  Password of the account to connect to the target with.
+▪ $K e yAttribut e▪
+Value: "attribut e"  Description:  Single account attribut e  details.
+▪ $K e yAttribut es▪
+Value: "attribut es"  Description:  List of account details.
+▪$KeyAuthKey▪
+Value: "authkey" Description:  SSH Authentic ation  key attribut e.
+▪$KeyBoolean▪
+Value: "boolean" Description:  true/false address attribut e  type
+▪$KeyCAPath▪
+Value: "CApath" Description:  Path to certific a t e  file.▪$KeyCAFile▪
+Value: "CAfile"  Description:  Certific a t e  file name.
+▪$KeyChildGroupID▪
+Value: "childgroupid" Description:
+▪$KeyCheckCert▪
+Value: "checkCert" Description:  Should the agent check the SSL certific a t e.
+▪$KeyCommand▪
+Value: "command" Description:  Command to run during runcommand() oper ation.
+▪$KeyCommandFile▪
+Value: "c ommandfilename"  Description:  File where the output from runcommand() oper ation  is
+written  to.
+▪$KeyCompression▪
+Value: "compression" Description:  SSH address attribut e  to compress the data tr ansmitted.
+▪$KeyFalse▪
+Value: "false" Description:  String used for boolean address and account attribut es.
+▪$KeyFullName▪
+Value: "fullname" Description:  Description  attribut e  of an account.
+▪$KeyGroup▪
+Value: "group" Description:  Single sub KV of a group on the target.
+$KeyGroupID
+Value: "groupid" Description:  Identifier  for the group.
+▪$KeyGroupName▪
+Value: "groupname" Description:  Name of the group.
+▪$KeyGroups▪
+Value: "groups" Description:  List of groups.
+▪$KeyHostID▪
+Value: "hostid"  Description:
+▪$KeyHostKeysDenyUnmatched▪
+Value: "DenyUnmatch" Description:  Tells the SSH library to connect ONLY if the host key matches an
+e xisting  one.
+▪$KeyHostKeysUpdate▪
+Value: "AllowUpdate" Description:  Allows the SSH c onnection  to update the host key if one already
+exists (unsafe).
+▪$KeyHostKeysAppend▪
+Value: "AllowAppend" Description:  Tells the SSH libary to add the host key if it is missing, but refuse if
+it does not match.
+▪$KeyInteger▪Value: "integer" Description:  Integral address attribut e  type.
+▪$KeyKvgroup▪
+Value: "kvgroup" Description:  Address attribut e  type.
+▪$KeyManagedGroup▪
+Value: "managedGroup" Description:
+▪$KeyModelUID▪
+Value: "modeluid" Description:  Account to use as a template when cr eating  a new user.
+▪$KeyNewPW▪
+Value: "newpw" Description:  Password for the new account or the new password when r esetting  an
+e xisting  account.
+▪$KeyNoPTY▪
+Value: "nopty" Description:
+▪$KeyOldPW▪
+Value: "oldpw" Description:  Current password for an account.
+▪ $K e yOper ation▪
+Value: "oper ation"  Description:  The action  that is currently underway.
+▪$KeyPort▪
+Value: "port" Description:  IP port to connect to on the target.
+▪ $K e yP osition▪
+Value: "position"  Description:
+▪$KeyReadOnly▪
+Value: "readonly" Description:  Address attribut e  that is not modifiable  by the user.
+▪$KeyResource▪
+Value: "resource" Description:
+▪$KeyResourceAddress▪
+Value: "resourceaddress" Description:
+▪$KeyResourceType▪
+Value: "resourcetype" Description:
+▪$KeyRestricted▪
+Value: "restricted" Description:  Address attribut e  type of restricted values.
+▪$KeyRestrictedValue▪
+Value: "restrictedvalue" Description:  Key for the chosen restricted address attribut e  value.
+▪$KeyRestrictedValueText▪
+Value: "restrictedvaluetext" Description:  Display value for a restricted address attribut e  value.
+▪$KeyRestart▪
+Value: "restart" Description:
+▪$KeyRevision▪Value: "rev" Description:
+▪$KeyScript▪
+Value: "script" Description:  Address attribut e  type.
+▪$KeyFile▪
+Value: "file"  Description:  Address attribut e  type.
+▪$KeyDir▪
+Value: "dir" Description:  Address attribut e  type.
+▪$KeyPath▪
+Value: "path" Description:  Address attribut e  type.
+▪$KeyServer▪
+Value: "server" Description:  Address attribut e  containing the target to connect to.
+▪$KeyServerInfo▪
+Value: "serverinfo" Description:  Oper ation  to query the target for version and status in f ormation.
+▪ $K e ySettings▪
+Value: "settings"  Description:
+▪$KeyShortID▪
+Value: "shortid"  Description:  User’s ID
+▪$KeySSL▪
+Value: "SSL" Description:  Address attribut e  determining if encrypted telnet should be used.
+▪$KeyString▪
+Value: "string" Description:
+▪$KeySysID▪
+Value: "sysID" Description:  Username for secondary login to the target (e.g. sudo).
+▪$KeySysPassword▪
+Value: "syspassword" Description:  Password for the secondary login to the target.
+▪$KeyTerm▪
+Value: "terminal" Description:  Address attribut e  determining the terminal type for the telnet
+c onnection.
+▪$KeyTimeout▪
+Value: "timeout"  Description:  Address attribut e  de fining  how long the agent should wait for
+c onnection  to complete.
+▪$KeyTrue▪
+Value: "true" Description:  String used for boolean address and account attribut es.
+▪ $K e yW rit eOption▪
+Value: "writ eoption"  Description:  Address attribut e  determining the terminal type for the telnet
+c onnection.
+Live debuggingYou can use the termdebug KVGroup to in t er activ ely  monitor what is sent and received by agent scripts
+over raw TCP c onnections,  SSL raw c onnections  (not http/http s),  telnet and SSH c onnections.  To do this,
+add a supplemental termdebug KVGroup to the agent input. For example:
+# KVGROUP-V1.0
+"" "" = {
+  "address" = "telnet_unix.psl"
+  "adminid" = "root"
+  "adminpw" = "<encrypted password value>"
+  "hostid" = "SSH1"
+  "listfilename" = "C:\\listing-test.txt"
+  "instance" = "globoco"
+  "listresource" "" = {
+  }
+  "operation" = "list"
+  "timeout" = "30"
+     "termdebug" "" = {
+       ## mandatory configurations
+         "address" = "127.0.0.1"
+          #String representation of the
+          #address of the interface to listen to.
+         "port" = "3210"
+          #string representation of the TCP port to listen to.
+          #agtssh listens to this port on IDM Suite server
+         "command" = "c:\\windows\\system32\\telnet.exe localhost 3210"
+          #Command line to run with full executable path and parameters
+          #Quotes and backslashes need to be escaped with \.
+          #See below for more info.
+       ## optional configurations
+         "interactive" = "1"
+           #0=no 1=yes
+           #If 1, shows a dialog box with the string to
+           # be sent, and waits for OK before it is sent.
+         "waitforjointimeout" = "10000"
+           #Timeout, in milliseconds, of the agent waiting
+           # for a client connection.
+         "sendtimeout" = "1000"
+           #Timeout, in milliseconds, of sending data back to the
+           # client.
+       }
+}Data seen on the debug port is raw decrypted data.
+Command options
+The command value can take Cygwin telnet.exe, or nc.exe, or a tn3270/tn5250 client as required, for
+example:
+ "command" = "c:\\cywgin\\bin\\bash -c \"/bin/telnet.exe localhost 3210 | tee /tmp/
+log1; sleep 3600\""
+To prevent the window closing after  the debug port closes, include cmd.exe /k telnet ...  for
+telnet, or sleep for Cygwin telnet.exe or nc.exe.
+For non-in t er activ e  debugging, the command can be something like:
+ "command" = "c:\\windows\\system32\\cmd.exe /c telnet localhost 3210 >> c:\\debuglog.txt 2>&1"
+In t er activity  options
+When in t er activity  is turned on ("in t er activ e"  = "1" ) the script waits for one of the following inputs
+before proceeding:
+ok = next step
+cancel = skip next questions,  run all steps aut omatic ally  without any more pr ompting
+If the original agent script or the target itself has very strict timeouts,  it is recommended that you do not
+use the in t er activ e  option,  or cancel it before the section  with critic al  timing.
+Adding the termdebug KVGroup to input
+You can add the termdebug KVGroup to the agent input by:
+▪Capturing agent input using the pstee program, then manually adding the inner KVGroup.▪
+▪Wrapping the actual agent in an agtdos script as described in the PSLang Manual ( pslang.pdf ) . ▪
+The script should:
+1.Read $_inVars1.
+2.Replace its address ( "address" = "doswrapper.psl" ) with the telnet or ssh address line, 2.
+then add the termdebug KVGroup
+3.Call the original agent with this group (converted to string) as input. It could also log the new modified 3.
+agent input for debugging the PSLang wrapper script.
+This method is more complicated, but has the advantage of working for every agent call and not
+replaying oper ations.See  the PSLang Manual ( pslang.pdf ) for more in f ormation  about KVGroup functions,
+and system() calls.
+Sanitizing  input variables and recommended ID filt er s
+Since the inputs into the agttelnet , agtssh and agtdos scripted connectors can come from
+untrusted external sources, Bravura Security  recommends putting  in safe guards to mitig a t e  the risk ofinjection  attack s.  The script writer should take extra care to both filt er  out pot entially  nefarious user IDs
+as well as properly escaping input variables before passing them to shell commands.
+Characters such as:
+   ;&|<>'"()*#
+should be looked for in user IDs and filt er ed  out during listing  so they don’t even make it to the Bravura
+Security Fabric  system. In addition  (or if these characters are required), the SSH script should ensure that
+they are properly escaped before passing them into the shell. This will avoid injection  attack s  which could
+compromise your system.
+criteria is de fined  by a simple expression. The default listing  behavior would list and individually test
+every single user, which could take a long time.  However, writing  a List expression to simply answer the
+question  "Who is JohnB’s manager?” is much more e fficien t.  The List expression outputs a shortlist that
+is filt er ed  by the user class criteria.
+Exclusive and non-exclusive listing  
+The Listing  members function  can be used for either exclusive or non-exclusive listings.  Exclusive listings
+simply run the List expression , and the users in the r esulting  shortlist aut omatic ally  become members of
+the user class. Non-exclusive listings  run the List expression and then filt er  the returned users through
+the other user class criteria. They are filt er ed  through the attribut e  and membership criteria fir s t,  and the
+r esulting  list is then filt er ed  through the PSLang criteria.
+The listing  type is de fined  by the P articipan ts  match this class solely via membership in this list (other
+criteria not considered) option.  If this option  is:
+▪Enabled then the List expression is exclusive and the users that are output by the expression ▪
+aut omatic ally  become members of the user class.
+▪Disabled then the List expression is non-exclusive and the users that are output by the expression are ▪
+filt er ed  through all additional  user class criteria.
+When writing  a PSLang expression for the Listing  members function,  you must ensure that the list
+expression is c ompatible  with the PSLang criteria expression. If the list expression does not return the
+same users that the PSLang criteria allows, then any user class policies aff ect ed  by this user class will
+behave inconsistently. 
+Configuring  the list expression
+Con figur e  the Listing  members function  from the P articipan t  specific ation  (on page 738) page.
+To use a list expression:
+1.Enable the Use the list expression checkbox. 1.
+2.Type the PSLang List expression into the text field. 2.
+3.If you want to exclude other criteria, enable P articipan ts  match this class solely via membership in 3.
+this list .
+4.Click Add if you are adding a new participan t,  or click Update if you are modifying an e xisting 4.
+participan t.

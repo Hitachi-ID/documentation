@@ -1,0 +1,313 @@
+Enabling and disabling authentic ation  chains
+Once an authentic ation  chain is created and c on figur ed,  you must enable it to make it available to users.
+On the Custom authentic ation  chains page, the Status column indicates if the chain is 
+  enabled or 
+disabled.
+Enabling authentic ation  chains
+To enable authentic ation  chains from the authentic ation  chain's c on figur ation
+The Authentic ation  chains page gives you access to the c on figur ation  pages for the built-in chains, and to
+the Custom authentic ation  chains page, where you can add, enable, disable, and delete your own chains.
+To navigate to the Authentic ation  chains page:
+1.Click Policies > Authentic ation  chains . 1.
+2.Click the appropriate link or Custom  to modify an e xisting  authentic ation  chain  (on page 842). 2.
+or
+Click Custom to add a custom authentic ation  chain  (on page 844).
+page, select the appropriate checkboxes next to the authentic ation  chains you want to enable, then click
+Enable .
+You can also enable an individual authentic ation  chain on the Authentic ation  chain in f ormation  page by
+clicking the Enable button.
+The built-in Front-end login , Help desk authentic ation , User identific ation  service and Generic login
+failure authentic ation  chains are enabled by default when Bravura Security Fabric  is installed. If they
+have been disabled for any reason, navigate to chain’s c on figur ation  page, then click Enable .
+Making authentic ation  chains available in the authentic ation  menu
+To make an authentic ation  chain available in the Front-end  authentic ation  menu, you must add it to the
+DEFAULT_LOGIN chain’s select_chain module. To do this:
+1.From the Authentic ation  chains menu, select Front-end login . 1.
+2.Click Disable . 2.This allows you to modify the chain.
+3.Select the select_chain module.3.
+4.Add the chains that you want to include in the authentic ation  menu to the Available chains list. 4.
+The DEFAULT_LOGIN chain includes Use PSFEXT VALUES by default, to include authentic ation
+methods c on figur ed  in the Front-end .
+5.Click Update below the module settings. 5.
+6.Click Enable to enable the authentic ation  chain. 6.
+The additional  authentic ation  chains are now available to users when they log in using the Front-end .
+Specifying an authentic ation  chain within a URL
+You can specify a certain authentic ation  chain within the Bravura Security Fabric  URL. This allows you to
+direct a user to a preferred method of authentic ation,  instead of the user being prompted to select an
+option  on their own.
+For example, the specified  user is directed to the fir s t page of the specified  authentic ation  chain:
+http s://<ser v er>/<ins t ance>/?LANG=en-us&USERID =<user>&PSF_EXT=<authchain>  
+Where:
+▪<server> is the Bravura Security Fabric  server ▪
+▪<instance> is the name of the Bravura Security Fabric  instance ▪
+▪<user> is the user for whom you are cr eating  the URL ▪
+▪<authchain> is the name of the authentic ation  chain to which you are dir ecting  them. ▪Disabling authentic ation  chains
+To disable the built-in Front-end login , Help desk authentic ation , User identific ation  service or Generic
+login failure authentic ation  chain, to navigate to the chain’s c on figur ation  page, and then click Disable .
+To disable custom authentic ation  chains, navigate to the Custom authentic ation  chains  page, select the
+appropriate checkboxes next to the authentic ation  chain you want to disable, then click Disable .
+You can also disable an individual custom authentic ation  chain on the Authentic ation  chain in f ormation
+page. Select the custom authentic ation  chain and click Disable .
+If you disable the DEFAULT_LOGIN chain, then all authentic ation  chain functionality  within Bravura
+Security Fabric is disabled and is replaced by legacy behavior; that is, Bravura Security Fabric only uses
+authentic ation  methods c onfigured  in the Front-end . Custom authentic ation  chains are not able to be used
+if DEFAULT_LOGIN is disabled.
+Con figuring  the help desk chain
+The Help users  (IDA) module has its own customizable authentic ation  chain called HELPDESK_LOGIN,
+enabling you to c on figur e  the way that help desk user s must authentic a t e  on behalf of other users before
+they are allowed to access a user’s pr ofile.
+The HELPDESK_LOGIN authentic ation  chain uses security questions  by default, but can be c on figur ed  to
+use other authentic ation  modules or additional  authentic ation  chains as methods of authentic ation.  To
+do this, use the same method used for c on figuring  the DEFAULT_LOGIN chain  (on page 861).
+By default, this authentic ation  chain is c on figur ed  to force the help desk user  to answer the user’s built-in
+security questions  before they can access the user’s pr ofile.  There are two settings  that work together to
+c on figur e  whether or not a help desk user  can bypass another user’s security questions  during
+authentic ation  to gain access to the user’s pr ofile:
+▪The Bypass security questions  user access rule ▪
+▪The ADMIN AUTHUSR MANDATORY system variable ▪
+When this chain is enabled the help desk user  can use the main menu link to exit from a user’s security
+questions.
+The behavior of these settings  depends on whether the user’s security pr ofile  is complete or incomplete:
+Incomplete security pr ofile  When ADMIN AUTHUSR MANDATORY is:
+Disabled : help desk users can access a user’s pr ofile,
+whether or not they have the Bypass security
+questions  user access rule.
+Enabled : help desk users only have access to a user’s
+pr ofile  if they have the Bypass security questions  user
+access rule. If they do not have this user access rule,
+then an error message is displayed when the help desk
+user accesses the user’s pr ofile.  This error message is
+not displayed if ADMIN AUTHUSR MANDATORY is
+disabled.Complete security pr ofile When the Bypass security questions  user access rule is:
+Granted : help desk users can skip authentic ation  by
+security questions  and gain access to the user’s pr ofile.
+In this case, ADMIN AUTHUSR MANDATORY can be
+either enabled or disabled.
+Not granted : help desk users cannot skip
+authentic ation  by security questions.  The security
+questions  must be correctly answered before access is
+granted to the user’s pr ofile.  In this case, ADMIN
+AUTHUSR MANDATORY can be either enabled or
+disabled.
+Configur ation  notes 
+By default, the HELPDESK_LOGIN authentic ation  chain is c on figur ed  to use the built-in security questions
+authentic ation  method to prompt for a user’s questions.
+If the HELPDESK_LOGIN authentic ation  chain is enabled, and the Ask users to answer questions  from
+this set option  is:
+▪Enabled for a question  set, and the question  set is enabled, then help desk user s are prompted with a ▪
+user’s security questions,  regardless of the value for the help-desk permissions.
+▪Disabled for a question  set, then help desk user s are not prompted with a user’s security questions, ▪
+regardless of the value for the help-desk permissions; even if the question  set is enabled.
+If the HELPDESK_LOGIN authentic ation  chain is disabled:
+▪And help-desk permissions for a question  set is set to Requires authentic ation  with security ▪
+questions , then the Ask users to answer questions  from this set is ignored. The help desk user will be
+prompted for a user’s questions  from this set as long as it is enabled, and the value for ADMIN
+AUTHUSR MANDATORY is enabled as well.
+▪And help-desk permissions for a question  set is set to either Not allowed to view security questions ▪
+or Allowed to view security questions , then the help desk user is not prompted with a user’s questions
+from this question  set, regardless of whether Ask users to answer questions  from this set is enabled
+or disabled; even if the question  set is enabled.
+The purpose for this behavior is to help distinguish  the question  sets that are marked for help desk
+authentic ation  from the question  sets that are intended for use with the default login authentic ation  to
+the Front-end ; for example, if:
+▪The HELPDESK_LOGIN authentic ation  chain is disabled, and; ▪
+▪The user -de fined  question  set has the Ask users to answer questions fr om  this set option  disabled, ▪
+and the help-desk permissions is set to Requires authentic ation  with security questions , and;
+▪The pr e-de fined  question  set has the Ask users to answer questions fr om  this set option  enabled, and ▪
+the help-desk permissions is set to Not allowed to view security questions , and;
+▪Both question  sets are enabled ▪then the built-in security questions  method would allow help desk user s to authentic a t e  (on behalf of
+other users) with questions  from the user -de fined  question  set, and users could log into the Front-end
+using the pr e-de fined  question  set.
+If any errors are encountered in the HELPDESK_LOGIN authentic ation  chain during the authentic ation
+process, the help desk user  is denied access to the user’s pr ofile.  The authentic ation  chain must be fix ed
+before access is possible.
+If a help desk user  fails the help desk authentic ation  process when attempting  to access the user’s pr ofile,
+then the global fail counter still increases for the user. The global fail counter only increases for failed help
+desk user  authentic ation  attemp ts  if the HELPDESK_LOGIN authentic ation  chain is enabled. If the help desk
+user’s failed attemp ts  cause the global fail counter to reach or exceed the value set by MAX USERAUTH
+FAILURE , this does not lock out the help desk user .
+If the global fail counter reaches or exceeds the value set by MAX USERAUTH FAILURE , this does not lock
+out the user or prevent them from logging into the Front-end . The user can still log into the Front-end , but
+if the global fail counter has reached or exceeded its limit, then the user is only allowed one
+authentic ation  attemp t.  If they fail this one attemp t  then they are locked out, but authentic ating
+successfully resets the global fail counter.
+If you disable the HELPDESK_LOGIN chain, then legacy behavior is used in it’s place; that is, only security
+questions  are available as an authentic ation  when help desk user s authentic at e  to access a user’s profile.
+When HELPDESK_LOGIN is disabled:
+▪The ADMIN AUTHUSR MANDATORY system variable must be enabled in order for the help desk user to ▪
+be prompted with the user’s security questions.
+▪The security questions  use the question  set settings,  not the authentic ation  chain settings. ▪
+R esetting ,  e xporting ,  and importing  settings
+You can reset, export, and import authentic ation  chain settings  by using the authcfg  utility .
+You can export settings,  for example to save a snapshot of settings  to import into another instance. To do
+this, run the following command:
+authcfg.exe -export
+This exports authentic ation  chain settings  to a file named by the current date and time;  for example,
+authcfg-20100421-123425.exp. You can also specify a filename  and loc ation:
+authcfg.exe -export <path/file>
+Import settings  from a file using the command:
+authcfg.exe -import <file>
+Reset original default settings  with the following command:
+authcfg.exe -reset When you use the -import or -reset argument, e xisting  authentic ation  chain settings  are aut omatic ally
+exported to a backup file before new or default values are imported.
+See more in f ormation  about authcfg usage .
+If any errors are encountered in the HELPDESK_LOGIN authentic ation  chain during the authentic ation
+process, the help desk user  is denied access to the user’s profile.  The authentic ation  chain must be fix ed
+before access is possible.
+Deleting  authentic ation  chains
+To delete an e xisting  authentic ation  chain:
+1.Navigate to the authentic ation  chain's c on figur ation 1.
+The Authentic ation  chains page gives you access to the c on figur ation  pages for the built-in chains, and
+to the Custom authentic ation  chains page, where you can add, enable, disable, and delete your own
+chains.
+To navigate to the Authentic ation  chains page:
+1.Click Policies > Authentic ation  chains . 1.
+2.Click the appropriate link or Custom  to modify an e xisting  authentic ation  chain  (on page 842). 2.
+or
+Click Custom to add a custom authentic ation  chain  (on page 844).
+page.
+2.Click the checkbox for the authentic ation  chain that you want to delete. 2.
+3.Click Delete . 3.
+A message box is displayed asking you to c on firm  that you want to delete the selected items.
+Note:  
+▪Only authentic ation  chains that are disabled may be deleted. Chains that are enabled must fir s t be ▪
+disabled.
+▪The Delete button  only appears if there are one or more authentic ation  chains that are disabled. ▪
+▪The built-in DEFAULT_LOGIN, HELPDESK_LOGIN, USER_IDENTIFICATION, and GENERIC_LOGIN_FAILURE▪
+authentic ation  chains cannot be deleted. DEFAULT_LOGIN is the primary authentic ation  chain for the
+Front-end , and HELPDESK_LOGIN is the primary authentic ation  chain for the Help users  (IDA) module.Authentic ation  chains: Use cases and examples
+This section  outlines use cases for authentic ation  chains and examples of how to c on figur e  them.
+Broadly, use case scenarios fit into two categories, single-factor and multi- f act or  authentic ation.
+Single-factor authentic ation
+Single-factor authentic ation  (SFA) is a process that requires a single method of authentic ation  to verify a
+user’s identity .  Bravura Security Fabric  provides a number of built-in and scenario based authentic ation
+chains that implement an SFA authentic ation  process. Examples include:
+▪Password based authentic ation  against an external source (one of the integrated target systems) ▪
+▪Security questions  based authentic ation  (where security questions  and answers are stored externally ▪
+or within the product)
+▪ One-time  passwords such as PINs sent to a device or loc ation  that requires a separate authentic ation ▪
+process  
+▪Token or smart card based authentic ation ▪
+An improper c onfiguration  of the DEFAULT_LOGIN  or HELPDESK_LOGIN  authentic ation  chains can
+render your Bravura Security Fabric instance inaccessible. Bravura Security recommends using the
+authcfg  program to export authentic ation  chain settings  before modifying the default
+c onfiguration.
+The following describe some SFA use cases typically implemented as part of Bravura Security Fabric
+deployments.
+▪Using either a password or security questions  (on page 868) ▪
+▪Using either a password, security questions,  or token  (on page 876) ▪
+▪Via Mobile app  (on page 875) ▪
+▪Smart Card authentic ation  (on page 918) ▪
+Multi- f act or  authentic ation
+Multi- f act or  authentic ation  (MFA) is a process that requires more than one method of authentic ation
+from independent categories of cr edentials  to verify a user’s identity .  Bravura Security Fabric  fully
+supports the c on figur ation  of MFA as part of its authentic ation  process.
+Deployments of Bravura Security Fabric  that require enhanced authentic ation  security typically
+implement a 2FA (two-factor authentic ation  - subset of MFA) process by combining two authentic ation
+factors in subsequent steps. The two factors include something you know (such as a password or answers
+to security questions)  and something you own (such as a mobile phone or token).
+Using built-in functionality ,  the fir s t step of authentic ating  a user can be c on figur ed  to require v alidation
+using one of:
+▪Password▪
+▪Security questions  (Not recommended for use in a Bravura Privilege  implemen t ation.) ▪As part of a second authentic ation  step, the user then requires v alidation  using one of:
+▪Email (PIN sent to email address)▪
+▪Phone (PIN sent via SMS)▪
+▪Mobile app (by scanning a QR code displayed on the product’s login page)▪
+▪Third-party token (a PIN that must be provided on the product’s login page)▪
+Browser fing erprinting  can be used to remember a previous authentic ation.  When a user attemp ts  to
+authentic a t e  again, the fing erprin t  can allow the user to skip the fir s t step.
+Bravura Security Fabric  ships with a number of built-in modules and scenario components which
+implement 2FA for users.
+▪ Authentic a t e  with both a password and security questions  (on page 869) ▪
+▪Using both a PIN sent to an email address and security questions  (on page 871) ▪
+▪Azure MFA in t egr ation  using RADIUS NPS (on page 880) ▪
+▪Okta API in t egr ation  (on page 911) ▪
+Single factor authentic ation:  Password or security questions
+For this use case, an authentic ation  chain is set up to allow authentic ation  with either a password or
+security questions.  Even if the password is incorrect, the user may still proceed further down the chain to
+try logging in using their security questions.
+This can be implemented by c on figuring  a custom authentic ation  chain: 
+Module Control type
+Password authentic ation  (password.pss) sufficien t
+Security questions  (response.pss) binding
+When a user logs in:
+1.The user chooses the custom authentic ation  chain and enters a password. 1.
+2.If the password is entered:2.
+▪Correctly, then the user is immediately logged into the Front-end . ▪
+▪Incorrectly, then the authentic ation  chain c ontinues  and the user is prompted to answer their ▪
+security questions.
+3.If the answers to the security questions  are: 3.
+▪Valid, then the user is immediately logged into the Front-end . ▪
+▪Invalid, then the user is redirected to the main page to select an authentic ation  method to use to ▪
+log in. This is because the Control ype for the response.pss module is set to binding , so the
+chain fails if an invalid answer is entered. Also, the password.pss module has the Control type
+set to sufficien t , which requires at least one module to succeed authentic ation.Two-factor authentic ation:  Password and security questions
+For this use case an authentic ation  chain is set up to require authentic ation  with both a valid password
+and valid answers to security questions.
+This can be implemented by c on figuring  a custom authentic ation  chain: 
+Module Control type
+Password authentic ation  (password.pss) required
+Security questions  (response.pss) binding
+When a user logs in:
+1.The user chooses the custom authentic ation  chain and enters a password. 1.
+2.If the password is entered:2.
+▪Correctly, then the user is prompted for their security questions. ▪
+▪Incorrectly, then the user is prompted for their security questions.  However, even if the security ▪
+questions  are answered correctly, the user is redirected to the main page to select another
+authentic ation  method. This is because the Control type for the password.pss module is set
+to required . A valid answer is required for this module in order for the chain to pass
+authentic ation,  as well as correct answers for all the modules in the rest of the chain.
+3.If the answers to the security questions  are: 3.
+▪Valid, then the user is immediately logged into the Front-end . ▪
+▪Invalid, then the user is redirected to the main page to select another authentic ation  method. This ▪
+is because the Control type for the response.pss  module is set to binding , so the chain fails if
+an invalid answer is entered.
+Lab: Two-factor authentic ation
+In this example, the default authentic ation  chain includes the select_chain module which presents the
+user with options  for authentic ation.  In this demons tr ation,  a second module is added to the default
+authentic ation  chain, so that users must pass two-factor authentic ation  in order to proceed. The second
+module will prompt users to answer a security question  if they have completed their security questions
+pr ofile.
+This example assumes that the Update security questions  (psq) module is enabled and an end user has
+completed their security questions  profile.  In a Bravura Privilege ins t allation,  the Update security
+questions  (psq) module is disabled by default, because it is a weak authentic ation  method by itself.
+Add a custom authentic ation  chain 
+To c on figur e  the authentic ation  process, fir s t add a custom authentic ation  chain module:
+1.Log into Bravura Security Fabric as superuser . 1.
+2.Click Manage the system > Policies > Authentic ation  chains >  Front-end login . 2.
+The Front-end DEFAULT_LOGIN  chain is shown on this page.3.Click Disable . 3.
+You must disable a chain in order to modify it. This prevents users from in t er acting  with the chain
+while you are c on figuring  it.
+Disabling the DEFAULT_LOGIN  chain does not prevent users from accessing Bravura Security Fabric. It
+simply defaults to the PSFEXT authentic ation  settings  c onfigured  in the Modules > Front-end  (PSF)
+menu.
+4.Under Modules , select select_chain . 4.
+5.Set the Control type to Required . 5.
+This means that if authentic ation  on this module succeeds, access is granted unless authentic ation
+fails on a module further along the chain. If authentic ation  fails, the user proceeds to the next
+module, but is ultima t ely  denied access.
+6.Click Update to close the module c on figur ation  options. 6.
+Now add a second module.
+7.Under Modules , click Add new… 7.
+8. Con figur e  the built-in security question  module: 8.
+a.From the Module drop-down list select Security questions . a.
+b.Set the control type to Required . b.
+c.Click Update . c.
+Notice  some extra options  become available in the Module c on figur ation  section.
+9.From the If a user does not have a valid security questions  pr ofile  drop-down list, select ”Bypass this 9.
+module”.
+10. In the Number of questions  to ask during authentic ation  section,  select ”1” from the From all 10.
+question  sets list.
+11. Click Update to close the module c on figur ation  options. 11.
+12. Con firm  that the modules are in the correct order and type; that is, the select_chain module 12.
+has a 1 in the Order column, and the response.pss  module has a 2 in the Order column.
+For maximum security, the last module in a chain should always be a binding, required, or requisite
+type.
+13. Click Enable to make the DEFAULT_LOGIN  authentic ation  chain available to users. 13.
+Test the authentic ation  process 
+To test the authentic ation  chain:
+1.Log in to Bravura Security Fabric  as an end-user. 1.
+2.Click Use password . 2.
+3.Enter the correct password.3.
+The Security questions  page is displayed.
+4.Correctly answer the security question. 4.

@@ -1,0 +1,310 @@
+Since Database Service (iddb) is a long running service, you can manually inform the logging system
+that a change was made by running the following command:
+idmlogsvc.exe -trace-restart
+3.To remove custom logging level settings  for all modules, type: 3.
+psdebug -remove
+4.To log only error level messages for a script called test with a submodule called test_submodule, type:4.
+psdebug -prog test -submodule test_submodule -level 1
+5.To log program and stored procedure performance for the T r ansaction  Monitor Service (idtm) service, 5.
+type:
+psdebug -prog idtm -extlevel perf perf_sproc
+6.To log program and stored procedure performance that takes more than 5 seconds for the iddiscover6.
+program, type:
+psdebug.exe -prog iddiscover -level 4 -maxwait 5
+Capturing log data on other systems
+You can use the logutil  program to manually capture log data. The logutil  program logs the data
+to a specified  log file. This can be used to troubleshoot issues on target systems where client or server
+tools have been installed.
+The logutil program could be used for t esting  purposes on the Bravura Security Fabric  server instead
+of the Logging Service. In this scenario, you would turn off the Logging Service and turn on logutil
+prior to e x ecuting  specific  actions  to capture the log output for those actions.
+Do not run logutil and Logging Service at the same time  on the same server – they could interfere
+with each other.
+If you terminate logutil by using [Ctrl] -[C], [Ctrl] -[Break] or by closing the window, then the logging
+session is also terminated.
+In addition  to being available on the Bravura Security Fabric  server, logutil can be copied to other
+servers to test client tools or the Password Change Notific ation  Module. The 64-bit logutil program
+is located in the util directory, and the 32-bit version is located in <instance> \ util\x86\. The program is
+installed with Bravura Privilege  client softw ar e  in:
+<Program Files path\>Bravura Security\hipamlws\util\
+The Logging Service is not required on client w ork s t ations.
+See logutil
+Requirements
+You must run the logutil  command as an administrator with sufficien t  privileges.
+Usage
+logutil.e x e  [options]  -instance <instance> | -cleanup [-instance <instance> ]Argument Description
+-bufmax <count> Maximum number of buff er s.  The default value is the
+Windows Events MinimumBuff er s  + 20.
+-bufmin <count> Minimum number of buff er s.  The default value is the
+number of CPUs + 2.
+-bufsize <size> Size of the session buff er s  in multiples  of 4 kb. The
+default is 64 kb.
+-instance <instance> Instance to watch events for. For Bravura Privilege local
+service mode instances, the value is "Privileged Access
+Manager Client".
+-cleanup Terminate any logging sessions which are not connected
+to any activ e  client. If the instance name is specified,  only
+the logging session for this particular  instance is cleaned
+up.
+-level <level> Debug level 1-5. Default is 5.
+-list List all enabled Event Tracing for Windows sessions.
+-logfile  <filename> File to write events to. You must specify an absolute path.
+-makekey Generate an instance name and its log GUID in the
+registry.
+Note:  This option  needs to be run once only.
+-maxdelay <maxdelay> The maximum seconds to allow the sorting  buff er  to keep
+items before flushing  out into the log file. The default
+value is 300.
+-maxsorted <count> The maximum number of events that can be sorted in
+memory. The default value is 100,000.
+-outdbg Write events with an output debug string.
+When logutil  runs, a new registry entry is created to record the session. The entry is stored under:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\LogSession
+The name of the entry is the instance name. When you press [enter]  to stop a session, the key will be
+gone with the session; however, if you kill the session by typing [Ctrl] +[C], the registry entry will remain.
+Use the -cleanup option  to remove remaining registry entries.
+Note that various tools also have hardcoded instance names:
+▪browser-extension-win: "Browser Extension" ▪
+▪ fir e f o x -br o w ser -e xt ension:  "Firefox Browser Extension" ▪
+▪hidshext: "Shell Extension" ▪
+▪hipamlws-win: "Hipamlws" ▪
+▪hippm-sm: "Session Monitor" ▪
+▪intcpt: "Password Filter" ▪
+▪ ntfclien t:  "Notific ation  Client" ▪▪ ppm-activ e-c on tr ols:  "PPM Client Activ eX  Controls" ▪
+▪pslocalr: "Local Reset Extension" ▪
+▪psns: "Notes Extension" ▪
+▪ sc ar d-activ e x -c on tr ols:  "SmartCard PIN Management Activ eX  Controls" ▪
+▪ska/runurl: " Login Assistant" ▪
+▪ pamutil : "pamutil" ▪
+Examples
+▪To start logging data for client softw ar e  with a debug level of 4, type: ▪
+logutil.e x e  -makekey -instance Bravura_client -level 4 -logfile  c:\idarchive.log 
+▪To start logging data on a local service mode managed system with a debug level of 4, to a log file ▪
+named local_service.log, type:
+logutil.e x e  -instance "hipamlws" -level 4 -logfile  local_service.log 
+▪To start logging data on pamutil and runwithpass with a debug level of 4, to a log file named ▪
+pamutil.log ,  type:
+logutil.e x e  -instance "pamutil"  -level 4 -logfile  pamutil.log  
+▪To start logging data on Activ eX  password disclosure plugins at level 4 to log file activ e x.log ,  type: ▪
+logutil.e x e  -instance "PPM Client Activ eX  Controls" -level 4 -logfile  activ e x.log  
+You must run logutil with the -makekey argument firs t for the instance "PPM Client ActiveX
+Controls".
+▪To start logging data for the default Login Manager instance with a debug level of 4, type:▪
+logutil.e x e  -instance "Login Manager" -level 4 -logfile  c:\logfile.log  
+for command-line usage and examples.
+The transparent s ynchr oniz ation  interceptor add-on  (on page 1662) for Windows installs with a diff er en t
+logging tool ( diagutil ) that logs similarly to logutil , but has additional  arguments to help with
+tr oubleshooting  or monitoring transparent s ynchr oniz ation.
+See diagutil
+diagutil.exe [-l <debug level> ] [ -t <timeout> ]
+              -u <userID> -p <userPassword>
+Argument Description
+-l, --level <N> The debug level 1-6. The default is 4.
+-t, --timeout  <N> The timeout  in seconds to receive diagnostic  in f ormation.
+The default is 60 seconds.
+-u, --user <userID> The user to be diagnosed.
+-p, --password The user’s password.Examples
+For example:
+diagutil.exe -u qa1000 -p letmein!
+returns:
+User account name: qa1000
+Checking the password filter Dll system registry setting...passed
+Checking the password filter Dll if it has been loaded...passed
+Checking the password filter service if it is running...passed
+Setting password for user [qa1000]:
+2010-02-02 11:15:28.561.2903 -
+ [] psintcpt.dll [388,2172] Info: Logging has been enabled, Log level: 4
+2010-02-02 11:15:28.576.5698 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], entered PasswordFilter, sequential number ( SNO ): 1
+2010-02-02 11:15:29.675.4688 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], SNO: 1, PasswordFilter returned [1]
+2010-02-02 11:15:29.717.0218 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], entered PasswordChangeNotify
+2010-02-02 11:15:29.720.6418 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], PasswordChangeNotify finished
+2010-02-02 11:15:29.724.6046 - [] diagutil.exe [3244,452] Info:
+***** User:[qa1000]'s password has been reset successfully *****
+If the debug level is greater than 4 (default), diagutil returns more detail on how the account falls
+into which categories.
+for command-line usage and examples.
+Gener ating  a c on figur ation  summary
+At the c ompletion  of auto discovery  Bravura Security Fabric  can write a summary of c on figur ation  settings
+for an instance. The summary is written  to a file called config- <yyyy >-<mm>-<dd>.kvg in the Logs
+directory. The file can be used by Bravura Security  support to help provide assistance.
+You can control this function  using the Maintenance > Options  > PSUPDATE INSTDUMP setting.  When
+enabled (disabled by default), psupdate runs the instdump program. See instdump
+The instdump program is run at the end of the auto discovery process and writes a c on figur ation
+summary to a file named c on fig-<y y y y>-<mm>-<dd>.kv g  in the Logs directory. The file can be used by
+Bravura Security support to help provide assistance.
+The psupdate program runs the instdump program when the Maintenance > Options  > PSUPDATE
+INSTDUMP  setting  is enabled (disabled by default).
+Some arguments are dependent on the Bravura Security product license.Usage
+instdump.exe [ <options> ] -outfile <outfile>
+Argument Description
+-acl Output ACL in f ormation.
+-attr grp Output attribut e  group in f ormation.  Requires Bravura
+Identity .
+-authenidlist Output authentic ation  target system list in f ormation.
+-authorizer Output authorizer in f ormation.  Requires Bravura Identity .
+-binaryversion Output binary version in f ormation.
+-consoleuser Output product administrator in f ormation.
+-cus t om file Output custom file in f ormation.
+-e xittr ap Output event action  (exit trap) in f ormation.
+-inventory Output inventory in f ormation.  Requires Bravura Identity .
+-managedgrp Output managed group in f ormation.  Requires Bravura
+Identity .
+-outfile  <outfile> File name for output (required).
+-plugin Output plugin in f ormation.
+-pr ofileattr Output attribut e  in f ormation.
+-registry Output registry in f ormation.
+-role Output role in f ormation.  Requires Bravura Identity .
+-service Output service in f ormation.
+-strength Output strength in f ormation.
+-system Output system c on figur ation  variables.
+-target Output target in f ormation.
+-t ar g e t attr Output account attribut e  in f ormation.
+-template Output template in f ormation.  Requires Bravura Identity .
+-userclass Output userclass in f ormation.
+-verbose Use a more readable format for output.
+for command-line details.
+Health check
+Bravura Security Fabric  servers can only be reliable if the environment they operate in is reliable. The
+Health check monitor reports on issues that may hinder performance.
+Health check monitor is installed and enabled when Bravura Security Fabric  is installed and will
+periodically report the status of the following components:
+▪Admin events▪
+The Functional.hid_healthcheck_admin_events  component scans the Windows event
+logs for critic al  failures related to r eplic ation  queue or the loaddb stored procedure.▪ Applic ation  crashes ▪
+The Functional.hid_healthcheck_app_crashes  component scans the Windows event
+logs for applic ation  crashes that have occurred within a specified  amount of days.
+▪Disk space - Drive C▪
+The Functional.hid_healthcheck_disk_space  component provides an alert when the
+c on figur ed  disk drive free space drops under the c on figur ed  thresholds. Bravura Security Fabric
+administrators can customize this component, including adding additional  drives to monitor, and the
+alert thresholds.
+▪Health Check password c on flict  count ▪
+The Functional.hid_healthcheck_pwd_conflict_count  should be enabled for Bravura
+Privilege and runs pwdconflicts  to identif y  e xisting  password c on flicts.
+▪Long processes▪
+The Functional.hid_healthcheck_long_processes  component checks for, and flags
+processes running under the Bravura Security Fabric  instance directory on the server that run for
+longer than the c on figur ed  threshold. This can be used, for example, to check for "stuck" listing  agents
+c on figur ed  with "in finit e  timeout"  which would prevent Autodiscovery from proceeding and alert an
+administrator.
+▪Services▪
+The Functional.hid_services  component ensures that Bravura Security Fabric  services are
+running if they are set to aut omatic ally  run. If the component finds  that the service is not running it
+will report a critic al  issue.
+▪URL▪
+The Functional.hid_healthcheck_url  component attemp ts  to connect to the c on figur ed
+url, to check if the WebUI or some other monitored applic ation  endpoint is available.
+By default, Health check monitor provides generic functionality .  To obtain the most from this feature, it is
+recommended that the various components be c on figur ed  to suit your particular  environment. At a
+minimum the following updates are recommended:
+▪Add email addresses to receive email notific ations ▪
+▪Add additional  drives to be monitored and set the alert thresholds to suit your environment. ▪
+▪Add URLS to be monitored▪
+See the Health check monitor c on figur ation  example  (on page 2797) for a walkthrough of the common
+cus t omiz ations  recommended.
+If none of the healthcheck tasks are needed, the product administrator can disable the Windows
+Scheduler > Library > HID Healthcheck  task and either disable the healthcheck components or uninstall
+them. See Components  (on page 312) for more in f ormation  on how to do this.
+DashboardThe status of the health check components are displayed on a dashboard in the Front-end  module. You
+can view the details by expanding each individual component.
+The Health check monitor is driven through Windows Task Scheduler. The task is set to run every fiv e
+minutes by default. Use the Windows Task Scheduler to modify the interval to suit your needs.
+Each test is denoted by one of two statuses:
+▪OK - the component is working normally. ▪
+▪ Critic al  - an outstanding issue requires immediate attention. ▪
+Health check monitor c on figur ation  example
+This example demonstrates how to edit the hid_healthcheck_con figur ation  table to make the following
+changes:
+▪Add product administrator email addresses▪
+▪Add additional  drives and c on figur e  threshold values to be monitored ▪
+▪Add a second url to monitor▪
+▪Edit the processes monitored▪
+1.From the main menu, click Manage external data store . 1.
+2.Click hid_healthcheck_c on figur ation . 2.
+3.Search for Namespace "HEALTHCHECK_DISK_SPACE".3.
+4.Edit the row for the EMAILS setting  and add the email address of the product administrator. 4.
+5.Add the following new set of entries in order to have health check monitor other disk partitions. 5.
+Ensure the Key value is diff er en t  from the e xisting  entries.
+Namespace Setting Key Value Description
+HEALTHCHECK_DISK_SPACE DESCRIPTION 2 Disk space - Drive D The description
+HEALTHCHECK_DISK_SPACE EMAILS 2 alerts@example.com Comma separated list of
+emails
+HEALTHCHECK_DISK_SPACE EMAIL_THRESHOLD 2 info Threshold to send emailsNamespace Setting Key Value Description
+HEALTHCHECK_DISK_SPACE EMAIL_SEND_DELAY 2 60 Delay between emails in
+minutes
+HEALTHCHECK_DISK_SPACE DEVICE_ID 2 D: Device ID for drive
+HEALTHCHECK_DISK_SPACE MIN_SIZE 2 30 Critic al  threshold for disk
+size in GB
+HEALTHCHECK_DISK_SPACE MIN_FREE 2 5 Critic al  threshold for free
+disk space in GB
+HEALTHCHECK_DISK_SPACE MIN_PERCENT_FREE 2 10 Critic al  threshold for
+percent free disk space
+The DEVICE_ID value on the e xisting  entry can be edited from C: to another drive if you do not want to
+monitor C:.
+Ensure the MIN_SIZE, MIN_FREE and MIN_PERCENT_FREE values are slightly smaller than the values
+from the service\iddb.cfg  c onfiguration  file, so that the warning email about running out of
+space goes out before the Database Service actually runs out of space.
+6.Search for Namespace "HEALTHCHECK_APP_CRASHES".6.
+7.Edit the row for the EMAILS setting  and add the email address of the product administrator. 7.
+8.Search for Namespace "HEALTHCHECK_ADMIN_EVENTS".8.
+9.Edit the row for the EMAILS setting  and add the email address of the product administrator. 9.
+10. Search for Namespace "HEALTHCHECK_URL". 10.
+11. Edit the row for the EMAILS setting  and add the email address of the product administrator. 11.
+12. Edit the URL setting  and add all comma delimited URLs to be monitored. 12.
+13. Search for Namespace "HEALTHCHECK_SERVICES". 13.
+14. Edit the row for the EMAILS setting  and add the email address of the product administrator. 14.
+15. Search for Namespace "HEALTHCHECK_LONG_PROCESSES". 15.
+16. Edit the row for the EMAILS setting  and add the email address of the product administrator. 16.
+17. Edi the PROCESS_WHITELIST row to include additional  processes to be monitored. 17.
+18. Edit the PROCESS_TIMESPAN row to a value acceptable for your or g aniz ation. 18.
+19. Search for Namespace "HEALTHCHECK_PASSWORD_CONFLICT_COUNT". 19.
+20. Edit the row for the EMAILS setting  and add the email address of the product administrator. 20.
+See also: 
+Components  (on page 312) for more detailed in f ormation  about components.
+Backups and restores
+Ensure that your back-end database system is adequately set up to handle backup and recovery
+oper ations.  Consult the documen t ation  provided with your database softw ar e  to learn how to do this.You should also back up any custom files (user interface, PSLang scripts, binaries) so your cus t omiz ations
+can be restored in the event of a system failure.
+After  restoring a database ensure the service broker is enabled. To enable service broker execute the
+following query:
+ALTER DATABASE <database name> SET ENABLE_BROKER WITH ROLLBACK
+IMMEDIATE 4 Database Maintenance
+The Bravura Security Fabric  database and database server require ongoing maintenance to prevent poor
+performance, system do wntime  and data loss. The following guidelines will help reduce the risks:
+▪It is recommended to monitor the database server disk space, using Bravura Security Fabric ’s health ▪
+check  (on page 2795) feature or an alt ernativ e.
+▪Monitor RAM availability and in v estig a t e  any services that maybe leaking RAM. ▪
+▪Database maintenance tasks; for example, de fr agmen t ation  and index rebuilding should not be ▪
+scheduled at the same time  as psupdate and other instance processes which update a lot of
+records in many tables. If the tasks and processes run at that same time  they will lock each other’s
+processes, r esulting  in the instance process, database maintenance, or both, to hang.
+▪When performing long-lasting  database maintenance; for example, index rebuilding, OS or database ▪
+patching that is expected to take more than 10-20 minutes it is recommended to stop updating  the
+database.
+▪If the database maintenance activity  requires a database upgrade, ensure that the upgrade version is ▪
+c ompatible  with Bravura Security Fabric  (on page 172).
+▪In a replicated environment, Bravura Security Fabric  requires that all nodes in the instance run the ▪
+same database version. If the database is to be upgraded, instance do wntime  is required and
+database maintenance on all nodes should be scheduled.
+▪Do not schedule database maintenance at the same time  on all databases which serve the same ▪
+applic ation.
+▪Before the database maintenance starts:▪
+▪Ensure no bulk processes are running on the applic ation  nodes that update that specific  database. ▪
+▪Remove the applic ation  node(s) using that database from the load balancer. ▪
+▪Wait for outgoing iddb queues to subside. ▪
+▪Stop the iddb service. ▪
+▪ After  the database maintenance is completed restore the applic ation  function  in reverse order. ▪
+Monitor idmsuite.log  when the product services (especially iddb)  are s t arting  up, and address
+any errors before c ontinuing.
+If the cgi\nodestat.exe (or its use as a REST endpoint) is used for load balancers to determine
+node availability, stopping iddb  is enough to stop incoming requests from the load balancer to that
+node.
+For additional  in f ormation  on SQL database maintenance, see Micr osoft’ s  best pr actice  maintenance
+r ec ommendations.
+5 Oper ating  system patch management
+This section  provides guidance on the key things to consider when applying Micr osoft  patches to Bravura
+Security Fabric  instance servers. Always check the Micr osoft  website for their latest r ec ommendations.

@@ -1,0 +1,107 @@
+5.Click Submit . 5.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+6.Click the View request link at the top of the page to view the status of the request. 6.API aut omation  for team vault update
+Once the API has been c on figur ed  (See ”SOAP API” in Bravura Security Fabric  Remote API ( api.pdf )), and
+your script has been authentic a t ed  to the API (Login or LoginEx API calls), the WF API calls can be used to
+create an API request to update a vault system.
+Use the WFPDRSubmit function  to create a w orkflo w  request and submit the request for publishing.
+When submitting  a request, use ”UPDATE_VAULT_SYSTEM” as the PDR ID. The request uses the following
+attribut es:
+attrk e y value
+MS_ID The ID of the team vault.
+MS_NAME The name of the team vault.
+MS_TEAM The team that the team vault will be
+assigned to.
+UPDATE_VAULT_SYSTEM batch request sample
+"MS_ID","MS_NAME","MS_TEAM" 
+"VAULT-000000","VAULT-000001","TEAM-000000"
+Archiving a team vault
+Users assigned as vault trustees can use the Team Vault: Archive request to archive a team vault.
+You cannot delete a vault that still has managed accounts associated with it.
+1.From the home page, click Manage resources . 1.
+2.Select the Team Vault: Archive request. 2.
+3.Select a team vault to archive.3.Click Next .
+4. Con firm  you wish to proceed. 4.
+5.Click Submit . 5.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+6.Click the View request link at the top of the page to view the status of the request. 6.API aut omation  for team vault archive
+Once the API has been c on figur ed  (See ”SOAP API” in Bravura Security Fabric  Remote API ( api.pdf )), and
+your script has been authentic a t ed  to the API (Login or LoginEx API calls), the WF API calls can be used to
+create an API request to archive a vault system.
+Use the WFPDRSubmit function  to create a w orkflo w  request and submit the request for publishing.
+When submitting  a request, use ” ARCHIVE_VAULT_SYSTEM” as the PDR ID. The request uses the following
+attribut es:
+attrk e y value
+MS_ID The ID of the team vault.
+CONFIRM_ACTION T to c on firm,  F to cancel.
+ARCHIVE_VAULT_SYSTEM batch request sample
+"MS_ID","CONFIRM_ACTION" 
+"VAULT-000000","T"
+Archiving a vault account
+Users assigned as vault trustees can use the Vault Account: Archive request to delete an account.
+Archiving a vault account is always a delete action.
+When you delete an account, all historical password data associated with the account is still available.
+Historical data is only deleted if the vault system is also archived.
+1.From the home page, click Manage resources . 1.
+2.Select the Vault Account: Archive request. 2.
+3.Select a vault account to remove.3.Click Next .
+Click Next .
+4. Con firm  that you want to proceed. 4.5.Click Submit . 5.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+6.Click the View request link at the top of the page to view the status of the request. 6.
+API aut omation  for vault account archive
+Once the API has been c on figur ed  (See ”SOAP API” in Bravura Security Fabric  Remote API ( api.pdf )), and
+your script has been authentic a t ed  to the API (Login or LoginEx API calls), the WF API calls can be used to
+create an API request to archive a vault account.
+Use the WFPDRSubmit function  to create a w orkflo w  request and submit the request for publishing.
+When submitting  a request, use ” ARCHIVE_VAULT_ACCOUNT” as the PDR ID. The request uses the
+following attribut es:
+attrk e y value
+MS_NAME The name of the system the vault
+account is added to.
+MA_NAME The name of the vault account.
+CONFIRM_ACTION T to c on firm,  F to cancel.
+ARCHIVE_VAULT_ACCOUNT batch request sample
+"MS_NAME","MA_NAME","CONFIRM_ACTION" 
+"VAULT-000000","VAULT-ACCOUNT-000004","T"Privilege P attern:  Self-service large cr edential  management
+Users with the LC Trustees privilege can upload large cr edentials  enclosed in files and other documents
+into an encrypted vault for team vaults and vault systems. They also have the ability to specify passwords
+which can be disclosed from the privileged access app, similar to vault accounts. Requesters can then
+request access to the vaulted file and download it upon checkout.
+LC trustees have access to the following pr e-de fined  requests:
+▪Vaulted File: Upload  (on page 2248) ▪
+▪Vaulted File: Update  (on page 2249) ▪
+In order to manage vaulted files,  a team vault needs to be created.  (on page 2224) Alt ernativ ely ,  a vault
+system can be used.
+Upload a vaulted file
+Users assigned as LC trustees can use the Vaulted File: Upload request to upload a file.
+1.From the home page, click Manage resources . 1.
+2.Select the Vaulted File: Upload request. 2.
+3.Select a managed system.3.
+Click Next .
+4.Enter a unique File ID . 4.5.Select a Vaulted File from the local w ork s t ation. 5.
+6.Enter an optional  File Password , in case the file is password-protected. 6.
+7.Click Submit . 7.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+8.Click the View request link at the top of the page to view the status of the request. 8.
+Once created, you can update the vaulted file’ s  contents or file password.
+API aut omation  for vaulted file upload
+This request is resource-dependent and cannot be submitted  via API for Bravura Security Fabric  version
+12.6.
+Updating  a vaulted file
+Users assigned as LC trustees can use the Vaulted File: Update request to update a vault file with a new
+file or specify a diff er en t  file password.
+1.From the home page, click Manage resources . 1.
+2.Select the Vaulted File: Update request. 2.
+3.Select a vaulted file. 3.
+Click Next .
+4.Select a new Vaulted File from the local w ork s t ation. 4.5. (Optional)  Enter a new File Password , in case the new file is password-protected. 5.
+WARNING! If you select a new vaulted file and previously set a file password, the
+password will no longer be retained if the File Password fields  are left
+empty.
+6.Click Submit . 6.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+7.Click the View request link at the top of the page to view the status of the request. 7.
+API aut omation  for vaulted file update
+This request is resource-dependent and cannot be submitted  via API for Bravura Security Fabric  version
+12.6.

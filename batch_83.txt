@@ -1,0 +1,234 @@
+▪ Pr ofile  ID in Bravura Security Fabric. This is default if all targets are removed from the Identific ation ▪
+priority list.
+▪ Pr ofile  attribut es,  if c on figur ed  (on page 830) ▪
+That fir s t default requires a user-selected target on purpose, because depending on account association
+logic, Account "johnd" can be associated to one pr ofile  on one target, and to another pr ofile  on another
+target; for example, in diff er en t  target Directories (LDAP or Activ e  Directory domains) r esulting  from
+company mergers, "johnd"can be a diff er en t  person in diff er en t  pre-merger companies.
+So:
+▪ Identific ation  requires you to choose a target from the provided list if there are more than one ▪
+Sources of Pr ofiles  in the c on figur ed  product instance.
+▪Once a pr ofile  was identified,  Authentic ation  can perform failover for the v erif y]oper ation  from one ▪
+target on the authentic ation  list to the next.
+Identif ying  users
+In order to log into Bravura Security Fabric  using the Front-end , users must provide an identifier .  By
+default, this is their login ID from the fir s t target system that you added as a source of Pr ofile  IDs.
+The Front-end  PROFILE ID TAG is disabled by default. When the tag is disabled, users can only identif y
+themselves with their login ID on a target system. When the PROFILE ID TAG is enabled, users can
+identif y  themselves with their Bravura Security Fabric  pr ofile  ID, or their login ID on a target system.
+The identifier  is searched for in the following order until  a match is found:
+1.Target – the user’s account ID on the target system1.
+2. Pr ofile  – the pr ofile  ID for the user’s Bravura Security Fabric  pr ofile 2.
+3.Admin – product administrator ID de fined  within the Manage the system  (PSA) module 3.
+You can allow users to identif y  with a pr ofile  attribut e  value, such as email address, by specifying them in
+the AUTH IDENTITY ATTRIBUTES setting  (on page 830).
+If more than one option  is available, users select how they want to identif y  themselves from the
+identific ation  priority list . When you add your fir s t target system, if PROFILE ID TAG is disabled, the target
+is aut omatic ally  added to the identific ation  priority list. You must manually add any additional  target
+systems.
+Product administrators do not require an account ID on a target system. In this case, their credentials  are
+stored in Bravura Security Fabric’s internal database.
+Set up the identific ation  priority list
+To set up the identific ation  priority list:
+1.Click Manage the system  > Policies > Identific ation  priority . 1.
+If necessary, search to narrow the list of target systems.2.Drag and drop one of the double dir ection  arrows in the Target system description  field  to change the 2.
+target systems’ order in the list.
+3.Click Update . 3.
+You can also c onfigure  this list by entering a colon-separated list in the PSF HOST LIST variable in the
+Manage the system > Maintenance > System variables  menu.
+Identific ation  examples
+Users choose an identific ation  target system
+If the system is c on figur ed  as shown below, and the PROFILE ID TAG is disabled, users are provided with a
+drop-down menu to choose how they want to identif y  themselves:
+In this case, users see the following options:Users choose P r ofile  ID an identific ation  target system
+When the PROFILE ID TAG is enabled ( Modules > Front-end  (PSF) ) users see the following options:Users must use P r ofile  ID
+You may want to limit choices and just allow the user to logon with their Pr ofile  ID. You can do this by
+enabling the PROFILE ID TAG and removing all target system identific ation  priorities:
+In this case, users are only asked for their Pr ofile  ID:See also
+▪Enable the PROFILE ID TAG and other Front-end options  (on page 1182). ▪
+▪ Identif y  users with pr ofile  attribut es  (on page 830). ▪
+▪Change the text that displays in the target system drop-down list for the PROFILE ID TAG option  (on ▪
+page 3506).
+Authentic ating  users
+The Bravura Security Fabric  Front-end  supports multiple,  c on figur able  methods of authentic ation.
+Basic c on figur ation
+By default, when you add your fir s t target system, Bravura Security Fabric  aut omatic ally  c on figur es  itself
+to identif y  imported users by their ID on the target system, and to authentic a t e  them using the password
+for their associated account on the target system. No additional  c on figur ation  is required.
+Bravura Security Fabric  can also be set up to use security questions,  where users type answers to
+personal questions.  This option  is only available to users after  they complete their security question
+pr ofiles.
+Bravura Security  strongly recommends c onfiguring  additional  or advanced authentic ation  factors. Relying
+on security questions  is not safe, nor easily maintainable, so Bravura Security Fabric off ers  a larger set of
+authentic ation  factors.
+Bravura Security does not recommend security questions  as an authentic ation  factor for Bravura
+Privilege.Modified  c on figur ation
+You can modify the basic authentic ation  c on figur ation  to:
+▪Change how the Front-end  identifies  users.  (on page 821) ▪
+▪ Con figur e  the authentic ation  priority list for password authentic ation.  (on page 826) ▪
+▪ Con figur e  additional  options  for password authentic ation.  (on page 827) ▪
+▪ Con figur e  additional  options  for security question  authentic ation.  (on page 828) ▪
+▪Enable additional  authentic ation  methods via Front-end  c on figur ation.  (on page 829) ▪
+Advanced c on figur ation
+Bravura Security Fabric ’s plugin architecture allows you to add external authentic ation  methods.  (on page
+1032)
+Authentic ation  chains  (on page 841) off er  more fle xible  authentic ation  options.
+Authentic ating  against target system
+Bravura Security Fabric  uses the authentic ation  priority list to determine:
+▪Which target systems are trusted systems . ▪
+Only target systems that have been added to the authentic ation  priority list are trusted and can be
+used to validate users’ passwords.
+▪The order in which to attemp t  to validate a password on target systems. ▪
+Each target system in the authentic ation  priority list is assigned a ranking value depending on their
+placement in the list. By default, Bravura Security Fabric  fir s t attemp ts  to validate a user’s password
+against the highest-ranked target system on which the user has an account.
+The number of target systems on which to attemp t  to validate a password is determined by the NUM
+HOSTS VERIFY setting.  The default is one.
+This is explained in greater detail in Con figuring  password authentic ation  (on page 827).
+When you add your fir s t target system, if the Allow users to verify passwords  setting  is enabled, the
+target system is aut omatic ally  added to the authentic ation  priority list. You must manually add additional
+target systems if required.
+Set the target system authentic ation  order
+To set up the authentic ation  priority list:
+1.Ensure that your target systems are set up to verify passwords.1.
+That is, ensure the Allow users to verify passwords checkbox is selected on each applicable targets’
+Target system in f ormation  page (default).
+2.Click Manage the system > Policies > Authentic ation  priority. 2.
+If necessary, search to narrow the list of target systems.3.Drag and drop one of the double dir ection  arrows in the Target system description  field  to change the 3.
+target systems’ order in the list.
+4.Click Update . 4.
+You can also c onfigure  this list by entering a colon-separated list in the AUTH HOST LIST variable in the
+Manage the system > Maintenance > System variables  menu.
+Con figuring  password authentic ation
+Users can prove their identities  by v alidating  their passwords against:
+▪A target system that is set up as a trusted system . ▪
+These users’ passwords are not stored in the Bravura Security Fabric  database.
+▪A value stored in Bravura Security Fabric . ▪
+This only applies to product administrator  s whose passwords are stored in Bravura Security Fabric .
+In order to set up password authentic ation  for users whose passwords are not stored in Bravura Security
+Fabric , c on figur e  the following:
+Authentic ation  priority list The authentic ation  priority list  (on page 826) ( Manage the system  >
+Policies > Authentic ation  priority ) controls the target systems that can
+be used to validate passwords and the target system authentic ation
+order.
+NUM HOSTS VERIFY (optional) This setting  (Manage the system > Policies > Options ) controls the
+number of target systems for authentic ation.
+Increase the value of NUM HOSTS VERIFY if the authentic ation  priority
+list contains more than one target system, and if you want Bravura
+Security Fabric  to retry the supplied password on additional  target
+systems before concluding that the user simply entered an incorrect
+password value.
+PSF IDENT AS AUTH (optional) Enable this setting  (Manage the system  > Modules  > Front-end ( PSF)) if
+you want Bravura Security Fabric  to attemp t  to authentic a t e  the user by
+verifying the supplied password against the target system chosen for
+identific ation.  (on page 821)
+PSF EXT Set this value to User-selectable or Password authentic ation .
+See Enabling authentic ation  methods via Front-end c on figur ation  (on
+page 829) for details.
+PSFEXT VALUES Include password.pss .
+Login process with password authentic ation  
+The following example login process illustrates how the above settings  a ff ect  the Front-end :
+1.A user visits the login page for the Front-end and enters an identifier  (a login ID on a trusted system or a 1.
+pr ofile  ID) and a password.
+2.If PSF IDENT AS AUTH is enabled, the Front-end  attemp ts  to authentic a t e  the user by verifying the 2.
+password against the target system chosen for identific ation.3.If PSF IDENT AS AUTH is not enabled, or if the user entered a pr ofile  ID, Bravura Security Fabric 3.
+attemp ts  to authentic a t e  the user by v alidating  the password against the fir s t target system in the
+authentic ation  priority list.
+4.If password v erific ation  fails, and if NUM HOSTS VERIFY is greater than one, Bravura Security Fabric 4.
+contacts the next target system in the authentic ation  priority list.
+5.The v erific ation  process c ontinues  until  authentic ation  succeeds or the number of failures equals the 5.
+value contained in NUM HOSTS VERIFY in which case authentic ation  fails.
+The process for the adminis tr ativ e  consoles is similar; however, Step 2 does not apply. In all cases Bravura
+Security Fabric  uses in f ormation  from the user’s pr ofile  to determine the correct login ID for each target
+system that it validates the password against.
+Con figuring  security question  authentic ation
+You can use multiple  Bravura Security Fabric  question  sets to authentic a t e  users. You can require users to
+have a set that is user de fined,  in which the user de fines  both the questions  and the answers, and a pr e-
+de fined  set, in which users de fine  only the answers.
+Users can de fine  the questions  and answers in their pr ofile  in one of two ways:
+▪Assisted by a help desk user  using the Help users  (IDA) module. ▪
+▪For themselves using the Update security questions  (PSQ) module. ▪
+In order to set up security question  authentic ation,  c on figur e  the following:
+Question  sets Bravura Security Fabric  includes default question  sets
+(on page 1024) that can be used to authentic a t e  users.
+You can modify the default sets or add your own.
+PSQ ENABLED The Update security questions  (PSQ) module – where
+users populate their personal in f ormation  – must be
+enabled if the DEFAULT_LOGIN authentic ation  chain
+has been disabled. You can enable it by setting  this
+value to On under Modules > Update security
+questions  (PSQ) .
+PSF EXT Set this value to User-selectable or Security questions .
+See Enabling authentic ation  methods via Front-end
+c on figur ation  (on page 829) for details.
+PSFEXT VALUES Include response.pss
+See also
+▪You can enable authentic ation  methods with greater fle xibility  and security by c on figuring ▪
+authentic ation  chains  (on page 841).
+▪You can also set up enforced enrollment  (on page 1183) to force users to complete the security ▪
+question  pr ofiles.
+▪Bravura Security Fabric  can use external programs to retrieve security question  data  (on page 1032), ▪
+and to validate answers in order to authentic a t e  Bravura Security Fabric  users.Enabling authentic ation  methods via Front-end c on figur ation
+An authentic ation  method must be enabled before it can be made available to users. By default,
+password authentic ation  and security question  authentic ation  are enabled. You can enable or disable
+methods by c on figuring  the Front-end .
+Alt ernatively ,  you can enable authentic ation  methods with greater fle xibility  by c onfiguring
+authentic ation  chains  (on page 841).
+To enable authentic ation  methods via Front-end  c on figur ation:
+1.Click Modules > Front-end (PSF) . 1.
+2.Select the appropriate choice from the PSF EXT drop-down list: 2.
+Password authentic ation Users can only authentic a t e  using a password.
+Security questions Users can only authentic a t e  using security questions.
+User-selectable Allow users to select from authentic ation  methods
+listed in PSFEXT VALUES , or custom authentic ation
+chains.
+3.Enable authentic ation  methods by including the names of programs or scripts in the PSFEXT VALUES 3.
+field.
+The field  accepts a comma-delimited list, which can include:
+▪password.pss – password authentic ation ▪
+▪response.pss – security questions ▪
+▪Custom program or script▪
+4.Click Update . 4.
+Adding options  to the authentic ation  menu
+When more than one authentic ation  method is enabled, the Front-end  displays a menu of available
+authentic ation  methods to users after  they have been identified.
+When password or security question  authentic ation  is enabled in PSFEXT VALUES , the option  is
+aut omatic ally  included in the menu.
+If you enable a custom authentic ation  method by including it in PSFEXT VALUES , you must edit the
+Bravura Security Fabric  skin files to include the option  in the authentic ation  menu. See Adding to the
+authentic ation  menu  (on page 3507) to learn how to do this.
+Alt ernativ ely ,  you can add a custom authentic ation  method to an authentic ation  chain  (on page 844), and
+make that available in the default authentic ation  chain.Specifying authentic ation  methods within URLs
+Once enabled, you can direct users to a preferred method of authentic ation  by specifying it in the
+Bravura Security Fabric  URL, rather than providing a menu.
+You can direct a user to:
+▪A built-in authentic ation  module, such as password authentic ation ▪
+▪An external authentic ation  method ▪
+▪An authentic ation  chain ▪
+For example:
+1.The specified  user is directed to a page to verify their password: 1.
+https://<server>/<instance>/?LANG=en-
+us&USERID=<user>&PSF_EXT=password.pss 
+2.The specified  user is directed to a page to enter responses to their security questions: 2.
+https://<server>/<instance>/?LANG=en-
+us&USERID=<user>&PSF_EXT=response.pss 
+3.The specified  user is directed to the fir s t page of the specified  authentic ation  chain: 3.
+https://<server>/<instance>/?LANG=en-
+us&USERID=<user>&PSF_EXT=<authchain> 
+Where:
+▪<server> is the Bravura Security Fabric  server ▪
+▪<instance> is the name of the Bravura Security Fabric  instance ▪
+▪<user> is the user for whom you are cr eating  the URL ▪
+▪<authchain> is the name of the authentic ation  chain to which you are dir ecting  them. ▪
+Generally, or g aniz ations  set up a customized intranet page with links to Bravura Security Fabric  so that
+users do not have to type the URL.
+Users can only select custom authentic ation  methods if the method is enabled. Methods that are not
+enabled do not appear in the authentic ation  menu and cannot be passed in the URL.
+Login options
+The following identific ation  and authentic ation  options  can be accessed via Manage the system >
+Policies > Login options .
+Identif ying  users with pr ofile  attribut es  instead of login IDs
+You can use the AUTH IDENTITY ATTRIBUTES setting  (Manage the system  > Policies  > Login options ) to
+de fine  a comma-delimited list of pr ofile  attribut es  that can be used to login into Bravura Security Fabric .
+A pr ofile  attribut e  can be set as a secondary identifier  that will be treated the same as a normal login ID.
+When c on figur ed,  users can login using either their pr ofile  ID or pr ofile  attribut e,  such as email address.

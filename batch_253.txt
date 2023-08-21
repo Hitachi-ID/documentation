@@ -1,0 +1,119 @@
+Enable the Allowed in the certific ation  process option  for each target system whose users can be
+reviewed.
+Ensure that target systems have appropriate descriptions  and help URLs specified,  to assist reviewers
+in identif ying  appropriate entitlemen ts.
+2.Manage groups  (on page 585) if you want them to be included in the certific ation  process. 2.
+The Allowed in the certific ation  process target system option  determines whether the system’s
+managed groups are selectable when s t arting  a certific ation  campaign . The target system option  is
+disabled by default. You can apply a global override or individual target system override to allow
+managed groups to be included in certific ation,  regardless of whether the parent target system is
+allowed in the certific ation  process.
+The target system option  is not accessible in Bravura Privilege, and target systems are not allowed in
+the c ertific ation  process by default, so you must apply either the global override or an individual target
+system override. You can enable managed groups to be c ertified  when a target system is not allowed
+in c ertific ation  process  (on page 2521).
+3. Optional:  De fine  user classes  (on page 733) to divide the user population  into segments, so that you 3.
+can assign a reviewer for each segment.
+4. Optional:  Set up roles  (on page 556) and segr eg ation  of duties  rules  (on page 154) to be certified. 4.
+When entitlemen ts  are assigned to a user via a role, they can only be c ertified  through that role.
+Reviewers cannot view or c ertif y  the member entitlemen ts  individually.
+5. Optional:  De fine  pr ofile  in f ormation  that you want reviewers to review. 5.
+Reviewers can view user pr ofile  in f ormation  to help them in their review. You can include basic
+in f ormation,  such as name, email address, manager, by default.
+If you de fine  additional  pr ofile  and request attribut es,  you must ensure that reviewers have
+permission to view in f ormation  about users they are reviewing, by de fining  the control of user groups
+over attribut e  groups . (on page 722)
+6. Optional:  Con figur e  pr e-de fined  requests to be used for r emediation 6.
+You can specify r emediation  requests to determine what happens when a review revokes an
+entitlemen t,  transfers a user, or resolves an SoD violation.  Pr e-de fined  request  (on page 1311)s are set
+up by default in most cases. Reviewers can also be enabled to create new pr ofiles  from within a
+certific ation  campaign. In this case, you must set up a pr e-de fined  request for this purpose.  (on page
+2540)
+7. Optional:  Enable consistency c alculations  and aut omatic  actions  (on page 2542). These options  can 7.
+ease the burden on reviewers by identif ying  consistent or inconsistent items, and aut omatic ally
+certif ying  or revoking items based on consistency and risk.
+Enabling managed groups to be certified  when a target system is not allowed in certific ation  process
+To allow all managed groups to be selectable when s t arting  a certific ation  campaign , regardless of
+whether the parent target system is allowed in the certific ation  process, enable CERT OVERRIDE TARGET
+CERT ENABLED FOR GROUPS in the Manage the system  > Modules > Modules > Manage certific ation
+process  (CERT) option  menu.Alt ernativ ely  you can apply an override to individual target systems by c on figuring  a boolean-type
+resource attribut e  identified  by CERT ATTRIBUTE GROUP CERT . The managed groups of the target system
+can be certified  when the attribut e  value is set to True.
+The following example illustrates:
+1. De fine  a resource attribut e: 1.
+a.Click Manage the system > Resources > Resource attribut es > Add new... a.
+b.Enter the ID; for example GROUP-CERTIFY . b.
+c.Enter the Description . c.
+d.Select Type : Boolean. d.
+e.Set the Default values for the attribut e : (None) . e.
+f.Click Add. f.
+2. De fine  a resource attribut e  group: 2.
+a.Click Manage the system > Resources > Resource attribut e  groups > Add new... a.
+b.Enter the ID; for example ALLOW-GROUP-CERTIFY . b.
+c.Enter the Description . c.
+d.Select Type : Target systems . d.
+e.Click Add. e.
+f.Click the Members tab. f.
+g.Click Select then select the resource attribut e  you created previously; for example GROUP-CERTIFY . g.
+3. Con figur e  the option  in the Manage certific ation  process  (CERT) module: 3.
+a.Click Manage the system  > Modules > Manage certific ation  process  (CERT ). a.
+b.Type GROUP-CERTIFY in the CERT ATTRIBUTE GROUP CERT field. b.
+4.Enable managed groups to be certified  for a target system that is not allowed in certific ation  process. 4.
+a.Click < Manage the System > Resources > Target systems . a.
+b.Select the target system.b.
+c.Set the ALLOW-GROUP-CERTIFY option  to ”True”. c.
+d.Click Update . d.
+Next: 
+Once you have de fined  which entitlemen ts,  users, and in f ormation  may be included in the certific ation
+process, you can c on figur e  and start an access certific ation  campaign  (on page 2567).  
+Example: Segr eg ation  of duties
+A simple example of a certific ation  campaign is where sensitiv e  groups are managed on an Activ e
+Directory target system. A product administrator  de fines  SoD rules, and periodically starts a certific ation
+campaign to invite group owners to log into Bravura Security Fabric  and certif y  the group members.The group owner can remove inappropriate group membership. If a user is in violation  of an SoD rule
+(due to having too many group memberships for example) the reviewer can either request an e x ception
+or remove group membership in order to resolve the SoD rule violation.   
+Configur ation  
+To set up this certific ation  campaign, the administrator would:
+1.Log into Bravura Security Fabric  as an administrator with the ”Manage certific ation  process” right. 1.
+2.Click Manage certific ation  process . 2.
+3.Click Start entitlemen t  certific ation  campaign . 3.
+4.On the Items to review tab, select Segr eg ation  of duties  rules , then select the checkbox next to the 4.
+applicable rule to review.
+5.Click the Reviewers tab to choose reviewers for the campaign. 5.
+6.Click Continue  to choose a single reviewer. 6.7.Click Select… . 7.
+8.Search for and select the appropriate user.8.
+9.Click the Submit tab. 9.
+10. Enter a Certific ation  campaign description . 10.
+11. Click Launch campaign . 11.12. Click Start new campaign . 12.
+Review 
+To complete the review, the reviewer would:
+1.Log into Bravura Security Fabric . 1.
+2.Click the notific ation  link or Review entitlemen ts  and c on figur ations . 2.
+The certific ation  app shows a list of users in violation  of the rule.
+3.Click the resolve icon 
+  next to a user’s name to open the request wizard. 3.
+The default pr e-de fined  request is ”Default r esolution  for segr eg ation  of duties  rules”.4.Click the request e x ception  icon 
+ to submit a request to allow the user to keep the c on flicting 4.
+entitlemen ts.
+5.Type a reason for the e x ception  and modify the expiry date if necessary. 5.6.Click Apply . 6.7.Click Save . 7.
+The request is now saved and will be submitted  upon sign off .
+8.Click the resolve icon 
+ next to another user’s name to open the request wizard. 8.
+9.Click the revoke icon 
+ to remove one of the c on flicting  entitlemen ts. 9.10. Click Save . 10.
+11. Click Finish to complete the review. 11.
+12. Enter My password . 12.
+13. Click Sign off. 13.
+Bravura Security Fabric  notifies  relevant authorizers to review the request.Example: Saved certific ation  setup
+This example demonstrates how to use saved searches to simplify and speed up the processes of s t arting
+a certific ation  campaign. It also demonstrates how to save and modify a certific ation  campaign setup.  
+Configur ation  
+To set up this certific ation  campaign, the administrator would:
+1.Log into Bravura Security Fabric  as an administrator with the ”Manage certific ation  process” right. 1.
+2.Click Manage certific ation  process . 2.
+3.Click Start entitlemen t  certific ation  campaign . 3.
+4.On the Items to review  tab, select Managed groups . 4.
+5.In the group list section,  click the advanced search icon 
+ next to the Search button. 5.
+6.Search on groups with a description  that contains ”finance” . 6.
+Searches can use any resource criteria. (on page 363)

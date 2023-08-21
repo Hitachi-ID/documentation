@@ -1,0 +1,302 @@
+Global help desk rules control what help desk users can do for all other users.
+4.Select 
+  the GLOBAL_HELP_DESK  user access rule. 4.
+This rule de fines  privileges for help desk managers. By default, the following privileges are enabled:
+▪Change passwords▪
+▪Change and expire passwords▪
+▪Unlock accounts▪
+▪Enable/Disable user pr ofile ▪
+▪Unlock user pr ofile ▪
+▪ Attach  other accounts ▪
+▪Generate voice print enrollment PIN▪
+▪Manage tokens▪
+If not yet c onfigured,  “(Disabled)” is displayed next to the privilege name.
+5.Click in the field  next to Allowed privileges  and select View security questions . 5.
+This will allow help desk users to see the user’s security questions  from question  sets that have
+appropriate Help-desk permissions  settings.
+For help desk users to see security questions  from a question  set, the question  set must also have its
+c onfiguration  setting  for Help-desk permissions  set to Allowed to view security
+questions .
+6.Click Update . 6.
+7.Click the Membership criteria  tab. 7.
+This page allows you to select or create user classes that de fine  the membership rules to have these
+access rights. By default, the membership criteria for this user access rule is de fined  by the
+_GLOBAL_HELP_DESK_  user class.
+8.Click the General  tab and click Recalculate  for Membership cache valid:. 8.
+The members of the _GLOBAL_HELP_DESK_  user class have now been granted permissions to see a
+user's security questions.
+T esting  privileges
+The Show e ff ectiv e  privileges function  allows you to view the privileges for individual users by user
+access rule categories. To do this:
+1.Click Manage the system > Security > Access to user pr ofile s > Show e ff ectiv e  privileges . 1.
+2.Type the pr ofile  ID of the Requester . This is the person for whom you want to show e ff ectiv e 2.
+privileges.
+3.Select which set of Rules to show e ff ectiv e  privileges for: 3.
+▪Global help desk rules▪
+▪Self-service rules▪
+▪Delegated adminis tr ation  rules – You must enter the <PROFILEID> of the Recipient . ▪4.Click Test. 4.
+Bravura Security Fabric  displays the message “User [ <profileID> ] has the following privileges when
+acting  on <recipient> ”, and lists the privileges for the requester.
+If the requester has a privilege in multiple  user access rules, then they are all displayed.
+Access to attribut es  and privileged accounts
+This section  shows you how to de fine  user groups to control access to attribut es  and privileged accounts.
+User groups de fine  which privileges a group of users can have, and user classes de fine  membership
+criteria for each user group. See User Classes  (on page 733) for more in f ormation  about user classes.
+Getting  started
+ Requirements 
+▪You require the "Manage user groups"  adminis tr ativ e  privilege in order to access the Privileged access ▪
+to systems , Access to pr ofile  and request attribut es  and Access to resource attribut es  menu items.
+ Na vig ation  steps 
+Use the User groups page to add and c on figur e  user groups. To navigate to this page:
+1.Click the menu item that corresponds with the user group you want to c on figur e: 1.
+▪Manage the system > Security > Access to resource attribut es ▪
+▪Manage the system > Security > Access to pr ofile  and request attribut es ▪
+▪Manage the system > Security > Privileged access to systems▪
+2.Search for, or select a user group, or click Add new... 2.
+De fine:
+▪Assigning user group access controls  (on page 727) ▪
+▪ De fining  user group membership criteria  (on page 728) ▪
+User groups and pr ofile  and request attribut e  groups
+Use the Manage the system > Security > Access to pr ofile  and request attribut es  menu to determine
+pr ofile  and request attribut e  groups a user group can see or edit.
+The following built-in user groups are c on figur ed  for pr ofile  and request attribut es:
+ALLAUTHORIZERS All users designated as authorizers of requests.
+ALLIMPLEMENTERS All users designated as implementers of requests.
+ALLRECIPIENTS All recipients of access change requests.
+ALLREQUESTERS All requesters of access change requests.
+ALLREVIEWERS All users designated to complete an entitlemen t  or c on figur ation
+review.You can also de fine  permissions via the W orkflo w  > Attribut e  groups menu.
+Users must have rights to at least one attribut e  group in order to view or edit attribut es  in Bravura
+Security Fabric .
+Users can be members of multiple  user groups, and are assigned the highest c ombination  of privileges
+assigned to the rules to which they belong.
+For example:
+▪User A belongs to recipient group B with read permissions on attribut e  group C. ▪
+▪User A belongs to recipient group D with write permissions on attribut e  group C. ▪
+▪User A in e ff ect  has both read and write permissions on attribut e  group C. ▪
+The highest c ombination  of rights is also assigned when a user is both recipient and requester, when
+using the Requests  app. That is, when a user is tracking a request and:
+▪Has requested an change for somebody else, their rights as a requester are in e ff ect. ▪
+▪Is the recipient of a change requested by somebody else, their rights as a recipient are in e ff ect. ▪
+▪Has requested a change for themselves, their combined rights as requester and recipient are in e ff ect. ▪
+Similar rules apply for users who are both requester and authorizer.
+If an attribut e  group contains required attribut es  that can only be edited by authorizers, the requirement
+is ignored until  the request reaches the authoriz ation  stage. If authorizers then fail to provide values for
+the required attribut es,  the request is aut omatic ally  denied.
+When a user group is assigned write-only permissions to attribut es  with restricted or boolean values, they
+in e ff ect  cannot view or edit those attribut es.  If you require a user to be able to edit attribut es  with
+restricted or boolean values, you must assign them read/write permissions.User groups and resource attribut es
+Use the Manage the system > Security > Access to resource attribut es  menu to determine what
+resource attribut es  a user group can see or edit.
+The following built-in user groups are c on figur ed  for resource attribut es:
+ALLUSERS All users
+ENTITLEMENT_EXPIRY_CONFIG Users who can c on figur e  entitlemen t  expiry days
+GROUP_CREATE_USERS Users who can create groupsYou can also de fine  permissions via the Manage the system > Resources > Resource attribut e  groups  
+menu.
+Membership to resource attribut e  user groups is de fined  by user classes.
+User groups and managed system policies
+ Applies to Bravura Privilege
+Use the Manage the system > Security > Privileged access to systems  menu to determine what managed
+system s and managed system policies  a user can see or edit.
+You can also assign access controls from within a managed system policy .
+The following user groups are c on figur ed  by default for privileged access to systems:
+ALLAUTHORIZERS All users designated as authorizers of requests.
+ALLRECIPIENTS All recipients of access change requests.
+ALLREQUESTERS All requesters of access change requests. By default this group has
+permission to request authoriz ation  to view the adminis tr ativ e
+password of any managed system.
+IT_SEC_USERS IT security users who are pre-approved to check-out managed
+account access.
+MSP_REPORT_USERS Product administrators who can generate and view reports r elating  to
+Bravura Privilege , including password check-in/check-out, password
+expiry, and password history.
+Product administrator user groups and permissions
+The permissions granted by a user group work in c onjunction  with adminis tr ativ e  privileges. product
+administrator s with the Manage managed system policies adminis tr ativ e  privilege have the right to access
+managed system policies  c on figur ation  pages. You add those product administrator s to one or more user
+groups, which control which managed system policies  the members have access to. For each managed
+system policy , the user group can be granted permissions listed in Privileged system access controls  (on
+page 726).These permissions apply to adminis tr ativ e  menus and to reports, such as the Password change history
+report. That is, a product administrator  who has the Manage reports adminis tr ativ e  privilege can only
+generate reports for managed system policies to which he has view access.
+Product administrators can belong to more than one user group. The maximum privilege is given when a
+product administrator  belongs to multiple  user groups, as privileges are cumulativ e.
+Privileged system access controls
+Privileged access permissions
+Permission Description
+View pr operties  for this policy Allows product administrators to view the managed system policy and its
+members.
+Modify pr operties  for this policy Allows product administrators to modify the managed system policy and its
+members.
+Pre-approved check-out of managed
+accountsAllows members to access accounts currently managed by this managed
+system policy.
+Randomize/override password of
+managed accountsAllows members to randomize and override passwords currently managed
+by this managed system policy.
+Request check-out of managed
+accountsAllows members to request access to accounts currently managed by this
+managed system policy, including account set access requests. Members
+can use shared account sets, however, they cannot modify them.
+View in f ormation:  Managed
+systems/Managed accounts/Group
+sets/Account setsDisplays the managed system, managed account, group sets, and account
+sets as hyperlinks throughout the request to allow members to view
+system/access in f ormation  from a pop-up window.
+Pre-approved check-out of group
+setsAllows members to access group sets currently managed by this managed
+system policy.
+Request check-out of group sets Allows members to request access to group sets currently managed by this
+managed system policy.
+Pre-approved search of recorded
+sessionsAllows members to be auto-approved to search this managed system
+policy’s recorded sessions.
+Pre-approved download of recorded
+sessionsAllows members to be auto-approved to download this managed system
+policy’s recorded sessions.
+Pre-approved view of recorded
+sessionsAllows members to be auto-approved to view this managed system policy’s
+recorded sessions.
+Run reports about privileged access
+for this policyAllows product administrators to run reports on recorded session
+in f ormation  for this managed system policy.
+Access password history for
+managed accountsAllows members to view the password history for a managed account when
+access is checked out.
+Modify all account sets in this policy Allows members to modify account sets managed by this managed system
+policy, whether shared or not.
+Manage systems on this policy Allows product administrators to modify pr operties  of systems currently
+managed by this managed system policy.Use of pre-approved options  is not recommended for security reasons.
+Regular user groups and permissions
+Bravura Privilege  allows regular users to request temporary access to adminis tr ativ e  passwords on
+managed systems, for themselves or other users, using authoriz ation  w orkflo w .  See Privileged system
+access controls  (on page 726) for details about w orkflo w .
+When you create a Bravura Privilege  managed system policy, Bravura Security Fabric  aut omatic ally  gives
+all users, via the built-in ALLREQUESTERS user group, the permission to:
+▪Request check-out of managed accounts▪
+▪View in f ormation:  Managed systems/Managed accounts/Group sets/Account sets ▪
+▪Request check-out of group sets▪
+This default behavior can be changed in the Modules  > Privileged access menu. Disable the IDARCHIVE
+PASSWORD REQUESTED and IDARCHIVE GSET REQUESTED settings.  This changes the default behavior so
+that users must be assigned to a user group with appropriate permission.
+You can also override this default behavior via a group’s Access control tab. For each managed system
+policy, the user group can be granted permissions listed in Privileged system access controls  (on page
+726).
+If regular users have ” Pre-approved check-out of managed accounts ” and ”Request check-out of managed
+accounts ” permissions, they are able to check out managed accounts without needing authoriz ation.  They
+can also update the end time  of their checkout.
+If enabling ” Pre-approved check-out of managed accounts ” for managed system policies with the SSH key
+authentic ation  type, check-out requests are aut omatic ally  approved instead of pre-approved.
+Regular users can belong to more than one user group. The maximum privilege is given when a user
+belongs to multiple  user groups - privileges are cumulativ e.
+Regular users who are not also members of an adminis trative  group cannot modify managed systems, or
+randomize or override passwords. Users must have appropriate product administrator  c apabilities  to
+manage managed systems. 
+Assigning user group access controls
+To de fine  access controls for a user group:
+1.From the user group in f ormation  page  (on page 722), click the Access control tab. 1.
+2.Enable Grant and Deny checkboxes for attribut e  groups or managed system policies  as required. 2.
+3.Click Update . 3.
+You cannot modify the access controls of a user group of which you are a member.De fining  user group membership criteria
+A user group can have one or more users as members. Membership criteria for a user group is de fined  by
+selecting  or cr eating  user classes. Users must be participan ts  of the selected user classes in order to have
+membership in the user group. Each user class must be mapped to the participan t  type: requester or
+recipient.
+To de fine  user group membership criteria:
+1.From the From the user group in f ormation  page  (on page 722), click the Membership criteria tab. 1.
+2.To de fine  user group membership criteria by: 2.
+▪ Selecting  e xisting  user classes: ▪
+i.Click Select... . i.
+ii.If required, click Edit 
+ for any user classes that need to be modified  before you select them. ii.
+iii.Enable the checkboxes for the user classes you want to select as membership criteria, then clickiii.
+Select .
+iv.Set the P articipan t  mapping to either the: iv.
+▪REQUESTER who can view and edit other users’ attribut es ▪
+or
+▪RECIPIENT whose attribut es  are being viewed and edited ▪
+▪ Cr eating  a new user class: ▪
+i.Click Create a new user class . i.
+ii.See User Classes  (on page 733) for full details on how to create a new user class. ii.
+Repeat this step until  you have de fined  user group membership.
+3.If you have selected multiple  user classes, select whether the participan ts  must match All of the user 3.
+classes or Any of the user classes .
+The default setting  is All of the user classes .
+Once you have finished  de fining  membership criteria, you can click the Test tab to Test membership of
+individual users, or List members .
+Membership of non-built-in user classes can be cached to improve performance. There are options  to
+recalculate or invalidate the cache on the user class c on figur ation  page.
+In a replicated environment, cache rec alculation  can only be performed on the instance which runs
+psupdate .
+Con figur ation  Notes
+In some cases it may be easier to prevent certain users from accessing specific  objects, rather than trying
+to find a way to grant limited user access.
+Use the ACL DENY ENABLE setting  on the Manage the system > Policies > Options  page to allow product
+administrator s to deny read and write permissions to objects.Security plugin options
+You can set the options  listed in the table below on the Manage the system > Security > Options  menu.
+Security options
+Option Description
+API ADMIN PLUGIN Filters API function  calls made by API users. This overrides the default API
+functions  that API users are allowed to call.
+See API adminis tr ativ e  privileges  (on page 729).
+OTP MAXIMUM Controls the number of last known passwords for an OTP API caller that are
+still considered valid. The default is set to 0, meaning that the one-time
+password will be invalidated after  its fir s t use.
+USER OPERATION FILTER PLUGIN Control the oper ations  that users can perform.
+You can also control the oper ations  that users can perform by applying user
+access rules to user classes. This plugin can be used for more complex
+requirements.
+See Oper ation  filt ering  (on page 730).
+API adminis tr ativ e  privileges
+You can c on figur e  the API ADMIN PLUGIN to choose which API functions  can be called for certain API
+users.
+By default, OTP API users are only allowed to call KMKeyGetByAccount, RecoverKeyByAccount,
+ManagedAccountOverridePassword, and ManagedAccountRandomizePassword API functions,  while all
+other API users are allowed to call all API functions  except KMKeyGetByAccount and
+RecoverKeyByAccount.
+This plugin will override the default settings,  so if you want to include additional  API functions  to call and
+retain the e xisting  ones, you must explicitly include this in the plugin.
+To use a plugin to determine access controls for API users:
+1.Click Manage the system > Security > Options . 1.
+2.Type the name of the plugin program in the API ADMIN PLUGIN row.2.
+3.Click Update . 3.
+There is no shipped plugin in use with this plugin point. See details on writing  a custom plugin
+Ex ecution  points
+This plugin is executed any time  an API function  other than Login, LoginEx, or Logout is called. Refer to
+the " Bravura Security Fabric  Remote API " for available API functions.
+Input
+"" "" = {  "OTP" = "false"
+  "REST" = "false"
+  "function" = "UserclassActorGet"
+  "sessionid" = "Ibcb3b1a0-9f22-4221-9479-fb7dcb18badf"
+  "userid" = "_API_USER"
+}
+Where:
+OTP indicates whether the logged-in user is an OTP user.
+REST indicates whether the plugin is being called from classic API or the REST API.
+function  indicates the API function  being called.
+sessionid is the current session ID.
+userid is the user calling the API function.
+Output
+The following is an example of the output returned by the plugin
+# KVGROUP-V1.0
+"" "" = {
+  "errmsg" = ""
+  "retval" = "0"
+  "action" = "allow"
+}
+Where:
+errmsg is used to indicate the error on failure
+retval is zero on success or non-zero on failure.
+action  is ’allow’ on success or ’deny’ on failure.
+.
+Oper ation  filt ering
+Many or g aniz ations  apply business logic to de fine  what employees are allowed to do; for example, allow
+only managers to submit requests for disabling user access. Bravura Security Fabric  implements the
+oper ation  filt er  plugin point to allow you to restrict access to oper ations  based on who the user is.
+You can also control the operations  that users can perform by applying user access rules to user classes.
+This plugin can be used for more complex requirements.
+To enable the plugin point:
+1.Click Manage the system > Security > Options . 1.
+2.Type the name of the plugin in the USER OPERATION FILTER PLUGIN  field. 2.
+3.Click Update at the bottom  of the page. 3.

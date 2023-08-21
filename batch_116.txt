@@ -1,0 +1,384 @@
+  "user" = "<profile ID>" # The user requesting the page
+  "requester" = "<profile ID>" # The user requesting the page
+  "cginame" = "ida|pss" # The CGI running the plugin
+  "host" "" = { #1 or more sets, each representing a target system
+    "id" = "<target system ID>"
+    "name" = "<target system name>"
+    "type" = "<target system type>"
+    "address" = "<target system address>"
+    "adminid" = "<target system administrator ID>"
+    "adminpass" = "<target system administrator password>"
+    "userid" = "<user's account on the target system>"
+     }
+  "tags" "" = {#Data to be remembered through the current login session
+    "<tag ID>" = "<tag value>" # 0 or more
+    "LANG" = "en-us"
+    "PS_LOCK_DIR" = "F:\\Locks\\"
+  "html" = "" # unused
+  }
+}
+The following is an example of the input received by the plugin during its fir s t run:
+   "" "" = {
+     "action" = "PRINT-FORM"
+     "user" = "user1id"
+     "requester" = "user1id"
+     "cginame" = "pss"
+     "host" "" = {
+       "id" = "AD"
+       "name" = "ad"
+       "type" = "WIN2K"
+       "address" = "10.10.77.20/basedn=ou=wfou"
+       "adminid" = "administrator"
+       "adminpass" = "letmein!"
+       "userid" = "user1id"
+     }
+     "tags" "" = {
+       "LANG" = "en-us"
+       "PS_LOCK_DIR" = "C:\\Program Files\\Hitachi ID\\IDM Suite\\Locks
+\\"
+     }
+     "html" = ""   }
+Output
+The following is added to the output:
+▪ submit_buttons  A list of HTML buttons  that the plugin displays on the page. The cgi needs to know ▪
+which buttons  a plugin has added so that user input on those buttons  can be sent back to the plugin.
+All of the entries in this list are the names of the HTML buttons;  they are "name" attribut es  from the
+<input> tags on the HTML page. All submit buttons  must begin with the string "EXT-" to distinguish
+their names from button  names used internally by Bravura Security Fabric .
+▪html Raw HTML that displays the plugin’s interface. ▪
+The following is an example of the output produced by the plugin:
+"" "" = {
+  "action" = "PRINT-FORM"
+  "cginame" = "ida"
+  "html" = ""
+  "requester" = "user1id"
+  "user" = "manage1"
+  "host" "" = {
+    "address" = "10.10.77.20/basedn=ou=wfou"
+    "adminid" = "administrator"
+    "adminpass" = "Letmein1"
+    "id" = "AD"
+    "name" = "ad"
+    "type" = "WIN2K"
+    "userid" = "manage1"
+  }
+  "submit-buttons" "" = {
+    "" = ""
+  }
+  "tags" "" = {
+    "LANG" = "en-us"
+    "PS_LOCK_DIR" = "C:\\Program Files\\Hitachi ID\\IDM Suite\\Locks\\"
+  }
+}
+.
+Provide HTML to the password status page
+You can use a CGI plugin to supply HTML code to the Password reset results  (password status) page of the
+Change passwords (PSS) module.The plugin is set by the S STATUS EXT plugin point on the Modules > Change passwords (PSS)
+c on figur ation  page.
+You cannot use the S STATUS EXT plugin to add in t eractive  form elements.
+The shipped cgilocalr plugin program  (on page 1580) allows you to enable and c on figur e  the Local
+Reset Extension .
+Requirements
+The CGI plugin is a console executable, which accepts in f ormation  on standard input and writes results to
+standard output. See W riting  plugins  for general requirements.
+Ex ecution  points
+The Change passwords (PSS) module invokes a plugin to add HTML content to the main menu. Each time
+the page is requested, the plugin executes. See CGI plugin sequence of events  (on page 1149)  for the
+general sequence of events.
+Input
+Input to the plugin includes:
+"" "" = {
+  "action" = "PRINT-FORM" # The action of the CGI
+  "user" = "<profile ID>" # The user requesting the page
+  "requester" = "<profile ID>" # The user requesting the page
+  "cginame" = "pss" # The CGI running the plugin
+  "host" "" = { #1 or more sets, each representing a target system
+    "id" = "<target system ID>"
+    "name" = "<target system name>"
+    "type" = "<target system type>"
+    "address" = "<target system address>"
+    "adminid" = "<target system administrator ID>"
+    "adminpass" = "<target system administrator password>"
+    "userid" = "<user's account on the target system>"
+     }
+  "tags" "" = {#Data to be remembered through the current login session
+    "<tag ID>" = "<tag value>" # 0 or more
+    "LANG" = "en-us"
+    "PS_LOCK_DIR" = "F:\\Locks\\"
+  "html" = "" # unused
+  }
+}
+The following is an example of the input received by the plugin:   "" "" = {
+     "action" = "PRINT-FORM"
+     "user" = "user1id"
+     "requester" = "user1id"
+     "cginame" = "pss"
+     "host" "" = {
+       "id" = "AD"
+       "name" = "ad"
+       "type" = "WIN2K"
+       "address" = "10.10.77.20/basedn=ou=wfou"
+       "adminid" = "administrator"
+       "adminpass" = "letmein!"
+       "userid" = "user1id"
+     }
+     "tags" "" = {
+       "LANG" = "en-us"
+       "PS_LOCK_DIR" = "C:\\Program Files\\Bravura Security\\Bravura
+Security Fabric\\Locks\\"
+     }
+     "html" = ""
+   }
+Output
+The following is an example of the output produced by the plugin:
+"" "" = {
+  "action" = "PRINT-FORM"
+  "cginame" = "ida"
+  "html" = ""
+     <TABLE width=100% border=0 cellpadding=0 cellspacing=0>
+     <TR>
+     <TH COLSPAN=2 class=HEADTEXT>
+     <nobr>Information for user manage1 on target AD</nobr>
+     </TH>
+     </TR>
+     <TR>
+     <TD valign=top COLSPAN=2 class=CELLTEXT>
+     &nbsp;
+     </TD>
+     </TR>
+     <TR>     <TD valign=top COLSPAN=2 class=CELLTEXT>
+     <strong>General</strong>
+     </TD>
+     </TR>
+     <TR>
+     <TD valign=top class=CELLTEXT>
+     Distinguished name:
+     </TD>
+     <TD valign=top class=CELLTEXT>
+     CN=Manage 1,OU=Users,OU=North America,DC=spacey-2k3,DC=local
+     </TD>
+     </TR>
+     <TR>
+     <TD valign=top class=CELLTEXT>
+     Full name:
+     </TD>
+     <TD valign=top class=CELLTEXT>
+     Manage 1
+     </TD>
+     </TR>
+     <TR>
+     <TD valign=top COLSPAN=2 class=CELLTEXT>
+     &nbsp;
+     </TD>
+     </TR>
+     </TABLE>
+     <P>
+  "requester" = "user1id"
+  "user" = "manage1"
+  "host" "" = {
+    "address" = "10.10.77.20/basedn=ou=wfou"
+    "adminid" = "administrator"
+    "adminpass" = "Letmein1"
+    "id" = "AD"
+    "name" = "ad"
+    "type" = "WIN2K"
+    "userid" = "manage1"
+  }
+  "submit-buttons" "" = {
+    "" = ""
+  }  "tags" "" = {
+    "LANG" = "en-us"
+    "PS_LOCK_DIR" = "C:\\Program Files\\Bravura Security\\Bravura
+Security Fabric\\Locks\\"
+  }
+}
+Display custom HTML
+You can write a CGI display plugin to generate s t atic  HTML to include on a page. You can choose to display
+custom HTML on some or all pages.
+The CGI display plugin is executed on pages that matches a tr ansaction  ID. The CGI display plugin receives
+in f ormation  on the user that is triggering the plugin.
+To set the plugin point, type the name of the plugin in the CGI DISPLAY PLUGIN field  on the Modules >
+Options  page.
+To display HTML on specific  pages, include the tr ansaction  ID of the pages, each separated by a space. If
+you do not specify a tr ansaction  ID, the plugin will be executed on all pages, however this is not
+recommended as this will result in performance issues.
+For example:
+custom-html.py F_LOGIN F_OPTION 
+will execute the CGI display plugin for pages that contain tr ansaction  ID F_LOGIN  or F_OPTION .
+Ensure that tags are specified  in the m4 files of the CGI program you wish to invoke. Tags are denoted by
+the format %<tag >%.
+For example, if you want to include HTML in the Front-end  that matches tr ansaction  ID F_OPTION ,
+modify the psf.m4 file and locate the tr ansaction  ID F_OPTION . Insert a new tag in this section,  or
+using an e xisting  tag.
+If adding a new tag into the m4 file, you will need to re-compile the skin files (on page 3477).
+There is no shipped plugin in use with this plugin point. See more in f ormation  on writing  a custom plugin
+Requirements
+The CGI plugin is a console executable, which accepts in f ormation  on standard input and writes results to
+standard output. See W riting  plugins  for general requirements.
+Ex ecution  points
+When a Bravura Security Fabric  CGI program matches a tr ansaction  ID, it invokes a plugin to add HTML
+content. Each time  the page is accessed, the plugin executes. See CGI plugin sequence of events  (on page
+1149) for the general sequence of events.
+InputInput passed into the plugin is as follows:
+   "" "" = {
+     "sessionid" = "<sessionid>" # ID of the current session
+     "transid" = "<transid>" # The transaction ID of the current page
+     "cginame" = "<cginame>" #The CGI running the plugin
+     "viewer" "user" = {
+       "id" = "<id>" # ID of the user requesting the page
+       "name" = "<name>" # Name of the user requesting the page
+     }
+     "request" "" = {
+       "key" = "<value>"     # List of all of the values posted in the form
+       "key2" = "<value>"
+     }
+   }
+For example:
+"" "" = {
+  "sessionid" = "S9982e39d-a79c-4af0-be79-9da546819501"
+  "cginame" = "psf"
+  "transid" = "F_OPTION"
+  "viewer" "user" = {
+    "id" = "superuser"
+    "name" = "superuser"
+  }
+  "request" "" = {
+        ...
+    "CGI_DISPLAY_PLUGIN_VALUE" = "custom-html.py"
+    "DEFAULT_API_SESS_EXPIRY_SECONDS_VALUE" = ""
+    "DEFAULT_EXPIRY_SECONDS_VALUE" = "999999"
+    "DEFAULT_SCHEDULE_TIME_VALUE" = "01:00"
+    "DIGITAL_SIGN_PLUGIN_VALUE" = ""
+    "DISPLAY_ALIAS_SIMPLIFIED_VALUE" = ""
+    "DISPLAY_GROUPID_PLUGIN_VALUE" = ""
+    "DISPLAY_TIMEZONE_VALUE" = ""
+    "FILTER_REQUEST_PLUGIN_VALUE" = ""
+    "FILTER_USER_PLUGIN_VALUE" = ""
+    "JS" = "true"
+    "KEEP_USER_PLUGIN_VALUE" = ""
+    "LANG" = "en-US"
+    "RECORDS_PER_PAGE_VALUE" = "20"
+    "SEARCH_MAX_RESULTS_VALUE" = "500"    "SEARCH_NO_INIT_RESULT_VALUE" = ""
+    "SESSDATA" = "<encrypted session data>"
+        ...
+  }
+}
+Output
+The output returns s t atic  in f ormation  that is presented to the user.
+Output passed from the plugin is as follows:
+   "" "" = {
+     "retval" = 0
+     "replacement" "" = {
+       "tag" = "<tag1>" #transid of tag1
+       "value" = "<html>" #html of tag1
+     }
+     "replacement" "" = {
+       "tag" = "<tag2>" #transid of tag2
+       "value" = "<html>" #html of tag2
+     }
+     ...
+   }
+The value for HTML key content must be written  as one line.
+For example:
+   "" "" = {
+     "retval" = 0
+     "replacement" "" = {
+       "tag" = "REPLACEME"
+       "value" = "<strong>Message of the day</
+strong><br>Please review new HR policies"
+       }
+     ...
+   }
+.
+Manage certific ation  process (CERT)
+Con figur e  the Manage certific ation  process  (CERT) module to control the access certific ation  process. Users
+with appropriate permissions use the Manage certific ation  process  (CERT) module to view, c on figur e,  and
+start access certific ation  campaigns.Users must be a product administrator  with the Manage certific ation  process or Initia t e  certific ation
+rounds adminis tr ativ e  privilege to initia t e  certific ation  campaigns.
+To c on figur e  options  that apply to the Manage certific ation  process  (CERT) module:
+1.Click Manage the system  > Modules  > Manage certific ation  process ( CERT ). 1.
+2. Con figur e  the options  in Table Modules > Manage certific ation  process (CERT) options  (on page 1159) 2.
+as required.
+3.If required, c on figur e  event options  listed in Table Manage certific ation  process (CERT) events that 3.
+launch interface programs  (on page 1161), Manage certific ation  process (CERT) events that launch
+interface programs  (on page 1534).
+4.Click Update at the bottom  of the page. 4.
+Modules > Manage certific ation  process  (CERT) options
+Option Description
+CERT ATTRIBUTE CERTIFIER Type the ID of the resource attribut e  to control whether the resource
+reviewer should be selected randomly from the resource’s set of
+authorizers or supplied by a plugin program.
+CERT ATTRIBUTE GROUP CERT Type the ID of the resource attribut e  to control whether managed groups
+can be certified  even if the parent target system is not allowed in the
+certific ation  process. This resource attribut e  should be set per target
+system.
+Alt ernativ ely ,  enable CERT OVERRIDE TARGET CERT ENABLED FOR GROUPS
+to allow managed account groups on all target systems to be selectable
+when s t arting  a certific ation  campaign.
+CERT CONFIG VALIDITY INTERVAL The c on figur ations  being certified  are valid for this many days after  the
+certific ation  has finished.  The default is 30 days.
+If a new certific ation  campaign is started within this time  frame, the
+c on figur ations  certified  in the previous campaign are identified  as certified.
+Con figur ations  that are identified  as certified  can be optionally  r e-certified
+to extend their validity.
+CERT CONSISTENCY ATTRIBUTE
+GROUPThe attribut e  group that collects users into peer groups. This can be
+modified  for individual campaigns.
+CERT CONSISTENCY CALCULATION Enable/Disable consistency c alculations.  If enabled, consistency c alculations
+can be c on figur ed  when a campaign is initia t ed.  If disabled, the options  do
+not appear when initiating  a campaign, and consistency c alculations  are
+turned off for activ e  campaigns.
+CERT CONSISTENCY MINIMUM The minimum size of a user peer group.
+If a peer group has fewer members than this, their entitlemen t  consistency
+will not be calculated. Instead, a help 
+ icon will be displayed in the
+consistency column for these users in the review.
+CERT CONSISTENCY USERS LOWER
+THRESHOLDEntitlemen ts  are considered out -of -pattern  if fewer than this percentage of
+users in a peer group share it.Option Description
+CERT CONSISTENCY USERS UPPER
+THRESHOLDEntitlemen ts  are considered in-pattern  if at least this percentage of users in
+a peer group share it.
+CERT DEFAULT CERTIFIER Type the user ID to be the default resource reviewer when the resource has
+no authorizer.
+CERT DELEGATION PLUGIN Type the name of the plugin that would supply the reviewer and delegates
+for a certific ation  segment.
+CERT EMAIL CANCELLATION
+ESCALATESEnable or disable this option  to determine whether emails of campaign
+c ancellation  are sent to escalated reviewers.
+CERT EMAIL INTERVAL The time,  in days, between sending out emails to managers in each level of
+the OrgChart to invite them to certif y  their subordinates.
+CERT ENFORCE NO WARNINGS The reviewer can not sign off a c on figur ation  certific ation  segment until  all
+the warnings are resolved (for example, the c on figur ation  is missing
+authorizers). Disable this option  to remove this enforcement.
+CERT HIDE REQ ROLE MEMBERS Hide required role members from reviewers, except when reviewing
+segr eg ation  of duties  rules violations.
+CERT MAX DELEG ALLOWED The maximum number of group owners to assign as delegates to review.
+The default is 50.
+CERT MAX ROUND CALCULATION
+TIMEThe maximum c alculation  time,  in seconds, of new certific ation  campaigns.
+After  this amount of time  passes, product administrators can cancel an
+activ e  certific ation  campaign. This delay prevents issues caused by
+canceling a campaign while it is still c alculating.  The value must be between
+60 and 86400 and defaults to 3600.
+CERT OVERRIDE TARGET CERT
+ENABLED FOR GROUPSEnable this option  to allow all managed groups to be selectable when
+s t arting  a certific ation  campaign, regardless of whether the parent target
+system is allowed in the certific ation  process.
+Alt ernativ ely  you can apply an override to individual target systems by
+c on figuring  a resource attribut e  identified  by CERT ATTRIBUTE GROUP CERT.
+CERT PROMPT PASSWORD Enable or disable this option  to determine whether reviewers must enter a
+password to sign off a certific ation  review by default. Certific ation  campaign
+initia t or s  can override the default when initiating  a campaign.
+CERT REQUIRES COMMENT TO
+CERTIFYEnable this option  to force reviewers to provide a reason when certif ying  an
+item.
+CERT REQUIRES COMMENT TO
+REVOKEEnable this option  to force reviewers to provide a reason when revoking an
+item.
+CERT REVOKE CASCADING Enable or disable this option  to control whether aut omatic  cascading of
+revokes should occur. If the system variable is enabled, when a parent
+entitlemen t  is revoked in certific ation,  all the children entitlemen ts  are
+marked as revoked and appear in the sign off summary as being marked for
+r e v oc ation.  If it is set to disabled, then the aut omatic  cascading of revokes
+is disabled.

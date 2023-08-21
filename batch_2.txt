@@ -1,0 +1,248 @@
+Part I HOME
+Bravura Security Fabric  12.6
+This site provides an overview of the entir e  Bravura Security Fabric , as well as important in f ormation
+about how to install and c on figur e  licensed Bravura Security Fabric  softw ar e  products.
+This content on this site covers releases from v12.6.0. There are minor feature improvements between
+patch releases, as noted in the release notes  (on page 17) and in relevant topics. The content is relevant
+to older major releases of Bravura Security Fabric ; however be aware there may be some v ariation.
+Bravura Security, Inc was formerly known as Hitachi ID Systems. The company was acquired by Volaris
+Group in September 2022 to accelerate its ability to solve fragmented and risk - filled  identity  experiences
+for our customers. Bravura Security Fabric  12.5 is the fir s t major release to carry the Bravura Security
+branding. In your version of Bravura Security Fabric  you may still see names of binaries, directories, and
+other objects that r e flect  Hitachi ID nomenclature. Parts of the documen t ation,  including screenshots
+and code samples, may also temporarily use the old name.
+Related documen t ation  sites
+The following sites are supplementary to this site:
+▪Connector Pack Documen t ation  - how to install Connector Pack, and integrate with various target ▪
+systems. This site also includes reference in f ormation  on Connector Pack tools and scripting.
+▪Mainframe Connector  - how to install and c on figur e  Mainframe Connector . ▪
+▪End Users Documen t ation  - how to use Bravura Security Fabric  as a self-service or help desk user. ▪
+▪Bravura Safe Documen t ation  - how to c on figur e  and use Bravura Safe for personal and team password ▪
+management.
+▪Upgrade and Migr ation  - when and how to upgrade or migrate Bravura Security Fabric  instances. This ▪
+site also includes reference in f ormation  on upgrade and migr ation  tools.
+▪ R eplic ation  and recovery  - detailed in f ormation  about Bravura Security Fabric  file and data r eplic ation, ▪
+and how to recover from server failures.
+▪REST API  - reference documen t ation  for the REST API for Bravura Security Fabric  12.6.x, supporting ▪
+OpenID Connect, Privilege, and SCIM endpoints.
+▪Glossary  - Bravura Security terminology. ▪
+Additional  resources
+Additional  in f ormation  may be found in printable documents  (on page 16), which are referenced
+throughout this site. You can also access the documents from the Resources widget to the right of the
+content.
+Other Bravura Security Fabric  versions
+See the documen t ation  site for Bravura Security Fabric  release: 12.5 , 12.4 , 12.3 , 12.2 .Visit the portal  for documen t ation  for versions of Bravura Security Fabric  older than 12.2.Part II ABOUT1 About this site
+What you can find on this site
+This site is organized as follows:
+ABOUT  (on page 13) Provides in f ormation  about what is on this site, what
+topics are available as printable PDFs.
+Release notes highlight what is new and updated in
+Bravura Security Fabric .
+INSTALLATION  (on page 168) Explains the requirements and procedures for installing
+Bravura Security Fabric  softw ar e.
+INSTALLATION > Components  (on page 312) Explains the component framework, patterns  and
+scenarios, and how to install and manage components.
+GETTING STARTED  (on page 351) Shows Bravura Security Fabric  administrators how to use
+the Manage the system (PSA) module GUI to c on figur e
+Bravura Security Fabric .
+Allows project managers and Bravura Security Fabric
+administrators to plan implemen t ation  of key features,
+and maps essential  steps to chapters in the document.
+BASE CONFIGURATION > Notific ation  (on page 411) Learn how to c on figur e  notific ations  for administrators
+and end-users.
+Learn how to set up web and batch notific ations  for
+password expiry, compliance, and other use cases.
+BASE CONFIGURATION > Resources  (on page 479) These chapters correspond to the Resources menu in
+Bravura Security Fabric . Read these chapters to learn
+how to c on figur e  target systems, users, and groups.
+BASE CONFIGURATION > User Groups and Rules  (on
+page 670)Learn how to control user access to resources and
+w orkflo w .
+BASE CONFIGURATION > Login Process  (on page 819) Learn how to c on figur e  authentic ation  policy and
+authentic ation  chains.
+BASE CONFIGURATION > W orkflo w  and Modules  (on
+page 1263)Learn how to c on figur e  w orkflo w  objects to enable users
+to de fine  access change requests. Learn how to c on figur e
+the behavior of web features.
+BASE CONFIGURATION > Mobile Access  (on page 1444) Learn how to set up Bravura One  to provide mobile
+access for Bravura Security Fabric .
+Searching on this site
+This site includes a simple but powerful search engine.
+Results are ranked by the number of times  a search term occurs in a title or topic content. Searches for
+multiple  terms are also supported. If a document matches at least one of the search terms, it will show in
+the results. The search terms are combined with OR. Topics that contain all terms will score more highly
+and will be returned fir s t.You can save searches then use them again from the Saves searches  widget to the right of the content.
+Na vig ating  this site
+You can browse content using the top na vig ation  bar, the Table of Contents (TOC) on the left, or the
+What's in this section  widget to the right of the content.
+You can hide any of these panels and widgets using the c on figur ation  menu. Click on the cog symbol 
+on the top right of the page.
+Sharing and saving pages
+Use the v ertic al  ellipsis icon 
+  to the right of a topic title to share or save pages.
+Saved pages can be accessed via the My Favorite Pages  widget to the right of the content.
+Con v entions
+This site uses the  following c on v entions:
+This in f ormation  … displayed in …
+Variable text (sub stitut ed  for your own text) <angle brackets>
+Non-text keystrokes – for example, [Enter]  key on
+a keyboard[brackets]
+Bravura Security program and file names Bold monospace font
+Terms unique to Bravura Security Fabric italics
+Button  names, text fields,  and menu items boldface
+User interface web pages (headers) italics
+Literal text, as typed into c on figur ation  files,  batch
+files,  command prompts, and data entry fieldsmonospace font
+Feedback and help
+If you have feedback about this site or wish to report an omission or error, please contact
+doc@bravurasecurity.com .If you require technical assistance with Bravura Security Fabric , contact  support@bravurasecurity.com .
+Printable documents
+Manuals
+These reference manuals are supplementary to this site.
+PSLang
+The “PSLang Reference Manual” ( pslang.pdf ) describes the PSLang language developed by Bravura
+Security. Use this manual when writing  scripts to customize various parts of Bravura Security Fabric .
+API
+The Bravura Security Fabric  Remote API ( api.pdf ) guide provides a detailed overview of theSOAP API as
+well as a complete function  reference.
+Personal Vault Quick Start
+Bravura Pass  Personal Vault ( personal-vault.pdf ) describes how to set up and use the Personal Vault. This
+guide applies to Bravura Pass  licenses. This feature will be deprecated in a future release.2 Release notes
+Bravura Security Fabric 12.6.0
+Deprecated features
+▪ St arting  in 12.6.0, as Internet Explorer is no longer supported, Activ eX  controls are no longer officially ▪
+supported. They will still be shipped, but will not be loaded on any web page. They can still be
+installed on client w ork s t ations,  where nativ e  extensions skip the download and use the installed.
+Use Guacamole controls and Secure browser/webapp in place of Activ eX  controls.
+▪Removed installers for Activ eX  local reset extensions ▪
+▪Removed old Internet Explorer 11 specific  styles and JavaScirpt. ▪
+▪Added unsupported browser redirect when the product is accessed with Internet Explorer 11.▪
+▪Bravura Security Login Manager has been disc ontinued  and is no longer supported. ▪
+▪Removed deprecated SOAP WCF-based binaries.▪
+▪Mac OS support for Login Assistant / Self Service Anywhere is now deprecated.▪
+Features and improvements
+Bravura Pass
+▪Updated Password Change Notific ation  Module installer, so the LONGID installer variable can be used ▪
+on the command line to c on figur e  the setting  "Long ID format to send to Password Manager service".
+Bravura Privilege
+▪Added filt er  to hide invalid accounts from PAACCESS. . ▪
+▪Secure browser has been updated to make use of WebView2 which is based on Micr osoft  Edge ▪
+http s://learn.micr osoft.c om/ en-us/micr osoft-edg e/w eb vie w2/ .
+Server hardening
+▪The shipped Content-Security-Policy was hardened to remove wildcards.▪
+▪One wildcard on connect-src  that must be hardened after  installing and setting  up r eplic ation  and ▪
+load balancers. See Content-Security-Policy (CSP)  (on page 307).
+▪img-src  defaults to self  which means only images served by the instance can be loaded. ▪
+Customers that use an external directory for pr ofile  picture URLs must whitelist the external directory
+for images to load.
+▪The Recaptcha component has been updated to use the recaptcha.net URL instead of google.com;▪
+Check that this component was upgraded successfully.
+Proxy servers
+▪Added proxy tunnel client functionality  to use HTTPS-based approach to connect to proxy servers and ▪
+avoid opening inbound TCP ports.Auto discovery
+▪Updated auto discovery, so Source of Pr ofile  target accounts that don't produce pr ofiles  can still auto- ▪
+associate to other pr ofiles.
+Resource and group attribut es
+▪ Con figur ations  for boolean account and group attribut es  now include settings  for specifying the values ▪
+r epr esenting  "true" and "false" on the target system.
+Components
+▪Updated the version of the sqlite3 dll to 3.41.2▪
+IDMLib (Python)
+▪Removed explicit schema name from models generated by peewee_iddb.▪
+▪Added support for Python 3.11 for Bravura Security Fabric . ▪
+Upgrade / migr ation
+▪Added the upgradetest utility  with the shipped ins t allation  files to check for pot ential  issues prior ▪
+to upgrading the database.
+▪Updated migratedata to support migr ating  manual associations  of accounts to pr ofiles  (- ▪
+manual_assoc).
+▪Updated migratedata to support migr ating  pr ofile  role memberships. Only memberships with ▪
+valid pr ofiles  can be migrated, and memberships to deprecated and non-assignable roles can be
+filt er ed  out (-rolembrs).
+Notific ation
+▪Moved PSN "user becomes compliant" message to be displayed in the Front-end  (PSF). ▪
+▪ Modified  auto discovery error email to keep the text f ormatting  even when system variable ▪
+MAIL_CONTENT_TYPE is enabled (Enable HTML mail content).
+▪Added support to send out IDTM failure notific ation  emails to requester, recipient and the authorizers ▪
+when oper ation  fails to implement after  the second try, so interested parties  can be more responsive
+to address the issue.
+User interface
+▪Reduce loading time  of pr ofile  page when a user has many entitlemen t  attribut es. ▪
+▪Upgrade Angular to 15.2.9 (and all NPM dependencies).▪
+Utilities
+▪Enhanced the iddbadm  (on page 3545) utility  to be to swap between SQL and Windows ▪
+authentic ation.
+▪Added the ATTR_AUTO_PROPAGATE_THRESHOLD  to control whether requests should be submitted ▪
+at all if the number of requests exceeds the threshold when running idtrack  (on page 2431) .
+Bravura Security Fabric  sends an email to the product administrator. ▪Added the AUTO_ASSIGNMENT_THRESHOLD  to control whether requests should be submitted  at all ▪
+if the number of requests exceeds the threshold when running autores  (on page 3618) .Bravura
+Security Fabric  sends an email to the product administrator. 
+▪ Modified  migratedata  utility  to add support for "user attr_file". ▪
+▪Added a limited node s ynchr oniz ation  checking utility ,  limitedsynccheck  (on page 3547). ▪
+Client tools
+▪Added client tools support for Windows 11.▪
+T r ansaction  monitor
+▪ Modified  account/group attribut e  override page to warn if both values are set and mapped account/ ▪
+group attribut e  to pr ofile/r eques t/r esour ce  attribut e  are c on figur ed.
+▪ Modified  T r ansaction  Monitor Service ( idtm ) when determining the attribut e  values passed to the ▪
+agent on account update, requested pr ofile  attribut e  values precedes literal values.
+R eplic ation
+▪Changed file r eplic ation  to skip log-level overrides for specific  modules (such as via psdebug.exe). ▪
+These overrides are now node-specific.
+▪Added *.pyc files to the hardcoded file r eplic ation  blacklist. ▪
+API
+▪Added idmconfig support for policy retrieval and update. ▪
+▪Default authoriz ation  policies have been added for many REST API endpoints. Endpoints which don't ▪
+have a specific  policy yet will use the 'generic_policy' policy. Default policies and their mappings can
+be found in the REST API Postman documen t ation.  Alt ernativ ely ,  policy mappings can be viewed on
+the Manage the system > Policies > REST API authoriz ation  policies  (on page 3469) page, where you
+can also download the current policy or reset modified  policies to their defaults.
+▪Target namespace of IDAPI SOAP API has been updated to www.bravurasecurity.com.▪
+Resolved issues
+Ins t allation
+▪Instance pr e-ins t allation  check "IIS Web Server Module Con flict  check" warns if IIS module "Web ▪
+Distributed Authoring and Versioning" (WebDAVModule) is installed and suggests disabling it due to
+pot ential  interference with REST API usage.
+See Primary server requirements  (on page 197).
+▪The installer for Phone Password Manager was fix ed  for an error that occurred during upgrades. ▪
+▪Fixed a problem where minimal connector pack installs may not be able to list.▪
+▪Fixed an error in pos t -ins t allation  in shared schema. ▪
+▪Fixed all ins t allations  in shared schema to not change the RestApiKey on secondary nodes. ▪
+▪Added ENCRESTAPIKEY to INF file for r eplic ation  and/or shared schema setups. ▪
+▪ Modified  resetkey  utility  (on page 3577) to include option  to export RestApiKey into INF file. ▪Bravura Privilege
+▪Archived accounts are hidden in the CREATE_PAMUTIL_API_USER pr e-de fined  request. ▪
+▪In the Privileged Access app, for a da t e/da t etime  field,  the time z one  value is now displayed next to its ▪
+label; before, it was displayed next to its widget which made it rendered nearly hidden.
+▪Fixed password CICO expiry email to load the proper time  zone info for TIME variable. ▪
+▪Improved performance in stored procedure PolicyRuleComputerDeploy.▪
+▪Fixed checked-out data on sessdata on previously selected items▪
+Bravura Pass
+▪Adjusted netvalidatepwpol plugin to be able to directly check against Azure.▪
+Authentic ation
+▪Fixed invalid authchain select rule in Scenario.hid_authchain_saml_sp.▪
+W orkflo w
+▪Fixed request g ener ation  to include seqno's in reqinfo kvg for default attribut e  values. ▪
+▪Ensured that OrgChart authorizer email only sends out to the related managers when request also has▪
+non-org oper ations.
+▪Fixed an issue with UPDT (account attribut e  update) request so that an empty value is set for the ▪
+a ff ect ed  account attribut e  that is mapped to a pr ofile  attribut e  of user type, and there is no valid
+account associated with the user pr ofileguid  (user attr  value) on the same target as the account to be
+updated.
+▪Fixed an issue in the requests app when w orkflo w  manager views a selected request which he/she ▪
+doesn't have ACLs on the requested attribut es,  the wrong capacity is loaded, and when he/she clicks
+on the hyperlink to view request details, requested attribut es  ACLs are not respected, and wfreq
+plugin fails to run.
+▪Fixed an issue so that multi- v alue  account attribut e  values are set properly when an implementer ▪
+completes the account cr eation  tasks.
+▪Account attribut e  values returned by agents on create/update will now flo w  through to mapped ▪
+pr ofile  attribut es.
+▪Fixed request details popup page to properly check the viewer's ACLs on the attribut es  instead of the ▪
+request's requester's ACLs to determine if requested attribut es  should be loaded.
+▪Added the request ID in f ormation  to the email plugin input. ▪
+▪Request in f ormation  is saved to the session to avoid the lost of the oper ations  when the wfreq plugin ▪
+fails.
+▪ IDMCon fig  will not abort any more if there is an attemp t  to add a duplicate default value to an ▪
+attribut e.  It will be logged as an warning instead.
+▪Fixed a pot ential  runtime  error "Subquery returned more than 1 value..." in sproc ▪
+BlackboardRuleGetBatch, which results in request being canceled.
+▪Fixed an issue where ORGCHART_MANAGER attribut e  was updated with the manager's accountname ▪
+(instead of manager's pr ofileguid)  for create/update attribut e  request.

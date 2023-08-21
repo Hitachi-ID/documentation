@@ -1,0 +1,139 @@
+Criteria Description
+Recipient ID Type a comma-and-space-delimited list of recipients you
+want to include in the report. This field  is only visible
+when Trend by  is set to Recipient .
+Alt ernativ ely ,  you can search for one or more recipient
+pr ofile  IDs.
+Managed system policy ID Type a comma-and-space-delimited list of managed
+system policy IDs you want to include in the report. This
+field  is only visible when Trend by  is set to Managed
+system policy .
+Alt ernativ ely ,  you can search for one or more policies.
+Specify time Specify a date range for user check-outs.
+Choose r elativ e  date Specify a r elativ e  date for user check-outs. The content
+from this field  will vary depending on which Specify time
+you choose.
+R eporting  time  interval Specify a time  interval for the collected data. Records can
+be organized by day, week, month, quarter, or year.
+Summarize report Select this if you prefer to have a numerical summary of
+the trend type.
+Graph type Specify the type of graph for a visual r epr esen t ation  of
+the data. The available graph types are V ertic al  bar chart
+and Line chart. This field  is only visible when Summarize
+report  is selected.2 Analytics
+Micr osoft’ s  SQL Server R eporting  Services (SSRS) is softw ar e  that can be used to generate reports. SSRS
+also provides a Report Builder tool for less technical users to generate reports. Analytics  is an optional
+Bravura Security report feature that organizes and displays SSRS reports.
+When analytics  is c on figur ed,  an Analytics  link is available on the Bravura Security Fabric  adminis tr ativ e
+menu.
+Reports that exist on a SQL Server R eporting  Service server are displayed on the Analytics  user interface
+and can then be saved in diff er en t  formats such as DOC, CSV, PDF and HTML.Managing and using analytics
+Requirements
+The analytics  feature requires SQL Server R eporting  Service (SSRS). The version of SSRS must be the same
+version as the SQL Server for the instance; for example, SQL Server 2016 and SSRS 2016.
+In order to use the Analytics  app, the feature must be c on figur ed:
+▪During Bravura Security Fabric  ins t allation  (on page 196). ▪
+or;
+▪ After  Bravura Security Fabric  ins t allation,  using the setupanalytics program. ▪
+Use setupanalytics to
+▪Add the Analytics  app if it was not installed when Bravura Security Fabric  was initially  installed. ▪
+▪Modify the Bravura Security Fabric 's current Analytics  app c on figur ation: ▪
+▪Change the SQL Server R eporting  Services (SSRS) server web service URL. ▪
+▪Change the SSRS server administrator username.▪
+▪Change the SSRS server administrator password.▪
+▪Change up a SSRS database, a database login username and password.▪
+▪Change the report users login username.▪
+▪Change the report users login password.▪
+Requirements
+If you are using setupanalytics to add the Analytics  app to the product if it was not initially
+installed when Bravura Security Fabric  was installed, the following extra steps are required:
+1.Install SQL Server R eporting  Services - Nativ e  feature. 1.
+2.Create a dedicated report database user and schema.2.
+3. Con figur e  SSRS. 3.
+Usage
+setupanalytics.exe [option]
+Argument Description
+–admin <username> Report server administrator
+–adminpwd <password> Report server administrator password.
+–db <database> Fully -qualified  domain name of the database server.
+–password <password> Database report user password.
+–url <url> Report server URL.
+–username <username> Database report username.
+Examples1.Change analytics  to use a diff er en t  database to report data from: 1.
+setupanalytics.exe --db SERVER01\database1 --
+username  reportuser  --password reportuserpassword
+2.Add the Analytics  app after  the Bravura Security Fabric  ins t allation: 2.
+setupanalytics.exe --admin sa --adminpwd password --
+db SERVER01\database1 --url http://SERVER01:80/ReportServer --
+username  reportuser  --password reportuserpassword
+If you do not  see Analytics  on the main menu, it has not been installed.
+In order to access the Analytics  app users require the "Analytics"  adminis tr ativ e  right or have
+membership criteria which is de fined  by the _ANALYTICS_READERS_ user class.
+To create new reports, Micr osoft’ s  Report Builder must be installed on the user’s computer.
+Report display
+Analytics  reports and some fields  can be shown or hidden using a filt er  plugin. See Options  on Page 450.
+The four report elements below can appear in a SSRS report created on the SSRS server and displayed in
+the Analytics  app:
+▪Records per page  Number of records per page to be shown. 10, 20, 50, or 100 records can be shown ▪
+per page.
+▪Show/hide columns  A selection  list of report columns which can be shown or hidden. By default they ▪
+are shown.
+▪Embedded links  A popup opens when a report item that has embedded link is clicked. ▪
+▪Hide r epeating  cells  A checkbox when enabled allows report cells showing identic al  in f ormation  to be ▪
+hidden. By default they are shown.
+These custom elements are c on figur ed  in reports created on the SSRS server.
+Na vig ation
+All Bravura Security Fabric  apps, including the analytics  app, utiliz e  a responsive user interface (UI).
+Depending on the app and your permissions, you will have diff er en t  options  available, however, all of the
+apps have a common na vig ation  scheme.
+The na vig ation  scheme has been designed to be in tuitiv e,  and works from left to right, across the screen.
+When you select a report from the left panel, the results are displayed in the Results panel.
+Left panel
+The left panel appears on the left side of the app window and displays all of the categories and each
+report within each category.When you click on a report in the left panel, the results become activ e  in the Results panel.
+Middle panel
+The middle panel, or sometimes  known as the Results panel is the area next to the left panel and displays
+the results from a link that is selected from the left panel.Top panel
+The top panel provides options  such as na vig ating  through the displayed report, refreshing the report,
+e xporting  and printing  the report.Graphs and drill-down reports
+Many of the built-in analytics  reports provided in Bravura Security Fabric  include graphs. You can hover
+the cursor over the data set on each type of graph to see the s t atistic  details.
+For line graphs, you can also:
+▪Hover over an item in the legend to highlight the r elativ e  line on the graph. ▪
+▪Click on an item in the legend to enable/disable the r elativ e  line on the graph. ▪
+JavaScript must be enabled for the graphs to be visible.
+You can view a more in-depth r epr esen t ation  of the data in any graph by clicking on an area in the graph
+or on any row within the table below the graph. This opens a pop-up "drill-down" window that tables
+data from a specific  section  of the graph.
+For example, if you click the results of "No login in f ormation"  in the graph displayed from the Dormant
+and orphan accounts analytics  report  …… a more detailed report displaying accounts with no login in f ormation  is displayed:For more in f ormation  about graph behavior see Using graphs within reports  (on page 2913).
+Exporting  reports
+Clicking on the export icon provides the option  to export the selected report to the following formats:
+▪Word▪
+▪Excel▪
+▪PowerPoint▪
+▪PDF▪
+▪Image - bmp, emf, gif, jpeg, png and tif ▪
+▪CSV▪
+▪XML file with report data ▪Options
+This section  describes behaviors you can set globally for the Analytics  app.
+Navigate to Manage the system > Maintenance > System variables  to set the following variables:
+▪CUSTOM ANALYTIC CATEGORIES  can be used to display new categories in the Analytics  panel. ▪
+▪Sub folders under the ReportItems folder on the SSRS server are considered categories from the▪
+Analytics  app’s per spectiv e.
+▪A report that is created on the SSRS server and not located in a folder under the ReportItems folder▪
+on the same SSRS server will not be shown in the Analytics  panel.
+▪If the option  is left empty you will see default analytics  folders and their reports. ▪
+▪A non-empty sub folder under the ReportItems folder created on the SSRS server and not entered▪
+here will not be displayed in the Analytics  panel.
+▪If a category is entered here, the category will not appear in the Analytics  panel and will not exist ▪
+on the SSRS server. You must create a sub folder with the same name under the ReportItems folder
+on the SSRS server.
+▪VIEW ANALYTICS PLUGIN  and the analytics  policy component hid_policy_analytics_filter ▪
+can be used to filt er  the analytics  panel by showing or hiding categories and reports.
+The component is installed with Bravura Security Fabric  by default, along with a sample plugin,
+plugin_analyticsfilter.py .
+See Components  (on page 3440) for more in f ormation.
+Components
+The hid_policy_analytics_filter  component together with the default Python script
+plugin_analyticsfilter  set in system variable VIEW ANALYTICS PLUGIN  provides a policy

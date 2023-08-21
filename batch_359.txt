@@ -1,0 +1,347 @@
+updinst
+The updinst program synchronizes files and registry settings  between servers in a multiple-ins t ance
+environment, or a r eplic ation  environment. The program is run during auto discovery when the
+Maintenance > Options  > PSUPDATE FILE REPLICATION  setting  is enabled. This is the default setting.
+This program also collects and synchronizes proxy log files onto the instance server.
+This program is used in c onjunction  with the File R eplic ation  Service ( idfilerep ).
+To determine which files and registry settings  updinst  replicates, there are whitelists and blacklists that
+specify what data to include and what data to omit in the context of file/r egis tr y  r eplic ation  You can write
+an updinst.cfg file to provide additional  c on figur ation.
+A sample of updinst.cfg is located in the samples directory. This c on figur ation  file must be placed in
+the \<instance> \ p sc on fig \ directory before it can be used by the File R eplic ation  Service. Use this
+c on figur ation  file to control which files and registry settings  are replicated to other instances (whitelist)
+and which are not replicated (blacklist). The whitelist settings  override blacklist settings.
+All file and c onfiguration  modific ations  should be done on the same server (the primary). When
+attempting  to run updinst from a node other than the primary, an error will occur, and the operation
+will be aborted. In extreme circumstances there is an option  to force external data store replic ation  (-
+extdb -forcerun) from a secondary node; however that should be done only when that database was
+corrupted on the primary (and its backups that are created every time  the external data store is updated,
+were also corrupted) but the database, or a backup, survived on a secondary node. If updinst is run
+from more than one server, or if file or registry changes are made on secondary nodes, it is possible for it
+to overwrite newer files or settings  that exist on secondary nodes. If a server with missing files runs
+updinst , that will remove those same files on all other instances.
+Do not attemp t  to replace Database Service ( iddb ) files using updinst or the File R eplic ation  Service.
+Updating  the Database Service and related files (such as iddbmssql.dll) must be done manually on all
+instances. This only applies to the Database Service service. All other services can be updated using the
+File R eplic ation  Service. To update the Database Service files manually, shut down all services on the
+instance, back up all services, and then replace the Database Service files.
+If a problem occurs during file r eplic ation  then a notific ation  email is sent to the administrator, and the
+FILE REPLICATION FAILURE event is triggered.
+Usage
+updinst.exe [-list] | [-showconfig] |
+  [-synchfile] [-syncreg] [-globalcp] [-serverid <serverid>...] [-dry-
+run] |
+[-extdb[-forcerun]] | [-getlogs] [-proxyfile <proxylist.csv>] [-
+removelogs]
+Argument Description
+-dry-run Only show what would be done without making changes.Argument Description
+-getlogs Retrieve and synchronize all logs from all proxies
+c on figur ed  onto the instance server. Logs will be under
+their r espectiv e  \Logs\proxy_<proxy_IP> directory.
+-globalcp Synchronize the global connector pack in addition  to the
+current instance. Used in c onjunction  with the -s yncfile
+argument.
+-list List file r eplic ation  services involved and exit. Display the
+status of each service, node ID, address, and port. If the
+service is unreachable, check the c onnection  of the
+Database Service for each server.
+-pr o xy file  <proxylist.csv> Retrieve and synchronize all logs from proxies listed in
+the \<ins t ance>\p sc on fig\pr o xylis t.cs v  file. Logs will be
+under their r espectiv e  \Logs\proxy_>proxy_IP< directory.
+Where proxylist.csv contains a list of proxy IP addresses
+and their ports.
+This is only used in c onjunction  with -getlogs.
+-serverid <serverid> … Synchronize to specified  servers; can be used with
+multiple  server IDs. The server ID can be found using the
+-list argument. If no server is specified,  all servers are
+updated.
+-sho w c on fig Show built-in c on figur ation  and exit.
+-s yncfile Synchronize files to other servers.
+-syncreg Synchronize registry settings  to other servers.
+-extdb Synchronize the extdb tables.
+-forcerun Forces the current node to synchronize the extdb tables.
+-removelogs Remove all previously fetched logs from all proxies. Can
+be used in c onjunction  with -getlogs to remove logs that
+no longer exist on the remote server.
+- filedir  <filedir> Specific  file path from which files are synchronized to
+other servers. This is the r elativ e  path under the
+instance’s main file folder.
+-registrydir <registrydir> Specific  registry path from which settings  are
+synchronized to other servers. This is the r elativ e  path
+under the instance’s main registry folder.
+Examples
+1.To show the default c on figur ation  file: 1.
+updinst -showconfig
+2.To show a list of all file r eplic ation  services that are running: 2.
+updinst -list3.To synchronize all files and registry settings  on all servers: 3.
+updinst -syncfile -syncreg
+4.To synchronize a specific  file directory on all servers: 4.
+updinst -syncfile -filedir <filedir>
+5.To synchronize multiple  file directories on all servers: 5.
+updinst -syncfile -filedir <filedir1> -filedir <filedir2> ...
+6.To synchronize a specific  registry setting  on all servers: 6.
+updinst -syncreg -registrydir <registrydir>
+7.To run a dry-run on a specific  server: 7.
+updinst -serverid <server id (guid)> -syncfile -syncreg
+8.To update global Connector Pack files: 8.
+updinst.exe -globalcp -syncfile
+9.To collect and synchronize logs from all proxies:9.
+updinst.exe -getlogs
+10. To collect and synchronize logs from all proxies listed in the proxylist file: 10.
+updinst.exe -getlogs -proxyfile <proxylist.csv>
+Where the proxylist.csv contains:
+::proxy, port:: 
+10.0.39.111, 3344 
+10.0.39.121, 3344
+11. To synchronize the extdb tables: 11.
+updinst.exe -extdb
+12. To remove all previously fetched logs: 12.
+updinst.exe -removelogs
+13. To remove logs that no longer exist on the remote server: 13.
+updinst.exe -removelogs -getlogs
+Update updinst c onfig  file
+In the updinst c on fig  file, all file paths are rooted at the backslash immediately after  the
+instance_name directory.
+Each item in the lists contained in the file is a regular expression (regex).
+While the sample .cfg file contains some entries from the default values built into the updinst binary
+(for regex illus tr ation  purposes), it's recommended that the cfg file actually used contain only new/
+custom values, which do not show up in the four lists when checking the c on figur ation  with no
+updinst.cfg  file in the p sc on fig  directory (it saves on comparisons, and the instance contains a lot of
+files and directories to compare with each declared regex string).
+If the file to add an e x ception  for is script\somefile.py , the most precise regex expression for it is:
+^\\\\script\\\\somefile.py$The s t arting  ^ represents the beginning of the string, so it would not match, for example, \samples
+\script\somefile.py.
+Similarly, the trailing $ represents the end of the string, so it won't match, for example, an extension
+like .pyg
+To exclude a whole directory, you can leave the $ off and the expression will match everything in that
+directory: files and other directories with their files.  This default option  for example matches all auto-
+discovered target list files:
+psconfig\\\\discovered
+Each backslash is escaped with a backslash, so \ becomes \\, and since that is itself inside of a KVG
+string, \\ becomes \\\\  (\s would simply escape the s).
+Below is an example that adds blacklisted registry entries and file entries (meaning that they will not be
+sent from the primary to secondary applic ation  nodes).
+# KVGROUP-V2.0  
+"updinst" "cfg" = {  
+}  
+# Registry path blacklist.  Registry paths that match the regular  
+# expressions here are not considered for replication, unless they  
+# appear in regWhitelist.  All paths are relative to the instance  
+# registry root.  Registry keys (and value names) are separated by  
+# double-escaped backslashes (\\\\).
+ "regBlacklist" = { "^IDAPISOAP\\\\endpoints",  
+                     "SENDER_EMAIL",  
+                     "ServerAddress" };
+# File path blacklist. Filesystem paths that match the regular
+# expressions here are not considered for propagation, unless they
+# appear in regWhitelist (see above). All paths are relative to the
+# instance root directory. Directories and files are separated
+# by double-escaped backslashes (\\\\).
+"fileBlacklist" = { "^\\\\psconfig\\\\.*\\.db$";
+"plugin\\\\debug\\\\.*";
+"design\\\\src\\\\ui.build\\\\.*";
+"design\\\\src\\\\ui\\\\node_modules\\\\.*"
+};
+}
+In the above:
+▪ Blacklisting  these entries ensures that the SENDER_EMAIL  and ServerAddres s are not ▪
+propagated from the primary to the secondaries. These two entries will be unique to each server.▪SENDER_EMAIL  system variable, so that each node can be given a separate "From:" field  in ▪
+outgoing emails, to be able to quickly distinguish  what node originates what email.
+▪ServerAddres s bypasses the aut omatic  computer-name de t ection  on each node (for example, ▪
+when iddb detects only the hostname in a node whose OS is not joined to a domain, and Bravura
+Privilege needs to register FQDNs instead - so that link passing between nodes, as in downloading
+recording archives, can succeed the TLS check in IIS)
+▪The entry blacklisting  the IDAPISOAP\endpoints  registry key exists by default in the ▪
+c on figur ation  file, in case each node has to provide diff er en t  SOAP endpoints (directly to the
+hostname, or for zoning purposes).
+▪Most registry changes are system variables listed in the registry section  at Manage the system ▪
+>Maintenance > System variables .
+▪psconfig\*\*.db  is where Bravura Privilege keeps list files from discovered systems in 12.0.0+: by ▪
+default, those files are useful only on the primary node and sending them to replica nodes is a waste
+of resources, especially at the end of each Auto discovery.
+▪For the same reason, check the output of updinst -showconfig  to make sure that the ▪
+psconfig\*.db  files are also blacklisted (and if not, add a blacklist rule for ^psconfig\\\
+\*.db )
+▪Filtering the logs for psupdate or updinst dur ations  can suggest what other large files can be ▪
+excluded from auto discovery if they take too long.
+▪plugin\debug \ is where (mostly c omponentiz ed)  Python scripts using IDMLib-based logging place ▪
+their input/output KVGs and like other log files,  those are usually not needed on secondaries from the
+primary.
+▪design\src\  files should never change after  patching. They are Angular app requirements and ▪
+there is no need for them to be propagated to secondary servers, let alone proxies.
+▪Whitelists trump blacklists. This means if the same item is matched both by a blacklist regex and a▪
+whitelist one, the whitelist wins and the item is propagated.
+▪If an entry is not blacklisted (or if it was by default blacklisted, but is modified  with a whitelist entry): ▪
+▪It copies any files changed on the primary inside the instance folder and subfolders, and it ▪
+overwrites any changes. In other words, it deletes any new files created on the secondary nodes
+and if files are modified  on secondaries, the changes are reverted and not backed up.
+▪It copies any registry changes made on the primary node and overwrites any changes on the▪
+secondary nodes (removes them if they were not on the primary).
+▪The main Bravura Security Fabric  installer only installs/checks for the 64-bit VC++ redistributables. The ▪
+Connector Pack MSI will install/check for both 32-bit and 64-bit, so do not depend on file pr opag ation
+to copy all the connector pack files over to other nodes and proxies.updproxy
+The updproxy program, installed on the Bravura Security Fabric  server, works in c onjunction  with the
+psproxy service. It is used to update the list of proxy servers registered on the Bravura Security Fabric
+server, and to push any files necessary to run connectors and list utilities  to the proxy servers. This
+includes the Logging Service ( idmlogsvc ) being used on the proxy servers. Normally, updproxy is
+invoked as one of the fir s t steps in the auto discovery batch file.
+The UPDATE SYSTEM AGENT COUNT option  controls how many proxy servers can be updated
+simultaneously. The default value is 50. This option  can be set at Manage the system  > Maintenance >
+Options .
+The UPDATE SYSTEM AGENT COUNT option  also controls how many target systems can be listed
+simultaneously.
+Usage
+updproxy.exe -list | -refresh | -rotatelog <N> | -proxy <IP address>/<port>
+Argument Description
+-list Lists all proxy servers registered with the Bravura Security
+Fabric server.
+-refresh Copies the latest agents to all proxy servers.
+-rotatelog <N> Rotate the log folder for at most <N> rounds.
+-proxy <IP address>/<port> Specifies  which proxy servers to refresh.
+Unlike updinst , updproxy  cannot  be controlled using a c on figur ation  file. Proxies have diff er en t
+requirements compared to full instances. Currently updproxy works based on a hardcoded list of
+things that are relevant to proxy instances:
+▪Connector Pack (instance or global)▪
+▪Some utilities  (updsvcpass, pscp, logutil) ▪
+▪\<instance>\script\▪
+▪\<instance>\lib\▪
+▪\<instance>\idmlib\▪
+▪\<instance>\license\▪
+▪\<instance>\component\▪
+▪Services (idmlogsvc, psproxy)▪
+Examples
+1.To show a list of currently registered proxy servers, type:1.
+updproxy -list
+2.To update agents on all the proxy servers, type:2.
+updproxy -refresh3.To update agents on a specific  server, type: 3.
+updproxy -refresh -proxy <IP address>/<port>
+loadreports
+Use the loadreports program to regenerate <instance>\report\reportsdata.dat which includes
+in f ormation  on the available executable reports.
+This utility  aut omatic ally  runs and generates this file when installing an instance of Bravura Security
+Fabric , during the pos t -ins t allation  tasks. The loadreports program is only required after  ins t allation
+if custom or additional  reports are installed.
+Usage
+loadreports.exe [-debug] [-init]
+Argument Description
+-debug Debug mode
+-init Initializ es  reports found in the reports folder.
+Examples
+1.To regenerate reportsdata.dat  and also load all custom reports entered into the ALLOWED 1.
+REPORTS CUSTOM, type:
+loadreports.exe
+2.To aut omatic ally  fill in the ALLOWED REPORTS CUSTOM field  with all custom reports found in the 2.
+reports folder type:
+loadreports.exe -init
+loaduccache
+The loaduccache program caches user classes and user class points for single participan ts.  The
+program is run aut omatic ally  at the end of auto discovery to load user class and user class point cache for
+any expired caches ( loaduccache -load -expired ).
+In a replicated environment, cache rec alculation  can only be performed on the instance which runs
+psupdate . (on page 2715)
+Usage
+loaduccache.exe  -clearall | -list | -listuc | -listucp |
+      -load [-expired | -hours <hours> | -ucp <pointid>  <category> <phase> | -userclass <user class> ] |
+      -clear [-expired | -hours <hours> | -ucp <pointid>  <category> <phase> | -userclass <user class>]
+Argument Description
+-clearall Completely clear the cacheArgument Description
+-list List the cache validity for all user classes and user class
+points that were cached at least once
+-listuc List all user classes available for caching
+-listucp List all user class points available for caching
+-load Load the cache for user classes and/or user class points
+given load criteria
+-clear Clear the cache for user classes and/or user class points
+given the clearing criteria
+-threads Use this many threads to recalculate user class caches.
+The default thread number is 4.
+-expired Load/Clear user classes and user class points whose
+cache is expired (based on the value set for USERCLASS
+CACHE EXPIRY). When used with -load, loaduccache also
+loads invalidated or cleared user classes and user class
+points.
+-hours <hours> Load/Clear user classes and user class points whose
+cache is older than the hours specified.
+-ucp <pointid>  <category> <phase> Load/Clear the specified  user class point cache.
+-userclass <user class> Load/Clear the specified  user class cache.
+When a load argument is used for a user class, user class
+points already cached are also recalculated.
+Examples
+1.To load all user classes and user class points:1.
+loaduccache.exe -load -hours 0
+2.To load all user classes and user class points with 6 threads:2.
+loaduccache.exe -load -hours 0 -threads 6
+3.To clear all user classes and user class points:3.
+loaduccache.exe -clearall
+4.To load a user class:4.
+loaduccache.exe -load -userclass HQUSERS
+5.To load a user class point:5.
+loaduccache.exe -load -ucp USERGROUP HQGROUP 1
+6.To list cached user classes and user class points:6.
+loaduccache.exe -listMobile access utilities
+mobpushcli
+Use the mobpushcli  program to send push notific ations  to mobile devices for users that have the
+Bravura One  app registered on their devices.
+The requests are sent to the Bravura One  mobile proxy  push notific ation  server  (on page 1447) which will
+then send them to the Apple and Google notific ation  servers. The notific ation  messages are placed in a
+queue and will then be pushed out to the registered mobile devices. They will appear as a notific ation
+message on a user’s mobile device.
+Usage
+mobpushcli.exe -u <profile ID> -t <message title> -m <message body>
+   [-b <number>] [-n] [-q] [-s <sound clip>]
+   [-w] [-l <seconds>]
+Argument Description
+-h — --help Print out the help usage.
+-v — --version Print out the version.
+-u <pr ofile  ID> — --users <pr ofile  ID> Specifies  the pr ofile  ID for a user to sent the push
+notific ation  to.
+Multiple  users may be specified  individually with "-u
+pr ofileid1  -u pr ofileid2  ...".
+-t <message title>  — --title  <message title> The title of the notific ation  message.
+-m <message body> — --body <message body> The message body of the notific ation  message.
+-b <number> — --badge <number> Specifies  a positiv e  numeric value for the badge.
+Specifying "-b 1" will add a "1" to the top right hand
+corner of the app icon.
+Applicable to iOS devices only.
+-n — --nourgent This will determine how fast that the notific ations  will
+reach an Android device.
+Messages submitted  from the notific ation  queue from
+Google will be sent faster and will be marked as urgent
+and as a high priority message when this option  is not
+specified.  They are marked as non-urgent when -n has
+been specified.
+-q — --quiet This option  will suppress most of the command line
+output and will only show the value for "errmsg" for the
+success or error message.
+-s <sound clip> — --sound <sound clip> Specifies  a sound clip on the mobile devices.
+The default sound clip is currently available. User
+specified  sounds are not currently supported.Argument Description
+-w — --sync When this option  is not specified,  notific ations  are sent
+directly to the push notific ation  server and put into the
+queue. mobpushcli will only return a message indic ating
+that the notific ation  has been queued, regardless of
+whether or not the notific ation  was sent successfully or
+not.
+When -w has been specified,  mobpushcli will wait for the
+result to be returned from the push notific ation  server
+and will immediately return the status of the notific ation,
+for example if it was successful or if an e x ception  has
+occurred.
+-l <seconds> — --ttl <seconds> Determines how long that the notific ation  will last in the
+queue for the Apple or Google push notific ation  server
+when the message cannot be delivered.
+The default value if this option  is not specified  is 86400
+seconds (24 hours).
+Examples
+1.To send a push notific ation  to the mobile device for a user that has a registered device, type: 1.
+  mobpushcli -u msmith -t "message title" -m "message body"
+2.To send a push notific ation  and set the badge icon to show a 1 in the top right hand corner of the 2.
+Bravura One  app on iOS mobile devices:
+  mobpushcli.exe -u msmith -t "message title" -m "message body" -b 1
+3.To send a push notific ation  and wait for the result to be returned by mobpushcli so that it can be 3.
+immediately shown:
+  mobpushcli.exe -u msmith -t "message title" -m "message body" -w
+4.To send a notific ation  to multiple  users at the same time: 4.
+  mobpushcli.exe -u jjackson -u cbrown -u msmith -t "message title" -
+m "message body" -w
+Password management utilities

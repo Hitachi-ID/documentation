@@ -1,0 +1,386 @@
+Type Active Directory DN
+Description Organization Directory
+4.Click Change to the right of the Address field  and enter the required in f ormation;  for example, for 4.
+Activ e  Directory DN if this is the domain or domain controller.
+Click Continue  to return to the Target system in f ormation  page.
+5.Modify general options  (on page 494) as needed. 5.
+To create Bravura Security Fabric  pr ofiles  from accounts on this system, select Source of pr ofile  IDs.
+Note that List accounts , List attribut es , and List groups are selected by default.
+6.Click Add. 6.
+Bravura Security Fabric  displays the Administrator cr edentials  page.
+7.Enter cr edentials  for a designated account to perform Bravura Security Fabric  oper ations  on the target 7.
+system; for example on Activ e  Directory DN this would be member of the Domain Admins group with
+read and write permissions for passwords and accounts.
+Click Update .
+8.To add user and other in f ormation  to the Bravura Security Fabric  database, click the General tab, then 8.
+click Run discovery at the bottom  of the form.
+9.Click the Authoriz ation  tab to select one or more users who can authorize access change requests on 9.
+this target system.
+Example: Adding an Activ e  Directory target system as source of pr ofiles
+This section  shows you the typical procedure for adding an Activ e  Directory target. For this
+demons tr ation,  this target will be set up so that it becomes the source of Bravura Security Fabric  pr ofiles.
+This means that users with accounts in Activ e  Directory will have pr ofiles,  including full user name,
+created for them in Bravura Security Fabric .
+1.Click Manage the System > Resources > Target systems  > Manually de fined  to see the Target system s 1.
+page.
+2.Click Add new...  to add a new target system. 2.
+3.Enter a unique identifier  for the new target system. The target ID can contain only letter s  (A-Za-z), 3.
+digits (0-9), and underscores (_).
+4.Select the target system’s Type ; for example, Activ e  Directory DN. 4.
+5.Type a Description  for the target system. 5.
+6.Click Change next to the Address field  to enter values for the target system address. For Activ e 6.
+Directory, there are three primary methods for specifying the Activ e  Directory target address:
+▪globaldomain.example.com▪
+▪\\mydomaincontroller.example.com▪
+▪\\mydomaincontroller▪
+You can restrict user listing  by container or group membership.7.Enable Aut omatic ally  create a Privileged Access Manager managed system  if you want to manage 7.
+privileged access to this system.
+8.Select the Source of pr ofile  IDs checkbox. 8.
+9.If you want Bravura Security Fabric  to generate a list of attribut es  for each account during auto 9.
+discovery, select List attribut es.  You must select this checkbox if you want Bravura Security Fabric  to
+import OrgChart data from the target system.
+10. Select the Allowed in the certific ation  process checkbox. 10.
+11. For this demons tr ation  ins t allation,  leave other parameters with default values. 11.
+12. Click Add. 12.
+The Administrator cr edentials  page displays so you can add a target system administrator for the
+target.
+13. Type the target system administrator’s login ID in the Administrator ID  field. 13.
+14. Type the account password in the Password and Con firm  password fields. 14.
+For this demons tr ation,  the W ork s t ation  ID and Account ID do not apply.
+15. Click Update . 15.
+Test the c onnection
+To test that your target system is c on figur ed  correctly:
+1.Click the Test c onnection  tab. 1.
+2.Click Test cr edentials . 2.
+3.Results should show "Success"; if not, verify that the address, target type and administrator3.
+cr edentials  are entered correctly.
+For the next test, Bravura Security Fabric  performs a list oper ation  to enumerate user accounts on the
+target system. The results of the list oper ation  are for t esting  purposes only and, unlike during auto
+discovery, will not be loaded into the database.
+Listing  can be a costly operation  on the target system. This may take a long time  on some systems.
+4.Click Test list . 4.
+While the list oper ation  is running, you can click the Refresh button  in the Bravura Security Fabric
+na vig ation  bar to update the page status. When the oper ation  completes, the "Number of users
+found" should match the number of enabled accounts on the target system.
+5.Click Show users . 5.
+Bravura Security Fabric  displays the results of the generated user list.
+Run auto discovery
+Once a target system has been added and is flag g ed  as a source of pr ofile  IDs, you need to run
+psupdate  to list accounts and create user pr ofiles:
+1.Click on the General  tab. 1.
+2.On the Target system inf ormation  page, click Run discovery  at the bottom  of the page. 2.Alt ernativ ely ,  on the Target systems  list page, select the target system and click Run discovery .
+3. Con firm  that you want to start the update. 3.
+Depending on the number and type of target systems, this process may take several minutes to
+complete.
+4.Click Home  
+ . 4.
+5.Click Manage reports > Reports > Users > Accounts . 5.
+6.Click Run at the bottom  of the report form. 6.
+If auto discovery was successful you should see a number of accounts listed as auto-associated.
+Cloning target systems
+You can clone an e xisting  target system from the Target system in f ormation  page  (on page 489) to create
+a new target system. This is useful when you want to set up a system that is very similar to an e xisting
+system.
+To clone a target system:
+1.Navigate to the Target system in f ormation  page  (on page 489) for an e xisting  target system. 1.
+2.Click Clone, at the bottom  of the page. 2.
+Bravura Security Fabric  displays a new Target system in f ormation  page, with the ID field  blank. All
+other general c on figur ation  settings  are copied from the original target. Logs and discovery tab
+settings  are also copied from the original target. You need to c on figur e  administrator cr edentials  and
+other tab settings.
+3.Type the new target system’s ID, and modify other settings  to suit your requirements. 3.
+4.Click Add.4.
+Bravura Security Fabric  displays the Administrator credentials  page.
+ Next: 
+Add target system administrators for the target system  (on page 517).
+Modifying or deleting  target systems
+You can modify or delete an e xisting  target system from the Target system in f ormation  page  (on page
+489).
+If you make c on figur ation  changes, including the target system address, ensure that you click Update to
+save the changes before leaving the page.
+WARNING! If you change the target system type from one which includes shipped
+default actions  for s (on page 566), any target-system-level overrides that
+you have c on figur ed  are removed from the core product; however the
+settings  related to them in the component framework c on figur ation  in the
+Manage external data store (DBE) module will have to be edited manually.You can also delete multiple  target systems from the target system selection  page ( Manage the System >
+Resources > Target systems  > <type >).
+You cannot delete a target system if it is depended on by other Bravura Security Fabric  objects such as
+managed groups. You must fir s t remove the dependencies; they will be listed in an in f ormation  pop-up
+when you try to delete a single system.
+A target system that is a managed system  will no longer be a member of managed system policies  to which it
+belonged.
+WARNING! It is strongly recommended that you back up all passwords and their
+password histories if you are deleting  a target system that is a managed
+system.
+Applying c on figur ation  changes
+When you add, modify, or delete a target system, you must update Bravura Security Fabric  in order for
+your changes to take e ff ect.
+Con figur ation  changes for all target systems take e ff ect  overnight during auto discovery . No accounts will
+be associated with the target system until  this process is complete. If you want your changes to take
+e ff ect  immediately:
+1.On the Target system in f ormation  page, click Run discovery  at the bottom  of the page. 1.
+Alt ernativ ely ,  on the Target systems list page, and click Run discovery .
+2. Con firm  you want to start the update. 2.
+Depending on the number and type of target systems, this process may take a few seconds, minutes,
+or several hours to complete.
+CAUTION: The Bravura Security Fabric  server stays online and services c ontinue
+running. It is strongly discouraged to make changes to c on figur ation  data
+or database contents during auto discovery; although Bravura Security
+Fabric  will allow changes not related to target systems or the listing
+process.  
+Con figuring  general options
+This section  describes c on figur ation  options  available on the main Target system inf ormation  page.
+Some of the options  on this page may apply to products that you do not have installed.
+Options  marked with a 
+  in this document are required.
+Symbols in this document indicate that the marked content applies to specific  product licenses:
+ Bravura Privilege | 
+  Bravura Identity  | 
+  Bravura Pass
+For IT Service Management (Ticket) systems, only the general options  are applicable. When you select a
+tick e t  system, other options  are hidden.
+Target system optionsOption Description
+ IDA unique identifier  for the new target system. The target system ID can contain
+letter s  (A-Za-z), digits (0-9), and other ASCII characters. The target system ID
+cannot contain the following characters: \/*?<>|" .
+ TypeThe target system’s type; which is a description  of the connector. The drop-
+down list includes only licensed target system types for which you have
+installed the connector
+Ticket target systems are listed under IT Service Management Systems , and are
+labeled with (Ticket) .
+ DescriptionThis is the target system name that is displayed to users. Keep this short. If
+there is a need for a detailed description  of the target system, write a s t atic
+HTML page and de fine  its URL in the Help URL page (see below).
+ AddressThe address of this target system  (on page 502). Refer to Target Systems  in the
+Connector Pack documen t ation  for syntax and additional  c onsider ations.
+Help URL In case a longer description  would help users, you can compose and post a web
+page that describes this system further, and enter its URL here. Users can open
+the URL by clicking the target system description  text wherever the text appears
+in the user interface.
+ Managed group/Network
+resource target system typeSelect:
+▪SMB Protocol  if you will be managing access to network shares on a ▪
+Micr osoft  Activ e  Directory target system using Bravura Groups.
+▪SMB Protocol for Activ e  Directory DN  if you will be managing access to ▪
+network shares on an Activ e  Directory DN target system using Bravura
+Groups.
+▪SharePoint Resource  if you will be managing access to sites and documents ▪
+on a SharePoint target system using Bravura Groups.
+▪VMware vSphere Server  to manage access to groups on a "VMware vSphere ▪
+Server" target system.
+ 
+ Allowed in the certific ation
+processAllow this target system to be included in a certific ation  process in Access
+Certifier .
+ Aut omatic ally  create a
+Privileged Access Manager
+managed systemAllow this target system to be c on figur ed  as a managed system in Bravura
+Privilege . Deleting  this target system from the Bravura Privilege managed
+systems will remove the ability of Bravura Privilege to reset passwords on the
+target system without manual c on figur ation.
+This option  is not available for local service mode target systems. You will need
+to run target system import rules if you delete this target system from the
+Bravura Privilege managed systems and decide to re-manage it.
+P r ofile  and account association
+Source of pr ofile  IDs Use this to indicate that users of this system should, by default, also be users of
+Bravura Security Fabric . This also means that full user names are drawn from
+this system.
+See Building user pr ofiles  (on page 539) for details.Option Description
+Account attribut e  to use as
+pr ofile  IDBy default, Bravura Security Fabric  aut omatic ally  uses the short ID on a Source
+of Pr ofiles  to de fine  the pr ofile  name. If you want to use a diff er en t  account
+attribut e  to create the pr ofile  ID, type the name of the account attribut e  in the
+Account attribut e  to use as pr ofile  ID field.  Make sure the chosen attribut e  is
+loaded from the target system  (on page 571) and that it is populated for all
+accounts with a unique value. The accounts for which this attribut e  is blank or
+doesn’t exist won’t create a pr ofile.  If the attribut e  has the same value for more
+than one account, no pr ofile  will be created and an error notice  about
+"duplicate accounts" will be logged. If the attribut e  has the same value for more
+than one account, all of those accounts will be associated with the fir s t pr ofile
+to be created (usually in alphabetic al  order).
+Aut omatic ally  attach  accounts Select this checkbox if user IDs on the target system are identic al  to those on
+Bravura Security Fabric . This allows Bravura Security Fabric  to aut omatic ally
+associate accounts owned by the user with their user ID.
+See Attaching  accounts  (on page 541) for details.
+Account attribut e  to
+aut omatic ally  attach  accounts to
+user pr ofilesThe attribut e  to use to associate each account with an e xisting  pr ofile.  By
+default, Bravura Security Fabric  aut omatic ally  attaches  an account to a pr ofile  if
+the account's short ID matches the Pr ofile  ID. If you want Bravura Security
+Fabric to use a specific  account attribut e  (rather than the short ID) to determine
+auto association,  type the name of the account attribut e  in this field.  Make sure
+the chosen attribut e  is loaded from the target system and that it is populated
+for all accounts; the accounts for which this attribut e  is blank or doesn't exist
+won't be associated with any pr ofile.  If the attribut e  has the same value for
+more than one account, all of those accounts will be associated with a single
+pr ofile.
+Auto discovery
+List accounts When enabled (default) the connector generates a listing  of account login IDs
+during auto discovery.
+This option  is visible only if the target system supports account listing.
+List account attribut es When enabled (default) the connector generates a listing  of account attribut es
+during auto discovery. By default, only account attribut es  that are mapped to
+pr ofile  and request attribut es  are loaded, and all attribut es  are loaded as single-
+valued. You can override this behavior for individual attribut es.
+In order to use this option  the List accounts checkbox must also be selected.
+Bravura Security Fabric  can only list account attribut es  from supported systems.
+See Target Systems  in the Connector Pack documen t ation  for details of specific
+systems.Option Description
+List groups When enabled (default) the connector generates a listing  of groups during auto
+discovery.
+In order to use this option  the List accounts checkbox must also be selected.
+Disabling this option  does not remove any e xisting  managed groups; groups
+must be manually unmanaged or they will be shown in the interface with a red
+x (invalid) and have zero membership.
+Target system supports multiple
+owners on groupsWhen disabled (default) a single group owner is supported for a group.
+When enabled, multiple  group owners are supported for a group.
+List group attribut es When enabled the connector generates a listing  of group attribut es  during auto
+discovery.
+In order to use this option  the List groups checkbox must also be selected.
+See Target Systems  in the Connector Pack documen t ation  for details of specific
+systems.
+Create pr ofile  IDs from enabled
+accounts onlyEnable this to prevent accounts that are disabled on the target system from
+being used to create Bravura Security Fabric  pr ofile  IDs. If you use the LDAP
+filt er  option  in the target address, this option  is not considered (the LDAP filt er
+overrides it)
+Use ID filt er s  to include only
+certain users and accountsYou can use ID filt er s  to exclude or include certain users and accounts. By
+default, an ID filt er  excludes identified  users from Bravura Security Fabric .
+When you select this checkbox, all accounts are excluded except those explicitly
+included by an ID filt er .
+CAUTION: You must also select the Include in system option  when c on figuring
+the filt er .
+Track account changes Select this checkbox to capture changes on target systems that happen out-of-
+band from Bravura Security Fabric . Changes that will be tracked include:
+accounts g etting  added and deleted, accounts joining or leaving managed
+groups, account attribut e  values being changed, and account association  being
+changed.
+The tracked changes are viewable in reports as part of each user’s pr ofile
+history.
+This can also be used in automated user adminis tration .
+Track group changes Select this checkbox to capture changes to group memberships on this target
+system that happen out-of-band from Bravura Security Fabric . This option  can
+also be set for individual managed groups.
+The tracked changes are viewable in reports on group membership.
+This can also be used in automated user adminis tr ation.Option Description
+Aut omatic ally  manage groups Con figur e  this option  if you want Bravura Security Fabric  to aut omatic ally
+manage groups listed on the target system. This option  applies to Activ e
+Directory, Oracle Database, or Domino Server Script target system types. Some
+systems have thousands of groups; this option  may slow down the listing
+dr amatic ally  and require a lot of space in the backend database; best pr actice  is
+to manage only the groups whose membership matter s  for the purposes
+Bravura Security Fabric  is used. Select one of the following:
+(Disabled) : No groups will be aut omatic ally  managed; this is the default setting.
+Only groups with owners, moderated by owners:  Only manage groups that
+have an owner. Assign the owner as the group authorizer.
+All groups, approval required:  Manage all groups on the target system. If a
+group has an owner, then the owner is assigned as the group authorizer. If a
+group has no owner, then authorizers must be manually assigned.
+Groups whose membership will
+be listedIf group listing  is enabled, use this option  to determine the groups whose
+membership will be listed. Bravura Security Fabric  generates the group
+membership lists during auto discovery. Select one of the following:
+Managed groups: Only accounts immediately in the managed group will be
+listed (nested group members are not listed), and only for groups that are
+managed by Bravura Security Fabric .
+Managed groups and child groups (if supported):  Group membership will be
+listed for managed groups and any nested group of a managed group, if the
+target system’s groups can be c on figur ed  hierarchically.
+All groups:  Group membership will be listed for all groups, regardless of
+whether Bravura Security Fabric  manages their membership.
+Note: This option  only controls what is written  to the membership list files
+during auto discovery.
+To enable membership of non-managed groups to be displayed on Bravura
+Security Fabric  module pages, enable all accounts to be discovered objects for
+targets c on figur ed  to list group membership.
+Allow child resources, including
+templates and managed
+account groups, to inherit
+implemen t ation  c on figur ationEnable this option  to aut omatic ally  c on figur e  implementers for resources based
+on the host target system’s resource oper ation  c on figur ation.  You can override
+this setting  on the managed group and template in f ormation  pages.
+Check password expiry For some target systems (Novell Directory Services (NDS), Micr osoft  Windows
+server, Activ e  Directory, SQL Server), Bravura Pass can also extract a list of users
+whose passwords will expire soon, or have already expired. This setting  is
+enabled by default if the account attribut es  are listed, otherwise it’s
+unavailable.
+The list can be used by the Bravura Security Fabric  notific ation  system to warn
+users of pending expiry.Option Description
+Program to generate a list of
+target systemsSome target system entries may actually represent c ollections  of actual target
+systems; for example, an Activ e  Directory domain can be managed as a
+c ollection  of domain controllers. The sub-host plug-in is used in these cases,
+and this field  is where you enter the name of the plug-in. Sub-host plug-ins are
+subject to the same timeout  interval as password connectors.
+Connector time  out Connectors are given a finit e  amount of time  to perform oper ations,  before
+Bravura Security Fabric  stops them. Use this field  to set that timeout  (in
+seconds). A setting  of -1 will give the connector in finit e  time.
+The default is 300  (fiv e  minutes). If oper ations  take longer than this time,  they
+will be retried according to the c on figur ation  of the Password Manager service
+(idpm) or the T r ansaction  Monitor Service (idtm): Comma-delimited list of
+intervals (in minutes) to wait before retrying failed requests.
+List time  out Connectors should be given a finit e  amount of time  to run during listing  before
+Bravura Security Fabric  stops them. Use this field  to set that timeout.  The
+default is -1 (in finit e),  because the product can’t tell how long each target can
+take to list. A correctly c on figur ed  target system should not use in finit e
+timeouts.
+Minimum list file size (bytes) List files must be at least this large (in bytes). Smaller files are discarded, and
+replaced by their backups.
+List of proxies to run connectors
+onProxy servers which can run connectors on behalf of the main Bravura Security
+Fabric  server. List servers, separated by a semicolon, in the format:
+<server name>/<port number>;<server name>/<port
+number> .
+The default behavior is to attemp t  to connect to proxies in the order in which
+they are listed. The fir s t successful c onnection  is used as the proxy to run the
+connector. To c on figur e  Bravura Security Fabric  to attemp t  to connect to proxies
+in random order, enable the AGENT PROXY RANDOM  setting  on the Manage
+the system > Maintenance > Connector behavior > Options  page.
+Allow incremental listing Attribut e  lists can be very large. Bravura Security Fabric  supports incremental
+listing  of account attribut es  on some target system types, such as LDAP and
+Activ e  Directory. For these targets, once the initial  discovery has been run,
+Bravura Security Fabric  will only list attribut es  for an account if it detects that
+the user has changed on subsequent runs of auto discovery. This setting  is
+enabled by default for target systems that support it. You can generate a full list
+of account attribut es  during the next auto discovery by clicking Generate full
+list on the Target system in f ormation  page. You must c on firm  your request
+before the change takes e ff ect.Option Description
+Enable persistent listing This feature allows Bravura Security Fabric  to receive changes from Activ e
+Directory and AD LDS LDAP as they happen on the domain controller. This
+feature is only present on Activ e  Directory DN and LDAP Directory Service
+target systems. It is disabled by default
+Copy data from these targets,
+separated by commas, during
+auto-discoveryThis is used along with the "Connector e x ecution  order" auto-discovery list as
+well as a post psupdate script for this target to copy the listing  data from one or
+more other targets and to use for the list file for this target. For more
+in f ormation  see Cr eating  a list file and copying data from other targets  (on page
+516).
+ 
+ The phase to which group
+owner should be added when
+being aut omatic ally  added as
+authorizerThis option  is available if phased authoriz ation  is enabled and if the target
+system supports it. This is useful, for example, in cases where a user’s manager
+must approve a request before it is sent to the group owner. The default is to
+add group owners to phase one.
+Account Policy
+Allow users to verify passwords Select this checkbox if you want the connector to verify passwords on this
+target system. If not selected, users will not be able to select the target system
+for authentic ation.
+ Check accounts for
+uniqueness when cr eating  new
+pr ofile  IDsSelect this checkbox if you want to ensure that new pr ofile  IDs do not c on flict
+with IDs on this system.
+ Program to set the case of
+new IDsWhen a new ID for this target system is created, use this program to set the
+case. Bravura Security Fabric  provides 2 built-in programs: upper.pss  uses all
+uppercase characters; lower.pss  uses all lowercase characters. Bravura
+Security Fabric  uses lower.pss  by default.
+ Policy for new account
+requests when the user has an
+e xisting  account on the target
+systemSet this option  to determine whether you want template requests to use the
+e xisting  account (do nothing) or create a new account.

@@ -1,0 +1,104 @@
+Click Next .
+6.Assign privileges to the team groups.6.
+Each group can have one or more privileges  (on page 2140). Bravura Security Fabric  administrators
+can set a default set of groups for new teams.Click Next .Set the initial  team trustees for the new team.
+Team trustees can manage team groups and members. There must be at least one team trustee in
+order to create a team.7.Click Submit . 7.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+8.Click the View request link at the top of the page to view the status of the request. 8.
+Once the request has been approved, the team will be created and the team trustee will then have
+access to the following pr e-de fined  requests:
+▪Team: Manage Group Membership  (on page 2161) ▪
+▪Team: Update  (on page 2167) ▪
+API aut omation  for team cr eation
+Once the API has been c on figur ed  (See ”SOAP API” in Bravura Security Fabric  Remote API ( api.pdf )), and
+your script has been authentic a t ed  to the API (Login or LoginEx API calls), the WF API calls can be used to
+create an API request to create a team.
+Use the WFPDRSubmit function  to create a w orkflo w  request and submit the request for publishing.
+When submitting  a request, use ”TEAM-CREATE” as the pr e-de fined  request (PDR) ID. At a minimum, the
+request requires the following attribut es:
+attrk e y value
+TC The name of the team.
+TC_GROUPS The team group name(s).
+*_PRIVILEGES The privileges  (on page 2140) for the
+team group, where * is the team
+group name. This needs to be
+de fined  for every team group in
+TC_GROUPS.
+*_MEMBERS The pr ofile  GUID of the user(s) for
+the team group, where * is the team
+group name. This only needs to be
+de fined  for team groups with the
+Team_Trustees  privilege only.
+TEAM-CREATE batch request sample
+"TC","TC_GROUPS","Group1_PRIVILEGES","Group2_PRIVILEGES","Group3_PRIVILEGES","Group1_MEMBERS" 
+"TEAM-000000","Group1,Group2,Group3","Team_Trustees","System_Trustees","Account_Trustees","5A8598FA-
+BCB1-4C36-A504-03F1F0478138"
+Verify team c on figur ation
+To verify a team's c on figur ation  or check why specific  users do not get the access expected, run the P AM
+team Management c on figur ation  report on the specific  team:
+1.Click Manage reports > Reports > Privileged access: Con figur ation>  PAM Team Management 1.
+c on figur ation.
+2.Search for the team name you want to include in the report.2.3.Click Run. 3.
+The report will display the various team groups, privileges, child groups and members of those groups.
+Example: Cr eating  a team
+This example demonstrates how to de fine  team administrators, how a team administrator creates a
+team, and how a trustee manages team group members.
+Requirements
+This example requires:
+▪Bravura Security Fabric  and Connector Pack installed ▪
+▪Bravura P attern:  Privileged Access E dition  installed ▪
+▪ Activ e  Directory source of pr ofiles ▪
+RefBuild.pam_team_management and Scenario.pam_personal_admin_management are installed
+when Bravura P attern:  Privileged Access E dition  is installed.
+Add team administrators
+1.Log in to Bravura Security Fabric  as superuser. 1.
+2.Click Manage the system > Policies > User classes . 2.
+3.Select PAM_TEAM_ADMINS . 3.
+4.Click the Criteria  tab. 4.
+Bravura Security Fabric  displays the user class criteria page.
+5.Click Add new…  in the P articipan ts  have group memberships matching:  section. 5.
+Bravura Security Fabric  displays the add criteria page.
+6.Choose "Required" from the Membership  drop-down list to include users who belong to the specified 6.
+group in the user class.
+7.Search for, and select, the AD target system.7.
+8.Search for the PAM Server Admins  managed group, and select that group. 8.
+9.Click Add. 9.10. Click the Test tab and click List to list all users who match the criteria. 10.
+The result should display users similar to the image below:
+11. Click the General  tab and click Recalculate  to update the user class membership cache. 11.
+Create a team
+1.Log in to Bravura Security Fabric  as a team administrator. 1.
+2.In the Requests  section  of the main menu, click Manage Resources . 2.3.Click Team: Create . 3.
+4.Enter the following:4.
+Team Name  Unix Admin Accounts
+Team Description  Unix admin accounts for r equesting
+Click Next5.Create the following groups:5.
+▪Approver▪
+▪Requester▪
+▪Trustee▪
+Use the "More" icon 
+  to add more team name fields  to the list.
+Click Next
+6.Enter the following team group descriptions. 6.
+Approver  Users who can approve
+Requester  Users who can request
+Trustee  Users who can manage teamClick Next .
+7.Assign privileges to the team groups as follows:7.
+Approver  Approvers, Auto_approved, Cr edential_Manag er ,  Requesters
+Requester  Requesters
+Trustee  Team Trustees
+Note that it is important that users who have the Auto_approved privilege also have the Requesters
+privilege.
+Click Next .
+8.Search for and select a user as the initial  team trustee for the new team. 8.
+Team trustees can manage team resources and members. There must be at least one team trustee to
+create a team.
+9.Click Submit . 9.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+10. Click the View request  link at the top of the page to view the status of the request. 10.
+You will see that the request has been processed. The team has been fully c on figur ed.
+Add group memberships
+To manage team group membership as a team trustee:
+1.Log in to Bravura Security Fabric  as the team trustee for the "Unix Admin Accounts" team. 1.
+2.In the Requests  section  of the main menu, click Manage Resources . 2.
+Note the requests that are available to this user.

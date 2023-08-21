@@ -1,0 +1,349 @@
+Con figuring  parallel listing
+By default, Bravura Security Fabric  runs user listing  in parallel for faster processing. To c on figur e  or
+disable parallel listing:
+1.From the Manage the system  (PSA) module, click Maintenance > Options . 1.
+2.Set UPDATE SYSTEM AGENT COUNT to the number (1 or higher) of connectors you want to run 2.
+concurrently. Default is 50.
+3.Click Update . 3.
+When parallel listing  is enabled, you can c on figur e  a priority sequence to determine in what order listing
+oper ations  are performed on the target systems; for example, you can have target systems with larger
+numbers of users listed fir s t.  To do this:
+1.From the Manage the system  (PSA) module, click Maintenance > Auto discovery > Connector 1.
+e x ecution  order .
+2.Drag and drop one of the double dir ection  arrows in the Target system description  field  to change the 2.
+target systems’ order in the list.
+3.Click Update . 3.
+You can also c onfigure  this list by entering a colon-separated list in the AGENTORDER HOST LIST
+variable in the Manage the system > Maintenance > System variables  menu.
+The Connector e x ecution  order interacts with UPDATE SYSTEM AGENT COUNT  in the following way:
+1.Target systems that have a sequence number are placed into the parallel queue until  it reaches the 1.
+maximum number specified  by UPDATE SYSTEM AGENT COUNT.
+2.The connectors in the queue are all started simultaneously.2.
+3.Once a connector in the parallel queue finishes,  the next connector (specified  by sequence number) is 3.
+placed in the queue and executed.
+4.Auto discovery (the psupdate  process) places all unsequenced (unsorted) target systems into the 4.
+queue and executes them in parallel, as long as the UPDATE SYSTEM AGENT COUNT allows it; they are
+not executed in a preset order since they lack a sequence number. Sequenced (ordered) targets are
+listed one after  the other, in the c on figur ed  sequence. There is no guarantee that they will start fir s t or
+last among all targets, only that they will be listed in the c on figur ed  order. Loading of the list files via
+the Discovery service  (on page 2875) ( iddiscover ) happens for each target after  it is successfully
+listed. Merging their data in the backend database, and any object association,  happens for all targets
+at once, regardless of whether they are sorted or listed in parallel.
+In v alidating  users
+When a user no longer has any accounts on any source of pr ofile  IDs, the user’s pr ofile  ID is invalidated
+immediately by default. Once the pr ofile  is invalid, the API Service can no longer retrieve in f ormation  on
+the account associations  or attribut es.You can c on figur e  a delay between the day that accounts are deleted and the day that the pr ofile  is
+invalidated. This allows you to issue requests and query data before the user is fully removed. Type the
+number of days in the INVALID USER DELAY DAYS setting  in the Maintenance > Options  menu.
+Clearing invalid user data
+When user pr ofiles  are invalidated – that is, accounts associated with them are removed – the data
+associated with the pr ofile  is kept in the database for a c on figur able  amount of time.  This allows users to
+be restored with data intact if the in v alidation  was caused by an in t ermitten t  problem.
+You can determine how long to keep data for invalid users by typing the period in days in the KEEP
+INVALID USER DAYS setting  in the Maintenance > Options  menu.
+Once the data has expired, it is cleaned from the database during auto discovery .
+Controlling auto discovery using scripts
+You can write a series of scripts (in Python, command line batches or PSLang) to control the auto discovery
+process. For example, you can add your own commands to the end of auto discovery  by cr eating  and
+editing  a file named, psupdate_post.psl . The auto discovery  scripts must be located in <Program Files
+path>\Bravura Security\Bravura Security Fabric\<instance>\ script\.
+The table below lists the PSLang scripts called by during auto discovery :
+PSLang scripts called by psupdate
+Script name When it’s run
+ Start
+psupdate_pre.psl At the beginning of auto discovery before any tasks are
+performed.
+ Refreshing proxy servers
+psupdate_updproxy_pre.psl Before the updproxy  program is executed.
+psupdate_updproxy_post.psl After  the updproxy  program has finished  e x ecuting.
+ User listing
+psupdate_list_pre.psl Before any connector programs are executed.
+psupdate_list_ <TARGET >_pre.psl Before the corresponding <TARGET>  connector is executed.
+psupdate_listpertarget_pre.psl After  the target specific  plugin is run, but before the connector
+runs.
+psupdate_list_ <TARGET >_post.psl After  the corresponding <TARGET>  connector has finished
+e x ecuting.
+psupdate_listpertarget_post.psl After  the connector and the target specific  plugin is run.
+ Updating  the Bravura Security Fabric  database
+psupdate_loaddb_pre.psl Before the iddiscover  program is executed.
+psupdate_loaddb_post.psl After  the iddiscover  program has finished  e x ecuting.Script name When it’s run
+ Checking inventory levels
+psupdate_checkinv_pre.psl Before the CHECK INVENTORY PLUGIN  plugin is executed.
+psupdate_checkinv_post.psl After  the CHECK INVENTORY PLUGIN  plugin has finished
+e x ecuting.
+ Finish
+psupdate_post.psl Run at the end of auto discovery after  all tasks are complete.
+ RBAC enforcement
+psupdate_enforcement_list_pre.psl Run before the rbacenforce  utility  makes the enforcement
+list.
+psupdate_enforcement_list_post.psl Run after  the rbacenforce  utility  makes the enforcement list.
+psupdate_enforcement_submit_pre.psl Run before the rbacenforce  utility  submits the enforcement
+list.
+psupdate_enforcement_submit_post.psl Run after  the rbacenforce  utility  submits the enforcement
+list.
+ Update instances
+psupdate_updinst_pre.psl Run before updinst  is executed.
+psupdate_updinst_post.psl Run after  updinst  completes.
+Each of the PSLang scripts listed above are executed by psupdate at the appropriate time.
+The psupdate  program also looks for a similarly named Python scripts (*.py) and Windows batch file
+(*.cmd). If the Python or Windows batch file exists, it is run before the PSLang script. For example,
+psupdate  will run psupdate_list_pre.cmd before listing  from target systems, if the file exists.
+You can choose whether you want to use Python, PSLang scripts, Windows batch files,  or a c ombination
+to customize the auto discovery  process.
+The psupdate_pre  and psupdate_post  scripts only run during a full auto discovery.
+Updating  individual users
+If you know that one account on one system has changed, you can run psupdate to update an
+individual user, rather than run auto discovery  for all users on all systems.
+You can use a custom program to detect changes to a single user on a particular  system, and propagate
+the change to other systems.
+This can be useful in situations  that require:
+▪Asynchronous attribut e  value assignment ▪For example, Micr osoft  Exchange 2000/2003 is c on figur ed  to aut omatic ally  assign new, unique email
+addresses to users. This process happens asynchronously, some time  after  a new mailbox is created.
+A custom program could detect the new user, then some time  after ,  run a single user auto discovery  to
+read the user’s email address and propagate the attribut e  to the user’s accounts on other systems.
+▪Near r eal-time  auto-provisioning and deprovisioning ▪
+For example, a human resources worker adds a new user, or updates an e xisting  user, to a HR
+database.
+A custom program could run periodically to detect changes to employee records, then run a single
+user auto discovery  to propagate the change on other systems.
+See psupdate
+The psupdate program initia t es  and controls the auto discovery process. It is responsible for calling a
+series of programs and PSLang scripts, which in turn, control e x ecution  of each auto discovery task.
+These tasks include:
+▪Refreshing proxy servers▪
+▪ Listing  in f ormation  from managed systems ▪
+▪Evaluate the import rules on discovered systems and accounts and assign them to managed system▪
+policies
+▪Monitoring list file size ▪
+▪ Con figuring  listed computer objects as Bravura Privilege resources ▪
+▪ Updating  the Bravura Security Fabric database ▪
+▪ De t ecting  out-of-band changes ▪
+▪Cleaning up the database▪
+▪Checking inventory levels▪
+▪Loading user class cache▪
+▪ Submitting  aut omatic  assignment requests ▪
+▪Synchronize server files and registry keys ▪
+▪ Notif ying  the Bravura Security Fabric administrator of errors or warnings ▪
+▪ Cr eating  the default scheduled task to run psupdate ▪
+You can also run psupdate to update a single user.
+Never run psupdate on more than one replicated Bravura Security Fabric server at the same time
+In a replic ation  environment, the sending node creates additional  queue files in the <ins t anc e>/db/
+replic ation  directory. These are used to store the data to be sent to all replic ation  nodes. Once this data
+has been replicated to the nodes, these files are removed.
+Usage
+psupdate.exe
+   [-account <accountID>]
+   [-alltasks]   [-checkinv]
+   [-enforce_list <enforcement-list>]
+   [-enforce_submit <enforcement-list>]
+   [-forcerun]
+   [-import]
+   [-importlws]
+   [-list]
+   [-list_reset_threshold]
+   [-loaddb]
+   [-no-plugins]
+   [-profile <profileID>]
+   [-resattr <attrID>]
+   [-resattrvalue <attrVal>]
+   [-schedule]
+   [-status]
+   [-target <targetID>]
+   [-targetdiscovered]
+   [-targetmanual]
+   [-updproxy]
+   [-v|--version]
+Argument Description
+-updproxy Refresh proxy servers.
+-list Only list login IDs and supported in f ormation  from
+specified  target systems. At least one target must be
+specified.
+-list_reset_threshold Resets the recorded object count before listing.  This
+disables listthr esholdma xr elativ echang e  for that specific
+list.
+-loaddb Only load data from specified  target systems based on
+the e xisting  list files to the database. At least one target
+must be specified.
+-checkinv Check inventory levels.
+- alltasks Complete all tasks that are done during a full update
+even though specific  target systems are being listed
+and/or loaded.
+-import Evaluate all discovered objects from target systems
+against push mode import rules where they apply.
+Applies to the discovered computers from the target, and
+the subsequent discovered accounts from discovered
+systems that get managed.Argument Description
+-importlws Evaluate all discovered objects from target systems
+against local service mode import rules where they apply.
+Applies to the local service mode discovered computers,
+and the subsequent discovered accounts from discovered
+systems that get managed.
+-no-plugins Run psupdate without e x ecuting  plugin scripts  (on
+page 2742) (*_pre.cmd, *_post.cmd).
+-enforce_list <enforcement-list> Run the rbacenforce program to list role
+enforcement violations.
+-enforce_submit <enforcement-submit> Run the rbacenforce program to submit requests
+role enforcement violations.
+-pr ofile  <pr ofile  ID> Run psupdate for a single user de fined  by a Bravura
+Security Fabric pr ofile  ID. You can use this with the -target
+option  zero or more times  to specify the targets on which
+psupdate will update the accounts. When used without
+the -target option,  psupdate will update the accounts
+on all target systems.
+-account <pr ofile  ID> Run psupdate for a single user de fined  by an account
+ID on a single specified  target system. You must use the -
+target option  to specify the target system.
+-target <target ID> Specify a target system on which psupdate will list a
+single user. This option  must be used with the -pr ofile,  -
+account, -list or -loaddb option.
+-targetdiscovered Specify all discovered target systems.
+-targetmanual Specify all target systems that are manually de fined.
+-forcerun Force psupdate to have it c ontinue  even if it looks like
+psupdate is already running or scheduled to run on some
+other node.
+-r esattr Select target systems based on a specified  resource
+attribut e  ID. This option  must be used with the -
+r esattr v alue  and -target option.
+-r esattr v alue Select target systems that match a resource attribut e
+value. This option  must be used with the -r esattr  and -
+target option.Argument Description
+-schedule Creates the default scheduled task to run psupdate if
+it does not already exist. No other tasks are run.
+-status Returns the current status of the auto discovery process:
+▪No c on figur ation  changes can be made until  it is ▪
+completed %RUNNINGACTIONS%
+▪Running connector for target [%TARGETID%] (elapsed▪
+time:  %ELAPSEDTIME%)
+▪ Listing  files on proxy [%PROXYSERVER%] (elapsed ▪
+time:  %ELAPSEDTIME%)
+▪Loading staging table [%STAGETABLE%] (elapsed time: ▪
+%ELAPSEDTIME%)
+▪Running plug-in [%PLUGIN%] (elapsed time: ▪
+%ELAPSEDTIME%)
+▪Running stored procedure [%STOREDPROC%] (elapsed▪
+time:  %ELAPSEDTIME%)
+▪ R eplic ating  file [%REPLFILE%] to proxy ▪
+[%PROXYSERVER%] (elapsed time:  %ELAPSEDTIME%)
+▪ Updating  database (%ACTION%) ▪
+▪ Listing  target (%ACTION%) ▪
+▪ Updating  proxy (%ACTION%) ▪
+-v — --version Display version in f ormation.
+Examples
+1.To run auto discovery, as it would be run during the scheduled psupdate job, type:1.
+psupdate.exe
+2.To determine the current status of the auto discovery process, type:2.
+psupdate.exe -status
+3.To list in f ormation  from all manually added target systems, type: 3.
+psupdate.exe -targetmanual -list
+4.To list in f ormation  from the target system ADDOM, type: 4.
+psupdate.exe -target ADDOM -list
+5.To list in f ormation  without running plugin scripts, type: 5.
+psupdate.exe -targetmanual -targetdiscovered -list -no-plugins
+6.To list, load, and evaluate in f ormation  from all discovered target systems, type: 6.
+psupdate.exe -targetdiscovered -list -loaddb -import
+7.To update accounts for a single pr ofile  on all target systems, type: 7.
+psupdate.exe -profile <profile ID>
+8.To only list from specified  target systems that have "New York" as a value for resource attribut e 8.
+"Loc ation".psupdate.exe -list -resattr Location -resattrvalue "New York" -
+target TARGET1  -target TARGET2
+for details of psupdate single-user options.
+Auto-discovery in a r eplic ation  environment
+In a r eplic ation  environment, psupdate  should only be run on one server for all nodes in the
+environment. You can select the server on which to run the scheduled psupdate . (on page 2715) The
+psupdate job will be executed on the c on figur ed  server and then all updates will be replicated to all
+nodes.
+Once psupdate has run locally, it may take some time  for the data gathered by psupdate to
+replicate to all nodes. During this period, users can still use the primary server but other nodes might
+take time  to receive updates.
+Examples: T esting  and tr oubleshooting  user listing
+One way of checking whether the users were successfully listed during auto discovery; is to view the
+Reports > Users >  Accounts report  (on page 2950). If auto discovery was successful you should see a
+number of accounts listed as auto-associated.
+The following examples demonstrate two other ways of c on figuring  and t esting  user listing:
+▪Running auto discovery from the web interface  (on page 2748) ▪
+▪Running auto discovery from the command line  (on page 2750) ▪
+Running auto discovery from the web interface
+To test that your target is listing  users correctly, you can run auto discovery from the Manage the system
+(psa) module and c on firm  that users have been listed by looking at the generated file:
+1.Log in to the Front-end (PSF) as superuser . 1.
+2.Click Manage the system > Resources > Target systems > Manually de fined . 2.
+3.Select the AD target to update the target settings. 3.
+4.Deselect List accounts . 4.
+5.Click Update . 5.
+6.Navigate to the \<instance>\psconfig\  directory. 6.
+7.Delete all files named AD.* . 7.
+8.From the Manage the system (PSA) module, click Maintenance > Auto discovery > Execute auto 8.
+discovery .
+9.Click Continue . 9.
+10. Click Maintenance > Auto discovery > Last log , and refresh the page until  the log shows "done 10.
+psupdate".
+11. Check the \<instance>\psconfig\  directory. 11.There will not be a file named AD.db  in \<instance>\psconfig\ , because the old one was
+deleted and user listing  was turned off for the Activ e  Directory target.
+12. Click Manage the system > Resources > Target systems > Manually de fined . 12.
+13. Select the AD target. 13.
+14. Select List accounts , List account attribut es , List groups , List group attribut es  and Create pr ofile  IDs 14.
+from enabled accounts only.
+15. Click Update . 15.
+16. Execute auto discovery: Maintenance > Auto discovery > Execute auto discovery > Continue . 16.
+17. Once the process is complete, check the \<instance>\psconfig\  directory. 17.
+The AD.db  file should now exist in \<instance>\psconfig\  because you turned on user listing
+for the Activ e  Directory target again.
+18. Con firm  the auto discovery successfully listed users by opening the file: 18.
+ C:\Program Files\Bravura Security\Bravura Security F abric\<ins t ance>\p sc on fig\ AD.db
+If auto discovery is successful, this file lists users with accounts on the Activ e  Directory target system.
+A file is added for each target system on which listing  is enabled.
+a.Select the AD.db  file in \<instance>\psconfig\  and hit [Enter]  or double-click to open. a.
+b.You will see a prompt saying "You are attempting  to open a file of type ’System file’ (.db)". b.
+c.Click Show apps . c.
+d.Scroll to the bottom  and Check the box saying Always use this app to open .db files . d.
+e.Browse for the DB Browser for SQLite  directory. e.
+f.Select the DB Browser for SQLite.exe  program. f.
+g.Click Open . The File will open within DB Browser for SQLite. g.
+h.Click the Browse Data  tab and use the Table:  drop-down menu to select the discobj  table. h.
+i. Con firm  that you now see a table of discovered groups and accounts from the AD target. i.
+j.Close the file once you have c on firmed  the table contains the discovered data. j.
+19. Con firm  that auto discovery listed users successfully from your target systems by searching the 19.
+idmsuite.log for the line in which the agent listed items from your target. Open:
+C:\Program Files\Bravura Security\Bravura Security Fabric\Logs\<instance>\idmsuite.log
+You should see lines in the psupdate section  for each agent indic ating  list succeeded. The lines will
+look something like this:
+2021-01-22 01:34:18.542.5089 -
+ [psupdate4936_6408] agtaddn.exe [1352,5096] 
+Info: [listobj] for Object [GRP] succeeded 
+2021-01-22 01:34:18.815.7331 -
+ [psupdate4936_6408] agtaddn.exe [1352,1756] 
+Perf: PerfConnector. Address: 
+{[server=hitachi1.corp;listOUs=["*,ou=Demo,dc=hitachi1,dc=corp";];listGroupOUs=["*,ou=Demo,dc=hitachi1,dc=corp";];listDeleted=NODELETED;nameFormat=DN;groupNameFormat=DN;grpowner_attr=managedBy;]} 
+| AdminID: {psadmin} | Duration: {775} | Event: {connector-operation} | 
+Message: {} | Operation: {listobj} | Result: {0} | SysID: {} |
+ TargetID: 
+{AD} 
+2021-01-22 01:34:18.815.7387 -
+ [psupdate4936_6408] agtaddn.exe [1352,1756] 
+Info: [listobj] for Object [ACCT] succeeded
+There is also a "Run discovery" button  in the Manage the system > Resources > Target systems
+> Manually de fined  section  for running auto-discovery against individual targets.
+Running auto discovery from the command line
+An alt ernativ e  way to test auto discovery is to run the psupdate program from the <instance>
+\util\  directory. You can use arguments with this command to specify part of the auto discovery
+process. In this lab, you will use the -list argument to just list users on a single target:
+1.Delete all files named AD.*  from the \<instance>\psconfig\  directory. 1.
+2.From a Windows Administrator Command Prompt, navigate to:2.
+C:\Program Files\Bravura Security\Bravura Security F abric\<ins t ance>\util\
+3.Type:3.
+psupdate -list -target AD
+4.Check the \<instance>\psconfig\  directory. 4.
+There should now be an updated file named AD.db  in \<instance>\psconfig\  because you
+executed psupdate  with the list option  to create list files.
+Examples: Reloading data
+Business requirement
+When or g aniz ational  changes happen, it is essential  that Bravura Security Fabric  is updated. For example:
+▪Employees transfer, take a leave of absence or depart▪
+▪New s t a ff  are employed ▪
+▪ St a ff  or the or g aniz ation  move loc ation ▪
+▪Phone numbers change▪
+These changes need to be r e flect ed  in Bravura Security Fabric  quickly and easily.
+Solution
+Bravura Security Fabric  can be c on figur ed  to:
+▪Discover groups, their attribut es,  and their members on a de fined-t ar g e t  system, then to load the ▪
+discovered data to the database.

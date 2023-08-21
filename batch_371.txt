@@ -1,0 +1,359 @@
+Name Version License
+@babel/plugin-transform-member-expression-
+literals@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-modules-amd@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-modules-commonjs@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-modules-systemjs@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-modules-umd@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-named-capturing-groups-
+regex@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-new-target@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-object-super@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-parameters@7.8.4 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-property-literals@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-regenerator@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-reserved-words@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-tr ans f orm-shorthand-pr operties@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-spread@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-tr ans f orm-sticky -r eg e x@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-template-literals@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-typeof-symbol@7.8.4 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/plugin-transform-unicode-regex@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/preset-env@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/template@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/traverse@7.8.4 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@babel/types@7.8.3 see name http s:// github.c om/babel/babel/blob/mas t er/LICENSE
+@ngtools/webpack@8.3.25 see name http s:// github.c om/ angular/ angular -cli/blob/mas t er/LICENSE
+@types/datatables.net@1.10.18 see name http s:// github.c om/De finit elyT yped/De finit elyT yped/blob/mas t er/LICENSE
+@types/file-sa v er@2.0.1 see name http s:// github.c om/De finit elyT yped/De finit elyT yped/blob/mas t er/LICENSE
+@types/hammerjs@2.0.36 see name http s:// github.c om/De finit elyT yped/De finit elyT yped/blob/mas t er/LICENSE
+@types/jquery@2.0.54 see name http s:// github.c om/De finit elyT yped/De finit elyT yped/blob/mas t er/LICENSE
+@types/jqueryui@1.12.10 see name http s:// github.c om/De finit elyT yped/De finit elyT yped/blob/mas t er/LICENSE
+@types/lodash@4.14.149 see name http s:// github.c om/De finit elyT yped/De finit elyT yped/blob/mas t er/LICENSE
+@types/node@10.17.14 see name http s:// github.c om/De finit elyT yped/De finit elyT yped/blob/mas t er/LICENSE
+@types/papaparse@4.5.11 see name http s:// github.c om/De finit elyT yped/De finit elyT yped/blob/mas t er/LICENSE
+@webassemblyjs/ast@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@w ebassemblyjs/floating-poin t -he x -par ser@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@webassemblyjs/helper-api-error@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@w ebassemblyjs/helper -buff er@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSEName Version License
+@webassemblyjs/helper-code-frame@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@webassemblyjs/helper-fsm@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@webassemblyjs/helper-module-context@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@webassemblyjs/helper-wasm-bytecode@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@w ebassemblyjs/helper -w asm-section@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@webassemblyjs/ieee754@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@webassemblyjs/leb128@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@w ebassemblyjs/utf8@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@webassemblyjs/wasm-edit@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@webassemblyjs/wasm-gen@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@webassemblyjs/wasm-opt@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@webassemblyjs/wasm-parser@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@webassemblyjs/wast-parser@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@webassemblyjs/wast-printer@1.8.5 see name http s:// github.c om/x tuc/w ebassemblyjs/blob/mas t er/LICENSE
+@xtuc/ieee754@1.2.0 see name http s:// github.c om/f er oss/ieee754/blob/mas t er/LICENSE
+@xtuc/long@4.2.2 see name http s:// github.c om/dc odeIO/long.js/blob/mas t er/LICENSE
+accepts@1.3.7 see name http s:// github.c om/jshttp/ accep ts/blob/mas t er/LICENSE
+acorn@6.4.0 see name http s:// github.c om/ ac ornjs/ ac orn/blob/mas t er/ ac orn/LICENSE
+ajv-errors@1.0.1 see name http s:// github.c om/ ajv - v alida t or/ ajv -err or s/blob/mas t er/LICENSE
+ajv-keywords@3.4.1 see name http s:// github.c om/ ajv - v alida t or/ ajv -k e y w or ds/blob/mas t er/LICENSE
+ajv@6.11.0 see name http s:// github.c om/ ajv - v alida t or/ ajv/blob/mas t er/LICENSE
+amde fine@1.0.1 see name http s:// github.c om/jrburk e/ amde fine/blob/mas t er/LICENSE
+ansi-colors@3.2.4 see name http s:// github.c om/doo wb/ ansi-c olor s/blob/mas t er/LICENSE
+ansi-escapes@4.3.0 see name http s:// github.c om/ sindr esorhus/ ansi-esc apes/blob/main/license
+ansi-regex@4.1.0 see name http s:// github.c om/ chalk/ ansi-r eg e x/blob/main/license
+ansi-regex@5.0.0 see name http s:// github.c om/ chalk/ ansi-r eg e x/blob/main/license
+ansi-styles@3.2.1 see name http s:// github.c om/ chalk/ ansi-s tyles/blob/main/license
+anymatch@2.0.0 see name http s:// github.c om/micr oma t ch/ an yma t ch/blob/mas t er/LICENSE
+arr -diff@4.0.0 see name http s:// github.c om/jonschlink ert/ arr -diff/blob/mas t er/LICENSE
+arr - flatten@1.1.0 see name http s:// github.c om/jonschlink ert/ arr - flatten/blob/mas t er/LICENSE
+arr-union@3.1.0 see name http s:// github.c om/jonschlink ert/ arr -union/blob/mas t er/LICENSE
+arr a y - flatten@1.1.1 see name http s:// github.c om/blak eembr e y/ arr a y - flatten/blob/mas t er/LICENSE
+array-union@1.0.2 see name http s:// github.c om/ sindr esorhus/ arr a y -union/blob/main/license
+array-uniq@1.0.3 see name http s:// github.c om/ sindr esorhus/ arr a y -uniq/blob/main/license
+array-unique@0.3.2 see name http s:// github.c om/jonschlink ert/ arr a y -unique/blob/mas t er/LICENSEName Version License
+asn1@0.2.4 see name http s:// github.c om/jo y en t/node-asn1/blob/mas t er/LICENSE
+assert-plus@1.0.0 see name http s:// github.c om/jo y en t/node-assert -plus/blob/mas t er/LICENSE
+assert@1.5.0 see name http s:// github.c om/br o w serif y/ c ommonjs-assert/blob/mas t er/LICENSE
+assign-symbols@1.0.0 see name http s:// github.c om/jonschlink ert/ assign-s ymbols/blob/mas t er/LICENSE
+async-each@1.0.3 see name http s:// github.c om/paulmillr/ as ync-each
+asynckit@0.4.0 see name http s:// github.c om/ ale xindig o/ as ynckit/blob/mas t er/LICENSE
+atob@2.1.2 see name http s:// git.c oolaj86.c om/ c oolaj86/ a t ob.js/ sr c/br anch/mas t er/LICENSE
+aut opr e fix er@9.6.1 see name http s:// github.c om/pos t css/ aut opr e fix er/blob/main/LICENSE
+aws-sign2@0.7.0 see name http s:// github.c om/r eques t/ a w s-sign/blob/mas t er/LICENSE
+aws4@1.9.1 see name http s:// github.c om/mhart/ a w s4/blob/mas t er/LICENSE
+balanced-match@1.0.0 see name http s:// github.c om/juliangruber/balanced -ma t ch/blob/mas t er/LICENSE.md
+base@0.11.2 see name http s:// github.c om/base/base/blob/mas t er/LICENSE
+batch@0.6.1 see name http s:// github.c om/visionmedia/ba t ch/blob/mas t er/LICENSE
+binary-extensions@1.13.1 see name http s:// github.c om/ sindr esorhus/binar y -e x t ensions/blob/main/license
+bluebird@3.7.2 see name http s:// github.c om/pe tk aan t ono v/bluebir d/blob/mas t er/LICENSE
+body-parser@1.19.0 see name http s:// github.c om/ e xpr essjs/body -par ser/blob/mas t er/LICENSE
+brace-expansion@1.1.11 see name http s:// github.c om/juliangruber/br ace-e xpansion
+braces@2.3.2 see name http s:// github.c om/micr oma t ch/br aces/blob/mas t er/LICENSE
+browserify-zlib@0.2.0 see name http s:// github.c om/br o w serif y/br o w serif y -zlib/blob/mas t er/LICENSE
+browserslist@4.8.6 see name http s:// github.c om/br o w ser slis t/br o w ser slis t/blob/main/LICENSE
+buff er - fr om@1.1.1 see name http s:// github.c om/LinusU/buff er - fr om/blob/mas t er/LICENSE
+buff er@4.9.2 see name http s:// github.c om/f er oss/buff er/blob/mas t er/LICENSE
+bytes@3.1.0 see name http s:// github.c om/visionmedia/b y t es.js/blob/mas t er/LICENSE
+cacache@12.0.2 see name http s:// github.c om/npm/ c ac ache/blob/main/LICENSE.m d
+cache-base@1.0.1 see name http s:// github.c om/jonschlink ert/ c ache-base/blob/mas t er/LICENSE
+caller-callsite@2.0.0 see name http s:// github.c om/ sindr esorhus/ c aller -c allsit e/blob/main/license
+caller-path@2.0.0 see name http s:// github.c om/ sindr esorhus/ c aller -pa th/blob/main/license
+callsites@2.0.0 see name http s:// github.c om/ sindr esorhus/ c allsit es/blob/main/license
+caniuse-lite@1.0.30001024 see name http s:// github.c om/br o w ser slis t/ c aniuse-lit e/blob/main/LICENSE
+canonical-path@1.0.0 see namehttp s:// github.c om/pe t ebac ondar win/node-c anonic al-pa th/blob/mas t er/
+RE ADME.md
+caseless@0.12.0 see name http s:// github.c om/r eques t/ c aseless/blob/mas t er/LICENSE
+chalk@2.4.2 see name http s:// github.c om/ chalk/ chalk/blob/main/license
+chardet@0.7.0 see name http s:// github.c om/runk/node-char de t/blob/mas t er/LICENSE
+chokidar@2.1.8 see name http s:// github.c om/paulmillr/ chokidar/blob/mas t er/LICENSE
+chownr@1.1.3 see name http s:// github.c om/isaacs/ cho wnr/blob/mas t er/LICENSEName Version License
+circular-dependency-plugin@5.2.0 see name http s:// github.c om/ aack erman/ cir cular -dependency -plugin/blob/mas t er/LICENSE
+class-utils@0.3.6 see name http s:// github.c om/jonschlink ert/ class-utils/blob/mas t er/LICENSE
+clean-css@4.2.1 see name http s:// github.c om/ clean-css/ clean-css/blob/mas t er/LICENSE
+cli-cursor@3.1.0 see name http s:// github.c om/ sindr esorhus/ cli-cur sor/blob/main/license
+cli-width@2.2.0 see name http s:// github.c om/kno wnasily a/ cli-width/blob/mas t er/LICENSE
+clone-deep@4.0.1 see name http s:// github.c om/jonschlink ert/ clone-deep/blob/mas t er/LICENSE
+codelyzer@5.2.1 see name http s:// github.c om/mg eche v/ c odely z er/blob/mas t er/LICENSE
+c ollection- visit@1.0.0 see name http s:// github.c om/jonschlink ert/ c ollection- visit/blob/mas t er/LICENSE
+color-convert@1.9.3 see name http s:// github.c om/Qix -/ c olor -c on v ert/blob/mas t er/LICENSE
+color-name@1.1.3 see name http s:// github.c om/ c olorjs/ c olor -name/blob/mas t er/LICENSE
+combined-stream@1.0.8 see name http s:// github.c om/f elixg e/node-c ombined-s tr eam/blob/mas t er/License
+commondir@1.0.1 see name http s:// github.c om/ sub s t ack/node-c ommondir/blob/mas t er/LICENSE
+c omponen t -emitter@1.3.0 see name http s:// github.c om/ c omponen t/ emitter/blob/mas t er/LICENSE
+compressible@2.0.18 see name http s:// github.c om/jshttp/ c ompr essible/blob/mas t er/LICENSE
+compression@1.7.4 see name http s:// github.c om/ e xpr essjs/ c ompr ession/blob/mas t er/LICENSE
+concat-map@0.0.1 see name http s:// github.c om/ sub s t ack/node-c onc a t -map/blob/mas t er/LICENSE
+concat-stream@1.6.2 see name http s:// github.c om/ma x og den/ c onc a t -s tr eam/blob/mas t er/LICENSE
+connect-history-api-fallback@1.6.0 see name http s:// github.c om/bripk ens/ c onnect -his t or y -api- f allback/blob/mas t er/LICENSE
+console-browserify@1.2.0 see name http s:// github.c om/br o w serif y/ c onsole-br o w serif y/blob/mas t er/LICENCE
+constants-browserify@1.0.0 see name http s:// github.c om/juliangruber/ c ons t an ts-br o w serif y/blob/mas t er/LICENSE.md
+c on t en t -disposition@0.5.3 see name http s:// github.c om/jshttp/ c on t en t -disposition/blob/mas t er/LICENSE
+content-type@1.0.4 see name http s:// github.c om/jshttp/ c on t en t -type/blob/mas t er/LICENSE
+convert-source-map@1.7.0 see name http s:// github.c om/thlor enz/ c on v ert -sour ce-map/blob/mas t er/LICENSE
+cookie-signature@1.0.6 see name http s:// github.c om/tj/node-c ookie-signa tur e/blob/mas t er/LICENSE
+cookie@0.4.0 see name http s:// github.c om/jshttp/ c ookie/blob/mas t er/LICENSE
+copy-descriptor@0.1.1 see name http s:// github.c om/jonschlink ert/ c op y -descript or/blob/mas t er/LICENSE
+copy-webpack-plugin@5.1.1 see name http s:// github.c om/w ebpack -c on trib/ c op y -w ebpack -plugin/blob/mas t er/LICENSE
+core-js@3.6.4 see name http s:// github.c om/zloir ock/ c or e-js/blob/mas t er/LICENSE
+c or e-util-is@1.0.2 see name http s:// github.c om/isaacs/ c or e-util-is/blob/mas t er/LICENSE
+c osmic on fig@5.2.1 see name http s:// github.c om/da vidtheclark/ c osmic on fig /blob/main/LICENSE
+cross-spawn@6.0.5 see name http s:// github.c om/mo xy s tudio/node-cr oss-spa wn/blob/mas t er/LICENSE
+crypto-browserify@3.12.0 see name http s:// github.c om/ cr yp t o-br o w serif y/ cr yp t o-br o w serif y/blob/mas t er/LICENSE
+cyclist@1.0.1 see name http s:// github.c om/ma fin t osh/ cy clis t/blob/mas t er/LICENSE
+debug@2.6.9 see name http s:// github.c om/visionmedia/debug /blob/mas t er/LICENSE
+decode-uri-component@0.2.0 see name http s:// github.c om/SamV er schuer en/dec ode-uri-c omponen t/blob/main/license
+default-gateway@4.2.0 see name http s:// github.c om/ silv er wind/de f ault -g a t e w a y/blob/mas t er/LICENSEName Version License
+de fine-pr operty@2.0.2 see name http s:// github.c om/jonschlink ert/de fine-pr operty/blob/mas t er/LICENSE
+del@4.1.1 see name http s:// github.c om/ sindr esorhus/del/blob/main/lic ense
+delayed-stream@1.0.0 see name http s:// github.c om/f elixg e/node-dela y ed-s tr eam/blob/mas t er/License
+depd@1.1.2 see name http s:// github.c om/dougwilson/nodejs-depd /blob/mas t er/LICENSE
+dependency-graph@0.7.2 see name http s:// github.c om/jrieck en/dependency -gr aph/blob/mas t er/LICENSE
+destroy@1.0.4 see name http s:// github.c om/ s tr eam-utils/des tr o y/blob/mas t er/LICENSE
+diff@4.0.2 see name http s:// github.c om/kpdeck er/jsdiff/blob/mas t er/LICENSE
+dir-glob@2.2.2 see name http s:// github.c om/k e v v a/dir -glob/blob/mas t er/license
+domain-browser@1.2.0 see name http s:// github.c om/be vr y/domain-br o w ser/blob/mas t er/LICENSE.md
+duplexify@3.7.1 see name http s:// github.c om/ma fin t osh/duple xif y/blob/mas t er/LICENSE
+ecc-jsbn@0.1.2 see name http s:// github.c om/ aduh95/ ecc-jsbn/blob/mas t er/LICENSE
+ee- fir s t@1.1.1 see name http s:// github.c om/jona thanong / ee- fir s t/blob/mas t er/LICENSE
+electron-to-chromium@1.3.345 see name http s:// github.c om/Kilian/ electr on-t o-chr omium/blob/mas t er/LICENSE
+emoji-regex@8.0.0 see name http s:// github.c om/ma thiasb ynens/ emoji-r eg e x/blob/main/LICENSE -MIT . tx t
+emojis-list@2.1.0 see name http s:// github.c om/Kik obea ts/ emojis-lis t/blob/mas t er/LICENSE.md
+encodeurl@1.0.2 see name http s:// github.c om/pillarjs/ enc odeurl/blob/mas t er/LICENSE
+end-of-stream@1.4.4 see name http s:// github.c om/ma fin t osh/ end-of -s tr eam/blob/mas t er/LICENSE
+enhanced-resolve@4.1.0 see name http s:// github.c om/w ebpack/ enhanced-r esolv e/blob/main/LICENSE
+errno@0.1.7 see name http s:// github.c om/r v ag g /node-errno#c op yrigh t --licence
+error-ex@1.3.2 see name http s:// github.c om/Qix -/node-err or -e x/blob/mas t er/LICENSE
+escape-html@1.0.3 see name http s:// github.c om/ c omponen t/ esc ape-h tml/blob/mas t er/LICENSE
+escape-string-regexp@1.0.5 see name http s:// github.c om/ sindr esorhus/ esc ape-s tring-r eg e xp/blob/main/license
+eslint-scope@4.0.3 see name http s:// github.c om/ eslin t/ eslin t -sc ope/blob/main/LICENSE
+esrecurse@4.2.1 see name http s:// github.c om/ es t ools/ esr ecur se#license
+estraverse@4.3.0 see name http s:// github.c om/ es t ools/ es tr a v er se#license
+esutils@2.0.3 see name http s:// github.c om/ es t ools/ esutils/blob/mas t er/LICENSE.BSD
+etag@1.8.1 see name http s:// github.c om/jshttp/ e t ag /blob/mas t er/LICENSE
+e v en t emitter3@4.0.0 see name http s:// github.c om/primus/ e v en t emitter3/blob/mas t er/LICENSE
+events@3.1.0 see name http s:// github.c om/br o w serif y/ e v en ts/blob/main/LICENSE
+execa@1.0.0 see name http s:// github.c om/ sindr esorhus/ e x ec a/blob/main/license
+expand-brackets@2.1.4 see name http s:// github.c om/micr oma t ch/ e xpand-br ack e ts/blob/mas t er/LICENSE
+express@4.17.1 see name http s:// github.c om/ e xpr essjs/ e xpr ess/blob/mas t er/LICENSE
+extend-shallow@3.0.2 see name http s:// github.c om/jonschlink ert/ e x t end-shallow/blob/mas t er/LICENSE
+extend@3.0.2 see name http s:// github.c om/jus tmoon/node-e x t end/blob/main/LICENSE
+external-editor@3.1.0 see name http s:// github.c om/mrkmg /node-e x t ernal-edit or/blob/mas t er/LICENSE
+extglob@2.0.4 see name http s:// github.c om/micr oma t ch/ e x tglob/blob/mas t er/LICENSEName Version License
+e x tsprintf@1.3.0 see name http s:// github.c om/jo y en t/node-e x tsprintf/blob/mas t er/LICENSE
+fast-deep-equal@3.1.1 see name http s:// github.c om/ epober e zkin/f as t -deep-equal/blob/mas t er/LICENSE
+fast-json-stable-stringify@2.1.0 see name http s:// github.c om/ epober e zkin/f as t -json-s t able-s tringif y/blob/mas t er/LICENSE
+fig gy -pudding@3.5.1 see name http s:// github.c om/zk a t/fig gy -pudding /blob/la t es t/LICENSE.md
+figur es@3.1.0 see name http s:// github.c om/ sindr esorhus/figur es/blob/main/license
+file-sa v er@2.0.2 see name http s:// github.c om/ eligr e y/FileSa v er .js/blob/mas t er/LICENSE.md
+fill-r ang e@4.0.0 see name http s:// github.c om/jonschlink ert/fill-r ang e/blob/mas t er/LICENSE
+finalhandler@1.1.2 see name http s:// github.c om/pillarjs/finalhandler/blo b/mas t er/LICENSE
+find-c ache-dir@3.0.0 see name http s:// github.c om/ a v ajs/find-c ache-dir/blob/main/licen se
+find-up@3.0.0 see name http s:// github.c om/ sindr esorhus/find-up/blob/main/lic ense
+flush-writ e-s tr eam@1.1.1 see name http s:// github.c om/ma fin t osh/flush-writ e-s tr eam/blob/mas t er/LICENSE
+follow-redirects@1.10.0 see name http s:// github.c om/f ollo w -r edir ects/f ollo w -r edir ects/blob/main/LICENSE
+font-awesome@4.7.0 see name http s:// github.c om/F ortAw esome/F on t -Aw esome/blob/mas t er/LICENSE. tx t
+for-in@1.0.2 see name http s:// github.c om/jonschlink ert/f or -in/blob/mas t er/LICENSE
+forever-agent@0.6.1 see name http s:// github.c om/r eques t/f or e v er -ag en t/blob/mas t er/LICENSE
+form-data@2.3.3 see name http s:// github.c om/f orm-da t a/f orm-da t a/blob/mas t er/License
+forwarded@0.1.2 see name http s:// github.c om/jshttp/f or w ar ded/blob/mas t er/LICENSE
+fragment-cache@0.2.1 see name http s:// github.c om/jonschlink ert/fr agmen t -c ache/blob/mas t er/LICENSE
+fresh@0.5.2 see name http s:// github.c om/jshttp/fr esh/blob/mas t er/LICENSE
+from2@2.3.0 see name http s:// github.c om/hughsk/fr om2/blob/mas t er/LICENSE.md
+fs.realpath@1.0.0 see name http s:// github.c om/isaacs/f s.r ealpa th/blob/mas t er/LICENSE
+get-stream@4.1.0 see name http s:// github.c om/ sindr esorhus/ g e t -s tr eam/blob/main/license
+get-value@2.0.6 see name http s:// github.c om/jonschlink ert/ g e t - v alue/blob/mas t er/LICENSE
+glob-parent@3.1.0 see name http s:// github.c om/ gulpjs/ glob-par en t/blob/main/LICENSE
+glob@7.1.6 see name http s:// github.c om/isaacs/node-glob/blob/mas t er/LICENSE
+globby@6.1.0 see name http s:// github.c om/ sindr esorhus/ globb y/blob/main/license
+globby@7.1.1 see name http s:// github.c om/ sindr esorhus/ globb y/blob/main/license
+graceful-fs@4.2.3 see name http s:// github.c om/isaacs/node-gr ace ful- f s/blob/mas t er/LICENSE
+hammerjs@2.0.8 see name http s:// github.c om/hammerjs/hammer .js/blob/mas t er/LICENSE.md
+har-schema@2.0.0 see name http s:// github.c om/ ahmadnassri/har -schema/blob/mas t er/LICENSE
+har-validator@5.1.3 see name http s:// github.c om/ ahmadnassri/node-har - v alida t or/blob/mas t er/LICENSE
+has- flag@3.0.0 see name http s:// github.c om/ sindr esorhus/has- flag /blob/main/license
+has-value@1.0.0 see name http s:// github.c om/jonschlink ert/has- v alue/blob/mas t er/LICENSE
+has-values@1.0.0 see name http s:// github.c om/jonschlink ert/has- v alues/blob/mas t er/LICENSE
+http-err or s@1.7.2 see name http s:// github.c om/jshttp/http-err or s/blob/mas t er/LICENSE
+http-pr o xy -middle w ar e@0.19.1 see name http s:// github.c om/ chimur ai/http-pr o xy -middle w ar e/blob/mas t er/LICENSEName Version License
+http-pr o xy@1.18.0 see name http s:// github.c om/http-party/node-http-pr o xy/blob/mas t er/LICENSE
+http-signa tur e@1.2.0 see name http s:// github.c om/http-party/node-http-pr o xy/blob/mas t er/LICENSE
+http s-br o w serif y@1.0.0 see name http s:// github.c om/ sub s t ack/http s-br o w serif y/blob/mas t er/LICENSE
+iconv-lite@0.4.24 see name http s:// github.c om/ ash tuchkin/ic on v -lit e/blob/mas t er/LICENSE
+ignore@3.3.10 see name http s:// github.c om/ sindr esorhus/import -cw d/blob/main/inde x.js
+import-cwd@2.1.0 see name http s:// github.c om/ sindr esorhus/import -cw d/blob/main/license
+import-fresh@2.0.0 see name http s:// github.c om/ sindr esorhus/import - fr esh/blob/main/license
+import-from@2.1.0 see name http s:// github.c om/ sindr esorhus/import - fr esh/blob/main/license
+imurmurhash@0.1.4 see name http s:// github.c om/jens y t/imurmurhash-js#license -mit
+infer-owner@1.0.4 see name http s:// github.c om/npm/in f er -o wner/blob/main/LICENSE
+in fligh t@1.0.6 see name http s:// github.c om/npm/in fligh t/blob/main/LICENSE
+inherits@2.0.3 see name http s:// github.c om/isaacs/inherits/blob/m as t er/LICENSE
+inquirer@6.5.1 see name http s:// github.c om/SBoudrias/Inquir er .js/blob/mas t er/LICENSE
+internal-ip@4.3.0 see name http s:// github.c om/ sindr esorhus/in t ernal-ip/blob/main/licens e
+ip-regex@2.1.0 see name http s:// github.c om/ sindr esorhus/ip-r eg e x/blob/main/license
+ip@1.1.5 see name http s:// github.c om/indutn y/node-ip#license
+ipaddr.js@1.9.0 see name http s:// github.c om/whit equark/ipaddr .js/blob/mas t er/LICENSE
+is-absolute-url@3.0.3 see name http s:// github.c om/ sindr esorhus/is-ab solut e-url/blob/main/license
+is-accessor-descriptor@0.1.6 see name http s:// github.c om/jonschlink ert/is-accessor -descript or/blob/mas t er/LICENSE
+is-arrayish@0.2.1 see name http s:// github.c om/Qix -/node-is-arr a yish/blob/mas t er/LICENSE
+is-binary-path@1.0.1 see name http s:// github.c om/ sindr esorhus/is-binar y -pa th/blob/main/license
+is-buff er@1.1.6 see name http s:// github.c om/f er oss/is-buff er/blob/mas t er/LICENSE
+is-data-descriptor@0.1.4 see name http s:// github.c om/jonschlink ert/is-da t a-descrip t or/blob/mas t er/LICENSE
+is-descriptor@0.1.6 see name http s:// github.c om/jonschlink ert/is-descrip t or/blob/mas t er/LICENSE
+is-directory@0.3.1 see name http s:// github.c om/jonschlink ert/is-dir ect or y/blob/mas t er/LICENSE
+is-extendable@0.1.1 see name http s:// github.c om/jonschlink ert/is-e x t endable/blob/mas t er/LICENSE
+is-extglob@2.1.1 see name http s:// github.c om/micr oma t ch/is-e x tglob/blob/mas t er/LICENSE
+is-fullwidth-code-point@3.0.0 see name http s:// github.c om/ sindr esorhus/is- fullwidth-c ode-poin t/blob/main/license
+is-glob@4.0.1 see name  http s:// github.c om/micr oma t ch/is-glob/blob/mas t er/LICENSE
+is-number@3.0.0 see name http s:// github.c om/jonschlink ert/is-number/blob/mas t er/LICENSE
+is-path-cwd@2.2.0 see name http s:// github.c om/ sindr esorhus/is-pa th-cw d/blob/main/license
+is-path-in-cwd@2.1.0 see name http s:// github.c om/ sindr esorhus/is-pa th-in-cw d/blob/main/license
+is-path-inside@2.1.0 see name http s:// github.c om/ sindr esorhus/is-pa th-in-inside/blob/main/lic ense
+is-promise@2.1.0 see name http s:// github.c om/then/is-pr omise/blob/mas t er/LICENSE
+is-stream@1.1.0 see name http s:// github.c om/ sindr esorhus/is-s tr eam/blob/main/licenseName Version License
+is-typedarray@1.0.0 see name http s:// github.c om/hughsk/is-typedarr a y/blob/mas t er/LICENSE.md
+is-windows@1.0.2 see name http s:// github.c om/jonschlink ert/is-windo w s/blob/mas t er/LICENSE
+is-wsl@1.1.0 see name http s:// github.c om/ sindr esorhus/is-w sl/blob/main/license
+isarray@1.0.0 see name http s:// github.c om/juliangruber/isarr a y/blob/mas t er/LICENSE
+isexe@2.0.0 see name http s:// github.c om/isaacs/ise x e/blob/mas t er/LICENSE
+isobject@3.0.1 see name http s:// github.c om/jonschlink ert/isobject/blob/mas t er/LICENSE
+isstream@0.1.2 see name
+jest-worker@24.9.0 see name http s:// github.c om/f acebook/jes t/blob/main/LICENSE
+jquery@2.2.4 see name http s:// github.c om/jquer y/jquer y/blob/main/LICENSE. tx t
+js-tokens@4.0.0 see name http s:// github.c om/ly dell/js-t ok ens/blob/main/LICENSE
+js-yaml@3.13.1 see name http s:// github.c om/nodec a/js- y aml/blob/mas t er/LICENSE
+jsbn@0.1.1 see name http s:// github.c om/ andyperlit ch/jsbn/blob/mas t er/LICENSE
+json-par se-better -err or s@1.0.2 see name http s:// github.c om/zk a t/json-par se-better -err or s/blob/la t es t/LICENSE.md
+json-schema-traverse@0.4.1 see name http s:// github.c om/ epober e zkin/json-schema-tr a v er se/blob/mas t er/LICENSE
+json-schema@0.2.3 see name http s:// github.c om/kris z yp/json-schema/blob/mas t er/LICENSE
+json-stringify-safe@5.0.1 see name http s:// github.c om/moll/json-s tringif y -sa f e/blob/mas t er/LICENSE
+json5@1.0.1 see name http s:// github.c om/json5/json5/blob/mas t er/LICENSE.md
+jsprim@1.4.1 see name http s:// github.c om/jo y en t/node-jsprim/blob/mas t er/LICENSE
+killable@1.0.1 see name http s:// github.c om/mart en-de- vries/killable/blob/mas t er/LICENSE
+kind-of@6.0.3 see name http s:// github.c om/jonschlink ert/kind-of/blob/mas t er/LICENSE
+license-webpack-plugin@2.1.2 see name http s:// github.c om/xz64/license-w ebpack -plugin/blob/mas t er/LICENSE
+loader-runner@2.4.0 see name http s:// github.c om/w ebpack/loader -runner/blob/mas t er/LICENSE
+loader -utils@1.2.3 see name http s:// github.c om/w ebpack/loader -utils/blob/mas t er/LICENSE
+locate-path@3.0.0 see name http s:// github.c om/ sindr esorhus/loc a t e-pa th/blob/main/license
+lodash.get@4.4.2 see name http s:// github.c om/lodash/lodash/blob/mas t er/LICENSE
+lodash.isequal@4.5.0 see name http s:// github.c om/lodash/lodash/blob/mas t er/LICENSE
+lodash.merge@4.6.2 see name http s:// github.c om/lodash/lodash/blob/mas t er/LICENSE
+lodash.set@4.3.2 see name http s:// github.c om/lodash/lodash/blob/mas t er/LICENSE
+lodash@4.17.15 see name http s:// github.c om/lodash/lodash/blob/mas t er/LICENSE
+lru-cache@5.1.1 see name http s:// github.c om/isaacs/node-lru-c ache/blob/mas t er/LICENSE
+magic-string@0.25.3 see name http s:// github.c om/Rich-Harris/magic-s tring /blob/mas t er/LICENSE
+make-dir@2.1.0 see name http s:// github.c om/ sindr esorhus/mak e-dir/blob/main/license
+map-cache@0.2.2 see name http s:// github.c om/jonschlink ert/map-c ache/blob/mas t er/LICENSE
+map-visit@1.0.0 see name http s:// github.c om/jonschlink ert/map- visit/blob/mas t er/LICENSE
+media-typer@0.3.0 see name http s:// github.c om/jshttp/media-typer/blo b/mas t er/LICENSE
+memory-fs@0.4.1 see name http s:// github.c om/w ebpack/memor y - f s/blob/mas t er/LICENSEName Version License
+merge-descriptors@1.0.1 see name http s:// github.c om/ c omponen t/mer g e-descript or s/blob/mas t er/LICENSE
+methods@1.1.2 see name http s:// github.c om/jshttp/me thods/blob/mas t er/LICENSE
+micromatch@3.1.10 see name http s:// github.c om/micr oma t ch/micr oma t ch/blob/mas t er/LICENSE
+mime-db@1.43.0 see name http s:// github.c om/jshttp/mime-db/blob/mas t er/LICENSE
+mime-types@2.1.26 see name http s:// github.c om/jshttp/mime-types/blo b/mas t er/LICENSE
+mime@2.4.4 see name http s:// github.c om/br oof a/mime/blob/mas t er/LICENSE
+mimic-fn@2.1.0 see name http s:// github.c om/ sindr esorhus/mimic- fn/blob/main/license
+mini-css-extract-plugin@0.8.0 see name http s:// github.c om/w ebpack -c on trib/mini-css-e x tr act -plugin/blob/mas t er/LICENSE
+minimatch@3.0.4 see name http s:// github.c om/isaacs/minima t ch/blob/mas t er/LICENSE
+mississippi@3.0.0 see name http s:// github.c om/ma x og den/mississippi/blob/mas t er/license
+mixin-deep@1.3.2 see name http s:// github.c om/jonschlink ert/mixin-deep/blob/mas t er/LICENSE
+mkdirp@0.5.1 see name http s:// github.c om/ sub s t ack/node-mk dirp/blob/mas t er/LICENSE
+moment@2.24.0 see name http s:// github.c om/momen t/momen t/blob/de v elop/LICENSE
+ms@2.0.0 see name http s:// github.c om/v er cel/ms/blob/mas t er/license.md
+mute-stream@0.0.8 see name http s:// github.c om/npm/mut e-s tr eam/blob/main/LICENSE
+nanomatch@1.2.13 see name http s:// github.c om/micr oma t ch/nanoma t ch/blob/mas t er/LICENSE
+neg otia t or@0.6.2 see name http s:// github.c om/jshttp/neg otia t or/blob/mas t er/LICENSE
+neo-async@2.6.1 see name http s:// github.c om/ suguru03/neo-as ync/blob/mas t er/LICENSE
+ngx-store@2.1.0 see name http s:// github.c om/z oomspher e/ngx -s t or e/blob/mas t er/LICENSE
+nice-try@1.0.5 see name http s:// github.c om/ elect erious/nice-tr y/blob/mas t er/LICENSE
+node-forge@0.9.0 see name http s:// github.c om/digit albaz aar/f or g e/blob/mas t er/LICENSE
+node-libs-browser@2.2.1 see name http s:// github.c om/w ebpack/node-lib s-br o w ser/blob/mas t er/LICENSE
+node-releases@1.1.48 see name http s:// github.c om/ chic o xy zz y/node-r eleases/blob/mas t er/LICENSE
+normalize-path@3.0.0 see name http s:// github.c om/jonschlink ert/normaliz e-pa th/blob/mas t er/LICENSE
+normalize-range@0.1.2 see name http s:// github.c om/james t almag e/normaliz e-r ang e/blob/mas t er/license
+npm-run-path@2.0.2 see name http s:// github.c om/ sindr esorhus/npm-run-pa th/blob/main/license
+num2fr action@1.2.2 see name http s:// github.c om/yisibl/num2fr action/blob/mas t er/LICENSE
+oauth-sign@0.9.0 see name http s:// github.c om/r eques t/ oauth-sign/blob/mas t er/LICENSE
+object-assign@4.1.1 see name http s:// github.c om/ sindr esorhus/ object -assign/blob/main/license
+object-copy@0.1.0 see name http s:// github.c om/jonschlink ert/ object -c op y/blob/mas t er/LICENSE
+object-visit@1.0.1 see name http s:// github.c om/jonschlink ert/ object - visit/blob/mas t er/LICENSE
+object.pick@1.3.0 see name http s:// github.c om/jonschlink ert/ object.pick/blob/mas t er/LICENSE
+on- finished@2.3.0 see name http s:// github.c om/jshttp/ on- finished/blob/mas t er/LICENSE
+on-headers@1.0.2 see name http s:// github.c om/jshttp/ on-header s/blob/mas t er/LICENSE
+once@1.4.0 see name http s:// github.c om/isaacs/ once/blob/mas t er/LICENSEName Version License
+onetime@5.1.0 see name http s:// github.c om/ sindr esorhus/ onetime/blob/main/license
+open@6.4.0 see name http s:// github.c om/ sindr esorhus/ open/blob/main/license
+opn@5.5.0 see name http s:// github.c om/ sindr esorhus/ open/blob/main/license
+os-browserify@0.3.0 see name http s:// github.c om/CoderPuppy/ os-br o w serif y/blob/mas t er/LICENSE
+os-tmpdir@1.0.2 see name http s:// github.c om/ sindr esorhus/ os-tmpdir/blob/main/lic ense
+p- finally@1.0.0 see name http s:// github.c om/ sindr esorhus/p- finally/blob/main/license
+p-limit@2.2.2 see name http s:// github.c om/ sindr esorhus/p-limit/blob/main /license
+p-locate@3.0.0 see name http s:// github.c om/ sindr esorhus/p-loc a t e/blob/main/license
+p-map@2.1.0 see name http s:// github.c om/ sindr esorhus/p-map/blob/main/lic ense
+p-try@2.2.0 see name http s:// github.c om/ sindr esorhus/p-tr y/blob/main/license
+papaparse@4.6.3 see name http s:// github.c om/mholt/P apaP ar se/blob/mas t er/LICENSE
+parallel-transform@1.2.0 see name http s:// github.c om/ma fin t osh/par allel-tr ans f orm/blob/mas t er/LICENSE
+parse-json@4.0.0 see name http s:// github.c om/ sindr esorhus/par se-json/blob/main/license
+parse5@4.0.0 see name http s:// github.c om/inik ulin/par se5/blob/mas t er/LICENSE
+parseurl@1.3.3 see name http s:// github.c om/pillarjs/par seurl/blob/mas t er/LICENSE
+pascalcase@0.1.1 see name http s:// github.c om/jonschlink ert/pasc alc ase/blob/mas t er/LICENSE
+path-browserify@0.0.1 see name http s:// github.c om/br o w serif y/pa th-br o w serif y/blob/mas t er/LICENSE
+path-dirname@1.0.2 see name http s:// github.c om/ gulpjs/pa th-dirname/blob/mas t er/license
+path-exists@3.0.0 see name http s:// github.c om/ sindr esorhus/pa th-e xis ts/blob/main/license
+path-is-absolute@1.0.1 see name http s:// github.c om/ sindr esorhus/pa th-is-ab solut e/blob/main/license
+path-is-inside@1.0.2 see name http s:// github.c om/domenic/pa th-is-inside/blob/mas t er/LICENSE. tx t
+path-key@2.0.1 see name http s:// github.c om/ sindr esorhus/pa th-k e y/blob/main/license
+path-to-regexp@0.1.7 see name http s:// github.c om/ c omponen t/pa th-t o-r eg e xp/blob/mas t er/LICENSE
+path-type@3.0.0 see name http s:// github.c om/ sindr esorhus/pa th-type/blob/main/lice nse
+performance-now@2.1.0 see name http:// opensour ce.or g /licenses/MIT
+pify@2.3.0 see name http s:// github.c om/ sindr esorhus/pif y/blob/main/license
+pify@4.0.1 see name http s:// github.c om/ sindr esorhus/pif y/blob/main/license
+pinkie-promise@2.0.1 see name http s:// github.c om/floa t dr op/pinkie-pr omise/blob/mas t er/license
+pkg-dir@3.0.0 see name http s:// github.c om/ sindr esorhus/pkg-dir/blob/main/ license
+posix-character-classes@0.1.1 see name http s:// github.c om/micr oma t ch/posix -char act er -classes/blob/mas t er/LICENSE
+postcss-import@12.0.1 see name http s:// github.c om/pos t css/pos t css-import/blob/mas t er/LICENSE
+pos t css-load-c on fig@2.1.0 see name http s:// github.c om/pos t css/pos t css-load-c on fig /blob/main/LICENSE
+postcss-loader@3.0.0 see name http s:// github.c om/w ebpack -c on trib/pos t css-loader/blob/mas t er/LICENSE
+postcss-momentum-scrolling@2.3.14 see name http s:// github.c om/ solv er sgr oup/pos t css-momen tum-scr olling /blob/main/LICENSE
+postcss-scss@2.0.0 see name http s:// github.c om/pos t css/pos t css-scss/blob/main/LICENSE
+postcss-value-parser@4.0.2 see name http s:// github.c om/T r ySound/pos t css- v alue-par ser/blob/mas t er/LICENSE

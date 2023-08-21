@@ -1,0 +1,226 @@
+Resource attribut es
+Terminology
+Resource attribut es  can be used to de fine  resource objects within Bravura Security Fabric  ; for example,
+you can c on figur e  a ”Loc ation”  attribut e  to be a mandatory value for target systems, to help users quickly
+find resources that are in the same loc ation.  Other examples include owner, risk level, department,
+division, and so on.
+Resource entitlemen t  attribut es  are resource attribut es  that de fine  the r elationship  between two
+resources. An entitlemen t  attribut e  is used to set entitlemen ts  on members of a resource.
+▪Group entitlemen t  attribut es  de fine  the r elationship  between a user and their group membership; for ▪
+example, the membership expiry date is a group entitlemen t  attribut e  for the r elationship  between a
+user and their group membership.
+▪Role entitlemen t  attribut es  de fine  the r elationship  between a user and their role assignment; for ▪
+example, an expiry date for a student’s r egis tr ation  in a math course at university is a role entitlemen t
+attribut e  for the r elationship  between the student and their role as a math student.
+Access control
+Resource attribut es  and entitlemen t  attribut es  are accessible via the Bravura Security Fabric  UI, and can
+be displayed and can be modified,  subject to access control policies. You apply and control access to
+resource attribut es  by adding them to resource attribut e  groups , which you then c on figur e  to de fine:
+▪Target systems▪
+▪Template accounts▪
+▪Roles▪
+▪Managed groups▪
+▪ Segr eg ation  of duties  rules ▪
+Resource attribut es  and entitlemen t  attribut es  diff er  from built-in resource parameters, such as resource
+ID, in that they are not required by Bravura Security Fabric  , and they are stored in a separate database
+table.
+The rest of this chapter describes:
+▪Types of resource attribut es  (on page 651) ▪
+▪ De fining  resource attribut es  (on page 654) ▪
+▪Examples  (on page 658) ▪
+ 
+Types of resource attribut es
+Resource attribut es  can be de fined  according to the following types:
+String A short alpha-numeric valueBoolean A true or false value.
+Da t e/time Users select a date in year/month/day hour:minute (YYYY/MM/DD
+HH:MM) format.
+Memo A multi-line  alpha-numeric value
+Integer An all-numeric value
+Password A value hidden from view. Bravura Security Fabric  displays a symbol such
+as 
+ for each character.
+Built-in resource attribut es
+There are several built-in attribut es:
+ENTITLEMENT_EXPIRY_DATE The expiry date of an entitlemen t.
+This attribut e  is not included in an attribut e  group by default. It is
+used to hold the expiry date for a requested e x ception  to a SoD rule.
+ENTITLEMENT_EXPIRY_DAYS_DEFAULT The default number of days before expiry.
+This attribut e  is included in the SOD_EXCEPTION_EXPIRY resource
+attribut e  group, and is used to determine the expiry date for a
+requested e x ception  to a SoD rule.
+GROUP_ID Group ID
+This attribut e  is included in the GROUP_INFO_CREATE attribut e
+group and is used in create group oper ations.
+GROUP_NAME Group name
+This attribut e  is included in the GROUP_INFO_CREATE and
+GROUP_INFO_UPDATE attribut e  groups and is used in create group
+and update group oper ations.
+GROUP_OU Group OU
+This attribut e  is included in the GROUP_INFO_CREATE attribut e
+group and is used in create group oper ations.
+GROUP_TARGET Group target system
+This attribut e  is included in the GROUP_INFO_CREATE attribut e
+group and is used in create group oper ations.
+IGNORE_VALIDITY_WINDOW When enabled the role membership validity window will be ignored.
+This attribut e  allows for a manual override when a validity window
+is set by aut omation,  based off some SoR attribut es.
+START_TIME Optional  start time  for a role assignment.
+This attribut e  is included in the ROLE_VALIDITY attribut e  group and
+is used when assigning roles.
+END_TIME Optional  end time  for a role assignment.
+This attribut e  is included in the ROLE_VALIDITY attribut e  group and
+is used when assigning roles.Getting  started
+ Requirements 
+Before you add a resource attribut e:
+▪You require the Manage resources adminis tr ativ e  privilege in order to access the Resource attribut es ▪
+menu item.
+ Na vig ation  steps 
+Use the Resource attribut e  in f ormation  page to add and c on figur e  resource attribut es.  To navigate to this
+page:
+1.Click Manage the system > Resources > Resource attribut es . 1.
+2.To de fine  a: 2.
+▪New resource attribut e  – click Add new... . ▪
+▪ Existing  resource attribut e  – search for, or select the resource attribut e  you want to view or modify. ▪De fining  resource attribut es
+To add a new resource attribut e:
+1.Navigate to the Resource attribut e  in f ormation  page  (on page 653). 1.
+2.Type a unique ID and Description . 2.
+3.Select a Type . 3.
+Bravura Security Fabric  refreshes the page and re-displays settings  according to the type you selected.
+If JavaScript is not enabled for your browser, you must click Add to allow the page to refresh.
+4.Set parameters as described in the table below.4.5.Click Add, or Update . 5.
+Resource attribut e  parameters
+Setting Type Description
+Minimum required number of
+valuesAll A number greater than 1 means the attribut e  is
+required.
+Maximum allowed number of
+valuesString,Integer A number greater than 1 means that multiple
+values are allowed.
+Allow duplicate values String,Integer Determine whether the values for a multi- v alued
+attribut e  must be unique. This does not apply to
+single-valued attribut es.
+Changes made will invalidate
+authoriz ationsAll If an authorizer or requester changes a resource
+attribut e  value, any previous authoriz ations  of a
+request are invalidated. Other authorizers are
+notified  and need to re-authorize the request.
+If an authorizer or requester changes an
+entitlemen t  attribut e  value, any previous
+authoriz ations  of that entitlemen t  are invalidated.
+Other authorizers are notified  and need to re-
+authorize the request.
+This is useful where an attribut e  change can be an
+entitlemen t  authoriz ation  period issue; for
+example, if AESOD set to a value of 30 days, and
+an authorizer changes the value to 60 days, the
+original request should be invalidated.
+Maximum field  length String, Integer,
+PasswordMaximum length allowed for each value
+Notes All Help in f ormation  for the attribut e.  Once set, it will
+be available in wizards by hovering over the
+question  mark icon.
+Description  of input values String,Memo,Integer,Password This is displayed to users to show them how to
+enter values for the attribut e.  For example, type
+YYYY-MM-DD  for a Date of birth field.
+Format requirement of input values String, Password For example, type NNNN-NN-NN to indicate a
+series of numbers.
+Regular expression used for
+v alidation  of input valuesString, Memo,
+Integer ,PasswordIf you use a regular expression for v alidation  the
+Description  of input values  is required.
+Plugin used to generate a list of
+restricted valuesString, Integer You can use a plug-in to supply one or more
+restricted values for an attribut e.  Leave this field
+blank to de fine  restricted values manually
+Display text for positiv e  value Boolean The default is True .
+Display text for neg ativ e  value Boolean The default is False.
+Display text for no value Boolean The default is ( None ).Setting Type Description
+Default values for the attribut e String, Integer, Boolean Attribut es  can be set up with default values, so
+that unless a user intervenes and changes them,
+the default values are copied to the newly added
+resource.
+If you de fine  restricted values for the attribut e,
+you can select them from a drop-down list for this
+option.
+Encrypt this attribut e  in theda abase All except User Enable this to encrypt attribut e  values in the
+database. If encrypted, the attribut e  cannot be
+mapped to a group attribut e.  Certific ation
+reviewers must have appropriate permission to
+view encrypted attribut e  values; otherwise they
+are masked.
+Boolean values
+Boolean attribut es  require users to input a true or false value. The default choices displayed to end users
+are True or False , or (None) if the attribut e  is optional.
+To specify other values:
+1.On the Resource attribut e  in f ormation  page  (on page 653), type a text string for: 1.
+▪Display text for positiv e  value ▪
+▪Display text for neg ativ e  value ▪
+▪Display text for no value▪
+2.Set the Default values for the attribut e  by selecting  the appropriate radio button. 2.
+3.Click Update . 3.
+When you click Update , the default values text will change to r e flect  the values you specified.   
+Number of values required or allowed
+The number of values required or allowed is set by the Minimum required number of values and
+Maximum allowed number of values on the Resource attribut e  in f ormation  page.▪If the attribut e  is required for a resource, type a number greater than 0 in the Minimum required ▪
+number of values field.
+▪If more than one value can be entered, type a number greater than 1 to set a Maximum allowed ▪
+number of values , or type -1 to allow an in finit e  number of values.
+This number can only be set to a positive  number or -1; 0 is invalid.
+Only string and integer attribut e  types can have more than 1 value. The boolean, da t e/time,  memo,
+and password attribut e  types can only have one value.
+Maximum length
+You can restrict the maximum length of a resource attribut e  value by using the Maximum field  length
+setting  on the Resource attribut e  in f ormation  page.
+For multiple  … Maximum length refers to …
+Restricted values Maximum length allowed for each value
+Unrestricted values Total number of characters allowed in the text field  for the attribut e
+Restricted values
+You can supply one or more restricted values for an attribut e.  Only integer or string type attribut es  can
+have restricted values.
+When multiple  restricted values are supplied for an attribut e,  users select one or more of the values from
+a list when they assign attribut e  values to a resource.
+You can c on figur e  the values:
+▪Manually using the Manage the system  (PSA) module ▪
+▪Using a plugin to generate them dynamically▪
+To de fine  restricted values:
+1.Add the attribut e  using the Resource attribut e  in f ormation  page, leaving the Plugin used to generate 1.
+a list of restricted values blank.
+The Restricted values tab appears once the attribut e  has been created.
+2.In the Restricted values tab, type the Actual value , to be recorded in the database, and Displayed 2.
+value , to be shown to users.
+To add additional  values, click More or Update to add rows.
+3.Click Update when you have added all values. 3.
+To delete a restricted value, select the checkbox next to the value then click Update .
+The drop-down list above the section  allows you to sort values alphabetic ally  according to actual value or
+displayed value.Default values
+Attribut es  can be set up with default values, so that unless a user intervenes and changes them, the
+default values are entered for a resource. This is the case for both required and optional  attribut es.
+If default values are c on figur ed,  they will be set in requests regardless of the recipient’s e xiting  values.
+On the Resource attribut e  in f ormation  page, de fine  Default values for the attribut e  by typing them in the
+text box (unrestricted values) or selecting  from the list of values (restricted or boolean values).
+Examples
+Add role membership attribut es  to w orkflo w
+Administrators can add attribut e  fields  to gather additional  in f ormation  about role membership. End
+users can add or update the attribut e  values by r equesting  a change in role membership. The following
+procedure describes how to update role membership attribut e  values using the standard Change role
+membership  request. It assumes that roles have been de fined  and assigned to an end user.
+Add role membership attribut es  
+To add role membership attribut es:
+1.As a product administrator , click Manage the system > Resources > Resource attribut es . 1.2.Click Add new… 2.3.Enter values as follows:3.
+ID: ROLE_ATTR1
+Description:  Role reason
+Type: String
+Minimum required number of values: 0
+Maximum allowed number of values:
+4.Click Add. 4.
+5.Click Add new… to add another attribut e. 5.
+6.Enter values as follows:6.
+ID: ROLE_ATTR2
+Description:  Role date
+Type: Da t e/time
+Minimum required number of values: 0
+7.Click Add. 7.
+There are now two attribut es  that can be added to the role membership request page.  
+Set attribut e  access controls 
+To set access controls for the new attribut e,  add it to an attribut e  group:
+1.As a product administrator , click Manage the system > Resources > Resource attribut e  groups . 1.

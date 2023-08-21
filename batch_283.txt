@@ -1,0 +1,392 @@
+Option Description
+Port number this service is running
+onThis defaults to 3334. This port is used for c ommunic ation  with interceptors
+installed from Connector Pack 1.1 and newer. To enable c ommunic ation  with older
+interceptors, you must set a backward c ompatibility  port, as explained below in this
+table.
+The port number selected must not be in use by any other service, including other
+instances of the Password Manager service (idpm).
+Maximum number of concurrent
+threads the service should runThe number of concurrent password s ynchr oniz ations  the Password Manager
+service can execute. The default is 8. You should vary this according to the load limit
+of the Bravura Pass server and the number and type of target systems.
+Timeout for c onnection  in seconds The amount of time  the Password Manager service will wait, once it has made a
+socket c onnection  and sent a s ynchr oniz ation  request, before killing the c onnection.
+The default is 600.
+Optional  parameters
+Comma-delimited list of IP
+addresses with CIDR bitmask that
+are allowed to send socket requestsBravura Security Fabric only accepts socket requests through the authorized IP/CIDR
+range de fined  in this field.  Password s ynchr oniz ation  interceptors that need to
+access idpm must be de fined  in this field,  otherwise, their requests will be
+rejected. See Allowing external c ommunic ation  with Bravura Security Fabric  (on
+page 2822).
+The default is 127.0.0.1/32,::1/128
+Perform password strength check
+on non-Bravura Pass usersSelect the Enable checkbox if you want the Password Manager service to enforce
+the password strength rules de fined  in Bravura Pass, when a non-Bravura Pass user
+(not in the user table) or a user who is not registered for transparent password
+s ynchr oniz ation  changes his or her password on a trigger system.
+Perform transparent password
+s ynchr oniz ation  on locked out usersSelect the Enable checkbox if you want the Password Manager service to enforce
+the transparent password s ynchr oniz ation  on locked out users.
+Note : The locked out users pr ofile  status is not a ff ect ed  by selecting  or deselecting
+this option.
+Enable this port for backward
+c ompatibility  (to communicate with
+older interceptors/triggers). Must
+be diff er en t  from Port number
+aboveThis port facilitates c ommunic ation  with interceptors that use legacy protocol. This
+includes:
+▪Unix and LDP interceptors▪
+▪OS/400 interceptors installed with Bravura Pass 7.0 or earlier▪
+▪Interceptors installed with Mainframe Connector ▪
+▪Any interceptor installed with Bravura Pass version 6.x or older.▪
+You must use a diff er en t  port number than the one specified  for Port number
+this service is running on.
+Note : If the wrong ports are used, c onnections  are dropped and the passwords
+are not synchronized.
+The following table lists Password Manager service events  (on page 1524) that can trigger email or
+updates on tick e t  systems.
+idpm service events that launch interface programsOption Description
+IDPM FINDUSER FAILURE The Password Manager service attemp ts  to check a password against
+password strength rules, and does not find the user in the Bravura
+Security Fabric database.
+IDPM GROUP FAILURE The Password Manager service attemp ts  to synchronize a group of
+passwords for a user, and fails on at least one of the passwords after  the
+specified  sequence of retries.
+IDPM GROUP FIRST TRY DONE All password oper ations  in a request have been attemp t ed  once.
+IDPM GROUP NOOP Transparent s ynchr oniz ation  request is received for a user that does not
+have any other accounts to synchronize.
+IDPM GROUP SUCCESS Every password is synchronized for a user by the Bravura Security Fabric
+interceptor service.
+IDPM REQUEUE A single password change fails, and is queued for retries on the Bravura
+Security Fabric server.
+IDPM SINGLE FAILURE The Password Manager service attemp ts  to change a single password for
+a user, and fails after  the specified  sequence of retries.
+IDPM SINGLE SUCCESS A single password is changed for a user by the Password Manager
+service.
+IDPM STRENGTH FAILURE The Password Manager service rejects a user’s password, because it
+failed at least one password policy rule. This exit point is useful for
+aut omatic ally  sending the user a reminder describing the password
+policy.
+IDPM STRENGTH SUCCESS A password strength check is successful.
+Command-line options  for idpm are listed below:
+idpm command-line options
+Argument Description
+-h Displays usage in f ormation.
+-v Displays version number only.
+-clearqueue Clears the queue. The service must be manually stopped before using this option.
+WARNING!: This oper ation  removes all records of outstanding requests.
+-c on fig Displays service c on figur ation  in f ormation.
+-server Run the service in server mode.
+-start Starts the service.
+-stop Stops the server/service
+Allowing external c ommunic ation  with Bravura Security Fabric
+Communic ation  with the Bravura Pass  server is controlled by an access control list. When you install the
+Password Manager service, it aut omatic ally  sets the access control for the local server,"127.0.0.1/32,::1/128", with all allowable access so that it can perform its oper ations  with no
+modific ation.
+To allow external servers access to the Password Manager service on the primary Bravura Security Fabric
+server, you must set up the Comma-delimited list of IP addresses with CIDR bitmask that are allowed to
+send socket requests on the Password Manager service in f ormation  page.
+The external server ACLs are based on a server’s IP address de fined  using Classless Inter-Domain R outing
+(CIDR) not ation
+The purpose of the IP addresses field  is to identif y  specific  external server(s) that are allowed to access
+the Bravura Security Fabric  server within the boundaries of the specified  access rights. This is
+accomplished by using Classless Inter-Domain R outing  (CIDR) not ation  to de fine  an IP address block. The
+address block is represented by an IP address and a pr e fix  size and is written  in slash not ation  <IP>/
+<pr e fix>  where:
+▪IP is the IPv4 (<0-255>.<0-255>.<0-255>.<0-255>) or IPv6 address (<0000- ff ff>:<0000- ff ff>:<0000- ▪
+ff ff>:<0000- ff ff>:<0000- ff ff>:<0000- ff ff>:<0000- ff ff>:<0000- ff ff>)
+▪ pr e fix  is the pr e fix  size for the mask and must be an integer within the range 0-32 for IPv4 or 0-128 for ▪
+IPv6
+The subnet mask determines the size of the address block (the number of IP addresses belonging to the
+block), and used in c onjunction  with the IP address, specifies  which particular  IP addresses belong to that
+block. Some planning is required. You need to determine whether the entry is going to be used to
+represent a single address or a range of c onsecutiv e  addresses.
+The size of the address block, or the number of IP addresses that the block contains is
+number of entries = 2(32- < subnetmask > )
+To determine the IP addresses of the servers that will be granted access to the Bravura Security Fabric
+server from the IP address/subnet entry do the following:
+1.Turn the IP address into binary not ation;  for example, 1.
+▪128.10.12.1 = 10000000.00001010.00001100.00000001▪
+2.Start at the left hand side of the binary r epr esen t ation  and mark off the number of binary digits 2.
+specified  by the subnet mask; for example, using a 30 bit subnet mask, the fir s t 30 digits are marked
+off (bolded).
+▪10000000.00001010.00001100.000000 01 ▪
+Valid or matching IP addresses must be based on these fir s t 30 digits.
+3.Calculate the valid addresses by cr eating  all possible permut ations  using the remaining binary digits. 3.
+In this case, there are only two unmasked digits, and as a result there are only 2(32 - 30)= 22= 4
+possible addresses that match.
+▪10000000.00001010.00001100.000000 00 = 128.10.12.0 ▪
+▪10000000.00001010.00001100.000000 01 = 128.10.12.1 ▪
+▪10000000.00001010.00001100.000000 10 = 128.10.12.2 ▪
+▪10000000.00001010.00001100.000000 11 = 128.10.12.3 ▪To restrict access to a single server use a complete pr e fix  (32 for IPv4 or 128 for IPv6). This means that
+the IP address must match exactly.
+To restrict access only to processes (servers) that reside on the Bravura Security Fabric  server, use the
+local host address with a complete pr e fix  (127.0.0.1/32 or ::1/128 for IPv4 and IPv6 r espectiv ely).
+External access will be denied.
+, which allows for address ranges.
+T esting
+To verify that the service is running, try to connect to the port number it uses with Telnet. For example,
+from the Bravura Security Fabric  server, type:
+ telnet localhost 3334 
+You should see nothing returned.
+If using load balancers, do not c on figur e  any SSL options  for transparent s ynchr oniz ation  tr a ffic.  SSL options  should
+only be c on figur ed  on load balancers for WebUI tr a ffic,  not transparent s ynchr oniz ation.  Transparent
+s ynchr oniz ation  is encrypted using a proprietary encr yption  algorithm. Contact support@bravurasecurity.com  for
+more details.
+Monitoring transparent password s ynchr oniz ation
+Managing the Password Manager Service queue
+Monitor transparent password s ynchr oniz ation  by running s ynchr oniz ation  reports. You may need to
+remove queued items to improve performance.
+By selecting  unwanted queued transparent s ynchr oniz ation  items and removing them, the items will not
+be retried to synchronize to their destination  targets and will be marked as failed s ynchr oniz ation.
+To remove items from the transparent s ynchr oniz ation  queue:
+1.Click Manage the system > Maintenance > Services . 1.
+2.Select Bravura Security (idpm) Password Manager Service . 2.
+3.Select Manage work queue in the bottom  table. 3.
+4.Enter search criteria and click Search . 4.
+5.Select the items you want to remove and click Cancel . 5.
+Monitoring transparent password s ynchr oniz ation  on Windows servers
+Monitor the health of the Password Change Notific ation  Module on Windows NT PDCs and Activ e
+Directory DCs. Run netstat -an to see whether there are many (more than 20 or 30) TCP
+c onnections  pending between the PDC/DC and the Bravura Pass  server. If so, there may be a problem
+with the Bravura Pass  server.
+Sometimes,  you may find that the Password Manager service (idpm) appears to be failing to synchronize
+passwords changed on a Windows server. In many cases this is caused by the Password ChangeNotific ation  Module interceptor ( psintcpt.dll ) timing  out before it has communicated a password
+change to idpm . The default timeout  period for psintcpt.dll  is 60 seconds. You can extend this
+timeout  period in the intcptsvc.cfg file.
+See Password interceptor service (intcptsvc) c on figur ation
+The password interceptor service, intcptsvc , is part of the Bravura Security Password Change
+Notific ation  Module, which also includes the psintcpt.dll . The service queues dll requests and
+communicates with the Password Manager service ( idpm ). The dll is loaded into Windows Local Security
+Authority (lsa) policy to capture nativ e  password changes.
+This section  explains how you can extend functionality  of the Password Change Notific ation  Module to
+include using diff er en t  interceptor settings  based on user’s DN, group and attribut es.
+This service is installed by intcpt.msi  or intcpt-64.msi  on a Windows transparent password
+s ynchr oniz ation  trigger.
+You can c on figur e  the interceptor service, intcptsvc to include or exclude certain users when they
+make password change requests on Windows trigger systems. The excluded requests are not sent to the
+Password Manager service ( idpm ), but are instead processed by the Windows password change facility
+as usual. This can be used to reduce network tr a ffic  between the trigger system and idpm .
+You can c on figur e  the Password Change Notific ation  Module filt er  using the c on figur ation  file,
+intcptsvc.cfg , located in:
+<Program Files path>\Bravura SecurityPassword Filter\service\
+See the intcptsvc.cfg file for basic ins tructions,  and samples located in:
+<Program Files path>\Bravura SecurityPassword Filter\samples\
+CAUTION: Do not alter instsvc.cfg unless you know what you are doing.
+For deployments on Windows NT environments, areas that are commented out should not be edited, due
+to limit ations  of Windows NT.
+The sample intcptsvc.cfg file below shows a modified  c on figur ation  file for an Activ e  Directory
+environment. In this file:
+▪The QueryAttributes group has been edited to specify attribut es  to query. ▪
+Using QueryAttributes = All  may slow down interceptor performance because it needs to
+retrieve all user attribut es  that have values (non blank). This option  is good for designing the
+c on figur ation  at the early stage. You can then specify individual attribut es  once you know what you
+are looking for.
+▪Bypass de fines  matching that will not be sent to the Password Manager service for password strength ▪
+checking and password s ynchr oniz ation.
+When used with the NotAny oper ation,  it includes the de fined  accounts; that is to say: "do not skip
+these accounts".
+▪BypassNotify de fines  matching accounts that will not be sent to the Password Manager service ▪
+for password s ynchr oniz ation.▪The c on figur ation  file maps to one Password Manager service only. In the case below, it is mapped to ▪
+the service at IP address 10.0.5.8, port 3334. This can be the virtual IP of a Network Load Balancer.
+▪One physical Activ e  Directory DC maps to two logical Target IDs in Bravura Security Fabric ; ▪
+End_Users  and Admin_Users  logical targets in Bravura Pass . These two targets map to diff er en t
+target groups, which have their own password policies.
+The idea here is that the Activ e  Directory accounts meet administrator criteria:
+▪Is, at least, a member of specified  administrator groups; specified  by the Bypass oper ation  "NotAny" ▪
+"memberof" , which has the e ff ect  of including de fined  accounts.
+▪Is not the specified  account names; Guest and Krbtgt . ▪
+▪Is not a disabled account; specified  by userAccountControl match "([0-1])*10") ▪
+If an administrator is a member of Domain Administrators group, his changing password will be examined
+by the Password Manager service, but it will not be synchronized to other associated targets. Instead, his
+password will be changed locally only.
+Sample intcptsvc.cfg file
+1# KVGROUP-V2.0
+config "" = {
+3  PMServer = {
+    Address = 10.0.5.8;
+5    Port = 3334;
+    ConnectTimeOut = 10; # default timeout 10 seconds
+7    # How many times retry if connection or communication failed
+    MaxRetry = 10; # default maximum retry times is 10;
+9    RetryDelay = 5; # default interval between each retry
+    };
+11  # The total timeout for doing password strength check on all targets
+  StrengthCheckTimeOutSeconds = 60;
+13  # How many time retry if IDPM server returns recoverable error
+  StrengthCheckRetry = 3;
+15  # Queue polling time
+  QueuePollTimeSeconds = 60;
+17  # Queued item will discarded if exceed this setting
+  NotificationExpireSeconds = 86400;
+19  # Discard this notification if it has been tried max times
+  DiscardNotificationAfterTried = 100;
+21  # if an exception occurred, 1 --
+ return StrengthCheck succeeded, 0 -- return strength check failed
+  BypassStrengthOnException = 1;
+23  MaxSessionLifeSeconds = 60; # default max life time for session is 60
+25  # regular expression to bypass both strength check and password change notification based on
+  # sAMAccountName before retrieving account attributes.27  # Default setting is for bypassing empty user name and computer account
+  sAMAccountNameBypassRegEx = "^\\s ⋆$|^.⋆\\$+$";
+29
+  # ADsPath has the syntax as: LDAP://HostName[:PortNumber][/
+DistinguishedName]
+31  # following variables can be used for the HostName and DistinguishedName
+  # %PDC%    -- primary domain controller
+33  # %DC%     -- default domain controller
+  # %DN%     -- default naming context
+35  ADsPath = "LDAP://%DC%/%DN%";
+37  # LDAP search filter for querying account's attributes, the account name variable %USER
+% can be used in the filter
+  # %USER%   -- the account name
+39  # ADsSearchFilter = "(&(objectCategory=person)(objectClass=user)
+(sAMAccountName=%USER%))";
+  ADsSearchFilter = "(sAMAccountName=%USER%)";
+41
+  # QueryAttributes defines attributes that will be used by the PSLang BypassCheck
+43  # function and the Target-
+based bypass check for integrating with Active Directory.
+  # There is one inherent attribute, '_AccountName_'; this is the only
+45  # attribute that can be supported on a non-
+Active Directory platform.
+  # Following are sample attributes for and Active Directory provider.
+47  # Specifying "All" as QueryAttributes, instead of a list of attributes,
+  # indicates to query all possible attributes for the user.
+49  # QueryAttributes = All;
+51
+  # Active Directory attributes sample
+53   QueryAttributes = {
+     "distinguishedName";
+55     "userAccountControl";
+     "memberOf";
+57     "objectSid";
+     "pwdLastSet";
+59     "replPropertyMetaData";
+     "whenCreated";
+61     "whenChanged";
+     "logonHours";
+63     "lastLogon";
+     };65
+67
+  Targets = {
+69    End_Users = {
+      # IDPM return code:
+71      #   0 -- Communication failure
+      #   1 -- Communication timeout
+73      #  99 -- IDPM service internal database access failure
+      # 100 -- Weak password
+75      # 101 -- Access denied ( ACL )
+      # 102 -- User not found
+77      # 103 -- User has been locked out
+      # 104 -- User has not been registered
+79      # 105 -- User has been disabled
+      # 106 -- Account not specified
+81      # 107 -- TargetID not specified
+      # 119 -- Invalid operation code
+83      # 120 -- Invalid request version
+      # 200 -- Good password
+85      CheckStrengthFailIfIDPMReturn = { 100; };
+      CheckStrengthOnly = 0;
+87      # If the target longid isn't the default sAMAccountName, define the longid as:
+      # LongID = "%sAMAccountName%";
+89      # LongID = "DomainName\\%sAMAccountName%";
+      # LongID = "%distinguishedName%";
+91      LongID = "LongIDMatchesPMTarget";
+93      # Target based bypass setting is based on 'Condition Group', the 'Condition Group' has below definitions:
+      #
+95      # Defines the conditions to bypass both strength check and password change notification
+      # Bypass "LogicalOperation" = {
+97      #   ConditionGroup1;
+      #   ConditionGroup2;
+99      #   ...
+      #   };
+101      #
+      # ConditionGroup:
+103      # LogicalOperation [Attribute] = {
+      #   Expression1;
+105      #   Expression2;
+      #   ConditionGroup1;
+107      #   ConditionGroup2;      #   };
+109      #
+      # LogicalOperations:
+111      # "Any", "All", "NotAny", "NotAll"
+      #
+113      # ComparisonOperators:
+      #  Equal, NotEqual, Like, NotLike, Match, NotMatch, Great, Less, GreatEqual, LessEqual
+115      # SpecialOperations: Exists, NotExists
+      #
+117      # Expression:
+      #   ComparisonOperator[:OperationModifier] = Pattern;
+119      #   SpecialOperations;
+      #
+121      # The 'Match' and 'NotMatch' use TR1 Regular Expression standard and ECMA script grammar
+      # The 'OperationModifier' is an option for the 'ComparisonOperation', specify 'i'
+123      # to make comparison case insensitive. The KVG expression treats value and
+      # pattern as string by default, use the 'OperationModifier' to specify type or transform
+125      # both value and pattern before make comparision.
+      #   'i' -- insensitive case comparison
+127      #   'b' -- convert decimal integer to bit string
+      #   'h' -- convert decimal integer to hexadecimal string
+129      #   'B' -- convert hex string to bit string
+      #   't' --
+ convert file time integer to yyyymmddhhmmss UTC time string
+131      #   'I' --
+ comparison as 64 bit integer for arithmetic comparison operators
+      #
+133      # Defines the condition to bypass password change notification
+      # BypassNotify "LogicalOperation" = {
+135      #   ConditionGroup1;
+      #   ConditionGroup2;
+137      #   ...
+      #   };
+139      # For example, we would like to bypass password both strength check and
+      # password change notification on this target for any account name starts
+141      # with root or Admin or users in Administrators group or users in Managers
+      # group:
+143      # Bypass "Any" = {
+      #    "Any" "_AccountName_" = {
+145      #      Like = "root ⋆";
+      #      Like = "Admin ⋆";147      #     };
+      #    "Any" "memberOf" = {
+149      #      Equal = "Administrators";
+      #      Equal = "Managers";
+151      #    };
+      # };
+153
+      CheckStrengthFailIfIDPMReturn = { 100; };
+155      CheckStrengthOnly = 0;
+157      Bypass "Any" = {# Bypass strength check to HiPM
+            "Any" "userAccountControl" = {
+159                # Disabled accounts are Bypassing HiPM strength check.
+                # Disabled accounts control numer is 2 (binary -> 10).
+161
+                # convert userAccountControl number from decimal to bit
+163                # string. Then use regular expression for comparison.
+                match:b = "([0-1]) ⋆10";
+165            };
+167          "Any" "logonHours" = {
+                Match:B = "([1]) ⋆";
+169          };
+171          "Any" "pwdLastSet" = {
+                match:t = "1290538([0-9]) ⋆";
+173          };
+175          "Any" "lastLogon" = {
+                Less:I = 128539593944756250;
+177          };
+179          "Any" "_AccountName_" = {
+                # put the computer accounts below that are bypassing HiPM
+181                Equal:i = "Guest";
+                Equal:i = "krbtgt";
+183                Equal:i = "LethBridgeUser1";
+           };
+185
+          "Any" "distinguishedName" = {
+187                Like:i = " ⋆OU=Calgary ⋆";
+          };
+189
+          "Any" "memberOf" = {
+191                # The accounts have membership in the following groups are
+                # bypassing HiPM

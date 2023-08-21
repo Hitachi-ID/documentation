@@ -1,0 +1,337 @@
+If the only two members of this attribut e  group are MAQ_COMMAND and MAQCMD_SCOPE and a
+request is submitted  that does not contain an account that can run commands, the MAQBASEATTR group
+will not appear on the request details page.
+However, if another attribut e  is a member of the MAQBASEATTR group, this group will appear on the
+request page, whether the request includes accounts that can run the commands or not. For example,
+you may create a custom attribut e  to collect extra in f ormation  about the request.
+T r oubleshooting
+Windows servers / w ork s t ations
+If you are attempting  to run commands on Windows servers or w ork s t ations:
+▪Ensure you have prepared the product server and the NT target server for remote management. See▪
+Windows Server  in the Connector Pack documen t ation.
+▪If you receive any error messages see ” T r oubleshooting ”  in the Windows Server  documen t ation.. ▪
+Connector log
+The connector log is retrieved for a run command oper ation  by default. You can customize the log within
+the command. For example:
+$path = 'c:\\temp\\';$file = 'textfile.txt';$file2 = 
+csvfile.csv';New-Item-path $path -Name $file -
+Value 'Test of creating a new 
+txt file using the New-Item cmdlet. ' -ItemType file -force;$A = Get-
+Date; 
+Add-Content $path
+$file2 $A; $commandOutput='Command Direct Out goes here'; 
+$commandFile='output file content goes here'; 
+Ensure the command is entered as a single line.Privileged access management options
+This chapter describes options  that you can set globally for privileged access management. Product
+administrators with all adminis tr ativ e  privileges enabled (superuser) can control:
+▪Local service mode softw ar e  ins t allation ▪
+▪Push mode initial  r andomiz ation ▪
+▪Password r andomiz ation  intervals ▪
+▪Account access check-in/check-out behavior▪
+▪Group set access check-in/check-out behavior▪
+▪Triggers for external programs▪
+▪Access disclosure plugins▪
+▪Email notific ation  intervals ▪
+▪Generic access check-in/check-out retries▪
+Product administrators can also c on figur e  these options  for each managed system policy to which they
+are assigned permission. Group level settings  override global settings.  Some group level settings  are only
+available if it applies to the authentic ation  type de fined  for the managed system policy.
+See also: 
+Bravura Security Fabric  includes access disclosure plugins to permit secure access to a password for a
+privileged account.
+See Access Disclosure Plugins  (on page 1957) for in f ormation  on c on figuring  these plugins.
+General policy management options
+Use options  available in the Manage the system > Privileged access > Options  > Managed system
+policies menu to control:
+▪Local service mode w ork s t ation  keys  (on page 1933) ▪
+▪Local service mode create cr edentials  retry  (on page 1933) ▪
+▪Local service mode softw ar e  ins t allation  (on page 1933) ▪
+▪Local service mode c onnection  timeout  (on page 1933) ▪
+▪Local service mode r es ynchr oniz ation  (on page 1933) ▪
+▪User attribut e  updates  (on page 1934) ▪
+▪Display of policy member systems  (on page 1934) ▪
+▪Global management external program triggers  (on page 1934) ▪
+▪ Con flicting  passwords  (on page 1936) ▪
+▪Generic access check-in and check-out retries  (on page 1936) ▪Local service mode w ork s t ation  keys
+Bravura Privilege  uses a key to ensure secure c ommunic ation  between a local service mode managed
+system and the Bravura Security Fabric  server. For security purposes, this key is changed periodically.
+Set the RESOURCE KEY CHANGE INTERVAL to control the interval, in days, after  which w ork s t ation  keys
+are changed. The default is 30 days.
+See Resource key  (on page 1831) for more in f ormation.
+Local service mode create cr edentials  retry
+Bravura Privilege  can be c on figur ed  to create adminis tr ativ e  accounts on Local W ork s t ation  Service mode
+target systems. If the initial  create fails, additional  retries are governed by RES ADMIN CREATE RETRY
+INTERVAL .
+Con figur e  the RES ADMIN CREATE RETRY INTERVAL to determine the interval at which to retry. The
+default is 1440 minutes.
+See Cr eating  administrator accounts on target systems  (on page 1832) for more in f ormation.
+Local service mode softw ar e  ins t allation
+After  a Local W ork s t ation  Service registers with the Bravura Privilege  server and is managed, it c ontinues
+to contact the server at the interval set by RES POLL INTERVAL . The default is 60 minutes.
+The default port number for the Local W ork s t ation  Service listener using the RES LISTENER PORT option.
+The Local W ork s t ation  Service will periodically contact the Bravura Privilege  server to obtain the options
+that are set. The default interval is 86400 seconds. You can use the RES CONFIG UPDATE INTERVAL
+option  to change this interval; the change will take e ff ect  the next time  the Local W ork s t ation  Service
+contacts the server.
+Local service mode c onnection  timeout
+When the Bravura Privilege  server is slow in responding to a Local W ork s t ation  Service the service will
+retry after  an amount of time  set by RES CONNECTION TIMEOUT . The default timeout  is 600 seconds.
+Local service mode r es ynchr oniz ation
+After  a Local W ork s t ation  Service registers with the Bravura Privilege  server and is managed, it will
+aut omatic ally  resynchronize itself with the Bravura Privilege  server as c on figur ed  by the system variables
+in the table below.
+Privileged access: local w ork s t ation  mode r es ynchr oniz ation  variablesOption Description
+RES RESYNC FAILURE RETRY
+INTERVALThe interval (in minutes) a managed local
+service mode system will wait before
+attempting  to resynchronize with the
+instance server after  a failed attemp t.  The
+default is 120 minutes.
+RES RESYNC INTERVAL The interval (in minutes) a managed local
+service mode system will wait before
+resynchronizing with the instance server. The
+default is 10080 minutes (approximately 1
+week).
+RES TRANSACTION FAILURE RETRY
+INTERVALThe interval (in minutes) a managed local
+service mode system will wait before sending
+a tr ansaction  to the instance server after  a
+failed attemp t.  The default is 60 minutes.
+See Resynchronizing a local service mode system  (on page 1833) for more in f ormation  about
+r es ynchr oniz ation.
+User attribut e  updates
+Changes made to user attribut es  on a local service mode managed system are updated on the next poll
+of the Local W ork s t ation  Service. You can c on figur e  this so that some user attribut es  are updated less
+frequently than the default poll time  of the Local W ork s t ation  Service.
+Using a separate time  interval RES ATTRIBUTE UPDATE DELAY , you can control the delay in which the
+user attribut es  will be updated. By default, the delay is set to 60 minutes.
+Only user attribut es  specified  in RES DELAY UPDATE ATTRIBUTES are updated according to this time
+interval, otherwise they are updated after  every poll. By default, the pwda (password age) user attribut e
+is updated using the RES ATTRIBUTE UPDATE DELAY .
+Display of policy member systems
+Bravura Privilege  displays member systems for each managed account on the Managed accounts page.
+Set the RES NUM SYSTEMS DISPLAY option  to control the maximum number of member systems to
+display per account the Managed accounts page of a managed system policy. The default value is 3.
+Global management external program triggers
+Managed system policy exit points do not override global settings  and vice versa; however, in the case
+where an exit point is c on figur ed  to run the same program from both loc ations,  only one instance of the
+program is run. The following events can trigger email or other external program actions:
+Privileged access: global managed system events that launch interface programsOption Description
+RES ADD WSTN FAILURE A system fails to be added to the list of
+managed systems.
+RES ADD WSTN SUCCESS A system is successfully added to the list of
+managed systems.
+RES DEL GROUP FAILURE A policy fails to be removed from the list of
+managed system policies.
+RES DEL GROUP SUCCESS A policy is removed from the list of
+managed system policies.
+RES DEL WSTN FAILURE A managed system fails to be removed
+from the list of managed systems. The trap
+is triggered when:
+▪A system (push, local service, or user▪
+managed) is successfully deleted from
+the list of managed systems.
+▪The Aut omatic ally  create a Privileged ▪
+Access Manager managed system
+option  is unchecked on the Target
+system in f ormation  page for a push
+mode managed system.
+▪The push mode managed system is▪
+deleted from the list of target systems.
+RES DEL WSTN SUCCESS A system is removed from the list of
+managed systems.
+RES GROUP WSTN FAILURE A system fails to be added to a managed
+system policy.
+RES GROUP WSTN SUCCESS A system was successfully added to a
+managed system policy.
+The exit point is triggered when:
+▪A managed system is manually added to▪
+a managed system policy. A managed
+system can be added to a policy from
+either the Managed systems menu or
+the Managed system policies menu. The
+exit point is triggered in both scenarios.
+▪A local service mode system▪
+successfully adds itself as a managed
+system.
+▪A PSLANG expression or plugin is used▪
+to add a managed system to a managed
+system policy.Option Description
+RES ID CONFLICT Local service mode managed systems with
+c on flicting  system identifier s  are detected.
+The Local W ork s t ation  Service on the
+a ff ect ed  system will be shut
+down .
+RES REINSTALL A local service is reinstalled.
+RES UNGROUP WSTN FAILURE A managed system fails to be removed
+from a managed system policy.
+RES UNGROUP WSTN SUCCESS A managed system is successfully removed
+from a managed system policy. The trap is
+not triggered when a managed system is
+deleted from the list of managed systems,
+even though that also removes the system
+from all the policies it belongs to.
+RES UPDATE WSTN FAILURE The c on figur ation  settings  of a managed
+system fail to be updated from the request
+privileged access (PSW) module.
+RES UPDATE WSTN SUCCESS The c on figur ation  settings  of a managed
+system are successfully updated from the
+Request privileged access (PSW) module.
+See Event actions  (exit traps)  (on page 1523) for more in f ormation  about c on figuring  event actions.
+Con flicting  passwords
+You can choose whether to aut omatic ally  resolve c on flicting  passwords or set a limit on how many
+c on flicting  passwords can be processed at once.
+Privileged access: c on flicting  passwords variables
+Option Description
+PASSWORD CONFLICT ATTEMPT
+VERIFICATIONAttemp t  to aut omatic ally  resolve c on flict ed
+passwords by running agents and querying
+replicas. This is enabled by default.
+PASSWORD VERIFICATION BATCH
+LIMITThe maximum size of a password
+v erific ation  batch. The default is 50.
+See Con flict  r esolution  (on page 1891) for more in f ormation.
+Generic access check-in and check-out retries
+If a generic access check-in or check-out fails, aut omatic  retry attemp ts  occur as c on figur ed  by the system
+variables in the table below.Privileged access: generic access variables
+Option Description
+PAM ACTION CI RETRY INTERVAL The interval (in minutes) to wait before
+retrying a generic access check-in attemp t.
+The default is 1 minute. This value must
+be less than PAM ACTION CI RETRY
+TIMEOUT .
+PAM ACTION CI RETRY TIMEOUT The timeout  (in minutes) at which retry
+attemp ts  stop for generic access check-ins.
+The default is 10 minutes.
+PAM ACTION CO RETRY INTERVAL The timeout  (in minutes) at which retry
+attemp ts  stop for generic access check-ins.
+The default is 10 minutes.
+Generic access check-in retry attemp ts  cannot be disabled.
+Privileged access check-in / check-out options
+Bravura Privilege  allows regular users to request temporary privileged access to managed systems, for
+themselves or other users, using authoriz ation  w orkflo w .
+Some examples of privileged access:
+▪Access to a single adminis tr ativ e  account ▪
+▪Access to keys▪
+▪Access to documents▪
+▪Temporary group membership using group sets▪
+▪The ability to run commands on multiple  systems and accounts ▪
+Requests can be auto-approved for certain users, or require approval by authorizers . If approval is
+required, Bravura Privilege  notifies  one or more authorizers, by email or other means, that they need to
+review the request. Bravura Security recommends that as a best pr actice  Bravura Privilege  auto approves
+most requests (80%+); when an authorizer receives too many requests, they tend to approve requests
+without reading them. This is called approver f atigue .
+Checking out account access does not allow a user to reset or change the account’s password.
+If approved, a user can check out the requested privileged access. Broadly, the check-out w orkflo w
+proceeds as follows:
+1.A user logs into the Front-end  and clicks the Privileged access link. 1.
+2.From the available menu options,  the user chooses: 2.
+▪Accounts to select one or more adminis tr ativ e  accounts. ▪
+▪Account sets to select an e xisting  account set. ▪
+▪Group sets to select from a list of group sets. ▪
+3.The user selects an account, group set, or account set and begins the request for access.3.4.The user enters required in f ormation,  including the time  needed for the check-out, and submits the 4.
+request. You can grant permission for users to bypass this step and proceed to Step 6.
+5.Bravura Privilege  notifies  appropriate authorizers who must log in to approve, modify, or deny the 5.
+request.
+6.If approved, the user logs in to check out the access privilege. The account access or group6.
+membership applies once they have it checked out.
+In the case of account check-outs, access disclosure plugins provide the user with access to the
+password or aut omatic  c onnection  to the managed system.
+In the case of account set check-outs, user can access each individual account included in the set and
+may be able to run command on multiple  systems.
+7.The user checks in when finished  with the accounts or group membership. Bravura Privilege  forces 7.
+the check-in after  a certain time.  The user can check out and check in once during an authorized
+interval. Messages can be c on figur ed  to display to users how much check-out time  is remaining and
+that the check-out time  has expired. See Privileged access request messages  (on page 1950).
+Note: When a one-time  disclosure plug-in is downloaded and executed, the
+plug-in will check with Bravura Privilege  to determine how much time  is
+left in the checkout, or if the authorized interval has expired. This also
+applies to one-time  plug-ins that have been saved for future use.
+In the case of account check-outs, the password is randomized upon check-in.
+Checking access privileges in and out allows Bravura Privilege  to control and audit who has access to an
+account or group set and when, and provides “dual-key” limit ations  on account access.
+This section  describes processes and options  for:
+▪Controlling user access request c apabilities  (on page 1938)  ▪
+▪ Con figuring  account access check-out options  (on page 1940)  ▪
+▪ Con figuring  group set check-out options  (on page 1945)  ▪
+▪Checking in access  (on page 1949)  ▪
+▪Privileged access request messages  (on page 1950)  ▪
+This section  also describes Check-in / check-out notific ations  (on page 1952).
+In this section,  unless specified,  account access refers to both single account and account set access
+requests.
+Controlling user access request c apabilities
+This sub section  describes:
+▪Who can check out privileged account access▪
+▪Who can check out group sets▪
+▪Who can see managed system and account in f ormation ▪
+▪Who can see check-out in f ormation ▪
+▪Who can request check-out extensions▪Who can check out privileged account access
+By default, any user can request permission to access managed accounts on any managed system. You
+can control this by:
+▪Disabling the IDARCHIVE PASSWORD REQUESTED setting  on the Modules > Privileged access  menu. ▪
+This changes the default behavior so that users must be assigned to a user group with appropriate
+permission. See Privileged access app  (on page 1251) for more module options.
+▪Specifying a user class in ACCESS ACCOUNTSETS USERCLASS setting  on the Modules > Privileged access ▪
+menu.
+This changes the default behavior so that only users belonging to the specified  user class can access
+managed account sets.
+▪Enable the ACCESS PERSONALADMINACCOUNTS USERCLASS setting  on the Modules > Privileged ▪
+access  menu.
+This setting  de fines  the user class that filt er s  users who can view the personal admin accounts filt er  in
+the Privileged access . If the owner of the personal adminis tr ativ e  account is part of the user class
+specified,  the personal admin accounts filt er  will be displayed in the Privileged access . See Privileged
+access app  (on page 1251) for more module options.
+▪Assigning users to groups.▪
+Users can also be granted permission to check out account access privileges without authoriz ation.
+▪ Con figuring  access controls from within a managed system policy . ▪
+Checking out account access does not allow a user to reset a password or to c on figur e  managed systems
+or managed system policies.
+Who can check out group sets
+By default, any user can request permission to groups for any managed system. You can control this by:
+▪Disabling the IDARCHIVE GSET REQUESTED setting  on the Modules > Privileged access  menu. This ▪
+changes the default behavior so that users must be assigned to a user group with appropriate
+permission. See Privileged access app  (on page 1251) for more module options.
+▪Specifying a user class in ACCESS GROUPSETS USERCLASS setting  on the Modules > Privileged access ▪
+menu.
+This changes the default behaviour so that only users belonging to the specified  user class can access
+group sets.
+▪Assigning users to groups. Users can also be granted permission to check out group set access▪
+privileges without authoriz ation.
+Who can see managed system and account in f ormation
+By default, all requesters can view additional  in f ormation  about the managed system and account when
+r equesting  account access. This in f ormation  can be accessed from a hyperlink that will be shown
+whenever the managed system or account name is displayed.All default push and local service mode managed system policies will have the View in f ormation:
+Managed systems/Managed accounts/Group sets/Account sets access control enabled for the
+ALLREQUESTERS and ALLRECIPIENTS user groups.
+You can choose not to disclose this in f ormation  for any future push or local service mode managed
+system policies created. To do this, go to Modules > Privileged access  menu and set IDARCHIVE VIEW
+MANAGED SYSTEM ACCOUNT INFO to Disabled . Modifying this option  will not a ff ect  any managed
+system policies created prior to this change.
+Who can see check-out in f ormation
+Users may be able to view details about who has currently checked out the password or group set  and the
+maximum number of check-outs allowed. This is controlled by the RES PWD CICO VIEW DETAILS and RES
+GSET CICO VIEW DETAILS settings  on the Manage the system  > Modules  > Privileged access  page.
+Standard details include password or group set status, expiry time  and last change, whether the
+password or group set can be requested, or whether a request has been approved and when it can be
+checked out.
+Who can request check-out extensions
+By default, any user can request a check-out extension to an activ e  managed account or group set access.
+You can control this by:
+▪Removing the "Request check-out extensions" privilege for ALLREQUESTERS in the Manage the ▪
+system > Security > Access to user pr ofile s > Global help desk  rules.
+This changes the default behavior so that check-out extensions are disabled for privileged access
+requests.
+▪Specifying a user class in the ACCESS EXTENSIONS USERCLASS setting  on the Manage the system  > ▪
+Modules > Privileged access  menu.
+This changes the default behavior so that only users belonging to the specified  user class can request
+check-out extensions.
+Account access check-out options
+The managed system policy must have the password or SSH key authentic ation  type in order to c on figur e
+account access check-out options.  Use options  available in the Manage the system > Privileged access >
+Options  > General > Account access request menu to control:
+▪Account access request behavior  (on page 1941) ▪
+▪Account access check-out external program triggers  (on page 1943) ▪
+Options  that can be c onfigured  on both Account access request and Group set access request tabs
+share the same value.
+Options  for external program triggers for generic access check-outs are available in Manage the system >
+Modules > Privileged access .

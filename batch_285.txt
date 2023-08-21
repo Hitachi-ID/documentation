@@ -1,0 +1,299 @@
+The service is aut omatic ally  installed and started on the Bravura Security Fabric  server during setup. You
+can modify the following parameters related to this service on the Service in f ormation  page:
+idwfm service options
+Option Description
+Process sending of emails with N
+concurrent threadsThe maximum number of emails that the W orkflo w
+Manager Service can process at one time.  The default is
+25. The maximum value that can be specified  for N is 64.
+Process changing batch status with N
+concurrent threadsThe maximum number of user-input events (for example,
+approvals, denials) that the W orkflo w  Manager Service
+can process simultaneously. The queue for processing
+events is e ff ectiv ely  in finit e.  The default is 10.
+Timeout for c onnection  in seconds The timeout  to use for c onnections.  The default is 600
+seconds.
+Port number this service is running
+onSpecifies  the port or the shared memory ID to listen on.
+The default is 2240.
+Command-line options  for idwfm are listed below:
+idwfm command-line options
+Argument Description
+-h Displays usage in f ormation.
+-v Displays version number only.
+-clearqueue Clears the queue. The service must be manually stopped before using this option.
+WARNING!: This oper ation  removes all records of outstanding requests.
+-c on fig Displays service c on figur ation  in f ormation.
+-server Run the service in server mode.Argument Description
+-start Starts the service.
+-stop Stops the server/service
+T r ansaction  Monitor Service (idtm)
+The T r ansaction  Monitor Service ( idtm ) runs agent programs on behalf of the W orkflo w  Manager
+Service ( idwfm ) or client programs such as iddriver . If an agent oper ation  fails, idtm can retry the
+oper ation  at specified  intervals.
+Depending on how target systems are c on figur ed,  the idtm  runs agents directly or through the Proxy
+Service ( psproxy ),
+The T r ansaction  Monitor Service is dependent on the Database Service  (on page 2844). If you restart the
+database service, you must restart the T r ansaction  Monitor Service.
+IDTM FAILURE EMAIL NOTIFICATION INTERVAL added in Bravura Security Fabric 12.6
+Configur ation
+The service is aut omatic ally  installed and started on the Bravura Security Fabric  server during setup.You
+can modify the following parameters related to this service on the Service in f ormation  page:
+idtm service options
+Option Description
+Required parameters:
+Maximum number of concurrent
+threads the service should runProcess queued requests with this many concurrent threads. It is
+reasonable to increase this number on larger Bravura Security Fabric
+servers. The default is 8.
+Timeout for c onnection  in seconds The timeout  to use for c onnections.  The default is 60 seconds.
+Port number this service is running
+onDefault is port 2234.
+Comma-delimited list of intervals, in
+minutes, to wait before retrying
+failed requestsIf a queued request fails, the T r ansaction  Monitor Service waits the
+specified  time  before retrying. For example, 5,5,10,10,20,20 means that
+T r ansaction  Monitor Service will retry in intervals of 5, 10, then 20
+minutes until  the failed target system becomes available.
+To specify no retries, enter a value of 0. To restore the default intervals,
+clear this field  of all values then click UpdateOption Description
+Optional  parameters:
+Plugin to determine if an action
+should still be run (IDTM ACTION
+STILL APPLICABLE PLUGIN )You can use a plugin to c on figur e  the behavior before an oper ation  is
+executed. The plugin accepts in f ormation  about requested actions,  and
+returns a ’true’ if the oper ation  will be run, or a ’false’ if the oper ation
+will not be run.
+The maximum number of
+oper ations  to do in a single agent
+in v oc ation  (IDTM AGENT SINGLE
+RUN OPERATION MAXIMUM )Set the value, if needed to allow agents to handle large requests. The
+default is 100.
+Plugin to modify a batch of
+connector oper ations  (IDTM BATCH
+OPREP PLUGIN)You can use a plugin to rewrite requested oper ations  on target systems.
+The plugin accepts in f ormation  about requested actions,  and maps them
+to 0 or more sub-actions  on specified  target systems. For example, a
+single update oper ation  can be translated into an update and rename
+oper ation  on a target system.
+See R e writing  target system oper ations  (on page 532) for in f ormation  on
+writing  a custom plugin.
+The interval (in days) to email about
+IDTM oper ation  failure after  the
+fir s t try fails (IDTM FAILURE EMAIL
+NOTIFICATION INTERVAL)Set the interval to send out notific ations  to diff er en t  parties  of the
+request (authorizer, requester, recipient) after  the fir s t attemp t  of an
+IDTM oper ation  fails. The default is one day.
+Plugin to determine whether and
+when to retry failed requests (IDTM
+RETRY PLUGIN)You can use a plugin to c on figur e  the behavior when an oper ation  fails.
+The plugin accepts in f ormation  about requested actions,  including the
+number of retries already done so far.
+The following table lists T r ansaction  Monitor service events  (on page 1524) that can trigger email or
+updates on tick e t  systems.
+T r ansaction  Monitor Service events that launch interfaceprograms
+Option Description
+IDTM GROUP FAILURE One or more actions  in a w orkflo w  request fails.
+IDTM GROUP SUCCESS All actions  in a w orkflo w  request succeed.Option Description
+IDTM SINGLE FAILURE An action  fails on a target system.
+IDTM SINGLE SUCCESS An action  succeeds on a target system.
+ Command-line options  for idtm are listed below:
+idtm service command-line options
+Argument Description
+-h Displays usage in f ormation.
+-v Displays version number only.
+-clearqueue Clears the queue. The service must be manually stopped before using this option.
+WARNING!: This oper ation  removes all records of outstanding requests.
+-c on fig Displays service c on figur ation  in f ormation.
+-server Run the service in server mode.
+-start Starts the service.
+-stop Stops the server/service
+Exposing role entitlemen t  attribut es  to target systems
+When a request is approved for some oper ation  on a target system, the T r ansaction  Monitor Service
+passes a reqacctitemsig attribut e  value to the agent. The value comes from the request itemid,
+which allows the target system to use the API to get role entitlemen t  in f ormation  from the Bravura
+Security Fabric database.
+It is rare that target systems themselves store the entitlemen t  attribut es.  This feature allows for support
+of proprietary systems that do store this in f ormation  to get access to the in f ormation  and have the
+Bravura Security Fabric store and set this in f ormation.
+See also: 
+Automated User Adminis tr ation  (on page 2424) for an overview of how the T r ansaction  Monitor Service
+works with the W orkflo w  Manager Service and idtrack  to propagate tracked changes.
+Database Service (iddb)
+The Database Service (iddb) is responsible for c onnecting  Bravura Security Fabric to its backend database.
+If Database Service fails or if you restart it, you must manually restart dependent services. See Stopping
+and s t arting  the Database Service  (on page 2845) for details.  
+Configur ationThe service is aut omatic ally  installed and started on the Bravura Security Fabric  server during setup.
+The Database Service uses a c on figur ation  file, iddb.cfg , located in the service directory. This file is
+aut omatic ally  generated when you install Bravura Security Fabric . It usually does not need to be edited;
+however you can edit the file for more advanced c on figur ation.  Contact support  for assistance.
+Note: You cannot modify parameters for the Database Service from the Manage
+the system (PSA) module.
+Command-line options  for iddb are listed below:
+iddb service command-line options
+Argument Description
+-h Displays usage in f ormation.
+-v Displays version number only.
+-cfg <cf gfile> The path to the iddb.cfg c on figur ation  file. The default is  \<instance>\service\
+-c on fig Displays service c on figur ation  in f ormation.
+-server Run the service in server mode.
+-start Starts the service.
+-stop Stops the server/service
+See also: 
+See the R eplic ation  and Recovery Guide  for in f ormation  about recovering from network failure, and steps
+to troubleshoot problems arising from unsynchronized data.
+Stopping and s t arting  the Database Service
+Unlike other Bravura Security Fabric services, you cannot stop, start, or otherwise manage the Database
+Service using the Manage the system  (PSA) module. You must use the Windows Services snap-in, or the
+Windows net command.
+Note: The Windows Services snap-in’s "Restart" oper ation  can aut omatic ally
+restart dependent services. By default, services are started aut omatic ally
+when the system starts.
+Stopping
+To stop the Database Service using the Windows net command:
+1.Log into the Windows server that is hosting  Bravura Security Fabric as a member of the Administrators 1.
+group.
+2.Open a command prompt and type:2.
+net stop iddb_<instance>
+where <instance> is the name of the Bravura Security Fabric instance.3.If the net command displays a list of dependent services:3.
+a.Note which services will be stopped. You will be required to restart them later.a.
+b.Type Y, then press [Enter]  to c ontinue. b.
+The Windows net command displays a success message after  the Database Service is stopped. This
+process may take several minutes.
+St arting
+To start the Database Service using the Windows net command:
+1.Log into the Windows server that is hosting  Bravura Security Fabric as a member of the Administrators 1.
+group.
+2.Open a command prompt and type:2.
+net start iddb_<instance>
+where <instance> is the name of the Bravura Security Fabric instance.
+The Windows net command displays a success message after  the Database Service is started. This
+process may take several minutes.
+You must also start any services that were stopped as a result of stopping the Database Service. To do this
+using the above net command, simply replace iddb with the appropriate executable name:
+Service name Executable name
+T r ansaction  Monitor Service idtm
+W orkflo w  Manager Service idwfm
+Scheduler Service psscheduler
+API Service idapi
+Privileged Access Manager Service idarch
+For example:
+net start idtm_default
+net start idwfm_default
+net start psscheduler_default
+API Service (idapi)
+The API Service (idapi) enables client programs to access Bravura Security Fabric w orkflo w  and
+provisioning features pr ogr ammatic ally .  Client programs communicate with the service using:
+▪SOAP (Simple Object Access Protocol)▪Some or g aniz ations  use the SOAP API to build their own customized front-end to Bravura Security
+Fabric .
+▪PSLang functions ▪
+Bravura Security Fabric  plugins can use PSLang to retrieve additional  in f ormation  about users,
+resources, and requests from the API Service.
+Refer to the Bravura Security Fabric  Remote API ( api.pdf ) to learn about the Bravura Security Fabric  API,
+and how to install and use the SOAP API. Refer to the PSLang Manual ( pslang.pdf ) for more in f ormation
+about PSLang .
+The API Service is dependent on the Database Service  (on page 2844). If you restart the database service,
+you must restart the API Service.
+Configur ation
+The service is aut omatic ally  installed and started on the Bravura Security Fabric  server during setup.
+You can modify the following parameters related to the API Service on the Service in f ormation  page:
+idapi service options
+Option Description
+Timeout for c onnection  in
+secondsThe timeout  to use for c onnections.  The default is 60
+seconds.
+Command-line options  for idapi are listed below:
+idapi service command-line options
+Argument Description
+-h Displays usage in f ormation.
+-v Displays version number only.
+-c on fig Displays service c on figur ation  in f ormation.
+-server Run the service in server mode.
+-start Starts the service.
+-stop Stops the server/service
+API SOAP Service (idapisoap)
+The API SOAP Service ( idapisoap ) provides access to the Bravura Security Fabric  API Service ( idapi )
+with the WWS web service API. It is installed and started on the Bravura Security Fabric  server during
+setup.
+Some or g aniz ations  use the SOAP API to build their own customized front-end to Bravura Security Fabric .Refer to the Bravura Security Fabric  Remote API ( api.pdf ) for detailed reference in f ormation.
+The API SOAP Service ( idapisoap ) requires:
+▪Windows Server 2012, or▪
+Windows Server 2012 R2
+▪ Micr osoft  .NET Framework 4.5+ ▪
+The API SOAP Service is dependent on the API Service ( idapi ). The PSLang API, IIS.NET API, and WWS
+API call into this service.
+Configur ation
+The service is aut omatic ally  installed and started on the Bravura Security Fabric  server during setup.
+You can modify the following parameters related to the API SOAP Service on the Service in f ormation
+page:
+idapisoap service options
+Option Description
+Endpoints for the IDAPI SOAP nativ e
+serviceThe URL that the API SOAP Service will listen in on.
+An optional  port can be appended to the host and
+preceded by a colon. Multiple  endpoints can be
+de fined  in a comma separated list. To secure the
+endpoint, c on figur e  it to listen on http s.
+Use system setting: Will be set to the following:
+http://<IP>/default/idapi,http://
+localhost/default/idapi, http://
+<IP-fqdn>/default/idapi
+The "server" URL fragment must be the IP , hostname or FQDN (fully qualified  domain name) of the server.
+If the c onnection  is secured with TLS (http s  protocol), only an FQDN listed in the TLS server c ertific at e  used
+on the IIS server will allow a secure remote c onnection.
+Command-line options  for idapisoap are listed below:
+idapisoap service command-line options
+Argument Description
+-h Displays usage in f ormation.
+-v Displays version number only.
+-binding <binding> Specify the binding type:
+– basicHttpBinding
+– w sHttpBinding  (default)
+-endpoint <endpoint> The endpoint that this SOAP service listens on-mextype <mextype> The metadata exchange method:
+– None
+– Me xHttpGe t
+– Mex (only for w sHttpbinding)
+– HttpGe t  (default). The default is suited for most applic ations.
+-c on fig Displays service c on figur ation  in f ormation.
+-server Run the service in server mode.
+-start Starts the service.
+-stop Stops the server/service
+To c on figur e  wsbinding and mex, set the service like this:
+idapisoap -binding 1 -mextype 2
+where the API service class can be generated from <endpoint>; for example, http://<IP  or fqdn>/hiim/
+idapi.
+To c on figur e  httpbinding  and HttpGe t,  set the service like this:
+idapisoap -binding 0 -mextype 4
+where the API service class can be generated from the WSDL <endpoint>/wsdl; for example,
+http://<IP  or fqdn>/hiim/idapi/wsdl
+Changing the SOAP c onnection  type by using the "binding" and "mextype" arguments is only required if
+the remote SOAP tooling used requires it. Do not change the default c onnection  type if t esting  the
+c ollection  of the WSDL using a browser, otherwise you will receive a generic server error (HTTP 500)
+instead of the WSDL.
+Metadata exchange
+The API SOAP Service has a couple of methods of exchanging metadata. When using the default httpg e t,
+the metadata exchange URL is:
+service_endpoint/wsdl
+For example:
+http s://<IP  or fqdn>/INST/idapi/wsdl
+If the API SOAP Service uses Me xHttpGe t,  the URL is:
+http s://<IP  or fqdn>/INST/idapi/metadata/wsdl
+If the API SOAP Service uses w sHttpBinding ,  then Mex metadata exchange can be used, and the
+metadata exchange URL is same as service endpoint.
+Changes to the service are not e ff ectiv e  until  the service is restarted.Binding
+If the end point is secured with SSL (http s),  then the binding for IIS is used to map the certific a t e  to the
+secure endpoint.
+Example: Con figur e  the API SOAP service for external API access
+This example demonstrates how to create a product administrator with the IDAPI caller privilege and
+c on figur e  the Bravura Security  API SOAP service for external API access. This setup allows a third-party
+applic ation  to communicate with Bravura Security Fabric .
+With this c on figur ation,  a third party applic ation  can be c on figur ed  to use the administrator account and
+the c on figur ed  API SOAP service to communicate with Bravura Security Fabric .
+For example, a tick e t  is raised in ServiceNow for a new employee. ServiceNow communicates with
+Bravura Security Fabric  to submit a request for an account cr eation  in Bravura Security Fabric .
+Create an user with the IDAPI caller privilege
+To create the user:
+1.Log in to your instance as a superuser.1.
+2.Click Manage the system > Security > Access to product features > Individual administrators. 2.
+3.Click Add new… 3.
+4.Fill in the relevant in f ormation. 4.

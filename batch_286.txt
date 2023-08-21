@@ -1,0 +1,302 @@
+5.Set a password.5.
+6.Grant the user the  IDAPI Caller  privilege. 6.
+7. Con figur e  the IP address with CIDR bitmask  to include the IP address of the the server of the third 7.
+party applic ation.  If left empty, everything except being called from the localhost (127.0.0.0) will be
+refused.
+8.Click Add. 8.
+Set up the Bravura Security  API SOAP service
+This step specific ally  assist with the IIS binding that is needed for the service to run. For more detailed
+in f ormation  about the API SOAP Service, see API SOAP Service  (on page 2847).
+1.Log in to your instance as a superuser.1.
+2.Click Manage the system > Maintenance > Service. 2.3.Click the Bravura Security  (idapisoap) API SOAP Service. 3.
+4.In the Endpoints for the IDAPI SOAP nativ e  service  field  enter the appropriate comma separated 4.
+values. For example, http://localhost/<Your Instance>/idapi . In the case of a fully
+qualified  domain, ensure that you add in a similar fashion for both http and http s.
+5.Click Update . 5.
+6.Stop and start the service so that these settings  will be recognized by the service. This is a 6.
+requirement to update this setting.  This will also have to be done any time  the settings  change.
+If you have multiple  nodes, repeat these steps to set the endpoints on all nodes. This is not a setting
+that will aut omatic ally  propagate through the s ynchroniz ation  process.
+Sample script in python.
+This following script is an example of an API call to display the known attribut es  for a specific  pr ofile  to
+ensure you have a successful c onnection  and can list data.
+from zeep import Client
+from zeep.helpers import serialize_object# Update with appropriate URL
+wsdl = 'http://localhost/test/idapi/wsdl'
+# Update with appropriate API user that you created
+api_user = 'API_TEST_USER'
+# Update with appropriate password that you set
+api_pass = 'SomethingRandom123456!'
+# Update with appropriate profileID from your system
+profile = '100005'
+class ApiError(Exception):
+pass
+def assert_api_op(ret, op=None):
+if ret.rc != 0 and ret.rc != 1:
+if op:
+raise ApiError('{} Error#{}: {}'.format(op, ret.rc, ret.errmsg))
+else:
+raise ApiError('Error #{}: {}'.format(ret.rc, ret.errmsg))
+return ret.sessdat
+client = Client(wsdl)
+LoginRequest = {
+'userid': api_user,
+'password': api_pass,
+'isadmin': 1,
+'options': '',
+'sessdat': ''
+}
+LoginResponse = client.service.Login(LoginRequest)
+sess = assert_api_op(LoginResponse, 'Login')
+UserStatusGetResponse = client.service.UserStatusGet(
+{'userid': profile, 'sessdat': sess})
+sess = assert_api_op(UserStatusGetResponse, 'UserStatusGet')
+UserStatus = serialize_object(
+UserStatusGetResponse.output.UserStatusGet_vectorOutput[0])
+print(" Profile: {}".format(profile))
+for k,v in UserStatus.items():
+print("{:>18}: {}".format(k, v))Logging Service (idmlogsvc)
+The Logging Service ( idmlogsvc ) manages logging sessions for a particular  instance. It captures event
+messages from Bravura Security Fabric program e x ecution,  and writes them to the c on figur ed  log file
+(idmsuite.log by default).
+The Logging Service also has the ability to write to the Windows event logs.
+Configur ation
+The service is aut omatic ally  installed and started on the Bravura Security Fabric  server during setup. You
+can modify the following parameters related to this service on the Service in f ormation  page:
+Note: You can update the idmlogsvc parameters without having to restart
+the Logging Service; however, the service’s event tracing needs to be
+restarted for the c on figur ation  changes to take e ff ect.
+If the Bravura Security Fabric  server runs out of disk space, the Logging Service stops logging until  there is
+at least 10 MB of disk space available, then it begins logging again.
+idmlogsvc service options
+Option Description
+Name of the log file The name of the Bravura Security Fabric log file. The default is
+idmsuite.log .
+The file is created in the directory de fined  by the PSTempDir
+setting.  This is normally <Program Files path>
+\Bravura Security\Bravura Security Fabric
+\Logs\<instance> . When the service starts, Bravura
+Security Fabric creates the directory if it does not already
+exist.
+Default level for log messages The default logging level. It can be set to:
+▪No debugging▪
+▪Default debugging▪
+▪Full debugging▪
+Enabled extended log levels The default extended level. It can be set to none, one or both
+of:
+▪ Runtime  performance messages – All binary and script ▪
+performance are recorded.
+▪Ajax runtime  performance messages – All Ajax requests, ▪
+including the function  name, transid, dur ation,  and user
+are recorded.
+▪Stored procedure runtime  performance messages – The ▪
+performance of stored procedures, called by binaries, is
+recorded.
+▪Local w ork s t ation  service runtime  performance messages ▪
+Command-line options  for idmlogsvc are listed below:idmlogsvc service command-line options
+Argument Description
+-h Displays usage in f ormation.
+-server Run the service in server mode.
+-start Starts the service.
+-stop Stops the server/service
+The following can be set only if the service
+is running:
+-trace-start Starts tracing the logging in f ormation.
+-trace-stop Stops tracing the logging in f ormation.
+-trace-restart Restarts tracing the logging in f ormation.
+-rotatelog <N> Rotate the log folder for at most <N> rounds. See Log directory r ot ation  (on page 2855).
+-c on fig  -logfile  <filename> Set the log file name.
+-c on fig  -level <level> Set the default logging level.
+It can be set to:
+▪0 No debugging▪
+▪4 Default debugging ▪
+▪6 Full debugging▪
+-c on fig  -extlevel <[level name]> Set extended log levels.
+It can be set to none, one or both of:
+▪perf  Runtime  performance messages – All binary and script performance are recorded ▪
+▪perf_sproc  Stored procedure runtime  performance messages – The performance of stored procedures, called by binaries, is recorded. ▪
+-c on fig  -bufsize <N> Set the size of the session buff er s.
+-c on fig  -bufmax<N> Set the maximum number of buff er s.
+Log directory r ot ation
+You can use the following command from the service directory to rotate the Logs directory de fined  by the
+PSTempDir setting:
+idmlogsvc -rotatelog [<N>] 
+This command performs a backup and r ot ation  of the Logs directory. That is, it appends . <yyyy> -<mm> -
+<dd> -<hhmmss> .<SerialNo> to the old directory name and creates a new directory with the original
+name, up to a maximum of <N> copies (default is 7).
+If the directory path set in PsTempDir ends with the instance name, the entir e  log folder will be rotated,
+cr eating  new folders named after  the instance. Otherwise, all files and folders contained inside
+PsTempDir will be (non-recursively) rotated, using their original names.
+To perform a one time  manual r ot ation  of the log file directory, type:idmlogsvc.exe -rotatelog 
+By default, the r ot ation  method is set to using the last modified  date of the f older/file.  You can modify
+the r ot ation  method by adding the following registry entry in:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\idmlogsvc
+Entryname RotateType
+Value 0—1 Set to 1 to rotate using the date and time
+contained in the f older/file  name.
+Datatype DWORD
+Default 0
+Logs directory r ot ation  is scheduled to occur nightly  (on page 2702) on the Bravura Security Fabric  server.
+Logs on proxy servers are rotated if auto discovery  is executed between +/-0.5 hours of the scheduled job.
+See About the Bravura Security Fabric Log  (on page 2776) for more in f ormation  about log files.
+Event tracing
+To stop and start event tracing from the command line, so that c on figur ation  parameters can be changed,
+type the following:
+idmlogsvc.exe -trace-stop
+Once you have finished  modifying c on figur ation  parameters, type:
+idmlogsvc.exe -trace-start
+Alt ernativ ely ,  you can make the c on figur ation  changes and then restart event tracing by typing:
+idmlogsvc.exe -trace-restart
+Logging to a syslog service
+You can enable the Logging Service to log to a syslog service on a remote system in addition  to the
+e xisting  local text files.
+The service uses a c on figur ation  file, idmlogsvc.cfg , located in the \<instance>\service\
+directory. This file is aut omatic ally  generated when you install Bravura Security Fabric. To set syslog
+logging, you must edit idmlogsvc.cfg  to contain the address of the syslog service.
+To do this, on the Bravura Security Fabric server:
+1.Stop the Logging Service.1.
+2.Create a backup copy of idmlogsvc.cfg . 2.
+3.Open i dmlogsvc.cfg  using a text editor. 3.
+a.To enable the syslog delivery feature change the following:a.
+!SyslogCollectors = {
+to
+SyslogCollectors = {b.Set the syslog collector host, file loc ation  or debug output pr e fix: b.
+"UDP=10.0.59.189" "514" = {
+or
+"TCP=10.0.59.189" "514" = {
+or
+"FILE=C:\\Windows\\Temp\\idmlogsvc_syslog.txt" "" = {
+or
+"DEBUG=::IDMLOG::" "" = {
+c.Set the preferred format of the logs. By default the log is set to syslog format.c.
+d.Set the preferred end-of-line style. By default the log end-of-line style is set to none.d.
+e. De fine  the delivery c onditions  by changing the Matches KVGroup to include or exclude certain log e.
+messages. Examples are provided in the c on figur ation  file, idmlogsvc.cfg .
+4.Save the file. 4.
+5.Restart the Logging Service.5.
+When upgrading Bravura Security Fabric, the idmlogsvc.cfg c on figur ation  file will be retained from the
+previous version. A new c on figur ation  file named idmlogsvc.bak will be created and will contain the
+c on figur ation  settings  of idmlogsvc.cfg  for Bravura Security Fabric 12.6.
+This c on figur ation  file should be reviewed for any changes between idmlogsvc.cfg  (c on figur ation
+settings  from the previous version) and idmlogsvc.bak  (c on figur ation  settings  for Bravura Security
+Fabric 12.6) after  the upgrade is complete.
+Excluding types of data
+You can exclude certain types of data from idmsuite.log by editing  idmlogsvc.cfg to include an
+ExcludeFromMainLog KVGroup.
+To do this, on the Bravura Security Fabric server:
+1.Stop the Logging Service.1.
+2.Create a backup copy of idmlogsvc.cfg . 2.
+3.Open idmlogsvc.cfg  using a text editor. 3.
+4.Add an ExcludedFromMainLog  KVGroup with the following syntax: 4.
+ExcludedFromMainLog = {
+<module name>[compare operator] = <log level name>;
+...
+};
+Compare operators are:
+: equal the level (omitted)
+> equal or higher than the level< equal or lower than the level
+! not the level
+You can use * as a wild card for both the module name and log level. For example:
+ExcludedFromMainLog = {
+*: = per_lsw;
+updinst.exe>=info;
+psupdate.exe< = info;
+iddb.exe! = verbose;
+mobworker.exe = ⋆;
+};
+Combining repeated log messages
+The Logging Service reduces the amount of times  a particular  log message is displayed when logged
+c onsecutiv ely .  For example, if multiple  instances of a particular  log message occurs in a given interval, the
+message will be only be displayed once, and will be followed by a log message s t ating  the number of
+times  the last message was repeated.
+For example:
+2014-04-03 12:26:23.286.5320 - [] test_plugin [60,64] Info: W aiting  for
+response
+2014-04-03 12:26:33.288.6614 - [] test_plugin [60,64] last message repeated 4 times
+The default interval that the log messages will be combined is 60 seconds. After  this interval, the next
+instance of the log message will be displayed again, and any other instances of the message that follow
+will be combined accordingly.
+You can modify the repeated timeout  value by adding the following registry entry in:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\idmlogsvc
+Entry name f or ce- flush-r epea t ed-timeout
+Value the time  in seconds to combine repeated log messages.
+Data type DWORD
+Default 60
+Mobile Worker Service (mobworker)
+The Mobile Worker Service ( mobworker ) works in c onjunction  with the Bravura One  proxy server to
+allow the Bravura One  app on mobile devices to access Bravura Security Fabric  servers.The Mobile Worker Service works with the Bravura One  proxy server and Mobile Proxy Service
+(mobproxy ) to allow a Bravura One  app on mobile devices to access Bravura Security Fabric  servers on
+a corporate private network from a home or public WiFi hot spot or a cell phone data plan.
+The Mobile Worker Service uses the following components to communicate with the Bravura One  proxy
+server:
+▪Bravura One  mobile proxy server authentic ation  encr yption  key. ▪
+▪Host name or IP address of the Bravura One  mobile proxy server. ▪
+▪Bravura One  proxy push notific ation  server authentic ation  encr yption  key. ▪
+▪Host name or IP address of the Bravura One  proxy push notific ation  server. ▪
+▪Whether or not the Bravura Security Fabric  server uses HTTPS encr yption. ▪
+Configur ation
+The service is aut omatic ally  installed on the Bravura Security Fabric  server, but not enabled or started,
+during setup. You can modify the following parameters related to this service on the Service in f ormation
+page:
+mobworker service options
+Option Description
+Proxy authentic ation  key Set the authentic ation  key to be the same value as the authentic ation
+encr yption  key that is c on figur ed  on the Bravura One  proxy server.
+Proxy server URL Set this to the URL of the Bravura One  proxy server that the Bravura One  app
+will be using for c ommunic ation  with the Bravura Security Fabric  server. For
+example:
+http s://mobpr o xy .br a vur asecurity .c om/y our_c ompan y/<ins t ance>
+If a load balancer is being used for the Bravura One  proxy servers, the load
+balancer url must be specified  using this parameter. This is also the public url
+in which the Bravura One  app will communicate with and to locate a Bravura
+One proxy server as designated by the load balancer.
+See Mobile access  (on page 1444) for more in f ormation  about load balancing
+the Bravura One  proxy servers.Option Description
+Private proxy server URL for this
+instanceSet this to the URL of the Bravura One  proxy server that will be used for the
+persistent c onnection  for c ommunic ation  with this instance for when a load
+balancer environment is c on figur ed  for the proxy servers.
+This parameter is not required if a load balanced url has not been c on figur ed
+for Proxy server URL.
+It must however be specified  for the private proxy server url that this instance
+will have a dedicated / persistent c onnection  with when a load balanced
+environment is used.
+In load balanced environments for the Bravura One  proxy servers, this value
+may be a single value for a specific  proxy server or it may be set to multiple
+Bravura One  proxy servers in a comma-separated list. Setting  it to multiple
+proxy servers is to allow for failover in case a Bravura One  proxy server is
+taken offline  or is unavailable. The next proxy server as designated by the load
+balancer and is in this list will be used for the c onnections  to ensure that the
+Bravura One  app may c ontinue  to be used uninterrupted. Each Bravura One
+proxy server used as a failover must in the comma-separated list for Private
+proxy server URL for this instance.
+When the Bravura Security Fabric server is set up for database r eplic ation,  the
+value for Private proxy server URL for this instance across the instance nodes
+may also be either set to the same Bravura One  proxy server to share the
+same Bravura One  proxy server URL or they may each be set for their own
+proxy server.
+In all cases, the instance name as de fined  in each of the urls for the Private
+proxy server URL for this instance must be the same as the instance name as
+c on figur ed  for the Bravura Security Fabric  server.
+URL of the local instance Set this using the fully qualified  URL of the Bravura Security Fabric  server that
+the Mobile Worker Service is currently running on. This must be set on each
+of the replicated nodes when database r eplic ation  has been c on figur ed.
+Set this using the following format: https://fqdn_or_ip_address/
+instance_name
+If left blank, the server name specified  by BASE_IDSYNCH_URL is used.
+HTTP proxy to use for internal
+c onnectionsSet this if a corporate proxy server is used for internal c onnections.  Specify
+the proxy server with the address:port format. Set the value to ":" to use the
+system proxy settings.  This format must be used to support a proxy bypass
+list.
+Timeout in seconds for accessing
+the local instanceThe number of seconds for the timeout  for the Bravura One  app when
+accessing the Bravura Security Fabric instance.
+Default value is 300.
+Push notific ation  server
+authentic ation  keySet the authentic ation  encr yption  key that is c on figur ed  for the Bravura One
+proxy push notific ation  server.
+Push notific ation  server URL Set this to the URL of the Bravura One  proxy push notific ation  server that is
+used for c ommunic ation  with the Bravura Security Fabric server and to send
+push notific ations  to a user’s mobile device for users that have a registered
+Bravura One  app.

@@ -1,0 +1,254 @@
+Part II Transparent Password S ynchr oniz ationOverview of Transparent Password S ynchr oniz ation
+Bravura Pass  can extend the nativ e  password management on selected types of systems with transparent
+password s ynchr oniz ation.  When this is implemented on a trigger system:
+▪ Nativ e  password changes on the trigger system are subjected to the Bravura Pass  password policy, ▪
+and may be rejected on that basis.
+▪Successful password changes trigger aut omatic  password s ynchr oniz ation  for other accounts, on other ▪
+systems, that belong to the same user.
+Transparent password s ynchr oniz ation  can be triggered from nativ e  password changes on any of the
+following systems:
+▪Windows 2016/2019/2022 servers and Activ e  Directory domains (password filt er  DLL on servers ▪
+and/or DCs).
+▪z/OS mainframes with RAC/F, ACF2 or TopSecret security products (security exit in the LPAR with the▪
+security products).
+▪OS/400, iSeries servers.▪
+▪Unix/Linux servers (passwd program wrapper binary or PAM).▪
+▪Sun/Oracle and IBM LDAP servers (attribut e  change filt er  on the directory server). ▪
+Each of these triggers contacts the Bravura Pass  server twice per password change, over an encrypted
+TCP/IP socket (shared key handshake, 256-bit AES encr yption):
+▪First c onnection:  validate password quality, possibly reject the user’s choice of a new password and ▪
+block the triggering password change due to policy violation
+Second c onnection:  initia t e  transparent password s ynchr oniz ation
+Architecture
+The architecture diagram below shows the basic elements of transparent password s ynchr oniz ation.  In
+the figur e,  a user changes their password nativ ely  on some system (most commonly a Windows
+w ork s t ation  connected to an AD domain). A trigger installed on this system – in the case of an AD DC, this
+is a password filt er  DLL – contacts a Bravura Pass  server when the password change happens, typically
+via a load balancer.
+Two calls are made to Bravura Pass :
+1.User X on system Z wishes to set their password to value Y . Is that acceptable?1.
+▪Bravura Pass  tests this c ombination  against the password policy that applies to the user . ▪
+▪The password, which may have been accepted by the trigger system, may be rejected by Bravura ▪
+Pass . In this case, the original password change is terminated: the new password is not c ommitted
+anywhere and the user gets an error message.
+▪Password quality v alidation  must be performed by Bravura Pass  as it has access to data, such as ▪
+password history (unlimited, not just last N) and dictionaries,  which enable it to enforce more
+robust rules than the trigger system.▪The process is fault-tolerant. Inability to contact Bravura Pass  is usually c on figur ed  to cause ▪
+passwords to be accepted.
+2.Password value Y has been c ommitted  locally, on system Z, for User X. Please initia t e  s ynchr oniz ation  if 2.
+required.
+▪Bravura Pass  looks up the user’s other accounts (on system Z or elsewhere). ▪
+▪Bravura Pass  connects to each system, r esetting  X’s password adminis tr ativ ely  to Y . ▪
+▪In the event an account password change fails on one of the user's synchronized systems, the▪
+password remains changed on all the user's systems that worked and Bravura Pass re-queues and
+retries the password change on any system that failed until  it falls out from the queue. Additionally ,
+Bravura Pass  may be c on figur ed  to send the user one or more e-mails to notif y  of the problem
+and/or create a tick e t  on an incident management system to alert someone of the s ynchr oniz ation
+problem.
+Transparent s ynchr oniz ation  architectureProcess
+Transparent password s ynchr oniz ation,  triggered by a nativ e  password change on a monitored system
+works as follows:
+1.User: decides to change their password(s) or has been asked to during the login process (password 1.
+has expired).
+2.User: enters their login ID, current password and desired new password. 2.
+3.Login server: validates password quality internally, then calls a Bravura Pass  interceptor library to 3.
+further validate password quality.
+4.Bravura Pass  interceptor: contacts the Bravura Pass  server; establishes an encrypted c onnection; 4.
+forwards a request for password policy check.5.Bravura Pass : validates password quality; returns result. In the event of an attemp t ed  policy violation, 5.
+Bravura Pass  may send a message directly to the user by email or a Windows pop-up message.
+6.Login server: updates the user’s password field  internally, calls the Bravura Pass  interceptor to notif y 6.
+it of the successful change. Note that a failure to meet the Bravura Pass  policy will normally block the
+initial  password change from c ompleting.
+7.Bravura Pass  interceptor: contacts the Bravura Pass  server; establishes an encrypted c onnection; 7.
+forwards a request for password s ynchr oniz ation.
+8.Bravura Pass : queues up the new password for s ynchr oniz ation. 8.
+9.Bravura Pass : resolves the single-queued event to a list of passwords that must be set for this user 9.
+(one per login account).
+10. Bravura Pass : adminis tr ativ ely  sets the user’s passwords on each system to the new value. 10.
+11. Bravura Pass : in the event of failure, re-queues and retries; may send the user one or more emails to 11.
+notif y  of the problem; may create a tick e t  on an incident management system to alert someone of an
+in t egr ation  problem.
+Transparent password s ynchr oniz ation  triggers are provided with Bravura Pass  for Activ e  Directory,
+Windows servers, LDAP , Linux and Unix (various), iSeries and z/OS (optional  component).
+In t egr ation  details
+To implement transparent password s ynchr oniz ation,  special softw ar e  is installed on the trigger system to
+monitor password changes and test the strength of new password choices. This softw ar e  communicates
+with the Password Manager service on the Bravura Pass  server, using an encrypted TCP socket
+c onnection.
+Although RSA Authentic ation  Manager 7.1/8.2 servers are not capable of being triggers, transparent
+s ynchr oniz ation  can reset PINs, as long as alpha-numeric PINs are allowed on the RSA Authentic ation
+Manager 7.1/8.2 server.
+Transparent password s ynchr oniz ation  involves the following softw ar e:
+In t egr ation  sub-system Purpose
+Password Manager service ( idpm ) This service works in c onjunction  with trigger programs
+and libraries on various systems. Over a secure,
+encrypted TCP c onnection,  the service evaluates a new
+password selected by a user, determines whether it
+should be accepted, and if so, synchronizes the
+password to a new value on all systems where the user
+has a login account.
+Password Change Notific ation  Module This local agent The psintcpt program intercepts
+nativ e  password changes on Micr osoft  Activ e  Directory
+domain controllers and Windows servers, and triggers
+transparent password s ynchr oniz ation.In t egr ation  sub-system Purpose
+Password replacement program ( pspasswd ) and the
+Bravura Security pluggable authentic ation  moduleThis program The Bravura Security password
+replacement program (pspasswd) intercepts nativ e
+password changes on Unix servers and triggers
+transparent password s ynchr oniz ation.
+LDAP password filt er  plugin ( psldap ) or OID-LDAP
+password filt er  plugin (psldap.so)This local agent The psldap  program intercepts nativ e
+password changes on LDAP Directory Service servers
+and triggers transparent password s ynchr oniz ation.
+OS/400 exit program This exit program Intercepts password changes on IBM
+OS/400 and propagates them to the Bravura Security
+Fabric server for policy v alidation  and to initia t e
+transparent s ynchr oniz ation.
+Software  add-ons for Windows-based and os/400 trigger systems are shipped with Bravura Security
+Fabric and installed in the addon/transparent-synch directory. Software  for Unix-based trigger systems is
+shipped with Connector Pack. The loc ation  depends on whether you install a global or ins t anc e-specific
+connector pack. The OS/390 trigger software  is shipped with Mainframe Connector. See the Mainframe
+Connector Documen t ation  for more inf ormation.
+Optionally ,  you can enable the Password s ynchr oniz ation  r egis tr ation  (PSR) module to educate users and
+enforce r egis tr ation  for transparent password s ynchr oniz ation.
+If using load balancers, do not c onfigure  any SSL options  for transparent s ynchroniz ation  traffic.  SSL
+options  should only be c onfigured  on load balancers for WebUI traffic,  not transparent s ynchroniz ation.
+Transparent s ynchroniz ation  is encrypted using a proprietary encr yption  algorithm. Contact
+support@bravurasecurity.com  for more details.
+Example: Users change their password on a Windows w ork s t ation
+Some or g aniz ations  require users to change their Activ e  Directory passwords on a regular basis. Often
+users do this from the login prompt on their desktop. Transparent password s ynchr oniz ation  can be set
+up to allow users to c ontinue  changing their passwords using the same, familiar method.
+Requirements
+This use case assumes that:
+▪Bravura Security Fabric  and Connector Pack are installed. ▪
+▪An Activ e  Directory target system is added as a source of pr ofiles. ▪
+▪A Linux target system is also added as a source of pr ofiles. ▪
+▪A user has an account on both target systems.▪
+▪The user is working on a Windows w ork s t ation  that has been added to the domain. ▪
+Method
+For demons tr ation,  a user named adam0000 with an AD account and a Linux account will be used on a
+w ork s t ation  that is connected to the AD network. The IP of the Linux server is 10.0.23.77.
+1.Log into the Windows w ork s t ation  as adam0000. 1.2.Press Ctrl+Alt+Del and choose Change a password. 2.
+3.Enter the current password for adam0000.3.
+4.Enter the new password and c on firm  in the appropriate places. 4.
+5.Click the arrow to complete the process and c on firm  that the password change was successful. 5.
+6.Check the instance logs to verify that the password change was detected. Something similar to the6.
+following log examples should be present on a successful password change:
+2021-02-02 13:41:20.331.2337 - [] idpm.exe [1800,5888] Info: Sending
+reply: code=[200], message=[Strength check success]
+2021-02-02 13:41:21.097.4324 - [] idpm.exe [1800,5888] Info: Sending
+reply: code=[200], message=[Request queued]
+2021-02-02 13:41:25.937.4569 - [] agtssh.exe [2172,2240] Info: line
+403: Password for account [adam0000] has been changed.
+2021-02-02 13:41:26.142.1307 - [] agtssh.exe [2172,2240] Info:
+[verifyreset] succeeded
+7.Log adam0000 into the Linux server.7.
+8.The user will be prompted for adam0000’s password. Enter in the new password.8.
+9.If the new password was accepted, the password change was successfully propagated and adam00009.
+will now be logged in.
+Interceptor c ompatibility
+Below is a c ompatibility  matrix that should be taken into c onsider ation  when upgrading Bravura Pass
+services ( idpm or pushpass ) or interceptors. Y denotes that the versions are c ompatible  and N
+denotes that the versions are not c ompatible.
+Bravura Pass  interceptor c ompatibility
+Interceptor version Service version
+ 10.0.x 10.1.x 11.0.x 11.1.x 12.0.x 12.1.x 12.2.x 12.3.x 12.4.x 12.5.x 12.6.x
+6.4.9 Y Y Y Y Y Y Y Y Y Y Y
+7.3.1 Y Y Y Y Y Y Y Y Y Y Y
+8.2.8 Y Y Y Y Y Y Y Y Y Y Y
+9.0.x Y Y Y Y Y Y Y Y Y Y YInterceptor version Service version
+10.0.x Y Y Y Y Y Y Y Y Y Y Y
+10.1.x Y Y Y Y Y Y Y Y Y Y Y
+11.0.x Y Y Y Y Y Y Y Y Y Y Y
+11.1.x Y Y Y Y Y Y Y Y Y Y Y
+12.0.x Y Y Y Y Y Y Y Y Y Y Y
+12.1.x Y Y Y Y Y Y Y Y Y Y Y
+12.2.x Y Y Y Y Y Y Y Y Y Y Y
+12.3.x Y Y Y Y Y Y Y Y Y Y Y
+12.4.x Y Y Y Y Y Y Y Y Y Y Y
+12.5.x Y Y Y Y Y Y Y Y Y Y Y
+CP 3.0.x (unix) Y N N Y Y Y Y Y Y Y Y
+CP 3.1.x (unix) Y N N Y Y Y Y Y Y Y Y
+CP 3.2.x (unix) Y Y Y Y Y Y Y Y Y Y Y
+CP 3.3.x (unix) Y Y Y Y Y Y Y Y Y Y Y
+CP 4.0.x (unix) Y Y Y Y Y Y Y Y Y Y Y
+CP 4.1.x (unix) Y Y Y Y Y Y Y Y Y Y Y
+CP 4.2.x (unix) Y Y Y Y Y Y Y Y Y Y Y
+CP 4.3.x (unix) Y Y Y Y Y Y Y Y Y Y Y
+CP 4.4.x (unix) Y Y Y Y Y Y Y Y Y Y Y
+CP 4.5.x (unix) Y Y Y Y Y Y Y Y Y Y Y
+Also review the access control list for the Comma-delimited list of IP addresses with CIDR bitmask that
+are allowed to send socket requests setting  for the Password Manager service  (on page 2820). Password
+s ynchr oniz ation  interceptors that need to access idpm must be de fined  in this field.Implementing  Transparent Password S ynchr oniz ation
+This section  provides an overview of the steps required to implement transparent password
+s ynchr oniz ation.  It assumes you have set up basic requirements for password management, including
+email notific ation  and at least one target system that is a source of Bravura Security Fabric  pr ofiles.
+To implement transparent password s ynchr oniz ation:
+1.Add target systems  (on page 490) that will be triggers  (on page 1652) for transparent password 1.
+s ynchr oniz ation.
+2.If required, enable the API SOAP Service  (on page 2847) ( idapisoap ) and ensure it is available for 2.
+access by the host running the interceptor. The API Service ( idapi ) c on figur ation  file requires the url
+of the API SOAP Service.
+The API SOAP Service is not required for Windows or LDAP Triggers.
+3.Gather the in f ormation  that you will need when you install the necessary softw ar e: 3.
+▪Trigger system’s target system ID▪
+▪The c ommunic ation  key (or Master Key) ▪
+The CommKey value is encrypted in Bravura Security Fabric . If you did not record the key in a
+secure loc ation,  copy the idmsetup.inf file from <instance> \ p sc on fig \ on the Bravura
+Security Fabric server to the same loc ation  as the installer. The installer will extract the
+Communic ation  Key value from the file.
+▪TCP port number on which the Password Manager service is listening for the LDAP interceptor.▪
+▪URL of the API SOAP Service, for interceptors other than the LDAP and Windows interceptors.▪
+▪DNS host name of each Bravura Security Fabric  server ▪
+4.Install the required softw ar e  on the trigger system: 4.
+▪Windows trigger  (on page 1662) ▪
+▪Unix trigger  (on page 1706) ▪
+▪LDAP trigger  (on page 1723) ▪
+▪OID-LDAP trigger  (on page 1729) ▪
+▪OS/390 or z/OS (RACF, TopSecret, ACF2) trigger with Mainframe Connector  (on page 1735) ▪
+▪OS/400 trigger  (on page 1736) ▪
+5.Educate users.5.
+Inform users that:
+▪All password changes for users (with a Bravura Security Fabric  pr ofile  ID) will be subjected to the ▪
+password policies enforced on the Bravura Security Fabric  server. By default transparent password
+s ynchr oniz ation  is available to all users.
+▪When users change their passwords on the relevant system (Micr osoft  Activ e  Directory, LDAP ▪
+Directory Service, OS/390), their new password will be applied aut omatic ally  to all of their
+accounts on other systems.Options
+You can c on figur e  the following if required:
+▪The Password s ynchr oniz ation  r egis tr ation  (PSR) module  (on page 1740) ▪
+This method of user educ ation  requires users to register for transparent s ynchr oniz ation,  using the
+Password s ynchr oniz ation  r egis tr ation  (PSR) module. This ensures users activ ely  understand and accept
+the changes. You must enable the Password s ynchr oniz ation  r egis tr ation  (PSR) module to activ a t e  this
+feature.
+▪Target system groups  (on page 562) ▪
+This allows you to apply diff er en t  password policies and s ynchr oniz ation  rules to groups of target
+systems.
+The default target system group is c on figur ed  to enable transparent password s ynchr oniz ation.
+Bravura Security recommends that all target systems belong to a single target system group, and are
+subject to a single password policy.
+▪Password Manager service  (on page 2820) ▪
+The Password Manager service is installed and started by default. You can set options  for thread
+count, password change queuing, and in t egr ation  with older Password Manager service (idpm)
+services. You can also set the Password Manager service to enforce the password strength policy for
+non- Bravura Pass  users. Several s ynchr oniz ation  events can be c on figur ed  to trigger email notific ation
+or other external programs.
+▪User notific ation  (on page 431) ▪
+You can use the Bravura Security Fabric  notific ation  system to warn users of pending password expiry.
+Transparent s ynchr oniz ation  and generated passwords
+Transparent password s ynchr oniz ation  is inc ompatible  with a security policy that mandates that users
+must select from a set of randomly generated passwords (by enforcing the ”Be one of the N suggested
+passwords” rule), because even with the interceptor, the OS has no way to supply this list.
+If users must select from a set of randomly generated passwords, they must use the Bravura Security
+Fabric web interface to change their passwords.
+Load Balancing
+By default, the Password Manager service service will be running on each Bravura Pass  server. However,
+only one server hostname may be provided to each transparent s ynchr oniz ation  interceptor. If multiple
+Bravura Pass  servers are oper ating ,  it is usually desirable to balance the transparent s ynchr oniz ation  load
+between them dynamically and provide for transparent fail-over.
+Round-robin DNS, or assigning multiple  address records to a hostname, can be helpful for load balancing.
+In this c on figur ation,  an additional  hostname should be set up with a record for each Bravura Pass  server,
+and this hostname should be provided to the transparent s ynchr oniz ation  interceptor installed on each
+target system. Target systems will then choose from the list of servers each time  they make a request.
+This method does not provide fail-over.

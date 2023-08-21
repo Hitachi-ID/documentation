@@ -1,0 +1,335 @@
+Argument Description
+-loaddb Only load data from specified  target systems based on
+the e xisting  list files to the database. At least one target
+must be specified.
+-checkinv Check inventory levels.
+- alltasks Complete all tasks that are done during a full update
+even though specific  target systems are being listed
+and/or loaded.
+-import Evaluate all discovered objects from target systems
+against push mode import rules where they apply.
+Applies to the discovered computers from the target, and
+the subsequent discovered accounts from discovered
+systems that get managed.
+-importlws Evaluate all discovered objects from target systems
+against local service mode import rules where they apply.
+Applies to the local service mode discovered computers,
+and the subsequent discovered accounts from discovered
+systems that get managed.
+-no-plugins Run psupdate without e x ecuting  plugin scripts  (on
+page 2742) (*_pre.cmd, *_post.cmd).
+-enforce_list <enforcement-list> Run the rbacenforce program to list role
+enforcement violations.
+-enforce_submit <enforcement-submit> Run the rbacenforce program to submit requests
+role enforcement violations.
+-pr ofile  <pr ofile  ID> Run psupdate for a single user de fined  by a Bravura
+Security Fabric pr ofile  ID. You can use this with the -target
+option  zero or more times  to specify the targets on which
+psupdate will update the accounts. When used without
+the -target option,  psupdate will update the accounts
+on all target systems.
+-account <pr ofile  ID> Run psupdate for a single user de fined  by an account
+ID on a single specified  target system. You must use the -
+target option  to specify the target system.
+-target <target ID> Specify a target system on which psupdate will list a
+single user. This option  must be used with the -pr ofile,  -
+account, -list or -loaddb option.
+-targetdiscovered Specify all discovered target systems.Argument Description
+-targetmanual Specify all target systems that are manually de fined.
+-forcerun Force psupdate to have it c ontinue  even if it looks like
+psupdate is already running or scheduled to run on some
+other node.
+-r esattr Select target systems based on a specified  resource
+attribut e  ID. This option  must be used with the -
+r esattr v alue  and -target option.
+-r esattr v alue Select target systems that match a resource attribut e
+value. This option  must be used with the -r esattr  and -
+target option.
+-schedule Creates the default scheduled task to run psupdate if
+it does not already exist. No other tasks are run.
+-status Returns the current status of the auto discovery process:
+▪No c on figur ation  changes can be made until  it is ▪
+completed %RUNNINGACTIONS%
+▪Running connector for target [%TARGETID%] (elapsed▪
+time:  %ELAPSEDTIME%)
+▪ Listing  files on proxy [%PROXYSERVER%] (elapsed ▪
+time:  %ELAPSEDTIME%)
+▪Loading staging table [%STAGETABLE%] (elapsed time: ▪
+%ELAPSEDTIME%)
+▪Running plug-in [%PLUGIN%] (elapsed time: ▪
+%ELAPSEDTIME%)
+▪Running stored procedure [%STOREDPROC%] (elapsed▪
+time:  %ELAPSEDTIME%)
+▪ R eplic ating  file [%REPLFILE%] to proxy ▪
+[%PROXYSERVER%] (elapsed time:  %ELAPSEDTIME%)
+▪ Updating  database (%ACTION%) ▪
+▪ Listing  target (%ACTION%) ▪
+▪ Updating  proxy (%ACTION%) ▪
+-v — --version Display version in f ormation.
+Examples
+1.To run auto discovery, as it would be run during the scheduled psupdate job, type:1.
+psupdate.exe
+2.To determine the current status of the auto discovery process, type:2.
+psupdate.exe -status3.To list in f ormation  from all manually added target systems, type: 3.
+psupdate.exe -targetmanual -list
+4.To list in f ormation  from the target system ADDOM, type: 4.
+psupdate.exe -target ADDOM -list
+5.To list in f ormation  without running plugin scripts, type: 5.
+psupdate.exe -targetmanual -targetdiscovered -list -no-plugins
+6.To list, load, and evaluate in f ormation  from all discovered target systems, type: 6.
+psupdate.exe -targetdiscovered -list -loaddb -import
+7.To update accounts for a single pr ofile  on all target systems, type: 7.
+psupdate.exe -profile <profile ID>
+8.To only list from specified  target systems that have "New York" as a value for resource attribut e 8.
+"Loc ation".
+psupdate.exe -list -resattr Location -resattrvalue "New York" -
+target TARGET1  -target TARGET2
+for command-line options  and examples.
+using either the Manage the system  module or command-line interface.
+When persistent listing  is enabled,
+▪The fir s t time  the Persistent Connector Service runs, it will list all objects. Each subsequent time  the ▪
+service will only list changes detected.
+▪If the service is stopped, upon restart it will list all changes since it was stopped.▪
+▪The domain controller that the service lists from can be changed without losing data.▪
+▪If a full list to reload all data must be redone, this can only be accomplished using the  -full  option  with ▪
+the Persistent Connector Service client program, agtsvccli .3 Monitoring, tr oubleshooting ,  and backups
+Bravura Security Fabric  requires very little  ongoing adminis tr ation.  It is advisable, however, to monitor
+server health.
+Monitoring is primarily done on the Bravura Security Fabric  server. You should:
+▪Check service health, using the Maintenance > Services menu option  in the Manage the system (PSA) ▪
+module.
+▪Monitor CPU load and virtual memory c onsumption  on the Bravura Security Fabric  server. Both should ▪
+be stable (change only very slowly) and signific an tly  below the total resources available on the server.
+▪Monitor the amount of free disk on the Bravura Security Fabric  server. Bravura Security Fabric  will fail ▪
+if it runs out of disk space.
+▪Check the contents of the Bravura Security Fabric  log file (on page 2776) for errors and to ensure that ▪
+the auto discovery  process was successful.
+▪Review recent contents of the Bravura Security Fabric  session log, by running reports ( Reports > ▪
+System oper ation ) on user and administrator events. See REPORTS  (on page 2891) for details.
+▪Customize the Health check monitor  (on page 2795), which is installed by default, to suit your ▪
+environment. Health check monitor will periodically report the status of the following:
+▪Admin events▪
+▪ Applic ation  crashes ▪
+▪Disk space usage▪
+▪Health Check password c on flict  count ▪
+▪Long running processes▪
+▪Availability of Bravura Security Fabric  services ▪
+▪URL accessibility▪
+Additionally ,  your database administrator should check the size of the Bravura Security Fabric  database
+regularly. Unexpected results may occur if the Bravura Security Fabric  data exceeds the maximum
+database size or tablespace limit. It is expected that the Bravura Security Fabric  database will grow over
+time;  however, with the e x ception  of the session log (sesslogtable), rapid increases or decreases in size
+may indicate a problem.
+Monitoring hardware resources
+It is important to ensure each applic ation  node and database server does not run out of resources. For
+example; Bravura Security Fabric  cannot update the database if the database server runs out of disk
+space or running out of physical RAM can cause the database processing to slow down dr amatic ally  as
+the OS swaps RAM to disk.
+Most hardware vendors provide monitoring softw ar e  and there are many third- party applic ations
+available that can be useful in c onjunction  with various settings  in Bravura Security Fabric  itself.
+Hardware monitoring includes:▪Monitor RAM availability  (on page 2775) ▪
+▪Disk space  (on page 2775) ▪
+Consult the relevant vendor’s documen t ation  for more in f ormation  about how to c on figur e  the
+monitoring.
+Monitor RAM availability
+▪Monitor the available RAM on the applic ation  nodes and database servers and set alerts if the ▪
+available RAM falls under acceptable levels.
+▪Consider aut omatic ally  r es t arting  any process or service whose memory use grows over time,  during ▪
+low usage time;  for example:
+▪The ajax service ▪
+▪Windows svchost service ▪
+▪SearchUI process ▪
+▪The MsMpEng processes ▪
+▪msgsvc service when Bravura Security Fabric  applic ation  node is under heavy use ▪
+Disk space
+Con figur e  monitoring of disk space availability on all nodes and database servers and set alerts when the
+disk space falls below a certain level.
+As historical data is gathered in Bravura Security Fabric , the backend database will c ontinually  grow. The
+disk loc ation  where MSSQL stores its files has to be at least 50% empty at all times.  If the server is not
+provisioned based requirements allocated space will have to be periodically increased by database
+administrators. See Server requirements  (on page 196) for the requirement details.
+Bravura Security Fabric  has a health check feature  (on page 2795), which monitors the C: drive and sends
+notific ations  about it. If the backend MSSQL database is installed on the same server, with its' file on a
+diff er en t  drive, health check can be c on figur ed  to monitor that other drive.
+However, if the database files are on a diff er en t  server, and the drive where the files are cannot be
+mapped to the Bravura Security Fabric  node for health check to be used, other tools will have to be used
+to alert Bravura Security Fabric  admins of the impending out-of-space situation.
+Whether r eplic ation  is c on figur ed  or not, the applic ation  node’s iddb.cfg file contains a setting  that
+will stop all database-related applic ation  processes if available disk space drops under a certain level. It is
+recommended not to manually modify the c on fig  file, but in some cases it may be required.
+The default level of "max_disk_space_percentage is 90%. When the available disk space reaches 10% of
+the total disk space, the applic ation  will stop working.
+For very large disks, that setting  is too small; for example, 10% of 1TB is 100GB. In extreme cases, the
+90% value can be increased as long as the available free space is still more than the size of the database
+files as mentioned  above.Note: The iddb.cfg records the max percentage the database service will still
+work, while the healthcheck MIN_PERCENT_FREE setting  is the opposite.
+When increasing the setting  in iddb.cfg (for example to 95), decrease the
+one in healthcheck (for that example, to 5).
+If the instance is replicated, that setting  can be c on figur ed  in the WebUI in the nodes Con figur ation  tab
+under Manage the system > Maintenance >  Database r eplic ation .
+Note: The tr ansaction  file itself can grow daily to more than the size of the
+database itself.
+About the Bravura Security Fabric Log
+The Logging Service ( idmlogsvc ) maintains a log of Bravura Security Fabric  program e x ecution.  This
+includes web modules, services, exit programs, plugins, connectors, and command-line programs. By
+default the log is stored in a text file, idmsuite.log , within the Logs directory. This directory is
+rotated nightly; rotated logs are named in the following way:
+1.Current: <instance> 1.
+2.Most recent for specific  date, except the current log: <instance> .<yyyy> -<mm> -<dd> 2.
+3.Log rotated more than once for a specific  date: <instance> .<yyyy> -<mm> -<dd> -<hhmmss> .<SerialNo> . 3.
+For example, if the instance is ExampleCo , logs are named:
+ExampleCo 
+ExampleCo.2016-02-28
+ExampleCo.2016-02-28-134020.0
+ExampleCo.2016-02-28-114020.0
+ExampleCo.2016-02-27   
+ExampleCo.2016-02-26   
+ExampleCo.2016-02-25
+In the above example, the log was rotated 3 times  in 2016-02-28 and the directories are in a most recent
+sequence order.
+Log entries are, in general, composed of multiple  lines or messages written  in the format:
+<date> <time>  - [<lsid>] <program> [<process ID>,<thread ID>] <level>: [<range>] <message text> 
+where:
+lsid is the logging session ID. Certain programs, such as web modules, include a session ID in their
+log entries. All lines with the same logging session ID belong to the same event.
+level is the level or severity of the message. This can be one of: Error, Warning, Notice,  Info, Debug,
+or Verbose.range is the range of characters from the log message included in the log entry. This is shown only
+when long log messages are spread between multiple  log entries. Since each log entry includes
+500 characters of the log message, the range for the fir s t entry is [0 .. 499] .
+See also: 
+▪Scheduling Maintenance  (on page 2702)  to learn how to control the rotatelog job that is ▪
+responsible for r ot ating  the log file directory.
+▪Logging Service  (on page 2854)  to learn how to change log service parameters for logging, including ▪
+the log file name and loc ation,  and the logging level. This chapter also shows you how to rotate the
+log using the idmlogsvc -rotatelog <N> command.
+Viewing Bravura Security Fabric system logs
+You can use the Maintenance > Systems logs page in the Manage the system  (PSA) module to view the
+current Bravura Security Fabric  systems log, as well as previously rotated logs.
+Note: The date and time  recorded in the Bravura Security Fabric  logs are based
+on the settings  of Windows servers where Bravura Security Fabric  is
+installed. You can view the current Bravura Security Fabric  server date and
+time  from the System logs page.
+To search the logs:
+1.Click Maintenance > System logs . 1.
+Bravura Security Fabric  displays the System logs page.
+2.If necessary, enter search criteria to display only specified  log entries: 2.
+Log message Type a string or a regular expression that represents the log message you want to view.
+You can use + and - symbols to include keywords from the search; for example
++ update operation - unlock
+includes the keywords update and operation , and excludes unlock .
+If you want to use a regular expression, you must also select the corresponding Regular
+expression checkbox.
+Process Type a string or a regular expression that represents the process you want to view. If you
+want to use a regular expression, you must also select the corresponding Regular
+expression checkbox.
+Severity Select one or more severity levels. By default, all severity levels are selected.
+Da t e/time Use the:
+▪First da t e/time  field  to select the earliest log entry to include. ▪
+▪Second da t e/time  field  to select the latest log entry to include. ▪
+3.Click Search . 3.
+You are shown records from the current log and any rotated logs. You can change the number of
+Records to display from the default 100.Note: If you want to view more than 1000 records, it is highly recommended
+that you do not use Micr osoft  Internet Explorer. Both Mozilla Firefox and
+Google Chrome perform much faster when rendering large numbers of
+records.
+Downloading logs
+Click Download to save the current log view to a file on the server. Any search criteria filt ering  is
+preserved in the file. A copy of the file is saved to the <Program Files path>\Bravura Security\Bravura Security
+Fabric\Logs\<instance>  directory and is rotated along with the rest of the logs.  
+See also: 
+If you need help with regular expression click the Regular expression link on the System logs page, or see
+Using Regular Expressions
+Regular expressions provide a way to identif y  patterns  of text in strings.
+Bravura Security Fabric  uses regular expressions to:
+▪Match and block invalid passwords.▪
+▪ Identif y  users who it should not manage. ▪
+▪Extract text from Telnet/TN3270 screens in Telnet connector scripts.▪
+▪Extract text from the output of password hashing programs in DBMS connector scripts.▪
+Regular expressions use a shorthand of literal characters and special characters to de fine  a pattern  in a
+precise and compact way. Literal characters are case sensitiv e.  The regular expression parser used by
+Bravura Security Fabric  uses the following special characters in literal strings:
+Character Purpose Example Match
+. Matches any single
+charactera.c aac , abc , a1c , a2c
+^ Beginning of a line ^hat hat , hatch , not
+chat
+$ End of a line hat$ hat , chat , not
+hatch
+| Alt ernation job|task job or task
+( ) Grouping job(12 |34) job12 or job34
+\ Treat the following
+special character
+literally\$5\.6\\7 $5.6\7
+The | alternates the longest possible string. That is, it matches job or task , and matches both jotask
+and jobask .
+Grouping with ( ) limits the alternate branches.Character sets
+Character sets
+You can de fine  a set of characters within a string. Character sets match any single character enclosed in
+square brackets [ ] . For example:
+Expression Match
+j[oa]n jon or jan
+Use the - character between two characters in a set to indicate a range. A - character outside of a set,
+or at the beginning or end of a set, is treated literally. For example:
+Expression Match
+[a-c] a, b, or c
+[1-3] 1, 2, or 3
+[ab-] a, b, or -
+[B-D]-3 B-3 , C-3 , or D-3
+If the fir s t character in the set is ^, then the character set matches any character that is not in the list. For
+example:
+Expression Match
+[^oa] Any character except o and a
+All other special characters lose their meaning when included in a character set. For example:
+Expression Match
+^[^*\+.-] Line must not start with *, \, +, .,or -
+To include a literal ] in the character set, make it the fir s t character in the set. It can also be excluded by
+following ^. The ] character is also treated literally outside of a set. For example:
+Expression Match
+[^]a-] Any character besides ], a, and -
+[]a] ] or a
+[a]] a]
+Quantifier s
+Quantifier s
+You can specify quantities  of character sets, grouped characters, or individual characters. The quantifier s
+*, +, ?, and { } act on the preceding set, group, or individual character.
+Character Purpose Example Match
+* Specifies  0 or more
+c onsecutiv e  occurrencesab*c ac, abc , abbbbc+ Specifies  1 or more
+c onsecutiv e  occurrencesab+c abc , abbbbc
+? Specifies  0 or 1 occurrence colou?r (wo)?man color or colour
+woman or man
+{x} Exactly <x> occurrences ab{4}c abbbbc
+{x,y} At least <x>, no more than
+<y> occurrencesab{2,4}c abbc , abbbc , abbbbc
+{x,} At least <x> occurrences ab{2,}c abbc , abbbc
+{,x} No more than <x>
+occurrencesab{,2}c ac, abc , or abbc
+Shorthand expressions
+Shorthand expressions
+The following expressions are shorthand for longer or more complex regular expressions:
+Expression Purpose Example Match
+[:alpha:] Matches must consist of
+letter s.[:alpha:]8,16 aBcmGLeEhhi
+[:digit:] Matches must consist of
+digits. [:digit:] is equivalent
+to [:d:] and \d.[[:digit:]]+ 2962954576
+[:upper:] Matches must consist of
+uppercase characters.[[:upper:]
+[:digit:]]+9DDD4MLAG13
+[:alnum:] Matches must be
+alphanumeric. [:alnum:] is
+short hand for [a-zA-Z0-9]
+in the ascii character set,
+but the use of [:alnum:] is
+preferred for c ompatibility
+with other languages and
+character sets.[:alnum:]7[^[:digit:]] a3dM9DD+
+Examples
+Examples
+Only allow letter s,  numbers, e x clamation  point, and
+period^[a-zA-Z0-9!.] ⋆$
+At most 8 characters long ^.,8$
+Must start with a letter ^[a-zA-Z]
+Must have a number [0-9]
+Must end in -admin or -test (-admin |-test)$
+Must begin with three capital letter s  and an underscore ^[A-Z] {3}_

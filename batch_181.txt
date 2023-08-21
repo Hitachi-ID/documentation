@@ -1,0 +1,258 @@
+Services marked with a * must be started in order for Phone Password Manager to operate properly.
+Dialogic®  services only appear on a system using a Dialogic®  IVR backend. The names of the
+Dialogic®  services may vary.
+In Phone Password Manager version 9.0+, the VoIP service has been merged into the Phone Password
+Manager module service.
+If the Phone Password Manager Service fails to start:
+▪Ensure that the Dialogic®  System Service, and Dialogic®  Boardserver service, are running and▪
+c on figur ed  to start aut omatic ally .
+You can do this using the Windows Service Control Manager (SCM), or the Dialogic®  product
+Con figur ation.
+▪Ensure that pspushpass.dll is installed and can be found in the system PATH.▪
+▪Some Dialogic®  services are dependant on other Dialogic®  services and will not restart aut omatic ally ▪
+after  a reboot of the server. After  a reboot, make a test call into your IVR server, and manually restart
+Dialogic®  services if required.
+▪The Phone Password Manager Service is dependant on Dialogic®  system services, and also needs to▪
+be manually restarted after  a reboot. It may take several seconds before the service is ready to be
+started, so ensure that you refresh the list of services to c on firm  that this service is running.
+Phone Password Manager cannot return requests
+If Phone Password Manager cannot return requests properly due to slow network speeds, then you can
+modify the "SoapTimeout" registry key:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\\Idapi\
+Modify the "SoapTimeout" registry key by increasing the value. The default setting  for this value is 60000
+milliseconds, which is one minute.
+Phone Password Manager cannot connect to the softphone  system
+If Phone Password Manager cannot connect to the softphone  system, try switching audio codecs in
+idtel.cfg  (on page 1764). The codec in Phone Password Manager must match the supported codecs
+of your softphone  system.
+Phone Password Manager fails unexpectedly
+If Phone Password Manager fails unexpectedly, it is possible the Dialogic license is expired or invalid. You
+may see an error message like the following:
+2013-01-15 07:54:59.532.2056 -
+ [] idvoip.exe [3292,3180] Warning: gc_Start,
+GC ErrorValue: 0x8c -
+ The start procedure of a call control library failed,
+CCLibID: 0 - GLOBALCALL, CC ErrorValue: 0x8c - The start procedure of acall control library failed
+2013-01-15 07:54:59.532.2093 -
+ [] idvoip.exe [3292,3180] Debug: Failed to
+initialize GlobalCall Libraries
+2013-01-15 07:54:59.532.3090 -
+ [] idvoip.exe [3292,3180] Error: Failed to
+InitGC, service terminated
+To resolve this, update the Dialogic license, then restart the Phone Password Manager service. See the
+Dialogic documen t ation  for details on updating  a license.
+SoX version mismatched
+Phone Password Manager is fully functional  with newer versions of the SoX utility ,  however Phone
+Password Manager expects SoX versions equal to or earlier than those shipped with Asterisk® when
+checking for the existence of a SoX ins t allation.  This version mismatch can impede the ins t allation  and
+function  of Phone Password Manager with Asterisk.
+To resolve this issue, log into the Asterisk® server as root, or escalate to root. Execute the following
+commands in the Unix terminal, in order:
+1.cp 'which sox' 'which sox'21.
+2.echo '#!/bin/bash' > 'which sox'2.
+3.echo '[ "$1" = "--version" ] && echo "sox: Version 0.0.0" ||3.
+ sox2 $*' >> 'which sox'
+This change will r ec on figur e  how SoX responds when asked to display its version, allowing Phone
+Password Manager to install with newer versions of SoX.Part VII PRIVILEGEPart I Privileged AccessImplementing  privileged access management
+Large or g aniz ations  may have thousands of w ork s t ations,  and hundreds of servers and applic ations
+running on multiple  platforms.  This complexity leads to numerous security problems.
+IT assets often  have multiple  sensitiv e  passwords such as administrator passwords, service passwords,
+applic ation  passwords. These passwords commonly do not have expiry enabled, although they should.
+Changing these passwords can be time-c onsuming  because of the large number of IT assets, users who
+need to know the passwords, and c on figur ation  interfaces, scripts, or programs that may contain hard
+coded passwords.
+Bravura Privilege  secures target system cr edential  passwords on servers and w ork s t ations  by periodically
+randomizing them, while maintaining the ability of IT s t a ff  to retrieve current cr edentials  for devices into
+which they must log in. You can also use Bravura Privilege  to store passwords for managed systems that
+must be managed manually.
+Bravura Privilege  has the following features:
+▪Frequent password r andomiz ation  eliminates s t atic,  shared passwords and controls former IT s t a ff ▪
+knowledge of passwords
+▪Access controls limit who can see passwords▪
+▪Logging and r eporting  of access disclosure facilitates audit compliance and faster tr oubleshooting ▪
+▪ Encr yption  secures passwords in storage and transit so that physical compromise will not expose ▪
+passwords
+▪ R eplic ation  ensures passwords are stored on multiple  servers in diff er en t  sites so that password access ▪
+and security survives server failures or site disasters
+▪Trusted SSH key management eliminates the use of passwords when accessing accounts on Unix▪
+systems
+Modes: push and local service
+Bravura Privilege  manages systems using two modes: pushmode and local service mode .
+Ensure you only use one mode to manage a system. If a system is managed by both push and local
+service modes you will end up with duplicate managed accounts. Bravura Privilege  will be unable to
+determine which managed account contains the current password and consequently, password history
+and auditing  issues.
+This section  explains the diff er ences  between the modes, and how to determine which mode to use.
+Push mode
+In push mode, Bravura Privilege  performs remote password resets using the Privileged Access Manager
+Service.
+Changes at the Bravura Privilege  server typically trigger immediate actions  on managed systems;
+whereas, in local service mode, actions  are triggered when the w ork s t ation  connects to the server at the
+end of the next polling interval.A system can be managed in push mode when it is manually added as a target system, or when it is
+discovered on a domain. Accounts can also be managed manually or during auto-discovery.
+Choose push mode if you:
+▪Do not want a softw ar e  footprint on your servers or w ork s t ations ▪
+▪Require real time”  in t egr ation ▪
+▪Want to manage passwords on systems other than Windows▪
+▪Want to manage SSH public keys on Unix systems▪
+▪Have systems in a DMZ that cannot connect to your Bravura Privilege  server ▪
+Local service mode
+In local service mode, you install the Local W ork s t ation  Service on the managed system. Local service
+mode works as follows:
+1. After  installing on the system to be managed, the Local W ork s t ation  Service waits a random amount 1.
+of time.
+This prevents large numbers of Local W ork s t ation  Services, installed during a mass deployment, from
+c on t acting  the Bravura Privilege  server simultaneously.
+2.The Local W ork s t ation  Service then connects to the pamlws  on the Bravura Security Fabric  server over 2.
+HTTP or HTTPS (recommended) and registers itself with Bravura Security Fabric . This initia t es  the
+discovery process, during which the system is listed as a discovered object, and evaluated against
+import rules. This process is repeated until  the system passes an import rule and is managed, or is
+disabled.
+3.Once a system is discovered and managed, the Bravura Security Fabric  server periodically checks on 3.
+what needs to be done, based on w orkflo w  requests and password e xpir ations,  and sets the necessary
+flags  for it.
+4.The Local W ork s t ation  Service periodically connects to, or polls, the pamlws  over HTTP or HTTPS to 4.
+check on any tasks, such as listing  users and attribut es,  changing a password, or adding and removing
+users from groups.
+5.The Local W ork s t ation  Service performs the assigned task, if any, and sends the required data back to 5.
+the pamlws  at the next poll. This may either be the list of users, groups and attribut es,  or success and
+failures on other tasks. It will wait a c on figur ed  amount of time  before c onnecting  to the Bravura
+Security Fabric  server again.
+Local service mode is only available for Windows systems; however, a plugin architecture supports
+applic ations  running on Windows.
+Choose local service mode if you have:
+▪Many Windows machines that are not permanently connected to the domain (laptops, w ork s t ations ▪
+etc.)
+▪Systems that aren't always on or are periodically unavailable.▪▪Servers that do not allow inbound access due to fir e w all  rules or other networking r es trictions. ▪
+Installing Local W ork s t ation  Service on these servers will allow outbound c onnections  to the Bravura
+Security Fabric  server.
+Many desktops are left on and locked so that users can resume their work the next day; if these are
+contactable via normal psupdate , do not add the Local W ork s t ation  Service to these machines.
+When users request privileged access on local service mode systems, group and account operations  may
+take longer than on push mode systems, since Bravura Security Fabric is required to wait for
+c ommunic ation  from the local work s t ation.
+Features and concepts
+The section  outlines Bravura Privilege  features and factors that should be taken into c onsider ation  before
+implementing  them.
+Managed system policies
+The key to understanding how to c on figur e  Bravura Privilege  lies in understanding the role the managed
+system policy plays in managing systems. The managed system policy  contains all c on figur ation  in f ormation
+required to manage accounts on a managed system . You also manage access controls for product
+administrator s and regular users based on what managed system policies they have access to, and what
+oper ations  they are allowed to perform on those managed system policies.
+In the managed system policy  you de fine:
+▪What systems are members of the policy▪
+▪What accounts are managed on the systems▪
+▪Who must authorize access to privileged accounts▪
+▪What authentic ation  types can be used to access accounts or group sets ▪
+▪Who will have access to privileged accounts▪
+The following can be de fined  system-wide or for each managed system policy :
+▪How often  privileged passwords are randomized ▪
+▪The policies for cr eating  passwords ▪
+▪How users are granted access▪
+▪Who can access accounts▪
+▪How sessions initia t ed  by users can be monitored and recorded ▪
+▪Who can access recorded sessions, and who must authorize their access▪
+Auto discovery and management of systems and accounts
+Bravura Security Fabric ’s auto discovery  feature can list in f ormation  about:
+▪Systems on a domain▪
+▪Administrator, domain, and user accounts whose cr edentials  are used to manage services, scheduled ▪
+tasks, IIS websites, or DCOM objectsThese discovered objects can be manually or aut omatic ally  imported to become managed systems and
+accounts.
+See Infrastructure Auto Discovery  (on page 2080) for more in f ormation.
+Password r andomiz ation
+As explained in Modes  (on page 1805), Bravura Privilege  can aut omatic ally  randomize passwords using
+two modes: push and local service.
+Passwords are randomized daily by default. You can change this frequency system-wide, or for individual
+managed system policies.
+See Password r andomiz ation  (on page 1874) for more in f ormation.
+Authentic ation  types
+When cr eating  a managed system policy , administrators must select one (or more) authentic ation  types
+that will be used for accessing the accounts or group sets in the managed system policy .
+There are three authentic ation  types:
+▪Password:▪
+▪Use this type if managed accounts in the managed system policy will be checked out using passwords. ▪
+▪This type can only be used for single account check-outs and account set check-outs.▪
+▪SSH key:▪
+▪Use this type if managed accounts in the managed system policy will be checked out using SSH keys. ▪
+▪This type can only be used for single account check-outs.▪
+▪Group set:▪
+▪Use this type if adding group sets to the managed system policy . ▪
+▪This type can only be used for group set check-outs.▪
+For example: if both Password and SSH key are selected for a managed system policy , requesters can
+choose which authentic ation  type to use for accessing the managed account. Single account access
+request forms include an Oper ation  to perform during check-out and check-in option.
+Support for authentic ation  types depends on the managed system policy  mode:
+▪Push mode: group set, password, and SSH key are available▪
+▪Local service mode: group set and password are available▪
+▪Vault mode: only password is available▪
+Once authentic ation  types are selected for the managed system policy , administrators are able to modify
+them. They can add more, remove, or replace authentic ation  types but there are r es trictions:
+▪ Authentic ation  types can only be added if they are valid for the managed system policy mode. ▪
+▪The password authentic ation  type can be removed only if the managed system policy has no managed ▪
+accounts.▪The SSH key authentic ation  type can be removed only if the managed system policy has no managed ▪
+accounts
+▪The group set authentic ation  type can be removed only if the managed system policy has no group sets. ▪
+Vault-only systems
+product administrator s can use Bravura Privilege  to manually store in f ormation  in vault-only managed
+systems. In this case, there is no c ommunic ation  between the Bravura Privilege  server and the managed
+system. In other words, the managed system exists in Bravura Privilege , however, all management is
+done manually by a user.
+Bravura Privilege  does not aut omatic ally  randomize passwords for these managed systems. Users can be
+granted permission, via access controls, to override the stored password after  they have accessed it.
+Access request
+Regular users can request temporary access to managed accounts or group sets. Depending on how you
+c on figur e  access controls, a given user’s request may be auto-approved, or require authoriz ation.  If
+approved, the user can check-out the requested access within a set time  period.
+The access permission can be checked-in by the user once they are finished  or aut omatic ally  checked-in if
+the set time  period expires. If they had access to an account, the password is randomized. If they had
+access to the account using SSH authentic ation,  the user’s SSH public key is removed from the target. If
+they had group set access, the user is removed from the group membership.
+Consider the following when determining who can access and manage privileged accounts or group sets:
+▪Who should be able to request access to which accounts or group sets?▪
+▪Who can be auto-approved?▪
+▪Who requires approval from an authorizer?▪
+Access disclosure
+Once a user has been granted access to a managed account, access disclosure plugins provide the user
+with access to the password, or an aut omatic  c onnection  to the managed system.
+The following disclosure methods are available with Bravura Privilege :
+▪Command prompt control – allow users to aut omatic ally  connect by launching a program ▪
+▪Copy control – allow users to copy and paste the password▪
+▪Remote desktop control – allow users to aut omatic ally  connect by launching a remote desktop ▪
+c onnection
+▪Display control – allow users to access privileged accounts on the web interface▪
+▪Browser driver control – provides users access to web sites using managed passwords▪Session recording and viewing
+The session monitoring feature enables the monitoring, recording, searching, and viewing of actions
+performed during adminis tr ativ e  sessions using Bravura Privilege  cr edentials.
+Determine who can do what with recorded sessions:
+▪Who should be able to search their own recorded sessions?▪
+▪Who should be able to search other people’s recorded sessions?▪
+▪Who can be auto-approved to search, view or download recorded sessions?▪
+▪Who requires approval from an authorizer?▪
+You can c on figur e  Bravura Privilege  session monitoring to use one or more c ollection  modules :
+▪Keystroke capture – to record keys that were pressed during a session▪
+▪Video capture – to periodically capture screen shots during a session▪
+▪Webcam capture – to periodically capture images from any attached  web cams during a recorded ▪
+session
+▪Clipboard capture – to collect copy/paste in f ormation  during a session ▪
+▪User interface capture – to capture text data from user interface elements during a recorded session▪
+▪Process name capture – to capture process created▪
+Setting  up Privileged Access Management
+To implement privileged access management with Bravura Security Fabric :
+1.Carry out initial  setup as outlined in Initial  steps, including: 1.
+▪ Con figuring  email notific ation  (on page 412) ▪
+▪Adding target systems  (on page 480) ▪
+▪ Importing  users  (on page 538) ▪
+▪ Con figuring  a thentic ation  (on page 820) ▪
+2. Con figur e  managed system policies, managed systems, and managed accounts. 2.
+The steps required depend on whether you are implementing:
+▪Push mode  (on page 1811) ▪
+▪Local service mode  (on page 1811) ▪
+▪Vault-only  (on page 1811) ▪
+3. Con figur e  user access controls. 3.
+You must set up product administrators and c on figur e  their adminis tr ativ e  privileges before users can
+access adminis tr ativ e  features. You can also fine tune access controls for regular users.
+See   User types and access rules  (on page 671).
+4. Con figur e  general options  as described in Privileged access management options  (on page 1932). 4.
+5. Con figur e  end user options  as required. 5.
+See   Modules.

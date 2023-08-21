@@ -1,0 +1,1054 @@
+• Adminis tr ativ e  menus  378
+• adminis tr ativ e  module  
+• Adminis tr ativ e  privileges  699
+•Administrator cr edentials  519
+•Administrator groups  681
+•administrator lockout  
+•adtoaddn  3646
+•Advanced c on figur ation  826, 3532
+•Advanced manual r esolution  1896
+•Advanced search page (older style)  2919
+•Advanced searching  363
+•Advantages of Bravura P attern  2456
+• Adv ertise  Login Assistant  1622
+•agent  
+•agent codes  3682
+•Agent codes  3682
+•agent.pss  858
+• Ag gr eg ation  and storage  2025
+•aging  1010
+•aging passwords  1010 , 1011
+•agtgrpw  529
+•agtrem-itsm  1556
+•agtsvc  2874 , 
+•agtsvccli  3557
+•Algorithm for comparison of answers  1028
+•Allow check-outs while r andomiz ation  is
+disabled  1877
+•Allowed IDs  1168
+•ALLOWED_ORIGINS  2044 , 307, 420
+•Allowing aut omatic  approval for authorizer
+requests  1416
+•Allowing external c ommunic ation  with
+Bravura Security Fabric  2822
+•Allowing optional  arguments  1961
+•Allowing other users to attach  aut omatic ally
+attached  accounts  547
+•Allowing product administrators to detach
+OrgChart trees  2513
+•Allowing users to detach accounts  548
+•Allowing users to specify a destination
+container  2401 , 515
+•Alter text by editing  KVG files 3489
+•Alter text with the Bravura Security Fabric
+translator interface  3485
+•Altering text  3485
+•alternate login ID  
+• Analytics  734, 86, 105, 3432 , 172, 174, 177,
+181, 226, 389
+• Analytics  app  
+• Analytics  report s ynchr oniz ation  3466
+•Ancestry trees  1887
+•Android nativ e  controls  1478
+•anonymous authentic ation  996•API 72, 79, 1955 , 1955 , 1956 , 98, 102, 102, 16,
+111, 3468 , 126
+•API account  112
+•API adminis tr ativ e  privileges  729
+•API aut omation  for account offboar d  2222
+•API aut omation  for account onboard  2208
+•API aut omation  for account update  2217
+•API aut omation  for cr eating  an OTP API user
+2251
+•API aut omation  for system offboar d  2198
+•API aut omation  for system onboard  2187
+•API aut omation  for system update  2192
+•API aut omation  for team cr eation  2155
+•API aut omation  for team delete  2182
+•API aut omation  for team group membership
+2166
+•API aut omation  for team update  2177
+•API aut omation  for team vault archive  2244
+•API aut omation  for team vault cr eation  2226
+•API aut omation  for team vault update  2242
+•API aut omation  for vault account archive  2247
+•API aut omation  for vault account cr eation
+2229
+•API aut omation  for vault account update  2237
+•API aut omation  for vaulted file update  2250
+•API aut omation  for vaulted file upload  2249
+•API calls  110
+•API functions  1955
+•API logging  112, 127
+•API plugin  112
+•API Service (idapi)  2846
+•API SOAP Service (idapisoap)  2847
+•API SOAP Service c on figur ation  1720
+•APIUSER_CIDR attribut e  1266
+•app2app account  
+•app2app client  
+•app2app server  
+• Applic ation  accounts  2049
+• applic ation  owner  
+• Applic ation  servers  483
+• applic ation-specific  accounts  
+•Applying c on figur ation  changes  494
+•Applying e v aluation  results  2126
+•Applying password policies by user class  564
+•Applying policies to managed systems  1829
+•Applying s ynchr oniz ation  rules  564
+•Applying web password change r es trictions
+563
+•approval w orkflo w  
+•approved e x ception  
+•Approved e x ceptions  to rules violations  3078
+•approver f atigue  
+•ARCH_EXTEND_CHECKOUT_REASON attribut e
+1266•Architecture  1445 , 1637 , 1652 , 1743 , 2070
+•Archiving a team vault  2242
+•Archiving a vault account  2244
+•Archiving systems via reports  2197
+•Arguments attribut e  1961
+•Assigned entitlemen ts  3381
+•Assigned reviewers  3452
+•Assigning access controls  1861
+•Assigning authorizers by user class  815, 1849 ,
+2672 , 524, 594, 626, 639
+•Assigning authorizers to a resource or policy
+706
+•Assigning implementers by user class  2676 ,
+526, 603, 630
+•Assigning inventory managers  2688
+•Assigning phone lines  1751
+•Assigning Pr ofile  IDs 2387
+•Assigning read and write permissions  1309 ,
+668
+•Assigning s t atic  authorizers  815, 1848 , 2671 ,
+524, 626, 638
+•Assigning s t atic  implementers  2675 , 526, 602,
+629
+•Assigning tasks to implementers  2404
+•Assigning unique, numeric IDs  1639
+•Assigning user group access controls  727
+•Assisted password changes  1575
+• Associating  import rules with a managed
+system policy  1845
+•Asterisk package on a Linux environment  1753
+•Asterisk package on a Windows environment
+1754
+•Asterisk® audio files 1800
+•AsteriskNow  1753
+• Attach  other accounts  1185 , 1185 , 1186 ,
+2719 , 3672 , 481, 547, 548, 548, 548
+• Attach  other accounts (PSL)  1185
+• Attaching  a target system to a managed
+system policy  1838
+• attaching  accounts  548
+• Attaching  authorizers to managed system
+policies  1847
+• Attaching  discovered systems to a managed
+system policy  1838
+• Attaching  subordinates  2509
+• attrfix edv al  1280 , 3633
+• Attribut e  flo w  2463
+• Attribut e  groups  1304
+• attribut e  priority  1298 , 
+• Attribut e  values  105
+• Attribut es  108, 148
+•Audit logging  1900
+•Audit reports  107, 3382
+• Auditing  310•Auditor in v estig ating  security breach on
+monitored resource  2047
+•AUP  
+•authanonreg  996
+•authcfg  865, 3537
+•authchain.m4  859
+• Authentic ating  against target system  826
+• Authentic ating  users  825
+• authentic ation  829
+• Authentic ation  73, 80, 98, 101, 113, 127, 49
+• Authentic ation  (tokens/MFA) systems  488
+• authentic ation  chain  841, 843, 
+• Authentic ation  chain scenario components
+973
+• Authentic ation  chain selector (select_chain)
+859
+• Authentic ation  Chain St atistics  3445
+• Authentic ation  chain utilities  3537
+• Authentic ation  chains  931, 2981 , 113
+• Authentic ation  chains: Bravura Security Fabric
+as identity  provider  927
+• Authentic ation  chains: Bravura Security Fabric
+as service provider  958
+• Authentic ation  chains: Components  973
+• Authentic ation  chains: Con figur ation  841
+• Authentic ation  chains: Plugins  981
+• Authentic ation  chains: SAML  923
+• Authentic ation  chains: Use cases and
+examples  867
+• authentic ation  factor  
+• authentic ation  modules  
+• Authentic ation  policy options  833
+• authentic ation  priority list  
+• Authentic ation  pr ompting  1967
+• Authentic ation  types  1808
+• Authentic ation  via Bravura One app  875
+• Authoriz ation  109
+• Authoriz ation  w orkflo w  1340
+•authorizer  
+•Authorizer activity  2986
+•authplugin  990
+•authplugin.psl  981, 990
+•authselect  983
+•authselect.m4  981
+•authselect.psl  859, 919, 983
+• authuser attr  997
+• authuser attr .m4  997
+• authuser attr .p sl  981
+•auto discovery  
+•Auto discovery  73, 80, 101, 102, 113, 128
+•Auto Discovery  2716
+•Auto discovery and management of systems
+and accounts  1807
+•Auto-answer mode  1784•Auto-assignment de viations  3068
+•Auto-assignment policy compliance per user
+3069
+•Auto-assignment setup  3069
+•Auto-assignment surplus and de ficit  3067
+•auto-discovery and r eplic ation  2748
+•Auto-discovery in a r eplic ation  environment
+2748
+•auto-discovery logs  2736
+•automated adminis tr ation  
+•automated event action  c on figur ation
+interface  1558
+•automated group adminis tr ation  599
+•Automated node check when using a load
+balancer  280
+•automated provisioning 
+•automated t ermination  
+•automated user adminis tr ation  2424 , 2430
+•Automated User Adminis tr ation  2424
+•Automated w orkflo w  request options  2443
+• Aut omatic  account attachmen t  examples  543
+• Aut omatic  action  based on risk  2543
+• Aut omatic  Assignment  2442
+• Aut omatic  assignment filt ering  2449
+• Aut omatic  assignment request splitting  2446
+• aut omatic  certific ation  action  2542
+• Aut omatic  ins t allation  using a group policy
+243
+• Aut omatic  provisioning of groups  2452
+• Aut omatic  provisioning of roles  2453
+• aut omatic  reminders  
+• Aut omatic  r esolution  1892
+• Aut omatic  storage/retrieval of field  values
+1046
+• Aut omatic ally  attaching  accounts to Pr ofile  IDs
+541
+• Aut omatic ally  discovered target system
+administrator cr eation  3193
+• Aut omatic ally  managing groups attached  to
+network resources  589
+• Aut omatic ally  managing groups via auto
+discovery  589
+• Aut omatic ally  selecting  / deselecting  accounts
+1197
+• Aut omatic ally  selecting  user accounts to
+receive temporary group membership  1948
+• Aut omatic ally  unlocking users  839
+• Aut omation  2460 , 2467 , 2468 , 2474 , 108
+• Aut o-populating  suggested passwords  1180 ,
+1199
+•autores  2442 , 2704 , 3618
+•Availability and monitoring softw ar e  484
+•Azure 1014
+•Azure Activ e  Directory tenant  882•Azure compromized password list  1014
+•Azure MFA in t egr ation  using RADIUS NPS  880
+B
+•backing up and r ot ating  2702
+•Backups and restores  2798
+•BASE CONFIGURATION  410
+•Basic c on figur ation  825
+•Basic manual r esolution  1893
+•Basic pr ec autions  303
+•Basic searching  2918 , 362
+•Basic Usage  1116
+•Batch and web notific ation  431
+•Batch loading  549
+•Batch loading question  set data  1032
+•batch loading security questions  data  1032
+•Before you begin  1759
+•Benchmarking metrics for Guacamole  2004
+•Best Pr actice:  Shipping events to SIEM systems
+2781
+•Best pr actices  1955
+•Binding  2850
+•biometric authentic ation  
+•blackboard oper ation  dependencies  645
+•Block web crawlers  3512
+•Blue Prism In t egr ation  2070
+•Boolean values  1274 , 656
+•Bravura Identity  67, 117, 51, 58
+•Bravura Identity  Workforce user classes  2457
+•Bravura IVR  120, 167
+•Bravura One  1445
+•Bravura One app nativ e  controls  1478
+•Bravura Pass  119, 42, 52
+•Bravura P attern  
+•Bravura P attern  / components  74, 97, 102,
+122
+•Bravura P attern  / Components  71, 85, 98, 101,
+103, 135, 59
+•Bravura P attern  Privilege  
+•Bravura Privilege  114, 42
+•Bravura Privilege P attern  2129
+•Bravura Privilege usability  72
+•Bravura Security Fabric 12.0.0  105
+•Bravura Security Fabric 12.0.1  102
+•Bravura Security Fabric 12.0.2  101
+•Bravura Security Fabric 12.0.3  100
+•Bravura Security Fabric 12.1.1  97
+•Bravura Security Fabric 12.1.10  93
+•Bravura Security Fabric 12.1.11  93
+•Bravura Security Fabric 12.1.2  96
+•Bravura Security Fabric 12.1.3  96
+•Bravura Security Fabric 12.1.4  95
+•Bravura Security Fabric 12.1.5  95
+•Bravura Security Fabric 12.1.6  95•Bravura Security Fabric 12.1.7  94
+•Bravura Security Fabric 12.1.8  94
+•Bravura Security Fabric 12.1.9  94
+•Bravura Security Fabric 12.2.0  72
+•Bravura Security Fabric 12.2.1  68
+•Bravura Security Fabric 12.2.2  68
+•Bravura Security Fabric 12.2.3  67
+•Bravura Security Fabric 12.2.4  67
+•Bravura Security Fabric 12.2.5  66
+•Bravura Security Fabric 12.2.6  66
+•Bravura Security Fabric 12.2.7  65
+•Bravura Security Fabric 12.3.0  48
+•Bravura Security Fabric 12.3.1  47
+•Bravura Security Fabric 12.3.2  46
+•Bravura Security Fabric 12.3.3  44
+•Bravura Security Fabric 12.3.4  43
+•Bravura Security Fabric 12.4.0  36
+•Bravura Security Fabric 12.4.1  34
+•Bravura Security Fabric 12.4.2  32
+•Bravura Security Fabric 12.5.0  25
+•Bravura Security Fabric 12.5.1  23
+•Bravura Security Fabric 12.6.0  17
+•Bravura Security Fabric features  402
+•Bravura Security Fabric Instance  882
+•Bravura Security Fabric local reset extension
+241
+•Bravura Workforce P attern  2455 , 2456
+•Bravura Workforce P attern  feature
+components  2457
+•Bridge Transfer  1787
+•brokered access disclosure  
+•Browse the OrgChart (IDO)  1177
+•Browser driver: pswxdom  1971
+•browser extension  
+•Browser support  110, 210
+•browser-extension-win-x86.msi  1973
+•Building .wav files using SAPI  1782
+•Building user pr ofiles  539
+•buildqa.psl  1032
+•Built-in attribut e  groups  1305
+•Built-in policies  1834
+•Built-in pr e-de fined  requests  1312
+•Built-in pr ofile  and request attribut es  1266
+•Built-in resource attribut e  groups  668
+•Built-in resource attribut es  652
+•Built-in user classes  734
+•Business requirement and solution  326
+•Buying a new IVR system vs. extending an
+e xisting  system  1643
+C
+•Cached cr edentials  on a user’s w ork s t ation
+1578
+•Caching  2054 , 2923•Caching user classes  804
+• Calculating  the number and size of voice
+boards  1749
+• Calculating  the number of servers required
+170
+•Call Modes  1784
+•Call Transfer  1786
+•Campaign s t atistics  3450
+•Cancel activ e  campaigns  2569
+•Canceling an Org building round  2511
+•CAPTCHA test authentic ation  922
+•Capturing log data on other systems  2791
+•Case 1: Serialized r andomiz ation  1885
+•Case 2: Perfectly parallel r andomiz ation  1886
+•Case 3: Interleaved parallel r andomiz ation
+1886
+•Case 4: Incomplete r andomiz ation  1887
+•Case studies  2031
+•Censoring recorded data  2045
+•cert 1158 , 2521 , 2543 , 2550 , 2566 , 2597 , 2639
+•CERT  
+•certapitest  3540
+• certific a t e  
+• certific a t e  authority 
+• certific ation  2522 , 2530 , 2542 , 2543 , 2543 ,
+2550
+• Certific ation  71, 73, 80, 117, 130, 52, 60
+• Certific ation  analytics  reports  3450
+• certific ation  campaign  
+• certific ation  campaign manager  
+• Certific ation  dashboard  2923
+• Certific ation  details  3096
+• Certific ation  of c on figur ations  campaigns  3138
+• Certific ation  of c on figur ations  reports  3138
+• Certific ation  of entitlemen ts  campaigns  3103
+• Certific ation  of entitlemen ts  reports  3080
+• Certific ation  options  2639
+• Certific ation  process  2517
+• Certific ation  reports  106
+• Certific ation  review deleg ations  and
+esc alations  3128
+• Certific ation  s t atistics  3451
+• Certific ation  utilities  3539
+•certscheduler  3539
+•cgi directory  
+•CGI plugin sequence of events  1149
+•cgilocalr.cfg  
+•cgilocalr.exe  
+•Chain selector  982
+•chain selector plugins  981
+•chainselect  983
+•chainselect.psl  859, 983
+•Challenge-response authentic ation  876
+•Challenges with access certific ation  2516•Change passwords (PSS)  1196
+•Change product administrator password  392
+•change request  
+•Change the layout  3496
+•Changes since review  3090
+•Changes to the service account (psadmin)
+2883
+•Changing a managed system policy’s owner
+1837
+•Changing a managed system policy’s service ID
+1863
+•Changing default font and size of viewable
+passwords  1970
+•Changing inventory item states  2689
+•changing service IDs  1863
+•Changing the c on figur ed  action  568, 616
+•Changing the failure message to users  1967
+•Changing the message to users on failure  1963
+•Changing the top-level manager  2506
+•Check in SSH key access  1920
+•Check individual target systems for
+uniqueness  2397
+•Check out SSH key access  1917
+•Check out the account  2282
+•Check-in / check-out notific ations  1952
+•Checking in access  1949
+•Checking inventory levels  2696 , 2721
+•Checking passwords against strength rules
+1023
+•Checking r eplic ation  status as an administrator
+279
+•checkstock  2696
+•Choosing a language  355
+•CICO  
+•CIDR  
+•Clean session data files 2703
+•Cleaning up r eplic ation  c on figur ation  293
+•Cleaning up the database  2720
+•cleansessdata  2703 , 3559
+•Clearing invalid user data  2742
+•clickable links  358
+•Clipboard capture  2041
+•clipboard-data.xml  2026
+•clone targets  493
+•cloning access disclosure plugins  2014
+•Cloning access disclosure plugins  1853 , 2014
+•Cloning target systems  493
+•coarse-grained user provisioning  
+•CODES  3671
+• Collection  modules  2025
+•Color depth comparison  2030
+•Column display  359
+•Combining repeated log messages  2858
+•Command attribut e  1960•Command e x ecution  log files 1930
+•Command e x ecution  status  1928
+•Command management  1929
+•Command prompt: pswxcmd  1960
+•Comments  3495
+•Common arguments: help and version  3537
+•Common return values  2061
+• Communic ating  with target systems  310
+• Communic ation  defenses  309
+•company directory  
+•Compare numbers of group memberships
+3070
+•Compare roles  3378
+•Compare users  3377
+•Complete Interface  1118
+• Completion  percentage  3110
+•complexity  1001
+•complexity rule  
+•Component and script priorities  314
+•Component deployment  929, 971
+•Component framework  85, 96
+•Components  3440 , 312
+•Components for authoriz ation  w orkflo w  1371
+•Compose t ar g e t -specific  account IDs  2398
+•Composing target system addresses  502
+•Concurrent session trend analysis  2030
+•concurrent sessions  1070
+• Condition  examples using expressions  2109
+• c on fig  3532
+• Con figur ation  1163 , 1955 , 2867
+• Con figur ation  and cr edentials  files 2051
+• Con figur ation  and usage notes  1632
+• Con figur ation  certific ation  coverage  3153
+• Con figur ation  certific ation  details  3164
+• Con figur ation  c ompletion  percentage  3156
+• Con figur ation  detail  451, 464
+• Con figur ation  examples and use cases  2649
+• Con figur ation  file 2051
+• Con figur ation  files 1831 , 248
+• Con figur ation  for HP-UX  1713
+• Con figur ation  for Linux  1717
+• Con figur ation  for Solaris 8/9 with PME  1716
+• Con figur ation  for Solaris 8/9 without PME
+1715
+• Con figur ation  notes  1790 , 2512 , 2637 , 2683 ,
+364, 371
+• Con figur ation  Notes  728
+• Con figur ation  notes for Activ e  Directory DN
+2484
+• Con figur ation  notes for Legacy Activ e
+Directory  2483
+• Con figur ation  notes for SharePoint  2484
+• Con figur ation  options  1930
+• Con figur ation  requirements  2032• Con figur ation  reviewer activity  3161
+• Con figur ation  reviewer details  3145
+• c on figur ation  summary g ener ating  2730
+• Con figur ation  via the wfemail component  427
+• Con figur e  authentic ation  via SMS PIN  873
+• Con figur e  Bravura Security Fabric system
+variables  298
+• Con figur e  certific ation  module options  2639
+• Con figur e  c omposition  rules for plugin-id.psl
+2392
+• Con figur e  Guacamole access disclosure
+plugins  1989
+• Con figur e  Guacamole remote desktop
+gateway  1981
+• Con figur e  Guacamole with SSL using Docker
+1992
+• Con figur e  Guacamole with SSL using Podman
+1997
+• Con figur e  IIS for smart card authentic ation
+918
+• Con figur e  import rules to set resource
+attribut es  2298
+• Con figur e  import rules to update resource
+attribut es  2298
+• Con figur e  initial  search results  1148
+• Con figur e  load balancing for the Bravura One
+proxy servers  1463
+• Con figur e  Local Reset Browser Extension on
+Chrome or Edge Chromium  1584
+• Con figur e  Local Reset Browser Extension on
+Firefox  1584
+• Con figur e  Local Reset Extension  1580
+• Con figur e  response headers  3512
+• Con figur e  saved search plugin  1123
+• Con figur e  SSL 1457
+• Con figur e  the API SOAP service  1706
+• Con figur e  the Azure MFA authentic ation  chain
+906
+• Con figur e  the Bravura Pass PAM  1711
+• Con figur e  the cookie persistence pr ofile  298
+• Con figur e  the Corporate AD target system
+2254
+• Con figur e  the global help desk rules  1470
+• Con figur e  the Mobile Worker Service  1461
+• Con figur e  the RADIUS Authentic ation  target
+system  904
+• Con figur e  the runurl program  1611
+• Con figur e  the self-service rules  1469
+• Con figur e  the smart card PIN reset plugin
+1648
+• Con figur e  two-factor authentic ation  via
+Bravura One app  876
+• Con figur e  virtual server to enable session
+persistence  302• Con figur e  your LDAP ins t allation  to use the
+LDAP password filt er  plugin  1724
+• c on figur eanalytics  3607
+• Con figur ed  user groups in managed system
+policies  3234
+• Con figuring  a deleg ation  plugin  1383
+• Con figuring  a group policy for unattended
+softw ar e  ins t allation  3530
+• Con figuring  a softw ar e  phone  1755
+• Con figuring  access  2049
+• Con figuring  an API caller for Phone Password
+Manager  1757
+• Con figuring  Asterisk® Softw ar e  1753
+• Con figuring  attribut e-based  account
+attachmen t  using the loaddb component  541
+• Con figuring  authentic ation  modules  847
+• Con figuring  auto assignment  641
+• Con figuring  aut omatic  attribut e  pr opag ation
+1302 , 2434
+• Con figuring  aut omatic  group assignment  606
+• Con figuring  batch notific ation  action  plugins
+469
+• Con figuring  batch notific ation  compliance
+plugins  467
+• Con figuring  batch notific ation  reminder
+plugins  469
+• Con figuring  batch notific ations  459
+• Con figuring  bridge transfers  1789
+• Con figuring  Dialogic® PowerMedia Host Media
+Processing Softw ar e  1752
+• Con figuring  Dialogic® voice boards  1749
+• Con figuring  discovery templates  2090
+• Con figuring  esc alation  options  1393
+• Con figuring  events for Remedy Action  Request
+System  1560
+• Con figuring  file s ynchr oniz ation  282
+• Con figuring  general options  494
+• Con figuring  global access disclosure options
+2011
+• Con figuring  global privileges  2140
+• Con figuring  global team groups  2139
+• Con figuring  group-level authoriz ation  592
+• Con figuring  group-level resource oper ations
+601
+• Con figuring  group-level role enforcement  604
+• Con figuring  inherited authoriz ation  523, 525
+• Con figuring  inventory event actions  2700
+• Con figuring  IVR question  sets  1640
+• Con figuring  licensing notific ations  2740
+• Con figuring  lockout interval  839
+• Con figuring  logging levels on an applic ation
+server  2789
+• Con figuring  multiple  servers  1671
+• Con figuring  node-specific  settings  417• Con figuring  of %LTIME% event action  variable.
+1564
+• Con figuring  OrgChart management options
+2501
+• Con figuring  pam_saved_session_policy  2015
+• Con figuring  parallel listing  2741
+• Con figuring  password authentic ation  827
+• Con figuring  phased authoriz ation  814, 1356 ,
+1847 , 2671 , 523, 593, 625, 637
+• Con figuring  Phone Password Manager  1773
+• Con figuring  plugins  1495
+• Con figuring  policy-level options  1860
+• Con figuring  proxy tunnel clients to map target
+systems to use proxy servers  261
+• Con figuring  r eplic ation  event actions  289
+• Con figuring  r eplic ation  servers  269
+• Con figuring  resource attribut es  817, 2677 ,
+517, 631, 643
+• Con figuring  role enforcement  640
+• Con figuring  search  1071
+• Con figuring  security question  authentic ation
+828
+• Con figuring  source systems  2088
+• Con figuring  s t atic  authorizers  705
+• Con figuring  string plugin attribut e  values  2013
+• Con figuring  target system oper ation  locking
+530
+• Con figuring  target systems to use proxy
+servers  265
+• Con figuring  target-system-level authoriz ation
+523
+• Con figuring  target-system-level resource
+oper ations  525
+• Con figuring  target-system-level role
+enforcement  527
+• Con figuring  template-level authoriz ation
+2669 , 624
+• Con figuring  template-level resource
+oper ations  2673 , 627
+• Con figuring  the Asterisk® server  1754
+• Con figuring  the Bravura Security Fabric Server
+1461
+• Con figuring  the F5 LTM load balancer  297
+• Con figuring  the help desk chain  863
+• Con figuring  the IVR Server  1749
+• Con figuring  the Local Reset Extension plugin
+1580
+• Con figuring  the other Bravura Security
+product server  2877
+• Con figuring  the Password Manager service for
+transparent s ynchr oniz ation  1724 , 1735 , 1739
+• Con figuring  the speech service  1781
+• Con figuring  tick e t  updates  1558• Con figuring  TransferCall for H323 protocol
+1787
+• Con figuring  TransferCall for SIP protocol  1786
+• Con figuring  voice print options  1777
+• Con figuring  web notific ation  action  plugins
+456
+• Con figuring  web notific ation  compliance
+plugins  453
+• Con figuring  web notific ations  448
+• Con figuring  w orkflo w  event actions  2513
+• Con figuring  w orkflo w  options  2491
+• Con firming  and t esting  changes  573, 619
+• Con firming  your actions  360
+• Con flict  de t ection  1885
+• Con flict  r esolution  1891
+• Con flicting  passwords  1936 , 3236
+• Connections  over VPN  1633
+• Connectivity  messages  2037
+•connector  
+•Connector Behavior Options  529
+•Connector events  1547
+•connector e x ecution  order  2741
+•Connector log  1931
+•connector logs  521
+•Connector Pack check fails  228
+•Connector package agent (agent.pss)  858
+•Connectors  133
+• Consider ations  when c on figuring  import rules
+to offboar d  or delete managed objects  2104
+•Consistency among peers  2542
+•console-only user  
+•consolidated adminis tr ation  
+•container DN  2401 , 515
+•Content-Security-Policy (CSP)  307
+•Control the Phone Password Manager source
+of IVR IDs  1070
+•Controlling attribut e  priority  1298
+•Controlling auto discovery using scripts  2742
+•Controlling IP addresses from setting  X-
+Forwarded-For  839
+•Controlling plugin processes  1503
+•Controlling user access request c apabilities
+1938
+• Con v entions  15
+•cookies  1046
+•Copy: pswxcopy  1964
+•Core server softw ar e  169
+•Create a c on figur ation  certific ation  campaign
+2593
+•Create a custom analytics  report  3454
+•Create a help user  1611
+•Create a new user using a standard pr e-
+de fined  request  1318•Create an entitlemen t  certific ation  campaign
+2569
+•Create an OTP API group  2279
+•Create an OTP API user  2251
+•Create an OTP_User  2280
+•Create and set up a team  2254 , 2268 , 2284
+•Create new language skins  3480
+•Create the group policy  1616
+•Create vault users  2264
+• Cr eating  a custom report  2921
+• Cr eating  a dedicated database, user, and
+schema  178
+• Cr eating  a dedicated report database user and
+schema  181
+• Cr eating  a list file and copying data from other
+targets  516
+• Cr eating  a pr e-de fined  request  1332
+• Cr eating  a secure service account  205
+• Cr eating  a team  2147
+• Cr eating  a team vault  2224
+• Cr eating  a vault account  2226
+• Cr eating  account inclusion rules for an
+account set  1926
+• Cr eating  administrator accounts on target
+systems  1832
+• Cr eating  an OrgChart manager  2501
+• Cr eating  and applying a password policy  1736
+• Cr eating  and deleting  My Searches  366
+• Cr eating  and deleting  Searches  367
+• Cr eating  attribut e  groups  1308
+• Cr eating  custom components  319
+• Cr eating  new cr edentials  on a managed
+system  2122
+• Cr eating  password policies  1001
+• Cr eating  resource attribut e  groups  668
+• Cr eating  roles  636
+• Cr eating  segr eg ation  of duties  rules  811
+• Cr eating  SSH Key pairs  1912
+• cr edential  database  
+• Cr edential  provider and the help account  1632
+• Cr edential  Provider for Windows  1587
+• cr edentials  
+• Cr edentials  file 2052
+• Cr edentials  for discovered systems  2085
+•Credits  3688
+•Cross-origin resource sharing for session
+recording  2044
+•cryptographic certific a t e  207
+•Cryptographic certific a t es  207
+•Custom attribut e  file 1821
+•custom.dat  1003
+•Customer r elationship  management systems
+484
+• Cus t omiz ation  1582•CUSTOMIZATION  3471
+• Cus t omiz ation  tasks  3503
+•Customize w orkflo w  email using the Manage
+the system (PSA) module  3521
+•Customizing an MSI  243
+•Customizing connector behavior  528
+•Customizing mobile proxy log files 1460
+•Customizing oper ations  376
+•Customizing skin design  3493
+•Customizing the global mail plugin  417
+•customizing the installer  3531
+•Customizing the main menu  376
+•Customizing the Shell Extension installer  3531
+•Customizing widgets  3499
+•Customizing w orkflo w  email using the Manage
+the system (PSA) module  423
+D
+• d42util  3596
+•Daily notific ation  s t atistics  3315
+•dash  1161 , 388
+•DASH  
+•dashboard  
+•Dashboard object pinning  375
+•Dashboard s t atistics  daily update  2703
+•dashboardstats  2703 , 3560
+•Data files 249
+•Data quality reports  107, 3361
+•Database  84, 121, 133, 61
+•Database c onnectivity  pr e-ins t allation  check
+fails 228
+•Database Maintenance  2800
+•Database performance  2811
+•Database r eplic ation  events  1545
+•Database server  206
+•Database Service (iddb)  2844
+•Database table audit  3383
+•Database utilities  3540
+•Databases  484
+•DBA  
+•dbarc  2812 , 3541
+•dbcmd  3544
+•DBE 
+•dbperfchk  3544
+•dcdiscovery  3647
+•dcselect  481
+•Default box for new pins  376
+•Default rules  645
+•Default templates  2090
+•Default values  1289 , 658
+•DEFAULT_LOGIN  843
+• De fining  a lock file directory  531
+• De fining  access controls  1337
+• De fining  access disclosure attribut es  2012• De fining  access disclosure plugins  1849 , 2011
+• De fining  c onditions  2105
+• De fining  c onditions  based on attribut es  2105
+• De fining  c onditions  using plugins  2111
+• De fining  c onditions  using PSLang expressions
+2107
+• De fining  c onnection  methods  2119
+• De fining  criteria for segmenting  users  792
+• De fining  custom target system groups  1769
+• De fining  custom target systems  1769
+• De fining  default attribut e  values for requests
+1336
+• De fining  disconnect tones in idtel.cfg  1766
+• De fining  disconnect tones with a TSF file 1767
+• De fining  dynamic restricted values using a
+plugin  1284
+• De fining  group set members using rules  1843
+• De fining  group sets  1841
+• De fining  managed accounts  1839
+• De fining  member systems  1838
+• De fining  membership criteria  719
+• De fining  multiple  variables  347
+• De fining  oper ations  1333
+• De fining  product administrators from the
+command prompt  690
+• De fining  product administrators from the web
+interface  674
+• De fining  pr ofile  and request attribut es  1270
+• De fining  questions  1030
+• De fining  resource attribut es  654
+• De fining  restricted values manually  1280
+• De fining  role authoriz ation  637
+• De fining  rules  648
+• De fining  segr eg ation  of duties  rule
+authoriz ation  814
+• De fining  source systems  2119
+• De fining  the request wizard order and display
+1338
+• De fining  usable inventory states  2682
+• De fining  user access to user pr ofiles  710
+• De fining  user group membership criteria  728
+• De fining  variables  346
+•delegate  
+•delegated adminis tr ation  
+•Delegated adminis tr ation  rules  708
+• deleg ation  1382
+• Deleg ation  2952 , 109
+• Deleg ation  and esc alation  1382
+• deleg ation  manager  
+• deleg ation-de f ault.p sl  1383
+• Deleting  a managed system  1829
+• Deleting  a team  2177
+• Deleting  authentic ation  chains  866
+• Deleting  authorizers  706• Deleting  discovered systems  2093
+• Deleting  email event actions  1565
+• Deleting  loc ations  and item types  2667
+• Deleting  managed system policies  1864
+• deleting  managed systems  2101
+• Deleting  overrides and non-shipped attribut es
+574, 620
+• Deleting  pr e-de fined  requests  1339
+• Deleting  roles  644
+• Deleting  segr eg ation  of duties  rules  818
+• Deleting  specified  attribut e  values  573, 619
+• Deleting  systems and accounts from Bravura
+Privilege using import rules  2102
+• Deleting  templates  2677 , 631
+• Deleting  unknown objects  609
+•Denying access  836
+•Deployment  974, 2309 , 3441
+•Deprecated features  17
+• Depr ec ating  pr e-de fined  requests  1339
+• Depr ec ating  roles  643
+• Depr ec ating  segr eg ation  of duties  rules  817
+•DESC_APP attribut e  1266
+•design directory  
+•Design files 3473
+• Designating  a source of Pr ofile  IDs 539
+•Desktop and mobile view  1492 , 354
+•Detaching access disclosure plugins  1852
+•Detaching subordinates  2509
+• De t ecting  changes in AD target system using
+the "Enable persistent listing"  option  2762
+• De t ecting  changes in AD target system using
+the "Track account changes" option  2751
+• De t ecting  changes in AD target system using
+the "Track group changes" option  2757
+• De t ecting  password expiry based on Bravura
+Security Fabric password policy  445
+• De t ecting  target system password expiry  444
+•Determining attribut e  group display order
+1310 , 669
+•Determining date / time  display preference
+3482
+•Determining how attribut es  are displayed
+1309 , 669
+•Determining implementers  2402
+•Determining language preference  3481
+•Determining number of required approvals
+814, 2671 , 523, 594, 625, 638
+•Determining override levels  2674 , 525, 602,
+628
+•Determining required storage capacity  2029
+•Determining the connector behavior of group
+set check-out failures  1948
+•Determining the full name format  1443
+•Determining users’ email addresses  412•Determining when to add group owners  1357
+• diagutil  3591
+•Dialog KVGroups  988
+• dictionar y  3692
+• Dictionar y  3692
+• dictionar y  directory  
+•DID 
+•DID association  1172
+•Digital ID  1171 , 1173 , 3672
+•Digital ID (DID)  1171
+•Digital ID r egis tr ation  1173
+•digital signatures  240
+•Digitally sign files 1047
+•digitally signing files 1047
+•disable  3532
+•Disable TCP/IP access to MSSQL  309
+•disabled account  
+•Disabling advanced search c apabilities  1180 ,
+1250
+•Disabling authentic ation  chains  863
+•Disabling caching  2068
+•Disabling components  318
+•Disabling password r andomiz ation  1876
+•Disappeared groups  3363
+•Disaster recovery  1636
+•discgrpw  481
+•Disclosure Filter Action  Table  2020
+•Disclosure Filter Policy and Action  Tables  2016
+•Disclosure Filter Policy Examples  2020
+•Disclosure Filter Policy Table  2016
+• Disc ontinued  92, 167, 65
+•Discovered objects  2088
+•Discovered subscribers  3215
+•discovered system  
+•Discovered system status  3177
+•Discovered systems attribut e  3050
+•discovered target system  
+•Discovery service (iddiscover)  2875
+•Discovery templates  2086
+•discoverystatussync  3599
+•disk space  2774
+•Disk space  2775
+•Display custom HTML  1156
+•Display group IDs  1048
+•Display message text to users at logon  1622
+•Display of policy member systems  1934
+•Display simplified  login IDs  1048
+•Display time  zone in f ormation  1071
+•Display: pswxview  1970
+•Displaying discovered object attribut es  2094
+•Domain and host values  1966
+•Domain requirements  204
+•domain service account  
+•Domain service accounts  2086•domain SKA  
+•Domain-level secure kiosk account  1593
+•Domain-level secure kiosk account softw ar e
+241
+•Dormant and orphan accounts  3442
+•Download search results  1071
+•Downloading logs  2737 , 2778 , 522
+•Downloading the ins t allation  package  1816
+•dumpacl  3651
+•dumpsid  3652
+•DURATION_INTERVAL  1266
+•DURATION_UNIT  1266
+•dynamic authoriz ation  
+•dynamic authoriz ation  w orkflo w  1341
+E
+•Edit KVGroup files to customize messages
+3523
+•Edit pam.conf  1713
+•Edit password strength rules  1002
+•Edit text for password rule names and
+descriptions  3524
+•Edit the sign-off  statement  2642
+• E diting  and deleting  user classes  803
+• E diting  email content  3521
+• E diting  email messages  422
+• E diting  KVGroup files to customize messages
+424
+• E diting  psunix c on figur ation  files 1719
+• E diting  table values  1165
+• E diting  the Asterisk® c on figur ation  file 1765
+• E diting  the c on figur ation  file 1764
+• E ff ectiv e  role assignment  3380
+•EMAIL attribut e  1266
+•Email block list  426
+•email message content  425
+•Email notific ation  1954 , 412
+•email PIN authentic ation  872
+•Email reminder intervals and scheduling  421
+•Email systems  486
+•Email/SMS PIN (emailsmspin.pss)  856
+•EMAIL_APP attribut e  1266
+•emailsmspin.pss  856
+•Embedded links: Viewing in f ormation  about
+an object  358
+•emergency check-in adminis tr ativ e  passwords
+1949
+•Employee training  304
+•Enable and disable modules  1045
+•Enable remotely administered target systems
+1070
+•Enable session persistence for API calls
+through iRules  300
+•Enable the Mobile Worker Service  1463

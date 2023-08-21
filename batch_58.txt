@@ -1,0 +1,333 @@
+Loading attribut es
+During auto discovery , Bravura Security Fabric  loads a list of users’ accounts on target systems into its
+internal database. By default, Bravura Security Fabric  also loads the most commonly used account
+attribut es,  including users’ fir s t names, last names, email addresses, and OrgChart managers.
+You can c on figur e  Bravura Security Fabric  to load account attribut es  at the target type or target override
+levels. To do this:
+1.Navigate to the override c on figur ation  page. 1.
+2.Enable the Load attribut e  values from target system checkbox. 2.
+3.Click Update . 3.
+Attribut es  must be listed before they can be loaded. If the List accounts and List attribut es  options  are
+not enabled for a target system  (on page 480), you must provide a list.
+If you want users to be able to view or edit the attribut e  value, map the account attribut e  to a pr ofile  and
+request attribut e  (on page 571). The Load attribut e  values from a target system option  is aut omatic ally
+set when you map to a pr ofile  and request attribut e.
+Mapping an account attribut e  to a profile  and request attribut e  will enable a user to edit the attribut e
+value, and the value will be updated on the target system. However, only the values from the most
+commonly used account attribut es  are loaded from the target system back to Bravura Security Fabric.
+Mapping account attribut es  to pr ofile  and request attribut es
+Pr ofile  and request attribut es  allow any number of account attribut es  to be mapped to a single value in
+users’ pr ofile  data. Several attribut es  are mapped by default; for example, the Activ e  Directory mail
+and Lotus Domino Server InternetAddress  account attribut es  are mapped to the EMAIL pr ofile  and
+request attribut e.  Attribut es  that are mapped to pr ofile  and request attribut es  are listed by default when
+the target system’s List attribut es  setting  is enabled.
+In order to map an account attribut e  to a profile  and request attribut e,  the attribut es’  requirements
+(number of values, attribut e  type, encoding) must be c ompatible.
+If a profile  attribut e  is set to not display in reports, the mapped account attribut e  will also not display in
+reports.
+To map an account attribut e  to a pr ofile  and request attribut e:
+1.Select an override level  (on page 569). 1.
+2.Select an account attribut e. 2.
+3.Choose the pr ofile  and request attribut e  to map to. You can either: 3.
+▪Search for the pr ofile  and request attribut e ▪
+▪Type the pr ofile  and request attribut e  ID in the Map account attribut e  to pr ofile/r eques t  attribut e ▪
+field
+▪Create a new pr ofile  and request attribut e: ▪
+i.Click the search icon 
+ . i.ii.Click 
+  Add new ... ii.
+iii. Con figur e  the options  de fined  in Getting  started  (on page 1269). iii.
+iv.Close the pr ofile  and request attribut e  attribut e  in f ormation  pop-up window. iv.
+The Populate mapped pr ofile  attribut e  with values from target system will aut omatic ally  be
+selected when the Map account attribut e  to pr ofile  and request attribut e  field  is filled  in and
+when the Load attribut e  values from target system has been checked. You can disable the
+mapping of attribut es  by deselecting  this box.
+4.Click Update . 4.
+Mapping target system boolean attribut e  values
+Pr ofile  and resource attribut es  in Bravura Security Fabric  represent boolean values internally using T and
+F for true and false, r espectiv ely .  However, target systems may use values other than T and F to
+represent boolean attribut e  values. Use the c on figur ation  settings  Target system attribut e  value that
+represents [True]  and Target system attribut e  value that represents [False]  to ensure that target system
+boolean attribut e  values are converted correctly to mapped pr ofile  or resource attribut es.  For example, if
+a target system attribut e  uses 1 for true and 0 for false, then set Target system attribut e  value that
+represents [True]  to 1 and Target system attribut e  value that represents [False]  to 0.
+Specifying attribut e  values
+Specifying fix ed  values will apply to account cr eation  and update.
+The steps to specify attribut e  values for the "set” action,  when not mapping them to pr ofile  and request
+attribut es,  vary according to the attribut e  type:
+Values set for Map account attribut e  to profile/reques t  attribut e  will override specified  values.
+To specify a character or number value for an account attribut e:
+1.Navigate to the override c on figur ation  page. 1.
+2.Set the Value type to Literal value or PSLang expression as appropriate. 2.
+3.Type a value in the field  under the Attribut e  value header. 3.
+For boolean type values, select True, False, or Unset from the drop-down list in the Attribut e  value
+column.
+For PSLang, you can select an available expression from the aut o-c ompletion  list.
+4.Click Update . 4.
+If more than one value is allowed by the Maximum number of values , Bravura Security Fabric  adds
+more fields  below the one you just entered.
+5.If applicable, add more values, and click Update . 5.
+Tracking account attribut e  changes
+Changes to account attribut e  values can be tracked. The tracked changes are viewable as part of each
+user’s pr ofile  history  (on page 560). You can also c on figur e  the idtrack program to executeprovisioning actions  based on the changes. To c on figur e  Bravura Security Fabric  to track account attribut e
+changes:
+1.Navigate to the override c on figur ation  page. 1.
+2.Select the Track changes option. 2.
+3.Click Update . 3.
+Deleting  specified  attribut e  values
+To delete an attribut e  value that you have specified:
+1.Navigate to the override c on figur ation  page. 1.
+2.Select the checkboxes next to the values you want to delete.2.
+3.Click Delete at the bottom  of the ”values” form. 3.
+Con firming  and t esting  changes
+After  you have made changes on the override c on figur ation  page:
+1.If required, c on firm  your changes. Click: 1.
+▪Yes (recommended), if you want to reload attribut e  values during the next auto discovery . ▪
+In this case, Bravura Security Fabric  updates the SQLite-based list files that correspond to the
+a ff ect ed  target systems (for example, WINDOWS1.db) with a full attribut e  list.
+▪No, if you want to reload attribut e  values only when the attribut e  changes on the target system. ▪
+This may help to speed up auto discovery ; however, it may also result in empty or out-of-date
+attribut es  in the Bravura Security Fabric  database.
+2.Click Back to return to the Account attribut es  page. 2.
+The attribut e  now appears in one of the level overrides tabs.
+3.If required, run auto discovery  to update your system. 3.
+4.Test your changes.4.
+Ensure that attribut e  in f ormation  can be listed (if applicable), and that accounts can be created,
+updated, and deleted successfully.
+Adding account attribut es
+If the attribut e  you want to utiliz e  is not included in the “catalog” of shipped attribut es  you can add the
+attribut e  manually. This way, the attribut e  will be loaded into Bravura Security Fabric  ’s internal database.
+After  you have added the attribut e  you can then manage the attribut e  the same way default attribut es
+can be managed.
+You can also use this step to add account attribut es  for custom applic ations  or systems with modifiable
+schemas. Adding an account attribut e  allows you to override the default action.
+To add an account attribut e:
+1.Select an override level  (on page 569). 1.2.Click Add new... at the bottom  of the Account attribut es  page. 2.
+Bravura Security Fabric  displays the c on figur ation  page.
+3.Type a descriptiv e  value in the Attribut e  name field. 3.
+4.If required, override the default settings.  See: 4.
+▪Changing the c on figur ed  action  (on page 568) ▪
+▪Modifying attribut e  cr eation  sequence  (on page 569) ▪
+▪Modifying attribut e  value constraints  (on page 570) ▪
+▪Loading attribut es  (on page 571) ▪
+▪Mapping account attribut es  to pr ofile  and request attribut es  (on page 571) ▪
+▪Tracking account attribut e  changes  (on page 572) ▪
+▪Specifying attribut e  values  (on page 572) ▪
+▪ Deleting  specified  attribut e  values  (on page 573) ▪
+5.Click Add. 5.
+Deleting  overrides and non-shipped attribut es
+To undo the changes you have made to a shipped account attribut e  and return it to its default setting ,  or
+to remove an attribut e  that was not shipped with Bravura Security Fabric  :
+1.Select an override level  (on page 569), then select the attribut e. 1.
+2.Click Delete at the bottom  of the form. If required c on firm  your actions. 2.
+Bravura Security Fabric  displays a c on firmation  page and asks you whether you want to:
+▪Reload all attribut e  values during the next auto discovery – click Yes (recommended). ▪
+In this case, Bravura Security Fabric  updates the SQLite-based list files that correspond to the
+a ff ect ed  target systems; for example, WINDOWS1.db, with a full attribut e  list.
+▪Reload attribut e  values only when the attribut e  changes on the target system – click No. ▪
+This may help to speed up auto discovery ; however, it may also result in empty or out-of-date
+attribut es  in the Bravura Security Fabric  database.
+If the attribut e  was shipped with Bravura Security Fabric , the overrides for the current level are removed,
+and the attribut e  is re-listed under the Defaults tab. If the attribut e  was not shipped with Bravura
+Security Fabric , it is deleted from the system.Network resources
+Bravura Group  provides a simple web interface that enables users to manage access to network
+resources without the need to understand the underlying security infrastructure.
+Bravura Group  manages diff er en t  types of resources using connectors and programs shipped with
+Connector Pack  in the agent directory:
+▪The nrsmb program binds managed group to a specific  resource whose access is mediated by ▪
+membership in a group on a Legacy Activ e  Directory target system. These resources include shares,
+folders, printers, and mail dis tribution  lists.
+▪The nrcifs program binds managed group to a specific  resource whose access is mediated by ▪
+membership in a group on an Activ e  Directory DN target system. These resources include shares,
+folders, printers, and mail dis tribution  lists.
+▪The nrshrpt program binds managed group to a specific  resource managed by a SharePoint ▪
+Resource target system. SharePoint resources include sites and documents.
+Bravura Group  requires network resource management plugins to:
+▪List network resources▪
+▪List permissions for each network resource▪
+▪List the owners of a network resource▪
+▪Add or delete owners for a network resource▪
+▪List the ACLs on a directory or share▪
+This chapter describes how to add network resources to managed groups , and how to add filt er  rules
+that limit the groups that users can view and for which they can submit requests to modify group
+membership.
+See also: 
+▪ Implementing  Network Resource Management  (on page 2481) for more in f ormation  about managed ▪
+group and its implemen t ation.
+▪Network resource management options  (on page 2491) shows you how to c on figur e  processes and ▪
+options  related to network resource management; including w orkflo w  options,  event triggers, and
+group owner selection.
+Getting  started
+Requirements
+Before you begin, ensure that you have c on figur ed  managed group . See Setting  up network resource
+management  (on page 2482) for more in f ormation.
+Na vig ation  steps
+You use the Network resource in f ormation  page to c on figur e  resource settings.  To navigate to this page:1.Click Manage the system > Resources > Network resources . 1.
+2.If required, select the Resources sub-menu item. 2.
+3.To de fine  a(n): 3.
+▪New resource – if Bravura Security Fabric  displays a list of e xisting  resources, click Add new... . ▪
+▪ Existing  resource – search for, or select the resource you want to view or modify. ▪
+You use the Network resource filt ers  page to add filt er  rules  (on page 577). To navigate to this page, Click
+Manage the system > Resources > Network resources  then select the Filters sub-menu item. At least one
+network resource must exist before network resource filt er s  can be c on figur ed.
+Adding network resources
+To add a network resource that can be managed by managed group :
+1.Navigate to the Network resource in f ormation  page  (on page 575), Network resource in f ormation 1.
+page  (on page 842), Network resource in f ormation  page  (on page 2032).
+2.Set the network resource options  as described in the table below. 2.
+3.Click Add. 3.
+Option Description
+ID A unique identifier  for the resource.
+Description The resource name that is displayed to users.
+Type The resource type options  available depend on network resource
+management plugin settings  on the Target system inf ormation  page.
+SMB Protocol ( nrsmb ):
+▪Shares/Folders▪
+▪Printers▪
+▪Mail dis tribution  lists ▪
+SMB Protocol for Activ e  Directory DN ( nrcifs ):
+▪Shares/Folders▪
+▪Printers▪
+▪Mail dis tribution  lists ▪
+SharePoint Resource ( nrshrpt ):
+▪Sites▪
+▪Documents▪Option Description
+UNC path/URL (Shares/Folders only) The path to the network share that you want to
+manage; for example, \\<servername>\<sharename>.
+Alternately, you can use <IPAddress> instead of <servername>.
+(Sites or Documents only) The URL to the SharePoint server that you want
+to manage; for example, http://sharepoint1:2427/sitename.
+Target system of the
+resourceThe target system that mediates access to there source.
+Users can only see sub-
+resources if they have
+rights to the resource(Shares/Folders or Sites only) Click this checkbox if you want to limit users
+who can view subfolders to those who belong to a group that can view
+the parent folder.
+For resources aut omatic ally  created by the Shell Extension , this is
+controlled by the IDR NETWORK RESOURCE VALIDATE setting..
+Once resources are set up, resources are available to users via the Request access to network resources
+link in the self-service menu.
+Filtering network resource groups
+You can limit the groups that Bravura Group  users can view, and for which they can request group
+membership modific ations,  by:
+▪Adding network resource filt er  rules using the Manage the system  (PSA) module  (on page 577) ▪
+▪Using a resource group filt er  plugin  (on page 581) ▪
+Filter rules
+Filter rules can be applied to all network resources, a specific  target system, or a specific  resource.
+managed group passes the applicable rules to the network resource plugin, which is responsible for
+implementing  them. In the case of nrsmb and nrcifs , these rules are used to pr eemptiv ely  filt er  the
+list of groups that it returns from the target system.
+To add a group filt er  rule:
+1.Click Manage the system > Resources > Network resources then select the Filters sub-menu item 1.
+2.Type a regular expression P attern  that represents the groups that you want to filt er . 2.
+See Using Regular Expressions
+Regular expressions provide a way to identif y  patterns  of text in strings.
+Bravura Security Fabric  uses regular expressions to:
+▪Match and block invalid passwords.▪
+▪ Identif y  users who it should not manage. ▪
+▪Extract text from Telnet/TN3270 screens in Telnet connector scripts.▪
+▪Extract text from the output of password hashing programs in DBMS connector scripts.▪Regular expressions use a shorthand of literal characters and special characters to de fine  a pattern  in a
+precise and compact way. Literal characters are case sensitiv e.  The regular expression parser used by
+Bravura Security Fabric  uses the following special characters in literal strings:
+Character Purpose Example Match
+. Matches any single
+charactera.c aac , abc , a1c , a2c
+^ Beginning of a line ^hat hat , hatch , not
+chat
+$ End of a line hat$ hat , chat , not
+hatch
+| Alt ernation job|task job or task
+( ) Grouping job(12 |34) job12 or job34
+\ Treat the following
+special character
+literally\$5\.6\\7 $5.6\7
+The | alternates the longest possible string. That is, it matches job or task , and matches both
+jotask and jobask .
+Grouping with ( ) limits the alternate branches.
+Character sets
+Character sets
+You can de fine  a set of characters within a string. Character sets match any single character enclosed
+in square brackets [ ] . For example:
+Expression Match
+j[oa]n jon or jan
+Use the - character between two characters in a set to indicate a range. A - character outside of a
+set, or at the beginning or end of a set, is treated literally. For example:
+Expression Match
+[a-c] a, b, or c
+[1-3] 1, 2, or 3
+[ab-] a, b, or -
+[B-D]-3 B-3 , C-3 , or D-3
+If the fir s t character in the set is ^, then the character set matches any character that is not in the list.
+For example:
+Expression Match
+[^oa] Any character except o and aAll other special characters lose their meaning when included in a character set. For example:
+Expression Match
+^[^*\+.-] Line must not start with *, \, +, .,or -
+To include a literal ] in the character set, make it the fir s t character in the set. It can also be excluded
+by following ^. The ] character is also treated literally outside of a set. For example:
+Expression Match
+[^]a-] Any character besides ], a, and -
+[]a] ] or a
+[a]] a]
+Quantifier s
+Quantifier s
+You can specify quantities  of character sets, grouped characters, or individual characters. The
+quantifier s  *, +, ?, and { } act on the preceding set, group, or individual character.
+Character Purpose Example Match
+* Specifies  0 or more
+c onsecutiv e  occurrencesab*c ac, abc , abbbbc
++ Specifies  1 or more
+c onsecutiv e  occurrencesab+c abc , abbbbc
+? Specifies  0 or 1 occurrence colou?r (wo)?man color or colour
+woman or man
+{x} Exactly <x> occurrences ab{4}c abbbbc
+{x,y} At least <x>, no more than
+<y> occurrencesab{2,4}c abbc , abbbc , abbbbc
+{x,} At least <x> occurrences ab{2,}c abbc , abbbc
+{,x} No more than <x>
+occurrencesab{,2}c ac, abc , or abbc
+Shorthand expressions
+Shorthand expressions
+The following expressions are shorthand for longer or more complex regular expressions:
+Expression Purpose Example Match
+[:alpha:] Matches must consist of
+letter s.[:alpha:]8,16 aBcmGLeEhhi[:digit:] Matches must consist of
+digits. [:digit:] is equivalent
+to [:d:] and \d.[[:digit:]]+ 2962954576
+[:upper:] Matches must consist of
+uppercase characters.[[:upper:]
+[:digit:]]+9DDD4MLAG13
+[:alnum:] Matches must be
+alphanumeric. [:alnum:] is
+short hand for [a-zA-Z0-9]
+in the ascii character set,
+but the use of [:alnum:] is
+preferred for c ompatibility
+with other languages and
+character sets.[:alnum:]7[^[:digit:]] a3dM9DD+
+Examples
+Examples
+Only allow letter s,  numbers, e x clamation  point, and
+period^[a-zA-Z0-9!.] ⋆$
+At most 8 characters long ^.,8$
+Must start with a letter ^[a-zA-Z]
+Must have a number [0-9]
+Must end in -admin or -test (-admin |-test)$
+Must begin with three capital letter s  and an underscore ^[A-Z] {3}_
+ See also: 
+Bravura Security Fabric  uses the ECMAScript regular expression grammar. For more in f ormation  on
+regular expressions supported by Bravura Security Fabric , see:
+▪The ECMA Script Language Specific ation  at: ▪
+http://w w w .ecma-in t ernational.or g /public ations/files/E CMA -S T /E cma-262.pdf
+or
+▪The Micr osoft  Developer Network (MSDN) TR1 Regular Expressions document at: ▪
+http://msdn.micr osoft.c om/ en-us/libr ar y/bb982727.asp x
+for help with regular expressions.
+For nrsmb and ntcifs , filt er s  are based on the distinguished  names (dn) of the groups.
+3.Select the appropriate value from the Include/Exclude drop-down list: 3.
+▪Exclude – if you select this value, none of the groups matching P attern  will be displayed in managed ▪
+group .
+▪Include – if you select this value, only the groups that match P attern , or that are included by ▪
+another rule, will be displayed in managed group .
+For nrsmb and ntcifs , include rules have precedence over exclude rules.

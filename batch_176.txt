@@ -1,0 +1,282 @@
+Selecting  a voice board
+The Phone Password Manager service is able to interact with a number of Dialogic® boards. When
+selecting  a voice board, you must consider the following factors:
+▪The amount of load expected on the IVR server.▪
+See Calculating  the number and size of voice boards  (on page 1749) for more help with this.
+▪ Existing  phone lines. ▪
+If you have a sufficien t  number of e xisting  lines, you must purchase a board that matches your type of
+line (digital or analog) to avoid having to install new lines.
+Using a digital line with an analog board, or an analog line with a digital board can permanently
+damage your telephony hardware.
+▪The c on figur ation  of the PBX (private branch exchange) at your or g aniz ation. ▪
+A PBX in t egr ation  board provides all of the basic voice and call processing c apabilities  of standard
+voice boards, and adds hardware and firm w ar e  that eases in t egr ation  with supported PBXs.
+The PBX in t egr ation  board connects directly to your PBX using a digital line. If you require this type of
+board, make sure to select one that is c ompatible  with your PBX.
+The PBX in t egr ation  board must be c on figur ed  to assign a phone number to the Dialogic® card.
+Consult your PBX documen t ation  for details.
+Bravura Security highly recommends that you install Dialogic®  PowerMedia Host Media Processing
+(HMP) server on a physical machine rather than a virtual machine to avoid performance and
+inconsistency issues.
+For more in f ormation  about voice boards, see:
+http s://w w w .sang oma.c om/t elephon y -c ar ds/dialogic-boar ds/jct/jct -c ombined/
+For more in f ormation  about PBX in t egr ation  boards, see:
+http s://w w w .sang oma.c om/t elephon y -c ar ds/dialogic-boar ds/jct/pb x -in t egr ation-boar ds/
+Phone Password Manager does not support Dialogic® Diva®  products.
+Assigning phone lines
+The type and number of line that you must install depends on your voice board. Check your vendor
+documen t ation  to ensure that you are installing the correct type of phone line.
+A phone technician should perform the following tasks:
+1.Ensure that the necessary number of phone lines are installed and tested for functionality . 1.
+2.If required, c on figur e  the telephone lines as a sequential  hunt group. 2.
+3.If required, assign the lead line on the sequential  hunt group a dedicated telephone number. 3.
+Plugging an analog line into a digital board and vice versa can damage the board.Installing the hardware and IVR softw ar e
+Once the physical lines are available, you can install the voice boards, drivers, and System Release
+softw ar e.  Since some boards require the softw ar e  to be installed fir s t and other boards need to be
+installed before the softw ar e,  it is recommended that you refer to the documen t ation  included with the
+System Release before you install the voice board.
+After  you have completed the ins t allation,  test your system to ensure that it is functioning  correctly and
+that the board is responding to external calls. Typically, the Dialogic® card drivers include softw ar e  for
+t esting  that the card is picking up calls.
+If you require drivers or troubleshooting  inf ormation,  contact your vendor.
+If you will be deploying biometric voice print v erific ation  on the IVR server, you can install the
+VoiceVantage softw ar e  after  you have v erified  that your system is functioning  correctly.
+Next:
+Set up the Bravura Pass  Remote AP  (on page 1757)I.
+Con figuring  Dialogic® PowerMedia Host Media Processing Softw ar e
+Phone Password Manager Server requirements
+In order to use VoIP or softphone  technology with Phone Password Manager, your IVR server must be
+c on figur ed  as follows:
+Oper ating  system
+Phone Password Manager requires Windows Server 2012 at current service packs.
+Your IVR system should be installed on a designated server. This machine should be separate from the
+Bravura Pass  server.
+Installing the Host Media Processing softw ar e
+If you want to c on figur e  Phone Password Manager to use VoIP or softphone  systems instead of voice
+boards, then you must install Dialogic® PowerMedia Host Media Processing (HMP) 3.0+ for Windows.
+The trial version of HMP and a demo license can be downloaded from the Dialogic® web site.
+For more in f ormation  about Dialogic® PowerMedia Host Media Processing, contact your vendor or visit:
+http://w w w .dialogic.c om/ en/pr oducts/media-ser v er -softw ar e/hmp-softw ar e.asp x
+Dialogic® PowerMedia Host Media Processing is inc ompatible  with several virtualiz ation  programs, and it
+is highly recommended that you install it on a physical machine.
+Once the Dialogic® PowerMedia Host Media Processing softw ar e  is installed, the Phone Password
+Manager will aut omatic ally  perform any required c on figur ations  upon ins t allation.
+Next:Set up the Bravura Pass  Remote AP  (on page 1757)I.
+Con figuring  Asterisk® Softw ar e
+Asterisk® is an open-source telephony solution  which provides a wide variety of call management
+functionality .  As a primarily Unix-based product, Asterisk® is best installed on a server separate from your
+Phone Password Manager server.
+When using Asterisk® softw ar e,  Phone Password Manager can be installed on a hardware machine or a
+virtual machine, and does not require a Dialogic® card or HMP softw ar e.
+The Asterisk® module is included by default, and installs support for receiving calls from an Asterisk®
+server.
+Phone Password Manager supports:
+▪AsteriskNow complete Linux dis tribution  (on page 1753) ▪
+▪Asterisk package on a Linux environment  (on page 1753) ▪
+▪Asterisk package on a Windows environment  (on page 1754) ▪
+AsteriskNow
+AsteriskNow is a complete Linux dis tribution  with Asterisk, the DAHDI driver framework, and optionally ,
+the FreePBX adminis tr ativ e  GUI.
+Download the AsteriskNow ISO from www.asterisk.org/downloads/asterisknow  and install the oper ating
+system on either a new virtual machine or a hardware box.
+Next:
+Con figur e  the Asterisk® server  (on page 1754).
+Asterisk package on a Linux environment
+You can install the Asterisk®  server in a Linux environment either on a hardware machine or a virtual
+machine.
+To install, use the system’s package manager to select the following packages, and apply the change:
+▪asterisk▪
+▪asterisk-core-sounds-en-gsm▪
+▪ as t erisk -c on fig▪
+▪sox▪
+The sox package is required by Phone Password Manager in order to convert audio files.
+When using a source package to install Asterisk® , ensure that the make commands are run after  all
+the libraries listed here have been installed and c onfigured.
+Additional  in f ormation  on installing Asterisk® can be found at:http://blogs.digium.c om/2012/11/05/ho w -t o-ins t all-as t erisk -11-on-cen t os-6/
+You may also need to allow access to the Asterisk audio file path, so that the "asterisk" user can create a
+new directory there; for example:
+sudo chown asterisk:asterisk /usr/share/asterisk
+The destination  might vary between Asterisk versions and Linux environments; it can be found in the
+Phone Password Manager log, where it shows the cr eation  of the directory failed due to the permission.
+Next:
+Con figur e  the Asterisk® server  (on page 1754).
+Asterisk package on a Windows environment
+It is also possible to install the Asterisk®  server in a Windows environment. Please note that Asterisk® 
+for Windows is a 32-bit binary which is only supported on Windows 2000, XP , or 2003. You will need to
+install Cygwin on this server, in order to run the SoX binary required by Phone Password Manager.
+Download the executable from www.asteriskwin32.com  and install Asterisk in the default loc ation.
+The site requires the Adobe® Flash plugin.
+Install the sox package from Cygwin. Cygwin is a Linux-like environment for Windows. The SoX package
+will allow Phone Password Manager to convert the ".wav" audio files to ".ulaw" audio files,  which can be
+played back to end users. You can download and install Cygwin tools from:
+http://w w w .cy gwin.c om/ se tup.e x e
+Using the Cygwin setup binary, search for the sox package and install it on the Asterisk installed directory
+(default c:\cygroot), or ensure the ins t allation  directory is in the system path.
+Next:
+Con figur e  the Asterisk®  server  (on page 1754).
+Con figuring  the Asterisk® server
+Once ins t allation  is complete, c on figur e  the Asterisk®  server:
+1.Start the Asterisk service by running the following command:1.
+sudo asterisk -vc
+or, on Windows:
+asterisk -vc
+2.If you are using a Linux system, connect to the Asterisk console:2.
+sudo asterisk -r
+3.Navigate to the /etc/asterisk directory on Linux, or C:\cygroot\asterisk\etc on a Windows system.3.
+4.Open sip.conf for editing. 4.5.Modify the c on figur ation  file by adding one or more of the following tags to the end of the file: 5.
+[777] 
+type=friend 
+username=777 
+secret=777 
+host=dynamic 
+disallow=all 
+allow=ulaw
+Write your changes and close the file.
+6.Run the sip reload  command from the Asterisk console to reload the new SIP c on figur ation. 6.
+7.Open extensions.conf for editing. 7.
+8.Add one or more of the following tags at the end of the c on figur ation  file: 8.
+[HiTPM] 
+exten => 777,1,Ringing 
+exten => 777,n,AGI(agi://10.0.42.103) 
+exten => 777,n,Hangup
+Where:
+▪777 is the newly-added extension ▪
+▪Ringing  will ring fir s t when calling this extension ▪
+▪10.0.42.103  is the IP address where the Phone Password Manager instance is installed ▪
+▪Hangup  will hang up after  c onnection  to the instance is finished ▪
+9.To include the newly-added tag (HiTPM), add include  => HiTPM  to the [default]  tag section 9.
+below include => demo . You may also need to add this tag to the [From-Local]  section  as
+well.
+10. Write your changes and close the file. 10.
+11. If the Asterisk server has not already started, run asterisk start . 11.
+12. Run the dialplan reload  command from the Asterisk console to load the new c on figur ation. 12.
+Next:
+Con figur e  a softw ar e  phone  (on page 1755).
+Con figuring  a softw ar e  phone
+Installing a softw ar e  phone (softphone)  will allow you to place calls to the IVR softw ar e,  and can be used
+to test that your c on figur ation  is running properly. Once the IVR server is c on figur ed,  create a softphone
+account and activ a t e  it.Placing a call with softphone
+Depending on your IVR c on figur ation,  you may need to alter how you address the IVR server when
+placing a call.
+Placing calls to Asterisk®
+Once you have enabled your softphone  pr ofile,  you only need to dial the extension c on figur ed  in your
+extensions.conf file, then connect the call.
+Placing calls to Dialogic®
+When placing a call to a Dialogic® server, the call is directed to the IVR server using the dialling address,
+instead of being included in the user pr ofile  you created earlier  (on page 1755). In order to place a call to
+a Dialogic® system, the address should be f ormatted  as:
+<Extension>@<Server IP>
+Unlike Asterisk® , dialogic will accept a call on any extension by default. Due to this behavior, call filt ering
+and line-specific  logic is largely done in the Phone Password Manager psynch.psl  script.Setting  up the Bravura Pass  Remote API
+The Bravura Pass  remote API enables Phone Password Manager and other external applic ations  to access
+Bravura Pass  features such as user authentic ation  and password change.
+The Phone Password Manager server uses the following components to communicate with the API:
+▪The Phone Password Manager service.▪
+▪The Password Manager API Services (IDAPI and IDAPISOAP) on the Bravura Pass  server. ▪
+▪The Bravura Pass  API DLL ( pspushpass.dll ) installed on the Phone Password Manager server ▪
+during setup.
+In order to set up the Remote API on Bravura Pass  server, you will need to:
+▪Enable the API Service  (on page 1757) ▪
+▪ Con figur e  an IDAPI caller  (on page 1757) ▪
+See also
+See more in f ormation  about the API Service  (on page 2846) (idapi).
+Enabling the API Service
+The API Service and API SOAP Service must be running on Bravura Pass  server before you can call the
+API. Both of these services are enabled and started by default, but unexpected shutdowns or
+maintenance may necessitate a manual restart.
+To enable and start the API Service:
+1.Click Manage the system > Maintenance > Services . 1.
+2.Select Bravura Security (idapi) API Service . 2.
+3.Click Enable the service . 3.
+4.Click Start the service . 4.
+5.Select Bravura Security (idapisoap) API SOAP Service . 5.
+6.Click Enable the service . 6.
+7.Click Start the service . 7.
+Next:
+Con figur e  an IDAPI caller  (on page 1757).
+Con figuring  an API caller for Phone Password Manager
+The API caller is an administrator account on the Bravura Pass  instance which Phone Password Manager
+uses to implement API calls. The account _API_USER_TPM is included in a Bravura Pass  ins t allation,  but is
+disabled by default.You can designate any product administrator as the API caller by giving them the API caller privilege. You
+can also create a new product administrator.
+To c on figur e  the API caller:
+1.Click Manage the system > Security > Access to product features . 1.
+2. Con figur e  _API_USER_TPM, or create a new product administrator, and grant it the API Caller 2.
+privilege.
+3. Con figur e  the IP address with CIDR bitmask  to include the IP address of the Phone Password Manager 3.
+server.
+4. Con figur e  a password for the API caller, and click Update . 4.
+5.Click Enable to activ a t e  the API caller account. 5.
+6.If necessary, c on figur e  the Password Manager service ( idpm ) (on page 2820). 6.
+Next:
+Install the Phone Password Manager softw ar e.  (on page 1759)
+See also:
+Bravura Security Fabric  Remote API ( api.pdf )Installing the Phone Password Manager Softw ar e
+This chapter shows you how to install the Phone Password Manager softw ar e.  You must install Phone
+Password Manager on the same Windows server where the Dialogic® board or Dialogic® PowerMedia
+Host Media Processing Softw ar e  is installed (IVR server). If you will be using an Asterisk® server, it is
+recommended that Phone Password Manager and Asterisk® are installed on separate servers.
+If you have a hardware phone system and have not yet installed a Dialogic® board, or if you require
+additional  in f ormation,  please refer to Con figuring  the IVR Server  (on page 1749).
+Before you begin
+Before you install Phone Password Manager softw ar e  on the IVR server, ensure that your:
+▪Hardware phone system is fully functioning  on the IVR server, including voice board, drivers, and all ▪
+c onnections.
+The Dialogic®  product System Service, and Dialogic®  product Boardserver service, must be running.
+Or
+▪Dialogic® PowerMedia Host Media Processing Softw ar e  is installed and fully functioning  on the IVR ▪
+server.
+Or
+▪The Asterisk® server is running, and has been c on figur ed  to connect to the IVR server. ▪
+Using setup to manage ins t allations
+If you do not already have the Phone Password Manager softw ar e,  please contact your Bravura Security
+account r epr esen t ativ e  to find out how to obtain the zip file.
+Once the zip file is downloaded and unzipped to a temporary folder on the IVR server, run the setup
+program that is located at the root of the dis tribution  folder. It gathers initial  c on figur ation  in f ormation
+and launches the installer ( idtel.msi ).
+The setup  program detects your c on figur ation.  If you have:
+▪Dialogic® boards, then Phone Password Manager installs support for hardware phone systems.▪
+▪Dialogic® PowerMedia Host Media Processing Softw ar e,  then Phone Password Manager installs ▪
+support for softphone  systems.
+▪By default, setup  will install the Asterisk® module. This module includes the <Instance>\service ▪
+\Asterisk.cfg file, as well as the tpm  service, and tpm.cfg  c on figur ation  file. These files are used to
+c on figur e  Asterisk® IVRs only.
+For an Asterisk ins t allation,  Phone Password Manager will not install the idtel.cfg file, nor will it start
+the VoIP Telephony service. These files are only installed when a Dialogic® c onfiguration  is detected on
+the system.
+You must run setup as a member of the Administrators group.Currently, the setup  program is used to:
+▪Install Phone Password Manager  (on page 1760) ▪
+▪Manage Phone Password Manager instances  (on page 1762) ▪
+▪Uninstall Phone Password Manager  (on page 1762) ▪
+Using setup to install the softw ar e
+To install the Phone Password Manager service:
+1.Run the setup program. 1.
+2.If you already have  Bravura Security Fabric  instance installed on the Windows server, setup displays 2.
+the Select an instance to c onfigure  page. Click Install New  to proceed.
+3.Select Bravura IVR , then click Next . 3.
+4.Enter a unique instance name, and optionally  a description. 4.
+Click Next .
+The setup  program performs a pr e-ins t allation  check and v erifies  all of the requirements for
+ins t allation.
+5.If all of the checks are successful, click Next  to proceed with the ins t allation. 5.
+If any of the pre-install checks produce warnings or errors, click Report  for details.
+The setup  program launches the Telephone Password Manager <instance> Setup Wizard .
+6.Click Next . 6.
+7.Read and accept the license agreement.7.
+Click Next .
+8.Type the loc ation  of the Phone Password Manager license file. Alt ernativ ely ,  you can use the Browse 8.
+button  to select the loc ation  of the file.
+Click Next.
+9.Choose the setup type that best suits your needs:9.
+▪Click Typical  to install Phone Password Manager, and the Asterisk® module without any additional ▪
+features.
+Or,
+▪Click Complete  to install Phone Password Manager with all additional  features: Asterisk® module, ▪
+Speech Service, RSA Audio files,  and HDD Encr yption  Audio files.
+Or,
+▪Click Custom  to select which additional  Phone Password Manager features to install. Select only ▪
+the items you want to install:
+▪Asterisk Module – See Con figuring  Asterisk® Softw ar e  (on page 1753) . ▪
+▪RSA Audio files – Audio files for RSA Authentic ation  Manager targets. ▪
+▪Speech Service – See Speech R ec ognition  and Text-to-Speech  (on page 1780) for details. ▪
+▪HDD Encr yption  Audio files – Audio files for Hard Drive Encr yption  targets. ▪

@@ -1,0 +1,344 @@
+▪Ask users to answer questions  from this set  is checked. ▪
+▪Ask telephone users to answer questions  from this set  is checked. ▪
+▪All of the questions  in the question  set require all-numeric answers of a fix ed  length. To do this: ▪
+Set the Minimum length of answers  and Maximum length of answer  fields  to the same value, and set
+the F ormatted  string for answer  field  to contain the required number of Ns. For example, set the
+minimum and maximum number of characters to 5, and write NNNNN as the f ormatted  string.
+Users must provide answers for all required questions  in the IVR question  sets in Bravura Pass prior to
+using the IVR system.
+You must record vocals (usually *.wav files)  for each of the IVR questions.  The IVR system plays these
+vocals for callers, prompting  them to enter their numeric answers.
+Learn more about adding question  sets  (on page 1024).
+IVR with voice print authentic ation
+IVR systems with voice print authentic ation  reliably identif y  callers by analyzing their voice print and
+matching it against a record of each registered user. This is a simpler and more secure caller
+authentic ation  process, compared to IVR question  sets, but is more costly.
+Biometric voice print v erific ation  is commercially available, can yield e ff ectiv ely  zero f alse-positiv e
+r ec ognitions,  and low f alse-neg ativ e  failures (approximately 1% to 2% of valid authentic ation  attemp ts
+end with a failure to recognize the speaker).
+Voice print verific ation  is not related to voice rec ognition  technology – the former identifies  a speaker,
+while the latter  attemp ts  to "understand" what was said. Voice print verific ation  is reliable, fast and
+independent of language, accent and the common cold.
+Or g aniz ations  deploying voice print v erific ation  technology in their IVR infrastructure must acquire voice
+samples from the entir e  user population.  Each voice print must be securely mapped to the particular
+user’s user IDs in order to allow secure password reset. During r egis tr ation,  users are asked to speak one
+or more phrases, so that their new response can be compared to their registered sample.
+Once authentic a t ed,  callers may request secure oper ations,  including a password reset. The IVR system
+uses Bravura Pass  to select a strong password for the caller, and to reset the password on all of the user’s
+accounts to the new selected value.
+Registering voice prints
+You can use Bravura Pass  to facilitate an automated, reliable, secure and e ff ectiv e  process to:
+▪Prompt users to register voice prints.▪
+▪ Authentic a t e  users prior to r egis tr ation. ▪
+▪Map users’ voice prints to their system IDs.▪
+▪Enable the IVR system to securely capture their voice prints.▪You can use Bravura Pass ’s Generate voice print enrollment PIN  (PSI) module to reliably register voice print
+samples for all users. You can use this facility for new IVR deployments or for new users on e xisting
+systems.
+Without Bravura Pass , IVR users are commonly provided with a short PIN via email, and are required to
+key in the PIN when they fir s t register with the IVR system. This presents a security weakness: PINs are
+short, guessable, and sent via an insecure media (email).
+Bravura Pass ’s Generate voice print enrollment PIN  (PSI) module streamlines and increases the security of
+the r egis tr ation  process by requiring users to authentic a t e  to receive a longer PIN that is only good for a
+single use, and expires after  a de finable  period.
+A user registers in the following way:
+1.The user logs into Bravura Pass  and navigates to the Generate voice print enrollment PIN page. 1.
+2.Bravura Pass  generates a random PIN and displays it to the user. The PIN is good for only one use and 2.
+expires after  a de fined  number of seconds.
+If c on figur ed,  Bravura Pass  displays additional  in f ormation  and na vig ation  steps for the phone
+r egis tr ation  system.
+3.The user calls the IVR system, follows the voice prompts, enters the PIN, and registers their voice3.
+print.
+The Generate voice print enrollment PIN  (PSI) module is disabled by default. You must enable it to allow
+users to access this feature.
+To c on figur e  IVR r egis tr ation:
+1.Click Manage the system  > Modules  > Generate voice print enrollment PIN  (PSI) . 1.
+2.Turn on the PSI ENABLED setting. 2.
+3. Con figur e  the variables described in the table below as required. 3.
+4.Click Update to submit the changes. 4.
+IVR r egis tr ation  options
+Option Description
+PSI RANDOM DIGITS The number of random digits to follow the 2 digit idpm server number in
+generated PINs. This value must be between 4 and 14. The default value
+is 4. (required)
+PSI RANDOM EXPIRY The time  (in seconds) before the random number generated is expired.
+The default value is 600.
+Implemen t ation  Options
+Self-service password reset, self-service RSA SecurID token management and automated r egis tr ation  of
+biometric voice print samples can all be implemented by in t egr ating  Bravura Pass  with an IVR system.
+Bravura Pass  licensees may choose to purchase a dedicated IVR system from Bravura Security, specific ally
+for these applic ations,  or to extend an e xisting  IVR system to include new call logic. In t egr ation  isavailable for every kind of e xisting  IVR system, through multiple  language and platform  bindings of a
+powerful Bravura Pass  API.
+User identific ation  can be implemented using speech-to-text technology, or user input of unique numeric
+identifier s  or numeric-mapped network login IDs.
+User authentic ation  can be implemented using either text prompts for personal in f ormation,  followed by
+touch-tone input of responses, or using biometric voice print v erific ation  technology.
+System in t egr ation  for a telephony-enabled password management system can range from one or two
+days of e ff ort  to activ a t e  a turn-key, touch-tone enabled IVR system up to two or three weeks to extend
+an e xisting  biometric system.
+Buying a new IVR system vs. extending an e xisting  system
+Bravura Security off er s  two options  to customers who wish to enable telephone access to Bravura Pass :
+1.Purchase a turn-key IVR system, designed specific ally  for authentic ating  callers and providing self- 1.
+service password resets, from Bravura Security.
+Turn-key system options  are described in Turn-key IVR options  off er ed  by Bravura Security  (on page
+1643).
+If an e xisting  Aut omatic  Call Dir ection  (ACD) system is in place, then it must be c on figur ed  to forward
+relevant calls to the Bravura Pass  IVR system.
+2.Extend the e xisting  IVR system to provide front end password reset functionality  (and pot entially , 2.
+biometric voice print authentic ation)  using Bravura Pass  as a "back end" to provide user
+authentic ation  and general password management services.
+In this case, the call flo w  logic on the e xisting  IVR system is modified  to prompt the user for
+identific ation  and authentic ation  in f ormation.  The IVR is programmed to verify user authentic ation  by
+calling either:
+a.Bravura Pass  (if using keypad PIN authentic ation),  or a.
+b.an external voice print biometric system (if using voice prints) implemented by the customer (eg.b.
+Nuance, Speechworks).
+Once the IVR has authentic a t ed  the user, it can make calls to the Bravura Pass  server to request
+various password reset services.
+Bravura Pass  can be integrated with almost any e xisting  IVR system, as described in the Connector
+Pack Documen t ation .
+The softw ar e  required to integrate Bravura Pass  with any e xisting  IVR system is included at no
+additional  charge. P articular  IVR systems may also require softw ar e  extensions as available from
+the IVR vendor; for example, XML over HTTPS.
+Turn-key IVR options  off er ed  by Bravura Security
+Bravura Security off er s  a turn-key IVR option,  Phone Password Manager , which uses touch-tone caller
+authentic ation,  and leverages the Web-based Bravura Pass  r egis tr ation  process to build user pr ofiles  for
+numeric security question  authentic ation.  This solution  is tigh tly  integrated with Bravura Pass , using the
+secure API described in Phone Password Manager  (on page 1742).Bravura Pass  has an open interface specific ation,  which allows other IVR biometric voice print
+authentic ation  systems, such as Vocent, to leverage Bravura Pass  for general enterprise password
+management.
+See Phone Password Manager  (on page 1742) to learn how to set up Bravura Pass  to work with the Phone
+Password Manager  and voice print authentic ation  systems such as Vocent.
+Leveraging an e xisting  authentic ation  process
+Or g aniz ations  with an e xisting  IVR system may choose to c ontinue  to use an e xisting  caller authentic ation
+process, or to strengthen it prior to activ ating  self-service password reset.
+The e xisting  identific ation  and authentic ation  process may have to be replaced because it is not secure
+enough and would weaken password security if it enables self-service password reset.
+Managing RSA SecurID tokens from a telephone
+Users who log into the network, or a remote access service, using a hardware token (most likely an RSA
+SecurID token) may experience problems and require service.
+Possible SecurID token problems include users f or g etting  their PINs, losing their tokens, or users whose
+token clocks have drifted  signific an tly  away from the time  reference on the RSA Authentic ation  Manager
+server.
+These users may require service before accessing the network, so a telephony solution  is desirable.
+Password resets from a telephone
+Allowing users who have experienced a password problem to access self-service from a telephone to
+resolve their own problem is advantageous for several reasons:
+▪It allows users who forgot their initial  network login password to resolve their own problem without ▪
+any special measure to make this available from the w ork s t ation  login prompt.
+▪It allows users who forgot their remote access (RAS or VPN) password to access self-service problem▪
+r esolution  without fir s t c onnecting  to the network.
+▪It encourages the use of self-service password reset in or g aniz ations  where users are accustomed to ▪
+g etting  service primarily with a telephone.
+Since user authentic ation,  password g ener ation  and password resets are all processed by the Bravura
+Pass  server, the process aut omatic ally  bene fits  from Bravura Pass ’s auto discovery process, user pr ofiles,
+password policy engine, email in t egr ation  and call tracking system in t egr ation.
+Enabling password resets from a telephone
+To enable IVR users to authentic a t e  and reset their own f or g otten  or locked-out passwords from a
+telephone:
+1.Set up the appropriate authentic ation  method for your IVR system: 1.▪If your IVR system uses voice print authentic ation  to identif y  users, enable the Generate voice print ▪
+enrollment PIN  (PSI) module.
+Users log into the Generate voice print enrollment PIN  (PSI) module to obtain a temporary PIN,
+allowing them to securely register biometric voice samples.
+See Registering voice prints  (on page 1641).
+▪If your IVR system uses touch-tone authentic ation,  c on figur e  an IVR question  se (on page 1640)t. ▪
+Users log into the Update security questions  (psq) module to register security question  in f ormation
+that is used by the IVR system to authentic a t e  users.
+2.Enable and start the idapi  service on the Bravura Pass  server: 2.
+a.Click Manage the system > Maintenance > Services , then select the Bravura Security (idapi) API a.
+Service .
+b.Select Enable the service . b.
+c.Select Start the service . c.
+3.Integrate your system with Bravura Pass  using the Password Manager Remote API. 3.
+4.Encourage users to register to use the IVR system, either by submitting  a voice sample or by answering 4.
+questions  in the IVR question  set.
+See Enforced enrollment  (on page 1183) to learn how to prompt and enforce user r egis tr ation.
+See also:
+▪The Bravura Security Fabric  Remote API ( api.pdf ) guide includes c on figur ation  details for c onnecting  to ▪
+the Bravura Security Fabric  api.
+▪Phone Password Manager  (on page 1742) details Bravura Security’s integrated Bravura Pass /IVR ▪
+solution  — Phone Password Manager .
+Self Service Anywhere: Encrypted systems accounts
+Users with access to Bravura Pass ’s web interface can recover an encrypted system through the Unlock
+encrypted systems/accounts  (HDD) module.
+If they have f or g otten  their password, they can access Bravura Security Fabric  using another form of
+authentic ation.  This can be another password on a trusted system, security questions,  a hardware token
+(for example, SecurID, SafeWord), or some other means.
+Once logged in, the user clicks Unlock encrypted systems/accounts  to access the Unlock encrypted systems/
+accounts  (HDD) module, which will provide them with ins tructions  on how to acquire a challenge code for
+the system, if required. The relevant connector will use this challenge code to generate a response code
+that can be used to unlock the encrypted device.
+Once users have regained access to the locked system, it is recommended that they change the
+encr yption  key, if this functionality  is not already provided through the Bravura Security Fabric .
+Hard drive encr yption  system connectors  use a default inputmask for its challenge and response codes.
+These connectors include McAfee Drive Encr yption  (agtmcee6 ), Sophos Safeguard Enterprise Server
+(agtsge ), Bitlocker Hard Drive Encr yption  (agtbitlocker ), Micr osoft  BitLocker Adminis tr ation  andMonitoring ( agtmbam ), Check Point Endpoint Security ( agtchkpt ), and PGP Whole Disk Encr yption
+Platform  (agtpgwde ).
+Generally, the code format will be structured in the same way as displayed in the pre-boot screen of the
+hard drive encr yption  system.
+To c on figur e  options  for the Unlock encrypted systems/accounts  (HDD) module:
+1.Click Manage the system  > Modules  > Unlock encrypted systems/accounts  (HDD) . 1.
+2. Con figur e  the options  in the table below as required. 2.
+3.Click Update to submit the changes. 3.
+Modules > Unlock encrypted systems/accounts HDD options
+Options Description
+HDD CHALLENGE FORMAT Specify a format for the challenge code string.
+See Overriding the string format for challenge/response codes  (on page
+1646) for more in f ormation
+HDD ENABLED Enable/disable the HDD module.This is enabled by default.
+HDD RESPONSE FORMAT Specify a format for the response code string.
+See Overriding the string format for challenge/response codes  (on page
+1646) for more in f ormation
+Overriding the string format for challenge/response codes
+You can override a challenge/response code string format to fine-tune  how the challenge and response
+codes will be presented to the user.
+Challenge code string formats are de fined  using HDD CHALLENGE FORMAT , and response code string
+formats are de fined  using HDD RESPONSE FORMAT .
+To override a challenge code string format:
+1.Click Manage the system  > Modules  > Unlock encrypted systems/accounts  (HDD) . 1.
+2. De fine  a challenge code string format for HDD CHALLENGE FORMAT . 2.
+3.Click Update . 3.
+To override a response code string format:
+1.Click Manage the system  > Modules  > Unlock encrypted systems/accounts  (HDD ). 1.
+2. De fine  a response code string format for HDD RESPONSE FORMAT . 2.
+3.Click Update . 3.
+If you choose to manually define  a challenge or response code string format, it will be presented the
+same way for all hard drive encr yption  systems.
+Special f ormatting  characters are used to determine what the expected input/output will be. These
+characters are:▪9 - Any numeric character.▪
+▪a - Any alphabetic  character. ▪
+▪* - Any alphanumeric character.▪
+▪A - Any alphabetic  character. The character will be converted to uppercase. ▪
+▪& - Any alphanumeric character. All alphabetic  characters will be converted to uppercase. ▪
+▪n - Adds a new line. This is only supported in HDD RESPONSE FORMAT . ▪
+Other characters are used to de fine  optional  characters or limit the number of characters a string can
+have:
+▪[ ]  - Any characters enclosed in square brackets will be treated as optional  characters. This can only ▪
+be de fined  once per challenge or response code, and at the end of a format string.
+▪_{m,n}  - A boundary c ondition  in which the recovery string contains a variable number of ▪
+characters. This can only be de fined  once per challenge or response code, and at the end of a format
+string.
+_ denotes the special f ormatting  character, m denotes the minimum number of characters that can be
+entered, and n denotes the maximum number of characters that can be entered.
+All other characters will be treated as literals, with the e x ception  of lower-case d, hms , and y.
+Examples
+1.To set a fix ed  string format for challenge codes, c onsisting  of 20 numeric characters grouped in 4, and 1.
+separated with spaces:
+HDD CHALLENGE FORMAT = 9999 9999 9999 9999 9999 
+An accepted challenge code would be:
+2356 7217 2340 3992 6671 
+2.To limit user input to 10-20 alphanumeric characters:2.
+HDD CHALLENGE FORMAT = *{10,20}
+An accepted challenge code would be:
+a6S8k7H6f1J1b2 
+3.To provide additional  input for an optional  5 characters to a fix ed  string format for challenge codes, 3.
+c onsisting  of 20 alphanumeric characters with alphabetic  characters converted to upper case, grouped
+in 5 and separated with spaces:  
+HDD CHALLENGE FORMAT = &&&&& &&&&& &&&&& &&&&& [&&&&&] 
+Accepted challenge codes would be:
+6S9C1 7N6K2 T0I4W 9M3Q1 2Y6C5
+or
+7H2H5 J1R2I 2G2AI 6H4CS 
+4.To set a fix ed  string format for response codes, c onsisting  of 30 alphanumeric characters with 4.
+alphabetic  characters converted to upper case, grouped in 5, and separated with spaces:  HDD RESPONSE FORMAT = &&&&& &&&&& &&&&& &&&&& &&&&& &&&&&  
+An accepted response code would be presented as:
+ A6S8S 9S7U6 Y6C4U 5H7Y7 T5S6G 3Z2SB  
+5.To add a line to a response code, using the previous example:  5.
+HDD RESPONSE FORMAT = &&&&& &&&&& &&&&&n &&&&& &&&&& &&&&&  
+An accepted response code would be presented as:
+A6S8S 9S7U6 Y6C4U 
+5H7Y7 T5S6G 3Z2SB  
+6.To provision between 1-5 numeric characters at the end of a response code:  6.
+HDD RESPONSE FORMAT = 99999 99999 99999{1,5}  
+Accepted response codes would be:
+23499 63724 60761 
+or
+45789 23476 98892342  
+See also:
+▪For in f ormation  about in t egr ating  with hard drive encr yption  systems, see Hard Drive Encr yption ▪
+Systems  in the Connector Pack documen t ation .
+Self Service Anywhere: Smart Card PIN Reset
+Bravura Pass  allows users to access a self-service web portal from anywhere, including from the locked
+out login screen of their laptop, even away from the office  (even using WiFi, as described earlier). Once a
+user signs into the self-service portal, Bravura Pass  can download an Activ eX  component to the user’s
+web browser, to communicate with the smart card and reset the f or g otten  PIN. Bravura Pass  can also be
+used to assign a user a temporary login password (often  a very long and random one) to be used in the
+event that a user left his smart card at home.
+Con figur e  the smart card PIN reset plugin
+The scpinplugin program works with the Activ eX  control HISCPINToolAX .ocx to reset
+SmartCard PINs. PIN strength checking can be done by checking the c ombinations  of rules specified  in a
+c on figur ation  file and the Bravura Pass  password policy.
+HISCPINToolAX.ocx  is shipped with Bravura Security Fabric  in the \<instance>\wwwdocs\ directory.
+This ocx is installed on the user’s machine when the browser loads the page which using the ocx for the
+fir s t time.
+You can customize the user interface text in the plugin-scpinmanage.m4  file. You can also modify
+Activ eX ’ s  result message in the RESULT_MESSAGES section  of this m4 file. See CUSTOMIZATION  (on page
+3471) for more in f ormation.
+RequirementsThe scpinplugin requires a c on figur ation  file to specify PIN strength rules. They can be used in
+c ombination  with Bravura Security Fabric  password policy when the Password Manager service ( idpm ) is
+installed and c on figur ed.
+The following sample file, scpinplugin.cfg  is included in the samples\ directory.
+#KVGROUP-V2.0
+config "scpincgiplugin" = {
+  Hosts = {
+    "AD" = {
+      CLASSID = "clsid:be43e0e9-9d20-4f53-a5ee-4043fd10e1c9";
+      CODEBASE = "HISCPINToolAX.ocx#version=1,0,0,1";
+      CLASSID_X64 = "clsid:be43e0e9-9d20-4f53-a5ee-4043fd10e1c9";
+      CODEBASE_X64 = "x64/HISCPINToolAX.ocx#version=1,0,0,1";
+      TITLE = "Bravura Pass Smartcard";
+      SEARCHDESC = "Please Insert Bravura Pass Smartcard";
+      CARDNAME = "Bravura Security Smartcard|Raak Technologies C2-40";
+      UILEVEL = 0;
+      EXTINIT = "";
+      EXTCHANGEPIN = "";
+      EXTRESETPIN = "";
+      EXTRESPONSE = "3des.exe -e \"%USERID%\" \"%HOSTID%\" \"%OLDPIN%
+\" \"%NEWPIN%\"";
+      PushPassTimeOut = "60";
+      PINManagementUITag = "SCPIN_BUTTONS_HTML";
+      PINStrength = {
+        AcceptRegExp = "^[0-9a-zA-Z]. ⋆$";
+        RejectRegExp = "";
+        TargetId = "AD-SMARTCARD";
+        };
+      };
+    };
+  };
+};
+Where:
+▪If the c on figur ation  file does not contain PINStrength, the PIN strength test is bypassed; ▪
+scpinplugin.exe  accepts any PIN, but the SmartCard Activ eX  may be failed by an invalid PIN.
+▪If AcceptRegExp is empty or does not exist, any input is accepted. If there are more then one▪
+AcceptRegExp, a PIN passes the strength test if it matches any one of them.
+▪If RejectRegExp is empty or does not exist, any input is accepted. If there are more then one▪
+RejectRegExp, the PIN is rejected if it matches any one of them.▪If TargetId is not empty, the strength test also has to be passed on the Bravura Pass  server by calling ▪
+the Password Manager service.
+▪The external program de fined  by EXTRESPONSE supplies the SmartCard response string (stdout) to the ▪
+challenge question  (stdout). The SmartCard vendor should supply or c on figur e  this binary.
+For security reasons, any time  the external program is used to calculate challenge/response for PIN
+resets, the event is logged.
+The Password Manager service must be running on the Bravura Pass  server in order for resets to
+succeed.
+Usage
+The scpinplugin CGI plugin is run by the:
+▪Help users  (IDA) module when c on figur ed  by the A RESET EXT plugin point ▪
+▪Change passwords  (PSS) module when c on figur ed  by the S CHANGE EXT plugin point ▪
+See Providing HTML to the Change passwords pages  (on page 1150) for more in f ormation  about these
+plugin points.
+T r oubleshooting
+Activ eX  controls
+Current Activ eX  controls only execute using the 32-bit version of Internet Explorer. The card provider
+must have the 32-bit drivers installed on the w ork s t ation  in order to perform the PIN change or PIN reset.
+ 
+404 error during DLL download
+If an HTML 404 error appears when trying to directly download the ocx from http(s)://<ser v er>/<virtual
+directory>/docs/HISCPINToolAX.ocx, then verify that there are no mappings for ocx extensions, such as
+ISAPI filt er s  on IIS. If a mapping exists, it can be removed from the docs folder.
+Using target ID to check PIN strength
+If you are using target ID to check PIN strength, then you must c on figur e  Password Manager service to
+accept requests from the localhost (127.0.0.1).
+To do this:
+1.Click Manage the system > Maintenance > Services > Bravura Security (idpm) Password Manager 1.
+Service .
+2. Con figur e  the value for Comma-delimited list of IP addresses with CIDR bitmask  (on page 2822) that 2.
+are allowed to send socket requests.

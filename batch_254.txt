@@ -1,0 +1,79 @@
+7.Click the ”Save search” icon.7.
+8.Enter a name for the new search.8.
+9.Click Create . 9.
+10. Click the ”Select all” checkbox at the top of the list. 10.11. Click Update . 11.
+12. Click the Reviewers tab to choose reviewers for the campaign. 12.
+13. Click Continue  to choose a single reviewer. 13.
+14. Click Select… . 14.
+15. Search for and select the appropriate user. 15.16. Click the Submit tab. 16.
+17. Enter a Certific ation  campaign description . 17.
+18. Click Save to save the certific ation  campaign setup. 18.
+You cannot make the setup shareable, since you saved the search for ”financ e”  groups, and custom
+saved searches cannot be shared. Saved searches are recalculated when modifying or initiating  asaved campaign is aut omatic ally  enabled. For this case, this means that if groups that match the
+search terms are added or deleted, the changes will be reflect ed  in the list of items to be reviewed.
+19. Click Save and schedule campaign . 19.
+20. Enter schedule in f ormation: 20.
+Enabled checked
+Repeat type Semi-annually
+Period mode Start date
+Period start date and time <future date>21. Click Schedule . 21.
+Modify a saved setup 
+To modify up this saved certific ation  campaign setup, the administrator would:
+1.Log into Bravura Security Fabric  as an administrator with the ”Manage certific ation  process” right. 1.2.Click Manage certific ation  process . 2.
+3.Click Saved certific ation  setups . 3.
+4.Select the saved setup.4.
+5.On the Items to review tab, select Managed groups . 5.
+6.Deselect one of the items.6.
+7.Click Update . 7.Note that two new buttons  appear in the Select column in the left item type table. This is so that you
+can c on firm  that you want to use only the selected items, or restore the saved search criteria.
+8.Click Use selected items . 8.
+9.Click Launch campaign . 9.
+10. Click Start new campaign . 10.
+The reviewer will be notified  to review the entitlemen ts.
+Review 
+To complete the review, the reviewer would:
+1.Log into Bravura Security Fabric . 1.
+2.Click the notific ation  link or Review entitlemen ts  and c on figur ations . 2.
+The certific ation  app shows a list of users who are members of finance  groups.3.Click the certif y  icon 
+ to allow the user to keep the entitlemen t. 3.
+4.Click the revoke icon 
+ to remove one of the entitlemen ts  from a user. Add a note to add to the 4.
+change group membership request that will be issued when the reviewer signs off .
+5.Click the delegate icon 
+ to delegate the review of an entitlemen t. 5.a.Search for and select a user you want to make your delegate.a.
+b.Click Delegate . b.
+6. Continue  until  all items have been reviewed. 6.
+7.Click Finish to complete the review. 7.
+8.Enter My password . 8.
+9.Click Sign off. 9.
+Bravura Security Fabric  notifies  relevant authorizers to review requests to change group membership.
+Example: Certific ation  r emediation
+This example demonstrates how to create a certific ation  r emediation  to enable the reviewer to create a
+new user while reviewing a certific ation  campaign.
+This is the only r emediation  type that is not pr e-c on figur ed  with a default pr e-de fined  request.
+Create a pr e-defined  request
+1.Log in to the front-end as superuser.1.
+2.Click Manage the system > W orkflo w  > Pr e-de fined  requests . 2.
+3.Click Add new… 3.
+4. Con figur e  the following: 4.
+▪ID ADDUSER ▪
+▪ Description  Add user ▪
+▪Enabled  selected ▪
+▪Accessible from certific ation  selected ▪
+▪ R emediation  type  Add pr ofile ▪
+▪Intended recipients  New users ▪
+5.Click Add. 5.
+6.Click the Oper ations  tab. 6.
+7.Select Create account  in the  Oper ations  on user-selected resources section. 7.
+8.Click Update. 8.
+9.Click the Attribut es  tab. 9.
+10. Click Select... . 10.
+11. Select BASEATTRIBUTE. 11.
+12. Click Select . 12.
+Create a certific ation  campaign
+To set up this certific ation  campaign, the administrator would:
+1.Log in to Bravura Security Fabric  as an administrator with the ”Manage certific ation  process” privilege. 1.
+2.Click Manage certific ation  process from the  ADMINISTRATIVE OPTIONS section. 2.
+3.From the main menu, click Start entitlemen t  certific ation  campaign . 3.
+4.On the Items to review  tab, click 
+  next to Target systems . 4.

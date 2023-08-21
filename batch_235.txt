@@ -1,0 +1,192 @@
+3.The requester selects templates r epr esenting  individual accounts on target systems; alt ernativ ely ,  they 3.
+select roles which may include sets of templates, group memberships, and other objects.
+4.If applicable, the requester selects group memberships for the new accounts.4.
+5.The requester may provide an initial  password for the new user’s accounts. The new password is 5.
+subject to Bravura Security Fabric ’s global password policy rules.
+Bravura Identity  also has built-in functionality  to generate passwords for new accounts, based on
+c on figur ed  password policies. In general, this would be a more secure approach.
+6.The user submits the request and Bravura Identity  enters it into authoriz ation  w orkflo w . 6.
+In most cases, user provisioning requests require approval before they can be completed.
+7.If applicable, the W orkflo w  Manager Service routes the requests to the appropriate authorizers for 7.
+authoriz ation  and ensures that all requests have sufficien t  approval before they can be fulfilled.
+8.Once the request is authorized, the T r ansaction  Monitor Service runs connector programs that create 8.
+the accounts on target systems.
+9.Bravura Identity  creates a user pr ofile  if one does not exist. All the accounts requested will be 9.
+aut omatic ally  associated with the pr ofile  as soon as the request is completed.
+10. Connector programs create new accounts by copying relevant parameters from the templates, setting 10.
+attribut es  provided during the request, and adding group memberships.
+At almost every stage of the user and account provisioning process, a plugin can augment the w orkflo w
+logic by providing additional  data for the request, dynamically adjusting  authoriz ation  requirements or
+performing v alidation  before the request is submitted.  For example, attribut es  may be entered by a user
+or administrator, and validated by a plugin that implements business logic.
+Pr ofile  comparison ("Model after"  provisioning)
+Many or g aniz ations  have security adminis tr ation  processes where requesters e ff ectiv ely  ask to "Create
+Bob like Mary" or "Adjust Bob’s security rights so he can do what Mary can do." Collectiv ely ,  this is a
+model after  approach.
+The "model after"  approach is very user friendly. Users often  don’t know what to ask for, but they just as
+often  do know who already has that which they need. The "model after"  approach can also be
+dangerous. Con figur ation  errors and excessive privileges owned by the model user can be copied to the
+new user. The net e ff ect  is to increase entropy in the security database.
+Bravura Security Fabric  provides a solution  with the usability advantage of this approach while
+eliminating  the security problems that come with it.
+The feature is c on figur ed  by setting  profile  comparison rules  (on page 706), which de fine  the r elationship
+between the requester, recipient, and model user. For example, you can c on figur e  the pr ofile  comparison
+rules so that a manager can create a new subordinate user modelled after  another of her subordinates,
+or compare two of her subordinates and add or remove resources and privileges as necessary. The
+manager can be prevented from using a user who is not a subordinate as a model user. Requesters also
+require pr ofile  comparison permissions.Bravura Security Fabric  uses template accounts  (on page 622) to create the new user, based on the
+accounts that the model user has. One template account per target system is c on figur ed  to be used as
+the pr ofile  comparison template.
+There are options  that a ff ect  ”model after ”  functionality  in the Manage the system  > Modules  > View
+and update pr ofile  (IDR) menu  (on page 1178). You can set MODELAFTER VALID ONLY option  to only
+display valid model users when using pr ofile  comparison. Performance can be signific an tly  slower when
+this option  is enabled. Enable MODELAFTER SHOWDIFFS to display diff er ences  between pr ofiles  when
+using pr ofile  comparison by default.
+Once the rules and other settings  are c on figur ed,  users can request to Copy entitlemen ts  from an
+e xisting  user when cr eating  a new user pr ofile
+You can create a new user pr ofile  by copying entitlemen ts  from an e xisting  user, provided that you meet
+certain criteria.
+To model a pr ofile  after  another user:
+1.From the main menu , click Create a new user pr ofile . 1.
+2.Click Copy entitlemen ts  from an e xisting  user . 2.
+3.Select the user you want to use as model user.3.
+The pr ofile  comparison page is displayed along with attribut es  that are c on figur ed  to be used on
+comparison pages.
+Depending on your permissions, you can copy the attribut es,  roles, accounts and group membership.4.Once you have selected which items to copy, click Continue . 4.
+If you copied attribut es  or entitlemen ts  in the previous step, you do not have to specify them in the
+following forms.
+5.Enter values for attribut e  fields  as required. 5.
+There may be one or more forms for personal in f ormation.Click Continue .
+6. Optional:  Select additional  roles. 6.
+Click Continue .7. Optional:  Select additional  template accounts to copy for the new user. 7.
+Click Continue .
+8. Optional:  modify the managed groups to join/leave. 8.
+a.Select 
+  the account for which you want to manage group membership. a.
+b.Enable/disable the checkboxes for the groups which you want to change in the requestb.
+c.Click Select . c.
+d.Repeat steps 8a to 8c for each account for which you want to manage group membership.d.
+e.Click Continue . e.
+From this point, Bravura Security Fabric displays an error message if you select items that c onflict
+with security rules.
+9.If one or more of the accounts requires a password, type an initial  password in the Password and 9.
+Con firm  fields.
+Bravura Security Fabric  provides a list of correctly f ormatted  passwords as sug g estions  in the drop-
+down list.
+Click Continue .
+10. De fine  request notific ation  in f ormation. 10.
+Click Continue .
+11. Review the request summary. 11.12. Click Submit . 12.
+.
+Setting  up user provisioning
+To implement user provisioning with Bravura Identity :
+1.Set up email notific ation. 1.
+Bravura Security Fabric activ ely  notifies  users about events that may require their attention;  this is
+generally done through email. It is recommended that all users have email addresses c on figur ed.
+Ensure that the email server and port are correctly c on figur ed  on the Manage the system > W orkflo w
+> Email c on figur ation  page.
+See Email notific ation  (on page 412).
+2.Add target systems.2.Add at least one target system that will be an authorit ativ e  list of users to be imported into Bravura
+Security Fabric . If supported, ensure that all users have email addresses c on figur ed  on the target. At
+least one target system should be able to verify passwords for users.
+See Target Systems  (on page 480).
+3.Set up accounts on each managed system to use as templates in Bravura Identity . 3.
+See the Connector Pack Documen t ation  for in f ormation  about cr eating  accounts on specific  systems.
+Ensure that you note the login ID of each model account.
+This is not necessary if new account requests will be fulfilled  by human implementers.
+It is recommended that you do not add template accounts to managed groups. Managed group
+memberships should be handled by including them in roles.
+4. Con figur e  account attribut es  if required 4.
+The term account attribut es  refers to the attribut es  of accounts on target systems. Bravura Identity
+uses an attribut e  catalog to determine rules for “handling” each attribut e  when managing users. You
+can override the default settings  for templates, target systems, or target types.
+See Account attribut es  (on page 566).
+5.Import users5.
+Run auto discovery to import a list of users, their accounts and other attribut es,  from one or more
+target systems.
+See Users and accounts  (on page 538).
+6. Con figur e  authentic ation. 6.
+Ensure that the Authentic ation  priority list and Identific ation  priority list are c on figur ed  on the
+Policies menu. This is required to allow users to access the main menu.
+See Login and authentic ation  (on page 820).
+7.Add pr ofile  and request attribut es 7.
+Pr ofile  and request attribut es  are used to collect and display in f ormation  about a user. They can be
+mapped to account attribut es.
+See Pr ofile  and request attribut es  (on page 1264).
+8.Add pr ofile  and request attribut e  groups for access control 8.
+Grouping attribut es  allows you to c on figur e  access controls to determine users’ read / write privileges.
+They also determine how pr ofile  and request attribut es  are displayed to users.
+See Attribut e  groups  (on page 1304).
+9.Add template accounts9.
+Bravura Identity  template accounts are mapped to model accounts on target systems. See the
+Connector Pack Documen t ation  to learn how to set up template accounts for each target type.
+Users set up or request new accounts based on individual templates or named sets of templates
+referred to as roles.
+See Template accounts  (on page 622).
+10. Con figur e  managed groups 10.Bravura Identity  uses managed groups to manage memberships in groups on target systems.
+See Groups  (on page 585).
+11. Add roles 11.
+Users assign required resources to a set of users by using roles. Users can also request a role.
+See Roles  (on page 635).
+12. Con figur e  access rules. 12.
+Access rules determine what users can do for themselves or others.
+See User types and access rules  (on page 671).
+13. Add segr eg ation  of duties  rules. 13.
+Users request e x ceptions  to roles or possible access c on flicts.
+See Segr eg ation  of duties  rules  (on page 811).
+14. Con figur e  role enforcement rules and options,  if Bravura Security Fabric  should aut omatic ally  issue 14.
+requests to correct violations  in a user’s access compared to their role.
+See Role enforcement  (on page 2409).
+15. Con figur e  authoriz ation  w orkflo w . 15.
+See Authoriz ation  w orkflo w  options  (on page 1340).
+16. Con figur e  user provisioning options,  including: 16.
+▪Resource assignment▪
+▪ Pr ofile  ID assignment ▪
+▪Password options ▪
+▪Provisioning by human agents, or implementers . ▪
+See User provisioning options .
+17. Con figur e  web features for request input, v alidation,  and authoriz ation. 17.
+Requests overview for Bravura Identity
+This topic provides an overview of the life cycle of a request using Bravura Identity , and the various
+features and programs involved in the lifecycle.
+A pr e-de fined  request  (on page 1311) is a common element of the request lifecycle. A PDR is a
+de finition  / template from which a request is generated and de fines  the following.
+▪ Actions  / oper ations  a generated request can or must execute. ▪
+▪Request attribut e  groups that can be provided as input to the request. ▪
+▪Users that are allowed to submit or receive requests from this PDR.▪
+▪In what context should the request be visible in the user interface (for example, cr eating  a user, ▪
+modifying an e xisting  user,).
+▪The order of display in which the request attribut es  must be populated when the wizard is used to ▪
+submit the request manually.Request cr eation  and submission methods
+There are numerous ways that a request can be generated.
+Automated request g ener ation  via auto-discovery
+When auto discovery runs, Bravura Identity  identifies  changes (adds/deletes/changes) are identified.
+Components that provide idtrack  functionality  can process those changes then submit the
+appropriate w orkflo w  requests. For example, when a new record in a Source of Records (SoR) target is
+identified,  idtrack  implementing  component logic will execute, aut omatic ally  populate and send a
+request to onboard a user.
+You can identif y  components that implement idtrack functionality  by searching for the string
+<provides>IDTRACK</provides>  in the manifest.xml  files in the components directory.
+Some c on figur ations  for idtrack  can be found in the hid_global_c on figur ation  policy extdb table. 
+These entries will be identifiable  as they will contain namespace=AUTOMATION .
+Automated request g ener ation  via aut omatic  assignment
+The aut omatic  assignment  (on page 2442) process utiliz es  user class membership to aut omatic ally
+assign/unassign roles or groups to a pr ofile.
+Automated request g ener ation  via role enforcement
+The role enforcement  (on page 2409) process utiliz es  role membership to submit requests to
+aut omatic ally  assign/unassign roles or groups to a role.
+Automated request g ener ation  via Attribut e  P r opag ation
+When a user's pr ofile  attribut e  is updated, Bravura Identity  can be c on figur ed  to aut omatic ally  propagate
+the updated pr ofile  attribut e  value  (on page 1302) to its mapped account attribut es.
+Manual request via wizard in Bravura Identity  user interface
+From the user interface, when a user clicks a request link such as My Pr ofile  > View and update pr ofile  >
+Request a group membership  it opens the pr e-de fined  request  (on page 1311) wizard.  Each page of the
+wizard is a form that facilitates the input of the necessary request attribut es.   When the user clicks the
+Submit button,  the request is generated and populated with the specified  request attribut es.
+Custom Scripts
+Requests can also be created from custom scripts.  Some API calls that can be used to submit requests
+are:
+▪WFPDRSubmit API call▪
+▪A simpler API for submitting  requests.  Less granular than WFRequest*. ▪
+▪May be called remotely via SOAP to create/submit a request from a specified  PDR. ▪
+▪May also be called locally via custom script directly from the Identity  applic ation  node. ▪

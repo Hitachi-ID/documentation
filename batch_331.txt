@@ -1,0 +1,324 @@
+Criteria Description
+Minimum threshold for account sets (%) The minimum percentage of users checking out a
+particular  account set out of the total number of users
+checking out at least one account set. This option  is only
+available when Include account sets is selected.
+Choose check-out date Choose one of the following options  to de fine  the check-
+out date:
+Date not required : This is the default setting.  In f ormation
+is listed regardless of start date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.Criteria Description
+Option Description
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: In f ormation  is only included in the report output if the
+start date falls within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: In f ormation  is only included in the report output if the
+start date and time  falls within the Start date range . Use
+the fir s t set of date / time  controls to select the earliest
+time  to include, and the second set of date / time
+controls to select the latest time  to include.Criteria Description
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Show summary Summarizes the report. This includes the percentage of
+users checking out privileged access based on the
+specified  attribut es,  how many of each privileged access
+type is checked out, and how many of each privileged
+access type do not meet the minimum threshold.
+Access disclosure plugins e x ecution
+Purpose : This report returns details of access disclosure plugin e x ecutions,  including their attribut es,  who
+used the access and when.
+Executable : pluginexecution
+Search Criteria :
+Criteria Description
+Date Choose one of the following options  to de fine  the check-
+out date:
+Date not required : This is the default setting.  In f ormation
+is listed regardless of start date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date optionsCriteria Description
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: In f ormation  is only included in the report output if the
+start date falls within the selected r elativ e  date range.
+Use selected dateCriteria Description
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: In f ormation  is only included in the report output if the
+start date and time  falls within the Start date range . Use
+the fir s t set of date / time  controls to select the earliestCriteria Description
+time  to include, and the second set of date / time
+controls to select the latest time  to include.
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Plugin file name Select access disclosure plugins:
+▪guacamole-rdp▪
+▪guacamole-ssh▪
+▪guacamole-telnet▪
+▪guacamole-vnc▪
+▪pswcmdrun▪
+▪pswxcmd.cab▪
+▪pswxcopy.cab▪
+▪pswxdom.cab▪
+▪pswxtsvc.cab▪
+▪pswxview.cab▪
+▪pswxwebapp▪
+▪securebrowser▪
+▪<any custom disclosure plugins>▪
+User ID Type a comma-and-space-delimited list of user IDs.
+Alt ernativ ely ,  search to find the matching user.
+Managed system ID Type a comma-and-space-delimited list of managed
+system IDs. Alt ernativ ely ,  search to find the matching
+managed systems.
+Account Enter the ID of the account.
+Filter by attribut e Select to filt er  results based on a specific  plugin attribut e.
+Attribut e  name Type a specific  plugin attribut e.  This field  only appears if
+Filter by attribut e  is selected.
+Comparator Select a comparator:
+▪is empty▪
+▪is not empty▪
+▪is equal to▪
+This field  only appears if Filter by attribut e  is selected.
+Attribut e  value Specify an attribut e  value to filt er  against. This field  only
+appears if Comparator is set to ‘is equal to’.
+Display attribut es By default, this option  is checked. Uncheck this to show
+the report without plugin attribut e  names and values.System oper ation  reports
+Notific ation
+Purpose : In f ormation  about c on figur ed  user notific ation  policies in the Bravura Pass  notific ation
+subsystem.
+Executable : notification
+Search Criteria :
+Criteria Description
+Notific ation  type Select from:
+▪All notific ations ▪
+▪ Activ e  notific ations ▪
+▪ Inactiv e  notific ations ▪
+Searches for inactiv e  notific ations  take no other
+search parameters, and always return the full list of
+notific ations  which have been deactiv a t ed,  or deleted.
+Notific ation  ID Type the ID of a notific ation  to list that notific ation  and
+its related settings.  All notific ation  IDs are selected by
+default.
+Notific ation  description Type the description  of a notific ation  to list that
+notific ation  and its related settings.
+Severity Select one or more levels of severity to only list
+notific ations  set to the specified  levels. All levels are
+selected by default.
+Compliance plugin Type the name of the compliance plugin to only list
+notific ations  that trigger that plugin. All notific ation
+plugins are selected by default.
+Reminder plugin Type the name of the reminder plugin to only list
+notific ations  that trigger that plugin. All notific ation
+plugins are selected by default.
+Action  plugin Type the name of the action  plugin to only list
+notific ations  that trigger that plugin. All notific ation
+plugins are selected by default.
+Batch plugin Type the name of the batch plugin to only list
+notific ations  that trigger that plugin. All notific ation
+plugins are selected by default.
+Users qualifying for notific ations
+Purpose : Shows users whose pr ofiles  warrant notific ation  as per policy.
+Executable : userqualify
+Search Criteria :Criteria Description
+Batch notific ations Select one or more batch notific ation  IDs. All notific ations
+are selected by default.
+Web notific ations Select one or more web notific ation  IDs. All notific ations
+are selected by default.
+Number of users to display Type the number of qualifying users to display.
+SSO session activity
+Purpose : Summary of SSO session activity .
+Executable : ssoactivity
+Search Criteria :
+Criteria Description
+User ID Type a pr ofile  ID to only list s ynchr oniz ation  events that
+apply to that user. Alt ernativ ely ,  you can search for one
+or more pr ofile  IDs.
+Requester ID Type a pr ofile  ID to only list s ynchr oniz ation  events
+requested by that user. Alt ernativ ely ,  you can search for
+one or more pr ofile  IDs.
+Choose date range Choose one of the following options  to de fine  a date
+range:
+Date not required : This is the default setting.  In f ormation
+is listed regardless of start date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.Criteria Description
+Option Description
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: In f ormation  is only included in the report output if the
+start date falls within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.

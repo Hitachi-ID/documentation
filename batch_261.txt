@@ -1,0 +1,154 @@
+If you select All, a question  mark is displayed next to the entitlemen t  to indicate that late binding is
+in e ff ect.
+Bravura Security Fabric  displays a warning if the number of selected entitlemen ts  exceeds the
+threshold de fined  by CERT SIZE WARNING THRESHOLD (Manage the system  > Modules  > Manage
+certific ation  process (CERT) ).
+When you select an individual entitlemen t,  the Selected column is updated when you click one of
+the icons in the E ntitlemen t  type column, Next , or another c ertific ation  tab.
+3.Click Next: Users or another certific ation  tab to proceed. 3.
+Next: 
+Select users to review for entitlemen t  certific ation  campaigns.
+▪Select users to review for entitlemen t  certific ation  campaigns ▪
+By default, all users associated with selected entitlemen ts  are reviewed during a certific ation
+campaign. To view the total number of users for each entitlemen t,  select the Users tab on the
+c on figur ation  page for a new or saved round:
+To limit a certific ation  campaign to selected individual users:
+1.Navigate to the c on figur ation  page for a new or saved campaign. 1.
+2.Click the Users tab, then a sub-tab to specify 2.
+▪Selected users▪
+Search for, or browse to select individual users, then click Select .▪Membership in user class▪
+▪Select e xisting  user classes: Enable the checkboxes for the user classes you want to add, then ▪
+click Select .
+▪Create new user classes: Click Create a new user class  (on page 738). ▪
+▪Edit e xisting  user classes: Click the edit 
+ icon to modify e xisting  user classes.  (on page 803) ▪
+Select and create user classes until  you have de fined  the user segments you want reviewed.
+Next: 
+Select attribut es  to display during entitlemen t  certific ation  campaign to determine the user
+in f ormation  you want to be available to reviewers.
+▪Select attribut es  to display during entitlemen t  certific ation  campaign ▪
+You can make user in f ormation,  de fined  by pr ofile  and request attribut es,  available to reviewers to
+assist them in their reviews. Reviewers can choose which attribut es  to include in their review list.
+Note: Reviewers must have appropriate permissions to view the attribut es.
+To select attribut es  to be available for display:1.Navigate to the c on figur ation  page for a new or saved campaign. 1.
+2.Click the Attribut es  to display tab. 2.
+3.To add attribut es,  click Select… , choose the applicable attribut es  and click Select . 3.
+4.Drag and drop one of the double dir ection  arrows in the ID field  to change the attribut es’  order in 4.
+the list.
+5.Click Update to apply changes. 5.
+6.Click Next: R emediation  or another certific ation  tab to proceed. 6.
+The shipped default selection  is EMAIL and PROFILE_PIC, which is determined by membership of the
+CERT_ATTR_TO_DISPLAY attribut e  group.  
+Next: 
+Select resource attribut es  to display during certific ation  campaign to determine the resource
+in f ormation  you want to be available to reviewers.
+▪Select resource attribut es  to display during entitlemen t  certific ation  campaign ▪
+You can make resource in f ormation,  de fined  by resource attribut es,  available to reviewers to assist
+them in their reviews. Reviewers can choose which resource attribut es  to include in their review list.
+Note: Reviewers must have appropriate permissions to view these resource
+attribut es.
+To select resource attribut es  to be available for display:
+1.Navigate to the config ur ation  page for a new or saved campaign. 1.
+2.Click the Resource attribut es  to display tab. 2.3.To add resource attribut es,  click Select… , choose the applicable resource attribut es  and click Select . 3.
+4.Drag and drop one of the double dir ection  arrows in the ID field  to change the attribut es’  order in 4.
+the list.
+5.Click Update to apply changes. 5.
+6.Click Next: R emediation  or another certific ation  tab to proceed. 6.
+Next: 
+Selecting  pr e-de fined  requests for r emediation .
+▪Select pr e-de fined  requests for r emediation  in entitlemen t  certific ation  campaigns ▪
+You can specify the r emediation  – that is, what happens to an entitlemen t  after  it is revoked in the
+entitlemen t  certific ation  campaign – by selecting  a pr e-de fined  request  (on page 1311). In most cases,
+the request will be submitted  after  the reviewer has signed off the entitlemen t  certific ation  campaign.
+You can specify more than one pr e-de fined  request for a r emediation  type. In this case, users choose
+which request to submit when they revoke the entitlemen t.
+Some special requests are submitted  immediately and may not be triggered by a reviewer revoking an
+entitlemen t.  These requests include:
+▪Add pr ofile ▪
+▪Transfer a user▪
+▪Resolve segr eg ation  of duties  rules ▪
+Note: Pr ofile  attribut es  must be included in the certific ation  campaign to allow
+reviewers to create a new user from the certific ation  app.
+To select pr e-de fined  requests for r emediation:
+1.Navigate to the c on figur ation  page for a new or saved campaign. 1.
+2.Click the R emediation  tab: 2.Each selected r emediation  type, except for Add pr ofile , is already loaded with built-in pr e-de fined
+requests for certific ation.  For the Add pr ofile  r emediation  type, you must de fine  a pr e-de fined
+request if you want users to be able to create new users from the certific ation  app review page.  (on
+page 2540)
+3.To select another pr e-de fined  request, click on the field  next to the r emediation  type. 3.
+4.Bravura Security Fabric  displays a list of pr e-de fined  requests available for that r emediation  type: 4.
+Note: Pr e-de fined  requests must be c on figur ed  to be Accessible from
+certific ation , with the appropriate R emediation  type selected.
+5.Click on the request you want to add.5.
+6.Click Update . 6.
+7.Click Next: Attribut es  to review or another certific ation  tab to proceed. 7.
+Next: 
+If you included pr ofile  attribut es  in items to review, select attribut es  to review to determine the user
+in f ormation  you want to be reviewed; otherwise, select the reviewers.
+▪Select attribut es  to review for entitlemen t  certific ation  campaigns ▪
+You can make user in f ormation,  de fined  by pr ofile  and request attribut es,  available to be reviewed.
+The Attribut es  to review tab becomes available if you included pr ofile  attribut es  in the Items to
+review tab. This is diff er en t  from the Attribut es  to display page as attribut es  selected here can be
+edited by the reviewer.
+Reviewers must have appropriate permissions to view and edit the attribut es.
+To select attribut es  to be editable in a review:
+1.Navigate to the c on figur ation  page for a new or saved campaign. 1.
+2.If the Attribut es  to review tab is not available, click the Items to review tab and click Yes to include 2.
+review of pr ofile  attribut es.
+3.Click the Attribut es  to review tab to set the pr e-de fined  request that will de fine  which attribut es  to 3.
+display for the certific ation  campaign:The pr e-de fined  request used to update pr ofile  attribut es,  listed in the upper table, de fines  the
+attribut es  listed in the lower table and their order. To be selectable here, the pr e-de fined  request
+may only have one attribut e  group.
+The order of the attribut es  is de fined  by the attribut e  group.
+4.Click on the drop-down list to select another pr e-de fined  request. Only one may be selected for 4.
+each certific ation  campaign.
+5.Click Update to apply changes. 5.
+6.Click Next: Reviewers or another certific ation  tab to proceed. 6.The default pr e-de fined  request for attribut es  to review contains the attribut es  FIRST_NAME,
+LAST_NAME, OTHER_NAME, and PROFILE_PIC.  
+Next:
+Select  reviewers.
+▪Select reviewers for entitlemen t  certific ation  campaigns ▪
+Note: Product administrators with the Manage certific ation  process
+adminis tr ativ e  privilege can initia t e  certific ation  campaigns with multiple
+reviewers. Product administrators with the Initia t e  entitlemen t
+certific ation  campaigns adminis tr ativ e  privilege can only initia t e
+certific ation  campaigns with a single reviewer.
+To determine who will certif y  users and privileges:
+1.Navigate to the c on figur ation  page for a new or saved campaign. 1.
+2.Click the Reviewers tab, then select a sub-tab to select: 2.
+▪Single reviewer▪
+Use the single reviewer method when one person is easily able to review the access rights of
+your entir e  user population,  or all the c on figur ations  included in the campaign.
+Search or browse the list to select the reviewer.  
+Next: Select peer groups for consistency c alculations.
+▪Segment reviewers for entitlemen ts ▪
+When you use the segment method, you c on figur e  reviewers for segments of the user
+population  based on user classes. This allows you to divide the work among multiple  reviewers.
+You can also select a reviewer to review users who do not belong to any of the selected classes.
+Note: It is possible for reviewers to be asked to certif y  “empty” segments.
+Reviewers can, in e ff ect,  be asked to certif y  that there are no users in a
+particular  user class, or not included in a user class.
+To de fine  segments and assign reviewers:
+1.Add user classes as segments:1.
+▪Select e xisting  user classes: Click Select... and enable the checkboxes for the user classes ▪
+you want to add, then click Select .
+▪Create new user classes: Click Create a new user class  (on page 738). ▪
+▪Edit e xisting  user classes: Click the edit 
+ icon to modify e xisting  user classes  (on page ▪
+803).
+Select and create user classes until  you have de fined  segments.
+2.Select a segment row to select the reviewer for the segment. This includes the segment2.
+de fined  by users not in any of the user classes.
+3.Search or browse the list to select the reviewer.3.
+4.Click Next: Submit or another certific ation  tab to proceed. 4.
+Next: 
+Select peer groups for consistency c alculations.
+▪ Entitlemen t  authorizers ▪
+When you use the entitlemen t  authorizers method, you c on figur e  reviewers for segments of the
+user population  based on selected entitlemen ts.  This allows you to divide the work among
+multiple  reviewers.
+You can manually assign entitlemen t  authorizers, enable random assignment from the
+authorizers attached  to the entitlemen t  or use a plugin to identif y  the primary and delegate
+reviewers.
+Manually assigning entitlemen t  authorizers
+To manually assign entitlemen t  authorizers:

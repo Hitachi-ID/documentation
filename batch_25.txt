@@ -1,0 +1,349 @@
+▪Password replacement program ( pspasswd ) The Bravura Security  password replacement program ▪
+(pspasswd) intercepts nativ e  password changes on Unix servers and triggers transparent password
+s ynchr oniz ation.
+Softw ar e  for Unix triggers is stored on the Bravura Security Fabric  server when you install Connector
+Pack . You copy it and c on figur e  it on the LDAP server.
+▪OS/400 exit program ( pspwdexit ). This exit program Intercepts password changes on IBM OS/400 ▪
+and propagates them to the Bravura Security Fabric server for policy v alidation  and to initia t e
+transparent s ynchr oniz ation.
+See the Transparent Password S ynchr oniz ation  (on page 1651) for more in f ormation  about this feature
+and installing softw ar e  for the above trigger systems.
+The OS/390 mainframe trigger software  is shipped with Mainframe Connector. See the Mainframe
+Ins t allation  and Configuration  Guide  for more inf ormation.
+Domain-level secure kiosk account softw ar e
+A domain-level secure kiosk account is a specially constructed and locked-down network oper ating
+system login account. It is typically used to allow users who forgot or otherwise disabled their network
+login password to gain access to a self-service password reset facility.
+The <Program Files path>\Bravura Security\Bravura Security Fabric\<instance>
+\addon\Domain SKA\ directory contains tools that are installed on a public share and used with the
+secure kiosk account (SKA).
+See Login Assistant  (on page 1587) for more in f ormation  about this feature.
+Local secure kiosk account softw ar e
+This is a local alt ernativ e  to deploying a domain-level secure kiosk account (SKA) with Bravura Security
+Fabric . On Windows, it triggers the local equivalent of a Windows GPO (group policy object), and
+launches a locally installed shell executable program ( runurl ) and will allow the users to change their
+passwords.
+You install this softw ar e  on Windows using the ska.msi or ska-x64.msi  (on page 252).
+See Login Assistant  (on page 1587) for more general in f ormation  about SKA softw ar e,  and for manual
+ins t allation  ins tructions.
+Bravura Security Fabric  local reset extension
+The Activ eX  add-on, pslocalr.ocx , can silently update the user’s Windows password cache after  a
+web-based password change via Bravura Security Fabric .
+The following local reset extension installers are available:
+▪browser-extension-win-x86.msi  for Chrome or Edge Chromium ▪
+▪firefox-extension-x86.msi  for Firefox ▪
+See Local Reset Extension  (on page 1578) for more general in f ormation  about this feature.Notific ation  client
+The Notific ation  Client ( psntfclient ) is required only if users will receive notific ation  via their web
+browser. The client is installed on a network share and is responsible for c on t acting  the Notific ation
+Service ( psntfsvc ) to determine if users have any pending notific ations.  If they do, the
+psntfclient program opens a browser on the user’s w ork s t ation  for the user to fir s t log in and then
+to display the notific ation  message in Bravura Security Fabric . If any of those notific ations  are force-level,
+the psntfclient opens the browser in kiosk mode, pr e v enting  the user from accessing na vig ation  or
+other functionality  until  the user becomes compliant.
+You install this softw ar e  using the ntfclient.msi  or ntfclient-x64.msi  (on page 250) installer.
+See Batch and web notific ation  (on page 431) for more general in f ormation  about this feature.
+Lotus Notes Extension client tools
+These tools are used to support Lotus Notes password management. You install this softw ar e  using the
+psns.msi  (on page 251) installer.
+See Lotus Domino Server  in the Connector Pack  documen t ation  for more in f ormation  about t ar g eting
+Lotus Notes.
+Local w ork s t ation  service
+Bravura Security Fabric  uses the Bravura Privilege  Local W ork s t ation  Service ( hipamlws ) softw ar e  (on
+page 245) to perform local password resets and other oper ations  for local service mode .
+See Managed systems  (on page 1815) for more in f ormation  about how to install and use this feature.
+Access disclosure plugins
+Bravura Security Fabric  uses access disclosure plugins to permit secure access to a password for a
+privileged account. Unlike scripted or executable plugins, these are JavaScript or web-based controls.
+See Access disclosure plugins  (on page 1957) to learn how to c on figur e  these controls.
+Installing ActiveX  controls is no longer a supported method. Use an alt ernative  disclosure plugin such as
+Guacamole  (on page 1975), as Internet Explorer is no longer a supported browser. For inf ormation  about
+ActiveX  controls see documen t ation  for Bravura Security Fabric  12.5  or older.
+Using MSI installers
+This section  provides general in f ormation  about using MSI installers to install Bravura Security  add-on
+softw ar e:
+▪Manually  (on page 243) ▪
+▪ Aut omatic ally ,  using a group policy  (on page 243). ▪Requirements
+In order to create required accounts and install softw ar e  on Windows w ork s t ations,  you must launch the
+MSI installer using elevated privileges. The client w ork s t ation  must have Windows Server 2008/Windows
+7 or later installed.
+Support for earlier operating  systems is available upon request. Contact support@bravurasecurity.com
+for additional  assistance.
+To enable the MSI installer to run with elevated privileges, create a local computer policy with the
+following privileges enabled:
+▪Computer Con figur ation  > Adminis tr ativ e  Templates > Windows Components > Windows Installer > ▪
+Always install with elevated privileges
+▪User Con figur ation  > Adminis tr ativ e  Templates > Windows Components > Windows Installer > ▪
+Always install with elevated privileges
+If you want the installer package to install aut omatic ally ,  with no end-user in t er action,  you must set
+ins t allation  options  by applying a Windows Installer Transform file (.mst ), or by editing  the installer
+package directly. If you are not sure how to do this, contact support@bravurasecurity.com .
+Manual ins t allation
+To manually install add-on softw ar e,  you can launch the appropriate MSI installer either by double-
+clicking the file or by using the Windows msiexec.exe  command-line utility .  You then proceed
+through a series of graphical user interface (GUI) pages to specify options  for ins t allation.  An easier way
+to record installer choices that you provide in the GUI, and even some settings  not available in the GUI, is
+to run the MSI from the command line, with the options  described in Add-on ins t allation  command-line
+options  (on page 245). See your Windows help for more in f ormation  about Windows Installer
+technologies.
+Customizing an MSI
+You can customize an add-on msiinstaller by modifying it with an MSI editor such as Orca. Orca is a table
+editing  tool that can be used to edit .msi files.  In f ormation  on how to use Orca and where to download it
+can be found at http s://docs.micr osoft.c om/ en-us/window s/desk t op/msi/ or c a-e x e . Pr operties  can also
+be specified  on the command-line or in a Windows Installer Transform file.
+Aut omatic  ins t allation  using a group policy
+With a Windows group policy, you can easily deploy a Bravura Security  msi to a group of users or
+computers. If you set options  for ins t allation,  such as the URL to the Bravura Security Fabric  server,
+before deploying the softw ar e,  no end-user input is required.
+Contact your Windows system administrator or Windows documen t ation  for more inf ormation  about
+using Windows Installer technologies.
+For in f ormation  about installer command-line options,  visit:http://msdn.micr osoft.c om/libr ar y/de f ault.asp?url=/libr ar y/ en-us/msi/ se tup/ c ommand_line_options.asp
+The following steps outline the general procedure for c on figuring  a group policy to deploy an installer
+package to computers in a domain (see your Windows help for more in f ormation).  You must perform
+these steps using administrator privileges:
+The following steps are for Microsoft  Active  Directory 2012R2, installed on Windows Server 2012R2.
+Details may vary depending on your version of Windows
+1.Log in to a domain controller.1.
+2.Copy the installer package and any transform files you have created to a shared folder with access 2.
+granted to all target machines.
+3.Launch Server Manager. 3.
+4.Click Tools > Group Policy Management . 4.
+5.If necessary, create a new group policy. To do this, right click on the container where you wish to5.
+create the group policy; for example, the container in which the computers reside.
+6.Select Create a GPO in this domain, and Link it here... , and type a unique name for the policy. For 6.
+example, Bravura Security software policy .
+7.Click OK. 7.
+8.Ensure the group policy is applied only to the appropriate users, computers, or groups:8.
+a.On the left hand side, select the policy you just created. You may need to expand the tree before a.
+you can view the new policy.
+b.Select the Deleg ation  tab. b.
+c.Click the Advanced… button. c.
+d.Select the  Authentic a t ed  Users group. d.
+Under the permissions for this group, clear the Allow checkbox for the Apply Group Policy
+permission.
+e.Click Add, type name of the users, computers, or groups to add, then click OK. e.
+f.Select each user, computer, or group for which you want to apply the group policy. Under thef.
+permissions for this object, select the Allow checkbox for the Apply Group Policy permission.
+g.Click OK to return to the Group Policy Management snap-in. g.
+9.Select the group policy you want to modify, then click Edit… . 9.
+The Group Policy Management Editor snap-in displays.
+10. Expand Computer Con figur ation  > Policies > Softw ar e  Settings . 10.
+11. Right-click Softw ar e  ins t allation  and select New > Package… . 11.
+The Open dialog box appears.
+12. Browse to the shared folder (UNC path) where you copied the MSI, select the file, then click Open . 12.
+The Deploy Softw ar e  dialog appears.
+13. Choose Advanced , then click OK. 13.
+The pr operties  dialog for the package appears.14. Select the Modific ations  tab. Click Add. In the Open dialog box, browse to the transform file (.mst ), 14.
+then click Open .
+15. Click OK. 15.
+The package is assigned immediately. The ins t allation  is performed when it is safe to do so, typically
+when the computer starts up.
+16. Close the Group Policy Management Editor and the Group Policy Management snap-in. 16.
+Add-on ins t allation  command-line options
+This section  describes syntax requirements, and MSI features and property options  for installing add-on
+softw ar e  from the command line or using a Windows Installer Transform file.
+For more in f ormation  on running msiexec at the command line, see http s://docs.micr osoft.c om/ en-gb/
+windo w s/desk t op/Msi/ c ommand-line-options .  
+Selecting  features
+You use the ADDLOCAL parameter to set which features you want installed. The format for the ADDLOCAL
+parameter on the command line is:
+ADDLOCAL=<feature>,<feature>,...
+Selecting  an add-on selects the parent feature as well.  
+Setting  parameters  
+If using the command line, you can specify parameters for non-in t er activ e  ins t allation,  or preset values
+for in t er activ e  ins t allation.  The syntax for setting  parameters on the command line is:
+   <addon>.msi  <parameter>=<value> <parameter>=<value>
+Key-value pairs must be separated by spaces. If a value contains spaces, the value must be enclosed in
+double quotes.
+For details on individual installers, see:
+▪Local service mode privileged access management options  (on page 245) ▪
+▪Access disclosure (ppm-activ e x -c on tr ols)  options  (on page 249) ▪
+▪Password Change Notific ation  Module (intcpt) options  (on page 249) ▪
+▪ Notific ation  Client (p sntfclien t)  options  (on page 250) ▪
+▪Lotus Notes Extension (psns.dll) options  (on page 251) ▪
+▪Login Assistant options  (on page 252) ▪
+Local W ork s t ation  Service softw ar e
+You can use command line options  to install Bravura Privilege  client softw ar e  silently on Windows
+w ork s t ations.  You must specify a Bravura Privilege  server if no INF file is available. If other options  are not
+included, default values are used.If the idmsetup.inf  file has been generated for this local w ork s t ation  ins t allation,  then the hipamlws
+MSI will aut omatic ally  populate all available parameters.
+Local service mode softw ar e  pr operties
+Property Description
+AUTHKEY The unencrypted authentic ation  key. This is the
+Authentic ation  key that was entered when Bravura
+Privilege  was fir s t installed.
+AUTHKEY_ENC The encrypted authentic ation  key. This can be retrieved
+from the idmsetup.inf file.
+INSTALLDIR Target directory to install. It is recommended that you
+leave this as the default <Program Files path\>Bravura
+Security\hipamlws\.
+SERVER Specify the Bravura Privilege  server address and cgi path.
+The format should be: "http://<server>/
+<instance>/cgi/pamlws.exe" .
+PROXY Proxy server if client services must contact Bravura
+Privilege  through a proxy. The format is <address:port>.
+The default is to use values c on figur ed  in the browser
+settings.
+VERIFY_CERT Use SSL c onnection.  Set to 1 if your Bravura Privilege
+server is running HTTPS. Set to 0 if it is not. The default is
+0.
+DISABLE_SERVICE Set this property to 0 to enable the Privileged Access
+Manager Local W ork s t ation  Service ( hipamlws ), or 1 to
+disable the service.
+DEFER_INITIAL_START_SERVICE Postpone running the Local W ork s t ation  Service until
+system restart. The default is 0. This requires that
+DISABLE SERVICE is set to 0.
+INITIAL_POLL_DELAY Set the initial  delay time  in seconds. The default is 3600
+seconds. Setting  this value causes the managed system to
+wait for the initial  delay time  to pass before attempting
+the fir s t poll to the Bravura Privilege  server following the
+ins t allation  of the Local W ork s t ation  Service.
+CUST_ATTR_FILE Specify the path of the customized attribut e  file. This is
+optional.
+WS_ID Specify the managed system ID that will be used. The
+default value for this is blank, and the Bravura Privilege
+server will use the system’s virtualdnshostname for its ID.
+REREGISTER Specify if the system is reinstalling the Local W ork s t ation
+Service or not. The default is 0. If the system was
+previously discovered on the Bravura Privilege  server this
+value needs to be set to true, otherwise it will be treatedProperty Description
+as a system with a c on flicting  ID and the Local
+W ork s t ation  Service will be shut down.
+PAMLWS_EPO Set ADDLOCAL=PAMLWS_EPO to enable in t egr ation  with
+McAfee ePolicy Orchestrator.
+DEFAULT_RESYNC_INTERVAL Set default r es ynchr oniz ation  interval on client upon
+install.
+DEFAULT_POLL_TIME Set the default poll time  in seconds upon ins t allation  of
+the Local W ork s t ation  Service. The default is 300
+seconds. This value will be overridden by received
+c on figur ations  from the Bravura Privilege  server.
+DEFAULT_ATTRIBUTE_UPDATE_DELAY Set the default attribut e  update delay in seconds upon
+ins t allation  of the Local W ork s t ation  Service. The default
+is 3600 seconds. This value will be overridden by received
+c on figur ations  from the Bravura Privilege  server.
+UPDATE_INTERVAL Set the c on figur ation  update interval in seconds upon
+ins t allation  of the Local W ork s t ation  Service. The default
+is 86400 seconds. This value will be overridden by
+received c on figur ations  from the Bravura Privilege  server.
+If the ins t allation  fails, an event viewer error message is displayed. You can use the /log <logfile>  option
+at the end of the install command to produce a log file.
+The following are examples:
+▪For non-SSL ins t allation: ▪
+hipamlws-win.msi INSTALLDIR="C:\Program Files\Bravura Security
+\Hipamlws" AUTHKEY="0123456789abcdef0123456789abcdef" 
+SERVER="http://10.0.xxx.xxx/idsynch/cgi/
+pamlws.exe" PROXY="" VERIFY_CERT="0" DISABLE_SERVICE="0" DEFER_INITIAL_START_SERVICE="1" INITIAL_POLL_DELAY="3600" /
+qn
+▪For SSL ins t allation: ▪
+hipamlws-win.msi INSTALLDIR="C:\Program Files\Bravura Security
+\Hipamlws"AUTHKEY="0123456789abcdef0123456789abcdef" SERVER="http://
+10.0.xxx.xxx/idsynch/cgi/
+pamlws.exe" PROXY="" VERIFY_CERT="1" DISABLE_SERVICE="0" DEFER_INITIAL_START_SERVICE="1" INITIAL_POLL_DELAY="3600" /
+qn
+▪To disable the Local W ork s t ation  Service after  ins t allation: ▪
+hipamlws-win.msi INSTALLDIR="C:\Program Files\Bravura Security
+\Hipamlws "AUTHKEY="0123456789abcdef0123456789abcdef" SERVER="http://
+10.0.xxx.xxx/idsynch/cgi/
+pamlws.exe" PROXY="" VERIFY_CERT="1" DISABLE_SERVICE="1" DEFER_INITIAL_START_SERVICE="0" INITIAL_POLL_DELAY="3600" /
+qn▪To disable the Local W ork s t ation  Service after  ins t allation  but defer s t arting  the service until  system ▪
+restart:
+hipamlws-win.msi INSTALLDIR="C:\Program Files\Bravura Security
+\Hipamlws" SERVER="http://10.0.xxx.xxx/idsynch/cgi/
+pamlws.exe" PROXY="" VERIFY_CERT="1" DISABLE_SERVICE="0" DEFER_INITIAL_START_SERVICE="1" INITIAL_POLL_DELAY="3600" /
+qn
+▪To re-register the Local W ork s t ation  Service: ▪
+hipamlws-win.msi INSTALLDIR="C:\Program Files\Bravura Security
+\Hipamlws" AUTHKEY="0123456789abcdef0123456789abcdef" SERVER="http://
+10.0.xxx.xxx/idsynch/cgi/
+pamlws.exe" PROXY="" VERIFY_CERT="1" DISABLE_SERVICE="0" DEFER_INITIAL_START_SERVICE="1" INITIAL_POLL_DELAY="3600" REREGISTER="1" /
+qn
+▪To specify the encrypted authentic ation  key instead of the unencrypted authentic ation  key: ▪
+hipamlws-win.msi INSTALLDIR="C:\Program Files\Bravura Security
+\Hipamlws"AUTHKEY_ENC="ad452da2491e543f6f4754193922ffd893019916cabfde71" SERVER="http://
+10.0.xxx.xxx/idsynch/cgi/
+pamlws.exe" PROXY="" VERIFY_CERT="0" DISABLE_SERVICE="0" DEFER_INITIAL_START_SERVICE="1" INITIAL_POLL_DELAY="3600" /
+qn
+See also
+Upgrading Local W ork s t ation  Service softw ar e
+Con figur ation  files
+When the Local W ork s t ation  Service is installed on the system, it fir s t attemp ts  to register with the
+Bravura Privilege  server. After  it has contacted the Bravura Privilege  server for the fir s t time,  it retrieves
+c on figur ation  settings  from the Bravura Privilege  server. The service saves the settings  in a c on figur ation
+file, hipamlwsinst.dat , in the <Program Files path\>Bravura Security\hipamlws\
+directory.
+The hipamlwsinst.dat  file contains settings  such as poll time  (pt), r es ynchr oniz ation  interval (ri),
+r es ynchr oniz ation  failure retry interval (rfri), tr ansaction  failure retry interval (trfi),  and the calculated
+machine ID (id). The file also records tasks, assigned by the Bravura Privilege  server when contacted by
+the local service, that need to be done on the managed system. The service reports the results of the
+tasks at the next poll of the server.
+The wait time  is de fined  by the initial  delay value setup during the ins t allation  of the Local W ork s t ation
+Service (or the registry key initial-poll-dela y).  After  it fir s t registers with the Bravura Privilege  server as a
+discovered system, it will c ontinue  to contact it at the poll time,  de fined  by the pt value in the
+hipamlwsinst.dat  c on figur ation  file. The default is 300 seconds. Once the system is managed, it
+adopts the poll time  de fined  on the Bravura Privilege  server’s RES POLL INTERVAL setting  (Manage the
+system > Privileged access > Options  >  General > Managed system policies ). The default is 60 minutes.These files should not be modified  as they may send incorrect data back to the Bravura Privilege server or
+cause the Local W ork s t ation  Service to behave improperly.
+Data files
+The Local W ork s t ation  Service keeps tracks of all attribut es  and discovered accounts found locally on the
+system in data files in the <Program Files path\>Bravura Security\hipamlws\ directory. These files are
+used to determine what data should be sent back to the Bravura Privilege  server when changes occur.
+The following data files can be created:
+▪hipamlwsmachine keeps track of the system attribut es,  including local w ork s t ation  mode system’s ▪
+name, address, IP settings,  and custom attribut es
+▪hipamlwsusr keeps track of the user accounts discovered on the system ▪
+▪hipamlwsgrp keeps track of groups and group memberships discovered on the sysem ▪
+The service detects changes to local system settings,  and updates the data files and updates settings  on
+the Bravura Privilege  server, at poll time.  These changes can trigger import rule e v aluations,  depending
+on the import rules setup and which attribut es  are used.
+These c onfiguration  files can only be accessed after  the local system administrator takes ownership of the
+files and grants users access to them.
+These files should not be modified  as they may send incorrect data back to the Bravura Privilege server or
+cause the Local W ork s t ation  Service to behave improperly.
+Access disclosure plugins
+Installing ActiveX  controls is no longer a supported method. Use an alt ernative  disclosure plugin such as
+Guacamole  (on page 1975), as Internet Explorer is no longer a supported browser. For inf ormation  about
+ActiveX  controls see documen t ation  for Bravura Security Fabric  12.5  or older.
+intcpt.msi / intcpt-x64.msi
+Features
+intcpt.msi / intcpt-x64.msi ADDLOCAL ins t allation  features
+Feature Description
+INTCPTFEATURE Parent feature, installs the Password Change Notific ation
+service; intcptsvc
+PASSWORDFILTERFEATURE Installs the w ork s t ation  password filt er .
+CFGUTILSFEATURE Installs the utilities  used to set up and test service
+c on figur ation.
+CFGSAMPLESFEATURE Installs the service c on figur ation  samples.
+P r opertiesintcpt.msi / intcpt-x64.msi pr operties
+Property Description
+INSTALLDIR The directory in which that the interceptor will be
+installed. The default is <Program Files path>\Bravura
+Security\Bravura Security Fabric\<instance>\.
+INSTALLLEVEL This parameter is used for silent ins t allation  and is
+mutually exclusive with ADDLOCAL. Set to a value from 1
+to 100 for a typical ins t allation:  INTCPTFEATURE and
+PASSWORDFILTERFEATURE. Set to a value from 101 to
+32767 for complete ins t allation.  The default is 1.
+COMMKEY The 64 hexadecimal-digit key used for 256-bit encrypted
+c ommunic ation  between the Bravura Security Fabric  sub-
+systems.
+PMPORT The TCP port number that the Password Manager service
+is listening on (default is 3344).
+PMSERVER The DNS host name or IP address of the Bravura Pass
+server.
+TARGETID The ID of the Bravura Pass  target system on which the
+interceptor is being installed.
+LONGID The longid format of the target system. Should be one of
+the following values: %sAMAccountName%,
+DomainName\\%sAMAccountName% (where
+DomainName is the actual domain name of the accounts
+on the target), or %distinguishedName%.
+ 
+ntfclien t.msi  / ntfclien t - x64.msi
+Features
+ntfclien t.msi  / ntfclien t - x64.msi  ADDLOCAL ins t allation  features
+Feature Description
+PSNTFCLIENT Installs the notific ation  client.
+P r operties
+ntfclien t.msi  / ntfclien t - x64.msi  pr operties
+Property Description
+BROWSERTITLE This parameter is used to change the browser title of the
+ntfclien t  window.

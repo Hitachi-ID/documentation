@@ -1,0 +1,109 @@
+12. Click Update . 12.
+Test the user class participan t  mapping
+To test if a change request will have enough authorizers:
+1.Click Test…  in the user class table. 1.
+2.In the List matching users:  table, select AUTHORIZER  in the List: drop down. 2.
+3.In the REQUESTER  field,  also under List matching users: , type DARAK. 3.
+4.Click List. 4.Bravura Security Fabric  will list DARAK’s manager, BERNAP , and all the managers in the chain of command
+above BERNAP as well.
+On the Target system inf ormation  page, you can enable the setting  to Default authoriz ation  for child
+resources, including managed groups and template accounts, will be inherited from the target system .
+This would mean the authorizers you mapped above, to review requests to change e xisting  accounts,
+would be mapped to all groups on the target system.
+You have now set up dynamic authoriz ation  for change requests related to e xisting  accounts.
+Submit a request to change attribut es
+1.Log in to the Front-end (PSF) as DARAK . 1.
+2.Click View and update pr ofile  in the MY PROFILE section. 2.
+3.Select Update attribut es  near the bottom  of the page. 3.
+The request wizard opens.
+4.Fill in the following in f ormation: 4.
+▪Other names  Barb ▪
+5.Click Submit . 5.
+6.Review the request details and authorizers and you should see that the request is pending approval6.
+from BERNAP  and the managers in the chain of command above him.Approve the attribut e  request
+1.Log in to the Front-end (PSF) as BERNAP . 1.
+2.Click There are 1 request(s) a w aiting  your approval . 2.
+The Requests  app opens.
+3.Select the Update attribut es  request from the Results panel. 3.
+The details of the request will appear in the Actions  panel .
+4.Click Approve . 4.
+5.Click the Approve  button  to c on firm. 5.
+Final approval
+Even though the authoriz ation  requirements for the target system are met, BRYANW’s approval is still
+required because we set the Input is required before request can be approved  option  when we
+c on figur ed  s t atic  authoriz ation  (on page 1341).
+1.Log in to the Front-end (PSF) as BRYANW . 1.
+2.Click There are 1 request(s) a w aiting  your approval . 2.
+The Requests  app opens.
+3.Select the Update attribut es  request from the Results panel. 3.
+The details of the request will appear in the Actions  panel .
+4.Click Approve . 4.
+5.Click the Approve  button  to c on firm. 5.
+The status of the request should change to "Approved, performing requested oper ations".
+6.Navigate back to DARAK’s home page.6.
+7.Click View and update pr ofile  in the My pr ofile  section. 7.
+The Other names  field  will now be populated with our change.If you can see that the change to Barb  has been made successfully to the Other names  field  for Dara,
+you have completed the lab properly.
+Con figuring  phased authoriz ation
+You can c on figur e  Bravura Security Fabric  to subject requests to multiple  phases of authoriz ation.  The WF
+PHASED AUTH option  enables the phased authoriz ation  functionality  (Manage the system > W orkflo w  >
+Options  > General ).
+Once WF PHASED AUTH is enabled, the Authoriz ation  phase setting  appears when assigning s t atic
+authorizers and when assigning authorizers by user class.
+The phased authoriz ation  c on figur ation  is separate from the non-phased authoriz ation  c on figur ation.
+When phased authoriz ation  is enabled, the authoriz ation  requirements set up previously are no longer
+accessible. However, this c on figur ation  persists, and will apply again if phased authoriz ation  is disabled.
+Similarly, if phased authoriz ation  is disabled after  c on figur ation  is done, that c on figur ation  is kept and will
+be used immediately if phased authoriz ation  is again enabled.
+The Minimum number of authorizers and Number of denials before a change request is terminated
+settings  apply to each individual authoriz ation  phase.
+When enabled, navigate to the Authoriz ation  page for a resource or policy, then:
+▪Click Add new… if you want to add a phase. ▪▪To change the order of phases, change the numbers in the Authoriz ation  phase column and click ▪
+Update .
+▪Select a phase to de fine  authorizers and settings. ▪
+Determining when to add group owners
+If supported by the target system, you can specify the phase in which group owners should be added as
+authorizers. If phased authoriz ation  is enabled, navigate to the target system’s in f ormation  page  (on page
+480) and update The phase to which group owner should be added when being aut omatic ally  added as
+authorizer .
+Lab: Con figuring  phased authoriz ation
+You can c on figur e  Bravura Security Fabric  to subject requests to multiple  phases of authoriz ation.  This
+means that even if a request is approved in phase one, it must be reviewed by another set of authorizers,
+perhaps from another department or level of management. There is no limit to the number of phases.
+The WF PHASED AUTH option  enables the phased authoriz ation  functionality  (Manage the system
+> W orkflo w  > Options  > General) .
+The Minimum number of authorizers and Number of denials before a change request is terminated
+settings  apply to each individual authoriz ation  phase. If an authorizer is c on figur ed  to be in more than
+one phase, then he must review the request in each phase. You can enable IDWFM AUTH PHASE
+PROPAGATION ( W orkflo w  > Options  > General ) to allow the authorizer’s response in the fir s t phase in
+which he appears to be propagated to later phases.
+In this example, you will enable phased authoriz ation,  then require new account requests to be approved
+by a member of a user class, followed by the requester’s direct manager.
+Requirements
+This use case assumes that:
+▪Bravura Security Fabric  and Connector Pack are installed. ▪
+▪An Activ e  Directory target system is added as a source of pr ofiles. ▪
+Enable phased authoriz ation
+1.Log in to the Front-end (PSF) as superuser . 1.
+2.Click Manage the system > W orkflo w  > Options  > General . 2.
+3.Enable WF PHASED AUTH.3.4.Click Update . 4.
+Assign authorizers to resources
+To set up phased authoriz ation  for new accounts:
+1.Click Manage the system > Resources > Template accounts . 1.
+2.Select AD_TEMPLATE . 2.
+3.Click the Authoriz ation  tab. 3.Note that the authoriz ation  page for resources now lists c on figur ed  authoriz ation  phases. So far, only
+one phase has been c on figur ed.
+4.Select the authoriz ation  phase 1. 4.
+5.Set the Minimum number of authorizers  to 1. 5.
+6.Set the Number of denials before a change request is terminated  to 1. 6.
+7.Click Update . 7.
+8.In the user class table, click Select… . 8.
+9.Click the edit icon 
+  next to _IT_SECURITY_ . 9.
+Bravura Security Fabric  displays the User class definition  page in a pop-up window.
+10. Check which users are part of this user class by clicking on the Test tab and clicking List. 10.11. Close the user class c on figur ation  window. 11.
+12. Select the checkbox next to the _IT_SECURITY_  user class and click Select . 12.
+Bravura Security Fabric  displays an error because you have not mapped the participan ts  in the user
+class yet.
+13. Under P articipan t  mapping  for USERID, select AUTHORIZER . 13.
+14. Click Update . 14.

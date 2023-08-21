@@ -1,0 +1,332 @@
+      "finalized" = "false"
+      "groupApproval" = "00000000-0000-0000-0000-000000000000"
+      "groupID" = "CN=FIN-
+AP,OU=resources,OU=staff,DC=norse,DC=bravurasecurity,DC=com"
+      "implicit" = "true"
+      "itemType" = "groupID"
+      "notes" = ""
+      "operation" = "GRUA"
+      "parentRole" = "STANDARD_ROLE"
+      "pseudoData" = ""
+      "pseudoOp" = "false"
+      "pseudoTag" = ""
+      "reason" = ""
+      "result" = "O"
+      "targetid" = "NORSE"
+      "template" = "NORSE_TEMPLATE"
+    }
+  }
+  "requester" "user" = {
+    "id" = "ACOS0000"
+    "name" = "Alyce Q Acosta"
+  }
+}
+Output
+Output from the plugin is as follows:
+   "" "" = {
+     "errmsg" = "" # Contains any error message to return
+     "retval" = "0"  # Mandatory; zero is success and non-
+zero is failure
+     "try" = "<Profile ID>" # The ID gerenated by the plugin
+     "forceUseID" = "<true|false>"
+       # Optional; overrides any conflicts with the profile ID
+     "reservationid" = "<reservation ID>"
+       # If a reservation functions are used, any reservation made needs to
+       # be returned
+   }
+The follow are examples of KVGroup plugin output:
+1.To suggest "DanielsJo1" be used:  1."" "" = { 
+  "errmsg" = "" 
+  "retval" = "0" 
+  "try" = "DanielsJo1" 
+}  
+2.To return a failure:  2.
+"" "" = { 
+  "errmsg" = "Fail" 
+  "retval" = "1" 
+}  
+3.To suggest "DanielsJo2" be used and force it to be used:  3.
+"" "" = { 
+  "retval" = "0" 
+  "try" = "DanielsJo2" 
+  "forceUseID" = "true" 
+}  
+.
+Con figur e  c omposition  rules for plugin-id.psl
+To c on figur e  the default ID generator plugin:
+1.Click Manage the system  > W orkflow  > Options  > Plugins . 1.
+2.Ensure the IDSYNCH ID PLUGIN option  is set to plugin-id.psl . 2.
+3.Type the IDSYNCH ID PLUGIN MASK to determine how a user ID will be composed. 3.
+4.The default pr ofile  ID c omposition  is determined by a PSLang expression that uses the fir s t six 4.
+characters of the last name and appends the fir s t two characters of the user’s fir s t name. If a fir s t
+name is not de fined,  the value is ignored.
+5.Click Update . 5.
+If the plugin produces an ID that c onflicts  with the ID filt ers  (on page 557), it will fail.See Using PSLang Expressions
+PSLang is a scripting  language with a syntax much like C, but with a large set of built-in functions.
+You can use PSLang expressions to de fine:
+▪account attribut e  values (other than boolean types) ▪
+▪The format of pr ofile  IDs ▪
+▪User classes▪
+▪Managed system policy memberships and managed accounts▪
+PSLang expressions let you use the value of a profile  attribut e  indirectly. That is, you can modify them,
+add them to another fix ed  value, or combine them with another pr ofile  attribut e.   
+Syntax
+An expression is some sequence of oper ations  that yields a result. A literal value, a variable, or a function
+by themselves can be an expression. The following are valid expressions:
+5
+"3"
+m y function(  1 )
+5+3
+5 + "3"
+"5" + "3"
+"5" + m y function(  innerfunction()  - 6 )
+$x + $y + $z
+A PSLang expression can include a sequence of variable declar ations  (including initializ er s)  and function
+calls. The final  statement  must be an expression; its value is taken as the overall result.
+Here is a sequence of statements:
+var $a = "hello";
+var $b = ", world";
+var $c = strlen( $a );
+$a + $b + " - length: " + $c
+This is acceptable as a PSLang expression because the last statement is itself a normal expression. The
+result here would be: hello, world - length: 5 .
+In the Bravura Security Fabric  GUI, the same sequence of statements would be written  on one line:
+var $a = "hello"; var $b = ", world"; var $c = strlen( $a ); $a + $b + " - length:" + $c
+Types of expressions
+PSLang supports the following types of expressions:Oper ation Description
+<string literal > string literal
+<integer literal > integer literal
+- <integer literal > negate an integer
+< floating-poin t  literal > floating-poin t  literal
+- < floating-poin t  literal > negate a floating-poin t  literal
+$var the value of the variable
+$var[expr] string and array indexing
+(expr ) for clarity or to change order of e v aluation
+expr + expr addition  or string c onc a t enation
+expr - expr sub tr action
+expr * expr multiplic ation
+expr ∕ expr division
+expr % expr modulus
+expr isin expr is left a substring of right?
+expr == expr equality
+expr ! = expr inequality
+expr ≤ expr left is less than or equal to right?
+expr < expr left is less than right?
+expr ≥ expr left is greater than or equal to right?
+expr > expr left is greater than right?
+~expr bitwise neg ation
+expr & expr bitwise and
+expr — expr bitwise or
+expr && expr logical and
+expr—— expr logical or
+$var++ post increment operator
+$var– post decrement operator
+! expr logical neg ation
+func(...) function  call
+iif( test, true_part , false _part ) ternary operator
+A boolean expression yields an integer result, where zero is interpreted as false , and any value other than
+zero is interpreted as true.
+Bitwise operators (~, &, —) must not be confused with logical operators ( !, &&, ——). Although PSLang
+does not support “^”, the bitwise exclusive or operator ( xor), you can achieve the same results using:
+( A & ~B ) | ( ~A & B ) .The PSLang + operator can be used with numerical values, or to append string values. In an expression
+such as  x+y , where x is a string and y is a number, y is converted to a string and appended to x.
+The ternary operator works the same way as the C++ ternary operator ( ?:). The test expression is
+evaluated, and if the result is non-zero, the true_part expression is evaluated and returned. Otherwise,
+the false _part expression is evaluated and returned.
+Order of e v aluation
+The order of e v aluation  proceeds according to the precedence of the operators in the expression. The
+following table lists the precedence of the operators, with the highest priority at the top of the list.
+Precedence Level Operators
+1 [ ]
+2 ! ~
+3 * ∕ %
+4 + -
+5 isin
+6 ≤  ≥  <  >
+7 == ! =
+8 &
+9 |
+10 &&
+11 ||
+12 parentheses
+E v aluation  of the expression moves left to right and stops at the earliest possible pass/fail decision;
+unnecessary c onditions  are not evaluated.
+PSLang aut o-c ompletion
+The user interface can be c on figur ed  to off er  aut o-c ompletion  of variable or function  calls when writing
+PSLang expressions. Enabling auto-complete provides quick access to help and f ormatting  in f ormation.
+Only the PSLang functions  that are in the string, time,  and misc sections  are available for aut o-
+c ompletion.
+The auto-complete drop-down list appears as you type a valid expression into a PSLang text area. Only
+variables, functions  and c ompletion  options  that match what you are typing are displayed. For detailed
+in f ormation,  click the ? link to the right of each listed item.
+To see the complete drop-down list of all available options:
+▪Click in an empty PSLangtext field. ▪
+▪Press the [ ↓] key at a word break while typing an expression in a PSLang text area. ▪
+▪Press the [ ↓] key mid-word while typing an expression that does not match any of the available ▪
+expressions.Na vig ation  through the list can be done with the mouse, or using the [ ↑] and [ ↓] keys. Selections  can be
+made using the [Enter] or [Tab] keys. The [Esc] key closes the menu.
+The PSLang aut o-c ompletion  functionality  can be disabled or enabled by clicking disable auto c ompletion
+or enable auto c ompletion  beneath any PSLang text area.
+The default settings  for the PSLang auto-complete functionality  are controlled by the config.js
+script, located in the \<instance>\design\src\js\ directory. In this script, the AutoCompletePslang group
+has the following options:
+<PSLANG>PSLang auto-complete options  inc on fig.js
+Option Description
+enabled Controls whether the script is available to users.The
+default value is true.
+initiallyOff Controls whether PSLang aut o-c ompletion  is
+enabled when a page loads. The default value is
+false. If set to true, then PSLang aut o-c ompletion  is
+off by default when a page loads..
+Default expressions
+This section  illustrates the use of <PSLANG> expressions by explaining expressions used by default by
+Bravura Security Fabric .
+Each of these expressions use an iif() function,  which takes 3 parameters –
+iif(boolean expression, "true-part", "false-part" )
+It evaluates the boolean expression, and when it’s true, it returns the true-part. Otherwise, it returns the
+false-part.
+In PSLang, a variable is pr e fix ed  by $. The variables discussed in this chapter represent a string of
+characters, or an array of strings.
+The characters [n] are placed after  variable names to index the nth character in a string, or the nth
+value in an array, s t arting  from 0. This is used with pr ofile  attribut es,  which can have multiple  values. The
+fir s t of an array of values is represented by $ATTRIBUTE[0] , the second by $ATTRIBUTE[1] , and so
+on.
+All built-in attribut es  must be expressed as an array. That is – $FIRST_NAME[0] , $OTHER_NAME[0] ,
+$LAST_NAME[0]
+IDSYNCH ID PLUGIN MASK
+The default function  for the IDSYNCH ID PLUGIN MASK is:
+iif( (size($LAST_NAME) > 0 && size($FIRST_NAME) > 0),substr($LAST_NAME[0], 0, 5) + substr($FIRST_NAME[0],
+0, 1),
+""
+)
+First, the boolean expression ensures that there are values for $FIRST_NAME  and $LAST_NAME . If
+check is successful, then it takes the 0-5 characters (fir s t  6) of LAST_NAME and the 0-1 characters (fir s t
+2) of FIRST_NAME and put them together to form a user’s <PROFILEID>.
+If the safety check fails, then it returns an empty string.
+FULLNAME
+This is used for the value of many target attribut es  (e.g., displayName on Activ e  Directory):
+iif( size($OTHER_NAME) > 0,
+$FIRST_NAME[0] + " " + $OTHER_NAME[0] + " " +
+$LAST_NAME[0],
+$FIRST_NAME[0] + " " + $LAST_NAME[0]
+)
+This fir s t checks whether $OTHER_NAME has any values. If it does, then it composes a string such as
+“John Angus Doe”. If $OTHER_NAME does not have any values (the user has no middle name) then it
+composes a string such as “Bill Smith”.
+MIDDLE INITIAL
+This PSLang expression, also used for the value of target attribut es  (e.g., initials  on Activ e  Directory),
+contains more than one statement:
+var $other = iif( size($OTHER_NAME) > 0,
+$OTHER_NAME[0], "" );
+$other[0];
+This retrieves the fir s t character of a user’s “other name”. The $OTHER_NAME  variable is an array of
+strings. Like other pr ofile  attribut es  it could be de fined  to accept more than one value. So, the expression
+assigns the fir s t element of $OTHER_NAME (assuming it exists, otherwise it returns a blank string) to
+$other . Since the variable $other is just a string, and not an array, the expression $other[0] gets just
+the fir s t character of the “other name”.
+and the PSLang Manual ( pslang.pdf ) for more in f ormation  about PSLang expressions.
+Check individual target systems for uniqueness
+In addition  to checking for uniqueness against other pr ofile  IDs, the IDSYNCH ID PLUGIN can also check
+for c on flicts  with accounts on individual target systems that are not necessarily a source of pr ofile  IDs. For
+example:▪John Smith has a user ID johns  on Target System A, which is not a source of pr ofile  IDs. ▪
+▪New hire John Snow is added on Target System B, which is a source of pr ofile  IDs. ▪
+▪Bravura Security Fabric  generates the ID johns  for John Snow. ▪
+▪John Smith’s accounts on Target System A are erroneously auto-associated with John Snow.▪
+To allow Bravura Security Fabric  to check a target system’s account IDs for c on flicts  with a new pr ofile  ID,
+select the Check accounts for uniqueness when cr eating  new pr ofile  IDs option  on the Target system
+in f ormation  (on page 480) page.  
+Compose t ar g e t -specific  account IDs
+Bravura Security Fabric  normally applies a standard pr ofile  ID to create new IDs on individual target
+systems. Some target systems use diff er en t  rules for case and c omposition.  You can change Bravura
+Security Fabric ’s default behavior of cr eating  lowercase login IDs by changing the plugin set by the
+Program to set the case of new IDs option  on the Target system inf ormation  page.
+Bravura Security Fabric  provides two built-in programs to convert the pr ofile  ID to a t ar g e t -s y s t em-
+specific  login ID:
+▪upper.pss – use all uppercase characters. ▪
+▪lower.pss – use all lowercase characters. ▪
+You can also write a customized plugin; for example, to create mixed-case IDs, or to create a numerical ID
+composed from a user attribut e.  A sample, plugin-idcase.psl , is included in the samples
+directory.
+To c on figur e  a target system login ID plugin, type the name of the plugin in the Program to set the case
+of new IDs  field  on the Target system inf ormation  page. The full path is not required.  
+See more in f ormation  about writing  a custom plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The plugin is called by the T r ansaction  Monitor Service service, before running a connector to create a
+new account.
+Input
+The plugin receives all Bravura Security Fabric  plugin data, including requester and recipient in f ormation,
+target system in f ormation,  and the initial  ID entered through the request.
+"" "" = {
+  "currentTemplate" = "<template ID>" # The template used for account creation (ACUA)
+  "fullname" = "<Recipient's fullname>"
+  "newid" = "<account ID>" # Suggested new account ID to use in creation  "userid" = "<profile ID>"
+  "operation" = "<RENU|
+ACUA>" # The operation involved in requesting the new account ID.
+  "recipient" "user" = { ... } # Recipient's data
+  "request" "" = { ... } # Request data
+  "requester" "user" = { ... } # Requester's data
+  #Target details
+  "target" "" = {
+    "address" = "<target address>" # address line of the target
+    "platform" = "<platform ID>" # platform ID of the target
+    "standardid" = "<true|
+false>" # uses standard ID for auto association
+    "targetid" = "<target ID>" # target ID of the target
+  }
+}
+Output
+The plugin must return a "newid" value and a standard "retval" value (0=success, 1=failure). It may return
+a standard "errmsg" value.
+"" "" = {
+  "errmsg" = ""
+  "newid" = "BoBbY OrE"
+  "retval" = "0"
+}
+Failure to return a "newid" value results in an error.
+.
+Generate passwords for new accounts
+You can use a plugin to aut omatic ally  generate and assign an initial  password for new accounts. This can
+be useful if accounts should have a hard-coded password (so that every new account has the same initial
+password), a password based on request attribut es,  or a randomly generated password.
+When a password is provided by the plugin, Bravura Identity  skips the Set initial  password  page usually
+shown to requesters.
+To enable a password generator plugin:
+1.Click Manage the system  > W orkflo w  > Options  > Plugins . 1.
+2.Type the name of the plugin or PSLang script in the PASSWORD GEN PLUGIN row. 2.
+3.Click Update at the bottom  of the page. 3.Shipped plugins
+Install the im_corp_onboard  scenario component via the Manage components  (on page 312) console to
+aut omatic ally  c on figur e  password g ener ation  logic in this plugin point. This component generates a
+random initial  password for new user accounts. Note that installing this component also installs a
+number of dependencies, including components that require fir s t -time  users to agree to an Acceptable
+Usage Policy , and to reset their password before accessing Bravura Security Fabric .
+You can also write a custom script to generate the initial  password
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The plugin is run by the W orkflo w  Manager Service ( idwfm ) when a new account is requested. If the
+plugin:
+▪Fails, the new account request cannot proceed.▪
+▪Succeeds but does not return a password, the user is prompted for a password as usual.▪
+▪Succeeds and returns a password, Bravura Identity  skips the Set initial  password page and proceeds to ▪
+the next step of the request.
+Input
+The plugin receives standard request data  (on page 1506). For example:
+"" "" = {
+  "module" = "<idr|idwfm>" # The program that calls the plugin
+  "sessionid" = "<session ID>" # session ID for the viewer
+  "passwordpolicy" "<policy id>" = {
+     "template" = "<template ID>"
+     "strength" "<policy id>" = {
+      "<rule ID>" = "<rule value>" # 1 or more password rules
+     }
+  } # 1 or more password policy KVGroups
+   "request" "" = { ... }
+     # See Request data  (on page 1506).
+}
+Output
+The output includes the standard "retval" and optional  "errmsg" pairs, and either "password" key-value
+pair or policy password KVGroup:
+   "" "" = {
+    "errmsg" = "<message>"

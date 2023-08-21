@@ -1,0 +1,333 @@
+Criteria Description
+▪Success▪
+▪Failed▪
+▪In progress▪
+Data quality reports
+Users with no managers
+Purpose : Shows users who do not have a manager in the OrgChart.
+Executable : usersnomanagers
+Search Criteria :
+Criteria Description
+Report type Select a report type:
+Show all users with no manager : displays all users that
+do not have a manager, regardless of their subordinates.
+Show users with no manager and no subordinates :
+displays all users that do not have a manager and do not
+have any subordinates.
+Show users with no manager and some subordinates :
+displays all users that do not have a manager but have at
+least one subordinate.
+Show users with no manager and list direct
+subordinates : list the users who are managers of
+orphaned subtrees along with their direct subordinates.
+Show users with no manager and list direct and indirect
+subordinates : list the users who are managers of
+orphaned subtrees along with their direct and indirect
+subordinates
+The top manager is not considered a user with no manager.
+Inconsistent account attribut es
+Purpose : Reports on users with corresponding account attribut es  that have inconsistent values.
+Executable : inconsisacctattrib
+Search Criteria :Criteria Description
+Attribut e Select one or more pr ofile  attribut es  for which to report
+inconsistencies. Attribut es  are only displayed here if they
+can be applied to a user pr ofile  (not request-only).
+User ID Type the ID of the user for whom you want to generate
+the report. Alt ernativ ely ,  search for one or more user
+pr ofile  IDs for which to report inconsistencies.
+Invalid user attribut es
+Purpose : Reports on users with pr ofile  attribut e  values that do not meet v alidation  rules.
+Executable : invaliduserattr
+Search Criteria :
+Criteria Description
+Attribut e Select one or more attribut es  from the list of pr ofile
+attribut es.  By default, the report will search for all
+attribut es.  Attribut es  are only displayed here if they can
+be applied to a user pr ofile  (not request-only).
+Report type Select a report type:
+Show users with empty attribut e  values : All users who
+do have not specified  a value for the selected attribut e
+are listed.
+Show users with non-empty attribut e  values shorter or
+equal to : Type a positiv e  integer value in the field.  This
+value specifies  the number of characters in the selected
+attribut e  values. The report lists all users whose attribut e
+value is shorter than the specified  length. For example, if
+you select the Email address attribut e,  and enter 10 for
+this option,  then the report lists all users whose email
+address is shorter than 10 characters in length.
+Show users with invalid attribut e  values : All users who
+have an invalid value for the selected attribut e  are listed.
+Attribut e  values are invalid if:
+▪Not enough values: value missing for mandatory▪
+attribut e
+▪Too long: value exceeds specified  maximum length ▪
+▪Not in restricted list: value is not from restricted list, if▪
+restricted values are de fined
+▪Bad format: value format does not match the required▪
+attribut e  formatDisappeared groups
+Purpose : Shows managed groups where the corresponding target system has disappeared.
+Executable : disappearedgroups
+Search Criteria :
+Criteria Description
+Target system ID Type a comma-and-space-delimited list of target system
+IDs to list invalid managed groups from those systems.
+Alt ernativ ely ,  you can search for one or more target
+systems.
+Show resources Select this checkbox if you want to display resources that
+use the disappeared group.
+Users with inactiv e  roles
+Purpose : Shows users with deprecated, disabled, or not assignable roles.
+Executable : inactiveroles
+Search Criteria :
+Criteria Description
+Roles Type a comma-and-space-delimited list of roles to
+include in the report. Alt ernativ ely ,  you can search for
+one or more roles.
+Role status Select one or more role statuses to include in the report:
+▪Deprecated▪
+▪Disabled▪
+▪Unassignable▪
+Duplicate entries can appear in report output if you select multiple  role statuses and a role has multiple
+statuses of invalidity, or a user has multiple  roles which are in diff eren t  statuses of invalidity.
+For example, if a role is both deprecated and unassigned, and a user has both roles, then that user is
+reported twice.
+Entitlemen ts  with invalid authorizers
+Purpose : Reports on entitlemen ts  with invalid or insufficien t  authorizers.
+Executable : invalidauthor
+Search Criteria :Criteria Description
+Report type Select a report type:
+Invalid authorizers : lists all authorizers that are no longer
+valid; for example, authorizers that were removed from
+the target system.
+Insufficien t  authorizers : lists all resources that have less
+than the minimum required number of authorizers
+de fined.
+Entitlemen t  type This is the type of resource from which you want to list
+invalid or insufficien t  authorizers. Select an entitlemen t
+type:
+▪Target system▪
+▪Template account▪
+▪Managed group▪
+▪Role▪
+▪ Segr eg ation  of duties  rules ▪
+Target system ID Type a comma-and-space-delimited list of target system
+IDs to list entitlemen ts  from those systems. Alt ernativ ely ,
+you can search for one or more target systems.
+This option  is only displayed if Entitlemen t  type is set to
+Target system , Template account , or Managed group .
+Managed groups Type a comma-and-space-delimited list of managed
+groups to list entitlemen ts  for those groups. Alt ernativ ely ,
+you can search for one or more managed groups.
+This option  is only displayed if Entitlemen t  type is set to
+Managed group .
+Roles Select one or more roles. This option  is only displayed if
+Entitlemen t  type is set to Role and there is at least one
+role de fined.
+Segr eg ation  of duties  rules Select one or more SoD rules. By default, all SoD rules are
+included in the report output. This option  is only
+displayed if Entitlemen t  type is set to Segr eg ation  of
+duties  rules and there is at least one SoD rule de fined.
+Include discovery templates Select to include discovery templates for target systems.
+This option  is only displayed if Entitlemen t  type is set to
+Target system .
+Invalid reviewers
+Purpose : Invalid reviewers assigned to activ e  certific ation  campaigns.
+Executable : invalidcertifiers
+Search Criteria :Criteria Description
+Campaign description Type the description  of one or more certific ation
+campaigns to only include those rounds in the report.
+Alt ernativ ely ,  you can search for one or more certific ation
+campaigns.
+Certific ation  method Select a value to only include saved c on figur ations  with a
+matching certific ation  method. The possible values are:
+▪All certific ation  methods ▪
+▪Single reviewer▪
+▪Segment reviewers▪
+▪Resource authorizers▪
+▪Orgchart manager▪
+Choose start date This is the date that the campaign was initia t ed,  not the
+date that the reviewer started. Choose one of the
+following options  to de fine  a start date:
+Date not required : This is the default setting.  In f ormation
+is listed regardless of start date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the reportCriteria Description
+Option Description
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: In f ormation  is only included in the report output if the
+start date falls within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: In f ormation  is only included in the report output if the
+start date and time  falls within the Start date range . Use
+the fir s t set of date / time  controls to select the earliest
+time  to include, and the second set of date / time
+controls to select the latest time  to include.Criteria Description
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Pr ofile  attribut e  histogram
+Purpose : Show the dis tribution  of pr ofile  attribut e.
+Executable : profileattrhistogram
+Search Criteria :
+Criteria Description
+Pr ofile  attribut e  to analyze The pr ofile  attribut e  which is used tally.
+Pr ofile  attribut e  to search Select a pr ofile  attribut e  and the value to filt er  the users
+that are considered to be included in the results.
+Comparator This field  is displayed if a Pr ofile  attribut e  to search  field
+is other than Attribut e  not required. Select the value type
+of comparator to apply on the pr ofile  attribut e  to search.
+is equal to  if you want Bravura Security Fabric  to search
+on values equal to a specified  string.
+is not equal to  if you want Bravura Security Fabric  to
+search on values not equal to a specified  string.
+is empty to  if you want Bravura Security Fabric  to search
+on attribut es  without a value.
+is not empty  to if you want Bravura Security Fabric  to
+search on attribut es  with a value.
+Value This field  is displayed and required if a Comparator field
+is set to  is equal to  or is not equal to . Type the value of
+the string to compare with.
+This searches against the attribut e’ s  stored string
+value in the database, regardless of attribut e  type.
+User class ID Select the single participan t  user classes to filt er  the
+users that are considered in the totals.
+Minimum value The minimum value to include.
+Maximum value The maximum value to include.
+Size of bands The size of bands that are tallied.
+Graph type The graph type to display the data bands.Pr ofile  attribut e  frequency
+Purpose : For a given attribut e  or a set of two pr ofile  attribut es,  show all values (or c ombinations  of two
+values) that appear at least a specified  number of times.  This includes individual values of multi- v alued
+attribut es  as well as duplicate values where multiple  values and duplicates are allowed for an attribut e.
+Executable : profileattrfreq
+Search Criteria :
+Criteria Description
+Attribut e Enter the pr ofile  attribut e  for which to count the value
+frequency.
+Attribut e  value to search Type the value of the pr ofile  attribut e.
+Attribut e Optionally ,  enter the second pr ofile  attribut e  for which to
+count the value frequency in c ombination  with the fir s t
+one.
+Attribut e  value to search This field  is displayed if the second attribut e  is other than
+"Attribut e  not required". Type the value of the pr ofile
+attribut e.
+Minimum frequency Enter the minimum appearance count for a same
+attribut e  value to be displayed.
+Graph type Select the graph type:
+(None ): No graph generated
+Horizontal bar chart : bar chart will be generated
+Number of rows for graph The maximum rows for graph to display. The selected
+rows will be displayed with the frequency of attribut es  in
+descending order.
+Mismatched role assignments
+Purpose : Lists roles per user where the user has been assigned the role and has some or all of the
+entitlemen ts,  but the correct in f ormation  is not r e flect ed  in the Bravura Security Fabric  database. For
+example, a user is assigned a role that includes only template accounts. A managed group is later added
+to the role, and the user is added to the group out of band. In this case the user meets the role
+requirements, but the database does not contain correct in f ormation.
+Executable : mismatchedrole
+Search Criteria :
+Criteria Description
+Reference role The roles to show surpluses or de ficiencies  for.
+Show mismatch based on expanded role de finitions The mismatched items are expanded on sub-roles to
+display de ficien t  and surplus entitlemen ts.Users with missing accounts
+Purpose : Lists users that do not have an account on a target.
+Executable : missingaccounts
+Search Criteria :
+Criteria Description
+UserID Type the ID of the user orsearch to find a user for whom
+you want to generate the report.
+Attribut e Select a pr ofile  attribut e  from the drop-down list. A value
+is required once an attribut e  is selected.
+Target system ID Type in target system ID orsearch to find target system to
+report users that do not have an account.
+Pr ofile  attribut e  coverage
+Purpose : Show the number of times  a given pr ofile  attribut e  is used.
+Executable : profileattrcoverage
+Search Criteria :
+Criteria Description
+Minimum number of distinct  values: Type a positiv e  integer to only display pr ofile  attribut es
+that have the "Number of distinct  values" greater than or
+equal to this integer. It is set to 1 by default.
+Maximum number of distinct  values (-1=in finit e): Type a positiv e  integer to only display pr ofile  attribut es
+that have the "Number of distinct  values" less than or
+equal to this integer. It must be greater than or equal to
+"Minimum number of distinct  values" and is set to
+in finit e  (-1) by default.
+Minimum percentage of users with a value (%): Type an integer between 0 and 100 to only display pr ofile
+attribut es  that have the "Percentage of users with a
+value" greater than or equal to this integer. It is set to 0
+by default. For each pr ofile  attribut e,  the "Percentage of
+users with a value" is calculated as its "Number of users
+with a value" divided by "Number of users excluding
+console users and superusers".
+Maximum percentage of users with a value (%): Type an integer between 0 and 100 to only display pr ofile
+attribut es  that have the "Percentage of users with a
+value" less than or equal to this integer. It must be less
+than or equal to "Minimum percentage of users with a
+value" and is set to 100 by default. For each pr ofile
+attribut e,  the "Percentage of users with a value" is
+calculated as its "Number of users with a value" divided

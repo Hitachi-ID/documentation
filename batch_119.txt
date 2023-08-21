@@ -1,0 +1,345 @@
+Bravura Pass ’s Generate voice print enrollment PIN  (PSI) module streamlines and increases the security of
+the r egis tr ation  process by requiring users to authentic a t e  to receive a longer PIN that is only good for a
+single use, and expires after  a de finable  period.
+A user registers in the following way:
+1.The user logs into Bravura Pass  and navigates to the Generate voice print enrollment PIN page. 1.
+2.Bravura Pass  generates a random PIN and displays it to the user. The PIN is good for only one use and 2.
+expires after  a de fined  number of seconds.
+If c on figur ed,  Bravura Pass  displays additional  in f ormation  and na vig ation  steps for the phone
+r egis tr ation  system.
+3.The user calls the IVR system, follows the voice prompts, enters the PIN, and registers their voice3.
+print.
+The Generate voice print enrollment PIN  (PSI) module is disabled by default. You must enable it to allow
+users to access this feature.
+To c on figur e  IVR r egis tr ation:
+1.Click Manage the system  > Modules  > Generate voice print enrollment PIN  (PSI) . 1.
+2.Turn on the PSI ENABLED setting. 2.
+3. Con figur e  the variables described in the table below as required. 3.
+4.Click Update to submit the changes. 4.
+IVR r egis tr ation  options
+Option Description
+PSI RANDOM DIGITS The number of random digits to follow the 2 digit idpm server number in
+generated PINs. This value must be between 4 and 14. The default value
+is 4. (required)
+PSI RANDOM EXPIRY The time  (in seconds) before the random number generated is expired.
+The default value is 600.
+Manage the system (PSA)
+Product administrators use the Manage the system  (PSA) module to carry out core c on figur ation  and
+adminis tr ation  tasks. This includes c on figuring  Bravura Security Fabric  objects and environment,
+managing processes and options,  c on figuring  web features, and administering security.
+To c on figur e  options  for the adminis tr ativ e  consoles, including the Manage the system  (PSA) module:
+1.Click Manage the system  > Modules  > Manage the system (PSA) . 1.
+2. Con figur e  the options  in Table Modules > Manage the system (PSA) options  (on page 1182) as 2.
+required.
+3.If required, c on figur e  event options  listed in table Manage the system  (PSA) module events  (on page 3.
+1182), Manage the system  (PSA) module events  (on page 1544).
+4.Click Update to submit changes. 4.Modules > Manage the system (PSA) options
+Option Description
+PSA FILTERING Enable this option  to allow filt er  plugins to run when a product
+administrator manages templates, roles, or pr e-de fined  requests in the
+Manage the system.
+PSA TARGET ADDRESS LENGTH Limit the number of characters displayed for target system addresses on
+the target selection  page in the Manage the System > Resources > Target
+systems  menu.
+Manage the system  (PSA) module events that launch interface programs
+The following Manage the system (PSA) module options  can be accessed from Manage the system  >
+Maintenance > System variables  or Manage the system  > Modules  > Manage the system (PSA) :
+Option Description
+ADMIN DISABLE SUCCESS A product administrator successfully disables another product
+administrator ’s user ID.
+ADMIN ENABLE SUCCESS A product administrator successfully enables another product
+administrator ’s user ID.
+ADMIN UNLOCK ADMIN A product administrator unlocks another product administrator .
+RESOURCE AUTHORIZER ADD An authorizer is added to a resources.
+RESOURCE AUTHORIZER DEL An authorizer is removed from a resources.
+RESOURCE IMPLEMENTER ADD An implementer is added to a resources.
+RESOURCE IMPLEMENTER DEL An implementer is removed from a resources.
+Front-End (PSF)
+When a user visits the index page for  Bravura Security Fabric  instance they are directed to the Front-end ,
+which is used to provide access to Bravura Security Fabric  and to present the user with a menu of
+available options.
+To c on figur e  options  for the Front-end :
+1.Click Manage the system  > Modules  > Front-end (PSF) . 1.
+2.Ensure that the PSF EXT option  is enabled - that it is set to an appropriate authentic ation  method. 2.
+3.If you set the authentic ation  method in PSF EXT to User-selectable , type a list of authentic ation 3.
+keywords (comma delimited, no spaces) in the PSFEXT VALUES option.
+4. Con figur e  the options  in Table Modules > Front-end (PSF) options  (on page 1183) as required. 4.
+5.Click Update to submit the changes. 5.
+Modules > Front-end (PSF) optionsOption Description
+DOWNLOAD PLUGIN Specify a plugin to generate a file to download.
+MAX MOBILE DEVICES Specify the maximum number of mobile devices that users may
+register for themselves.
+See Mobile Access  (on page 1444) for more in f ormation.
+PROFILE ID TAG Allow users to enter their <PROFILEID>s on the Front-end login
+page.
+PSFEXT VALUES All possible values of PSF EXT.
+PSF EXT Authentic ation  program or method to run for self-service front-end
+authentic ation.
+PSF FORCE ENROLLMENT When users login, aut omatic ally  direct them to appropriate
+modules to complete enrollment tasks.
+PSF IDENT AS AUTH If this option  is enabled, Bravura Security Fabric  v erifies  the user’s
+password against the target system selected for identific ation.  If the
+v erific ation  fails, or if the selected target system is not in the
+authentic ation  priority list, then Bravura Security Fabric  tries to
+verify the password as determined by NUM HOSTS VERIFY and the
+authentic ation  priority list.
+PSF MOBILE REGTIMEOUT This is the number of seconds that a user has to scan a QR code
+when they are activ ating  their mobile device using the Bravura One
+app before the activ ation  will expire.
+Default is 300.
+See Mobile Access  (on page 1444) for more in f ormation.
+PSF PLUGIN Add functionality  and HTML to the front-end. The default plugin is
+psf-plugin.py .
+Enforced enrollment
+Bravura Security Fabric  aut omatic ally  directs users to the appropriate module if they need to complete
+an enrollment task.
+To control which tasks users must complete before their pr ofile  is considered complete, add one or more
+of the following comma-delimited values to Manage the system > Modules > Front-end (PSF) >  PSF
+FORCE ENROLLMENT :
+Value Enforcement action
+psq If users have not de fined  enough personal questions  and answers, they
+are directed to the Update security questions  (psq) module.
+psr If users have not registered for transparent s ynchr oniz ation,  they are
+directed to the Password s ynchr oniz ation  r egis tr ation  (PSR) module.
+psl If users have not registered enough accounts, they are directed to the
+Attach  other accounts (PSL) module.Value Enforcement action
+idr If users have not supplied required values for pr ofile  and request
+attribut es,  they are directed to the View and update pr ofile  (IDR) module.
+The Complete pr ofile  attribut es  pr e-de fined  request wizard aut omatic ally
+opens.
+mobiledevice If users have not registered a mobile device, they are directed to the
+Mobile devices page.
+psi If users have not registered for voice print, they are directed to the
+Generate voice print enrollment PIN (PSI) module.
+When web notific ations  (on page 448) are c on figur ed,  they are shown to users fir s t.  When the user
+attemp ts  to return to the main menu, they are directed to the enrollment task. Users are directed to
+enrollment tasks in the order in which the values are entered in this field.  When the user completes all
+enrollment tasks, they are redirected to the main menu aut omatic ally .
+To disable aut omatic  r edir ection,  clear all values from this field.
+Unlock accounts (PSK)
+The Unlock accounts  (PSR) module allows users who have locked an account due to too many failed login
+attemp ts  to unlock their account, using a web browser. Users access the Unlock accounts  (PSR) module
+after  logging into Bravura Security Fabric  with a known password or with another form of authentic ation.
+Bravura Pass does not allow users to reactivat e  accounts that were disabled by an administrator.
+The Unlock accounts  (PSR) module is disabled by default. You must enable it to allow users to access this
+feature. Enabling this module also allows help desk user s to unlock users accounts via the Help users  (IDA)
+module.
+To c on figur e  self-service unlock:
+1.Click Manage the system  > Modules  > Self-service unlock (PSK) . 1.
+2.Turn on the PSK ENABLED setting. 2.
+3.If required, c on figur e  event options,  listed in Table Unlock accounts  (PSK) module events that launch 3.
+interface programs  (on page 1184), Unlock accounts  (PSK) module events that launch interface
+programs  (on page 1542), that trigger external programs.
+4.Click Update to submit changes. 4.
+Unlock accounts  (PSK) module events that launch interface programs
+The following Unlock accounts (PSK) module options  can be accessed from Manage the system  >
+Maintenance > System variables or Manage the system  > Modules > Unlock accounts (PSK):
+Option Description
+PSK UNLOCK FAILURE An authorized user has failed to unlock one or more of the accounts that
+they own.Option Description
+PSK UNLOCK START An authorized user attemp ts  to unlock one or more accounts that they
+own.
+PSK UNLOCK SUCCESS An authorized user successfully unlocks all selected accounts that they
+own.
+Attach  other accounts (PSL)
+The Attach  other accounts  (PSL) module builds on auto discovery , which aut omatic ally  connects standard IDs
+to users’ pr ofiles.  Regular users can use the Attach  other accounts  (PSL) module to attach  their own non-
+standard login IDs to their pr ofile.
+The Attach  other accounts  (PSL) module is enabled by default. To block access to this feature, turn off the
+PSL ENABLED setting.  Depending on the user access rules, help desk user s can attach  accounts to users’
+pr ofiles,  via the Help users  (IDA) module.
+Users cannot attach  accounts on target systems that do not allow password v erific ation.  By default, users
+cannot attach  accounts that already belong to another user.
+You can modify some defaults for individual targets on the Target system in f ormation  for the target
+system.
+PSL modes
+The Attach  other accounts  (PSL) module can be used in one of two modes:  
+Simplified  mode (default): 
+1.Users are presented with a list of their accounts. For each account, Bravura Security Fabric  lists the 1.
+target system, login ID, whether it is standard, and whether the account is still valid in the column.
+2.Depending on the c on figur ation,  users: 2.
+▪Enter a login ID, then the corresponding password on the next web page.▪
+▪Enter one or more login IDs and password pairs on a single page. The maximum number of pairs▪
+allowed is c on figur able.
+3.Bravura Security Fabric  searches for all available accounts with the supplied non-standard login ID. If 3.
+Bravura Security Fabric  finds  more than one account, users are presented with a list so that they can
+choose which account they would like to attach  to their pr ofile.
+This step is skipped if Bravura Security Fabric  is c on figur ed  to aut omatic ally  select all returned
+accounts.
+4.Bravura Security Fabric  v erifies  the user-supplied password on the accounts then attaches  the correct 4.
+accounts to users’ pr ofiles.
+Advanced mode: 
+1.Users are presented with a list of systems where Bravura Security Fabric  can manage login IDs and 1.
+accounts.2.Users attach  an account on a system by typing their ID and password beside that system’s description. 2.
+3.Bravura Security Fabric  v erifies  that the ID exists and the password is correct. If so, they are attached 3.
+to the users’ pr ofiles.
+In the Attach  other accounts  (PSL) module’s simplified  mode, users cannot attach  accounts that exist on
+a target system that is a source of profile  IDs.
+PSL options
+To c on figur e  options  that apply to the Attach  other accounts  (PSL) module:
+1.Click Manage the system  > Modules  > Attach  other accounts  (PSL) . 1.
+2. Con figur e  the options  in Table Modules > Attach  other accounts  (PSL) options  (on page 1186) as 2.
+required.
+3.If required, c on figur e  event options,  listed in Table Attach  other accounts  (PSL) module events that 3.
+launch interface programs  (on page 1187), Attach  other accounts  (PSL) module events that launch
+interface programs  (on page 1536).
+4.Click Update . 4.
+Options  marked with a 
+  in this table only apply to simplified  mode.
+Options  marked with a 
+  in this table only apply to advanced mode.
+Modules > Attach  other accounts  (PSL) options
+Option Description
+PSL ALLOW DELETE Allow users to remove manually -attached  accounts from their pr ofiles.  You
+can override this behavior for individual target systems.
+PSL DUPLICATE SHOWWhen a user attemp ts  to attach  an account that is already owned by
+another user and the oper ation  is not allowed, show the owner of the
+account in the r esulting  error message.
+PSL MIN ACCOUNTS Require users to attach  <N> accounts in their pr ofiles.  If a value is not
+specified,  the default is 1.
+If users have not attached  enough accounts, Bravura Security Fabric  can
+enforce this requirement by dir ecting  users to the Attach  other accounts
+(on page 1183) after  they log in, and displaying an error message.
+When you change this setting ,  Bravura Security Fabric  aut omatic ally
+schedules the psdonechk program to run once to check compliance. To
+modify the scheduled job, click <NavSchedule>, then select PSDONECHK .
+PSL POWER USER Allow advanced users to be able to switch to advanced mode from
+simplified  mode.
+PSL SHOW HOST TYPE Show users the type of target system alongside its name
+PSL SIMPLIFIED Enable simplified  mode (default). If this option  is not enabled, then users
+must operate in advanced mode.Option Description
+PSL SIMPLIFIED MOVE
+PASSWORDAllow users to enter <N> login ID and password pairs on the attach  other
+accounts page.
+If this setting  does not have a value, users type a single login ID on the
+attach  other accounts page, then they type a single password on the select
+accounts page.
+PSL SIMPLIFIED SELECT ALL Aut omatic ally  attach  all accounts that match the supplied login ID and
+password pairs to users’ pr ofiles.  When this setting  is enabled, the account
+selection  page is not displayed.
+PSL SIMPLIFIED MOVE PASSWORD  must also be enabled.
+PSL SIMPLIFIED SELECT NONE Do not pre-select any account checkboxes on the account selection  page.
+PSL USER VERIFY Verify passwords for e xisting  IDs with a user verify oper ation  rather than
+administrator verify oper ation.
+PSL VERIFY COUNTS To prevent users from attempting  to attach  accounts that do not belong to
+them, the logged-in user is locked out of Bravura Security Fabric  after  a pr e-
+de fined  number of password authentic ation  failures . An authentic ation
+failure is counted if an ID/password pair fails to match any account.
+If you disable this option,  no failure will be counted when an ID/password
+pair fails for all attached  accounts, and users will not be locked out of
+Bravura Security Fabric .
+Attach  other accounts  (PSL) module events that launch interface programs
+The following Attach  other accounts (PSL) module options  can be accessed from Manage the system  >
+Maintenance > System variables  or Manage the system  > Modules  > Attach  other accounts (PSL) :
+Option Description
+PSL DELETE FAILURE A user tries to delete a login ID from their pr ofile,  but fails for some
+reason.
+PSL DELETE SUCCESS A user deletes a login ID for themselves on some system – showing that
+they now have a standard-name login account on that system.
+PSL DONE A user successfully attaches  the minimum number of accounts specified  by
+the PSL MIN ACCOUNTS option.
+PSL DUPLICATE ALIAS An advanced mode user tries to attach  an alternate login ID that has
+already been assigned, and so is denied the ID.
+PSL NOT DONE A user fails to attach  the minimum number of accounts specified  by the
+PSL MIN ACCOUNTS option.
+PSL UPDATE FAILURE A user tries to change an account in their pr ofile,  but fails for some reason.
+PSL UPDATE SUCCESS A user changes an alternate login ID for themselves on at least one system.
+PSL VERIFY FAILURE A user tries to modify an ID in their pr ofile  (add, update or delete), but
+fails because the password provided for the login on that system could not
+be v erified.Option Description
+PSL VERIFY LOCKOUT A user gives an invalid password too many times  for an alternate login ID
+and is now locked out of Bravura Security Fabric .
+User notific ation  (PSN)
+The User notific ations  (PSN) module acts as the gateway between the Notific ation  Client ( psntfclient )
+and the Notific ation  Service, and enables users to receive, acknowledge, and act on notific ations  from
+their web browser
+When a web notific ation  is triggered, the user is prompted to log into Bravura Security Fabric  and then
+the web browser will open at the Notific ations  page of the User notific ations  (PSN) module. Users can also
+access this page, if they have notific ations,  from a link on the main menu.
+Enabling / disabling the User notific ations  (PSN) module 
+The User notific ations  (PSN) module is enabled by default.
+To disable the User notific ations  (PSN) module:
+1.Click Manage the system  > Modules  > User notific ation . 1.
+2.Turn off PSN ENABLED to disable the module. 2.
+3.Click Update to commit your changes. 3.
+Disabling the User notific ations  (PSN) module disables all web notific ations.  It does not aff ect  batch
+notific ations.
+Configuring  notific ation  events 
+If you are using a web notific ation  to enforce compliance with an Acceptable use policy  (on page 449)
+c on figur e  event options,  listed below, which trigger external programs. See Event actions  for more
+in f ormation  about c on figuring  event actions.
+User notific ations  (PSN) module events that launch interface programs
+Option Description
+AUP DONE A user accepts an acceptable use policy.
+AUP NOT DONE A user declines an acceptable use policy.Modify notific ations  and redirect users
+You can use a plugin to modify the order of notific ations  and redirect users as they navigate and act on
+notific ations.
+When the User notific ations  (PSN) module is enabled and the plugin is set, and a user logs into Bravura
+Security Fabric :
+1.The plugin presents a list of notific ations  in order of priority. 1.
+2. After  the user acts on a notific ation  (clicks Accept or Decline ), the plugin directs the user to the next 2.
+notific ation  in the list.
+3.When there are no more notific ations  left, the user is directed to the Front-end . 3.
+The plugin is set by the PSN MODIFY ORDER AND REDIRECTION PLUGIN field  (Manage the system >
+Modules> User notific ations  (PSN) )
+There are no shipped plugins for use with this plugin point. See more in f ormation  on writing  a custom
+plugin
+Requirements
+The plugin must return notific ations  not only in order but without any gaps in numbers. If there are 5
+notific ations  and you want to show them all, then they will have to be numbered 1, 2, 3, 4, 5. If say they
+were numbered 1, 2, 3, 4, 6 then the last one will be hidden.
+Notific ations  can be hidden by:
+▪ Setting  their priorities  to "0" or any number behind the real sequence; for example if you have 10 ▪
+notific ations:  1 through to 10, you can hide notific ations  by setting  the priority to 12, 100 or 9999.
+▪Removing particular  KVGroups from output altogether. Ensure that you update priorities  of all ▪
+notific ations  "behind" the deleted one.
+See W riting  plugins  for general requirements.
+Ex ecution  points
+This plugin is executed once when a user logs into Bravura Security Fabric .
+Input
+The following is a sample of input:
+# KVGROUP-V1.0
+"" "" = {
+  "notification" "" = {
+    "id" = "AUP1"
+    "desc" = "AUP1"
+    "severity" = "F"
+    "maxrem" = "-1"    "infomsg" = "AUP1"
+    "link" = "PSNAUP"
+    "status" = "R"
+    "nreminders" = "0"
+  }
+  "notification" "" = {
+    "id" = "AUP2"
+    "desc" = "AUP2"
+    "severity" = "F"
+    "maxrem" = "-1"
+    "infomsg" = "AUP2"
+    "link" = "PSNAUP"
+    "status" = "R"
+    "nreminders" = "0"
+  }
+  "notification" "" = {
+    "id" = "AUP3"
+    "desc" = "AUP3"
+    "severity" = "F"
+    "maxrem" = "-1"
+    "infomsg" = "AUP3"
+    "link" = "PSNAUP"
+    "status" = "R"
+    "nreminders" = "0"
+  }
+  "notification" "" = {
+    "id" = "AUP4"
+    "desc" = "AUP4"
+    "severity" = "I"
+    "maxrem" = "-1"
+    "infomsg" = "AUP4"
+    "link" = "PSNAUP"
+    "status" = "R"
+    "nreminders" = "0"
+  }
+}
+Output
+The following is an example of the possible output, where "AUP2" is hidden:
+# KVGROUP-V1.0

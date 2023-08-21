@@ -1,0 +1,126 @@
+Team group members can be assigned the following privileges:
+Approvers Users who allow or disallow access requests.
+Note : Approvers are also referred to as authorizers in the core Bravura Security
+Fabric  c on figur ation  and documen t ation.
+Auto_Approved Users who can check-out access to accounts without making an access request.
+These users must also have permission to request access.
+Cr edential_Manag er User who can override or randomize the stored password on a checked-out
+account. These users must also have the Requesters privilege.
+Requesters Users who can make access requests.
+Account_Trustees Users who can make account management requests; for example, onboard
+accounts.
+System_Trustees Users who can make system management requests; for example, onboard
+privileged systems.
+Vault_Trustees Users who can make vault management requests; for example, create and update
+team vaults and accounts.
+Team_Trustees Users who can make team management requests.
+LC_Trustees Users who can make large cr edential  management requests; for example,
+uploading and updating  encrypted files,  including SSH keys and password
+protected code signing certific a t es.
+OTP_Trustees Trustees who can make OTP API account requests; for example, can create and use
+OTP accounts.
+Subscriber_Trustees Trustees who can validate subscribers of onboarded accounts.
+These are the actual values that must be inserted into the hid_global_c on figur ation  table.
+The following default privileges are assigned to the default group for ”Team: Create” requests:Example: Cr eating  global team groups and privileges
+To make cr eating  new teams more e fficien t,  you can de fine  rules in the hid_global_c on figur ation  external
+data store (extdb) table that will c on figur e  standard team groups with attached  privileges that get
+aut omatic ally  created whenever a user triggers the Team:Create pr e-de fined  request.
+This example demonstrates how to make the entries required in the hid_global_c on figur ation  external
+data store (extdb) table and create a new team for the Windows administrator accounts using the new
+standardized c on figur ation.
+Requirements
+This example requires:
+▪Bravura Security Fabric  and Connector Pack installed ▪
+▪Bravura P attern:  Privileged Access E dition  installed ▪
+▪ Activ e  Directory source of pr ofiles ▪
+Create global team groups and privileges
+1.Log in to Bravura Security Fabric  as superuser. 1.
+2.Click Manage external data store > hid_global_c on figur ation . 2.
+3.Add the following rules to the table:3.
+▪Rules to add a global team group called Approver  with the approvers, auto-approved, ▪
+cr edential_manag er  and requesters privileges:
+id: 100
+namespace:  pam_team_management
+setting:  GROUP-PRIVILEGE-ASSIGNMENT
+key:  Approver
+value:  Approvers
+description:  Add Approver group with approvers privilege to new teams.
+id:101
+namespace: pam_team_management
+setting:  GROUP-PRIVILEGE-ASSIGNMENT
+key:  Approver
+value:  Auto_Approved
+description:  Add Approver group with auto-approval privilege to new teams.
+id:102
+namespace: pam_team_management
+setting:  GROUP-PRIVILEGE-ASSIGNMENT
+key:  Approver
+value:  Cr edential_Manag erdescription:  Add Approver group with cr edential  manager privilege to new teams.
+id:103
+namespace: pam_team_management
+setting:  GROUP-PRIVILEGE-ASSIGNMENT
+key:  Approver
+value:  Requesters
+description:  Add Approver group with requesters privilege to new teams.
+▪Rule to add a global team group called Requester  with the requesters privilege: ▪
+id:104
+namespace: pam_team_management
+setting:  GROUP-PRIVILEGE-ASSIGNMENT
+key:  Requester
+value:  Requesters
+description:  Add Requester group with requesters privilege to new teams.
+▪Rule to add a global team group called Trustee  with the trustees privilege: ▪
+id:105
+namespace: pam_team_management
+setting:  GROUP-PRIVILEGE-ASSIGNMENT
+key:  Trustee
+value:  Trustees
+description:  Add Trustee group with trustees privilege to new teams.
+4.Click Update  at the bottom  of the table once all your entries are added. 4.
+Create teams using global group rules
+1.Log in to Bravura Security Fabric  as a team administrator. 1.
+2.In the Requests  section  of the main menu, click Manage Resources . 2.
+3.Click Team: Create . 3.
+4. De fine  values for the team name, description,  and members. 4.
+Click Next  and proceed to add the in f ormation  for the team. Group in f ormation  and the privileges for
+each group are added aut omatic ally .5.Click Submit . 5.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+Add group memberships
+1.Open another browser tab and login as trustee for the "Windows Admin Accounts" team.1.
+2.Click Manage Resources > Team: Manage Group Membership . 2.
+3.Select the "Windows Admin Accounts" team.3.
+Click Next .
+4.On the Team Group List  page, select "Approver" and "Requester". 4.
+Click Next .
+5.In the Select Child Group for Approver  field,  select the "IT-WINDOWS-MANAGERS" group. 5.6.In the Select Group Members for Requester  field,  select the "billig" user. 6.
+7.Click Submit . 7.Privilege P attern:  Team management
+Team administrators can access pr e-de fined  requests, via the Manage Resources option  in the Request
+section  on the home page, that can create, delete and alter group memberships of teams. When cr eating
+a team, the team administrator assigns a team trustee who can then manage that team by controlling
+team group membership and privileges.
+Team administrators have access to the following pr e-de fined  requests:
+▪Team: Create  (on page 2147) for cr eating  teams. ▪
+▪Team: Manage Group Membership  (on page 2161) allows administrators to add users to team groups ▪
+in order to grant them privileges. Trustees of a group will be asked for their approval of any group
+memberships that the team administrator requests.
+▪Team: Delete  (on page 2167) for removing teams. ▪
+Requirements 
+In order to de fine  a team administrator, users need to be added to the PAM_TEAM_ADMINS user class:
+1.Click Manage the system > Policies > User classes . 1.
+2.Select the PAM_TEAM_ADMINS.2.
+3.Click the Explicit users tab. 3.
+4.Click Select . 4.
+5.Search and select a user.5.
+6.Click Add. 6.
+Cr eating  a team
+To create a new team, use the Team: Create request. When selected, a wizard will guide you through the
+process of cr eating  a team.
+1.From the home page, click Manage resources . 1.
+2.Click Team: Create . 2.
+3.Enter a unique Team name and, optionally ,  a Team description . 3.Click Next .
+4.Create the initial  team groups. 4.
+Depending on the installed features, there may be a default set of groups that are displayed here.
+Change the names to suit your business processes. Use the ”More” icon to add more team name
+fields  to the list.
+Click Next .
+5.Enter team group descriptions  as required. 5.

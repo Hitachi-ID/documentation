@@ -1,0 +1,37 @@
+3.Click Add new… 3.
+4.Enter values as follows:4.
+▪ID SECURITY_LEVEL ▪
+▪ Description  Group security level ▪
+▪Type  String ▪
+▪Minimum required number of values  0 ▪
+▪Maximum allowed number of values  1 ▪5.Click Add. 5.
+6.Click the Restricted values  tab and add the following: 6.
+a.Actual value  1 and Displayed value  Security Level 1 , then click More . a.
+b.Actual value  2 and Displayed value  Security Level 2 , then click More  again. b.
+c.Actual valu e 3 and Displayed value  Security Level 3 . c.
+d.Click Update . d.
+Set attribut e  access controls
+To set access controls for the new attribut e,  add it to an attribut e  group:
+1.Click Manage the system > Resources > Resource attribut e  groups . 1.2.Select GROUP_INFO_UPDATE.2.
+This is a built-in resource attribut e  group that is included in the _GROUP_UPDATE_ATTRS pr e-de fined
+request. Attribut es  that are members of this group can be updated by group owners.3.Click the Members  tab. 3.
+4.Click Select… . 4.
+5.Select the checkbox for the SECURITY_LEVEL attribut e  you added above, then click Select . 5.6.Click the Display criteria  tab. 6.
+7.Set the Display type  to "Main". 7.
+This will display the Group security level  field  on the main page of the Update attribut es  pr e-de fined
+request.
+8.Click Update . 8.
+Now the SECURITY_LEVEL attribut e  will be available for editing  by group owners.
+Map SECURITY_LEVEL attribut e  to an Activ e  Directory group attribut e
+We will now map this resource attribut e  to the Activ e  Directory "info" group attribut e.  The "info" group
+attribut e  displays in the "notes" field  in Activ e  Directory Users and Computers (ADUC). This way, when we
+view a group via ADUC, we can read the notes and see what security level the group is.
+1.Click Manage the system > Resources > Group attribut es  > Target system . 1.
+2.Select the Corporate AD target.2.
+3.Click Add new... . 3.
+4.Enter the following in f ormation: 4.
+▪ID info ▪
+▪Map group attribut e  to resource attribut e  SECURITY_LEVEL ▪
+▪Load attribut e  values from target system  selected ▪
+▪Populate mapped resource attribut e  with values from target system  selected ▪
+5.Leave all other settings  as default. 5.

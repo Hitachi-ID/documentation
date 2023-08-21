@@ -1,0 +1,213 @@
+▪ Submitting  c on figur ation  reviews ▪
+On the Start certific ation  campaign page for a c on figur ation  review:
+1.Click the Submit tab on the c on figur ation  page for a new or saved campaign. 1.
+2.In the Notific ation  details section: 2.
+a.Type the Certific ation  campaign description , to be displayed to reviewers. a.
+b.Review the Segment description , if applicable (for certific ation  by c on figur ation  reviewers). b.
+c.Review the Email . c.
+If you want to edit the notific ation  details for this campaign, select the ”Other” radio button  and
+type the message. Hover your cursor over the question  mark to see variables you can include.
+The values will be inserted in the actual notific ation  message.
+3.Review the Con figur ations  section,  including the: 3.
+▪ Con figur ations  to be reviewed ▪
+▪Review method▪
+If the review method is Certific ation  by c on figur ation  authorizers , there is an option  to
+Consolidate reviews for same reviewer . It is selected by default, so that all segments that have
+the same reviewer will be combined into one segment.
+4.Click:4.
+▪Save to save the c on figur ation  before s t arting  or scheduling a campaign. ▪
+Continue  to Saving a certific ation  setup  (on page 2633).
+▪Schedule to schedule a previously saved c on figur ation. ▪
+▪Launch campaign to start a campaign without saving. ▪
+Click Start new campaign .Save a certific ation  setup
+You can save a certific ation  setup once you have reviewed changes and de fined  notific ation  details  (on
+page 2627). On the Save certific ation  setup  page:1.If the current setup is based on a previously saved certific ation  setup that you don’t want to 1.
+overwrite, click Save new...
+2.Type an ID and Description  for the setup. 2.
+3.Make the setup Shareable if you want to allow other users to use it. 3.
+▪A shared certific ation  setup can be used by other users but it can not be o v er written. ▪
+▪Only the creator of a shared certific ation  setup can delete it. ▪
+▪Users with the Initia t e  entitlemen t  certific ation  campaigns privilege can use a shared certific ation ▪
+setup only if the certific ation  method is single reviewer.
+▪A setup cannot be shared if it uses a saved search. ▪
+4.Click:4.
+▪Save to take no further action  at the moment. ▪
+▪Save and schedule campaign to schedule campaigns to start later. ▪
+▪Save and launch campaign to start a campaign immediately. ▪
+i.If you selected OrgChart reviewers for an entitlemen t  campaign, schedule OrgChart manager i.
+notific ation  emails
+If you chose OrgChart managers, c on figur e  the Number of days to wait between sending out
+in vit ation  emails to each level of the OrgChart before s t arting  a campaign.
+Bravura Security Fabric  uses notific ation  campaigns to stagger the emails it sends to managers
+based on their level in the OrgChart . The default interval is determined by the CERT EMAIL
+INTERVAL .
+1.Click 
+ to see the notific ation  schedule. 1.
+2.Select a date in at least one date field.  To select a date click on the date field  and type a date 2.
+or choose a date with the calendar.3.If you have left fields  blank, click Calculate to aut omatic ally  populate other date fields  based 3.
+on the Number of days to wait between sending out in vit ation  emails to each level of the
+OrgChart .
+In the notific ation  list, the level 0 represents the top level manager for the campaign, not
+necessarily the CEO or top-level manager in your organiz ation.
+.
+ii.Click Start new campaign . ii.
+Schedule a certific ation  campaign
+You can schedule certific ation  campaigns once you have reviewed and saved the c on figur ation.  To
+schedule certific ation  campaigns, on the Schedule certific ation  campaign page:
+1. Con figur e  settings  as listed in Table Scheduling a certific ation  campaign  (on page 2635). 1.
+If JavaScript is enabled, options  are shown or hidden depending on the Repeat type .
+2.Click Schedule . 2.
+In a multi-ser v er  environment, a certific ation  campaign can only be scheduled on one server.
+Scheduled certific ation  campaign settingsOption Description
+Job ID Update the ID for this scheduled certific ation,  if necessary.
+Email address to send scheduled
+certific ation  warnings toType an email address to receive notific ations  of problems with scheduled
+certific ations.  If not specified  the RECIPIENT EMAIL address is used.
+Enabled Use this to turn on the scheduled certific ation.
+Repeat type Select the frequency of the scheduled job using the drop-down list.
+Depending on the repeat type, set scheduling options:
+▪Run once – you must select a Date and time  to run this job. ▪
+▪Daily – you must select which Days to run this job by selecting  either ▪
+Every day or Only on weekdays .
+▪Weekly – you must Choose the days of the week to perform this task . ▪
+▪Monthly – you must Choose the days of the month to perform this task ▪
+and Choose which months to perform this task . All months are selected
+by default.
+▪Quarterly – The task is started every three months after  the initial  run. ▪
+▪Semi-Annually – A new round is started every six months after  the initial ▪
+run.
+▪Annually – A new round is started every twelve months after  the initial ▪
+run.
+Period mode For jobs that are repeated quarterly, semi-annually, and annually, choose
+either:
+▪Start date - then Period start date and time ▪
+▪Month/week/day - then select the fir s t month, week of the month, and ▪
+day of the week to perform the task.
+The Choose the firs t month to perform this task  setting  is based
+on the current calendar year. For example if you set the firs t month
+for a quarterly job to January, and the current month is February,
+the task will start in April.
+Date and time  to run / Time to run All scheduled jobs time  to run is local to the server that runs the job. Except
+for jobs that are run once, the default time  to run is set by Manage the
+system  > Modules > Options  > DEFAULT SCHEDULED TIME .
+Last day of the month For monthly to annual schedules, use this setting  to avoid missed run times.
+For example, if you schedule a job quarterly, with a start date of August 31,
+the next run time  after  August 31 would be November 31, which does not
+exist. With this setting  enabled, the next round would start on the last day
+of the month, November 30.Option Description
+Job time  range Specify if you want your job to always run, to run for a specific  length of
+time,  or for a specific  number of it er ations  by selecting  one of the following
+from the drop-down list:
+▪Always run – Scheduled job always runs as specified. ▪
+▪From specified  start date to end date – Click the da t e/time  fields  to ▪
+select a date and hour for the Start date and End date . To edit the
+minutes enter a time  in the HH:MM format.
+▪For number of it er ations  from specified  start date – Click the da t e/time ▪
+field  to choose select a date and hour for the Start date . To edit the
+minutes enter a time  in the HH:MM format. Specify a Number
+ofit er ations  to run . Your job will only run for the number of it er ations
+you enter here.
+Con figur ation  notes
+About late binding
+If a saved certific ation  setup includes all entitlemen ts  or c on figur ations  of a type, Bravura Security Fabric
+includes all entitlemen ts  or c on figur ations  found at the time  the certific ation  campaign is started, rather
+than when the setup is saved.
+The following example illustrates:
+1.Two roles are listed in the Bravura Security Fabric  database. 1.2.A product administrator  c on figur es  a c on figur ation  certific ation  round to start the following day, and 2.
+clicks All to select all roles.
+3.The product administrator  saves the certific ation  setup. 3.
+4.A new role is created in the mean time. 4.
+5.When the campaign starts, it includes all three roles currently listed in the database.5.
+If the certific ation  method is by entitlemen t  or c on figur ation  authorizers, Bravura Security Fabric  tries to
+find authorizers for newly added entitlemen ts  or c on figur ations.  If an authorizer is not found then the
+saved certific ation  setup is rendered invalid. The scheduled job is still executed by the Scheduler Service
+(psscheduler) (and considered finished)  but since the certific ation  setup has become invalid, no
+certific ation  campaign is initia t ed.Certific ation  options
+Read this chapter to learn how to:
+▪ Con figur e  options  to control certific ation  processes ▪
+▪Edit the certific ation  sign-off  statement ▪
+Con figur e  certific ation  module options
+You can control global options  for the access certific ation  process by c on figuring  the Manage certific ation
+process  (CERT) module. Users with appropriate permissions use the Manage certific ation  process  (CERT)
+module to view, c on figur e,  and start access certific ation  campaigns.
+The following general options  are available at Manage the system  > Modules  > Manage certific ation
+process  (CERT) :
+Modules > Manage certific ation  process  (CERT) options
+Option Description
+CERT ATTRIBUTE CERTIFIER Type the ID of the resource attribut e  to control whether the resource
+reviewer should be selected randomly from the resource’s set of
+authorizers or supplied by a plugin program.
+CERT ATTRIBUTE GROUP CERT Type the ID of the resource attribut e  to control whether managed groups
+can be certified  even if the parent target system is not allowed in the
+certific ation  process. This resource attribut e  should be set per target
+system.
+Alt ernativ ely ,  enable CERT OVERRIDE TARGET CERT ENABLED FOR GROUPS
+to allow managed account groups on all target systems to be selectable
+when s t arting  a certific ation  campaign.
+CERT CONFIG VALIDITY INTERVAL The c on figur ations  being certified  are valid for this many days after  the
+certific ation  has finished.  The default is 30 days.
+If a new certific ation  campaign is started within this time  frame, the
+c on figur ations  certified  in the previous campaign are identified  as certified.
+Con figur ations  that are identified  as certified  can be optionally  r e-certified
+to extend their validity.
+CERT CONSISTENCY ATTRIBUTE
+GROUPThe attribut e  group that collects users into peer groups. This can be
+modified  for individual campaigns.
+CERT CONSISTENCY CALCULATION Enable/Disable consistency c alculations.  If enabled, consistency c alculations
+can be c on figur ed  when a campaign is initia t ed.  If disabled, the options  do
+not appear when initiating  a campaign, and consistency c alculations  are
+turned off for activ e  campaigns.
+CERT CONSISTENCY MINIMUM The minimum size of a user peer group.
+If a peer group has fewer members than this, their entitlemen t  consistency
+will not be calculated. Instead, a help 
+ icon will be displayed in the
+consistency column for these users in the review.Option Description
+CERT CONSISTENCY USERS LOWER
+THRESHOLDEntitlemen ts  are considered out -of -pattern  if fewer than this percentage of
+users in a peer group share it.
+CERT CONSISTENCY USERS UPPER
+THRESHOLDEntitlemen ts  are considered in-pattern  if at least this percentage of users in
+a peer group share it.
+CERT DEFAULT CERTIFIER Type the user ID to be the default resource reviewer when the resource has
+no authorizer.
+CERT DELEGATION PLUGIN Type the name of the plugin that would supply the reviewer and delegates
+for a certific ation  segment.
+CERT EMAIL CANCELLATION
+ESCALATESEnable or disable this option  to determine whether emails of campaign
+c ancellation  are sent to escalated reviewers.
+CERT EMAIL INTERVAL The time,  in days, between sending out emails to managers in each level of
+the OrgChart to invite them to certif y  their subordinates.
+CERT ENFORCE NO WARNINGS The reviewer can not sign off a c on figur ation  certific ation  segment until  all
+the warnings are resolved (for example, the c on figur ation  is missing
+authorizers). Disable this option  to remove this enforcement.
+CERT HIDE REQ ROLE MEMBERS Hide required role members from reviewers, except when reviewing
+segr eg ation  of duties  rules violations.
+CERT MAX DELEG ALLOWED The maximum number of group owners to assign as delegates to review.
+The default is 50.
+CERT MAX ROUND CALCULATION
+TIMEThe maximum c alculation  time,  in seconds, of new certific ation  campaigns.
+After  this amount of time  passes, product administrators can cancel an
+activ e  certific ation  campaign. This delay prevents issues caused by
+canceling a campaign while it is still c alculating.  The value must be between
+60 and 86400 and defaults to 3600.
+CERT OVERRIDE TARGET CERT
+ENABLED FOR GROUPSEnable this option  to allow all managed groups to be selectable when
+s t arting  a certific ation  campaign, regardless of whether the parent target
+system is allowed in the certific ation  process.
+Alt ernativ ely  you can apply an override to individual target systems by
+c on figuring  a resource attribut e  identified  by CERT ATTRIBUTE GROUP CERT.
+CERT PROMPT PASSWORD Enable or disable this option  to determine whether reviewers must enter a
+password to sign off a certific ation  review by default. Certific ation  campaign
+initia t or s  can override the default when initiating  a campaign.
+CERT REQUIRES COMMENT TO
+CERTIFYEnable this option  to force reviewers to provide a reason when certif ying  an
+item.
+CERT REQUIRES COMMENT TO
+REVOKEEnable this option  to force reviewers to provide a reason when revoking an
+item.
+CERT REVOKE CASCADING Enable or disable this option  to control whether aut omatic  cascading of
+revokes should occur. If the system variable is enabled, when a parent
+entitlemen t  is revoked in certific ation,  all the children entitlemen ts  are
+marked as revoked and appear in the sign off summary as being marked for
+r e v oc ation.  If it is set to disabled, then the aut omatic  cascading of revokes
+is disabled.

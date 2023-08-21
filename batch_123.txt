@@ -1,0 +1,55 @@
+6.Click Add. 6.
+7.Click Yes to retrieve a full attribut e  list during the next auto discovery. 7.
+8.Execute auto discovery for the AD target system.8.
+Update group attribut es
+To update group attribut es  as a group owner:
+1.Log in to the Front-end (PSF) as an end user who is a group owner.1.
+2.From the self-service main menu, click Groups . 2.
+This displays My groups .
+3.Select the IT-MANAGERS group from the Results panel.3.4.Click Update attribut es . 4.
+Notice  the Group description  is already filled  in. This is because the Activ e  Directory description
+attribut e  is mapped to the GROUP_NAME attribut e  when Bravura Workforce P attern  is installed and the
+attribut e  contained a value. The List group attribut es  option  must also be selected on the Activ e
+Directory target.
+However, the info attribut e  does not contain any values at this point in time  so no data is shown.
+5.Select "Security Level 3" for the Group security level . 5.6.Click Submit . 6.
+7.Click the View request  link at the top of the page to view the request status. 7.
+8.In the right Actions  panel , select the Request  ID link and display Oper ations  and Authorizers . 8.
+Note that with the current c on figur ation,  you would also need to approve the request as the group
+owner, but since we are using the owner of the group to make the request, it is auto-approved.If the value in the Results  column of the Resources to be updated  table is "Success" then you know
+the task has been completed properly.
+You can c on firm  the request was successful by viewing the pr operties  of the IT-MANAGERS group
+directly in Activ e  Directory Users and Computers.
+The info attribut e  was updated for the IT-MANAGERS group and the specified  value of [Security Level]
+"3" now appears in the Notes  field.
+Example: Con figur e  group entitlemen t  attribut es
+In Example: Updating  group attribut es  (on page 1209), you learned how to update a resource attribut e
+that was mapped to a group attribut e  on Activ e  Directory. Resource attribut es  can also be c on figur ed  as
+entitlemen t  attribut es  to de fine  the r elationship  between two resources.The built-in ENTITLEMENT_EXPIRY_DATE attribut e  can be used to trigger an event to complete an action;
+for example, when a member’s expiry date arrives, an email is sent to prompt the removal of that user
+from the group.
+In this example, we add a resource attribut e  group so that users can set this expiry date in a pr e-de fined
+request.
+Assumptions
+This example assumes:
+▪Bravura Workforce P attern  is installed. ▪
+▪The "AD" Activ e  Directory target system is c on figur ed  as a source of pr ofiles. ▪
+▪Group owners in AD are c on figur ed  as group managers in Bravura Identity . ▪
+Add a resource attribut e  group
+1.Log in to the Front-end (PSF) as superuser . 1.
+2.Click Manage the system > Resources > Resource attribut e  groups . 2.
+3.Click Add new… . 3.
+4.Enter the following in f ormation: 4.
+▪ID Gr oup_entitlemen ts_attr s ▪
+▪ Description  Group entitlemen t  attribut es ▪
+▪Resource type  Account group memberships ▪5.Click Add. 5.
+6.Click the Access control  tab. 6.
+7.Select "Allow read" and "Allow write" for ALLUSERS.7.
+8.Click Update . 8.
+9.Click the Members  tab. 9.
+10. Click Select... . 10.
+11. Select "ENTITLEMENT_EXPIRY_DATE". 11.
+12. Click Select . 12.
+13. Click the Display criteria  tab. 13.
+14. Ensure the Display type  is set to "Main". 14.
+15. Click Update . 15.

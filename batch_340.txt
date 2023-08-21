@@ -1,0 +1,326 @@
+Criteria Description
+Use within the last N days : Changes are only included in
+the report output if their audit time  falls within the
+specified  last number of days.
+Use N or more days ago : Changes are only included in
+the report output if their audit time  was more than the
+specified  number of days ago.
+If you do not specify any search criteria, the report output includes all tracked changes.
+Account audit
+Purpose : Audit trail of accounts created and disabled through Bravura Security Fabric
+Executable : accountaudit
+Search Criteria :
+Criteria Description
+Account Type the long ID, not the short ID, of the account for
+which you want to list changes.
+Target system ID Type the ID of the target system to include in the report.
+Alt ernativ ely ,  you can search for one or more target
+systems.
+User ID Type the ID of the user who performed the oper ation  to
+include in the report. Alt ernativ ely ,  you can search for
+one or more users.
+Oper ation Choose the oper ation  type for accounts:
+Provisioned through IDM Suite  Return only oper ations
+where the account was created by Bravura Security
+Fabric .
+Provisioned outside of IDM Suite  Return only oper ations
+where the account was not created by Bravura Security
+Fabric .
+Disabled through IDM Suite  Return only oper ations
+where the account was disabled by Bravura Security
+Fabric .
+Disabled outside of IDM Suite  Return only oper ations
+where the account was not disabled by Bravura Security
+Fabric .
+Account group audit
+Purpose : Audit trail of manage/unmanage oper ations  on account groups. Lists current and historical
+values.Executable : groupaudit
+Search Criteria :
+Criteria Description
+Target system ID Type the ID of the target system to include in the report.
+Alt ernativ ely ,  you can search for one or more target
+systems.
+Group ID Type the ID of the group to include in the report.
+Alt ernativ ely ,  you can search for one or more groups.
+Oper ations Choose the oper ation  type for groups:
+All oper ations : Return all oper ations  involving groups
+being managed or unmanaged.
+Manage oper ations : Return only oper ations  that involve
+groups being managed.
+Unmanage oper ations : Return only oper ations  that
+involve groups being unmanaged.
+User ID Type the ID of the user who performed the oper ation  to
+include in the report. Alt ernativ ely ,  you can search for
+one or more users.
+Last modified  time Choose from the drop-down list. The Date not required
+setting  is used by default.
+Date not required : This is the default setting.  Oper ations
+are reported regardless of the last modified  time.
+Use r elativ e  date:
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. ForCriteria Description
+Option Description
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+Oper ations  are only included in the report output if their
+last modified  time  falls within the selected r elativ e  date
+range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Oper ations  are only included in the report output if
+their last modified  time  falls between the earliest last
+modified  time  and the latest last modified  time.
+Use within the last N days:  Oper ations  are only included
+in the report output if their last modified  time  falls within
+the specified  last number of days.Criteria Description
+Use N or more days ago : Oper ations  are only included in
+the report output if their last modified  time  was more
+than the specified  number of days ago.
+Entitlemen t  and attribut e  history
+Purpose : To audit the status of tracked account attribut es  and entitlemen ts  as they existed at a specified
+reference time.  These include:
+▪Target system account changes▪
+▪Managed group membership▪
+▪Role membership▪
+▪Account attribut e  changes ▪
+Tracking of changes must be enabled for target systems, managed groups, and account attribut es  in
+order for data on these entitlemen ts  to be collected.
+This report returns results as a snapshot of their status at the c onfigured  time.  Only the changes most
+recent to that point in time  will be returned.
+Executable : entitlementandattributehistory
+Search Criteria :
+Criteria Description
+Account Type the long ID, not the short ID, of the account for
+which you want to list changes.
+User ID Type the pr ofile  ID of the user for whom you want to list
+changes. Alt ernativ ely ,  you can search for one or more
+pr ofile  IDs.
+Target system ID Type a comma-and-space-delimited list of target system
+IDs for which you want to list changes. All target systems
+are included by default. If this field  has a value, the
+report only lists group membership changes r elating  to
+the specified  targets. Alt ernativ ely ,  you can search for
+one or more target systems.
+Managed groups Type the long ID of one or more managed groups for
+which you want to list changes. If this field  has a value,
+the report only lists group membership changes r elating
+to the specified  groups. Alt ernativ ely ,  you can search for
+one or more managed groups.
+Roles Type the role ID to search against.
+Display tracked changes for Select from the following options  to return only those
+results:
+▪Target system account changes▪Criteria Description
+▪Managed group membership▪
+▪ Pr ofile  attribut e  changes ▪
+▪Account attribut e  changes ▪
+Reference date Provide a specific  date and time  value to return a
+snapshot of entitlemen ts  and attribut es  as they existed at
+that point in time.  The default setting  uses the current
+date and time,  in order to return results as they exist
+currently.
+If you do not specify any search criteria, the report output includes all of the most recent tracked
+changes.
+Out-of-band group changes
+Purpose : Provides details about changes a ff ecting  managed groups.
+Executable : oobchanges
+Search Criteria :
+Criteria Description
+Out-of-band action Select an action:
+Out-of-band additions  Select this option  to only show
+the additions  to groups.
+Out-of-band deletion s Select this option  to show only
+removal from groups.
+Leaving it blank is the same as selecting  all types.
+Display oper ations Select an oper ation:
+Assign group Groups which new members join are
+displayed in report.
+Revoke group  Groups which members leave are
+displayed in report.
+Add child group  Groups that have new child groups are
+displayed in report.
+Delete child group  Groups from which child groups are
+deleted from are displayed in report.
+No action  taken  Groups that have no actions  associated.
+Leaving it blank is the same as selecting  all oper ations.
+Resource attribut e  to display Select resource attribut es  to be displayed in report.
+Time range Select time  range.
+Use r elativ e  dat
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. ThisCriteria Description
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.Criteria Description
+Option Description
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+e Selecting  this time  range displays the Choose r elativ e
+request entry date: input field  with a list of inputs to
+select
+▪Current date▪
+▪Current calendar week▪
+▪Current month▪
+▪Current quarter▪
+▪Current year▪
+▪Previous day▪
+▪Previous calendar week▪
+▪Previous month▪
+▪Previous quarter▪
+▪Previous year▪
+Use selected date
+You can de fine  a specific  date range for your
+report. The fir s t da t e/time  field  selects the
+earliest start time  to include, and the second
+selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do 2.
+not want to start on the hour.
+3.Click the lower da t e/time  field  to specify the 3.
+end date and hour.
+4.Type an end time  in HH:MM format if you do 4.
+not want to start on the hour.
+The allowed years range from 1970 to 2038
+Selecting  this time  range displays the Earliest request
+entry start date: and Latest request entry start date:
+input fields.
+Use within the last N days : Selecting  this time  range
+displays the Number of days: input field.
+Use N or more days ago : Selecting  this time  range
+displays the Number of days: input field.Criteria Description
+Resource attribut e Filter results using a resource attribut e  and criteria. The
+type of criteria is dependent on the attribut e  selected.
+Up to four resource attribut e  filt er s  can be de fined.
+Authorizer ID Type a comma-and-space-delimited list of authorizer IDs.
+Alt ernativ ely ,  you can search for one or more authorizers.
+Requester ID Type a comma-and-space-delimited list of requester IDs.
+Alt ernativ ely ,  you can search for one or more requesters.
+Managed groups Type a comma-and-space-delimited list of managed
+groups. Alt ernativ ely ,  you can search for one or more
+groups.
+Group owner Type a comma-and-space-delimited list of group owners.
+Alt ernativ ely ,  you can search for one or more group
+owners.
+SOX groups report
+Purpose : This new report allows in v estig ation  of all suspicious group activity  that falls under SOX
+de finition.
+Executable : soxgroups
+Search Criteria :
+Criteria Description
+Report type Select the report type:
+Group states  Select this option  to only show state
+tr ansitions,  such as group cr eation/deletion.
+Group management  Select this option  to show user/
+group ownership changes to groups.
+Group membership  Select this option  to show user/
+group membership changes to groups.
+User ID Type the user ID of the user or users for whom you want
+to include in the report. Alt ernativ ely ,  you can search for
+one or more user IDs. All users are included by default.
+Group ID Type the ID of the group to include in the report.
+Alt ernativ ely ,  you can search for one or more groups.
+Target system ID Type a comma-and-space-delimited list of target system
+IDs for which you want to list changes. All target systems
+are included by default. If this field  has a value, the
+report only lists group membership changes r elating  to
+the specified  targets. Alt ernativ ely ,  you can search for
+one or more target systems.

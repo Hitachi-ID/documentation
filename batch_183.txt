@@ -1,0 +1,268 @@
+Custom attribut e  file
+You can use custom system attribut es  to de fine  requirements for import rules. For local service mode
+systems, computer in f ormation  is not stored on the Bravura Privilege  server, but locally on the system
+itself.
+The local service installer can read a custom attribut e  file and send in f ormation  back to the server to be
+used by import rules as discovered system attribut es.  The custom attribut e  file must be in KVGroup
+format:
+# KVGROUP-V2.0 
+"custom_attribute" "" = { 
+  "<attribute1>" = "value1"; 
+  "<attribute2>" = "value2"; 
+  ... 
+  "<multi-valued attribute1>" "" = { 
+     "<mv1-value1>"; 
+     "<mv1-value2>"; 
+     ... 
+  "<multi-valued attribute2>" "" = { 
+     "<mv2-value1>"; 
+     .... 
+  }; 
+}; 
+For example:
+ 
+# KVGROUP-V2.0 
+"custom_attribute" "" = { 
+  "location" = "calgary"; 
+  "system_type" = "laptop"; 
+ 
+  "departments" "" = { 
+     "sales"; 
+     "marketing"; 
+  }; 
+}; 
+There are some res trictions  on what names the custom attribut es  may use. If any of the custom attribut es
+are using these values, they will invalidate the attribut e  file and any new attribut es  will not be sent to the
+Bravura Privilege server. The attribut e  names such as NETBIOS, dNSHostName and f ailedAttemp ts  are
+some examples.
+Custom discovered system object attribut es  can be removed by setting  the cust-attr-file registry
+entry of the local service of the w ork s t ation  to an empty string.Custom discovered system object attribut es  can be added by setting  the cust-attr-file registry
+entry of the local service of the w ork s t ation  to the full path name of the custom attribut e  file.
+In t egr ating  with McAfee ePolicy Orchestrator (ePO)
+The Local W ork s t ation  Service can send pr operties  of its ins t allation  to the McAfee ePolicy Orchestrator
+(ePO) via McAfee Agent. These pr operties  include the product version, the ins t allation  path, and
+language version.
+The server or w ork s t ation  on which the Local W ork s t ation  Service will be installed must be added as a
+system on the ePO. Consult the McAfee ePolicy Orchestrator documen t ation  to learn how to do this.
+Supported versions of ePO include v4.6 or greater.
+To install and c on figur e  Local W ork s t ation  Service to be ePO aware:
+1.Contact support@bravurasecurity.com  to obtain the hipamlws-win.zip file for in t egr ation  with 1.
+McAfee ePolicy Orchestrator.
+2.Copy over the hipamlws-win.zip file onto the ePO server. 2.
+3.On the ePO console, go to Menu > Master Repository . 3.
+4.Click Check In Package . 4.
+5.In the File Path , click Browse to locate the hipamlws-win.zip file. 5.
+6.Click Next . 6.
+7.Click Save . 7.
+8.Go to Menu > Policy > Client Task Catalog . 8.
+9.Click New Task . 9.
+10. In the Task Types dropdown menu, click Product Deployment . 10.
+11. Click OK. 11.
+12. Enter the task name; for example, InstallLWS . 12.
+13. In Products and components : 13.
+a.Select Loc alW ork s t ationSer vice  from the fir s t dropdown menu. a.
+b.Select Install as the Action. b.
+c.In the Command line field,  specify the following arguments, each separated by a space: c.
+Enable ePO in t egr ation:   
+  ADDLOCAL=PAMLWS_EPO 
+▪The w ork s t ation  authoriz ation  encr yption  key. This is the authentic ation  key that was entered ▪
+when Bravura Privilege was originally installed.  
+  AUTHKEY=workstation authentication encryption key  
+▪The address of the Bravura Privilege  server .  ▪
+  SERVER=http://<server>/<instance>/cgi/pamlws.exe  
+You can de fine  other Local W ork s t ation  Service command line arguments  (on page 245).
+14. Click Save . 14.WARNING! Ensure that any previous ins t allations  of the Local W ork s t ation  Service is
+removed, or the ins t allation  will fail. Also, if the system is already
+discovered in the Bravura Privilege  server from an e xisting  ins t allation,
+the ins t allation  will fail. If you are re-registering this system, ensure that
+the proper arguments are de fined  in the command line.
+To run the Local W ork s t ation  Service ins t allation  manually using ePO:
+1.Go to Menu > Systems section  > System Tree . 1.
+2.Select the Systems tab (if not already redirected to this section). 2.
+3.Check off the systems to install the Local W ork s t ation  Service. 3.
+4.Click Actions  > Agent > Run Client Task Now . 4.
+5.Select the install task you’ve previously created.5.
+6.Click Run Task Now . 6.
+The Local W ork s t ation  Service ins t allation  will commence.
+To run the Local W ork s t ation  Service ins t allation  immediately after  adding a new system to the ePO:
+1.Go to Menu > Policy > Client Task Assignments . 1.
+2.On the left menu pane, select the group in the system tree where the Local W ork s t ation  Service will 2.
+be installed.
+3.Click Actions  > New Client Task Assignment . 3.
+4.In Task to Schedule , select the task you’ve previously created. 4.
+5.Click Next . 5.
+6.Set the Schedule type to Run immediately . 6.
+7.Click Save . 7.
+When new systems gets added to the ePO and the McAfee Agent is successfully installed on the
+system, the ins t allation  of the Local W ork s t ation  Service will run aut omatic ally .
+To view the pr operties  of the Local W ork s t ation  Service on ePO:
+1.Go to Menu > Systems section  > System Tree . 1.
+2.Select the system where the Local W ork s t ation  Service is installed. 2.
+3.Select the Products tab. 3.
+4.Select Local W ork s t ation  Service . 4.
+The pr operties  of the Local W ork s t ation  Service will be displayed.Initially ,  the Local W ork s t ation  Service will not show up in the list of products. You may need to wait
+until  next time  the McAfee agent sends properties  to the ePO.
+To uninstall the Local W ork s t ation  Service using ePO:
+1.Go to Menu > Policy > Client Task Catalog . 1.
+2.Click New Task . 2.
+3.In the Task Types dropdown menu, click Product Deployment . 3.
+4.Click OK. 4.
+5.Enter the task name; for example, RemoveLWS . 5.
+6.In Products and components : 6.
+▪Select Loc alW ork s t ationSer vice  from the fir s t dropdown menu. ▪
+▪Select Remove as the Action. ▪
+7.Click Save . 7.
+8.Go to Menu > Systems section  > System Tree . 8.
+9.Select Systems tab (if not already redirected to this section). 9.
+10. Check off the systems to remove the Local W ork s t ation  Service. 10.
+11. Click Actions  > Agent > Run Client Task Now . 11.
+12. Select the uninstall task you’ve previously created. 12.
+13. Click Run Task Now . 13.
+The Local W ork s t ation  Service will be uninstalled.
+The Local W ork s t ation  Service will be removed from the system, however this will not remove the
+system from the Bravura Privilege server.
+Adding vault-only managed systems
+In vault-only mode, Bravura Privilege  simply stores in f ormation  about a managed system. In this case,
+there is no c ommunic ation  between the Bravura Privilege  server and the managed system; all
+in f ormation  is inputted  and maintained by product administrator  s. Bravura Privilege  does not
+aut omatic ally  randomize passwords for these managed systems. Vault-only managed system  can only
+belong to vault-only type managed system policies .
+You can apply access controls to allow certain users to change a stored password after  they have it
+checked out. To do this, grant users in a user group the Randomize/Override permission to the vault-only
+managed system policy. See Assigning access controls  (on page 1861) to learn how to apply system policy
+access controls.
+Product administrators require the "Create managed systems"  adminis tr ativ e  privilege in order to add a
+vault-only managed system.
+To add a vault-only managed system:
+1.Click Manage the system  > Privileged access  > Managed systems . 1.
+2.Click Add new… 2.3.Type an ID and Description  that will be displayed to users. 3.
+4. Optional:  Type a Help URL. 4.
+In case a longer description  would help users, you can compose and post an HTML page that describes
+this system further, and type its URL here. Users can open the URL by clicking the managed system
+description  text wherever the text appears as a link in the Request privileged access  (PSW) module.
+5.Click Add. 5.
+To learn how to add accounts and passwords for vault-only systems, see Storing adminis tr ativ e  passwords
+manually  (on page 1873).
+Viewing and modifying managed system in f ormation
+You can view managed system  details on the Managed system in f ormation  page. Depending on how the
+managed system  is c on figur ed,  you may be able to modify some managed system  in f ormation.
+Only product administrator s with the Manage orphan managed systems right can modify managed
+systems that are not assigned to a managed system policy .
+To view or modify managed system in f ormation:
+1.Click Manage the system  > Privileged access  > Managed systems . 1.
+Bravura Privilege  displays a list of managed managed systems.The managed system  page details the managed system ’s type (local service, push, or vault-only), the
+target system’s type, and the number of managed system policies it belongs to. You can view if
+account passwords for managed systems can be randomized in the Randomiz ation  tab.
+2.Select the managed system  you want to view or modify. 2.
+Bravura Privilege  displays the Managed system in f ormation  <resource> page.
+3.If applicable, modify the values listed in Table Managed system options  (on page 1827). 3.
+4.Click Update . 4.
+Managed system optionsOption Description
+ID A unique ID for the managed system. For a:
+▪Local service mode managed system, this is aut omatic ally  set to the ▪
+<machine GUID> of the Windows server or w ork s t ation  by default
+▪Push mode managed system, this is aut omatic ally  set to the target ID. ▪
+▪Vault-only system, this is an arbitrary value selected by a Bravura▪
+Privilege product administrator .
+The ID must not contain any spaces.
+Description The managed system description.
+For local service mode managed systems, this is aut omatic ally  set using the
+NetBios name. It is set manually for push mode and vault-only systems.
+Address For a push mode or local service mode managed system, this is
+aut omatic ally  set to the target system address.
+This field  is not available for vault-only managed systems.
+Type The type of license the managed system should use:
+W ork s t ation  One w ork s t ation  license allows you to manage the passwords
+on one w ork s t ation.
+Server One server license allows you to manage the passwords on one
+server.
+Applic ation  Uses one w ork s t ation  license to manage the passwords on one
+applic ation  type managed system.
+Hardware Uses one w ork s t ation  license to manage the passwords on one
+hardware type managed system.
+Other Uses one w ork s t ation  license to manage the passwords on one other
+type managed system.
+These values are aut omatic ally  assigned for push mode and local service
+mode managed systems. Push mode targets usually use server licenses.
+Local service mode managed systems depend on the system type.
+This field  is not available for vault-only managed systems.
+OS type The oper ating  system or target system type. For a:
+▪Local service mode managed system, this is aut omatic ally  set to the ▪
+oper ating  system where the Bravura Privilege client softw ar e  is
+▪installed.▪
+▪Push mode managed system, this is aut omatic ally  set to the type of ▪
+target system.
+This field  is not available for vault-only managed systems.
+OS version The oper ating  system version or softw ar e  version of your Bravura Privilege
+managed system.
+This field  is not available for vault-only managed systems.Option Description
+Help URL In case a longer description  would help users, you can compose and post an
+HTML page that describes this system further, and type its URL here. Users
+can open the URL by clicking the managed system description  text
+wherever the text appears as a link in the Request privileged access (PSW)
+module.
+Primary managed system policy Indicates which managed system policy’s options  to use when managing
+the managed system. When a managed system belongs to more than one
+managed system policy, you can specify which one to use.
+By default, this is set to the fir s t managed system policy that the managed
+system becomes a member of. If that managed system policy is deleted,
+then the oldest remaining managed system policy is used next.
+Options  that are applied to the managed system include: password policy,
+valid password change time  intervals (push mode), service ID that will be
+used to manage the managed system (push mode), and options  listed on
+the managed system policy’s options  page.
+Last logon user The last account that was randomized on a managed system. This applies to
+both push and local service mode managed systems. This field  is not
+available for vault-only managed systems.
+Time of last successful
+c ommunic ationThe time  that the managed system last contacted the Bravura Privilege
+server. This applies to both push and local service mode managed systems.
+This field  is not available for vault-only managed systems.
+Applying policies to managed systems
+A managed system must belong to at least one managed system policy in order for users to be able to
+access managed accounts or groups on the system.
+To apply one or more managed system s to a managed system policy :
+1.Click Manage the system  > Privileged access  > Managed systems . 1.
+2.Select the managed system you want to manage. 2.
+3.Click Policies . 3.
+4.Click Select... to view the list of available managed system policies . 4.
+5.Check the boxes next to the policies you want to assign to the managed system . 5.
+Only managed system policies  matching the managed system ’s mode are listed.
+6.Click Select . 6.
+Deleting  a managed system
+Deleted managed systems are removed from all managed systems policies and are not placed in the
+HISTORICAL_DATA_GRP policy. Their passwords are no longer accessible through the GUI, but are still
+accessible by using KMKeyGetByAccount  and RecoverKeyByAccount API functions.Ensure that you note the password for each managed system before removing the managed system.
+Deleted managed systems are not placed in the HISTORICAL_DATA_GRP policy.
+You cannot delete any managed system  that has checked-out passwords.
+To remove a managed system :
+1.Click Manage the system  > Privileged access  > Managed systems . 1.
+2.Check the boxes for the managed system s you want to remove, and then click Delete . 2.
+3.Click OK to c on firm  your action. 3.
+If you delete a local service mode managed system, the aut omatic ally  discovered object corresponding to
+the managed system will also be deleted.
+To re-manage a push mode deleted system, the aut omatic ally  discovered object corresponding to the
+managed system also needs to be deleted by Removing managed systems from the target system menu
+(on page 1830).
+Removing managed systems from managed system policies
+A managed system can also be removed or unbound from a managed system policy. In this case, if the
+managed system does not belong to any policy, it will be moved into the HISTORICAL_DATA_GRP policy
+where its passwords are stored. In this state, the passwords are still accessible, but no longer
+randomized.
+To unbind a managed system from a managed system policy:
+1.Click Manage the system  > Privileged access  > Managed system policies . 1.
+2.Select the managed system policy of the managed system s you want to remove. 2.
+3.Click Member systems . 3.
+4.Check the boxes for the managed system s you want to remove, and then click Delete . 4.
+5.Click OK to c on firm  your action. 5.
+Removing managed systems from the target system menu
+An alt ernativ e  way to delete a managed system is through the target system menu.
+WARNING! Deleted managed systems are removed from all managed system policies
+and are not placed in the HISTORICAL_DATA_GRP policy. Their passwords
+are no longer accessible through the GUI.
+To delete a managed system that is c on figur ed  as a target system:
+1.Click Manage the System > Resources > Target systems . 1.
+2.Depending on how the managed system was added, click either Manually de fined  or Aut omatic ally 2.
+discovered .
+3.Delete the target system:3.
+a.Check the boxes for the systems you want to remove, and then click Delete . a.

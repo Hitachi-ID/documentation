@@ -1,0 +1,345 @@
+User interface
+▪Fixed the issue where checkbox can't be toggled by pressing the space bar.▪
+▪ fix ed  embedded links disappearing when applying advanced search. ▪
+▪Fixed search table size in wizards.▪
+▪Fixed the hard coded English across the product.▪
+▪Fixed the icons overlaid issue in wizard page.▪
+▪Added pressing the Enter key to save the Saved search functionality  across the product. ▪
+▪Select lists made more accessible by being readable by screen readers and ensuring control with only▪
+the keyboard.
+Events
+▪Fixed idmemail to handle e x ceptions  and return a warning when MAIL AUTH options  are specified  for ▪
+an SMTP server that does not support authentic ation.
+▪Resolved ambiguity around libidapi error codes and by extension pamutil  error codes. ▪
+Certific ation
+▪Reduce the log level of message "Wizard failed to load request..." from Error to Info when it failed to▪
+load request from session.
+▪Fix the issue that if partial  deleg ations  already exist for the same certific ation  segment,reviewer and ▪
+delegate,no additional  emails will be sent when more partial  deleg ations  are performed.
+Bravura P attern  / Components
+▪Upgrade 11.1.3 -> 12.2: some account management disclosure components failed to be upgraded,▪
+now fix ed.
+▪Fixed the Functional.hid_ba t ch_r eques t_submit  component to encrypt its sensitiv e  attribut es. ▪
+▪Fixed the team trustee list to not include deleted accounts by verifying that the pr ofile  is still in the ▪
+database.
+▪Fixed wizard to error out on submission if wfreq fails v alidation  on a previous page which is not the ▪
+same page as the page to submit the request, and presents that page to the user.
+▪Fixed Functional.hid_policy_attr v al_c alculation  where values were not updated in request attribut es ▪
+when certain numerical portions  changed.
+▪Fixed im_t ermination  component to properly compare and sort days rules and improve the lookup ▪
+performance of processed users.
+▪Fix inconsistent behavior in Functional.im_r eques t_split  depending on how it was executed. ▪
+▪Maximum allowed number of values are now respected for request attribut es  in all scenarios. ▪
+▪Fixed an issue where Recaptcha components not triggering a skin rebuild when external data store is▪
+modified.
+▪Reduced and eliminated common cases where long running Python processes would hold open▪
+c onnections  to replicated sqlite databases.Bravura Privilege  usability
+▪Corrected issue so that restricted value attribut es  in wizards are properly validated when minimum ▪
+number of required values is greater than 1.
+▪Fixed memory c orruption  in some cases when submitting  a r andomiz ation  to idarch. ▪
+▪Fixed missing securityDomain argument in Agent.agent_add_subscriber IDMLib function ▪
+▪Fixed the Account: Offboar d  pdr to use a default request team value if one cannot be obtained for the ▪
+account.
+▪ Modified  System: Onboard pr e-de fined  request to check c onnectivity  of the system as part of the ▪
+cr edential  check. Upon submission, if the system cannot be reached, the user will be redirected back
+to the System onboarding details screen.
+▪Group membership types are now supported by the t eam_utils.member s_of  function. ▪
+▪Fixed pam_otp_api_management component so that the values of MS_TEAM and SELECT_MULTI_MA▪
+attribut es  are validated when submitting  a P AMUtil:  Create OTP API User PDR request.
+▪ Modified  pam_system_management component so that multiple  Oracle Database instances hosted ▪
+on the same server can be onboarded.
+▪Corrected issue so that mako expressions are properly evaluated in the pam_disclosur e_filt er_action ▪
+extdb table.
+▪Fixed issue where subscriber r andomiz ation  would occasionally add a blank oper ation  dependency if ▪
+or ches tr ating  multiple  subscribers from the same target.
+▪Fixed the sesslog_full unique key violation  in SPROC PolicyRuleAccountDeploy when an unbind ▪
+managed account import rule runs.
+▪Improved error messages for duplicate team names in API submitted  Team: Create requests. ▪
+▪Fixed Team Vault and Vault Accounts PDRs to now require vault trustee authoriz ation  when submitted ▪
+via API.
+▪ Modified  behavior so that if notific ation  is disabled for subscribers of a managed account, the ▪
+subscriber target will not be contacted during or ches tr ation/r andomiz ation.
+▪Session monitoring search only returns recorded sessions from accounts belonging to managed▪
+system policies for which the search request was approved.
+Bravura Security Fabric 12.2.0
+Features and improvements
+▪Modernize the look and feel, while bringing the new Bravura language and feel to the product.▪
+API
+▪Added support for API admin plugins to idmlib.▪
+▪Added a feature to allow idapisoap using IP in x-forwarded-for header as remote client’s IP if XFF ▪
+header has value. This is to handle the case where the Bravura Security Fabric  server is behind a load
+balancer.
+▪Added API function  LicenseCountsList to retrieve license compliance object counts ▪▪Improved API function  ReserveIdGet to make idapi and idapisoap services more robust when there ▪
+are many WFRequestSubmit calls.
+Authentic ation
+▪A "ForceAuthn" option  was added to SAML_SP authentic ation  chain to instruct OKTA or Azure IdP to ▪
+r e-authentic a t e  a user even if the user has an e xisting  session irr espectiv e  of authentic ation  level.
+Auto discovery
+▪New option  has been added to the psupdate  utility  to allow the running of all tasks when only ▪
+listing  or loading a single target.
+Roles
+▪Improved the "-role" option  to case insensitiv e  for utility  autores. ▪
+Certific ation
+▪Added a new option,  "Comments required" to the Submit  tab of the certific ation  setup page to ensure ▪
+that all items in the certific ation  campaign are commented on before sign off .
+▪If this option  is selected then the reviewer must add a comment to any item that was certified  or ▪
+revoked.
+▪If the item was previously certified  and is still within the CERT_VALIDITY_INTERVAL then no ▪
+comment is required.
+▪This option  is intended to be used to provide control at the campaign level whether comments ▪
+should be enforced.
+▪If comments are always mandatory then the sysvars CERT REQUIRES COMMENT TO CERTIFY and▪
+CERT REQUIRES COMMENT TO REVOKE should be used.
+▪The new option  will only override the settings  of the sysvars if it is checked. ▪
+▪It will not act to disable the need for comments if the sysvars are enabled.▪
+▪Add a new dashboard Certific ation  St atistics  to show: ▪
+▪ certific ation  s t atistics  of entitlemen ts  of all users ▪
+▪direct subordinates▪
+▪all subordinates and entitlemen ts  in current certific ation  campaign initia t ed  by current analytics ▪
+reader
+▪In Bravura Privilege  license only, the checkbox ’ Allowed in the certific ation  process’ on the target ▪
+c on figur ation  page is unchecked by default. When the checkbox ’ Allowed in the certific ation  process’
+is enabled,the target and managed groups are accessible in the certific ation  setup process.
+▪The link "View activ e  subordinate reviews" displayed for a manager is disabled. ▪Event c on figur ation
+▪Added the ability for emergency access token codes to be exposed for the PSP EMERGENCYON▪
+SUCCESS exit trap when the Emergency Access Mode is enabled for the token.
+▪Expose target system to exit traps of IDPM_GROUP_SUCCESS and IDPM_GROUP_FAILURE when▪
+password s ynchr oniz ation  succeeded or failed.
+Group management
+▪Added a feature that tells users what actions  are performed on each line in the Group app wizard: ▪
+▪ Existing  entries are strike through if the selection  is deleted. ▪
+▪Pending member record becomes gray (instead of striking through) if the selection  is removed. ▪
+Bravura P attern  / components
+▪Added "RemoveAuthorizerIf" c ondition  for pam_t eam_authoriz ation  and pam_authoriz ation_policy ▪
+external database tables to remove authorizers from a request if they match the c ondition  set; for
+example, is requester.
+▪Added pam_personal_admin_management_rms_sample to show how personal administrator▪
+accounts can be onboarded with rms based on matching expressions.
+▪Added team trustee and team admin approval for team deletion. ▪
+▪Added scenario component "pam_managed_account_cleanup" to remove deleted managed accounts▪
+from teams.
+▪Added a global c on figur ation  to support custom pr e-de fined  request (PDR)s to use policy in ▪
+hid_policy_attr v al_c alculation  to generate pr ofile  ID
+▪Added contains/notcontains as Functional.hid_authchain_sel ect  ma t ch_c onditions ▪
+▪Updated manage_components.py so the install/remove/enable/disable can now take a list of▪
+components. Skins will only be built once when install/remove multiple  components at the same time
+from UI or command line.
+▪Updated idmlib to allow lists on expressions.▪
+▪Added mapping for lastLogonTimestamp AD attribut e. ▪
+▪Improved the performance of the scripted agent responsible for the system onboarding process.▪
+Login Assistant / SKA
+▪Improved the recoverability of local service mode discovered systems.▪
+▪ Addition  of new LWS_LAST_CONNECTION_UPDATE_INTERVAL system variable ▪
+▪The MAC OS Self Service Anywhere packages and binaries are no longer installed for new instances.▪
+They will instead be available and released separately.
+Support for MAC OS Self Service Anywhere is not available as of Bravura Security Fabric  version 12.6
+(on page 17).
+▪The Login Assistant has been modified  to now set a default value of 30 for "Timeout (in seconds)" and ▪
+3 for the "Retries" fields.Ins t allation
+During setup:
+▪Domain accounts now allowed for service account in all scenarios.▪
+▪Improved standardized account v erific ation  error checking and handling for installer. ▪
+▪The new upgradetest  tool was added to the ins t allation  package to check for possible problems ▪
+with updating  the database.
+▪Fixed the issue where the managed group auto assignment settings  were not kept after  upgrade. ▪
+▪Added a pr e-ins t allation  check to verify that an instance ins t allation  will not start inside a directory ▪
+where the user only has read-only access.
+▪Updated SQLite DLL version to v3.36.0.0▪
+▪Updated the product installer to check for the following during the pr e-ins t allation  checks when ▪
+patching or upgrading a r eplic ation  node:
+▪Auto discovery, updinst, and/or persistent listing  is still running ▪
+▪ R eplic ation  queue contains too much data ▪
+▪ R eplic ation  queue delay is too long ▪
+▪Updated product installer to check for the following during upgrades:▪
+▪The Instance upgrade check during Pr e-Ins t allation  Check will verify that no management tools are ▪
+currently opened by the Micr osoft  Management Console.
+▪The installer will verify that no management tools are currently opened by the Micr osoft ▪
+Management Console while uninstalling the old services.
+▪The installer will verify that the messaging service is stopped before the messaging service gets▪
+upgraded.
+Logging
+▪Updated logging service to trigger trace-restart when run psdebug or rotate log file. ▪
+▪Add time  zone to idmsuite.log when r ot ating  log file on Bravura Security Fabric  instance server. ▪
+Mobile
+▪The iOS Bravura One  app now uses the UIWebView API instead of WKWebView, improving ▪
+performance.
+▪When migr ating  user mobile device r egis tr ations  using the migratedata  Data Migr ation  Utility  to a ▪
+current Bravura Security Fabric  version and the instance name has changed and/or the company
+name has changed for the Proxy server URL address in the Mobile Worker Service (mobworker)
+settings,  the rewrite rule in the Apache c on figur ation  on the Bravura One  proxy server may now be
+modified  to allow for these changes and to ensure that users will not be required to re-register their
+mobile devices after  the migr ation  is complete.
+Notific ation
+▪Web notific ation  message can now be displayed in multiple  lines. ▪Password policy
+▪Added a new password rule current password may be reused for password resets for N days after  its ▪
+fir s t use to allow password reuse, when used in c onjunction  with "not be an old password".
+Plugins
+▪Added the changesOnlyForDisplay flag to indicate that the wizard plugin will be run for viewing only, ▪
+so that the script writer does not need to waste time  in changing the request in the plugin.
+▪Add a plugin that can check Azure password policy when AD is fully synchronized with Azure.▪
+Privileged access c on figur ation
+▪Added secure browser access disclosure plugin that allows disclosure to website applic ations  with ▪
+session monitoring.
+▪Upgraded Guacamole to version 1.3.0.▪
+▪Added optional  commands to guac Dock erfile  for allowing RDP into older windows clients. ▪
+Privileged access usability
+▪Added support for download of large cr edential  files using pamutil . ▪
+▪ Addition  of synchronouswrite option  for pamutil  to wait and see if oper ations,  such as randomize ▪
+and override, succeeded or not.
+R eplic ation
+▪Added queueflush  program to make it easier and safer to flush  r eplic ation  queues for ▪
+tr oubleshooting  and maintenance.
+▪Enabled windows event log to monitor critic al  failures with r eplic ation  queue and loaddb stored ▪
+procedures.
+▪Added a section  to health check dashboard to display these failures. ▪
+▪Improved usability when pr opag ating  r eplic ation  c on figur ation  to other servers ▪
+▪Removed the "Disabled" mode option  for r eplic ation. ▪
+▪Updated the product installer to check whether r eplic ation  nodes are in a 'Disabled' mode before ▪
+proceeding.
+▪Improved usability when adding new replicas by cloning the c on figur ation  of e xisting  nodes. ▪
+Reports and dashboards
+▪New SOX Groups and SOX Users audit reports have been added to in v estig a t e  all suspicious group and ▪
+users activities  that fall under SOX de finition.
+▪Added Violation  details, Violation  e x ception  status and Violation  e x ception  details analytics ▪
+dashboards.
+▪Add new report Account audit to the Audit category to provide in f ormation  on source of account ▪
+cr eation  / deletion.▪Bravura Privilege licensees can now run USERSTAT reports for the Acceptable Use Policy.▪
+▪Removed the filt er  "Allowed network addresses for remote API access" from the Access to product ▪
+features report.
+▪ Analytics  report Platform  c onsumption  correctly displays valid and invalid categories such as accounts, ▪
+groups, and computers on both AD and NT platforms.
+▪In Request summary dashboard:▪
+▪Changed the trend graph to be a line graph and add a drill through for the data points.▪
+▪Changed date range labels to be last 7 days, last 31 days, etc. instead of last day, month.▪
+▪Added drill through to request by node and change the drilled through dashboard to display a node▪
+column.
+▪Date/Time is displayed and calculated with local time z one. ▪
+▪The PDR id of request generated from orgchart build is no longer empty.▪
+▪Default analytics  categories and reports are displayed and viewed in diff er en t  language skins. ▪
+▪"Enable pr ofile","Disable  pr ofile","P ar en t  group add" and "Parent group delete" have been added to ▪
+the option  drop-down of "Oper ation"  in the Search requests report.
+▪Added a feature that saved reports can be downloaded in PDF format.▪
+▪A new column with header "Create date" has been added in user report types, Inactiv e  accounts and ▪
+Inactiv e  pr ofiles.
+▪Added new report, Group memberships consistency, to identif y  group memberships a user has that ▪
+are not consistent with their peer group.
+▪Added user, user class, managed system, and managed account filt er s  to the Con figur ed  user groups ▪
+in managed system policies report.
+▪Added the Web app privileged sign-on c on figur ation  analytics  report to provide details on web app ▪
+c on figur ations  that are associated with managed accounts.
+Search
+▪Allowed saved searches to be shared on similar engines.▪
+▪Added ’Update’ and ’Override’ options  for saved search. ▪
+Security questions
+▪ Option  for users to view answers to security questions  in plain text added. ▪
+▪Fixed idr to not allow users to bypass forced web notific ations. ▪
+Services
+▪Enhanced messaging service to handle heavy load▪
+▪Made improvements for proxy service▪
+▪ Modified  the T r ansaction  Monitor Service to be able to retry with returned data. ▪
+▪An agent can return a ACTryAgainLater code and send a data "cookie" to be returned on the next▪
+try and an amount of time  to wait before being called again.Utilities
+▪New "maxwait" parameter added to psdebug utility  to filt er  out PerfSproc with dur ation  less than ▪
+maximum wait time.
+▪Added a new "hidemaxage" parameter to the dbarch utility . ▪
+▪Added functionality  to loadbalancerstatus to trim db/nodestatus file contents older than a date ▪
+specified  by system variable LOADBALANCERSTATUS_RECORD_HIST_DAYS.
+▪Added a scheduled job to regularly trim.▪
+▪Added option  to export/import target system cr edentials  using migratedata . ▪
+User Interface
+User interface style and format is improved on desktop and mobile platform.
+1.A log-in box in the middle of the log-in screen, and background image can be added to the log-in1.
+screen between screen header and footer.
+2.A lighter background color is used for footer and dark grey text color is for header.2.
+3.All borders but the left one of inline alert/notific ation  are removed and its background color is set to 3.
+white. The color of text/link in messages is also updated.
+4.Filter panel styling in Group and Privileged Access app:4.
+▪Background color of filt er  panel is updated to a light gray. ▪
+▪Filter group titles  are updated to uppercase like the main menu and to have a short red bar under ▪
+them.
+▪More spacing between filt er  groups is added. ▪
+▪ Selection  styles and hover style of the filt er s  are updated ▪
+▪Padding around "Create" button  is improved in groups app ▪
+5. Action  panel in Requests, Manage Components, and Analytics  page: 5.
+▪Styling and the background color is update to a light gray.▪
+▪The selected styles and hover styles of an action  is updated. ▪
+6.The product name is changed to Bravura Security Fabric ; the change happens for all references of 6.
+Hitachi ID Management Suite, the installer, and license. The word ‘menu’ on the main menu header is
+removed.
+7.Screen styling is improved:7.
+▪A single dark grey bar on the top of the UI page on each UI page.▪
+▪Hitachi logo appears on the far left side of the bar/row. ▪
+▪Other icons are displayed on the same row.▪
+▪Wizard popup shows Hitachi icon in a single row.▪
+8.Menu bar color and height is improved:8.
+▪The updated top menu bar hover colour has a 50% transparent black.▪
+▪The hover zone for the top menu is 100% of the height of the bar.▪
+▪The updated sub-menu styles and hover state is transparent black (darker instead of lighter).▪▪The line height of the na vig ation  items is increased slightly. ▪
+9.Main menu format and color is improved:9.
+▪The headers is capitalized.▪
+▪A small red underline is added below the headers.▪
+▪Background color in the HEALTH CHECK section  is darker. ▪
+▪Some icons are dropped off the sections  / boxes and their image files are removed from the ▪
+repository.
+10. Header logo can now be customized. 10.
+11. Header decal is enabled by default and can be disabled and unused content in file header.m4 and 11.
+footer.m4 is removed.
+12. Improvements are added to the areas below: 12.
+▪Scrolling is added to the filt er  panel on the Analytics  page. ▪
+▪Close sign/button  is removed in Components panel for Details and Task Status. ▪
+▪Hover and select styling is updated.▪
+▪Styling is updated in these apps:Groups, Roles, Requests, PAM, and Session monitor.▪
+Resolved Issues 12.2.0
+API
+▪Fixed an issue where r eser v ations  would not be executed on the primary node when initia t ed  from a ▪
+secondary node.
+▪Fixed an issue to allow API function  UserAccountsGet to return correct results when flag resetOnly, ▪
+verifyOnly, or unlockOnly is enabled.
+▪Added logic for retrying password g ener ation  up to 1000 times. ▪
+▪SOAP: UserAccountsGet function  does not return invalid accounts anymore. ▪
+▪Fixed the issue when a resource is selected with the ALL option  or if ALLRESOURCES is used, all ▪
+resources were included in the certific ation  campaign. Now only those resources that belong to the
+selected users are included.
+Services
+▪Fixed so "Run on all servers" scheduled jobs run.▪
+▪No need to restart the IDPM service when PSR status is modified. ▪
+▪Fixed idtrack to fill in recipient info properly for the request if the recipient is an invalid user. ▪
+▪Fixed an issue where i ddiscover did not load values from accounts associated via account attach ▪
+request oper ation.
+▪Fixed a few scheduler issues:▪
+▪Show ’Run now’ only for jobs scheduled on current node.▪
+▪The ’Last run time’  and ’Last finish  time’  have good values for all tasks. ▪▪Fixed a crash that may occur when shutting  down a service that is in the middle of processing a ▪
+request.
+Authentic ation
+▪Fixed an issue that prevented using the "IdP Initia t ed  SSO" functionality  from Okta. ▪
+▪Corrected issue so that metadata for Azure IdP is properly parsed for SAML authentic ation ▪
+c on figur ation.
+Auto discovery
+▪Fixed an issue where new pr ofile  was not created after  change to associated account. ▪
+▪Fixed an issue where when pr ofile  was created its pr ofile  attribut es  were not populated by the same ▪
+account used to create the pr ofile.
+▪Updated Me t aattrMer g eInitial()  stored procedure, to avoid issue where user doesn't get a me t aattr ▪
+record appended if the corresponding target attribut e  value already exists in the t ar g e t objattr  table.
+▪Missing objects due to long ID c apit aliz ation  c on flicts  can now be discovered. ▪
+▪Nightly psupdates will now aut omatic ally  clear completed entries from the discoverystate database ▪
+table that are more than a month old.
+▪Low-value, high-frequency sesslog events will be disabled unless their corresponding exit trap is▪
+enabled. This includes IDTM_GROUP_FAILURE, IDTM_GROUP_SUCCESS, and IDTM_SINGLE_FAILURE.
+▪Extended the rmidarchivepwdhis utility  to remove failed passwords of managed accounts. ▪
+▪Fixed a stored procedure to avoid using invalid accounts for "add an account to a group" oper ation. ▪
+▪Computer objects are not duplicated when listed from more than one target.▪
+▪Fixed an issue that pr ofile  attribut es  are not re-synchronized after  associated accounts are deleted ▪
+from targets.
+▪Fixed an issue where loaddb plugin did not handle pseudo attribut es  correctly when persistent listing ▪
+was enabled.
+▪Fixed an issue where account attribut es  not removed during psupdate  if all attribut es  go away on ▪
+non-incremental list target.
+▪ Modified  the Scheduled Jobs gui screen to only show the 'Run Now' button  for applicable nodes. For ▪
+example, secondary nodes will not have 'Run now' for psupdate .
+▪Regular psupdate no longer performs scheduled job changes. ▪
+▪"psupdate -schedule" can be run to cr ea t e/upda t e/fix  default scheduled jobs. ▪
+Privileged access management
+▪Run commands greater than 450 characters correctly saved and ran without trunc ating. ▪
+▪Fixed memory c orruption  in some cases when submitting  a r andomiz ation  to idarch. ▪
+Certific ation
+▪Fix the issue where the Show/hide column dialog in certific ation  review page was off -scr een ▪

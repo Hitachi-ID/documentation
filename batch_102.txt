@@ -1,0 +1,336 @@
+password, this setting  is not practic al.  This might be the case, for example, when password
+s ynchroniz ation  is c onfigured  to be triggered from Active  Directory (transparent s ynchroniz ation).
+Implementing  password aging
+The maximum password age is controlled by the password must be changed after  N days strength rule.
+Bravura Security Fabric  uses the lastpwchgtime field  in the expiry table to determine when
+passwords were last changed.
+Bravura Security Fabric  can list users with soon-to-expire passwords based on both target system
+password expiry and Bravura Security Fabric  password policies.
+If both target password expiry and Bravura Security Fabric password expiry are in eff ect,  the earliest
+expiry time  is used.  
+See also
+Password expiry de t ection  (on page 443) shows you how to set up user notific ation  and enforcement
+upon password expiry.
+Add new rules with a plugin
+You can use a plugin to display and enforce additional  password strength rules in Bravura Security Fabric .
+You can also include embedded HTML as part of a custom password strength rule. This is helpful in cases
+where Unix target systems make use of a text-only terminal, and objects cannot be accessed using
+graphical methods. For example, on systems where hyperlinks are not supported, a HTML tag containing
+a URL could be displayed.
+Configur ation
+The plugin point is set by the Require the password to be approved by this plugin  and the Warn if the
+password is not approved by this plugin  strength rules on the Policies > Password policies  c on figur ation
+page.
+Ensure that password strength rules enforced by the plugin do not c onflict  with rules enabled in Bravura
+Security Fabric. This will cause all passwords to be invalid. For example, a minimum password length of 7
+characters in Bravura Security Fabric will c onflict  with a plugin enforced minimum of 4 or a maximum of 6
+characters.
+Shipped plugins
+There are two shipped plugins for additional  password strength checking:
+▪ pass filt  (on page 1012) ▪
+▪netvalidatepwpol  (on page 1014) ▪
+The passfilt plugin program can be used with the Require the password to be approved by this
+plugin  and Warn if the password is not approved by this plugin  strength rules, whereas
+netvalidatepwpol can be used with Require the password to be approved by this plugin  only.pass filt.p sl
+Bravura Security Fabric  is shipped with passfilt.psl , which emulates the Windows NT pass filt.dll  to
+enforce a c ombination  of strength rules. The plugin point is set by the Require the password to be
+approved by this plugin strength rule on the Manage the system > Policies > Password policies
+c on figur ation  page.
+For passwords to be approved by the passfilt.psl plugin, passwords must:
+▪Be at least 6 characters long▪
+▪May not contain your pr ofile  ID or name or any part of your full name. ▪
+A pr ofile  ID or name value with one character, such as a middle initial,  can be used in the password.
+▪Must contain characters from at least 3 of the 4 following classes:▪
+Class Examples
+English uppercase letter s A, B, C,... Z
+English lowercase letter s a, b, c,... z
+Westernized Arabic numerals 0, 1, 2,... 9
+Non-alphanumeric ("special characters") $,!,%,∧
+See passfilt details
+passfilt  e x ecution  points
+The passfilt program is run by the View and update pr ofile  (IDR) module, Password s ynchr oniz ation
+r egis tr ation  (PSR) module, and the Manage the system (PSA) module. The plugin is located in the
+\<instance>\plugin\ directory on the Bravura Security Fabric  server.
+When passfilt is c on figur ed  as part of the Bravura Security Fabric  password strength policy, it is
+used to approve passwords entered by users when r equesting  new accounts.
+passfilt  input
+Bravura Security Fabric  makes two calls to the password strength plugin. The fir s t call asks the plugin to
+display its rules. The second call asks the plugin to validate the selected password.
+When Bravura Security Fabric  asks the plugin to display its rules, input to the plugin is the KVGroup:
+ "show_rules" "show_rules" = {
+ }
+After  a user selects a new password, Bravura Security Fabric  calls the program with the following
+KVGroup:
+ "pwcheck" "pwcheck" = {
+   "accountid" = "<account id>"
+   "oldpassword" = "<old password>"
+   "password" = "<requested password>"   "targetid" = "<target id>"
+   "userid" = "<user id>"
+   "username" = "<user name>"
+ }
+The acc ountid,  oldpassword, and t ar g etid  values may not always be passed to the plugin. Verify that your
+plugin works under scenarios such as an initial  password change (when no old password is available).
+passfilt  output
+When Bravura Security Fabric  requests the plugin’s password rules (the show_rules KVGroup is input),
+the plugin may respond with a KVGroup listing  the plugin’s enforced password requirements as displayed
+to the user. The default pass filt  plugin returns the following KVGroup in response to a show_rules
+request:
+ "" "" = {
+    "rules" "rules" = {
+      "USERNAME" = "!!!PASSFILT_RULE_USERNAME_DESC"
+      "CHARTYPES" = "!!!PASSFILT_RULE_CHARTYPES_DESC"
+     }
+    "retval" = "0"
+  }
+Every value in the "rules" KVGroup will be displayed to the user. Keys must be unique between rules in
+this plugin and are used to associate success/failure statuses with their corresponding rule description.  At
+least one rule description  must be provided.
+!!!PASSFILT_RULE_USERNAME_DESC and !!!PASSFILT_RULE_CHARTYPES_DESC are multi-languag e  tags
+that will be transformed into appropriate strings. It is not necessary to use multi-languag e  tags; for
+convenience, you may simply return non-tag strings, but they will not be translated.
+See Add language tags  (on page 3490) for more in f ormation  about multi-languag e  tags.
+When Bravura Security Fabric  asks the plugin to validate the selected password, the plugin must respond
+with a KVGroup containing a retval (equal to 0 for success, or any other integer for failure), and a pass
+(true) or failure (false) for each rule de fined.  If the password failed v alidation  of any of the rules, a
+corresponding error message must be provided. This error message is typically the description,  as
+demonstrated by pass filt.p sl,  where it is the same message passed back on error and in response to the
+"show_rules" request. Keep in mind the description  must make sense after  the prompt "The password
+must:".
+The shipped passfilt.psl plugin responds to a failure with a KVGroup similar to the following:
+   "" "" = {
+      "results" "results" = {
+      "USERNAME" = "false"
+      "CHARTYPES" = "true"
+     }     "errmsgs" "errmsgs" = {
+      "USERNAME" = "!!!PASSFILT_RULE_USERNAME_DESC"
+     }
+     "retval" = "1"
+   }
+.
+netvalidatepwpol.exe
+Updated in Bravura Security Fabric 12.2.6/12.3.5/12.4.2
+The netvalidatepwpol password strength plugin, shipped with Bravura Security Fabric , is used to
+enforce Azure AD Password Pr ot ection  password policy.
+This plugin supports password policy enforcement for both on-prem or cloud ins t allations  of Azure AD
+Password Pr ot ection.
+On-premises Azure password policy checking is not supported when you have transparent
+s ynchroniz ation  trigger software  enabled for AD on the on-prem DCs.
+The plugin point is set by the Require the password to be approved by this plugin  strength rule.
+Configur ation  - on premises
+The netvalidatepwpol  plugin can be c on figur ed  to enforce on-premises Azure password policy
+checking with following steps:
+1.Ensure Azure AD Password Pr ot ection  is On and Enabled in On-premises mode, as described in: 1.
+http s://docs.micr osoft.c om/ en-us/ az ur e/ activ e-dir ect or y/ authentic ation/ c oncep t -pass w or d-ban-bad-
+on-pr emises .
+2.Make sure it is enabled but NOT in Audit mode to avoid over logging. 2.
+3.On the target system c on figur ation  page, set the Activ e  Directory target as the ”domain” on the 3.
+address wizard page and specify domain target cr edentials,  the plugin must run in the context of a
+domain user.
+4.Ensure the Bravura Security Fabric  server is a domain member, which is required for the above step. 4.
+5.Copy the sample netvalidatepwpol.cfg file from the samples directory to the plugin directory 5.
+on the Bravura Security Fabric  server.
+6.Update netvalidatepwpol.cfg file to point to the AD target. 6.
+7.Go to Manage the system > Policies > Password policies  c on figur ation  page; set Require the 7.
+password to be approved by this plugin to netvalidatepwpol.exe .
+Configur ation  - cloud
+The netvalidatepwpol  plugin can be c on figur ed  to enforce cloud Azure password policy checking
+with the following steps:1.Ensure Azure AD Password Pr ot ection  is On and Enabled, as described in: 1.
+http s://learn.micr osoft.c om/ en-us/ az ur e/ activ e-dir ect or y/ authentic ation/ c oncep t -pass w or d-ban-bad
+2.Make sure its enabled but NOT in Audit mode to avoid over logging. 2.
+3. Con figur e  an Azure Activ e  Directory target system  and associate its accounts to Bravura Security 3.
+Fabric  pr ofiles.
+4.Copy the sample netvalidatepwpol.cfg  file from the samples directory to the plugin directory 4.
+on the Bravura Security Fabric  server.
+5.Update netvalidatepwpol.cfg  file to point to the Azure AD target. 5.
+6.Go to Manage the system > Policies > Password policies  c on figur ation  page; set Require the 6.
+password to be approved by this plugin  to netvalidatepwpol.exe .
+See netvalidatepwpol  e x ecution  points and input detail
+netvalidatepwpol e x ecution  points
+netvalidatepwpol  is run by the Change passwords  (PSS) module and the Help users  (IDA) module.
+The netvalidatepwpol.exe  plugin program is located in the \<instance>\plugin\ directory There is
+also a sample c on figur ation  file, netvalidatepwpol.cfg , which is located in the samples\ directory
+on the Bravura Security Fabric  server.
+When netvalidatepwpol is c on figur ed  as part of the Bravura Security Fabric  password strength
+policy, it checks Azure password policy when Azure Activ e  Directory is synchronized with Azure.
+In netvalidatepwpol.cfg , the API version used to validate password against Azure policy can be
+specified  as below:
+apiver=beta
+By default, without specifying the version, it is using beta; in the future if there is an official  version that
+supports this v alidation,  that beta can be the version number; for example, 2.0.
+netvalidatepwpol input
+Bravura Security Fabric  calls the plugin program with the following KVGroup:
+"pwcheck" "pwcheck" = {
+  "resourceid" = "<resourceid>"
+  "password" = "<requested password>"
+  "oldpassword" = "<old password>"
+  "userid" = "<user id>"
+  "username" = "<user name>"
+  "targetid" = "<target id>"
+  "accountid" = "<account id>"
+  "tgroupid" = "<target group id>"
+}The acc ountid,  oldpassword, and t ar g etid  values may not always be passed to the plugin. Verify that your
+plugin works under scenarios such as self-service password reset or helpdesk password reset.
+.
+Add new rules using regular expressions
+You can add additional  rules that use regular expressions to force or prevent the use of certain
+passwords.
+To add a password rule using a regular expression:
+1.On the  Password Policy  (on page 1002) tab, click Add new… in the Regular expressions form below 1.
+the standard strength rules.
+2.Select the Status (required or warning). 2.
+3.Type a description. 3.
+This description  identifies  the expression on the policy c on figur ation  page, and is also displayed to
+users when they enter new passwords. Depending on the status, Bravura Security Fabric  prepends
+"The password should” or "The password must” to the message to display to users; for example:
+Your password must:
+▪not begin with the letters SAP▪
+4.Type the regular expression. For example, enter: ∧[Ss][Aa][Pp] 4.
+5.Select ” Accept matching passwords” or ”Reject matching passwords”.5.
+6.Click Add. 6.
+See also: 
+See Using Regular Expressions
+Regular expressions provide a way to identif y  patterns  of text in strings.
+Bravura Security Fabric  uses regular expressions to:
+▪Match and block invalid passwords.▪
+▪ Identif y  users who it should not manage. ▪
+▪Extract text from Telnet/TN3270 screens in Telnet connector scripts.▪
+▪Extract text from the output of password hashing programs in DBMS connector scripts.▪
+Regular expressions use a shorthand of literal characters and special characters to de fine  a pattern  in a
+precise and compact way. Literal characters are case sensitiv e.  The regular expression parser used by
+Bravura Security Fabric  uses the following special characters in literal strings:
+Character Purpose Example Match
+. Matches any single
+charactera.c aac , abc , a1c , a2c^ Beginning of a line ^hat hat , hatch , not
+chat
+$ End of a line hat$ hat , chat , not
+hatch
+| Alt ernation job|task job or task
+( ) Grouping job(12 |34) job12 or job34
+\ Treat the following
+special character
+literally\$5\.6\\7 $5.6\7
+The | alternates the longest possible string. That is, it matches job or task , and matches both jotask
+and jobask .
+Grouping with ( ) limits the alternate branches.
+Character sets
+Character sets
+You can de fine  a set of characters within a string. Character sets match any single character enclosed in
+square brackets [ ] . For example:
+Expression Match
+j[oa]n jon or jan
+Use the - character between two characters in a set to indicate a range. A - character outside of a set,
+or at the beginning or end of a set, is treated literally. For example:
+Expression Match
+[a-c] a, b, or c
+[1-3] 1, 2, or 3
+[ab-] a, b, or -
+[B-D]-3 B-3 , C-3 , or D-3
+If the fir s t character in the set is ^, then the character set matches any character that is not in the list. For
+example:
+Expression Match
+[^oa] Any character except o and a
+All other special characters lose their meaning when included in a character set. For example:
+Expression Match
+^[^*\+.-] Line must not start with *, \, +, .,or -
+To include a literal ] in the character set, make it the fir s t character in the set. It can also be excluded by
+following ^. The ] character is also treated literally outside of a set. For example:
+Expression Match[^]a-] Any character besides ], a, and -
+[]a] ] or a
+[a]] a]
+Quantifier s
+Quantifier s
+You can specify quantities  of character sets, grouped characters, or individual characters. The quantifier s
+*, +, ?, and { } act on the preceding set, group, or individual character.
+Character Purpose Example Match
+* Specifies  0 or more
+c onsecutiv e  occurrencesab*c ac, abc , abbbbc
++ Specifies  1 or more
+c onsecutiv e  occurrencesab+c abc , abbbbc
+? Specifies  0 or 1 occurrence colou?r (wo)?man color or colour
+woman or man
+{x} Exactly <x> occurrences ab{4}c abbbbc
+{x,y} At least <x>, no more than
+<y> occurrencesab{2,4}c abbc , abbbc , abbbbc
+{x,} At least <x> occurrences ab{2,}c abbc , abbbc
+{,x} No more than <x>
+occurrencesab{,2}c ac, abc , or abbc
+Shorthand expressions
+Shorthand expressions
+The following expressions are shorthand for longer or more complex regular expressions:
+Expression Purpose Example Match
+[:alpha:] Matches must consist of
+letter s.[:alpha:]8,16 aBcmGLeEhhi
+[:digit:] Matches must consist of
+digits. [:digit:] is equivalent
+to [:d:] and \d.[[:digit:]]+ 2962954576
+[:upper:] Matches must consist of
+uppercase characters.[[:upper:]
+[:digit:]]+9DDD4MLAG13[:alnum:] Matches must be
+alphanumeric. [:alnum:] is
+short hand for [a-zA-Z0-9]
+in the ascii character set,
+but the use of [:alnum:] is
+preferred for c ompatibility
+with other languages and
+character sets.[:alnum:]7[^[:digit:]] a3dM9DD+
+Examples
+Examples
+Only allow letter s,  numbers, e x clamation  point, and
+period^[a-zA-Z0-9!.] ⋆$
+At most 8 characters long ^.,8$
+Must start with a letter ^[a-zA-Z]
+Must have a number [0-9]
+Must end in -admin or -test (-admin |-test)$
+Must begin with three capital letter s  and an underscore ^[A-Z] {3}_
+ See also: 
+Bravura Security Fabric  uses the ECMAScript regular expression grammar. For more in f ormation  on
+regular expressions supported by Bravura Security Fabric , see:
+▪The ECMA Script Language Specific ation  at: ▪
+http://w w w .ecma-in t ernational.or g /public ations/files/E CMA -S T /E cma-262.pdf
+or
+▪The Micr osoft  Developer Network (MSDN) TR1 Regular Expressions document at: ▪
+http://msdn.micr osoft.c om/ en-us/libr ar y/bb982727.asp x
+for more in f ormation.
+new rules using a white list
+You can add additional  rules that use a white lists of characters that must be used in a password. This is
+particularly  useful when de fining  the Privileged access password policy  (on page 1000), where a higher
+degree of entropy is required.
+To add a password rule using a white list:
+1.On the  Password Policy  (on page 1002) tab, type Valid characters in the White list form below the 1.
+standard strength rules; for example aeiouAEIOU .
+2.Type the Number of valid characters that must be included in a password. 2.
+This value will be included in the rule’s description.
+3.Select the Status (required or warning). 3.Depending on the status, Bravura Security Fabric  prepends “The password must” or “The password
+should” to the message to display to users; for example:
+Your password must:
+▪have at least 3 characters in [aeiouAEIOU]▪
+4.Click Update . 4.
+Bravura Security Fabric  aut omatic ally  adds a row so that you can add another white list, or you can
+click More to add more rows.
+New passwords will be generated and tested against a c ombination  of white lists and other rules.
+To delete a white list, select the checkbox next to the list and click Update in the white list table.
+Gener ating  random passwords with a plugin
+You can use a plugin to generate a list of randomly-selected passwords and display them to users. Users
+may then use one of these values when they choose new passwords.
+To use a random password generator plugin, ensure that the plugin is located in the plugin directory, then
+add the plugin name to the generate random passwords with this plugin strength rule on the Manage
+the system > Policies > Password policies page.
+Bravura Security Fabric  is shipped with a default random password generator, randpasswd  that is used
+if this strength rule is not c on figur ed.
+If your password policy includes complex regular expression rules, or if you are using your own password
+strength plugin, you should use a custom random password generator, rather than randpasswd .
+See details on how to write a custom plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+This plugin is called at any time  a randomly generated password is requested.
+Input
+Input to the plugin includes user data and a list of password strength rules; for example:
+   "" "" = {
+     "requestpasswordnumber" = "30" # Number of passwords to generate
+     "requester" "user" = { # User setting the password
+       "id" = ""
+       "name" = ""
+     }
+     "strength" "myresourcegroup" = {
+       "AUTOGEN_NUM" = "10"

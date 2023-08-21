@@ -1,0 +1,268 @@
+"language" "<LANGUAGE_LOCALE>" = { 
+}
+2.Specify the associations  between language tags and their tr anslations  by inserting  entries into the 2.
+outer KVGroup, in the following format :
+"_<CUSTOM_TEXT_MACRO>" "" = { 
+ "text" = "<text>" 
+  }
+3.Save and close the file. 3.
+4.Generate and install the new skin files (on page 3477). 4.
+If your new text must include quotes, it is highly recommended that you use single quotes (') rather
+than double quotes ("). If you must use double quotes, they must be escaped properly.
+For text that appears within an HTML widget, a double quote must be preceded by three backslashes
+(\\\"). For "normal" text, a double quote must be preceded by a single backslash (\").
+You will need to create a new custom KVG file for each language that you intend to translate the
+custom tag into. Ensure that <lang>-<locale>  in the filename  and <LANG-LOCALE>  in the
+outer KVGroup are updated according to the respective  language, before rebuilding and installing the
+respective  language skin.
+Now that you have instructed the Bravura Security Fabric  on what to do with these new language tags,
+you are ready to use them in your instance.
+To use the tag, type its name beginning with !!!  and containing no spaces. For the example listed
+above, this would be written  as !!!<CUSTOM_TEXT_MACRO>  in any loc ation  where you want your
+custom text to appear.
+Use case: Add a question  in multiple  languages
+To add a question  to a pr e-de fined  question  set that is visible by American English and Spanish users:
+1.Create your custom en-us-language.kv g file as follows: 1.
+# KVGROUP-V1.0 
+"language" "EN_US" = { 
+  "_NEW_QUESTION" "" = { 
+    "text" = "Date of birth" 
+  } 
+}
+2.Create your custom es-es-language.kvg  file as follows: 2.
+# KVGROUP-V1.0 
+"language" "ES_ES" = { 
+  "_NEW_QUESTION" "" = { 
+    "text" = "fecha de cumpleanos" 
+  } 
+}3. After  you generate and install the modified  en-us and es-es skins, you can now type !!! 3.
+_NEW_QUESTION  in the Question  field  on the question  de finition  page. Bravura Security Fabric  will
+identif y  the tag, and replace it with the corresponding text before it is displayed to the end user.Customizing skin design
+You can customize appearance, and behavior of the Legacy portion  of the skins by editing  m4 files in the
+\<instance>\design\ directory. You then regenerate and reinstall your skin files using the make.bat batch
+file. Note that you do not modify the skin files directly.
+Before you start, ensure that you have read preceding chapters, in particular  chapters About the User
+Interface  (on page 3472) to Gener ating  and Installing Skins  (on page 3477). This chapter includes:
+▪The m4 Macro System  (on page 3493) ▪
+▪Finding where to edit  (on page 3495) ▪
+▪Changing the layout  (on page 3496) ▪
+For conciseness, the following procedures assume that your current working directory is the
+\<instance>\design\ directory.
+Unless otherwise instructed, do not change any code that begins and ends in percent (%) signs. These
+codes are replaced by session-specific  text when Bravura Security Fabric builds each page.
+The M4 macro system
+Bravura Security Fabric  uses an off -the-shelf  text macro system called M4 to construct the Legacy skin
+files.  m4 expands short strings (macros) into longer strings. An M4 macro processor is shipped with
+Bravura Security Fabric .
+m4 was made popular on Unix systems as a way to manage sendmail c on figur ation  files more easily. For
+more in f ormation  about M4, visit:
+http://w w w . gnu.or g / softw ar e/m4/
+An M4 file may consist of:
+▪An initializ ation  block ▪
+▪Tag values▪
+▪An ending block▪
+▪Comments▪
+Initializ ation  block
+The initializ ation  block is a series of statements specific  to the m4 language. It includes all statements up
+to but not including the fir s t line that starts with !!! .
+For example, psf.m4 begins with:
+de fine(‘PSFMODULE',  ‘yes')
+include(initializ e.m4)
+include(common.m4)
+include(errors.m4)
+!!!F_LOGIN_HIDDEN_TAG<input type="hidden" name="%HIDDEN_NAME%" value="%HIDDEN_VALUE%" />
+!!!F_HEALTH_CHECKS
+  _PSF_HEALTH_CHECKS_DESC
+Tag values
+All tag values start with three e x clamation  marks. They include all statements up to, but not including,
+the next line that starts with !!! .
+The tag body can include:
+▪Statements specific  to m4 ( define statements) ▪
+▪Bravura Security Fabric -specific  macros or tags ▪
+(example:  _PSF_HEALTH_CHECKS_DESC )
+When you run make.bat, the m4 program expands these tags.
+▪HTML markup (example: <p class="bold"> … </p> ) ▪
+▪Dynamic-text place holders (example:  %HIDDEN_NAME% ) ▪
+At run-time,  Bravura Security Fabric  replaces these strings with session-specific  data.
+Some tag bodies will include widget de finitions.  When a page is loaded the CGI will use widget files to
+interpret these to statements into HTML markup with the attribut es  from the de finition.
+For example:
+!!!F_OPTION_USER_MENU
+<!--@div( class="hide" id="userMenu" )-->
+  <!--@rawhtml()-->%USERMENU%<!--@endrawhtml()-->
+<!--@enddiv()-->
+In this example the tag body includes two widget de finitions;  div and rawhtml. A widget de finition  can be
+broken down as follows:
+▪The ’begin’ widget file (if it exists) that will be used to interpret this de finition.  <!--@div  indicates ▪
+that the div-begin.html file will be used to interpret.
+▪The HTML attribut e  de finitions.  ( class="hide" id="userMenu" ) ▪
+▪The content for the widget (if needed). In the example the content of the div is the rawhtml widget▪
+de finition  and the content of the rawhtml is %USERMENU%
+▪The ’end’ widget file (if it exists) that will be used to interpret this de finition.  <!--@enddiv indicates ▪
+that the div-end.html file will be used to interpret.
+Ending block
+The ending block is a set of zero or more m4-specific  statements that appear at the end of the file. For
+example:
+sinclude(custom/psf.m4)Comments
+A comment is any line beginning in dnl .
+Find where to edit
+In order to customize the Legacy portion  of the user interface, you can compile a skin in debug mode to
+help you find the lines of code (text, M4 macros, HTML snippets) that you want to edit.
+Debug mode only displays tags in the Legacy portion  of the skin.
+Debug skins should not be used in production.  Debug skins generally have a network payload 5x greater
+than optimiz ed  production  skins, and the code itself is not optimiz ed.  Angular also runs slower with more
+checks in development mode to help developers find errors.
+A ’Development mode’ badge appears on the screen when the skin is built in debug mode.
+To do this:
+1.In the \<instance>\design\ directory, run the following commands to regenerate the skins in debug1.
+mode for the default skin:
+make.bat debug default en-us 
+make.bat install default en-us
+The M4 tag names are now included as comments in the HTML source of each Bravura Security Fabric
+web page.
+2.Log into Bravura Security Fabric  and navigate to a web page that you want to customize. 2.
+3.Use the "Inspect element" or an equivalent option  in your web browser to see the current HTML 3.
+source.
+"View page source" or an equivalent option  cannot be used as it will not show the relevant HTML code
+and debug comments.
+4.Search for comments embedded in the HTML to find the text you want to modify. 4.
+5.Open the file in the \<instance>\design\src\ directory r elating  to the web page you want to customize. 5.
+For example, open psf.m4  in src\z\ if to find code that applies to the Front-end (psf). Or, open
+header.m4 in src\common\ to find page header code that applies to all pages.
+Open authchain.m4 in src\common\ to find code for authentic ation  chains. See Authentic ation
+chains: Plugins  (on page 981) for more in f ormation  for authchain.m4 modific ations.
+Some m4 files have tag names; if tag names are present in the file, then determine the tag name
+located above the matching text. Tag names are prefix ed  with three e x clamation  points; for
+example, !!!F_LOGIN .
+6.Locate the tag in the m4 or KVG file that matches the HTML code you saw in the web browser. 6.
+Do not make changes directly in the files in src\z\. These files will be replaced during upgrades. See
+Change the layout  (on page 3496) to learn how to make changes in custom files.
+To turn off debug mode, generate and install the skins  (on page 3477) without the debug argument.Change the layout
+You can modify the design of any Legacy web page, including the placement of fields,  buttons  and text by
+editing  the appropriate M4 file. To do this:
+1.Find the source code that you want to edit  (on page 3495). 1.
+Create a custom M4 file in custom\.
+This file must have the same name as the original.
+If you copy a file from \<instance>\design\src\ to the custom\ directory, ensure that you remove the
+lines: include(initialize.m4)  and sinclude(custom/<filename>.m4 )
+2.Copy the lines s t arting  from the tag de finition  up to, but not including, the next tag from the source 2.
+file into the custom file. If the M4 file does not contain tags, then copy only the lines you want to
+change into the custom file.
+Files may also require an m4 define command; for example, define(‘PSFMODULE',
+‘yes') . To customize header*.m4 and footer*.m4, you must copy the entire  file to the custom
+directory. These files contain ins tructions  on how to customize them.
+3.Modify the custom file to suit your needs. 3.
+4.Save and close the file. 4.
+5.Generate and install the new skin files 5.
+To generate and install new or modified  skin files,  use the following format for the commands to run
+from the <instance>\design\ directory, where en-us  is American English:
+1.Compile the skins:1.
+make.bat default en-us
+Changes are saved in the instance's <instance>\design\skin\ directory
+2.Install the skins:2.
+make.bat install default en-us
+The compiled files are copied to the instance's skin\ directory
+3.If necessary, reload and review any changes to Bravura Security Fabric  web pages. 3.
+Do not run the second command to install the skins if they fail to compile, especially if the firs t m4
+file (links.m4) fails to compile.
+Skins can fail to compile if something in the environment is locking the skin files.  That can be a
+malware program, an automated backup tool running at the time,  but more likely the product UI itself
+being in use at the time  of the skin c ompilation
+Have a test instance where you can compile the skins when the instance is not being used. Make a
+backup copy of the files on the production  instance in case you need to quickly roll them back. Review
+changes on the test instance, then copy the skin files to the production  instance.
+.Modifying style
+You can customize the style of Bravura Security Fabric  web pages by editing  the files.
+All Bravura Security Fabric  web pages share a common sassy cascading style sheet, styles.scss. The style
+sheet de fines  all colors, fonts, images (including buttons  and icons), and styles for common HTML
+elements. Each Angular component also has a style sheet associated with it for styles specific ally  r elating
+to that component.
+This section  shows you how to modify the common styles. Before you start, ensure that you have read
+preceding chapters, in particular  chapters About the User Interface  (on page 3472) to Gener ating  and
+Installing Skins  (on page 3477) .
+To modify the common page style, you can customize the following files:
+▪styles.scss – Contains default styles for common HTML elements. ▪
+▪_common.scss – Used by styles.scss to provide a common set of colors, fonts, and backgrounds. ▪
+These files contain ins tructions  for customizing them.
+An example called customTheme , in design/example/customTheme , has some CSS examples for
+how to customize colors, and ins tructions  on how to deploy.
+To modify the page style:
+1.Do one or more of the following:1.
+▪Override styles.scss:▪
+i.Open styles.scss in \<instance>\design\custom\.i.
+ii.Copy styles between "Start copy" and "End copy" in \<instance>\design\src\ui\src\styles.scss toii.
+the new file.
+iii.Add $custom-style: true; to the top of the new file. iii.
+iv.Customize and remove global styles as desired.iv.
+▪Append styles to styles.scss:▪
+i.Open styles-custom.scss in \<instance>\design\custom\.i.
+ii.Add new global styles to the new file. ii.
+iii.To add new styles for one specific  skin, pr e fix  each style with html[ data-skin=<skin iii.
+id>] ; for example:
+html[data-skin=unbranded] .companyLogo { display: none; } .
+▪Append styles to _common.scss:▪
+i.Open _common-custom.scss in \<instance>\design\custom\.i.
+ii.Add new styles to the new file. ii.
+2.Save and close the files. 2.
+3.Generate and install the new skin files 3.To generate and install new or modified  skin files,  use the following format for the commands to run
+from the <instance>\design\ directory, where en-us  is American English:
+1.Compile the skins:1.
+make.bat default en-us
+Changes are saved in the instance's <instance>\design\skin\ directory
+2.Install the skins:2.
+make.bat install default en-us
+The compiled files are copied to the instance's skin\ directory
+3.If necessary, reload and review any changes to Bravura Security Fabric  web pages. 3.
+Do not run the second command to install the skins if they fail to compile, especially if the firs t m4
+file (links.m4) fails to compile.
+Skins can fail to compile if something in the environment is locking the skin files.  That can be a
+malware program, an automated backup tool running at the time,  but more likely the product UI itself
+being in use at the time  of the skin c ompilation
+Have a test instance where you can compile the skins when the instance is not being used. Make a
+backup copy of the files on the production  instance in case you need to quickly roll them back. Review
+changes on the test instance, then copy the skin files to the production  instance.
+.
+The only way to make a style cus t omiz ation  for a specific  skin is using the html[data-
+skin=<skin id>]  prefix  for that style in styles-custom.scss . You cannot perform
+cus t omiz ations  for a specific  skin by placing SCSS files in the \<instance>\design\custom\<skin id>
+directory.Customizing widgets
+You can customize widgets using one of two methods:
+▪Edit the widget de finition  in the m4 file to customize a single widget. ▪
+Follow the procedures described in Customizing Skin Design  (on page 3493) for modifying m4 files.
+▪Edit the widget file to customize a group of widgets. ▪
+This chapter covers the second method: customizing widget files.  Note that you do not modify the widget
+files directly.
+Place custom widget files in the \<instance>\design\custom\widget\ directory. These files must have the
+same names as the original widget files found in the skin\widget\ directory. Once the changes have been
+made to the custom widget files there is no need to run make.bat; the CGI will use the custom widget
+files upon loading a page.
+You need to restart all services after  a widget change.Lab: Customizing the logo
+This use case shows you how to add a component to customize the user interface to replace the Bravura
+Security logo with your own.
+The hid_custom_logo component makes it easy to customize the logo.
+Copy the component files
+1.Copy:1.
+<instance>\samples\idmlib\component\Functional\hid_custom_logo
+folder and contents to:
+<instance>\component\Custom\Functional\
+Contact support@bravurasecurity.com  to obtain the custom logo component package if it was not
+shipped with your version of Bravura Security Fabric .
+2.Open the hid_custom_logo folder and examine the contents. The component folder includes:2.
+▪manifest.xml  – This standard component file describes the parameters and dependencies of ▪
+the component. You do not need to alter this file unless you use a diff er en t  logo filename.
+▪A ui folder containing: ▪
+▪logo.png  – A sample logo file that replaces the Bravura Security logo. ▪
+▪styles-component.scss  – A style file that describes parameters of the logo. ▪
+You can replace the logo file with your own image. If you want to use a diff er en t  filename,  edit
+the $logo-file-name  value in the styles-component.scss  file, and edit the
+filename  in the manifest.xml  file.
+The file must be a png, gif or jpg. The png format is recommended for non-rectangular logos
+because it supports transparency.
+The height of the logo is set at the recommended height for minimal UI skewing. You can adjust
+the height by editing  the $logo-height  value in styles-component.scss .
+Load and install the component
+1.Log into Bravura Security Fabric as superuser . 1.
+2.Click Manage components . 2.
+3.Click Reload DB . 3.
+This loads the component into the database and displays it in the Manage components  page.
+4.Click Functional  and select the Functional.hid_cus t om_log o  component. 4.

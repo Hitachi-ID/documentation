@@ -1,0 +1,347 @@
+Option Description
+Initial  number of worker threads Set this to the URL of the Bravura One  proxy push notific ation  server that is
+used for c ommunic ation  with the Bravura Security Fabric server and to send
+push notific ations  to a user’s mobile device for users that have a registered
+Bravura One  app.
+Maximum number of worker
+threadsThe maximum number of worker threads that the Bravura One  proxy server
+will be listening on.
+Ignore all server certific ation
+warningsIgnore all server certific a t e  warnings from the Bravura Security Fabric server.
+This option  must also be checked if the Bravura Security Fabric server uses a
+self-signed certific a t e  for HTTPS encr yption.
+Aut omatic ally  determine proxy
+server timeoutSelect this checkbox to aut omatic ally  determine the value for the Bravura
+One proxy server requests.
+The timeout,  in seconds, to wait for
+proxy server requests (default is
+600)The number of seconds for the timeout  for the requests that are sent from
+the Bravura One  app for the Bravura One  proxy server to process.
+HTTP proxy to use for outgoing
+c onnectionsSet this if a corporate proxy server is used for outgoing c onnections  if the
+Bravura One  proxy server is hosted externally such as in the cloud for
+example. Specify the proxy server with the address:port format. Set the value
+to ":" to use the service user’s winhttp  proxy settings.  This format must be
+used to support a proxy bypass list.Command-line options  for mobworker are listed below:
+mobworker service command-line options
+Argument Description
+-h Displays usage in f ormation.
+-v Displays version number only.
+-auth Sets the proxy server authentic ation  key.
+-c on fig Displays service c on figur ation  in f ormation.
+-idle <idle> Sets the initial  number of worker threads.
+-ignorecert <1|0> Ignore all Bravura One  proxy server certific a t e  warnings. Set to 1 to ignore certific a t es.
+-max <max> Sets the maximum number of worker threads.
+-remote <remote> Sets the Bravura One  proxy server URL.
+-timeout  <timeout> Sets the timeout  in seconds to wait for the Bravura One  proxy server requests.
+-server Run the service in server mode.
+-start Starts the service.
+-stop Stops the server/service
+See also: 
+See the Mobile access  (on page 1444) for more in f ormation  about Bravura One  and the Bravura One  app.
+File R eplic ation  Service (idfiler ep)
+The File R eplic ation  Service ( idfilerep ) receives data from a master instance in a r eplic ation
+environment, and is used in c onjunction  with the updinst utility  to synchronize files and registry keys
+between multiple  instances.
+When updinst is used from the master instance, the File R eplic ation  Service adds, modifies,  and
+removes files and registry settings  on the server. Con figur ation  options  for file r eplic ation  are explained
+further in this section.
+CAUTION: Do not attemp t  to replace Database Service files using updinst or the
+File R eplic ation  Service. Updating  the Database Service and related files
+(such as iddbmssql.dll ) must be done manually on all instances. This
+only applies to the Database Service service. All other services can be
+updated using the File R eplic ation  Service. To update the Database
+Service files manually, shut down all services on the instance, back up all
+services, and then replace the Database Service files.
+You must set up a database r eplic ation  environment in order for the File R eplic ation  Service to identif y  r eplic ation
+servers with which to synchronize files.  See Recovery .
+The File R eplic ation  Service uses the updinst utility  to initia t e  the file r eplic ation  process.See updinst usage in f ormation
+The updinst program synchronizes files and registry settings  between servers in a multiple-ins t ance
+environment, or a r eplic ation  environment. The program is run during auto discovery when the
+Maintenance > Options  > PSUPDATE FILE REPLICATION  setting  is enabled. This is the default setting.
+This program also collects and synchronizes proxy log files onto the instance server.
+This program is used in c onjunction  with the File R eplic ation  Service ( idfilerep ).
+To determine which files and registry settings  updinst  replicates, there are whitelists and blacklists that
+specify what data to include and what data to omit in the context of file/r egis tr y  r eplic ation  You can write
+an updinst.cfg file to provide additional  c on figur ation.
+A sample of updinst.cfg is located in the samples directory. This c on figur ation  file must be placed in
+the \<instance> \ p sc on fig \ directory before it can be used by the File R eplic ation  Service. Use this
+c on figur ation  file to control which files and registry settings  are replicated to other instances (whitelist)
+and which are not replicated (blacklist). The whitelist settings  override blacklist settings.
+All file and c onfiguration  modific ations  should be done on the same server (the primary). When
+attempting  to run updinst from a node other than the primary, an error will occur, and the operation
+will be aborted. In extreme circumstances there is an option  to force external data store replic ation  (-
+extdb -forcerun) from a secondary node; however that should be done only when that database was
+corrupted on the primary (and its backups that are created every time  the external data store is updated,
+were also corrupted) but the database, or a backup, survived on a secondary node. If updinst is run
+from more than one server, or if file or registry changes are made on secondary nodes, it is possible for it
+to overwrite newer files or settings  that exist on secondary nodes. If a server with missing files runs
+updinst , that will remove those same files on all other instances.
+Do not attemp t  to replace Database Service ( iddb ) files using updinst or the File R eplic ation  Service.
+Updating  the Database Service and related files (such as iddbmssql.dll) must be done manually on all
+instances. This only applies to the Database Service service. All other services can be updated using the
+File R eplic ation  Service. To update the Database Service files manually, shut down all services on the
+instance, back up all services, and then replace the Database Service files.
+If a problem occurs during file r eplic ation  then a notific ation  email is sent to the administrator, and the
+FILE REPLICATION FAILURE event is triggered.
+Usage
+updinst.exe [-list] | [-showconfig] |
+  [-synchfile] [-syncreg] [-globalcp] [-serverid <serverid>...] [-dry-
+run] |
+[-extdb[-forcerun]] | [-getlogs] [-proxyfile <proxylist.csv>] [-
+removelogs]
+Argument Description
+-dry-run Only show what would be done without making changes.Argument Description
+-getlogs Retrieve and synchronize all logs from all proxies
+c on figur ed  onto the instance server. Logs will be under
+their r espectiv e  \Logs\proxy_<proxy_IP> directory.
+-globalcp Synchronize the global connector pack in addition  to the
+current instance. Used in c onjunction  with the -s yncfile
+argument.
+-list List file r eplic ation  services involved and exit. Display the
+status of each service, node ID, address, and port. If the
+service is unreachable, check the c onnection  of the
+Database Service for each server.
+-pr o xy file  <proxylist.csv> Retrieve and synchronize all logs from proxies listed in
+the \<ins t ance>\p sc on fig\pr o xylis t.cs v  file. Logs will be
+under their r espectiv e  \Logs\proxy_>proxy_IP< directory.
+Where proxylist.csv contains a list of proxy IP addresses
+and their ports.
+This is only used in c onjunction  with -getlogs.
+-serverid <serverid> … Synchronize to specified  servers; can be used with
+multiple  server IDs. The server ID can be found using the
+-list argument. If no server is specified,  all servers are
+updated.
+-sho w c on fig Show built-in c on figur ation  and exit.
+-s yncfile Synchronize files to other servers.
+-syncreg Synchronize registry settings  to other servers.
+-extdb Synchronize the extdb tables.
+-forcerun Forces the current node to synchronize the extdb tables.
+-removelogs Remove all previously fetched logs from all proxies. Can
+be used in c onjunction  with -getlogs to remove logs that
+no longer exist on the remote server.
+- filedir  <filedir> Specific  file path from which files are synchronized to
+other servers. This is the r elativ e  path under the
+instance’s main file folder.
+-registrydir <registrydir> Specific  registry path from which settings  are
+synchronized to other servers. This is the r elativ e  path
+under the instance’s main registry folder.
+Examples
+1.To show the default c on figur ation  file: 1.
+updinst -showconfig
+2.To show a list of all file r eplic ation  services that are running: 2.
+updinst -list3.To synchronize all files and registry settings  on all servers: 3.
+updinst -syncfile -syncreg
+4.To synchronize a specific  file directory on all servers: 4.
+updinst -syncfile -filedir <filedir>
+5.To synchronize multiple  file directories on all servers: 5.
+updinst -syncfile -filedir <filedir1> -filedir <filedir2> ...
+6.To synchronize a specific  registry setting  on all servers: 6.
+updinst -syncreg -registrydir <registrydir>
+7.To run a dry-run on a specific  server: 7.
+updinst -serverid <server id (guid)> -syncfile -syncreg
+8.To update global Connector Pack files: 8.
+updinst.exe -globalcp -syncfile
+9.To collect and synchronize logs from all proxies:9.
+updinst.exe -getlogs
+10. To collect and synchronize logs from all proxies listed in the proxylist file: 10.
+updinst.exe -getlogs -proxyfile <proxylist.csv>
+Where the proxylist.csv contains:
+::proxy, port:: 
+10.0.39.111, 3344 
+10.0.39.121, 3344
+11. To synchronize the extdb tables: 11.
+updinst.exe -extdb
+12. To remove all previously fetched logs: 12.
+updinst.exe -removelogs
+13. To remove logs that no longer exist on the remote server: 13.
+updinst.exe -removelogs -getlogs
+Update updinst c onfig  file
+In the updinst c on fig  file, all file paths are rooted at the backslash immediately after  the
+instance_name directory.
+Each item in the lists contained in the file is a regular expression (regex).
+While the sample .cfg file contains some entries from the default values built into the updinst binary
+(for regex illus tr ation  purposes), it's recommended that the cfg file actually used contain only new/
+custom values, which do not show up in the four lists when checking the c on figur ation  with no
+updinst.cfg  file in the p sc on fig  directory (it saves on comparisons, and the instance contains a lot of
+files and directories to compare with each declared regex string).
+If the file to add an e x ception  for is script\somefile.py , the most precise regex expression for it is:
+^\\\\script\\\\somefile.py$The s t arting  ^ represents the beginning of the string, so it would not match, for example, \samples
+\script\somefile.py.
+Similarly, the trailing $ represents the end of the string, so it won't match, for example, an extension
+like .pyg
+To exclude a whole directory, you can leave the $ off and the expression will match everything in that
+directory: files and other directories with their files.  This default option  for example matches all auto-
+discovered target list files:
+psconfig\\\\discovered
+Each backslash is escaped with a backslash, so \ becomes \\, and since that is itself inside of a KVG
+string, \\ becomes \\\\  (\s would simply escape the s).
+Below is an example that adds blacklisted registry entries and file entries (meaning that they will not be
+sent from the primary to secondary applic ation  nodes).
+# KVGROUP-V2.0  
+"updinst" "cfg" = {  
+}  
+# Registry path blacklist.  Registry paths that match the regular  
+# expressions here are not considered for replication, unless they  
+# appear in regWhitelist.  All paths are relative to the instance  
+# registry root.  Registry keys (and value names) are separated by  
+# double-escaped backslashes (\\\\).
+ "regBlacklist" = { "^IDAPISOAP\\\\endpoints",  
+                     "SENDER_EMAIL",  
+                     "ServerAddress" };
+# File path blacklist. Filesystem paths that match the regular
+# expressions here are not considered for propagation, unless they
+# appear in regWhitelist (see above). All paths are relative to the
+# instance root directory. Directories and files are separated
+# by double-escaped backslashes (\\\\).
+"fileBlacklist" = { "^\\\\psconfig\\\\.*\\.db$";
+"plugin\\\\debug\\\\.*";
+"design\\\\src\\\\ui.build\\\\.*";
+"design\\\\src\\\\ui\\\\node_modules\\\\.*"
+};
+}
+In the above:
+▪ Blacklisting  these entries ensures that the SENDER_EMAIL  and ServerAddres s are not ▪
+propagated from the primary to the secondaries. These two entries will be unique to each server.▪SENDER_EMAIL  system variable, so that each node can be given a separate "From:" field  in ▪
+outgoing emails, to be able to quickly distinguish  what node originates what email.
+▪ServerAddres s bypasses the aut omatic  computer-name de t ection  on each node (for example, ▪
+when iddb detects only the hostname in a node whose OS is not joined to a domain, and Bravura
+Privilege needs to register FQDNs instead - so that link passing between nodes, as in downloading
+recording archives, can succeed the TLS check in IIS)
+▪The entry blacklisting  the IDAPISOAP\endpoints  registry key exists by default in the ▪
+c on figur ation  file, in case each node has to provide diff er en t  SOAP endpoints (directly to the
+hostname, or for zoning purposes).
+▪Most registry changes are system variables listed in the registry section  at Manage the system ▪
+>Maintenance > System variables .
+▪psconfig\*\*.db  is where Bravura Privilege keeps list files from discovered systems in 12.0.0+: by ▪
+default, those files are useful only on the primary node and sending them to replica nodes is a waste
+of resources, especially at the end of each Auto discovery.
+▪For the same reason, check the output of updinst -showconfig  to make sure that the ▪
+psconfig\*.db  files are also blacklisted (and if not, add a blacklist rule for ^psconfig\\\
+\*.db )
+▪Filtering the logs for psupdate or updinst dur ations  can suggest what other large files can be ▪
+excluded from auto discovery if they take too long.
+▪plugin\debug \ is where (mostly c omponentiz ed)  Python scripts using IDMLib-based logging place ▪
+their input/output KVGs and like other log files,  those are usually not needed on secondaries from the
+primary.
+▪design\src\  files should never change after  patching. They are Angular app requirements and ▪
+there is no need for them to be propagated to secondary servers, let alone proxies.
+▪Whitelists trump blacklists. This means if the same item is matched both by a blacklist regex and a▪
+whitelist one, the whitelist wins and the item is propagated.
+▪If an entry is not blacklisted (or if it was by default blacklisted, but is modified  with a whitelist entry): ▪
+▪It copies any files changed on the primary inside the instance folder and subfolders, and it ▪
+overwrites any changes. In other words, it deletes any new files created on the secondary nodes
+and if files are modified  on secondaries, the changes are reverted and not backed up.
+▪It copies any registry changes made on the primary node and overwrites any changes on the▪
+secondary nodes (removes them if they were not on the primary).
+▪The main Bravura Security Fabric  installer only installs/checks for the 64-bit VC++ redistributables. The ▪
+Connector Pack MSI will install/check for both 32-bit and 64-bit, so do not depend on file pr opag ation
+to copy all the connector pack files over to other nodes and proxies.
+.
+Con figur ation
+The File R eplic ation  Service is aut omatic ally  installed and started on the Bravura Security Fabric  server
+during setup. You can also modify the following parameters related to this service on the Service
+in f ormation  page:idfiler ep  service options
+Option Description
+Port number this service is running
+onSpecifies  the port or the shared memory ID to listen on. The default
+is 2380.
+Command-line options  for idfilerep are listed below:
+idfiler ep  service command-line options
+Argument Description
+-h Displays usage in f ormation.
+-v Displays version number only.
+-restart Restart a running service.
+-c on fig Displays service c on figur ation  in f ormation.
+-server Run the service in server mode.
+-start Starts the service.
+-stop Stops the server/service
+The File R eplic ation  Service ( idfilerep ) archives e xisting  files before o v er writing  them. By default, the
+archived files are stored in the Logs directory for the instance ( <Program Files path>\Bravura Security
+\Bravura Security Fabric\Logs\<instance> ). You can change the archive directory by using the Manage the
+system > Maintenance > Options  > FILE REPLICATION ARCHIVE DIR setting.  This directory will be
+aut omatic ally  created on the other instances during file r eplic ation  if it does not already exist.
+The Manage the system > Maintenance > Options  > FILE REPLICATION TIMEOUT setting  is used to
+specify a timeout  value (in seconds) before the File R eplic ation  Service disconnects. The default value is
+300 seconds. This timeout  only applies if servers lose their c onnection  while backing up or deleting  files;
+an error occurs immediately if the servers are unable to maintain a c onnection  while r eplic ating  files.
+To manually perform file s ynchr oniz ation:
+1.Click Manage the system > Maintenance > File s ynchr oniz ation . 1.
+2.Select all file r eplic ation  servers that you want to synchronize. You can choose file r eplic ation  servers 2.
+and proxy servers.
+3.Click Synchronize . 3.
+If any nodes are missing from the File s ynchr oniz ation  page ( Manage the system > Maintenance > File
+s ynchr oniz ation ), verify that the missing nodes have network c onnectivity ,  then restart their File
+R eplic ation  Services. Reload the File s ynchr oniz ation  page. The missing nodes should be displayed after
+r es t arting  their File R eplic ation  Services.
+If the server on which you are running the File R eplic ation  Service cannot access the other r eplic ation
+servers using the hostname (that is, database r eplic ation  has to use the node’s IP address to connect with
+other nodes), you can set the "server address" string value in the instance’s registry to broadcast thenode’s IP address to other r eplic ation  nodes. This address can be used to set the file r eplic ation
+in f ormation.
+You can control whether or not to archive e xisting  files by adding the following registry entry in:
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\IDFileRep
+Entryname backups
+Value 0—1 Set to 0 to disable backups
+Datatype DWORD
+Default 1
+The File R eplic ation  Service is used in c onjunction  with updinst . To determine which files and registry
+settings  updinst  replicates, there are whitelists and blacklists that specify what data to include and
+what data to omit in the context of file/r egis tr y  r eplic ation  You can write an updinst.cfg file to
+provide additional  c on figur ation.
+A sample of updinst.cfg is located in the samples directory. This c on figur ation  file must be placed in
+the \<instance> \ p sc on fig \ directory before it can be used by the File R eplic ation  Service. Use this
+c on figur ation  file to control which files and registry settings  are replicated to other instances (whitelist)
+and which are not replicated (blacklist). The whitelist settings  override blacklist settings.
+All file and c onfiguration  modific ations  should be done on the same server (the primary). When
+attempting  to run updinst from a node other than the primary, an error will occur, and the operation
+will be aborted. In extreme circumstances there is an option  to force external data store replic ation  (-
+extdb -forcerun) from a secondary node; however that should be done only when that database was
+corrupted on the primary (and its backups that are created every time  the external data store is updated,
+were also corrupted) but the database, or a backup, survived on a secondary node. If updinst is run
+from more than one server, or if file or registry changes are made on secondary nodes, it is possible for it
+to overwrite newer files or settings  that exist on secondary nodes. If a server with missing files runs
+updinst , that will remove those same files on all other instances.
+Do not attemp t  to replace Database Service ( iddb ) files using updinst or the File R eplic ation  Service.
+Updating  the Database Service and related files (such as iddbmssql.dll) must be done manually on all
+instances. This only applies to the Database Service service. All other services can be updated using the
+File R eplic ation  Service. To update the Database Service files manually, shut down all services on the
+instance, back up all services, and then replace the Database Service files. If a problem occurs during file
+r eplic ation  then a notific ation  email is sent to the administrator, and the FILE REPLICATION FAILURE event
+is triggered. 
+Scheduler Service (psscheduler)
+The Scheduler Service ( psscheduler ) schedules and executes periodic jobs. By default, it is c on figur ed
+to run the psupdate program (for auto discovery) and the command to rotate log files.  It runs the
+default jobs nightly.
+The Scheduler Service is dependent on the Database Service  (on page 2844). If you restart the database
+service, you must restart the Scheduler Service.The service is aut omatic ally  installed and started on the Bravura Security Fabric  server during setup. You
+can also modify the following parameters related to this service on the Service in f ormation  page:
+psscheduler service options
+Option Description
+Minutes to wait to -check database Minutes to wait to check for changes to the jobs in the database. The
+default is 10 minute
+For details about default scheduled jobs, see Scheduling Maintenance  (on page 2702).
+Command-line options  for psscheduler are listed below:
+pscheduler service command-line options
+Argument Description
+-h Displays usage in f ormation.
+-v Displays version number only.
+-poll <N> Minutes to wait to check for changes to the jobs in the database. The default is 10 minutes
+-server Run the service in server mode.
+-start Starts the service.
+-stop Stops the server/service
+Proxy Service (psproxy)
+The Proxy Service (psproxy) The Proxy service ( psproxy ) enables the Bravura Security Fabric proxy
+server on which it is installed to execute agents and exit trap programs on behalf of other Bravura
+Security Fabric  servers.
+The service also periodically receives updates (agents, exit programs, c on figur ation  data) from the
+Bravura Security Fabric server.  
+See also: 
+▪The updproxy ▪
+The updproxy program, installed on the Bravura Security Fabric  server, works in c onjunction  with
+the psproxy service. It is used to update the list of proxy servers registered on the Bravura Security
+Fabric  server, and to push any files necessary to run connectors and list utilities  to the proxy servers.
+This includes the Logging Service ( idmlogsvc ) being used on the proxy servers. Normally,
+updproxy is invoked as one of the fir s t steps in the auto discovery batch file.
+The UPDATE SYSTEM AGENT COUNT option  controls how many proxy servers can be updated
+simultaneously. The default value is 50. This option  can be set at Manage the system  > Maintenance >
+Options .

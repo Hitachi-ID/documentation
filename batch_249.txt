@@ -1,0 +1,215 @@
+Implementing  network resource management
+Network resource management allows users to request access to network resources for themselves or
+others without the need to understand the underlying security infrastructure. In Bravura Security Fabric ,
+network resource management is provided by Bravura Group .
+Bravura Group  manages diff er en t  types of resources using connectors and programs shipped with
+Connector Pack  in the agent directory:
+▪The nrsmb program binds Bravura Group  to a specific  resource whose access is mediated by ▪
+membership in a group on a Legacy Activ e  Directory target system. These resources include shares,
+folders, printers, and mail dis tribution  lists.
+▪The nrcifs program binds Bravura Group  to a specific  resource whose access is mediated by ▪
+membership in a group on an Activ e  Directory DN target system. These resources include shares,
+folders, printers, and mail dis tribution  lists.
+▪The nrshrpt program binds Bravura Group  to a specific  resource managed by a SharePoint ▪
+Resource target system. Micr osoft  Office  SharePoint Server resources include sites and documents.
+In general, the process for gaining access to a Windows shared folder is as follows:
+1.A Network Administrator creates a shared folder on the target system.1.
+2.A Network Administrator grants permissions, using groups, to control access to the shared folder.2.
+3.A target system is c on figur ed  to manage network resources. 3.
+4.A user (requester) logs into the Bravura Security Fabric  web applic ation  and selects the network 4.
+resources link.
+Bravura Security Fabric  displays a search page.
+5.The user selects the share that he wants to view.5.
+The nrsmb or nrcifs program gathers initial  in f ormation  about the share and displays a tree view
+of the folders in the selected share.
+6.The user browses for and selects a folder where access is desired.6.
+The nrsmb or nrcifs program gathers additional  in f ormation  about the share and displays a list
+of groups that have privileges on the share as well as the groups’ owners and read / write privileges.
+7.The user selects a group to join and submits the request.7.
+Bravura Security Fabric  enters the request into the authoriz ation  w orkflo w .
+8.The W orkflo w  Manager Service routes the request to the selected group owner for authoriz ation. 8.
+9. After  authoriz ation  is complete the T r ansaction  Monitor Service runs a connector program that adds 9.
+the user to the selected group on the target system.
+When users are granted membership in a group they are granted access to all the resources that the
+group has permission to access. Likewise, taking away users’ access to a particular  resource results in the
+users losing their membership in the group that was providing the access, and losing access to all the
+resources the group has permission to access.
+The Bravura Group  network resource management feature works with the following components:Components Purpose
+View and update pr ofile  (IDR) module Empowers users to request access to resources.
+Help users (IDA) module Allows help desk users to make changes to users’
+access.
+Requests app Enables users to view the status of their requests.
+W orkflo w  Manager Service Receives requests for authoriz ation  w orkflo w .
+Shell Extension for slow or distant topologies
+The Shell Extension  (on page 3528) provides an alt ernativ e  method of managing network resources. It
+works in c onjunction  with Bravura Group  to allow e fficien t  access to protected network resources. It is
+recommended for implemen t ations  where the network infrastructure is non-simplistic  or there are
+shares located far away from Bravura Security Fabric .
+Once installed, the Shell Extension is embedded into the oper ating  system. Instead of logging into
+Bravura Group , r equesting  access is as simple as a right-click or double click on the protected resource.
+Setting  up network resource management
+In order to implement network resource management using Bravura Group :
+1.Prepare the resource on the external target system.1.
+See Preparing resources on target systems  (on page 2483) for more in f ormation.
+2.Add the target system that mediates access to the resource.2.
+Set the Managed group/Network resource target system type option  to the appropriate value.
+See Setting  up target systems for resource management  (on page 2483) for more in f ormation.
+3.Add the network resource to Bravura Group . 3.
+See Network resources  (on page 575) for more in f ormation.
+4.Manage groups.4.
+You can manually select which groups you want managed, or allow Bravura Group  to select them for
+you.
+See Groups  (on page 585) for more in f ormation.
+5. Con figur e  additional  features and settings. 5.
+See Network management resource options  (on page 2491) for more in f ormation.Preparing resources on target systems
+All shared resources to which users are going to request access must be correctly c on figur ed  on the
+target system. Bravura Group ’s ability to successfully control access to the resources depends heavily on
+how the resources are c on figur ed  on the target system.
+Some thought must be given to planning how many groups need to be created and what resources they
+will have permission to access, so that adding/removing a user’s membership in a group provides them
+with the exact access to network resources that they need. To provide access to resources on a resource
+by resource basis, you need to create a group for each resource.
+In general, you must do the following:
+1.Create groups with appropriate permissions to control access to the resources that are going to be1.
+managed by Bravura Group .
+2.Ensure that each group has an owner (recommended).2.
+Bravura Group  can use group owners as authorizers for requests to join the group. See Groups  (on
+page 585) for more in f ormation.
+3.Ensure that all resources to be managed have the correct groups assigned to them.3.
+See the Connector Pack Documen t ation  for details on setting  up target systems for network resource
+management.
+Setting  up target systems for network resource management
+This section  describes c on figur ation  requirements for target systems that support network resource
+management in Bravura Security Fabric .
+Con figur ation  notes for Legacy Activ e  Directory
+For a resource whose access is mediated by membership in Activ e  Directory groups, ensure that the
+target system is c on figur ed  as follows:
+Setting Value
+Target type Legacy Activ e  Directory
+Manage group / Network
+resource target system
+typeSMB Protocol for Legacy Activ e  Directory
+Target address For a share / folder, this is the domain where the share is published. You set the
+path to individual shares when you add resources.
+For a printer, this is the print server or domain where printers are published.
+For a mail dis tribution  list, this is the domain where dis tribution  groups are stored.Con figur ation  notes for Activ e  Directory DN
+For a resource whose access is mediated by membership in Activ e  Directory DN groups, ensure that the
+target system is c on figur ed  as follows:
+Setting Value
+Target type Activ e  Directory DN
+Manage group / Network
+resource target system
+typeSMB Protocol for Activ e  Directory DN
+Target address For a share / folder, this is the domain where the share is published. You set the
+path to individual shares when you add resources.
+For a printer, this is the print server or domain where printers are published.
+For a mail dis tribution  list, this is the domain where dis tribution  groups are stored.
+Con figur ation  notes for SharePoint
+For a resource whose access is mediated by membership in SharePoint resources, ensure that the target
+system is c on figur ed  as follows:
+Setting Value
+Target type SharePointServer
+Manage group / Network
+resource target system typeSharePointResource
+Target address Main URL of the site, followed by a colon, then the port number, a slash,
+and the site name. For example:
+http://sharepoint1:2427/site1/site2/
+See the Connector Pack Documen t ation  for further details on setting  up target systems for network
+resource management.
+Use cases and examples
+Request access to a folder (multiple  groups)
+This use case demonstrates the process a user would follow to request access to a shared Sales folder.
+The user could request access to the appropriate group that would provide them access to the folder,
+however, in most instances, a user would not know which group that would be. An alt ernativ e  is to set up
+network resources and allow the user to request access to the shared folder. Bravura Group  will do the
+work in the background to enable the access.
+Before a user can request access to the Sales folder, the following is required:
+▪A folder named Sales is shared on a Micr osoft  Windows file server. ▪▪Groups have been used on the share to apply security, and those groups are managed by Bravura ▪
+Security Fabric .
+▪An Activ e  Directory DN target has been added, and is c on figur ed  to manage network resources. ▪
+▪ Authoriz ation  has been set on the groups. ▪
+▪The share is added to Bravura Group  as a network resource. ▪
+To request access to the Sales folder:
+1.From the main menu, click Request access to network resources in the My pr ofile  section. 1.
+2.Click Shares/Folders . 2.
+3.Select the Mark eting  folder. 3.
+4.Click the search 
+  icon next to the folder that you want to access. 4.
+The groups that have privileges to that folder appear on the right hand side.
+5.Select the check box to join a group to access the Sales folder.5.
+You could c ontinue  to select more folders/groups that you want to access.
+Best pr actice Although you can select multiple  groups that have access to the same
+folder, the best pr actice  is to choose correct privileges by selecting  one
+group. This can be forced, as shown in Use case: R equesting  access to a
+folder (single group)  (on page 2486).
+6.If required, type Requester notes . 6.
+Requester notes are required if the IDR REQUIRES REASON NEWREQUEST option  is enabled.
+7.Click Complete . 7.
+8.Click OK to c on firm  the request. 8.
+Bravura Security Fabric  enters the request into the authoriz ation  w orkflo w .
+The W orkflo w  Manager Service routes the request to the selected group owner for authoriz ation.  After
+authoriz ation  is complete the T r ansaction  Monitor Service runs a connector program that adds the userto the selected groups on the target system and the user will have access to the Sales and Public
+R elations  folders.
+Request access to a folder (single group)
+This use case demonstrates the process a user would follow to request access to a shared Public
+R elations  folder.
+A network resource has been set up to allow the user to request access to the shared Public R elations
+folder. By default, a user can request access to several groups at a time.  In this use case however, the IDR
+NETWORK RESOURCE SELECT ONE GROUP system variable has been enabled, r es tricting  the users to
+r equesting  access to one group at a time.  In this case, the user can choose between a group that has
+read-only access or read and write access.
+Before a user can request access to the Public R elations  folder, the following is required:
+▪A folder named Public R elations  is shared on a Micr osoft  Windows file server. ▪
+▪Groups have been used on the share to apply security, and those groups are managed by Bravura ▪
+Security Fabric .
+▪An Activ e  Directory DN target has been added, and is c on figur ed  to manage network resources. ▪
+▪ Authoriz ation  has been set on the groups. ▪
+▪The share is added to Bravura Group  as a network resource. ▪
+Configur e  the IDR NETWORK RESOURCE SELECT ONE GROUP system variable
+1.Log in to the front-end as superuser.1.
+2.Click Manage the system  > Modules  > View and update pr ofile  (IDR) . 2.
+3.Enable the I DR NETWORK RESOURCE SELECT ONE GROUP  variable. 3.
+Enabling this variable will restrict the users to r equesting  one group/resource at a time.
+4.Click Update . 4.
+To request access to the Public R elations  folder:
+1.From the main menu, click Request access to network resources in the My pr ofile  section. 1.
+2.Click Shares/Folders . 2.
+3.Select the Mark eting  folder. 3.4.Click the Public R elations  folder. 4.
+The groups that provide the privileges to the Public R elations  folder are listed on the right hand side.
+5.If required, type Requester notes . 5.
+Requester notes are required if the IDR REQUIRES REASON NEWREQUEST option  is enabled.
+6.Click Request in the appropriate group row. 6.
+Bravura Security Fabric  enters the request to join this group into the authoriz ation  w orkflo w .
+Joining this group will provide the user with read and write access to the Public R elations  folder.
+The W orkflo w  Manager Service routes the request to the selected group owner for authoriz ation.  After
+authoriz ation  is complete the T r ansaction  Monitor Service runs a connector program that adds the user
+to the selected group on the target system and the user will have access to the Pubic R elations  folder.
+Request access to documents in SharePoint
+This use case demonstrates the process a user would follow to request access to a document library in
+SharePoint.
+Before a user can be granted access to a document library in SharePoint, the following is required:
+▪A document library has been created in Windows SharePoint.▪
+▪At least one document exists in the document library.▪▪Users have at least read privileges to the SharePoint site. In this use case, the ”domain users” Activ e ▪
+Directory group has been added to the SharePoint Visitors group.
+▪The Visitors, Members, and Owners SharePoint groups all have owners.▪
+▪A SharePoint target has been added to Bravura Security Fabric , and is c on figur ed  to manage ▪
+SharePoint network resources.
+▪The document library is added to Bravura Security Fabric  as a network resource. ▪
+To request access to the document library:
+1.From the main menu, click Request access to network resources in the My pr ofile  section. 1.
+The Request access to network resources page appears.
+2.Click Documents . 2.
+Bravura Security Fabric  displays available document libraries on the right hand section.
+3.Select the document library in the right hand section. 3.
+Bravura Security Fabric  displays available resources in the document library.You can click the 
+  icon next to the various folders to view privileges.
+4.Click the 
+  icon next to Documents . 4.
+The privileges are displayed on the right hand side.5.Select a group that gives you the privileges you want.5.
+6.If required, type Requester notes . 6.
+Requester notes are required if the IDR REQUIRES REASON NEWREQUEST option  is enabled.
+7.Click Complete . 7.
+Bravura Security Fabric  enters the request into the authoriz ation  w orkflo w .
+The W orkflo w  Manager Service routes the request to the selected group owner for authoriz ation.  After
+authoriz ation  is complete the T r ansaction  Monitor Service runs a connector program that adds the user
+to the selected group on the target system and the user will have access to the Sales folder.

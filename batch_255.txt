@@ -1,0 +1,133 @@
+5.Select a sour ce-of -pr ofiles  target system from the list of target systems available. 5.
+6.Click Update . 6.
+7.Click Yes next to  Include review of pr ofile  attribut es. 7.
+8.Click the R emediation  tab. 8.
+9.Click the input field  for Add pr ofile  and select the "Add user" request you created above. 9.
+10. Click Update. 10.
+11. Click the Reviewers tab to choose reviewers for the campaign. 11.
+12. Click Continue  to choose a single reviewer. 12.
+13. Click Select… . 13.
+14. Search for and select a reviewer. 14.
+15. Click the Submit tab. 15.
+16. Enter a Certific ation  campaign description . 16.
+17. Click Launch campaign . 17.
+18. Click Start new campaign . 18.
+Review and create a new user in the certific ation  campaign
+1.Log in as the reviewer.1.
+2.Click the link Please review access for <campaign description>  to commence the certific ation 2.
+campaign.
+The New user  button  is displayed in the campaign form.3.Click New user  to open the request wizard. 3.
+4.Complete the wizard and submit.4.
+The request for a new user is submitted  immediately.
+Other remediation  requests, for example to remove entitlemen ts,  are submitted  once the reviewer has
+completed their review.
+5.Review the remaining items and sign-off  the certific ation. 5.
+Peer groups, consistency c alculations  and aut omatic  actions
+Reviewer f atigue  can be a problem in cases where reviewers must review many users and entitlemen ts  in
+a campaign; the danger is that reviewers may start to pay less attention  and certif y  items that should be
+revoked. To alleviate this problem, you can c on figur e  entitlemen t  certific ation  campaigns to:
+▪Display consistency among peers.▪
+▪ Aut omatic ally  certif y  entitlemen ts,  or identif y  entitlemen ts  that are candidates for r e v oc ation,  based ▪
+on risk.
+Consistency among peers
+You can c on figur e  entitlemen t  certific ation  campaigns so that reviewers see r ec ommendations  of items
+to pay particular  attention  to, based on consistency among peers.
+A peer group is a group of users with some attribut e  in common; for example, users working at the same
+loc ation  or department, or having the same manager.
+When c on figur ed  for a round, a Consistency column is displayed in the certific ation  campaign review
+page. Consistency is visually represented by a color bar with a number s t ating  the percentage of peers
+having the same entitlemen t.  This can help the reviewer to decide whether to retain or revoke a user’s
+entitlemen t.
+The consistency color bar is:1.Red, where an entitlemen t  is inconsistent, or out -of -pattern ; that is, most of a user’s peers do not 1.
+have this entitlemen t.
+This is indicated where the number of users with the entitlemen t  is between 0% and a lower
+threshold.
+2.Yellow, where an entitlemen t  is possibly out -of -pattern:  that is, some of the user’s peers have the 2.
+entitlemen t,  and some don’t.
+This is indicated where the number of users with the entitlemen t  is between a lower threshold and an
+upper threshold.
+3.Green, where an entitlemen t  is consistent, or in-pattern ; that is, most of a user’s peers have the 3.
+entitlemen t.
+This is indicated where the number of users with the entitlemen t  is between an upper threshold and
+100%.
+The lower and upper thresholds can be set globally and when submitting  a campaign.
+The entitlemen t  consistency c alculation  is done every time  the reviewer opens the certific ation  app to
+review.
+If you disable the global CERT CONSISTENCY CALCULATION setting ,  consistency c alculations  are turned
+off for activ e  campaigns. When CERT CONSISTENCY CALCULATION is enabled, you can c on figur e
+consistency c alculations  at the global level or at the campaign level.
+The setup and usage of consistency c alculations  are demonstrated in Example: Entitlemen t  consistency
+r ec ommendations  (on page 2543).
+Aut omatic  action  based on risk
+If entitlemen t  consistency c alculations  are enabled for a certific ation  round, entitlemen ts  can also be
+aut omatic ally  certified  or revoked based on a resource attribut e  comparison. This can reduce the number
+of items that reviewers must act on, although they can still override the calculated action  if they prefer.
+The resource attribut e  to compare may be a boolean, string, integer, or date that indicates that an
+entitlemen t  is a low risk, and so can be aut omatic ally  certified,  or high risk, and so should be revoked.
+As an example, if 85% of a support analyst group has an account on a target system that is a low security
+risk, it will be marked in the certific ation  app as aut omatic ally  certified.
+The setup and usage of aut omatic  actions  are demonstrated in Example: Aut omatic  actions  (on page
+2550).
+Use case: Entitlemen t  consistency r ec ommendations
+This use case illustrates how to set up the entitlemen t  consistency r ec ommendations  when certif ying
+group memberships. The peer group is users that have the same manager, calculated based on the
+ORGCHART_MANAGER attribut e,  which is a member of the CERT_ORGCHART_MANAGER group.Configur e  global settings  
+To c on figur e  global settings  for the r ec ommendation  engine:
+1.Click Manage the system  > Modules > Manage certific ation  process   (CERT ). 1.
+2.Set the following:2.
+CERT CONSISTENCY ATTRIBUTE GROUP CERT_ORGCHART_MANAGER
+CERT CONSISTENCY CALCULATION Enabled
+CERT CONSISTENCY MINIMUM 5
+CERT CONSISTENCY USERS LOWER THRESHOLD 20
+CERT CONSISTENCY USERS UPPER THRESHOLD 80
+3.Click Update 3.
+Start an entitlemen t  certific ation  campaign 
+To start an entitlemen t  certific ation  campaign:
+1.From the main menu, click Manage certific ation  process . 1.
+2.Click Start entitlemen t  certific ation  campaign . 2.
+3.Select entitlemen ts  to be reviewed. 3.Click Next: Users .
+4.Select users to be reviewed.4.
+Click Continue
+5.Click the Reviewers tab to choose reviewers for the campaign. 5.
+6.Click Continue  to choose a single reviewer. 6.
+7.Click Select… . 7.
+8.Search for and select the appropriate user.8.
+9.Click the Peer groups tab to review the settings  for marking consistent entitlemen ts. 9.
+Note that the Enable c alculating  consistency across peers checkbox is enabled by default.
+Modify settings  to mark items for consistency as required.10. Click the Submit tab. 10.
+11. Type a Certific ation  campaign description . 11. 
+12. Click Launch campaign . 12.
+13. Click Start new campaign . 13.
+Review in certific ation  app 
+To review items in the certific ation  app:
+1.Log into Bravura Security Fabric  as the reviewer 1.
+2.Click the notific ation  link or click Review entitlemen ts  and c on figur ations  to view the campaign 2.
+review page. In the above screenshot:
+ This peer group is too small for c alculations.
+ This entitlemen t  is out -of -pattern.  Only 14% of the user’s peers have this entitlemen t.
+ This entitlemen t  is possibly out -of -pattern.  50% of the user’s peers have this entitlemen t.
+ This entitlemen t  is in-pattern.  80% of the user’s peers have this entitlemen t.
+You can hide the Consistency column by toggling Hide / show columns .
+Use case: Aut omatic  actions
+This use case illustrates how to use entitlemen t  consistency c alculations  and resource attribut e
+comparison  (on page 2542) to aut omatic ally  certif y  items or identif y  r e v oc ation  candidates in a
+certific ation  campaign.
+This use case assumes the following global settings  under Manage the system  > Modules  > Manage
+certific ation  process ( CERT ):
+CERT CONSISTENCY ATTRIBUTE GROUP CERT_ORGCHART_MANAGER
+CERT CONSISTENCY CALCULATION Enabled
+CERT CONSISTENCY MINIMUM 5
+CERT CONSISTENCY USERS LOWER THRESHOLD 20
+CERT CONSISTENCY USERS UPPER THRESHOLD 80
+Create a resource attribut e  to compare to trigger aut omatic  actions  
+To set up a resource attribut e  to compare:
+1.Click Manage the system > Resources > Resource attribut es . 1.
+2.Click Add new... 2.
+3.On the Resource attribut e  in f ormation  page, enter the following values: 3.
+ID RISK
+Description RISK
+Type Integer
+Leave other values as default.
+The resource attribut e  must be date, boolean, string, or integer type. For string and integer types the
+maximum number of values must be 1.
+4.Click Add. 4.

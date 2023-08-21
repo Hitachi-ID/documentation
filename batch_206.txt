@@ -1,0 +1,364 @@
+▪libcurl – available from http:// curl.ha xx.se/libcurl/  (version 7.26.0 has been tested on supported ▪
+platforms  )
+It is not recommended to deploy runwithpass without SSL.
+Con figur ation  and cr edentials  files
+Both the program and library use the following files:
+▪The c on figur ation  file, supplied as config.ini , which de fines  c on figur ation  parameters. ▪
+▪The cr edentials  file, which is specified  in the c on figur ation  file, holds encrypted passwords. ▪
+▪The large cr edentials  c on figur ation  file, supplied as lcinfo.ini , which contains in f ormation  about ▪
+large cr edential  files.
+These file can be renamed and can be placed anywhere on the files y s t em.
+Con figur ation  file
+The c on figur ation  file, typically called config.ini , specifies  the following parameters, in
+simple ’key=value’ format:
+Options  marked with a 
+  are required.
+▪ apiurl=https://<ser v er>/<ins t ancename>/idapi    The URL to the Bravura Privilege  API web service. ▪
+Edit the value to suit your environment. An empty url means do local c onnection.
+▪proxy=  A proxy to use when accessing the API SOAP Service (idapisoap) endpoint. If omitted,  uses the ▪
+default proxy from environment variables on Unix/Linux system or the proxy settings  in user registry
+on Windows. If empty, disables all proxy use.
+▪capath=  For Unix/Linux systems only: The CA directory or file holding the certific a t es  to trust. ▪
+▪cert=  The certific ation  file in PEM format for client authentic ation. ▪
+This is not recommended for use without supervision from Bravura Security s t aff .
+▪ignorebadservercert=0  Whether to ignore problems with server certific a t e  and identity  v alidation. ▪
+Default is 0 (do not ignore) if not specified.  Valid values are 0 (false) or 1 (true).
+▪ timeout=30  The API SOAP Service (idapisoap) call timeout  in seconds. Default is 300 if not specified. ▪
+Valid values are between 0 and 3600 inclusive.
+▪
+  lockfile=/tmp/.pam-lo ck  The files y s t em  path where a lock will be placed while calling the web ▪
+service, to ensure that two processes do not simultaneously access the same one-time  password
+(OTP), which could lead to an invalid OTP being retained locally.
+▪locktries=200  The number of tries to lock the file. Default is10 if not specified.  Valid values are ▪
+between 0 and 200 inclusive.
+▪locksleep=0.1  The delay between attemp ts  to lock the file, in seconds. Default is 2 seconds if not ▪
+specified.  Valid values are between 0 and 100 inclusive. It supports fr actional  values, like 1.5.
+▪
+  cr eds file=cr eds.ini  The files y s t em  path where cr edentials  will be stored ▪▪
+  lcin f ofile=lcin f o.ini  The files y s t em  path where large cr edential  file (on page 2052) in f ormation  will ▪
+be stored
+▪cacheseconds=60  The lif etime  of cached cr edentials.  Default is 60 if not specified.  Valid values are ▪
+between 0 and 86400 (24 hours) inclusive.
+▪usemachinekey=1  Whether to include MAC address, IP address and host name in the encr yption  key. ▪
+Default is 1 (do include). Valid values are 0 (false) or 1 (true).
+▪useargskey=1  Whether to include the command line details to the encr yption  key. Default is 0 if not ▪
+specified.  Valid values are 0 (false) or 1 (true).
+▪ filek e y=./ c on fig.ini  Can appear multiple  times  to use multiple  files as keys. ▪
+▪ filek e y=/usr/local/lib/libidapi.s o  The files to include into the encr yption  key. ▪
+▪synchronouswrite is deprecated and ignored if present. A warning will exist in the log. ▪
+Cr edentials  file
+The cr edentials  file, specified  in the c on figur ation  file ( c on fig.ini),  holds two types of passwords:
+▪A one-time  password, used by runwithpass and/or pamutil shared object to authentic a t e  to ▪
+the Bravura Privilege  web service.
+▪Cached copies of the passwords fetched from the Bravura Privilege  web service. ▪
+The file has one line of text per system/account/password. For example:
+  system=__OTP__|user=ID|password=PW|expires=0
+Where:
+▪ID is the ID of the product administrator (OTP), proxy user, or managed account ID. ▪
+▪PW is the password for this ID ▪
+The file will be created upon initializing  the one-time  password user, as detailed in One-time  passwords
+(on page 2053).
+Large cr edentials  c on figur ation  file
+The lcinfo.ini  c on figur ation  file contains in f ormation  about large cr edential  files.  This file is created
+upon the fir s t download of a large cr edential  file using pamutil . Each time  a new large cr edential  file
+gets downloaded, its in f ormation  gets recorded into this c on figur ation  file.
+The loc ation  of lcinfo.ini is c on figur ed  in c on fig.ini  (on page 2051).
+Ins t allation  and setup of Bravura Privilege P attern  (on page 2129) is required in order to upload vaulted
+files.
+The file has one line of text per large cr edential  file. For example:
+system=TESTSYS|user=sampleCredFile|attrkey=LC_FILE|
+filename=sampleCredFile.zip|lchash=zkYU108lTR10b8EGgxLDvQ==
+Where:▪system is the ID of the vault system or team vault the file is associated to ▪
+▪user is the ID of the vaulted file ▪
+▪attrkey is the attribut e  key the file is added to (typically LC_FILE) ▪
+▪filename is the name of the file ▪
+▪lchash is the hash of the file contents ▪
+This c on figur ation  file does not store password in f ormation.
+One-time  passwords
+The Bravura Privilege  API can eliminate s t atic,  plaintext passwords embedded in scripts and c on figur ation
+files.  This is done by cr eating  one user ID per applic ation  per server; that is, an applic ation  running on 10
+servers requires 10 user IDs. These IDs are Bravura Privilege  product administrator IDs with the "OTP
+IDAPI caller" privilege, and granted access to just the passwords they need to retrieve, randomize, or
+override.
+OTP IDAPI account IDs are subject to two extra authentic ation  constraints, as compared to human
+Bravura Privilege  users:
+▪They must authentic a t e  to the Bravura Privilege  web services API with a one time  password; ▪
+whenever an OTP IDAPI ID successfully signs into the API, it uses the previous passwords but receives
+a new password, to be used next time.
+▪They must authentic a t e  from a previously de fined  IP subnet; that is, they must be c onnecting  from a ▪
+well known applic ation  server.
+This means that any user of the API has to be initializ ed  with an applic ation  ID’s password and must track
+changes to that password on every call to the API. In turn, this means that API access should be
+serialized, to avoid a race c ondition  where two processes call the API using the same applic ation  ID from
+the same machine at the same time,  and it’s not clear which new password is the most current one.
+The runwithpass program and the pamutil library shared object take care of recording changes
+to the OTP and serializing API access via a lock file.
+One-time  passwords and cached passwords are both stored in the creds.ini  cr edentials  file. The file
+name may vary, as specified  in the c on figur ation  file. The ID and password must be initializ ed  before it
+can be used by this program to connect to the Bravura Privilege  web services.
+To initializ e  the creds.ini cr edential  file with an ID and password use the following command:
+    runwithpass -initial
+Enter the ID and password as prompted.
+Alt ernativ ely ,  the pamutil API (on page 2057) function  SetInitialPasswords can also be used.
+If the useargskey option  is enabled in the config.ini  all other arguments that would be normally
+used need to be specified.  See Section  1.11 for more inf ormation
+In the scenario where the OTP passwords needs to be reset the previously mentioned  command can be
+used to reset the creds.ini  cr edential  file.Each time  an OTP IDAPI account signs into the API, its password gets randomized. You can set how often
+the password gets randomized, in hour intervals. The option,  Number of hours between password
+r andomiz ations , is available for Bravura Privilege  product administrator IDs with the "OTP IDAPI caller"
+privilege, located in Manage the system > Security > Access to product features > Individual
+administrators .
+By default, passwords that OTP IDAPI accounts use to sign into the API are immediately discarded.
+However, you can set a limit of how many passwords previously used by an OTP account that will be
+considered valid when authentic ating  to the API. These passwords will be stored in a password history,
+and the oldest password will be removed each time  the OTP account signs in again. This option  is
+c on figur ed  from Manage the system > Security > Options  > OTP MAXIMUM .
+Caching
+Imagine that there are 1,000 servers, each of which holds an applic ation  that needs a password from the
+Bravura Privilege  vault 1,000 times  per second. In total, then, the Bravura Privilege  web service would
+have to provide 1,000,000 passwords per second. This would require a lot of resources and create a
+single point of failure for the entir e  infrastructure.
+To reduce the workload on the Bravura Privilege  service, improve the performance of applic ations  that
+require cr edentials  from the vault and provide for resiliency in the event that Bravura Privilege  is
+unreachable, cr edentials  fetched from the vault are cached locally, in the creds.ini  file.
+For large cr edential  files,  if the file has previously been downloaded, and it has not been modified  based
+on a file content hash check, the Bravura Privilege  service will not attemp t  to contact the instance to
+download the file again. If the file does not exist, or does exist but has been modified  (fails the hash
+check), the file will be downloaded again.
+Key management
+The cr edentials  file, creds.ini, contains both cached passwords fetched via the Bravura Privilege  API and
+the current value of the one-time  password. This file needs to be protected, which in pr actice  means
+encrypted.
+The question  then is how to synthesize an encr yption  key to use when encr ypting  passwords in this file?
+A plaintext key is clearly not desirable, since the whole point of the API is to eliminate plaintext
+passwords (keys and passwords are essentially  interchangeable).
+The only r ealistic  option  is to have the API wrapper synthesize a key from char act eristics  of the runtime
+environment. This way, if the cr edentials  file is moved to another machine or if an attack er  gains partial
+access to the server or its files y s t em,  the key g ener ation  process would yield a new key and so cached
+cr edentials  and the OTP will become unavailable.
+The runwithpass program and the pamutil library support a number of inputs into the key
+g ener ation  process:
+▪ Char act eristics  of the machine running the softw ar e;  that is, IP address, MAC addresses, hostname, ▪
+and so on.
+▪A cryptographic hash of one or more files on the files y s t em. ▪▪A cryptographic hash of the entir e  command line being executed by the program. ▪
+Usage
+The following are the command-line options  for runwithpass:
+ runwithpass.exe [ -conf <file> ] -res <resource ID> -acct <account ID>
+   [ -expirecache ][ -keyword <string> ][ -replace <inputfile>
+   <outputfile> ][ -v ][ -initial ][ -randomize ][ -
+override <password> ]
+   [ -downloadfile <attributekey> ][ -downloaddir <directory> ]
+   [ -downloadfilepassword ][-- <client cmd> ]
+runwithpass arguments
+Argument Description
+-conf <filename> Specify a c on figur ation  file. The default is c on fig.ini.
+-res <resource ID> The ID of the system from which the password will be
+fetched.
+-acct <account ID> The ID of the account for which the password will be
+fetched.
+-expirecache Treat cached cr edential  as expired.
+See Section  1.10 for more in f ormation.
+-keyword <string> String to replace with password in client command
+arguments or input file.
+-replace <inputfile>  <outputfile> Search/replace on the given input/output files.
+<inputfile>  may be - meaning stdin. <outputfile>  may be -
+meaning stdout.
+-v Attemp ts  to obtain more detailed error in f ormation  when
+available.
+-initial Set the initial  passwords as encrypted. Using this
+argument will prompt for the following:
+▪API user ID - The OTP IDAPI user▪
+▪API user’s password - The initial  password for the OTP ▪
+IDAPI cr edentials
+▪Proxy user ID - The proxy user (if the proxy is▪
+c on figur ed  in the c on figur ation  file)
+▪Proxy user’s password - The password of the proxy▪
+user
+▪userkey - An unencrypted null-terminated string to▪
+add to the encr yption  key
+-override <password> Set the account’s password to the specified  value.
+-randomize Set the account’s password to a random value.
+-do wnloadfile  <attribut ek e y> Download the large cr edential  file using this attribut e  key.Argument Description
+-downloaddir <directory> Download the large cr edential  file to a specific  directory.
+By default, the current directory will be used.
+-do wnloadfilepassw or d Fetch the password associated with the large cr edential
+file, if one exists. Must be used in c onjunction  with -
+do wnloadfile.
+-- Client command line and arguments to run follow the --.
+If the client command is omitted  and no replacement is
+specified,  the password is sent to stdout.
+The command line, including the password if it was sub stitut ed,  executed by runwithpass may be visible
+to other users of the system. Using -replace to pass the password to the program’s standard input is
+recommended.
+It is recommended that you use full path names in all arguments.
+Examples
+1.To fetch the password for psadmin on target system SSH:1.
+runwithpass.exe -conf config.ini -res SSH -acct psadmin
+2.To replace PWD in template.txt with the password for account APISVCACCT on system PAMSYSID01:2.
+runwithpass -conf config.ini -keyword PWD -res PAMSYSID01 -
+acct APISVCACCT -replace template.txt - -- /bin/cat
+3.To pass a password on the command-line to /usr/local/bin/somecommand:3.
+runwithpass -conf config.ini -keyword PASSWORD -res PAMSYSID01 -
+acct APISVCACCT -- /usr/local/bin/somecommand -
+u APISVCACCT@myserver -p PASSWORD
+Note that running ’ps -ef’ will display the password unless /usr/local/bin/somecommand removes it
+from its process space.
+There is no portable way for processes to hide their own command-line arguments and none at all for
+a parent process to rewrite command-line arguments after  passing them to a child process.
+4.To initializ e  the cr edential  passwords with useargskey encr yption: 4.
+runwithpass -res AD -acct Administrator -initial
+5.To set the password of an account to a specified  value: 5.
+runwithpass -res AD -acct Administrator -override newPassword
+6.To randomize the password of an account:6.
+runwithpass -res AD -acct Administrator -randomize
+7.To download a large cr edential  file to the current directory: 7.
+runwithpass -res TESTSYS -acct vaultfile -downloadfile LC_FILE
+8.To download a large cr edential  file to a specified  directory: 8.runwithpass -res TESTSYS -acct vaultfile -downloadfile LC_FILE -
+downloaddir /home/psadmin
+9.To download a large cr edential  file that is associated with a password: 9.
+runwithpass -res TESTSYS -acct vaultfile -downloadfile LC_FILE -
+downloadfilepassword
+pamutil  API
+You can write programs that link against the pamutil library. This section  describes functions  that are
+provided in the relevant .h header files.  All functions  return 0 on success, and non-zero on failure.
+Return codes
+The pamutil library returns a 32-bit signed integer type. Strictly speaking, this type is only guaranteed
+to be 16 bits long, but it was retained for backwards c ompatibility  purposes. If your compiler emits 16-bit
+integers, please contact support@bravurasecurity.com  for a replacement that uses the long type.
+The pamutil library return codes are split into fiv e fields  to indicate problems encountered during
+e x ecution,  as shown below:
+Bit 31 30 29 28 27 26 25 24 23 22 21 20
+Field CB RESERVED SPECIFIC
+Bit 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0
+Field GENERAL IDAPI
+Return code fields
+Field Description
+CB Set when a password was returned from the cache
+instead of the Bravura Privilege  server. If set, a password
+was returned. If unset, a password may or may not have
+been returned.
+RESERVED Reserved. You may assume this field  will always be 0.
+SPECIFIC The error code in this field  indicates a specific  error, such
+as "Cannot open file for reading."
+GENERAL The error code in this field  indicates a general error, such
+as "Error loading creds file."
+IDAPI The error code in this field  indicates the error returned by
+the API Service (idapi).
+You can use the GetErrorMessage function  in the shared object, or the -v flag in runwithpass to obtain
+error messages corresponding to error codes returned by pamutil .Error codes
+General error codes
+# Code Meaning
+1 ERR_LOADING_CONFIG_FILE Error loading c on fig  file
+2 ERR_LOADING_CREDS_FILE Error loading creds file
+3 ERR_GENERATING_MACHINE_KEY Error g ener ating  machine key
+4 ERR_GENERATING_FILE_KEY Error g ener ating  file key
+5 ERR_GENERATING_ENCRYPTION_KEY Error g ener ating  encr yption  key
+6 ERR_DECRYPTING_CREDS_FILE Error decr ypting  creds file
+7 ERR_LOCKING Error obtaining file lock
+8 ERR_CALLING_SOAP Error calling IDAPI service
+9 ERR_ENCRYPTING_CREDS Error encr ypting  creds file
+10 ERR_WRITING_CREDS_FILE Error writing  to creds file
+11 ERR_WRITING_CONFIG_FILE Error writing  to c on fig  file
+12 ERR_UNLOCKING Error unlocking file lock
+13 ERR_BUILDING_COMMAND_LINE Error building command line
+14 ERR_RUNNING_COMMAND Error running command
+15 ERR_REPLACING_INPUT_FILE Error in replace input/output file
+16 ERR_PARSING_ARGUMENTS Invalid arguments supplied
+17 ERR_CREATING_ERRMSG Error cr eating  an error message
+18 UNKNOWN Unknown
+Specific  error codes
+# Code Meaning
+1 NON_NUMERIC_INPUT_IGNOREBADSERVERCERT Non-numeric value specified  for
+'ignorebadservercert'
+2 NON_NUMERIC_INPUT_TIMEOUT Non-numeric value specified  for
+'timeout'
+3 NON_NUMERIC_INPUT_LOCKTRIES Non-numeric value specified  for
+'locktries'
+4 NON_NUMERIC_INPUT_LOCKSLEEP Non-numeric value specified  for
+'locksleep'
+5 NON_NUMERIC_INPUT_CACHESECONDS Non-numeric value specified  for
+'cacheseconds'
+6 NON_NUMERIC_INPUT_USEMACHINEKEY Non-numeric value specified  for
+'usemachinekey'
+7 NON_NUMERIC_INPUT_USEARGSKEY Non-numeric value specified  for
+'useargskey'# Code Meaning
+8 CANNOT_OPEN_FILE_READING Cannot open file for reading
+9 CANNOT_OPEN_FILE_WRITING Cannot open file for writing
+10 CANNOT_READ_FROM_FILE Cannot read from open file
+11 CANNOT_CREATE_FILE Failed to create file
+12 CANNOT_LOCK_FILE Failed to lock file
+13 CANNOT_UNLOCK_FILE Failed to unlock file
+14 CANNOT_OPEN_DLL Failed to load libidapi
+15 CANNOT_LOCATE_FUNCPTR_DLL Failed to load libidapi
+16 MISSING_REQUIRED_KEYWORD A required keyword was missing
+17 INVALID_KEYWORD_ENCOUNTERED An invalid keyword was encountered
+18 VALUE_OUT_OF_RANGE A numeric input value was out of
+range
+19 LOCKTRIES_VALUE_OUT_OF_RANGE The 'locktries' value was out of the
+acceptable range [0,200]
+20 LOCKSLEEP_VALUE_OUT_OF_RANGE The 'locksleep' value was out of the
+acceptable range [0,100000]
+21 CACHESECONDS_VALUE_OUT_OF_RANGE The 'cacheseconds' value was out of
+the acceptable range [0,86400]
+22 TIMEOUT_VALUE_OUT_OF_RANGE The 'timeout'  value was out of the
+acceptable range [0,3600]
+23 IGNOREBADSERVERCERT_VALUE_OUT_OF_RANGE The 'ignorebadservercert' value was
+out of the acceptable range
+24 USEARGSKEY_VALUE_OUT_OF_RANGE The 'useargskey' value was out of the
+acceptable range
+25 USEMACHINEKEY_VALUE_OUT_OF_RANGE The 'usemachinekey' value was out of
+the acceptable range
+26 BLANK_SYSTEM The 'system' entry can not be blank
+27 DUPLICATE_SYSTEM A duplicate 'system' entry was
+encountered
+28 DUPLICATE_USER A duplicate 'user' entry was
+encountered
+29 DUPLICATE_PASSWORD A duplicate 'password' entry was
+encountered
+30 DUPLICATE_PLAINTEXT A duplicate 'plaintext' entry was
+encountered
+31 DUPLICATE_EXPIRES A duplicate 'expires' entry was
+encountered
+32 DECRYPTION_FAILURE Failed to decrypt
+33 FAILED_IOCTL Call to ioctl() failed# Code Meaning
+34 FAILED_CREATE_SOCKET Failed to create socket
+35 FAILED_MALLOC Memory alloc ation  failed
+36 FAILED_GETKERNINFO Call to getkerninfo() failed
+37 FAILED_FCNTL Call to fcntl() failed
+38 RETRY_LIMIT_EXCEEDED Lockfile  retry limit exceeded
+39 IMPROPER_ARGC_ARGV Improper use of argc/argv; either null
+argv with positiv e  argc or neg ativ e
+argc
+40 CONFIGFILE_PATH_REQUIRED A path to a c on fig  file is required
+41 CREDSFILE_PATH_REQUIRED A path to a creds file is required
+42 LOCKFILE_PATH_REQUIRED A path to a lock file is required
+43 APIURL_REQUIRED An API URL is required
+44 NO_BYTES An input or output buff er  had no data
+when it was expected to contain data
+45 UNALIGNED_CIPHERTEXT Unaligned ciphertext
+46 BAD_CIPHERTEXT_ENCODING Bad ciphertext encoding
+47 LOGIN_FAILED Login failed
+48 KMKEYGETBYACCOUNT_FAILED KMKeyGetByAccount failed
+49 NO_VALID_IFACE No valid interface found
+50 INCORRECT_FORMAT_DELIMETER Delimeter expected when parsing
+51 INCORRECT_FORMAT_KEY_VALUE Incorrect input format, missing '='
+52 BUFFER_OVERRUN A buff er  was not large enough to hold
+the output data
+53 SOURCE_FILE_REQUIRED A source file must be specified
+54 DESTINATION_FILE_REQUIRED A destination  file must be specified
+55 SOURCE_DESTINATION_SAME Source and destination  may not be
+the same
+56 SOAP_CLIENT_EXCEPTION A SOAP client e x ception  occurred
+57 SOAP_CLIENT_PARSERROR_MISSING_FIELDS
+(deprecated:
+SOAP_CLIENT_INSUFFICIENT_MEMORY)Required fields  were missing from the
+server's response
+58 SOAP_CLIENT_PARSERROR
+(deprecated:
+SOAP_CLIENT_INSUFFICIENT_BUFFER)The SOAP client failed to parse the
+server's response
+59 SOAP_CLIENT_FAILED_TO_SEND_REQUEST The SOAP client failed to send the
+request
+60 SPECIFIC_OUT_OF_RANGE The specific  error code was either
+neg ativ e  or larger than the largest
+known code.

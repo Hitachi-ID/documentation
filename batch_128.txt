@@ -1,0 +1,261 @@
+Setting Type Description
+Allow duplicate values String, Integer, User Determine whether the values for a
+multi- v alued  attribut e  must be
+unique. This does not apply to
+single-valued attribut es.
+Sent in emails All except Password and File Pr ofile  and request attribut es  can be
+included or excluded from the
+in f ormation  sent in email
+notific ations.
+Allow for pr ofile  comparison All except Password and File Pr ofile  and request attribut es  can be
+included or excluded from the Pr ofile
+comparison page. These attribut es
+cannot be encrypted in the
+database.
+Allow for authentic ation  chains String, Integer, Password, Da t e/time Pr ofile  and request attribut es  can be
+used in authentic ation  chain
+c on figur ation.  This is enabled for the
+EMAIL attribut e  by default. It is
+currently used only for the
+Email/SMS PIN authentic ation
+module.
+Only use for requests (do not apply
+to a user pr ofile)All Determine whether the attribut e’ s
+values are only used in the context
+of a request, and are not saved with
+the user’s pr ofile.  For example, the
+built-in VIEWABLE BY RECIPIENT is
+used to determine whether a
+request is hidden from the recipient.
+Editable only on request cr eation All Allow or disallow changes to the
+attribut e  value after  request
+cr eation.
+Track changes All except File Changes to pr ofile  and request
+attribut e  values can be tracked. The
+tracked changes are viewable as part
+of each user’s pr ofile  history.
+You can also c on figur e  the idtrack
+program to execute a variety of
+provisioning actions  aut omatic ally .
+Users must verify and c on firm  the
+valueString, Integer, Password
+(recommended)Require users to re-type the value in
+a second text box. For example, you
+might want to set this option  for
+password-type attribut es,  where
+users can’t see what they are typing.Setting Type Description
+Changes made will invalidate
+authoriz ationsAll If an authorizer changes an attribut e
+value, any previous authoriz ations  of
+a request are invalidated. Other
+authorizers are notified  and need to
+re-authorize the request.
+This is useful where an attribut e
+change can be a security issue; for
+example, if a security level attribut e
+is set to a value of 2, and an
+authorizer changes the value to 1,
+the original request should be
+invalidated.
+Allow in advanced search criteria All Pr ofile  and request attribut es  can be
+included or excluded from the
+Advanced search.
+This does not a ff ect  the advanced
+search page for the main  Pr ofile  and
+request attribut es  menu.
+Display in reports All Allow or disallow the attribut e  values
+to be displayed in reports. This is
+enabled by default.
+Map to vCard property All Map pr ofile  and request attribut es  to
+commonly used vCard pr operties
+Notes All Help in f ormation  for the attribut e.
+Once set, it will be available in
+wizards by hovering over the
+question  mark icon.
+Description  of input values String, Memo, Integer, Password, File This is displayed to users to show
+them how to enter values for the
+attribut e.  For example, type YYYY-
+MM-DD for a Date of birth field.
+Format requirement of input values String, Password, File For example, type NNNN-NN-NN to
+indicate a series of numbers.
+Regular expression used for
+v alidation  of input valuesString, Memo, Integer, Password If you use a regular expression for
+v alidation  the Description  of input
+values is required.Setting Type Description
+Restricted values are c ase-sensitiv e String, Integer The restricted values entered will
+maintain their case. Default behavior
+is to uppercase all Actual values
+entered. When c on figuring  da t e/
+time  attribut es
+(PREFERRED_DATEFORMAT and
+PREFERRED_TIMEFORMAT), ensure
+that they are c ase-sensitiv e.
+Plugin used to generate a list of
+restricted valuesString, Integer You can use a plugin to supply one or
+more restricted values for an
+attribut e.  Leave this field  blank to
+de fine  restricted values manually..
+Parent attribut e String, Integer You can use a plugin to supply one or
+more restricted values for an
+attribut e.  Leave this field  blank to
+de fine  restricted values manually.
+Display text for positiv e  value Boolean The default is True .
+Display text for neg ativ e  value Boolean The default is False .
+Display text for no value Boolean The default is (None) .
+Default values String, Integer, Boolean Attribut es  can be set up with default
+values, so that unless a user
+intervenes and changes them, the
+default values are entered with a
+request then copied to the newly
+created account.
+If you de fine  restricted values for the
+attribut e,  you can select them from a
+drop-down list for this option.Setting Type Description
+Inherit v alidation  enforcement from
+attribut e  groupAll Leave this enabled if you want the
+attribut e  to inherit v alidation
+enforcement rules from the attribut e
+group to which it belongs.
+▪If you clear this checkbox, you▪
+must set the rule for the
+attribut e:
+▪Enforce v alidation  when cr eating ▪
+new accounts – Enable this if new
+account requests can only
+proceed if a correctly f ormatted
+value is entered for this attribut e.
+▪ V alidation  behavior when ▪
+updating  e xisting  accounts –
+Determine whether Bravura
+Security Fabric  should always
+validate the value for this
+attribut e  before proceeding with
+a request, or only if the value has
+been modified.
+Encrypt this attribut e  in the
+databaseAll except User, Managed system,
+Discovered system, Manageable
+accountEnable this to encrypt attribut e
+values in the database. If encrypted,
+the attribut e  cannot be used in
+advanced search criteria, mapped to
+an account attribut e,  or used in
+pr ofile  comparisons. Encrypted
+attribut e  values are masked in
+reports. Certific ation  reviewers must
+have appropriate permission to view
+encrypted attribut e  vaules;
+otherwise they are masked.
+The Description , Description  of input values , Format requirement of input values , and Regular
+expression used for validation  of input values fields  can accept custom text macros. If a custom macro
+has been c onfigured  for the Description , Description  of input values and/or Format requirement of input
+values fields,  a second text field  will appear on this page detailing the value which will be displayed to the
+user.
+Boolean values
+Boolean attribut es  require users to select a true or false value. The default choices displayed to end users
+are True or False , or (None) if the attribut e  is optional.
+To specify other values:
+1.On the Pr ofile  and request attribut e  in f ormation  (on page 1269)  page, type a text string for: 1.▪Display text for positiv e  value ▪
+▪Display text for neg ativ e  value ▪
+▪Display text for no value▪
+2.Set the Default values . 2.
+3.Click Update . 3.
+When you click Update , the default values text will change to r e flect  the values you specified.   
+See also: 
+See Entering multi-languag e  descriptions  (on page 361) for in f ormation  about using multi-languag e
+display text.
+Number of values required or allowed
+The number of values required or allowed is set by the Minimum required numberof values and
+Maximum allowed number of values on the Pr ofile  and request attribut e  in f ormation  page.
+▪If the attribut e  is required for a request to be complete, type a number greater than 0 in the ▪
+Minimum required number of values field.
+▪If more than one value can be entered, type a number greater than 1 to set a Maximum allowed ▪
+number of values , or type -1 to allow an in finit e  number of values.
+This number can only be set to a positive  number or -1; 0 is invalid.
+This means that when users update attribut es,  they will be presented with a More button  that
+displays additional  fields  for this attribut e.
+Only string and integer attribut e  types can have more than 1 value. The boolean, da t e/time,  memo,
+and password attribut e  types can only have one value.
+A value for a required attribut e  can be provided at any stage of the request process. That is, an authorizer
+with assigned rights can enter in f ormation,  such as salary or Social Security Number, to which the
+requester does not have access. Con figur e  access controls  (on page 706) to determine which users can
+view or edit certain attribut es.
+If requesters do not have write permissions to a required attribut e,  then authorizers must enter a value
+for the attribut e.  If not, the request will be aut omatic ally  denied.If an attribut e  that is not enabled for comparison requires a value then the requester is brought to the
+recipient’s Pr ofile  in f ormation  page. There the requester can enter the required value.
+Maximum length
+You can restrict the maximum length of a pr ofile  and request attribut e  value by using the Maximum field
+length setting  on the Pr ofile  and request attribut e  in f ormation  page.
+For multiple  … Maximum length refers to …
+Restricted values Maximum length allowed for each value
+Unrestricted values Total number of characters allowed in the text field  for the attribut e
+vCard pr operties
+When at least one pr ofile  and request attribut e  is mapped to a vCard property, users can view pr ofile
+in f ormation  as a vCard contact record.
+Bravura Security Fabric  includes links on pr ofile  in f ormation  pages to Download pr ofile  as vCard , and
+Scan pr ofile  as QR Code .Below is an example of a vCard contact record, saved as a .vcf file:
+BEGIN:VCARD 
+VERSION:3.0 
+FN:John Doe 
+EMAIL:doejo@example.net 
+ADR:;;1401 1st Street SE;Calgary;AB;T2G 2J3;Canada 
+BDAY:1987-07-23 06:00:00 
+TEL;TYPE=CELL:403-555-4535 
+ORG:Bravura Security 
+TEL;TYPE=FAX:403-555-2545 
+FN:John Doe 
+N:Doe;John 
+NICKNAME:Johnny 
+NOTE:Contractor until 2015-12-31 
+TEL;TYPE=HOME:403-555-6543 
+TITLE:Developer 
+URL:http://www.bravurasecurity.com 
+TEL;TYPE=WORK:403-555-6541 
+END:VCARD 
+Below is an example of pr ofile  as QR Code:Users can also add contact records directly into the nativ e  contacts lists for both Android and iOS mobile
+devices from the Download pr ofile  as vCard link when accessed from the Bravura One  app.
+From the Bravura One  app, navigate to the Pr ofile  in f ormation  and entitlemen ts  page for a user and then
+click Download pr ofile  as vCard . The contact record will be added to the nativ e  contacts lists for the
+Android or iOS mobile device.
+See also: 
+See Mobile Access  (on page 1444) for more in f ormation  about Bravura One  and the Bravura One  app.
+Restricted values
+You can supply one or more restricted values  for an integer or string type attribut e.
+When multiple  restricted values are supplied for an attribut e,  users select one or more of the values from
+a list when they make a request.
+You can c on figur e  the values:
+▪Manually using the Manage the system  (PSA) module  (on page 1280) ▪
+▪Using the attrfixedval program to load fix ed  values  (on page 1280) ▪▪Using a plugin to generate them dynamically  (on page 1284) ▪
+De fining  restricted values manually
+To manually de fine  restricted values:
+1.Add the attribut e  using the Pr ofile  and request attribut e  in f ormation  page. It is not necessary to give 1.
+a value for Plugin used to generate a list of restricted values .
+The Restricted values tab appears once the attribut e  has been created.
+2.In the Restricted values tab, type the Actual value , to be recorded in the database and pot entially  be 2.
+written  out to target systems, and Displayed value , to be shown to users. The actual value will be
+stored uppercase unless the Restricted values are c ase-sensitiv e  option  is selected.
+To add additional  values, click More or Update to add rows.
+3.Click Update when you have added all values. 3.
+To delete a restricted value, select the check box next to the value then click Update .
+You can sort values alphabetic ally  according to actual value or displayed value.
+If actual values contain the sequence !!! , Bravura Security Fabric will treat them as macros and expand
+them according to the skin being used. The actual values applied in this case will be diff eren t  from what is
+defined  in the attribut e  c onfiguration.  This will lead to the values being rejected, due to restricted list
+mismatch. The !!! sequence must therefore be avoided in actual values. If loc aliz ation  is required,
+specify the macro tag in the displayed value instead.
+Loading restricted values from an external source
+Values can be extracted from an external source and loaded into Bravura Security Fabric . The
+attrfixedval  program is used to load or update values that are s t atic;  that is, do not change during
+the course of a request. attrfixedval also allows you to manipulate the display values which
+correspond to the s t atic  restricted values.
+Updating  the list of restricted values for an attribut e  using batch loading can be useful where the values
+can vary over time;  for example, seasonal employment, or academic schedules.
+See attrfixedval usage
+Use the attrfixedval program to obtain and set restricted values of pr ofile  and request attribut es.
+Usage
+attrfixedval.exe <Action>
+where <Action>  is one of:
+Option Description
+add <attrk e y>  <value>[<viewable value>] Add <value>/<viewable value> as a restricted value to attribut e  <attrk e y>.
+-delete <attrk e y>  <value> Delete restricted value <value> from attribut e  <attrk e y>.
+-deleteall <attrk e y> Delete all restricted values from attribut e  <attrk e y>.

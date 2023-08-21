@@ -1,0 +1,171 @@
+Cr eating  a custom report
+To create a custom report in Python:
+1.Import the report library from IDMLib . 1.
+2. Initializ e  a report object. This should contain: 2.
+▪Report title ▪
+▪Report category▪
+▪Report description ▪
+If you want the report to be included under a specific  category, use an e xisting  category name
+when initializing  a report object in your python script. The e xisting  category name is defined  in
+report.py  in the \<instance>\idmlib\ directory.
+3.Set the headers of the report table (using add_headers() method).3.
+The number of headers and their values will not change once this is done.
+4.Construct the search criteria.4.
+There are methods, de fined  in report.py  in the \<instance>\idmlib\ directory, to add diff er en t
+search fields.
+5.Call the start (cb) method, passing the function  name of the callback that will handle the processing of 5.
+the data.
+Registering a custom report
+Registering a report is the act of importing  the custom report into the report module. Once correctly
+registered, the custom report should be indistinguishable  from a built-in report.
+To import the report:
+1.Ensure that Python 3.11.2+ is installed and added to the oper ating  system PATH variable. 1.
+2.To check whether Python recognizes IDMLib:2.
+a.Open a command line prompt and navigate to the <Program Files path>\Bravura Security\Bravura a.
+Security Fabric\<instance>\  directory.
+b.Type python , and press [Enter]  to start the Python interpreter. b.
+c.On the Python interpreter command line, type from idmlib import report , and press c.
+[Enter] .
+d.If IDMLib  is recognized, there should be no error returned. d.
+3.Copy the script file into the \<instance>\report\ directory. 3.
+4.Log in to Bravura Security Fabric  and navigate to Manage the system > W orkflo w  > Options  > Plugins . 4.
+5.In the PLUGIN PROGRAM  field,  specify:  .py <Python Installation Path> . 5.
+6.Navigate to Manage the system > Modules > Manage reports (RPT) . 6.
+7.In the ALLOWED REPORTS CUSTOM  field,  type the path, file name and extension of the report script 7.
+r elativ e  to the \<instance>\report\ directory.
+For multiple  reports, include the report script names in a comma-separated list.For example, if the report script, sample.py is located in \<instance>\report\pam\, then specify pam
+\sample.py  only.
+If the script contains any errors, it will not show up in the Manage reports (RPT) module. Manage
+reports  reports page will display which custom reports have errors detected in them.
+T r oubleshooting  custom reports
+A method is provided in order to troubleshoot custom reports. Within the \<instance>\report\ directory,
+run the following command:
+<Script>.py <Action>
+where <Script> is the custom report script and <Action>  is one of:
+Custom reports tr oubleshooting  arguments
+Argument Description
+-h, –help Display the help message and exit.
+-query Returns the KVGroup of search criteria to display.
+-queryinfo Returns report title,  category, and description  details.
+-queryheaders Returns headers de fined  in script. The number of entries
+must match the number of header columns de fined.
+-t estinput  <t estinput> Generate empty search criteria KVGroup input
+<t estinput>.
+-testrun <testrun> Dumps all query info and executes using search criteria
+de fined  in KVGroup file <testrun>
+-execute Executes search query. Expects initial  KVGroup.
+Sample Custom Report
+A sample report, example-custom-report.py , is located in samples\idmlib\report\.
+If you cannot find the sample file, try re-running setup to modify your ins t allation.  Sample files are
+aut omatic ally  installed only with complete ins t allations.  You can select them in custom ins t allations.
+Viewing dashboards
+The View dashboards (dash) console displays graphical summary reports of s t atistics  for Bravura Security
+Fabric  oper ation  and usage. This chapter provides general in f ormation  about using dashboards, and in
+particular ,  the View dashboards (DASH)  console.
+Read this chapter to learn about:
+▪Caching▪
+▪Graphs and drill-down reports▪
+▪ Certific ation  dashboard ▪▪Privileged access dashboards▪
+▪ W orkflo w  dashboard ▪
+▪OrgChart dashboard▪
+▪Enrollment dashboard▪
+▪Help desk dashboard▪
+See also
+The Health check  (on page 2795) monitor dashboard is also displayed if the user has the required
+privileges.
+Caching
+Some dashboards use cached data. Product administrators with the "Recompute dashboard cache"
+privilege can use the Update button  on cached dashboards (identified  by having a last update time).  A
+message is displayed while the dashboard is being updated and the Update button  is not available during
+that time.
+You can use system variables in the Manage the system > Modules > View dashboards  (DASH) menu to
+determine if the cached data on a dashboard needs to be recalculated upon visiting  the page.
+Graphs and drill-down reports
+Some dashboards include graphs of s t atistics  found on the page. You can hover the cursor over the data
+set on each type of graph to see the s t atistic  details.
+For line graphs, you can also:
+▪Hover over an item in the legend to highlight the r elativ e  line on the graph. ▪
+▪Click on an item in the legend to enable/disable the r elativ e  line on the graph. ▪
+JavaScript must be enabled for the graphs to be visible.
+Product administrators who have the privilege to view a specific  dashboard can view a more in-depth
+r epr esen t ation  of the data in any graph by clicking on an area in the graph or on any row within the table
+below the graph. This opens a pop-up "drill-down" window that tables data from a specific  section  of the
+graph. A basic search box within the window allows you to filt er  data within the table.
+For more in f ormation  about graph behavior see Using graphs within reports  (on page 2913).
+Certific ation  dashboard
+ Applies to Bravura Identity  
+ Applies to Bravura Privilege
+Product administrators with the privileges listed here
+There are four views available, depending on privileges of the dashboard viewer:
+▪All users and entitlemen ts  shows general view of certific ation  s t atistics  for all the users and ▪
+entitlemen ts.▪Current certific ation  campaigns initia t ed  by me shows certific ation  s t atistics  for activ e  campaigns ▪
+started by me.
+▪Direct subordinates  shows certific ation  s t atistics  for my direct subordinates only. ▪
+▪All subordinate s shows certific ation  s t atistics  for all my subordinates, direct and indirect. ▪
+Users who are not managers and have the "View certific ation  dashboard" privilege can view:
+▪All users and entitlemen ts ▪
+Users who are not managers and have the "View certific ation  dashboard" and "Initia t e  entitlemen t
+certific ation  campaigns" privileges can view:
+▪Current certific ation  campaigns initia t ed  by me ▪
+Users who are not managers and have "View certific ation  dashboard" and "Manage certific ation  process"
+privileges can view:
+▪All users and entitlemen ts ▪
+▪Current certific ation  campaigns initia t ed  by me ▪
+Managers with the "View certific ation  dashboard" privilege can view:
+▪Direct subordinates▪
+▪All subordinates▪
+Managers with the "View certific ation  dashboard" and "Initia t e  entitlemen t  certific ation  campaigns"
+privileges can view:
+▪Current certific ation  campaigns initia t ed  by me ▪
+▪Direct subordinates▪
+▪All subordinates▪
+Managers with "View certific ation  dashboard" and "Manage certific ation  process" privileges can view:
+▪All users and entitlemen ts ▪
+▪Current certific ation  campaigns initia t ed  by me ▪
+▪Direct subordinates▪
+▪All subordinates▪
+can click View dashboards > Certific ation  to see s t atistics  of entitlemen ts  that are in the system.
+On the dashboard, entitlemen ts  fit into two categories based on their status of certific ation:
+▪Reviewed:  number of entitlemen ts  that have been certified  and have been signed off . ▪
+▪Unreviewed:  number of entitlemen ts  that are not signed off yet. ▪
+The entitlemen ts  include pr ofiles,  accounts, roles and managed group memberships. A v ertic al  bar graph
+is included to display this set of s t atistics.
+The current activity  displays the s t atistics  of activ e  certific ation  campaigns.
+Both sets of data (entitlemen ts  and current activity)  are cached.Graphs and data
+If you have the "View certific ation  dashboard" privilege, you can view in-depth data in a pop-up window
+by clicking on elements within a graph.Privileged access dashboards
+Product administrators with the "View privileged access dashboard" privilege can click View dashboards
+> Privileged access  to view:
+▪License in f ormation  (on page 2927) ▪
+▪Local w ork s t ation  (on page 2928) ▪
+▪Managed accounts  (on page 2929) ▪
+▪Group sets  (on page 2931) ▪
+▪Account sets  (on page 2933) ▪▪Managed account access trend  (on page 2935) ▪
+▪Group set access trend  (on page 2936) ▪
+▪Password r andomiz ation  (on page 2937) ▪
+▪Onboarding and offboar ding  (on page 2938) ▪
+You can change the span of the results by selecting  the time  span from the drop-down boxes. You can
+generate more detailed reports from the Manage reports  menu.
+There are bar graphs for the number of check-outs, blocked check-outs, pending check-outs and pending
+requests for managed accounts and group sets.
+License in f ormation
+This dashboard reports on the number of servers and w ork s t ations  managed by Bravura Security Fabric .
+To access this dashboard, click View dashboards > Privileged access > License in f ormation .
+This dashboard does not use cached data.Local w ork s t ation
+This dashboard reports on local w ork s t ation  service s t atistics,  including the number that have registered
+to the Bravura Privilege  server, number of systems that are currently managed by Bravura Privilege , and
+number of systems that are unmanaged.
+To access this dashboard, click View dashboards > Privileged access > Local w ork s t ation . This dashboard
+is split into two sections:
+▪Local w ork s t ation  service overall summary: these s t atistics  are not based on a time  interval ▪
+▪Local w ork s t ation  service summary: these s t atistics  are restricted to the specified  time  interval. You ▪
+can select various time  intervals from the drop-down list to calculate the s t atistics.
+This dashboard does not use cached data.Managed accounts
+This dashboard reports on managed account s t atistics,  including the number of accounts currently
+checked out, blocked check-outs, and requests approved for check-out.
+To access this dashboard, click View dashboards > Privileged access > Managed accounts . This
+dashboard is split into two sections:
+▪Current s t atistics  for managed accounts: these s t atistics  are not based on a time  interval ▪
+▪Managed accounts summary: these s t atistics  are restricted to the specified  time  interval. You can ▪
+select various time  intervals from the drop-down list to calculate the s t atistics.
+Only the current s t atistics  for managed accounts are cached.

@@ -1,0 +1,323 @@
+where:
+▪port is the port that the OID-LDAP server listens on - default is 389 ▪
+▪hostname is the host name of OID-LDAP server - localhost can be used. ▪
+For example: 
+  $ORACLE_HOME/bin/ldapadd -p 389 -h myhost -D cn=orcladmin -
+w mypass -v -f psldap-oidldap-pluginreg.dat  
+14. Restart the Oracle listener:  14.
+  lsnrctl stop 
+  lsnrctl start 
+  dbstart  
+Windows-based OID-LDAP servers
+To install the OID-LDAP password filt er  plugin (psldap.dll) on a Windows Server 2003-based LDAP server:
+1.Log into the server hosting  the OID-LDAP Applic ation  Server with adminis tr ativ e  privileges. 1.
+2.Stop the OID-LDAP Applic ation  Server. 2.
+3.Copy psldap-oidldap.dll  from addon \transparent-synch\ldap\ on the Bravura Security Fabric 3.
+server to $ORACLE_HOME/lib on the OID-LDAP server as psldap.dll .
+You can place this binary somewhere else, but you must edit files in the next steps accordingly.
+ORACLE_HOME is the destination  directory specified  during the Oracle Applic ation  Server
+Infrastructure ins t allation.
+4.Copy psldap.cfg from the addon transparent-synch\ldap\ directory on the Bravura Security Fabric 4.
+server to %ORACLE_HOME%\lib on the OID-LDAP server.
+5.Copy the libidapi.dll file from the <instance>\lib\ directory on your Bravura Pass  server to 5.
+<Program Files path>\Bravura Security\Bravura Security Fabric\<instance>\ lib\.
+6.Copy the idapitool.exe  file from the <instance>\lib\ directory on your Bravura Pass  server to 6.
+<Program Files path>\Bravura Security\Bravura Security Fabric\<instance>\ .
+Edit psldap.cfg as follows:
+▪comm-key De fines  the private key used for encr yption.  This key must match the one set during ▪
+ins t allation  on the Bravura Security Fabric  server.  
+  comm-key =  "<encrypted commkey value>";  
+▪ t ar g etid  This option  is used to specify the ID of the target system associated with this interceptor.  ▪
+  targetid = "ldap";  
+▪libcurl The full path to the libcurl shared object required when using SSL. An empty value uses the ▪
+system default loc ation,  otherwise the full path can specified.  A value of ’0’ disables libcurl which
+ultima t ely  disables SSL and web proxy f acilities.   
+   libcurl = "0";  
+▪url The URL option  specifies  the service endpoint of the API SOAP Service.  ▪
+   url = "http://host.domain.com/default/idapi";  
+▪user The user ID the API SOAP Service is c on figur ed  to use.  ▪   user = "_API_USER";  
+▪psw The password the API SOAP Service is c on figur ed  to use. Use the idapitool program to acquire ▪
+this value from the known plain text value. See the " Bravura Security Fabric  Remote API" guide for
+idapitool usage in f ormation.   
+   psw = "the_encrypted_password_created_by_idapitool";  
+You can generate the encrypted password with the following command: 
+    idapitool.exe -url http://host.domain.com/default/idapi -
+user _API_USER -psw Letmein1 -q  
+7. Optionally ,  edit these keys: 7.
+▪proxy The proxy option  specifies  the address and port.  ▪
+   proxy = "http://idapi_proxy.mydomain.com:3128";  
+▪proxyuser The username to authentic a t e  against the proxy. (optional)   ▪
+   proxyuser = "proxyuser";  
+▪proxypath The password to authentic a t e  against the proxy. (optional)   ▪
+   proxypass = "proxypass";  
+▪capath The CA directory or file holding the root certific a t es  to trust. This value is required if using ▪
+SSL.  
+   capath = "";  
+▪cert The certific a t e  for client authentic ation.  This value is optional  when using SSL and may be used ▪
+if client v erific ation  is required by the server.  
+   cert = "ldap.crt";  
+▪ignore Whether or not to enforce strict name checking of the server certific a t e.   ▪
+   ignore = "0";  
+▪ timeout  Specifies  the timeout  when c ommunic ating  with IDAPI SOAP service. The default timeout ▪
+is 300 seconds.  
+   timeout = "300";  
+▪ r e tr y -attemp ts  Specifies  the retry attemp ts  for failed IDAPI calls. The default r e tr y -attemp ts  value is ▪
+2.  
+   retry-attempts = "2";  
+▪retry-delay  Specifies  the retry delay between IDAPI calls. The default retry-delay is 5 seconds.  ▪
+   retry-delay = "5";  
+▪fail-if-unavailable Specifies  if password changes should fail if the IDAPI SOAP service cannot be ▪
+contacted. The default behavior is to always fail if IDAPI SOAP service is unavailable.  
+   fail-if-unavailable = "true";  
+▪strength-check-only  If this option  is set to true, the password reset oper ation  will not occur. The ▪
+default value is set to true.  
+   strength-check-only = "true";  
+8.On the OID-LDAP server create the following registry keys:  8.HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\
+Entry name  PsldapCfg
+Value  Path to psldap.cfg file
+Data type  REG_DWORD  
+HKLM\SOFTWARE\Bravura Security\Bravura Security Fabric\<instance>\
+Entry name  PsInstallDir
+Value The full directory path of the psldap.cfg file
+Data type  REG_SZ
+9.Edit the listener.ora file in $ORACLE_HOME/network/admin to permit access to the shared object. 9.
+Add the path to the library to the oracle environment variable EXTPROC_DLLS. This must match the
+path to the psldap.so  binary.
+For example:
+  SID_LIST_LISTENER = 
+    (SID_LIST = 
+      (SID_DESC = 
+        (SID_NAME = PLSExtProc) 
+        (ORACLE_HOME = C:\oracle) 
+        (PROGRAM = extproc) 
+        (ENVS="EXTPROC_DLLS=C:\oracle\lib\psldap.dll") 
+      ) 
+    )
+10. Edit psldap-oidldap-plugin.sql to set the path to the library in the plugin. This must match the path to 10.
+the psldap.so  binary.
+For example:
+  CREATE OR REPLACE LIBRARY psldap_lib AS 
+  'C:\oracle\lib\psldap.dll'; 
+  / 
+  SHOW ERRORS
+11. Install psldap-oidldap-plugin.sql. This file contains stored procedures needed for the plugin. You can 11.
+install it, for example, by e x ecuting  the command:  
+  sqlplus ods/<odspassword> @<pathto psldap-oidldap-plugin.sql>  
+on the database server, where ods is the OID Database Schema owner
+For example: 
+  $ORACLE_HOME/bin/sqlplus ods/mypass @psldap-oidldap-plugin.sql  
+12. Set up the plugin in the LDAP server. This can be done either from the GUI by hand, or using the 12.
+supplied pluginreg.dat. Using pluginreg.dat from the LDAP server, run the command:    ldapadd -p <portnum> -h <hostname> -D cn=orcladmin \ 
+        -w <orcladminpassword> -v \ 
+        -f <pathto psldap-oidldap-pluginreg.dat>  
+where:
+▪port is the port that the OID-LDAP server listens on - default is 389 ▪
+▪hostname is the host name of OID-LDAP server - localhost can be used. ▪
+For example: 
+  $ORACLE_HOME/bin/ldapadd -p 389 -h myhost -D cn=orcladmin -
+w mypass -v -f psldap-oidldap-pluginreg.dat  
+13. Restart the Oracle listener using the Windows Service Control Manager. 13.
+T r oubleshooting
+If things do not work correctly, execute the following code in sqlplus:
+  declare
+  errmsg VARCHAR2(255);
+  result NUMBER;
+  begin
+  result := 0;
+  result := pwd_plugin.check_password('someuser', 'somepasswd', errmsg);
+  end;
+  /
+This will help provide more details about how the shared object is failing.OS/390 or z/OS (RACF, TopSecret, ACF2) trigger with Mainframe Connector
+Mainframe Connector can intercept password changes on OS/390 or z/OS mainframes, with RACF, ACF2
+or TopSecret security softw ar e.  This is done by inserting  an exit trap into the security system, and by
+installing an authorized task which starts at IPL.
+The c ombination  of an exit and task apply password strength rules de fined  on the Bravura Pass  server to
+all new password selections,  made using any user interface, nativ ely  on MVS or OS390. The task forwards
+a request for s ynchr oniz ation  to the Bravura Pass  server after  every successful mainframe password
+change.
+Before installing the exit and task on your mainframe, be sure to inform your users that:
+▪All mainframe password changes for users who appear in the Bravura Pass  server’s user database will ▪
+be subjected to the password policy enforced on the Bravura Pass  server.
+▪When users who are de fined  on the Bravura Pass  server change their passwords on the mainframe, ▪
+their new password will be aut omatic ally  applied to all of their other accounts, on other systems
+de fined  on the Bravura Pass  server.
+Refer to the Mainframe Connector Ins t allation  and Con figur ation  Guide  for detailed ins tructions  about
+installing and c on figuring  the exit and task on your security system (RACF, ACF2 or TopSecret).
+Note: If you install Mainframe Connector, but do not install the password exit in
+your security product, then Bravura Pass  will be able to manage
+mainframe passwords, but transparent password s ynchr oniz ation  will not
+be triggered by nativ e  mainframe password changes.
+Con figuring  the Password Manager service for transparent s ynchr oniz ation
+The interceptor installed with Mainframe Connector uses a legacy protocol to communicate with the
+Password Manager service  (on page 2820) ( idpm ). You must c on figur e  the Password Manager service for
+backward c ompatibility:
+▪Set the following field  to use the port c on figur ed  for this interceptor (default 3333): ▪
+Enable this port for backward c ompatibility  (to communicate with older interceptors/triggers). Must
+be diff er en t  from Port number above
+▪Add a CIDR mask address for the trigger system in the following setting: ▪
+Comma-delimited list of IP addresses with CIDR bitmask that are allowed to send socket requests
+If using load balancers, do not c on figur e  any SSL options  for transparent s ynchr oniz ation  tr a ffic.  SSL options
+should only be c on figur ed  on load balancers for WebUI tr a ffic,  not transparent s ynchr oniz ation.  Transparent
+s ynchr oniz ation  is encrypted using a proprietary encr yption  algorithm. Contact support@bravurasecurity.com
+for more details.OS/400 trigger
+Bravura Pass  can intercept password changes on an IBM OS/400 system. This is done by installing an exit
+program, pspwdexit_v5r4m0 or pspwdexit_v7r1m0 , which implements the
+QIBM_QSY_VLD_PASSWRD exit point on the OS/400 system. The exit program informs Bravura Pass
+when a password is changed. It also allows Bravura Pass  to check who is changing whose password. If a
+user tries to change another user’s password, the attemp t  is blocked and a warning is sent to a specified
+administrator.
+Bravura Pass  ships with two exit programs for OS/400, pspwdexit_v5r4m0 for the IBM i7.1
+oper ating  system and pspwdexit_v7r1m0 for the IBM i7.2 oper ating  system.
+This chapter details how to c on figur e  transparent password s ynchr oniz ation  on an OS/400 system by:
+1. Cr eating  and applying a password policy 1.
+2.Installing and c on figuring  pspwdexit 2.
+3. Con figuring  the Password Manager service (idpm) 3.
+4.Verifying the c on figur ation 4.
+These steps are detailed in the sections  that follow.
+This chapter assumes you have set up an os400 target system and tested it’s c on figur ation  according to
+Connector Pack  documen t ation .
+Cr eating  and applying a password policy
+Before installing and c on figuring  the Bravura Pass  transparent password s ynchr oniz ation  softw ar e  on the
+OS/400 server, you need to create a password strength policy for the OS/400 server:
+1. Con figur e  a password strength policy.  (on page 999) 1.
+Set the Maximum number of lowercase letter s  to 0. Passwords on the OS/400 system cannot include
+lowercase letter s.  Con figur e  other parameters as required.
+2.Create a target system group2.
+▪Ensure that the Use transparent password s ynchr oniz ation  checkbox is selected. ▪
+▪Select the password policy that you created.▪
+1.Make the OS/400 server a member of the target system group.1.
+Once you have applied the password policy and installed the exit programs on an OS/400 server, be sure
+to inform your users that:
+▪All future password changes are subjected to the password policy enforced by the Bravura Pass  server. ▪
+▪When they change their password on the OS/400 server, their new password is aut omatic ally  applied ▪
+to all their other accounts managed by the Bravura Pass  server.
+▪Their new password must be all uppercase.▪Installing and c on figuring  pspwdexit
+The pspwdexit_v5r4m0 and pspwdexit_v7r1m0 programs are installed in the \<instance>
+\addon\transparent-synch\as400 directory.
+To install and c on figur e  the pspwdexit_v5r4m0 for IBM i7.1 or pspwdexit_v7r1m0 for IBM i7.2
+program:
+1.From the Bravura Pass  server, establish a c onnection  to the OS/400 server using the 5250 emulator 1.
+softw ar e.
+2.If the OS/400 server already has another version of the transparent s ynchr oniz ation  interceptor 2.
+installed on it, you must remove it by running the following command:  
+   DLTLIB PSYNCH  
+3.Create a PSPWDEXIT save file.  3.
+   CRTSAVF FILE(QGPL/PSPWDEXIT)  
+4.Transfer the pspwdexit_v5r4m0 or pspwdexit_v7r1m0 to the OS/400 server, so that it 4.
+overwrites the placeholder file you created in step 3.
+a.Navigate to the \<instance>\addon\transparent-synch\as400 directory.a.
+b.From a Windows command prompt:  b.
+      ftp <OS/400 server> 
+      > binary 
+      > put <exit program> QGPL/PSPWDEXIT (replace 
+      > quit  
+Note that there is no closing parenthesis on the put command.
+5.Switch back to the 5250 emulator.5.
+6.Restore the PSYNCH library:  6.
+   RSTLIB SAVLIB(PSYNCH) DEV(*SAVF) SAVF(QGPL/PSPWDEXIT)  
+7.Change the following system value:  7.
+   CHGSYSVAL SYSVAL(QPWDVLDPGM) VALUE(*REGFAC)  
+then add the exit program by typing on one line: 
+   ADDEXITPGM EXITPNT(QIBM_QSY_VLD_PASSWRD) FORMAT(VLDP0100) PGMNBR( ⋆HIGH) PGM(PSYNCH/
+PSPWDEXIT) THDSAFE( ⋆YES) TEXT('Password Manager Password Exit Program')  
+8. Con figur e  the following data areas: 8.
+▪Set TARGETID to the target ID of the OS/400 server as it is c on figur ed  in Bravura Pass :  ▪
+      CHGDTAARA DTAARA(PSYNCH/TARGETID) VALUE('<target ID>')  
+▪Set PSSERVER to the address of the Bravura Pass  server:  ▪
+      CHGDTAARA DTAARA(PSYNCH/
+PSSERVER) VALUE('<Pass server address>')  
+▪Set PSPORT to 3334:  ▪
+      CHGDTAARA DTAARA(PSYNCH/PSPORT) VALUE('3334')  ▪Set COMMKEY to the Bravura Pass  server c ommunic ation  key (or Master Key) value:  ▪
+      CHGDTAARA DTAARA(PSYNCH/COMMKEY) VALUE('<commkey value>')  
+▪Set MSGUSER to the adminis tr ativ e  user who will receive system messages:  ▪
+      CHGDTAARA DTAARA(PSYNCH/MSGUSER) VALUE('<user>')  
+See OS/400 system components
+All the values are type CHAR, so the values should be encased in single-quotes.
+OS/400 system components
+Component Description
+PSPWDEXIT The exit programs work with the
+QIBM_QSY_VLD_PASSWRD exit point. Use the
+ADDEXITPGM command to add the exit point.
+You also need to set the QPWDVLDPGM system value to
+*REGFAC. The advantage of this, is that it can check who
+is changing whose password. Users are not allowed to
+change others users’ passwords. If this is attemp t ed,  a
+warning message is sent to an administrator MSGUSER.
+MSGUSER The user that adminis tr ativ e  messages are sent to. If the
+user is not specified,  messages are sent to QSYSOPR. If a
+nonexistent user is specified,  messages are not sent. Field
+length is 10.
+MSGLEVEL The adminis tr ativ e  message level settings  that are
+logged. The default level is 3. The value can be set to the
+following: 0 (No logging), 1 (Error), 2 (Warning), 3
+(Notice),  4 (Info), 5 (Debug)
+PSSERVER The Bravura Pass  server’s network name or IP address.
+Field length is 50.
+PSPORT The Password Manager service port number. Field length
+is 5.
+COMMKEY The Bravura Pass  c ommunic ation  key (or Master Key) in
+the encrypted format. Field length is 80.
+TARGETID The target ID of the OS/400 server as it is identified  in
+Bravura Pass . Field length is 80.
+TIMEOUT The default timeout  value for c onnecting  to Password
+Manager service is 8 seconds. If the network is slow, a
+greater value may be needed. Field length is 2.
+FAILPPDOWN The behavior when Password Manager service cannot be
+contacted. By default it is 0 and the CHGPWD is still
+permitted  if it cannot be contacted. If set to 1, CHGPWD
+is rejected if Password Manager service cannot be
+contacted.
+for a description  of values.9.Modify the PSYNCH library’s object authoriz ation. 9.
+To modify the authority of the objects in the PSYNCH library:
+a.Type:  a.
+      WRKLIB LIB(PSYNCH)  
+b.Enter 12 (work with objects). b.
+c.For each object in the PSYNCH library:c.
+▪Select 2 to edit authority.▪
+▪Ensure the *PUBLIC user has its object authority set to *USE. Modify accordingly.▪
+Con figuring  the Password Manager service for transparent s ynchr oniz ation
+To allow external servers access to the Password Manager service  (on page 2820) (idpm) on the primary
+Bravura Security Fabric  server you must also add a CIDR mask address for the trigger system.
+1.Click Manage the system > Maintenance > Services . 1.
+2.Select Bravura Security (idpm) Password Manager Service . 2.
+3.Add a CIDR mask address for the trigger system in the following setting: 3.
+Comma-delimited list of IP addresses with CIDR bitmask that are allowed to send socket requests
+Verifying the c on figur ation
+Verify that the transparent password s ynchr oniz ation  trigger is working as expected. Log into the OS/400
+server and change the password of a user that Bravura Pass  is managing. Ensure that the password
+change was captured by Bravura Pass  and propagated to other target systems.Password s ynchr oniz ation  r egis tr ation
+When transparent password s ynchr oniz ation  (on page 1651) is implemented, it is important for users to
+understand the new password c omposition  rules that Bravura Pass  enforces over nativ e  password
+changes made on individual systems. Users also need to understand that password s ynchr oniz ation  takes
+place aut omatic ally  after  they change their own password on a trigger system.
+Bravura Pass  incorporates a web-based r egis tr ation  module, intended to prompt users for activ e
+c on firmation  that they understand what transparent s ynchr oniz ation  does for them. When the Password
+s ynchr oniz ation  r egis tr ation  (PSR) module is activ a t ed,  users are not a ff ect ed  by transparent password
+s ynchr oniz ation  until  they activ ely  “register” for it.
+The Password s ynchr oniz ation  r egis tr ation  (PSR) module is disabled by default. You must enable it to allow
+users to access this feature.
+Bravura Security  recommends that password s ynchroniz ation  be applied to all users. R egis tration  can be
+used to implement password s ynchroniz ation  on a user-by-user basis; however, there are inc ompatibilities
+between password s ynchroniz ation  regis tration  and IVR and the Bravura Pass API. If password
+s ynchroniz ation  regis tration  is enabled, IVR and the Bravura Pass API may not be able to find users.
+It is recommended that password s ynchr oniz ation  r egis tr ation  only be used as an educ ational  tool. If this
+module is not enabled, all Bravura Pass  users are aut omatic ally  subjected to password s ynchr oniz ation
+when it is activ a t ed.  You can enforce r egis tr ation  via the PSF FORCE ENROLLMENT  setting  (on page 1183).
+To c on figur e  password s ynchr oniz ation  r egis tr ation:
+1.Click Manage the system  > Modules > Password s ynchr oniz ation  r egis tr ation  (PSR) . 1.
+2.Turn on the PSR ENABLED setting. 2.
+3.If required, c on figur e  event options,  listed below. 3.
+4.Click Update to submit the changes. 4.
+5.Restart the Password Manager service to apply your settings. 5.
+The Password Manager service must be restarted after  transparent s ynchroniz ation  is enabled. If it is
+not restarted, users may remain aut omatic ally  subjected to transparent s ynchroniz ation  despite not
+being actively  registered for it.
+Password s ynchr oniz ation  r egis tr ation  (PSR) module events that launch interface programs
+The following Password s ynchr oniz ation  r egis tr ation  (PSR) module options  can be accessed from Manage the
+system  > Maintenance > System variables or Manage the system  > Modules > Password s ynchr oniz ation
+r egis tr ation  (PSR) :
+Option Description
+PSR CANCELLATION SUCCESS A user disables transparent password s ynchr oniz ation  for themselves.
+PSR REGISTRATION FAILURE A user tries to register for transparent password s ynchr oniz ation,  but fails
+for some reason.
+PSR REGISTRATION SUCCESS A user registers for transparent password s ynchr oniz ation.

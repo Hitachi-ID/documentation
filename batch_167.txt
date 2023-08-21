@@ -1,0 +1,199 @@
+Transparent s ynchr oniz ation  requests can also be handled by a load balancer. Though no specific  load
+balancer is endorsed for this purpose, the following criteria for its c on figur ation  apply:
+▪No heartbeat should be done on either of the ports used by idpm . Use loadbalancerstatus to ▪
+probe the health of nodes.
+See the R eplic ation  and Recovery Guide  for more in f ormation.
+▪Persistent or sticky  c onnections  are required. Having once connected, a host’s tr a ffic  should be ▪
+directed to the same server for considerably longer than the maximum request time.  3-5 minutes is
+suitable for most environments.
+▪The tr a ffic  must be load balanced as a raw TCP stream. As it is encrypted, the load balancer should ▪
+attemp t  no tr anslation  or v alidation  on it.
+▪The load balancer’s address facing the Bravura Pass  server must be c on figur ed  in the list of IP ▪
+addresses from which Password Manager service will allow requests.
+▪A fir e w all  should restrict access to the load balancer so that only those hosts intended to be sources ▪
+of transparent s ynchr oniz ation  events may connect to the Password Manager service service. The
+CIDR bitmask option  provided in the Password Manager service service c on figur ation  is ine ff ectiv e  if
+hosts can connect through a load balancer.
+If using load balancers, do not c on figur e  any SSL options  for transparent s ynchr oniz ation  tr a ffic.  SSL
+options  should only be c on figur ed  on load balancers for WebUI tr a ffic,  not transparent s ynchr oniz ation.
+Transparent s ynchr oniz ation  is encrypted using a proprietary encr yption  algorithm. Contact
+support@bravurasecurity.com  for more details.Windows trigger
+This chapter shows you how to set up transparent password s ynchr oniz ation  for a Micr osoft  Windows
+server or Activ e  Directory based trigger system.
+Before you begin, ensure that you have researched and carried out the steps outlined in Implementing
+Transparent Password S ynchr oniz ation  (on page 1659).
+About the Password Change Notific ation  Module
+Bravura Pass  can intercept password changes on a Windows-based trigger system using the Password
+Change Notific ation  Module. The Password Change Notific ation  Module consists of an interceptor
+service, intcptsvc , and the psintcpt.dll . The service queues DLL requests and communicates
+with the Password Manager service ( idpm ). The DLL captures nativ e  password changes.
+The installer package also includes t esting  and maintenance utility  programs.
+You can install the Password Change Notific ation  Module on a:
+▪ Activ e  Directory domain controller (DC) ▪
+This will a ff ect  password changes by users of the Activ e  Directory domain. In order to intercept all
+password changes in your domain, you must install the Password Change Notific ation  Module on
+every Activ e  Directory DC on your network.
+CAUTION: Do not install the Password Change Notific ation  Module on an Activ e
+Directory DC that allows blank passwords. If users change their passwords
+to a blank password, Activ e  Directory will not send the change to Bravura
+Pass , and the event will not be logged.
+▪Windows server▪
+Password changes local to that server will likewise be subjected to password strength enforcement
+and s ynchr oniz ation.
+The Password Change Notific ation  Module supports filt er s  that can limit the scope of an Activ e  Directory
+DC to a specific  OU mapped to a target system in Bravura Pass . For example, you may want to limit the
+passwords that are intercepted to accounts in three OUs on an Activ e  Directory DC. Each OU is mapped
+to a separate target system set up in Bravura Pass . The target systems may belong to diff er en t  target
+system groups with distinct  password policies. You can install the Password Change Notific ation  Module
+on the DC and c on figur e  it with three filt er s  mapped to each OU.
+You can also use filt er s  to include or exclude specific  account names to be sent to the Password Manager
+service for password strength t esting  and s ynchr oniz ation.
+Install the softw ar e
+Use intcpt.msi or intcpt-x64.msi from the \<instance>\addon\transparent-synch\ad\
+directory to install the Password Change Notific ation  Module.The following ins tructions  show you how to install and c on figur e  the Password Change Notific ation
+Module onto a Micr osoft  Activ e  Directory domain controller (DC) and use the softw ar e  module to trigger
+the transparent s ynchr oniz ation  process.
+Before you begin:
+Note the c ommunic ation  key (or Master Key) used to encrypt c ommunic ation  between Bravura Security
+components on the network.
+The CommKey value is encrypted in Bravura Security Fabric . If you did not record the key in a secure
+loc ation,  copy the idmsetup.inf file from <instance> \ p sc on fig \ on the Bravura Security Fabric
+server to the same loc ation  as the installer. The installer will extract the Communic ation  Key value from
+the file.
+This section  shows you how to manually install the Password Change Notific ation  Module using the
+Windows Installer.
+See also:
+▪Using MSI installers  (on page 242) for more in f ormation  about setting  MSI pr operties  in a transform ▪
+file or from the command line.
+Manual ins t allation  steps
+To manually install the Password Change Notific ation  Module:
+1.Copy the intcpt.msi  or intcpt-x64.msi  installer from the Bravura Pass  server to a scratch 1.
+directory (C:\temp) on the server or DC, or to a publicly accessible share.
+2.Launch the Windows Installer package.2.Click Next .
+3.Read the Bravura Security Fabric  license. Select I accept the terms in the License Agreement if you 3.
+agree to the terms and click Next .4.Click Complete to include the Password Change Notific ation  Module and c on figur ation  utility 4.
+programs.5.Type the c ommunic ation  key. 5.
+Network c ommunic ation  between Bravura Security components is protected using a secret encr yption
+key. Enter the same key here as you did on the main Bravura Pass  server (c ommunic ation  key (or
+Master Key)). If you copied the idmsetup.inf  file from the Bravura Security Fabric  server the key is
+entered aut omatic ally .
+Click Next .6. Con figur e  the service by entering the: 6.
+▪Bravura Security Fabric server name or IP address▪
+▪TCP/IP port the service is listening on▪
+▪Primary target system ID this machine corresponds to▪
+You must enter the ID of the target system you are installing on as it is c on figur ed  in the Bravura
+Pass  primary server.
+This target must be c on figur ed  as a Bravura Pass  target system on the primary server before
+Password Change Notific ation  Module will function  properly.
+▪Long ID format to send to Password Manager service▪
+The longid must match the longid on the target system. Choose the format based on the target
+system setting  (on page 1668) and how the user’s longid is being listed.
+Click Next .
+7.Click Install to start the ins t allation. 7.
+The installer begins copying files to your computer. The Ins t allation  Complete page appears after  the
+softw ar e  has been successfully installed.
+8.Click Finish to exit. 8.
+9.Click Yes to restart Windows now, or No if you will manually restart later. 9.After  you restart Windows, nativ e  password changes will be intercepted by the Password Change
+Notific ation  Module and forwarded to the Bravura Pass  server for transparent s ynchr oniz ation.
+Configur e  the Password Manager service
+1.Log into the Bravura Pass  server as a superuser. 1.
+2.Navigate to Manage the system > Maintenance > Services . Select the Password Manager Service . 2.
+3.Enter the IP address of the AD server with the appropriate mask into Comma-delimited list of IP 3.
+addresses with CIDR bitmask that are allowed to send socket requests . For instance, if the AD server
+IP is 10.0.23.76 and it is the only server to contact then the entry would be 10.0.23.76/32.
+4.Click Update . 4.
+5.Stop and start the Password manager service (idpm ). 5.
+a.At the bottom  of the page, locate the Service status section. a.
+b.Select Stop the service . b.
+6.Start the idpm  service by selecting  Start the service . 6.
+T r oubleshooting
+If the password change fails to propagate, double check the following:
+▪Ensure that the instance and AD server fir e w alls  have the correct settings.  Incorrect fir e w all  settings ▪
+will block the change password request from reaching the instance server and the password change
+will not be propagated.
+▪The domain controller has been added to list of IP addresses allowed to send socket requests to the▪
+IDPM Password Manager Service. Once again, the password change request will not be propagated
+with the wrong IP address.
+▪There might be a mismatch on the longid format. As stated before, it must match the longid on the▪
+target system.
+Setting  the longid format
+The longid format on the target system must match the longid format used by the Password Change
+Notific ation  Module. By default, the agtaddn connector’s longid format is set to the NT4 name format.
+Complete one or more of the following:
+1.Select the matching longid format during the ins t allation  of the Password Change Notific ation  Module, 1.
+(on page 1662)
+Note: Versions of the Password Change Notific ation  Module older than 11.0.1
+do not prompt for a longid format and instead, set the longid to the
+distinguished  name (DN) format by default
+or
+2.Change the longid format on the target system to use the distinguished  name (DN) format. See the 2.
+Connector Pack documen t ation  for Windows target systems.
+or3.Modify the intcptsvc.cfg c on figur ation  file, located in: 3.
+<Program Files path>\Bravura Security\Password Filter\service\
+a.Locate the following lines:a.
+  # LongID = "%sAMAccountName%"; 
+  # LongID = "DomainName\\%sAMAccountName%"; 
+  LongID = "%distinguishedName%";
+b.Comment out the LongID line:b.
+  LongID = "%distinguishedName%"
+c.Locate and uncomment the following line:c.
+ # LongID = "DomainName\\%sAMAccountName%"
+d.Specify the DomainName of the target.d.
+e.Save the c on figur ation  file. e.
+f.Restart the intcptsvc service. f.
+T esting  the c onnection
+Test c onnectivity  and initializ e  the API by running the diagutil program.
+Use the diagutil program for tr oubleshooting  the Bravura Security Password Change Notific ation
+Module interceptor. Once executed, it submits real requests to the Password Manager service ( idpm ) to
+process according to the password interceptor service ( intcptsvc ) c on figur ation  file.
+This program acts as a real time  logging utility  to monitor the activities  between the interceptor and the
+Password Manager service ( idpm ) on the Bravura Security Fabric  server; for example, if an account
+password is changed, using net user <accountName> <Password>  in another command prompt,
+the activities  are displayed in the diagutil prompt until  [Ctrl]+[C] is used to stop logging.
+This program is installed by intcpt.msi  or intcpt-64.msi  on a Windows transparent password
+s ynchr oniz ation  trigger system and can be found in the following directory:
+<Program Files path>\Bravura Security\Password Filt er\util\
+Usage
+diagutil.exe [-l <debug level> ] [ -t <timeout> ]
+              -u <userID> -p <userPassword>
+Argument Description
+-l, --level <N> The debug level 1-6. The default is 4.
+-t, --timeout  <N> The timeout  in seconds to receive diagnostic  in f ormation.
+The default is 60 seconds.
+-u, --user <userID> The user to be diagnosed.
+-p, --password The user’s password.Examples
+For example:
+diagutil.exe -u qa1000 -p letmein!
+returns:
+User account name: qa1000
+Checking the password filter Dll system registry setting...passed
+Checking the password filter Dll if it has been loaded...passed
+Checking the password filter service if it is running...passed
+Setting password for user [qa1000]:
+2010-02-02 11:15:28.561.2903 -
+ [] psintcpt.dll [388,2172] Info: Logging has been enabled, Log level: 4
+2010-02-02 11:15:28.576.5698 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], entered PasswordFilter, sequential number ( SNO ): 1
+2010-02-02 11:15:29.675.4688 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], SNO: 1, PasswordFilter returned [1]
+2010-02-02 11:15:29.717.0218 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], entered PasswordChangeNotify
+2010-02-02 11:15:29.720.6418 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], PasswordChangeNotify finished
+2010-02-02 11:15:29.724.6046 - [] diagutil.exe [3244,452] Info:
+***** User:[qa1000]'s password has been reset successfully *****
+If the debug level is greater than 4 (default), diagutil returns more detail on how the account falls
+into which categories.
+See diagutil usage in f ormation.
+diagutil.exe [-l <debug level> ] [ -t <timeout> ]
+              -u <userID> -p <userPassword>
+Argument Description
+-l, --level <N> The debug level 1-6. The default is 4.
+-t, --timeout  <N> The timeout  in seconds to receive diagnostic  in f ormation.
+The default is 60 seconds.
+-u, --user <userID> The user to be diagnosed.
+-p, --password The user’s password.
+Examples
+For example:
+diagutil.exe -u qa1000 -p letmein!
+returns:

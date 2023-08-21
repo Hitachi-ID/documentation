@@ -1,0 +1,363 @@
+Transparent password s ynchr oniz ation
+▪Added a new variable, sAMAccountNameBypassRegEx, in intcptsvc.cfg to bypass specified  accounts ▪
+when joining password transparent s ynchr oniz ation.
+▪Added a new variable, ADsPath, in intcptsvc.cfg to specify the domain controller and context to look▪
+up account in f ormation
+▪Added a new variable, ADsSearchFilter, in intcptsvc.cfg to specify the searching filt er  for looking up ▪
+accounts.
+▪Added two new options  to user attr . ▪
+▪-p For specifying the domain controller and context to look up accounts▪
+▪-f For specifying the search filt er  to look up accounts. ▪
+▪Added an option,  Perform transparent password s ynchr oniz ation  on locked out users, to Bravura Pass ▪
+Transparent S ynchr oniz ation  feature. This option  disabled by default. When this option  is enabled and
+a locked out user triggers a nativ e  target password reset, the new password is synchronized to other
+associated target accounts.
+▪Added a Bravura Pass session tag ERRORCODE for IDPM FINDUSER FAILURE event. When the session▪
+tag ERRORCODE is c on figur ed  in IDPM FINDUSER FAILURE and a locked out or disabled user trigger a
+nativ e  target password reset, then the event will be triggered and ERRORCODE will display the actual
+value according to the abnormal user status.
+▪Enhanced the Event Log report to present descriptiv e  in f ormation  when users with locked-out or ▪
+disabled status reset passwords in the nativ e  targets triggering password transparent s ynchr oniz ation.
+See the Transparent Password S ynchr oniz ation  (on page 1651) for more in f ormation  on c on figuring  and
+using this feature.
+Database
+▪Changed LONGID from 200 to 256 characters.▪
+▪Increased size of attribut e  columns, in which a large string can be stored, up to maximum. ▪
+▪Added a feature to allow arbitrary extra Database Service (iddb) c onnection  string parameters via an ▪
+optional  registry value.
+▪The importdata program now supports running scripts to patch or upgrade a database. ▪
+External data store
+▪Upgraded sqlite3 version to 3.27.2.0.▪
+▪SEARCH DOWNLOAD PLUGIN can now be c on figur ed  to allow administrators to download external ▪
+data store tables as CSV files.  A shipped plugin is included for this purpose: plugin-download-csv.exe.
+▪Product administrators can c on figur e  individual column display width of an external data store table. ▪
+▪Product administrators can c on figur e  Manage external data store (DBE) module to turn values in a ▪
+table column into uppercase.
+▪Product administrators can c on figur e  external data store tables to be sorted by selected columns. ▪
+▪Superusers can now add descriptions  to each column in the external data store tables. ▪▪Manage external data store (DBE) module table c on figur ation  includes the column setting  for Allowed ▪
+IDs.
+▪Clearer na vig ation  buttons  have been added to the Manage external data store (DBE) module single ▪
+record editing  page.
+▪Improved UI when an external data store table uses foreign keys.▪
+▪DBE module now displays the table description  with the table name. ▪
+▪ Ins tructions  can now be added to external data store (or policy) tables. ▪
+▪Added a new c on figur ation  option  to the external data store, which allows tables to be sorted by ▪
+column groups.
+Group management
+▪New fields  for c on figuring  Aut omatic ally  managed groups option  are added to target system ▪
+c on figur ation  page.
+▪Requests for network resources now display a success message instead of taking the user to the▪
+network resources main page. The Continue  button  was changed to Complete on the network
+resources request page.
+▪When group r ec ommendations  are enabled, they can be viewed in request wizards on the Change ▪
+group membership page, as well as in the Groups app.
+▪The e xisting  out-of-band de t ection  functionality  has been extended so that Bravura Security Fabric ▪
+now:
+▪Detects deletions  from groups as well as additions. ▪
+▪Detects child group changes as well as account group changes.▪
+▪Detects and properly handles orphaned account group changes.▪
+▪Supports the aut omatic  reversal of the out-of-band change and the submission of a w orkflo w  request ▪
+to perform the same change.
+Bravura P attern  / components
+▪Added the ability for environment files to add column data to CSVs when column is not present in ▪
+original CSV.
+▪Added the ability to specify rules based on managed system resource attribut es  in the ▪
+pam_disclosur e_filt er_policy  extdb table.
+▪Included ability to clean up invalid accounts from team group memberships.▪
+▪Added the ability for the hid_authchain_select component to be able to specify IP ranges for▪
+REMOTE_ADDR for sessdata.
+▪Added IMPORT SYSTEM RESATTR OVERWRITE and IMPORT ACCOUNT RESATTR OVERWRITE system▪
+variables that are disabled by default. When enabled, import rules can be c on figur ed  to set team
+resource attribut es.
+▪Added ability to generate arbitrary HTTP result codes from within the SOAP webservice.▪
+▪Added utility  manage_plugins.py to swap a plugin point between script and service. ▪
+▪Updated authmod components to allow BaseP olicyAuthoriz ation  to set Ma xR ejections. ▪▪The Invisible RECAPTCHA component has been added to the component framework.▪
+▪Added RequesterUserclass support to attr v al  v alidation  policy model. ▪
+▪Added ExpresionMatch column to the default attr v al  policy. ▪
+▪Lowered log level when loading extensions from info to debug.▪
+▪Added support for ’changed’ computer and account attribut es  in idtrack. ▪
+▪Added support for RMS de t ection  of changed system and account attribut es. ▪
+▪Changed hid_policy_wfemail policy to allow duplicate event_id and added ExpressionMatch field  for ▪
+more specific  rule matching.
+▪Added ErrorMsg column to extdb table hid_authchain_select to provide custom error message when▪
+authentic ation  fails to find any valid chain.
+▪ Optimiz ed  the loading time  for component TEST_EXPRESSION_HELPER. ▪
+▪The manage_components.py script has been enhanced to detect components with errors and▪
+prevents their loading.
+▪The im_corp_lookup_country component has been improved to allow cus t omiz ation  of country codes ▪
+being set in database.
+▪Added a sample component that demonstrates a scripted password policy v alidation. ▪
+▪Enhanced the external data store module to support tables and columns that contain spaces or special▪
+characters.
+▪Updated component Functional.hid_r eques ts  to allow method submit_pdr() and submit_requests() ▪
+using an e xisting  API object.
+▪User pr ofile  attribut es  are deleted during the t ermination  process. ▪
+▪The im_t ermination  component has been enhanced by deleting  the users Questions  and Answers ▪
+after  the accounts have been removed.
+▪Added Scenario.hid_w ebpr o xy_c on fig  component which can be used to override the default proxy ▪
+c on figur ation  for Python components/scripts.
+▪Added BambooHR in t egr ation  to Scenario.hid_saml_idp ▪
+IDMLib
+▪The Python IDMLib library has support for tracking changes in groups, group attribut es,  group ▪
+members, and group owner.
+▪A new explicit "clear_attribut e_v alues  method" was added to clear the values of a given attribut e. ▪
+▪Enabled custom content types and encoders for Ajax requests.▪
+▪Added wizard_display_page_id attribut e  to SearchFilter class in IDMlib. ▪
+▪Updated IDMlib so that function  submit_pdr() and submit_request() in ▪
+Functional.hid_r eques ts.r eques ts.p y  will return a request object instead of True when request
+submission is successful.
+▪The idmlib has new group-centric functions  to group changes in a group into a single diffit em. ▪
+▪The IDMLib agent library now supports the group oper ations. ▪
+▪Added support for group attribut es  to idmc on fig. ▪Logging
+Logcensor utility
+▪The logcensor utility  now supports using wildcards and specifying a directory to process multiple  log ▪
+files.  If log files are not specified,  all files in the instance log directory are censored.
+▪Updated the logcensor utility  to include a -manual argument for specifying replacements via a CSV ▪
+file.
+▪Updated the logcensor utility  to include a -strict argument for g ener ating  random replacement values. ▪
+▪Improved logcensor usability:▪
+▪Made the -minlen argument default to 5.▪
+▪Made the outfile  default to < logfile >_replaced. ▪
+▪Added a -warnings argument to write warnings to a file rather than stdout. ▪
+▪Added the ability to specify pr ofile  attribut es  and account attribut es  to exclude, either in the ▪
+command, or in a new-line-delimited file.
+▪Updated the logcensor utility  to include an -auto argument to run in "easy" mode. Default settings ▪
+are aut omatic ally  chosen. Added ability to exclude certain pr ofile  attribut es  or account attribut es.
+▪ Modified  logcensor utility  to de fine  type of objects being replaced in replacement log. ▪
+Mobile
+▪Added a new script for ins t allation  of the Bravura One  proxy servers on Linux servers. ▪
+▪Default value for the setting  "The timeout,  in seconds, to wait for proxy server request" in the Mobile ▪
+Worker Service is now 280.
+▪Added the "Timeout in seconds for accessing the local instance" option  for the Mobile Worker Service ▪
+for a timeout  value for the Bravura One  applic ation  accessing the Bravura Security Fabric instance.
+▪Copy disclosure plugin: In personal vaults, added app action  to copy password when plugin cannot be ▪
+displayed due to an unsupported browser.
+▪Change passwords page on mobile has been changed to be simpler and more in tuitiv e. ▪
+PSLang
+▪Added a new function,  getUsersByTarget, to PSLang to allow for speeding up PSLang user classes ▪
+de fined  based on a pr ofile  having an account on a target system.
+R eplic ation
+▪Nodestatus request will fail if Ajax timeouts  exceed a threshold. ▪
+▪Added Health Check component hid_healthcheck_r eplic ation_queue  that alerts when the disk space, ▪
+watermark, last processed time  and queue delay threshold have been reached on a r eplic ation  node.
+▪Added the nodestatus API call that load balancing tools can use to track the state of a Bravura Security▪
+Fabric instance, and can be c on figur ed  via P sIns t allDir/p sc on fig /nodes t a t.cf g.
+▪Added the ability to disable backups for files being replaced during r eplic ation. ▪Sessions
+▪Added support for concurrent access to the same web session.▪
+▪Added the SESSION MAX BIN SIZE system variable, which controls the maximum size that a session▪
+data file can become before it is terminated.
+Segr eg ation  of Duties
+▪Added a label "Default: 60 days" besides the Default number of days before expiry: field  on the ▪
+Segr eg ation  of Duties  rule r esolution  page.
+Services
+▪Added a registry entry to adjust the timeout  setting  for the Asynchronous Request Service (ajaxsvc). ▪
+▪Fixed issue when the fir s t proxy server failover will try the second one when multiple  proxy servers ▪
+c on figur ed.
+T r ansaction  monitor
+▪The system variable IDTM AGENT SINGLE RUN OPERATION MAXIMUM is added to determine the▪
+maximum number of oper ations  to do in a single agent in v oc ation.  The default value is 100.
+▪Updated the T r ansaction  Monitor Service (idtm) to coalesce oper ations  on the same target system in ▪
+the same request.
+Upgrade
+▪The Bravura Security Fabric installer is now able to create a database backup prior to performing an▪
+upgrade.
+▪Each server in the shared schema environment can be upgraded in parallel.▪
+▪Added pre-upgrade check process to verify if the current windows user is the same user that used for▪
+Windows authentic ation  by the instance.
+Utilities
+▪An "extractdir" option  was added to the dbarc program to specify the loc ation  to extract data. ▪
+▪Added more options  to targetsync: ▪
+▪-target: multiple  times  to select multiple  targets ▪
+▪-targetmanual: to select all manual targets▪
+▪-wait: to have targetsync wait for the discovery to complete▪
+▪-j: to get it to process a specified  number of targets in parallel ▪
+▪Added utility  smonclean .exe that permanently deletes recorded session monitoring using a given ▪
+age threshold.
+▪Added the serviceacct  (on page 2883)  utility  to update all loc ations  where the service user ▪
+account (psadmin) is used, in cases where the account has changed.▪Added the sqlutil .py utility  used to run SQL scripts. ▪
+▪Enhanced c on flicting  password UI and utility  (pwdconflicts ) to recognize deleted or archived ▪
+accounts and disable actions  against these accounts.
+▪Enhanced the servicemove utility  so that it can add an entry for the old service whose home ▪
+server doesn’t exist any more.
+Resolved Issues 12.0.0
+Accessibility
+▪Issues with screen reader output around info bubbles on pr e-de fined  request pages have been fix ed. ▪
+API
+▪Fixed issues with the DELR (delete role) oper ation  when a request is submitted  through idapi. ▪
+▪Updated request IDAPI calls. WFRequestCreate will check PDR ACLs if PDR is used and requester has▪
+accounts. WFR eques tActionsSe t  will check user group ACLs if no PDR is used.
+▪Re-added registry override DisableOTP to prevent password r andomiz ation  for OTP API user. ▪
+▪Re-added registry overrides W s tnAttrIP  and W s tnAttrDNSHos tName  for KMKeyGetByAccount API. ▪
+▪The pr ofile  attribut e  section  is present when includepr ofileattribut es  is 1 in certific ation  API ▪
+CertStartCertCampaign.
+▪Only applicable r emediation  is populated based on a selected resource to review when calling API ▪
+CertStartCertCampaign.
+▪Added MACC resource type support to IDAPI function  ResourceFindCriteria, ResourceFind, and ▪
+ResourceGet.
+▪The API Service UserSearch function  has been enhanced to allow searching for users via boolean ▪
+pr ofile  attribut es.
+▪Fixed AdminAdd to properly respect pr ofile.in v alid. ▪
+▪Password policy rule "have at most N characters" is required and set to 150 characters for▪
+PAM_DEFAULT and PERSONAL_VAULT password policies.
+▪The ManagedAccountOverridePassword API function  will now accept up to 150 characters for a ▪
+password.
+▪Updated API call of "RunReport" to handle the case of return values over 32 columns.▪
+▪ WFR eques tAttr sSe t  has been enhanced to allow the setting  of reqecctsig during pr ofile  and resource ▪
+attribut e  setting  for w orkflo w  requests.
+▪Required attribut es  can be populated for a request submitted  via API. ▪
+▪The API user’s password can be removed using both the UI and the adm_set utility . ▪
+▪ Modified  InstanceList API function  so that it includes all nodes in the r eplic ation  setup and not just ▪
+accessible nodes.
+▪Resolved an issue where an API call timeout  could cause subsequent API calls during the same session ▪
+to fail.▪Search criteria for the WFRequestFind idapi function  has been improved by allowing requesterguid, ▪
+requestername, delegateguid, delegatename, canceledbyguid, canceledbyname, recipientguid and
+recipientname.
+▪The API caller can log in successfully even when the caller’s target system is not the fir s t one on the ▪
+authentic ation  priority list.
+▪Updated API call R esour ceAttr sGe t/Se t/Del  so that it can return correct results for unde fined  resource ▪
+attribut es.
+▪Fixed OTPAPIUserCreate API so that UserAttrAdd  procedure does not fail to execute. ▪
+▪The length of the "UserclassMembershipList" IDAPI fields  was changed from ’20’ to c on figur able  value ▪
+(CONFIGURED_ID) and currently it can handle values up to 80 characters.
+▪Corrected handling of emails for certific ation  API functions. ▪
+▪Updated stored procedure RBACRoleGet so that API ResourceGet will return the correct isautores▪
+value for a role.
+▪Updated API call OrgReportsTo to avoid idapi service crash▪
+▪Updated stored procedure UserGroupMemberGet such that the API Service UserGroupsGet function ▪
+will return t ar g etid  for cross-target nested group properly.
+REST API
+▪Enhanced REST API to allow nosgroup search engine to return extended columns of r esattr s. ▪
+▪REST API calls using GET are will log correct function  path when Ajax performance metrics are ▪
+enabled.
+▪Improved group update oper ation  performance by optimizing  the a ff ect ed  stored procedures and ▪
+reducing the number of calls to them.
+▪Fixed REST API login process to succeed after  fir s t successful password v erific ation. ▪
+▪The REST API has been enhanced to allow better  error recovery from bad requests. ▪
+▪Fixed the issue where the return output of REST call set the content-type to text/json instead of▪
+applic ation/json.
+▪The REST api will accept a predetermined batch ID when submitting  a request. ▪
+API logging
+▪The log does not display false errors regarding the API user when "Allowed network addresses for▪
+remote API access" has been set.
+Authentic ation
+▪ Modified  the behavior of GENERIC LOGIN FAILURE to display username as entered rather than fake full ▪
+name.
+▪The feature will be removed in future releases.▪
+▪Fixed an issue with Windows and web server authentic ation  for httpauth.exe  to ensure that ▪
+authentic ation  occurs for the user transparently and the user is logged in.
+▪Fixed an error occurring when parsing XML using HTTPAUTH and SAML.▪▪Fixed an error where the correct language was not used when r edir ecting  SAML. ▪
+▪The PII authentic ation  chain will provide an appropriate message when authentic ation  fails because of ▪
+missing attribut es.
+▪Fixed so that when a user who logs in with an authentic ation  chain that uses challenge response ▪
+authentic ation  is given a log-in link via email from an access request they are not immediately locked
+out of their account when following through on the link.
+▪Fixed the issue when by adding authentic ation  chain r egis tr ation  to the plugins, we limited the entir e ▪
+policy table to work with only one "DEFAULT_LOGIN" chain.
+▪Fixed so that email is no longer accepted as a form of identific ation  by default when logging in. ▪
+Email identific ation  can still be used on an optional  basis by adding it to the AUTH IDENTITY
+ATTRIBUTES variable.
+▪Fixed the issue where default SAML pin doesn’t render and the end user is required to use the▪
+Con figur e  launchpad link in order to make those launchpad tiles show up on the landing page.
+▪Fixed the issue where SAML-based authentic ation  oper ations  like ’failed login’ and ’logout’ did not ▪
+leave the instance in the root directory.
+▪Fixed the issue when launchpad pin reports itself broken when window with same app already exists▪
+and is logged out.
+▪Fixed an issue with the httpauth.exe  authentic ation  plugin so that it works properly when a URL ▪
+contains userid.
+Auto discovery
+▪Improved a stored procedure used in the persistent auto-discovery.▪
+▪Fixed an issue where iddiscover incorrectly combines discoveries that ask for c on flicting  things ▪
+on the same target.
+▪Fixed an issue where non-persistent list and persistent list do not list same group attribut es. ▪
+▪Fixed re-running diff se ts  with IDTrack CLI so that it properly locates accounts when account and target ▪
+arguments are specified.
+▪Updated discovery so persistent listing  does not add global group attribut es. ▪
+▪ Modified  the maximum queue usage for the Persistent Connector Service to be 99% of disk space ▪
+instead of the default 1 GB per queue.
+▪Fixed an issue where auto-discovery causes TempDB to grow rapidly for unchanged multi- v alue ▪
+attribut es.
+▪Corrected issue so that w ork s t ations  that are flag g ed  for deletion  are properly removed from the ▪
+database when the threshold has been reached.
+▪ Sensitiv e  data is now suppressed during discovery process. ▪
+▪Improved persistent discovery and iddiscover API performance when making small updates to large▪
+groups.
+▪Corrected issue so that systems onboarded using team management properly reports the last▪
+successful c onnection  time.
+▪Fixed an issue where restoring an invalid managed group does not clear the invalid time  on non-auto- ▪
+manage target systems.▪Fixed a cross-target r elationship  issue during the discovery when t ar g eting  the same target twice. ▪
+▪Auto discovery will not load incomplete pr ofile  data into queue when disk usage is over the limit. ▪
+▪Fixed Populate mapped pr ofile  attribut e  with values from target system setting  to load database. ▪
+▪Resolved an issue where IDARCHIVE MANAGEMENT GUARD could fail to provide log warnings when▪
+triggered by sequential  psupdate rounds.
+▪Resolved an issue where IDARCHIVE MANAGEMENT GUARD EXCEEDED could fail to trigger when▪
+IDARCHIVE MANAGEMENT GUARD was triggered by sequential  psupdate rounds.
+▪Updated the log message created when IDARCHIVE MANAGEMENT GUARD is triggered to clarify that▪
+no systems were evaluated by the import rule.
+▪Fixed so that if the password policy rule "not have been changed by you in the last N hours" is set and▪
+a user’s password is changed by the help desk, it allows the user to change their password again
+immediately.
+▪In a main-server-proxy-server c on figur ation  warning and error messages are displayed in the system ▪
+log while psupdate runs and the target system .lst file on the main server is open for editing.
+▪Records in database are not invalidated when a second run of psupdate returns ▪
+code ’ A C Oper ationNotSupport ed’ .
+▪Fixed so that auto discovery on a Cisco ASA system set as a source of pr ofiles  no longer gives a ▪
+warning message about an advanced encr yption  (advencrypt) parameter that does not exist.
+▪Resolved an issue where auto-discovery could take a long time  to complete if a subset of the listed ▪
+targets were in the connector e x ecution  order list.
+▪Corrected a targetsync.exe  issue failing to pass a flag to discovery service r esulting  in plugin ▪
+points not being triggered.
+▪Fixed an issue when the applic ation  did not check that it’s the master instance before processing a ▪
+discovery.
+▪Stopped auto discovery error messages from c ontinuing  to report users in a management cycle ▪
+despite having been removed from the Activ e  Directory domain already.
+▪Reversed a fix that prevented management cycle error messages to users without an OrgChart license, ▪
+as it is still used for some things even without view or edit permissions.
+▪Fixed the issue when the per sisting  listing  is enabled, the psupdate program c ontinues  to use the ▪
+e xisting  *.grp,*.lst and *.mbr files.
+▪Fixed the issue when multiple  psupdate scheduled jobs get created due to psupdate not ▪
+checking if it is scheduled to run on another server.
+▪Enhanced stored procedure RequestBatchClean so that r eser v ations  not associated to any request will ▪
+be removed by psupdate after  one day.
+▪Fixed an issue in persistent listing  such that a request that makes changes to a target where persistent ▪
+listing  is enabled will work properly.
+▪ Pr ofile  attribut e  values are updated from account attribut es  for all available target systems even if ▪
+discovery is done only for one target system.
+▪Updated psupdate to avoid too many iddiscover jobs. ▪
+▪Fixed the issue when the delayed in v alidation  setting  did not apply for the instance. ▪▪Fixed persistent listing  issues so that agtsvc will send proper JSON to iddiscover and extra ▪
+data will be parsed properly.
+▪The in finit e  timeout  was replaced with the default timeout  for auto discovery through a proxy server. ▪
+▪Fixed r es ynchr oniz ation  of discovered system so that all discovered system attribut es  are entered into ▪
+the database.
+Certific ation
+▪Reviewer selection  works well when the privilege to "Initia t e  entitlemen t  certific ation  campaigns" is ▪
+assigned to an administrator group without the privilege to "Manage certific ation  process" and the
+user class for the administrator group includes the certific ation  initia t or  who has superuser privilege.
+▪ Certific ation  can be delegated correctly by using the certific ation  deleg ation  plugin point ▪
+CERT_DELEGATION_PLUGIN.
+▪In the Certific ation  review page, wizards will be opened successfully if a wizard was previously ▪
+canceled.
+▪In the Certific ation  app, all access control is based on ALLREVIEWERS. ▪
+▪Users can add large amount of members to a group using the API aidmlib.▪
+▪Invalid accounts are excluded from "items to review" c ounting  in the certific ation  campaign and activ e ▪
+campaign summary page.
+▪Fixed the issue that non-certific ation  type deleg ations  send malformed emails for certific ations. ▪
+▪Users can login and open the certific ation  review page successfully by clicking the link in esc alation ▪
+notific ation  email.
+▪Bulk action  icons in the upper-right of a certific ation  review page are hidden when the selected item is ▪
+inaccessible.
+▪The delegatee and escalatee can access a certific ation  campaign properly if there is a deleg ation  and ▪
+esc alation  at the same time.
+The delegatee and escalatee can login and open a certific ation  campaign if they are in a delect ation
+cycle.
+▪The "Integrity violation"  error no longer appears and a newly created user will be added in an activ e ▪
+OrgChart certific ation.
+▪The status of requests generated from a partial  delegated certific ation  segment is correct in ▪
+certific ation  reports.
+▪Error prompts will appear when a certific ation  r emediation  is no longer valid for a certific ation. ▪
+▪ R emediations  will be populated even without clicking the Update button  in the resource selection ▪
+page.
+▪Component Functional.hid_cert_disabl e_t o_dele t e  is installed and enabled aut omatic ally  so that ▪
+"Revoke account" requests generated in certific ation  campaigns contain oper ations  if the target
+system does not support disable account oper ations.  The description  of the
+HR_ORGCHART_MANAGER attribut e  was changed to not duplicate ORGCHART_MANAGER’s
+description.

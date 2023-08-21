@@ -1,0 +1,300 @@
+▪N = ceil(1 + [3111]∕[54000]) ▪
+▪N = ceil(1.0576) ▪
+▪N = 2 ▪
+ See also: 
+▪Installing with a Shared Schema  (on page 229) ▪
+▪Recovery▪
+Optional  local agents and services
+Optional  local agents and services
+Add-on Description
+ Password Change Notific ation
+ModuleWhen Bravura Pass  is licensed, intercepts nativ e  password changes and
+propagates them to the Bravura Security Fabric server for policy v alidation
+and to initia t e  transparent password s ynchr oniz ation.
+The Interceptor DLL can be installed on a Windows 201x domain
+controller.
+ Local W ork s t ation  Service
+(hipamlws )Manages local password resets for Bravura Privilege , secures
+c ommunic ation  between Bravura Privilege  server and the managed
+resource, and provides load balancing.
+The softw ar e  is installed on Windows resources. For details see Managed
+systems  (on page 1815).
+IBM OS/400 exit program Intercepts password changes on OS/400 and propagates them to the
+Bravura Pass  server for policy v alidation  and to initia t e  transparent
+s ynchr oniz ation.
+Unix listener Secures c ommunic ation  between the <FABRIC > server and a Unix server
+when a secure protocol, such as SSH, is not available.
+The softw ar e  is installed on supported fla v or s  of Unix. For details see the
+Connector Pack Documen t ation .
+Mainframe Connector Secures c ommunic ation  between the Bravura Security Fabric server and
+OS/390s.
+The softw ar e  is installed on the OS/390. This agent is sold separately from
+Bravura Security Fabric and is available as a separate download. For details
+see Mainframe Connector Documen t ation .2 Installing database and database client softw ar e
+Bravura Security Fabric  requires an external database backend to store its data. You must have a working
+ins t allation  of one of the supported database management systems before you can install Bravura
+Security Fabric .
+This chapter lists the supported database management systems, and outlines the c onsider ations  for
+selecting  the most appropriate “ edition”  (enterprise or express) for your or g aniz ation.  This chapter also
+provides guidance about how to c on figur e  supported database management systems to work with
+Bravura Security Fabric .
+Supported database management systems
+Bravura Security Fabric  works with any of the following database management systems:
+▪ Micr osoft  SQL Server 2019 ▪
+▪ Micr osoft  SQL Server 2017 ▪
+▪ Micr osoft  SQL Server 2016 SP2 ▪
+▪ Micr osoft  SQL Server 2014 SP3 ▪
+Both 32-bit and 64-bit versions of these databases will work.
+The Compatibility  level on the Microsoft  SQL Server database must be set to a minimum value of SQL
+Server 2014 (120) .
+If you are installing SQL Server R eporting  Service (SSRS) to use the Analytics  ensure the server is not a
+Domain Controller.
+Express editions  should only be used for e v aluation  purposes. Bravura Security  strongly recommends that,
+whenever possible, you use an enterprise or standard edition,  rather than the express database edition.
+Database I/O performance on a virtualized file system; for example, VMDK or equivalent, is slow. If the
+database server softw ar e  runs on a VM, please use a fast, nearby NAS or SAN to store the actual data
+files.
+Clustered backend databases can lose data during or after  cluster failover. Bravura Security  recommends
+using Bravura Security Fabric’s applic ation-le vel  replic ation  rather than clustered databases whenever
+possible. If your company policy requires the use of clustered databases, have database cluster nodes
+available as close as possible on the network to the Bravura Security Fabric nodes to target directly. See
+Installing with a shared schema  (on page 229) for setting  up the Bravura Security Fabric nodes in shared
+schema.
+Installing database client softw ar e
+Bravura Security Fabric  requires a database client in order to connect to the Micr osoft  SQL Server. At a
+minimum, the following drivers must be installed before installing Bravura Security Fabric :
+▪Either Micr osoft  SQL Server 2008 Nativ e  Client or Micr osoft  SQL Server 2012 Nativ e  Client ▪▪ Micr osoft  OLE DB Driver 19 for SQL Server ▪
+You must install Micr osoft  Visual C++ 2015 Redistributable (x64 and x86 versions) as a pre-requisite
+Depending on the version of Micr osoft  SQL Server, these drivers may already be installed provided that
+"Client Tools Connectivity"  was selected during setup. Otherwise, obtain and install these drivers from
+the official  Micr osoft  website.
+To verify if you system has the correct OLE DB Driver installed, click the Windows Start icon and open the
+system settings  "Apps and Features" category. Scroll down the list to find the "Microsoft  OLE DB Driver 19
+for SQL Server" program. If it does not appear in your list, then it still needs to be downloaded and
+installed.
+If you decide to install Bravura Security Fabric  on a system that is diff er en t  than the database, you do not
+need to install Micr osoft  SQL Server, however you will still need to install the required database client
+drivers.
+Where to install the softw ar e
+Bravura Security Fabric  can be installed on the same server as the database, or on a separate server.
+If Bravura Security Fabric  is installed on physical hardware, deploying the database on the same server
+can have the following advantages:
+▪Reduce total hardware cost.▪
+▪The same performance will be achieved, assuming the database server meets the minimum▪
+requirements for the database product.
+By default, the Microsoft  database engine will only use one CPU core, due to license res trictions  – the
+ability to use more CPU cores costs more money.
+▪Network latency between Bravura Security Fabric  and the Database Management Server (DBMS) is ▪
+reduced to zero.
+▪The backup process can be simplified  by taking a snapshot of the complete server, as opposed to ▪
+making separate backups of multiple  servers. This makes the restore process much simpler.
+▪Both Micr osoft  SQL Server and Bravura Security Fabric  require a Windows server as their host ▪
+oper ating  system.
+If Bravura Security Fabric  and the DBMS are installed on a virtual machine, ensure the database is
+deployed on a disk with high-speed I/0 (not a vmdk file).
+Note that two or more Bravura Security Fabric  instance nodes may share database schema. See Installing
+with a Shared Schema  (on page 229) for more in f ormation.
+Installing and c on figuring  Micr osoft  SQL Server
+This section  provides basic ins tructions  for use with a Micr osoft  SQL Server  database and the
+corresponding client softw ar e.  These ins tructions  are based on a "standard” c on figur ation.  If you want to
+use a non-standard c on figur ation,  or if you experience errors, consult the documen t ation  provided with
+the SQL Server  softw ar e.When setting  up SQL Server , avoid using non-alphanumeric characters in your server name, users’
+passwords, or in any other names (instance, database, schema).
+Overview for setting  up Micr osoft  SQL Server
+The following is an overview of required and optional  tasks for setting  up Micr osoft  SQL Server  to work
+with Bravura Security Fabric . The tasks are detailed in the sections  that follow.
+Bravura Security  recommends the enterprise version of Microsoft  SQL Server for a production  ins t allation.
+The express version should only be used for e valuation  purposes.
+Read Supported database management systems  (on page 172) and Where to install the softw ar e  to
+determine appropriate version for your or g aniz ation.
+To set up Micr osoft  SQL Server  :
+1.Install the SQL Server softw ar e  (on page 174) if you haven’t already. 1.
+2.Gather in f ormation  about your database server that will be required during Security Fabric ins t allation 2.
+(on page 176).
+3. Optional:  Create a dedicated database, user, and schema  (on page 178). 3.
+You can allow Bravura Security Fabric  setup to do this for you, as described in Using setup to create
+a new dedicated database user.
+4. Optional:  Create a dedicated report database user  (on page 181). 4.
+You can allow Bravura Security Fabric  setup to do this for you, as described in SSRS settings .
+5. Optional:  Remove public/guest permissions  (on page 189). 5.
+6.If you will be using multiple  Bravura Security Fabric  instances or servers (r eplic ation),  read Working 6.
+with multiple  ins t allations  (on page 191) for additional  c onsider ations
+Ensure you follow Microsoft’ s  best practic e  guide when setting  up your SQL server.
+Installing Micr osoft  SQL Server
+It is recommended that you install Micr osoft  SQL Server  on Windows Server 2012 R2, 2016 or 2019.
+1.Install Micr osoft  SQL Server  with the following settings: 1.
+▪Feature Selections ▪
+▪Database Engine Services▪
+▪ Optional:  R eporting  Services - Nativ e ▪
+This feature is a requirement to use the Analytics  app.
+▪Client Tools Connectivity ▪
+▪Management Tools - Basic▪
+▪Management Tools - Complete▪
+If the footprint of Client Tools Connectivity  and the Management Tools sets is too large, the
+minimum requirement on the applic ation  node is the SQL Server Nativ e  Client (sqlncli).Installing SQL Server Management Studio (SSMS) on the applic ation  node is strongly
+recommended for applic ation  database tr oubleshooting.  SSMS can be installed on another
+server, but this would make the applic ation  database tr oubleshooting  harder.
+▪Server Con figur ation ▪
+▪SQL Server Agent NT AUTHORITY \SYSTEM (not available in Micr osoft  SQL Server Express E dition ) ▪
+▪SQL Server Database Engine NT AUTHORITY \SYSTEM ▪
+▪SQL Server Browser NT AUTHORITY \LOCAL SYSTEM ▪
+▪SQL Server R eporting  Services NT SERVICE \ReportServer ▪(Only available if you chose to install reporting  services)
+▪Startup Type Aut omatic  for all services ▪
+The server c ollation  type must be SQL_Latin1_General_CP1_CI_A S,  and the database c ollation  type
+must be set to Latin1_General_BIN  when the database is created later.
+▪Database Engine Con figur ation  Mixed Mode (SQL Server authentic ation  and Windows ▪
+authentic ation).
+Enter and c on firm  the password. Optionally ,  you can specify SQL Server Administrators, which use
+Windows authentic ation  to manage SQL Server.
+2.If you chose to install reporting  services , click Install and c on figur e  on the R eporting  Services 2.
+Con figur ation  page.
+This removes the need for the SSRS post ins t allation  steps.
+If you are installing SQL Server R eporting  Service (SSRS) to use the Analytics  ensure the server is not a
+Domain Controller.
+3.Verify the features to be installed on the Ready to install page. 3.
+4.Click Install . 4.
+Consult Microsoft’ s  documen t ation  for detailed ins t allation  ins tructions.   
+Next:
+▪Gather in f ormation  needed for Fabric ins t allation  (on page 176). ▪
+▪If you decide to install SQL Server R eporting  Services after  installing SQL Server, complete SSRS pos t - ▪
+ins t allation  steps  (on page 177).
+SQL Server in f ormation  required for Bravura Security Fabric ins t allation
+You need the following in f ormation  about your SQL Server database before installing Bravura Security
+Fabric :
+▪IP address or DNS name of the server that SQL Server  is installed on. ▪
+You should verify that you can reach this address from the machine that will host Bravura Security
+Fabric .
+For Micr osoft  SQL Server Express E dition  this is usually localhost .
+▪SQL Server  instance name. ▪
+Typically, SQL Server  is installed in the default instance, and the instance name is MSSQLSERVER .
+Clients that connect to the default instance, including Bravura Security Fabric , do not require
+\MSSQLSERVER  in their server address lines.
+For Micr osoft  SQL Server Express E dition  this is usually SQLEXPRESS .
+▪Name and password of a system administrator (sysadmin role) login.▪
+For Micr osoft  SQL Server Express E dition  this is usually sa.Setting  up encrypted c ommunic ation  with the Database Service (iddb)
+In most cases the SQL Server is local to the Bravura Security Fabric  instance. If this is not the case, you
+may want to set up encr yption  to ensure that c ommunic ation  between the Database Service ( iddb ) and
+SQL Server takes place over an encrypted channel.
+To setup up encr yption  on SQL Server:
+1.Obtain a certific a t e. 1.
+2.Install the certific a t e  with its private key on the SQL Server. 2.
+3.Install the certific a t e  (without private key) at the appropriate place on your instance server, if 3.
+necessary.
+4.Under the instance's SQL Server registry key, create a DWORD called FORCEENCRYPT and set its 4.
+value to 1.
+5.On SQL Server, in the certific a t e's  snap-in of mmc.exe, right click the appropriate certific a t e  > all tasks 5.
+> manage private keys … and add read access to the account that runs the SQL Server service (by
+default, NT Authority\MSSQLSERVER )
+6.In the SQL Server Con figur ation  Manager, expand SQL Server Network Con figur ation  on the left-hand 6.
+pane, then right click Protocols for <mssql instance name>  and click Pr operties . Choose the
+appropriate certific a t e  under the Certific a t es  tab
+7.Restart the SQL Server service.7.
+8.Restart iddb . 8.
+Notes:
+▪FORCEENCRYPT requires certific a t e  v alidation;  it cannot be turned off if you want encr yption.  You ▪
+can use a self-signed cert, and install it as a trusted root certific a t e  on the instance.
+▪FORCEENCRYPT will use TDS 7.3 rather than 8.0, meaning that TLS will be used only for certific a t e ▪
+neg otiation  (with applic ation-la y er  encr yption)  rather than fully enc ap sulating  the tr a ffic.  Bravura
+Security Fabric  not support TDS 8.0 currently.
+▪Since setup  currently does not use the OLE DB driver, encr yption  will be on during install/patch only ▪
+if the server is set to require it, and even then certific a t es  will not be validated. During initial
+ins t allation,  if encr yption  is mandatory on the server side, iddb will fail to start. When presented
+with the error prompt, set the FORCEENCRYPT  registry value and click Retry .
+▪Take care not to allow the certific a t e  to expire without r ot ating  it. Your instance will stop working once ▪
+it expires.
+SQL Server R eporting  Services post ins t allation
+The SQL Server R eporting  Services feature is a requirement to use the Analytics  app in Bravura Security
+Fabric . The following steps are only required if you add the SSRS feature after  you have already installed
+SQL Server; you do not need to do these steps if you installed SSRS during the SQL server install.
+The version of SSRS must be the same version as the SQL Server for the instance. For example; SQL Server
+2016 and SSRS 2016.If you are installing SQL Server R eporting  Service (SSRS) to use the Analytics  ensure the server is not a
+Domain Controller.
+1.Launch R eporting  Services Con figur ation  Manager. 1.
+2.Click the Web Service URL button  on the left. Change settings  if required. 2.
+3.Click Apply (whether you change the settings  or not). 3.
+4.Take note of the Report Server Web Service URL. You will need this when you install Bravura Security 4.
+Fabric .
+5.Click the Database button  on the left. 5.
+6.If you do not have a database:6.
+a.Click Change Database a.
+b.Select Create a new report server database b.
+c.Click Next c.
+d.Follow the prompts to create a databased.
+This initial  database will not be used; however, SSRS requires an initial  database to connect to as
+part of the install process.
+Cr eating  a dedicated database, user, and schema
+Bravura Security Fabric  requires a dedicated database, user and schema in SQL Server  in order to connect
+to a database and install schema objects.
+You can allow Bravura Security Fabric  setup to do this for you, as described in Using setup to create a
+new dedicated database user, or use the following ins tructions  to set up the user and schema yourself.
+To create the user and c on figur e  its permissions:
+1.Start Micr osoft  SQL Server Management Studio. 1.
+2.Connect to the server as a system administrator (sysadmin role).2.
+You can do this using SQL Server authentic ation  and the sa account, or using Windows authentic ation
+if the Windows user has the sysadmin role.
+For example, to connect to the server using the sa account, set:
+Server type : Database Engine
+Server name: <host name or IP address> \<instance>
+Authentic ation:  SQL authentic ation
+Login:  sa
+Password <password for sa>
+Click Connect .
+3.Create a new database for Bravura Security Fabric : 3.
+a.In the Object Explorer (left)  pane, right-click Databases , then click New Database… . a.
+b.Type the Database name . b.c.Click Options . c.
+d.Select Recovery model and choose Simple . d.
+Ensure that an appropriate database backup policy is in place. See http://
+t echne t.microsoft.c om/ en-us/librar y/ms189275.asp x  for more inf ormation.
+e.Select Compatibility  level and ensure that this is set to a minimum value of SQL Server 2014 (120) . e.
+The c ompatibility  level for the installed version of Micr osoft  SQL Server is suitable.
+f.Select Auto Create St atistics  and choose True . f.
+g.Select Auto Update St atistics  and choose True . g.
+h.Select Auto Update St atistics  asynchronously and choose False . h.
+i.Click OK. i.
+4.Create a new login:4.
+a.In the Object Explorer pane, expand Security . a.
+b.Right-click Logins , then click New Login… . b.
+c.On the General page, type the Login name . c.
+d.Select:d.
+▪SQL Server Authentic ation ▪
+Type and c on firm  the password for the new login. Deselect the User must change password at
+next login and Enforce password e xpir ation  checkboxes.
+Or
+▪Windows authentic ation ▪
+Pick a local or domain account or group.
+e.Set Default database to the database that you created in step 3. e.
+f.Click OK. f.
+5.Create a new schema in the database:5.
+a.In the Object Explorer pane expand Databases > <Newdatabase > >Security . a.
+Where <New database> is the database that you created in step 3.
+b.Right-click Schemas , then click New Schema… . b.
+c.Type the Schema name . c.
+d.Click OK. d.
+6.Set the user in the database:6.
+a.In the Object Explorer pane, expand Databases > <Newdatabase > >Security . a.
+Where <New database> is the database that you created in step 3.
+b.Right-click Users , then click New User… b.
+c.Type the User name . c.
+d.Set the Login name to the user you created in step 4. d.
+e.Set the Default schema to the schema you created in step 5. e.f.In the Database role membership area, enable: f.
+▪db_datareader▪
+▪db_datawriter▪
+▪db_ddladmin▪
+▪db_owner▪
+g.Click OK. g.
+7.Close the c onnection  to the schema by collapsing the database tree and highlighting  the root of the 7.
+SQL Server management interface.
+This ensures that the database can be locked to perform the following oper ation.
+8.Alter the database c ollation: 8.
+a.In the toolbar, click New Query . a.
+b.In the new query window, type the following:  b.
+ALTER DATABASE <database name>  SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+ALTER DATABASE <database name>  COLLATE Latin1_General_BIN 
+ALTER DATABASE <database name>  SET ALLOW_SNAPSHOT_ISOLATION ON 
+ALTER DATABASE <database name>  SET READ_COMMITTED_SNAPSHOT ON 
+ALTER DATABASE <database name>  SET MULTI_USER
+ALTER DATABASE <database name>  SET NEW_BROKER
+ALTER DATABASE <database name>  SET ENABLE_BROKER WITH ROLLBACK
+IMMEDIATE  
+If the database name is ”default”, enclose it in square brackets: [default] .
+c.Click Execute . c.

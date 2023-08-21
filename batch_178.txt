@@ -1,0 +1,334 @@
+      //$langmapping["777"] = "en-us"; 
+      //$langmapping["888"] = "fr-fr";
+Enabling this code will c on figur e  Phone Password Manager to aut omatic ally  provide service in an
+alternate language, depending on the phone extension used to dial in to the system.
+Phone Password Manager can off er  users any number of language options  by default. However, if you
+wish to off er  ten or more language options  in the same menu, additional  c onfiguration  is required to
+allow Phone Password Manager to prompt for, and accept two-button  input in the language selection
+menu.
+To help with tr anslations,  the vocal-script.txt  file in the <instance>\audio\en-us\ directory
+contains a complete listing  of all shipped English-language files and their tr anscriptions.
+HDD Encr yption  Audio files
+Phone Password Manager includes support for HDD (Hard Disk Drive) Encr yption  agents  used by Bravura
+Pass , such as agtmcee6  for McAfee McAfee Endpoint Encr yption  6.x.
+To support these functions,  Phone Password Manager requires the "HDD Encr yption  Audio files"  package
+to be installed on the system.
+The HDD Encr yption  package includes several audio files which allow Phone Password Manager to
+properly present to users the HDD Encr yption  functions.
+If the HDD E ncr yption  Audio files package is added to a running ins t allation  which uses the Asterisk® 
+backend, a Phone Password Manager service restart is required to help propagate the new audio files to
+the Asterisk server.
+No c on figur ation  is required for the HDD Encr yption  Audio files,  as the Phone Password Manager will
+aut omatic ally  recognize the relevant agent and play the corresponding audio when required.
+Mapping user IDs to telephone keypads
+Users identif y  themselves to the IVR system by typing their IVR IDs on telephone keypads. An IVR ID is
+the numeric r epr esen t ation  of one of their Bravura Pass  pr ofile  and request attribut es.  Therefore, each
+user that logs into the Phone Password Manager system must fir s t exist in Bravura Pass .
+You can change the pr ofile  and request attribut e  that is used as a source of users’ IVR IDs by using the
+TPM ID ATTR option.  By default, pr ofile  IDs are used as the source of IVR IDs.
+If users’ IVR IDs contain punctuation,  they should be instructed to skip all punctuation,  including # and ⋆,
+when entering their IDs for v alidation.  For example, the IVR ID O’Hare should be entered as 64273.
+Phone Password Manager assumes that telephone keypads are mapped according the current
+in t ernational  standard (ITU E.161).
+If this is not the case at your organiz ation,  contact support@bravurasecurity.com  for assistance. If Phone
+Password Manager discovers multiple  matching usernames, then all matching users are listed with a
+maximum of 9 users per page. At the end of any page, you can:
+▪Press 0 to go back and enter another Bravura Pass  pr ofile  ID. ▪▪Press # to repeat the list of users, s t arting  from the fir s t page. ▪
+If no selection  is made, the next page of users is played. At any time,  you can:
+▪Press * to skip all previously played users, and play the remaining users, with a maximum of 9 users ▪
+per page.
+Using multiple  Bravura Pass  instances with Phone Password Manager
+You can use multiple  Bravura Pass  instances with a single Phone Password Manager server, by adding the
+LoadInstanceCFG function  in the psynch.psl  file (on page 1767); for example:
+LoadInstanceCfg("C:\\Program Files\\Bravura Security\
+\Telephone Password Manager\\My Instance\\script\\mypspushpass.cfg")
+Multiple  Bravura Pass  instances require multiple  phone lines or extensions.Con figuring  Phone Password Manager
+User Authentic ation
+Secure methods of authentic ating  users to Phone Password Manager include:
+▪Touch-tone authentic ation  (Numeric questions  and answers) ▪
+Users key-in their answers to personal questions  using a telephone key pad.
+You can set up Phone Password Manager to authentic a t e  users by pr ompting  them with questions
+from their Bravura Pass  question  and answer pr ofiles.
+▪Biometric voice print v erific ation ▪
+Users speak one or more phrases so that their voice can be compared to a previously registered
+sample.
+In order to use voice print v erific ation,  users must fir s t register their voice samples. You can set up
+Bravura Pass  to facilitate and secure the r egis tr ation  process.
+This chapter shows you how to set up question  sets in Bravura Pass  that Phone Password Manager can
+use to authentic a t e  users. See Self Service Anywhere In t er activ e  Voice Response systems  (on page 1637)
+to learn how to set up self-service in t er activ e  voice response r egis tr ation.
+Setting  up IVR question  sets
+In order for Phone Password Manager to use questions  and answers from Bravura Pass  to authentic a t e
+users, the following c onditions  must be met:
+▪ Question  sets and questions  must be set up correctly for Phone Password Manager in t egr ation. ▪
+▪Phone Password Manager question  sets must be pr e-de fined,  and all questions  must have all- ▪
+numeric answers so they can be easily entered from a telephone keypad.
+▪You can either add a new question  set specific ally  for the Phone Password Manager, or use the ▪
+e xisting  pr e-de fined  question  set.
+▪The question  set must have Ask telephone users to answer questions  from this set  enabled. ▪
+▪Users must complete their security question  pr ofiles. ▪
+▪Users’ completed pr ofiles  must include at least <N> questions  from each question  set that can be used ▪
+for Phone Password Manager in t egr ation.
+Where <N> is equal to the question  set’s Number of questions  to ask during authentic ation  setting.
+Using the default question  set
+Bravura Pass  is shipped with a pr e-de fined  question  set, DEFAULT_PREDEFQSET, that contains three
+questions  that can be used for Phone Password Manager authentic ation:
+▪What is your favorite or lucky number?▪
+▪What was your fir s t telephone number? ▪
+▪On what year did you purchase your fir s t car? ▪Adding question  sets
+If you do not want to use the default question  set (DEFAULT_PREDEFQSET) for touch-tone authentic ation,
+or if you want to strengthen the authentic ation  process, you can add more Phone Password Manager
+specific  question  sets.
+To do this:
+1.Click Manage the system > Policies > Question  sets > Pr e-de fined  questions . 1.
+2.If Bravura Pass  displays a list of e xisting  question  sets, click Add new...  at the bottom  of the list. 2.
+3.Enable the Ask telephone users to answer questions  from this set  checkbox. 3.
+4.Set appropriate options  for the new question  set. 4.
+See details regarding question  set options
+The following options  apply to question  sets:
+Note: Options  marked with ⋆ are for pr e-de fined  question  sets only.
+Options  marked with † are for external question  sets only.
+Question  set options
+Option Description
+ID (Required) A unique identifier  for the new question  set.
+Description (Required) The description  that Bravura Security Fabric displays to users.
+Enabled Select this checkbox to enable the question  set for use with Bravura Security Fabric. This is
+enabled by default.
+⋆  Users allowed to edit answers Select this checkbox to allow regular users to edit answers in a pr e-de fined  question  set. This is
+enabled by default. If disabled, this question  set will not be accessible through the Update
+security questions  (PSQ) module.
+†  Users allowed to edit questions/
+ans w er sSelect this checkbox to allow regular users to edit questions  and answers in an external
+question  set. If disabled, this question  set will not be accessible through the Update security
+questions  (psq) module.
+Minimum number of answered
+questions  per user(Required) The number of questions  to which a user must provide answers. Set the value to 0
+to make a question  set optional.
+When you change this setting ,  Bravura Security Fabric aut omatic ally  schedules the
+psdonechk program to run once to check compliance. To modify the scheduled job, click
+Manage the system  > Maintenance > Scheduled jobs , then select PSDONECHK .
+Answers in the set must be unique Select this checkbox to prevent users from giving the same answer to two diff er en t  questions.
+Help-desk permissions Select a value to control how help-desk users can interact with questions  and answers in this
+set:
+▪Not allowed to view security questions ▪
+▪Requires authentic ation  with security questions ▪
+▪Allowed to view security questions ▪
+See Help-desk permissions  (on page 1027) for details.Option Description
+Ask users to answer questions  from
+this setSelect this checkbox to prompt users to answer questions  from this set during authentic ation.
+Ask telephone users to answer
+questions  from this setSelect this checkbox to prompt Phone Password Manager users to answer questions  from this
+set during in t er activ e  voice response (IVR) authentic ation.
+Plugin for v alidating  answers (Optional)  The plugin to test the strength of questions  and answers when a user is updating
+their Question  sets.
+This option  is available in user -de fined  and pr e-de fined  question  sets.
+Number of questions  to ask during
+authentic ation(Required) Set the number of questions  to randomly draw from this set to ask a user during
+authentic ation.
+The number of questions  to ask cannot exceed the Minimum number of questions  user
+pr ofiles  should contain . For an external question  set, set this number to -1 if you want to get
+all questions  from the external source..
+Page number for question  set to be
+displayed in(Required) Users may be prompted to answer questions  in a sequence of authentic ation  pages.
+Type an integer in this field  to make questions  in this set appear before or after  questions  in
+other sets.
+The page number must be unique for external question  sets.
+Algorithm to match answers during
+authentic ationSelect the algorithm to use when comparing the answers  (on page 1028) typed during
+authentic ation  to the answers stored in the user’s pr ofile:
+▪Exact string match▪
+▪ Case-insensitiv e▪
+▪Only alpha characters▪
+▪Soundex algorithm▪
+▪One extra character▪
+▪N extra characters▪
+†  External program (Required) The name of the external program, or authentic ation  plugin , to run.
+See External question  set plugin tasks  (on page 1030) for details on the authentic ation  plugin
+and how to correctly c on figur e  the question  set according to your needs and the c apabilities  of
+the program.
+This option  is only available for external question  sets.
+†  Check that user has an account
+on target systemDetermines how Bravura Security Fabric identifies  users on an external system.
+See Identif ying  users on external systems  (on page 1030) for details.
+†  External program provides
+answers along with questionsSelect this checkbox if an external program will provide both questions  and answers for Bravura
+Security Fabric to display and validate.
+If this checkbox is not selected, then the program will accept answers from Bravura Security
+Fabric and validate them.
+This option  is only available for external question  sets.
+See External question  set plugin tasks  (on page 1030) for details.
+Note the following:▪ Questions  from any of the question  sets can only appear in the default security questions  if the ▪
+value for Number of questions  to ask during authentic ation  is greater than 0 and Ask users to
+answer questions  from this set is checked.
+▪To prevent the order of questions  in a selected set from being randomized, set Number of ▪
+questions  to ask during authentic ation  to -1. This is required for multi-s t ag e  question  sets, since
+the order of entries is often  required to be shown in a particular  order.
+▪If you enable, disable, or modify the Ask users to answer questions  from this set option  in a ▪
+question  set that is part of any custom authentic ation  chains, then you must also modify the
+chains. See Using question  sets with authentic ation  chains  (on page 1028)  for details.
+.
+5.Click Add. 5.
+Add questions
+In order for a question  to be suitable for touch-tone authentic ation,  it must have the following
+char act eristics:
+▪Answers are private – r elativ ely  hard for anyone other than the user to come by. ▪
+▪Answers are easy – users should be able to quickly and reliably answer the question  without having to ▪
+remember anything new, and with a low likelihood of making mistakes.
+▪Answers are all-numeric and have a fix ed  length. ▪
+If you are de fining  a new question  for which a sound file does not exist by default, the question’ s
+Description  field  must be f ormatted  as: DEFAULT_PREDEFQSET_<QID> . This f ormatting  is mandatory
+in order to associate a new question  to it’s r espectiv e  sound file.
+The QID de fined  in the description  field  is used to uniquely address the sound files on the IVR, and should
+be unique to every custom question  you wish to de fine.
+See Adding custom authentic ation  questions  (on page 1768) for more in f ormation  on de fining  custom
+Phone Password Manager authentic ation  questions.
+Record question  vocals for new questions.
+When users call into the Phone Password Manager, the system plays vocals (sound files)  that prompt the
+users to prove their identities  by keying in numerical answers to the questions  that they have c on figur ed
+in Bravura Pass .
+Phone Password Manager is shipped with vocals for each numeric question  in the default pr e-de fined
+question  set (DEFAULT_QSET). If you have added additional  questions  for touch-tone authentic ation  you
+must record a vocal for each new question,  in each supported language.
+Vocal files must be named QD-PREDEFINED_<QID>.wav, and must be located in the <instance>\audio
+\<lang>-<locale> directory on the Phone Password Manager server. Note that the value of:
+▪<QID> must match the number de fined  in the description  field  for the question  as it was de fined  in ▪
+Bravura Pass . The description  field  should always be f ormatted  as: DEFAULT_PREDEFQSET_<QID>.
+▪<lang>-<locale> corresponds to language that the vocal was recorded for.▪See Managing audio files (on page 1768) for more in f ormation  on Phone Password Manager audio files.
+Voice Print Enrollment
+A voice print is a form of biometric authentic ation  where the char act eristic  being measured is the timbr e,
+tone, speed and volume of the user’s voice. Typically, the user speaks a phrase during enrollment, then
+later repeats that phrase as part of the authentic ation  process.
+Setting  up voice print enrollment
+To set up voice print enrollment:
+1.Install VoiceVantage VoiceCheck SDK on the Phone Password Manager server.1.
+2.Copy psynch.voiceprint.psl  from the samples* directory to the script directory. 2.
+3.Modify C:\Program Files (x86)\Bravura Security\\Telephone Password Manager\<instance>\service3.
+\idtel.cfg by changing ScriptName as follows:
+ScriptName = "psynch.voiceprint.psl"
+4.Restart the Phone Password Manager service.4.
+5.Enable and c on figur e  the Generate voice print enrollment PIN (PSI) module on Bravura Pass  server. 5.
+Con figur e  the following settings:
+▪PSI ENABLED : On ▪
+▪PSI RANDOM DIGITS : 4 ▪
+▪PSI RANDOM EXPIRY : 600 ▪
+6.Restart the Password Manager Service on Bravura Pass  server. 6.
+Phone Password Manager is now c on figur ed  and ready for users to enroll via a PIN.
+Con figuring  voice print options
+The tone of your voice varies each time  you authentic a t e  against your voice print. If your voice sounds
+too diff er en t  from your voice print, Bravura Pass  might not be able to properly authentic a t e  you.
+The following options,  located in idtel.cfg  or tpm.cfg , help you c on figur e  the sensitivity
+thresholds, and the recording time  for voice print authentic ation.
+Option Description
+DefaultVoicePrintConsistencyThreshold This is used during voice print enrollment to ensure that
+the multiple  voice samples are consistent enough. Set a
+value between 1 and 99 to control the consistency
+threshold. The higher the number, the more closely-
+matched the samples must be. Default value is 50.
+De f aultV oicePrin tV erific ationThr eshold This is used during voice print v erific ation  to ensure that
+the spoken voice matches the recorded voice. Set a value
+between 1 and 99 to control the v erific ation  threshold.Option Description
+The higher the number, the more closely-matched the
+samples must be. Default value is 55.
+VoicePrintMaxRecordTime The maximum recording time  for a single recording. If the
+recording is longer than this time,  the voice will be cut off
+after  the maximum time  reached. Default value is 6
+seconds.
+VoicePrintSilenceToEnd The seconds that the voice print system will wait until  it
+stops recording; for example, if set to 2, the system will
+wait for 2 seconds after  the voice stopped to finish
+recording. Default value is 2 seconds.
+ReplayVoicePrintBadSample If set to 1, the voice print system will replay a bad
+sample, where the signal can be "too loud", "too quiet",
+"too short" or anything where VoiceVantage is "Unable to
+extract recording sample". If set to 0, nothing will be
+played back. Default value is 1.
+If you change the values of these options  in idtel.cfg , then you must restart the Phone Password
+Manager service.
+T esting  voice print enrollment
+To test voice print enrollment:
+1.Log into the Generate voice print enrollment PIN  (PSI) module as a regular user. 1.
+2.Click Generate voice print enrollment PIN . 2.
+3.Place a phone call to the IVR server.3.
+4.Select 1 to enroll. 4.
+You are prompted for a PIN to authentic a t e.
+5.Type in the user’s PIN.5.
+You are now ready to do voice print enrollment.
+T esting  voice print enrollment (command line)
+Use the vpcmd  program, installed with Phone Password Manager, to test the g ener ation  or v erific ation
+of voice print audio files.
+View vpcmd  usage in f ormation
+Use the vpcmd  program, installed with Phone Password Manager, to test the g ener ation  or v erific ation
+of voice print audio files.
+Usage
+vpcmd.exe -c (generate|verify) -f <file> -u <userID> -vi <n> (-ei <n>|-
+en <n>) [ -p "<payload>"][ -s 1|0]Option  / Argument Description
+-c <generate—verify> The voiceprint command to perform. Valid commands:
+generate, verify (required)
+-ei <1—2—3> The enrollment index to generate (users attemp t  to
+record speech 3 times).
+-en <1—2—3> The enrollments to verify.
+-f <file> The speech audio file (required)
+-l Prevent voiceprints being running concurrently.
+-p <CELL—LAND> The payload to attach  to the generated voiceprint.
+-s <1—0> Whether to save the speech voice: 1 to save, 0 to ignore.
+-u <userID> The user ID (required)
+-vi <n> The v erific ation  phrase index (required)
+Examples
+1.To generate voice print audio file "a.wav" with user "user1" using cellphone as the recording type: 1.
+vpcmd.exe -c generate -f a.wav -u user1 -vi 2 -ei 1 -p "CELL"
+2.To verify the user voice print with "a.wav" on "user2" using "land-line".2.
+vpcmd.exe -c verify -f a.wav -u user2 -vi 2 -en 2 -p "LAND"
+.
+Removing voice print enrollment data
+The vputil  program is installed with Phone Password Manager and helps to clean the voice print
+database by removing enrollment data for users who do not have a valid Bravura Pass  pr ofile.
+View vputil usage in f ormation
+The vputil  program is installed with Phone Password Manager and helps to clean the voice print
+database by removing enrollment data for users who do not have a valid Bravura Pass  pr ofile.
+Usage
+vputil.exe [query|list|clean][<options>]
+Option  / Argument Description
+query Reports specified  user’s v erific ation  threshold and
+enrollment consistency threshold. It also shows all
+enrollments, v erific ation  phrases and r enditions.
+list Lists users who have completed voice print enrollment,
+but do not have a valid Bravura Security Fabric  pr ofile.
+Optionally ,  this can be used in c onjunction  with the -a
+option  to list all enrolled users, instead of only listed
+those without valid pr ofiles.Option  / Argument Description
+clean Removes enrollment data for users who have completed
+voice print enrollment, but do not have a valid Bravura
+Security Fabric  pr ofile.  For example, this option  removes
+data for users who have previously enrolled, but their
+pr ofiles  have since been deleted.
+-a Lists all enrolled users instead of only listing  those
+without valid pr ofiles.  Used in c onjunction  with the list
+option.
+-n Searches for and aut omatic ally  removes enrollment data
+for users who do not have a matching Bravura Security
+Fabric  pr ofile.
+-t <target system ID> Specifies  which target system to search. If a target system
+is not specified,  then the default target system is chosen.
+-u <list file> Specifies  the name of the list file that specifies  which
+users to clean. Used with the clean option.
+-w Specifies  the voice print interface dll. By default, vputil.dll
+is used.
+Examples
+1.To list all users who have completed voice print enrollment:1.
+vputil.exe list -a
+2.To list users from Activ e  Directory target "AD" who have completed voice print enrollment: 2.
+vputil.exe list -t AD
+3.To remove enrollment data for users who have completed voice print enrollment but do not have a3.
+valid Bravura Security Fabric  pr ofile:
+vputil.exe clean -n
+.
+Speech R ec ognition  and Text-to-Speech
+Phone Password Manager supports both speech-to-text (speech r ec ognition)  as well as text-to-speech
+(TTS). Speech r ec ognition  converts spoken words to text, and TTS can playback text in f ormation  as
+spoken words.
+To support these functions,  Phone Password Manager requires a speech engine to be installed on the
+system. Phone Password Manager uses Micr osoft  Speech API as the programming interface, and supports
+SAPI versions 5.1+. However, all SAPI-compliant speech engines can be utiliz ed  by Phone Password
+Manager.
+Speech r ec ognition  is provided by the Speech Service, which is installed during a complete ins t allation  or
+if selected during a custom ins t allation.

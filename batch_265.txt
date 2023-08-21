@@ -1,0 +1,189 @@
+Option Description
+CERT SINGLE USER CONFIGURATION Type the ID of a saved certific ation  setup to load default attribut es  to
+display, and the r emediation  pr e-de fined  requests, when initiating  a review
+of all entitlemen ts  for a user from their pr ofile  page.
+CERT SIZE WARNING THRESHOLD Display a warning to the certific ation  campaign initia t or  if the number of
+selected items exceeds the threshold.
+CERT VALIDITY INTERVAL The in f ormation  being certified  is valid for this many days after  the
+certific ation  has finished,  with the e x ception  of self -certific ation,  which is
+not counted.
+If a new certific ation  campaign is started within this time  frame, the users,
+login IDs, and group memberships certified  in the previous campaign are
+identified  as certified.  The most recent certific ation  of any type is used
+when determining if the data is current; for example, if group memberships
+were certified  during a target certific ation,  those memberships are
+identified  as certified  if a group certific ation  is started within the validity
+interval.
+Items that are identified  as certified  can be optionally  r e-certified  to extend
+their validity.
+ORGCHART MODS FREEZE CERT
+SEGMENTSEnable this option  if you want to ensure that OrgChart modific ations,  such
+as transfers and new subordinates, do not cause changes to an ongoing
+certific ation  campaign process; for example, segments will not be
+reopened, and segments will not be added for new subordinate managers.
+When disabled, for example, segments for managers who are detached
+during a certific ation  campaign will be closed, and deleting  a sub-manager
+will cause esc alations.
+This option  is disabled by default.
+Do not enable or disable this option  during an activ e  certific ation  campaign;
+it will cause the behavior to change.
+Manage certific ation  process (CERT) events that launch interface programs
+The following certific ation  options  can be accessed from Manage the system  > Maintenance > System
+variables  or Manage the system  > Modules > Manage certific ation  process (CERT):
+Option Description
+CERT REMOVE USER SUCCESS A user is successfully removed during an access certific ation
+campaign.
+CERT SIGN OFF An access certific ation  campaign completes.
+CERT START ROUND FAILURE An access certific ation  campaign fails to start.
+CERT START ROUND SUCCESS An access certific ation  campaign starts successfully.Edit the sign-off  statement
+When reviewers have finished  reviewing the in f ormation  in their certific ation  campaign, they are asked
+to electronically sign a statement to the e ff ect  that their certific ation  has been completed.
+You can modify the text of this agreement to match the requirements of your or g aniz ation.  To do this,
+edit the value of CERT_STATEMENT or CERT_STATEMENT_MANAGER in the custom en-us-
+language.kvg  file. Be sure to rebuild the skin files by running make.bat  in the design directory.
+See CUSTOMIZATION  (on page 3471) for details.Part X Inventory ManagementImplementing  Inventory Management
+Inventory management involves provisioning items such as tokens or physical devices, and tracking and
+managing stock in an inventory database. In Bravura Security Fabric , inventory management services are
+provided by Bravura Identity . It can be integrated with e xisting  asset management systems.
+Bravura Identity  allows you to assign inventory items to users in the same way that system access is
+created, and can notif y  appropriate people when items need to be delivered, shipped, or recovered.
+In general, the Bravura Identity  inventory provisioning process works as follows:
+1.A requester logs into the Bravura Security Fabric  web applic ation  and selects a menu item which 1.
+allows him to either create a new user pr ofile  or request new resources for an e xisting  user.
+2.The requester selects templates r epr esenting  item types and loc ations  on a RSA Authentic ation 2.
+Manager 7.1/8.2, Vasco IDENTIKEY Server, or placeholder (null) target system.
+Inventory templates can be included in roles with account templates or can depend on the cr eation  of
+accounts.
+3.The user submits the request and Bravura Identity enters it into authoriz ation  w orkflo w . 3.
+Individual items can be aut omatic ally  assigned at this point.
+4.If applicable, the W orkflo w  Manager Service routes the requests to the appropriate authorizers for 4.
+authoriz ation  and ensures that all requests have sufficien t  approval.
+Individual items can be aut omatic ally  assigned at this point.
+5.If applicable, an implementer selects and ensures delivery of the items.5.
+This chapter explains how Bravura Identity  can be used to manage inventory and illustrates this with case
+studies. The diagram below details one way in which inventory items are provisioned once the system is
+c on figur ed.
+W orkflo w  for token inventory provisioningHow inventory lists are maintained
+Bravura Identity  maintains a list of inventory items in its database. You can use the manageinv  program
+to batch load items, or use the web interface to manage individual inventory items in the database. You
+can also write a plugin to maintain the list on an external source.
+Bravura Identity  identifies  inventory items by loc ation  and type. Inventory items become available for
+provisioning to users after  the inventory item type and loc ation  are bound to RSA Authentic ation
+Manager 7.1/8.2 or Vasco IDENTIKEY Server target systems or to a placeholder through the use of a
+template.
+Who manages inventory
+Bravura Identity  is fle xible  enough to accommodate your e xisting  w orkflo w  and areas of responsibility.
+Inventory management can be handled by Bravura Identity  administrators, and can include regular users
+de fined  as inventory managers , authorizers , implementers and inventory managers-implementers .
+Bravura Identity  product administrator s can use the Manage the system (PSA) module to:
+▪ De fine  inventory target systems and templates. ▪
+▪ De fine  item types and loc ations. ▪
+▪Assign inventory managers to item types and loc ations. ▪
+▪Assign authorizers and implementers.▪
+▪Add items to the database (they can also do this in batches).▪
+▪Modify all item pr operties,  including states. ▪
+Inventory managers can manage inventory items by loc ation  and type.
+Using the Manage inventory  (IDV) module, an assigned inventory manager can:
+▪Add inventory items to the Bravura Security Fabric database. ▪
+▪Change the state of an item.▪
+▪Change the loc ation  of an item if they are responsible for the same item types in diff er en t  loc ations. ▪
+▪Unassign items.▪
+Authorizers can approve or deny requests for inventory items, via the Requests  app.
+Implementers can fulfill  requests for inventory items. Implementers can act on a task after  a request has
+been approved. Using the Requests  app, they can:
+▪Accept, decline or delegate the task.▪
+▪Mark the task as complete or could not be completed.▪
+Implementers who are also an inventory manager have the most fle xibility  to fulfill  requests for inventory
+items. These users can act on a task after  a request has been approved. Using the Requests  app they can:
+▪Accept, decline or delegate the task.▪
+▪Reserve an inventory item.▪
+▪Mark the task as complete or could not be completed.▪▪Change the state of an item.▪
+▪Change the loc ation  of an item if they are responsible for the same item types in diff er en t  loc ations. ▪
+▪Unassign items.▪
+How inventory is assigned to users
+Inventory items can be assigned to users in the Bravura Identity  database in a number of ways,
+depending on the c on figur ation:
+▪When the resource is requested▪
+Bravura Identity  can aut omatic ally  allocate the fir s t available inventory item with the type and
+loc ation  specified  by the template account.
+▪When the request is fulfilled ▪
+Implementers can reserve an item after  they accept the task of delivering the item.
+A request cannot proceed if there are no items available to fulfill  it. You can c on figur e  a plugin to check
+inventory levels on a nightly basis and notif y  responsible personnel when stocks are low. See ?? for more
+in f ormation  about this plugin.
+Item states
+Bravura Identity  keeps track of an item by altering its state  attribut e  in the database or external source.
+The diagram below illustrates the r elationship  between inventory items, states, and provisioning
+w orkflo w .  In this figur e,  options  available by default are represented in blue. Yellow represents options
+that you must c on figur e.
+Inventory states and w orkflowWhen its state changes, appropriate users are notified.  Inventory managers and product administrator  s
+can use the Bravura Security Fabric  interface to move items between states. Users cannot change states
+in a way that would violate rules by which items are managed; for example, they cannot change a state
+from assigned to reserved.  
+Setting  up inventory management
+Before you start c on figuring  Bravura Identity  for inventory management, answer the following questions:
+▪How do you de fine  inventory by type and loc ation? ▪
+▪What target systems and templates are required?▪
+▪What inventory states are required?▪
+▪Are inventory lists to be maintained in the Bravura Identity database or on an external source ▪
+▪What authoriz ation  is required? ▪
+▪Does provisioning of an item depend on ownership of accounts on other target systems?▪
+▪Do you need to de fine  inventory managers? ▪
+▪Will inventory managers also approve inventory requests?▪
+▪Will inventory managers use the Bravura Security Fabric  web interface to manage inventory? ▪
+You should also set up a test environment before deploying Bravura Identity  for inventory provisioning.
+To manage inventory items:
+1.Set up a placeholder or RSA Authentic ation  Manager 7.1/8.2 or Vasco IDENTIKEY Server inventory 1.
+target system  (on page 2657) to manage inventory.
+2.Set up item types and loc ations  (on page 2667). 2.
+3.Add inventory templates  (on page 2668). 3.
+4. Optional:  Con figur e  additional  inventory states  (on page 2678) and inventory managers  (on page 4.
+2688).
+5.Add inventory items  (on page 2688) to the Bravura Identity database or an external database. 5.
+6. Optional:  Con figur e  additional  features and settings  (on page 2696). 6.
+Con figur ation  examples and use cases
+Inventory management w orkflo w  is highly customizable. The following use cases represent a few possible
+c on figur ations.
+Use case: RSA SecurID Authentic a t or  provisioning
+The following use case illustrates the w orkflo w  for RSA Authentic ation  Manager 7.1/8.2 token
+provisioning:
+1.A user submits a request for a new account. The user enters user attribut es,  selects the RSA 1.
+Authentic ation  Manager 7.1/8.2 template, and enters a password.
+2.A user who can authorize requests will review the request and approve it. The request is then2.
+approved.3.The request is processed and sent to the connector.3.
+4.The RSA Authentic ation  Manager connector sends the request to the RSA Authentic ation  Manager 4.
+7.1/8.2 server.
+5.The RSA Authentic ation  Manager 7.1/8.2 server receives the request and: 5.
+a.Creates the user account if it doesn’t already exist.a.
+b.Assigns the token to the user.b.
+c.Sets the password of the RSA Authentic ation  Manager user as the password of one of the c.
+c on figur ed  attribut es.
+d.Sets the PIN of the token as the password.d.
+e.If any of the above oper ations  fail, unassigns the token. e.
+6.Upon success the token inventory manager is notified  to deliver the token to the user. 6.
+7.The user is notified  of the new account, and is given ins tructions  on how to activ a t e  the token using 7.
+the Bravura Pass token management module.
+Use case: Item provisioning with an implementer who is also the inventory manager and authorizer
+For this use case a company uses the following c on figur ation  to provision smart phones to users in New
+York City:
+▪Inventory items SPH123 and SPH456 are included in a group of items classified  by type=SPH and ▪
+loc ation=Ne w  York City.
+▪Items classified  by type=SPH and loc ation=Ne w  York City are c on figur ed  to use ”In transit/Received by ▪
+user” states.
+▪User ADAM is assigned as an inventory manager for smart phones in New York City.▪
+▪An inventory template account is de fined  as: ▪
+ID INV_SPH
+Target system Warehouse (NULL Target)
+Password required deselected
+Item type SPH
+Loc ation New York City
+Resource oper ations Implementer
+Authorizer ADAM
+Implementer ADAM
+▪A pr e-de fined  request is de fined  as: ▪
+ID PDR_SPH
+Description Order a new smart phone
+Oper ations New account: Template account = INV_SPH
+Attribut es APP_BUILTIN
+Access control _EXISTING_USERS_ = REQUESTER
+When an inventory item is provisioned using the above c on figur ation:

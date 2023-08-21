@@ -1,0 +1,367 @@
+Personal vaults passphrase policy
+When enabled, the Personal vault app allows users to store account in f ormation  and passwords. This
+in f ormation  is stored securely and can only be decrypted with the user’s passphrase.
+The default personal vault passphrase policy is simple; it requires a phrase of at least eight characters.
+Product administrators can modify the policy at Manage the system > Policies > Password policies  >
+PERSONAL_VAULT . This policy can also be c on figur ed  so that having a passphrase is optional.  This is not
+recommended as personal vault data (excluding passwords) will not be encrypted when there is no
+passphrase for the personal vault.
+This feature will be deprecated in a future release.
+Cr eating  password policies
+By default, Bravura Security Fabric  is c on figur ed  to support a single, global password policy, to ensure
+that all new passwords are acceptable to every system. You can create additional  password policies to
+apply to:
+▪Target system groups▪
+You may want to set up multiple  target system groups and password policies, for example, if subsets
+of target systems have inc ompatible  password strength rules, or you want a user’s passwords to vary
+on two or more target systems.
+▪Users de fined  by user class ▪
+You can use user classes to apply diff er en t  password policies for segments of the user population  on
+the same target system group; for example to apply stricter rules to Activ e  Directory administrators
+than to regular users on the same domain.
+See Target system groups  (on page 562) for more in f ormation  about target system groups and user-class-
+selected policies.
+The case for alt ernativ e  password policies across systems
+Bravura Security Fabric  allows you to create multiple  alt ernativ e  password policies that you can apply to
+subsets of target systems, de fined  by a target system group.
+For example, you may want to create multiple  policies for inc ompatible  systems. In some cases, it is
+impossible to formulate a single, consistent password policy that works across two diff er en t  systems.
+Typically this happens when one system requires strong security, and complex passwords, while another
+system simply cannot support complex passwords.
+Examples of weak systems include legacy applic ations  that use very short passwords or numeric PINs,
+voice mail passwords, and so on.
+Systems with a moderate password complexity capability typically include mainframes and DBMS servers.
+Systems with a strong password complexity capability typically include Novell NetWare, Windows Activ e
+Directory, LDAP directories, and modern implemen t ations  of Unix.Bravura Security recommends that all target systems belong to a single target group, and are subject to a
+single password policy. Synchronizing passwords signific an tly  reduces help desk call volume. Even
+passwords on systems notorious for "weak" passwords, such as mainframes, can be made strong with a
+good c ombination  of password policy rules. Forcing users to change passwords often  also strengthens
+security. Grouping target systems is usually only done for legacy applic ations  or to comply with internal
+policy.
+The case for alt ernativ e  password policies across user classes
+In some cases, you may want to use diff er en t  password policies on the same target for diff er en t  users.
+For example, adminis tr ativ e  users on an Activ e  Directory domain may have a stricter password policy
+than regular users on the same domain. You can implement this by de fining  user class points and
+password policy associations  in target system groups, in addition  to the default password policy for each
+target system group. Bravura Security Fabric  uses these associations  to find which password policy should
+be applied to a given user’s password changes.
+Add a password policy
+To add a password policy:
+1.Click Manage the system > Policies > Password policies . 1.
+2.Click Add new … . 2.
+3.Type a unique password policy ID and a Description . 3.
+4.Click Add. 4.
+Edit password strength rules
+You can edit the system password strength policy enforced by Bravura Security Fabric  to include or
+exclude certain rules, and change values on some rules.
+To edit a password strength policy enforced by Bravura Security Fabric :
+1.Click Manage the system > Policies > Password policies . 1.
+or
+Click Manage the system  > Privileged access  > Managed system policies ..
+2.Select the policy that you want to edit.2.
+3.Click the Password policy tab. 3.
+4.Select an appropriate status from the drop-down list next to each rule.4.
+If applicable, type a value in the text field  next to each enabled rule.
+Depending on the rule some status may not apply. The available status include:
+▪Required The rule is enabled, and is strictly enforced. ▪
+If a password supplied by a user does not satis f y  the rule, Bravura Security Fabric  rejects it.
+▪Warning The rule is enabled, but is not enforced. ▪If a password supplied by a user does not satis f y  the rule, Bravura Security Fabric  warns that the
+password is weak, but still accepts it.
+The built-in random password generator only generates passwords that satis f y  the rule.
+▪Disabled The rule is not applied to new passwords. ▪
+▪Enabled The rule is applied to new passwords. ▪
+This status is available where enforcement does not apply.
+See Table Password strength rules  (on page 1003) below for de finitions  of the password strength
+rules supplied with Bravura Security Fabric .
+5.Select Hide description  if you want to hide the rule from users in the web interface. If their chosen 5.
+password violates the rule, an error message detailing the rule will be displayed.
+You can create a custom message  (on page 1022) to add to or replace the displayed rules.
+6.Click Update . 6.
+Password strength rules
+Rule name Type Description
+have at least N characters ReqThe smallest number of characters that a legal password
+must have.
+have at most N characters Req / WarnThe largest number of characters that a legal password
+can have.
+include both uppercase and
+lowercase charactersReq / WarnEnable if passwords should have both uppercase and
+lowercase characters.
+have at least N lowercase
+letter sReq / WarnThe smallest number of lowercase letter s  that a legal
+password can contain.
+have at most N lowercase
+letter sReq / WarnThe largest number of lowercase letter s  that a legal
+password can contain.
+have at least N uppercase
+letter sReq / WarnThe smallest number of uppercase letter s  that a legal
+password can contain.
+have at most N uppercase
+letter sReq / WarnThe largest number of uppercase letter s  that a legal
+password can contain.
+have at least N special
+characters (not letter s  or
+digits)Req / WarnThe smallest number of non-alphanumeric characters that
+a legal password must contain. Spaces are treated as non-
+alphanumeric characters.
+Have at most N special
+characters (not letter s  or
+digits)Req / WarnThe largest number of non-alphanumeric characters that a
+legal password can contain. Spaces are treated as non-
+alphanumeric characters.
+have at least N special
+characters (not letter s  or
+digits) not at the beginning
+and endReq / WarnSame as minimum non-alphanumeric characters, but not
+c ounting  the fir s t or last character of the password. Spaces
+are treated as non-alphanumeric characters.
+have at least N letter s Req / WarnThe smallest number of letter s  that a password must
+contain.Rule name Type Description
+begin with a letter Req / WarnEnable to require all passwords to start with a letter .
+Useful for c ompatibility  with some systems.
+have at least N digits Req / WarnThe smallest number of digits that a legal password must
+contain.
+have at least N digits not at
+the beginning and endReq / WarnSame as minimum digits, but not c ounting  the fir s t or last
+character of the password.
+have up to 8 characters, only
+@,#,$ special characters
+allowed (mainframe
+c ompatible)Req / WarnIntended for mainframe c ompatibility  (can have up to 8
+chars; alpha/num or @$#).
+have password rules apply to
+the fir s t N charactersDisabled /
+EnabledThis forces the fir s t N characters of the password to
+comply with the password rules, and only the fir s t N
+characters are used to validate the password. The number
+of characters must be set.
+not be a dictionar y  word Req / WarnThe password, stripped of non-letter  characters, may not
+match a word (c onsisting  of two or more letter s)  from the
+dictionar y  (on page 1008). For example, the passwords
+word123 and pa9sswor*d are not valid. The dictionar y
+search is c ase-insensitiv e.
+not be an exact dictionar y
+word match (e.g. word)Req / WarnA password may not exactly match a dictionar y  word
+c onsisting  of four or more letter s.  For example, the
+passwords w1o2r3d or word123 are valid. The password
+word is not valid. The dictionar y  search is c ase-insensitiv e.
+not contain an exact
+dictionar y  word match (e.g.
+xyzword123)Req / WarnA password may not contain a dictionar y  word. For
+example, the password xyzword123 is not valid. The
+dictionar y  search is c ase-insensitiv e.
+not contain a dictionar y  word
+(e.g. xyzw1o2r3d)Req / WarnA password, stripped of non-letter  characters, may not
+contain a dictionar y  word. For example, the password
+xyzw1o2r3d is not valid. The dictionar y  search is c ase-
+insensitiv e.
+not be a dictionar y  word
+rearranged (e.g. rdow123)Req / WarnA password, stripped of non-letter  characters, may not be
+a dictionar y  word rearranged. For example, the password
+w1o2r3d4xyz is valid. The password rdow123 is not valid.
+not be the pr ofile  ID or name Req / WarnThe user’s pr ofile  ID or name may not be used as the new
+password. This applies to both the full name and each
+word in the name.
+not be the pr ofile  ID or name
+reversedReq / WarnSame as above but with the letter s  in the name reversed.
+This applies to both the full name and each word in the
+name.
+not contain the pr ofile  ID or
+nameReq / WarnThe user’s pr ofile  ID or name may not form part of the
+new password. This applies to both the full name and each
+word in the name.Rule name Type Description
+not contain the pr ofile  ID or
+name reversedReq / Warn Same as above but with the letter s  in the name reversed.
+not be the pr ofile  ID or name
+rearrangedReq / WarnSame as above but with the letter s  in the name
+rearranged in any way. This applies to both the full name
+and each word in the name.
+not contain rearranged pr ofile
+ID or nameReq / WarnThe password cannot contain the user’s pr ofile  ID or name
+rearranged in any permut ation  and mixed with any
+number of other characters, numbers, or special
+characters. This is a more r es trictiv e  form than “Not a
+rearranged user name?”. It applies to both the full name
+and each word in the name. The length checked against
+the full name and each word in the name is decided by the
+MIN DICTWORD LENGTH  setting  in the Manage the
+system > Policies > Options  menu. , and the punctuation
+marks like ’.’ are also stripped For example, with user
+name = Bob Jones, pr ofile  ID = JonesB the following
+passwords will be rejected:
+▪obbonjes 1 (with the space)▪
+▪bsenoj2▪
+▪obbonjes3▪
+▪bbo sdfd4▪
+▪sdf4 snoje▪
+not begin with the fir s t N
+characters of the pr ofile  ID or
+nameReq / WarnThe new password may not contain the specified  number
+of characters that begin the pr ofile  ID name.
+require the password to be
+approved by this pluginDisabled /
+EnabledAn external program is called to verify that a password is
+acceptable. Details in R e writing  target system oper ations
+(on page 532).
+generate random passwords
+using this pluginDisabled /
+EnabledSpecify a plugin to generate random passwords instead of
+the built-in password generator. Used with Off er  the user
+N random passwords .
+warn if the password is not
+approved by this pluginDisabled /
+EnabledA warning will be generated if the password does not pass
+the password policy of the specified  plugin.
+have at most N pairs of
+r epeating  charactersReq / WarnThe maximum number of pairs of the same character
+appearing c onsecutiv ely  in new, legal password values.
+NOTE:  The total possible pairs are counted in a sequence;
+for example, annno includes two pairs of ’n’s (the fir s t two
+and the last two), and annnno includes three pairs;
+however Uuno contains zero pairs, since upper and lower
+cases letter s  are treated as diff er en t.Rule name Type Description
+be one of the N suggested
+passwordsReq / WarnDisplay some randomly-selected passwords that the user
+may choose as a new password value. If disabled, no
+suggested passwords will be displayed. It is strongly
+recommended that this rule is set to ’Warning’. This
+should only be set to ’Required’ in cases where corporate
+policy disallows non-computer-generated passwords.
+WARNING!  Setting  this rule to ’Required’ is not
+c ompatible  with transparent password s ynchr oniz ation.
+See Transparent s ynchr oniz ation  and generated passwords
+(on page 1660) for details.
+contain only characters
+available on a standard
+English (US) keyboardReq / WarnThe password is rejected or a warning is issued if the
+password contains non-printable ascii characters. Non-
+printable ascii characters can create problems with
+character encoding tr anslation.  The Password policy rules
+web form provides a link to a page that lists valid
+characters.
+not have N occurrences of the
+same characterReq / WarnThe password is rejected or a warning is issued if it
+contains any character occurring N times.  N must be
+da t a filled.
+not be an old password Req / WarnNew passwords may not be the same as old passwords for
+the selected targets.Rule name Type Description
+allow old passwords after  N
+daysDisabled /
+EnabledChange the history rule, so that new passwords can be the
+same as old ones (in the history file),  if they are over N
+days old. Ensure that this value is greater than the value of
+password must be changed every N days, if set. See
+Pr e v enting  users from re-using old passwords  (on page
+1010) for more in f ormation.
+password must be changed
+every N daysDisabled /
+EnabledPrompt the user to change passwords every N days.
+Ensure this value is less than the value for allow old
+passwords after  N days , if set.
+not be one of last N
+passwordsReq / WarnNew passwords may not be the same as one of the last N
+passwords.
+be diff er en t  by at least N
+characters from the previous
+passwordReq / WarnThe password is rejected or a warning is issued if the
+password does not contain N characters that do not
+already exist in the previous password.Rule name Type Description
+not have been changed by
+you in the last N hoursReq / WarnThe password is rejected or a warning is issued if the
+password was changed in the last N hours.
+current password may be
+reused for password resets for
+N days after  its fir s t useDisabled /
+EnabledAllow password reuse within limited days when used in
+c onjunction  with not be an old password .
+Prevent users from using specific  words in a password
+There are a few built-in password policy rules which are designed to prevent using specific  words in
+passwords:
+▪The pr ofile  ID or names of the user ▪
+▪Selected words listed in a "dictionar y" ▪
+About the dictionar y
+Bravura Security Fabric  uses a fla t file, words.dat  to determine if new passwords fail dictionar y -based
+password policy rules. This file is located in the dictionar y  directory on the primary applic ation  server. You
+can customize this file to suit your needs. Alt ernativ ely ,  you can also create a new dictionar y  file called
+custom.dat  located in the dictionar y  directory. If this file presents, Bravura Security Fabric  will use this
+file, instead of words.dat , as dictionar y .  The main advantage of using custom.dat  file is that this file
+will be retained after  upgrade while a customized words.dat  will be replaced by the default file.
+The encoding of words.dat  text file must be UTF-8
+Limit ations  of using the dictionar y
+The dictionar y  file is designed to contain a r elativ ely  small list of banned words (like the company name,
+or some swear words).
+It is not designed to prevent users from choosing passwords that:▪Were found in breaches; for that purpose, use the haveibeenpwned  component  (on page 1009) or ▪
+check against Azure's compromised passwords API  (on page 1014)
+▪Are known to be found at the top of hackers' list-based heuristics ▪
+There are some limits to keep in mind when populating  words.dat :
+▪There is a low-character-per-line limit, the product does not take into c onsider ation  dictionar y  words ▪
+of three letter s  or less.
+▪There is no fix ed  upper (max) limit to the number of words in the file (other than available RAM and ▪
+CPUs for the services using the password policy), but there is a "soft"  limit: around 50 to 100 MB.
+When the file is large, the pages which render password policies will become slow because the pages
+have to choose and verify (by default) 10 random passwords.
+▪The impact to the rendering speed of those pages can be mitig a t ed  by reducing the number of ▪
+passwords to provide as examples, but the best solution  to this limit ation  is to use the
+haveibeenpwned component  (on page 1009) or Azure plugin  (on page 1014) for large data sets, and
+keep words.dat  small, for the uses it was designed to cover.
+▪Like any other registry-based or file-based  c on figur ation,  the dictionar y  is read at service startup, to ▪
+optimiz e  oper ations.  So after  changing the contents of that file, restart the Ajax service ( ajaxsvc )
+(for the WebUI on any license),Password Manager Service ( idpm ) for Bravura Pass , or Privileged
+Access Manager Service ( idarch)  for Bravura Privilege  when using manual overrides  (on page 1871)
+(though Bravura Privilege's r andomiz ation  allows it to usually avoid the pitfalls  of manually-selected
+passwords).
+Prevent users from using compromised passwords
+When a user attemp ts  to update their password through the Change passwords  (PSS) module, Bravura
+Security Fabric  can be c on figur ed  to check the password to a list of compromised passwords.
+The Functional.hid_password_policy_haveibeenpwned introduces an update to the
+Password Policy that will compare the password change to the "Have I been pwned?" (haveibeenpwned)
+list of known compromised passwords. The password update will not be allowed to proceed if a match is
+found.  
+Example 
+1.Install Functional.hid_password_policy_haveibeenpwned . 1.
+This component aut omatic ally  c on figur es  the Require the password to be approved by this plugin
+password rule to use the plugin_check_password.py  plugin.
+2. Optional:  Click Manage external data store  > hid_global_c on figur ation  to c on figur e  the component’s 2.
+proxy, timeout,  and r eject_on_c onnection_f ailur e  settings  to suit your environment, if necessary.
+3.Log into Bravura Security Fabric  as a user and navigate to the Change passwords  (PSS) module. 3.
+4. Attemp t  to change the user’s password to one that has been v erified  to be compromised and verify 4.
+that the change password button  is disabled.
+5. Attemp t  to change the user’s password to one that is uncompromised and verify that the change 5.
+password button  is enabled and the password update is allowed to proceed.See Managing Components  (on page 315) for more in f ormation  on installing components.
+Prevent users from re-using old passwords
+A particularly  useful strength rule, not be an old password prevents or warns users against reusing old
+passwords. This ensures that, if a user’s password was divulged in the past, it will not c onstitut e  a threat
+in the future.
+This rule is implemented as follows:
+▪Passwords are stored in the history database table.▪
+Users’ passwords are cryptographically hashed. Data includes the pr ofile  ID, account ID, target ID, the
+time  the password was modified,  and by whom.
+▪Bravura Security Fabric  enforces password history by matching the newly requested password against ▪
+all passwords used by that user on all target systems within the selected target system group. If there
+is a match, Bravura Security Fabric  rejects the new password request.
+▪Users can select a password that was used on target systems in a target system group other than the▪
+ones selected for password change.
+▪If used in c onjunction  with the have password rules apply to the fir s t N characters rule, new ▪
+passwords will be historically compared on only the fir s t N characters.
+▪Passwords in the history table that are older than a certain number of days may be accepted by▪
+Bravura Security Fabric  if that has been c on figur ed  by the password rule allow old passwords after  N
+days .
+▪Whenever a password is successfully changed by Bravura Security Fabric , it is added to the history ▪
+table. This includes passwords changed by:
+▪Users of the Change passwords  (PSS) module ▪
+▪help desk user s using the Help users  (IDA) module ▪
+▪The Password Manager service (IDPM)▪
+The number of days for allow old passwords after  N days  must be greater than the number of days for
+password must be changed every N days .
+The recommended setting  is that N = 6 x maximum age; for example, password must be changed every
+N days  set to 30 days, and allow old passwords after  N days  set to 180 days.
+If c onfigured  incorrectly, users are able to reset and "change" their password using their e xisting
+password.
+Bravura Security Fabric does not test prospective  passwords against the target system's password history.
+Reset operations  may fail due to the target system rejecting  a password it identifies  as being reused.
+Bravura Security Fabric only identifies  passwords changed through the password change (PSS),
+transparent s ynchroniz ation  (idpm ) or help desk (IDA) module
+By default Active  Directory expires passwords every 42 days, and does not allow users to use the last 10
+passwords. This means users will not be able to reuse a password until  the 11th reset minimum,
+assuming they only change their password when it expires. The setting  password must be changed every
+N days  only prompts users to change their passwords when they login to Bravura Security Fabric. For use
+cases where Bravura Security Fabric is only accessed when users lock themselves out or forget their

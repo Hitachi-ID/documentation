@@ -1,0 +1,248 @@
+Segr eg ation  of duties  rules
+In Bravura Security Fabric , SoD rules provide a way of identif ying  e x ceptions  to roles or possible access
+c on flicts.  They are a component of a role-based access control system, along with roles.
+In f ormation  regarding the rule is de fined  in four tabs:
+General Contains rule ID, description,  status of the rule, the number of
+entitlemen ts  needed to be considered in violation,  total number of users in
+violation  of the rule, and the number of users in violation  without
+approved e x ception.  The values for the number of users in violation  are
+auto-generated.
+Authoriz ation Where you de fine  whether requests for e x ceptions  to the rule require
+authoriz ation,  how many authorizers, and which authorizers. You can also
+de fine  how many authorizers must deny the request for it to be denied.
+Entitlemen ts Where you de fine  which resources are considered part of the rule; this can
+include template accounts, managed groups, and sub-roles.
+Violators This page lists all users currently in violation  of the SoD rule, users without
+approved e x ceptions,  and users with approved e x ceptions.  The content is
+auto-generated. Violators are calculated recursively. For example, if an SoD
+rule’s entitlemen ts  contain two roles, and each role has managed groups as
+their entitlemen ts,  then the violators include both common users in the
+roles as well as the common members in the managed groups.
+Rule status 
+When cr eating  a rule you must set its status. For a rule to be activ e  it must be enabled.
+An enabled rule can be deprecated once it is used.
+Cr eating  segr eg ation  of duties  rules
+To create a segr eg ation  of duties  rule:
+1.Navigate to the Segr eg ation  of duties  rule de finition  page 1.
+Na vig ation  steps 
+You use the Segr eg ation  of duties  rule in f ormation  page to c on figur e  general rule in f ormation,  and to
+access additional  c on figur ation  settings.  To navigate to this page:
+1.Click Manage the system > Policies > Segr eg ation  of duties  rules . 1.
+2.To de fine: 2.
+▪A new rule – click Add new … . ▪
+▪An e xisting  rule –search for, or select the rule you want to view or modify. ▪You cannot modify a deprecated rule. You must restore it firs t.
+for a new rule.
+2.Type a unique ID and Description . 2.
+3.Determine whether the rule is Enabled . 3.
+4.Select Ex ceptions  not allowed if you do not want users or reviewers to be able to request e x ceptions 4.
+to the rule.
+5.If you selected Ex ceptions  not allowed , and you want to allow e x ceptions  under certain 5.
+circumstances, type the name of the plugin Program to enable e x ception .
+A sample plugin, plugin-sod-exception.psl , is included in the <instance>\samples\. See
+Plugin to enable e x ception  (on page 813) for more in f ormation  about writing  an e x ceptions  plugin.
+6.Type the minimum Number of entitlemen ts  a user must have to violate a rule . 6.
+This means that if a user has at least this many of the rule’s c on figur ed  resources, then they are in
+violation  of the rule.
+▪If set to 1, then all of the users for each of the rule’s resource members are in violation  of the rule. ▪
+▪If set to 2, then users who are a part of two of the c on figur ed  resource members are in violation. ▪
+7.If you want to vary the time  that an e x ception  will be allowed, type the Default number of days 7.
+before expiry . The default expiry is 60 days, as determined by EXPIRY FOR EXCEPTIONS TO SOD
+RULES (Manage the system > Policies > Options ). Requesters are able to change this value when
+r equesting  an e x ception.  After  this time,  a user who is granted an e x ception  will be in violation  again.
+8.Click Add. 8.
+ Next: 
+▪Assign authorizers to the rule  (on page 815) ▪
+▪Add resource members to the rule  (on page 816) ▪Plugin to enable e x ception
+A segr eg ation  of duties  (SoD) rule is generally put in place for most users; however, there are times
+where e x ceptions  are required for specific  individuals. Rules can be c on figur ed  to allow or disallow
+e x ceptions.  Once an e x ception  request is approved, the resources that are being applied for the
+e x ception  are assigned to the user, overriding the segr eg ation  of duties  rule.
+To disallow e x ceptions,  you enable the Ex ceptions  not allowed  option  on the Segr eg ation  of duties  rule
+de finition  page. You can also write a plugin to override this setting ,  to allow e x ceptions  in certain
+circumstances. You enable the plugin in the Program to enable e x ception  field.
+See more in f ormation  on writing  a custom plug-in.
+Requirements
+See W riting  plugins  for general requirements.
+Shipped plugins
+A sample plugin script, plugin-sod-exception.psl  is provided in the samples\ directory. The
+sample always returns success, to override the Ex ceptions  not allowed setting.  You must edit the script
+and move it to the \<instance>\plugin\ directory.
+Ex ecution  points
+The e x ceptions  plugin is run when a user views SoDs on a self-service request page or certific ation  page.
+Input
+The plugin receives the ID of the SoD and the requester:
+"" "" = {
+  "sodid" "" = {
+    "sodid" = "<SoD ID>"
+        # indicates the ID of the SoD rule that is in violation
+  }
+  "user" "" = {
+    "user" = "<userid>"
+        # indicates the userid of the user that is in violation of
+        # the SoD rule.  This value will be blank for new user
+        # requests that violate the rule since it is not yet known
+        # until after the request is submitted.
+  }
+}
+When a request for new users results in an SoD violation  being triggered, the value for the user ID for the
+"user" section  will be blank since it is not known at this point of the request (it is determined after  the
+request is submitted).Output
+The plugin returns standard output where retval=0 means that the Ex ceptions  not allowed setting  is
+overruled; for example:
+"" "" = {
+     "errmsg" = "<text message>"
+         # The message to indicate why an exception may be allowed or
+         # disallowed.
+     "exception" = "<true|false>"
+         # Mandatory; true indicates that exceptions may be allowed.
+         # Anything else (such as false for example) will not allow
+         # exceptions to be requested.
+     "retval" = "0"
+         # Mandatory; non-zero indicates that exceptions may not be
+         # allowed.
+   }
+De fining  segr eg ation  of duties  rule authoriz ation
+De fine  authoriz ation  in f ormation  for SoD rules to:
+▪Set the number of approvals or denials required for requests for e x ceptions  to the rule. ▪
+▪Assign s t atic  authorizers to de fine  who can approve requests for e x ceptions  to the rule. ▪
+Users must be loaded into the Bravura Security Fabric database before you can de fine  them as
+authorizers.
+You must assign enough authorizers to meet the minimum number of authorizers requirement. If you do
+not do this, requests involving the resource are aut omatic ally  denied unless authorizers are assigned by a
+w orkflo w  plug-in.
+Con figuring  phased authoriz ation
+If phased authoriz ation  is enabled, navigate to the target system’s Authoriz ation  page, then:
+▪Click Add new… if you want to add a phase. ▪
+▪To change the order of phases, change the numbers in the Authoriz ation  phase column and click ▪
+Update .
+▪Select a phase to de fine  authorizers and settings. ▪
+Determining number of required approvals
+To de fine  the authoriz ation  requirements for a rule:
+1.Navigate to the Segr eg ation  of duties  rule in f ormation  page. 1.
+2.Select the Authoriz ation  tab. 2.Select a phase if phased authoriz ation  is enabled.
+3.Type a value for the:3.
+▪Minimum number of authorizers – A value of 0 means requests for the resource are auto- ▪
+approved.
+The default value is set by the MIN AUTHORIZERS  policy.
+▪Number of denials before a change request is terminated – A resource request is canceled when ▪
+this number of authorizers deny it, as long as the Minimum number of authorizers has not been
+reached.
+4.The default value is set by the MAX REJECTIONS  policy. 4.
+5.Click Update . 5.
+Assigning s t atic  authorizers
+To assign s t atic  authorizers to a rule:
+1.Navigate to the Segr eg ation  of duties  rule in f ormation  page. 1.
+2.Select the Authoriz ation  tab. 2.
+Select a phase if phased authoriz ation  is enabled.
+3.Click Select... at the bottom  of the Authorizers table. 3.
+4.Search for, or enable the checkboxes next to the authorizers that you want to assign.4.
+5.Click Select at the bottom  of the page. 5.
+Assigning authorizers by user class
+To assign authorizers by user class:
+1.Navigate to the Segr eg ation  of duties  rule in f ormation  page. 1.
+2.Select the Authoriz ation  tab. 2.
+3.To de fine  membership criteria: 3.▪Select e xisting  user classes: Click Select... and enable the checkboxes for the user classes you want ▪
+to add, then click Select .
+▪Create new user classes: Click 
+ Add new… . See Adding user classes  (on page 738) for full details ▪
+on how to create a new user class.
+4. Con figur e  P articipan t  mapping for each user class that you add. 4.
+Select and create user classes until  you have de fined  membership.
+5.If your membership criteria includes multiple  user classes, de fine  whether users are required to match 5.
+All of the user classes or Any of the user classes .
+ Removing users from membership
+To remove users from membership, you can:
+1.Edit user classes to change the participan ts. 1.
+2.Delete user classes from the membership criteria.2.
+a.Navigate to the membership criteria  page where user classes are listed. a.
+b.Enable the checkbox next to the user classes you want to delete.b.
+3.Click Delete . 3.
+Adding entitlemen ts  to segr eg ation  of duties  rules
+Once you have added a rule, you can add entitlemen ts  to it:
+To add entitlemen ts  to a rule:
+1.Navigate to the Segr eg ation  of duties  rule de finition  page 1.
+Na vig ation  steps 
+You use the Segr eg ation  of duties  rule in f ormation  page to c on figur e  general rule in f ormation,  and to
+access additional  c on figur ation  settings.  To navigate to this page:
+1.Click Manage the system > Policies > Segr eg ation  of duties  rules . 1.
+2.To de fine: 2.
+▪A new rule – click Add new … . ▪
+▪An e xisting  rule –search for, or select the rule you want to view or modify. ▪
+You cannot modify a deprecated rule. You must restore it firs t.
+.
+2.Select Entitlemen ts ., then the sub-tab link for: 2.
+▪Account▪
+▪Managed group▪
+▪Role▪
+3.Click Select... . 3.
+4.Select the resources you want to include then click Select . 4.When an SoD rule includes a role, it checks users that are assigned the role in Bravura Security Fabric,
+and users who have all of the role’s member resources. The set of users who have all the resources
+that de fine  a role count as one segregation  of duties  resource member.
+Con figuring  resource attribut es
+It is possible to add resource attribut es  to this resource type; you can use resource attribut es  to create
+and set attribut e  values for individual resources. Before you can do this, you must add the resource
+attribut es  to at least one resource attribut e  group, and c on figur e  access to resource attribut es.
+Depr ec ating  segr eg ation  of duties  rules
+Once a rule has been used, you can deprecate it if you want to render it unusable, while preserving it for
+auditing  purposes. While it is deprecated, it is not taken into account during a request, and cannot be
+deleted. A deprecated rule can be restored at a later date.
+To deprecate a rule:
+1.Navigate to the Segr eg ation  of duties  rule de finition  page 1.
+Na vig ation  steps 
+You use the Segr eg ation  of duties  rule in f ormation  page to c on figur e  general rule in f ormation,  and to
+access additional  c on figur ation  settings.  To navigate to this page:
+1.Click Manage the system > Policies > Segr eg ation  of duties  rules . 1.
+2.To de fine: 2.
+▪A new rule – click Add new … . ▪
+▪An e xisting  rule –search for, or select the rule you want to view or modify. ▪
+You cannot modify a deprecated rule. You must restore it firs t.
+.
+2.Select the checkbox next to the deprecate button. 2.
+3. Optionally ,  enter a Reason for depr ec ation . 3.4.Click Deprecate . 4.
+ Restoring a rule 
+To restore a rule, click Restore on the Segr eg ation  of duties  rule in f ormation  page.
+Deleting  segr eg ation  of duties  rules
+You can delete rules that are disabled. You cannot delete a rule if it is enabled or deprecated.
+To delete a rule:
+1.Click Manage the system > Policies > Segr eg ation  of duties  rules . 1.
+2.Select the checkboxes next to the rules you want to delete.2.
+If a checkbox is not available next to a rule you want to delete, then the rule is not disabled. Select the
+rule, and restore and/or disable the rule as necessary, then return to the Segr eg ation  of duties  rules
+page.
+3.Click Delete and c on firm  the deletion. 3.
+Alternately, you can delete a disabled rule from its Segr eg ation  of duties  rule in f ormation  page.
+When you delete a rule in the Manage the system  (PSA) module, it is flag g ed  as deleted in the Bravura
+Security Fabric  database. It is maintained for auditing  purposes.Part IV Login ProcessIdentific ation  and authentic ation
+This chapter describes how users log into Bravura Security Fabric , and how you can c on figur e  Bravura
+Security Fabric  to identif y  and authentic a t e  users.  
+How users log in
+Users log in using the Front-end . The way that users access the login pages can vary according to how
+or g aniz ations  customize the interface between Bravura Security Fabric , the corporate intranet, and other
+applic ations.
+The Front-end  provides access to multiple  Bravura Security Fabric  web modules using a single
+authentic ation  point, rather than requiring authentic ation  for each individual module. In general, the
+Front-end  authentic ation  process works as follows:
+1.A user visits the Front-end  login page by following a link from your corporate intranet, or typing the 1.
+URL in a browser:
+▪http[s]:// <host name > ▪
+if the index page for this instance is set up as the default web page, or
+▪http[s]:// <host name >/<virtual directory >/ ▪
+to access the login page for an instance that is not set up as the default web page.
+2.Depending on how the identific ation  priority list is c on figur ed,  the Front-end  displays a list of trusted 2.
+systems for the user to select from.
+3.The user enters an ID.3.
+This is a login ID for a trusted system, pr ofile  ID, email address, or other attribut e.
+Console-only users do not have accounts, and therefore must always enter their pr ofile  ID.
+4.The Front-end  determines the authentic ation  methods that are available to the user. If more than one 4.
+method is available, the Front-end  displays a pr e-c on figur ed  list for the user to select from.
+5.The user authentic a t es  to Bravura Security Fabric  using the selected method. 5.
+6.Depending on how the module is c on figur ed,  the Front-end  ensures that the user has a complete 6.
+pr ofile,  then presents the user with a list of available options.
+7.The user clicks a link on the main menu to access functionality  provided by another Bravura Security 7.
+Fabric  module.
+Identific ation  vs Authentic ation
+The two main parts of the Login process, identific ation  and authentic ation  , work diff er en tly  because they
+work on diff er en t  data.
+As described below in this chapter in more detail, users can Identif y  themselves with either:
+▪Account names currently associated to that pr ofile  from a user-selected target from the Identific ation ▪
+priority list.  (on page 821) The default is the fir s t target system added.

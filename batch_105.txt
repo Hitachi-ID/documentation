@@ -1,0 +1,346 @@
+The output KVGroup for a successful v alidation  is of the format:
+"" "" = {
+       "returnval" = "0"
+}
+.Part V Web Modules and Apps
+About web modules
+The Bravura Security Fabric  user interface is provided by a set of self-contained CGI programs and web
+apps known c ollectiv ely  as modules .  
+The options  on the Modules menu enable you to c on figur e  the behavior of the Bravura Security Fabric
+web modules and apps. The c on figur ation  settings  a ff ect  the Front-end , self-service module s, and
+adminis tr ativ e  modules.
+You require the Con figur e  modules adminis tr ativ e  privilege in order to access the Modules menu.
+Types of modules 
+Modules are classified  by their purpose and by the users that can access them:
+The Front-end  (PSF) module  (on page 1182) Provides an authentic ation  and task selection  point for
+all Bravura Security Fabric users. 
+self-service module modules Enable users to manage their pr ofiles,  submit security
+change requests, and authorize or manage security
+change requests. Self-service modules are only
+accessible to users with accounts.
+adminis tr ativ e  modules A part of the Bravura Security Fabric  softw ar e  that
+enables users to carry out privileged or adminis tr ativ e
+tasks. Adminis tr ativ e  modules are only accessible to
+users with product administrator rights.
+The table below describes the purpose of each module.
+Modules
+Menu link Program Description
+Manage certific ation
+process  (on page 1158)CERT Enables product
+administrator s to view,
+c on figur e,  and start access
+certific ation  campaigns.
+View dashboards  (on page
+1161)DASH Enables product
+administrator s to view
+graphical summaries of
+Bravura Security Fabric
+oper ations  and usage.
+Manage external data
+store  (on page 1163)DBE Enables product
+administrator s to view and
+update data in the External
+data store.Menu link Program Description
+Digital ID  (on page 1171) DID Used to update a Lotus
+Notes ID file repository,
+particularly  when managing
+Lotus Notes passwords with
+Bravura Pass .
+Unlock encrypted systems/
+accounts  (on page 1174)HDD Enables users to unlock
+encrypted target systems.
+Help users  (on page 1174) IDA Enables help-desk users to
+administer regular users’
+pr ofiles.  This includes
+modifying users’ pr ofile
+statuses, security question
+pr ofiles,  and owned
+accounts. .
+Manage the OrgChart  (on
+page 1177)IDGEnables product
+administrator s to build
+and administer users in
+the OrgChart.
+Browse the OrgChart  (on
+page 1177)IDO Enables managers to
+manage their subordinates
+in the OrgChart.
+View and update pr ofile
+(on page 1178)IDR Enables users to request
+access changes or inventory
+items for themselves or
+others.
+Manage deleg ations  (on
+page 1180)IDS Enables users to respond to
+deleg ation  requests.
+Manage the system  (on
+page 1181)PSA Provides a means for
+product administrator s to
+carry out core c on figur ation
+and adminis tr ation  tasks
+from a web interface. This
+includes c on figuring
+Bravura Security Fabric
+objects and environment,
+managing processes and
+options,  c on figuring
+individual features and
+functionality ,  and
+administering security.
+View requests  (on page
+1180)IDW Allows users to track
+requests with read-only
+permission.Menu link Program Description
+Generate voice print
+enrollment PIN  (on page
+1180)PSI Enables users to register for
+IVR authentic ation.
+Unlock accounts  (on page
+1184)PSK Enables users to unlock
+their accounts.
+Attach  other accounts  (on
+page 1185)PSL Enables users to manage
+their accounts and
+alternate login IDs.
+User notific ations  (on page
+1188)PSN Acts as the gateway
+between the Notific ation
+Client ( psntfclient )
+and the Notific ation
+Service, and enables users
+to receive, acknowledge,
+and act on notific ations
+from their web browser.
+Manage tokens  (on page
+1192)PSP Enables users to manage
+their SecurID tokens.
+Update security questions
+(on page 1193)PSQ Enables users to manage
+their security question
+authentic ation  pr ofiles.
+Password s ynchr oniz ation
+r egis tr ation  (on page 1194)PSR Enables users to register for
+transparent password
+s ynchr oniz ation.
+Change passwords  (on
+page 1196)PSS Enables users to reset their
+own passwords.
+Manage reports  (on page
+1199)RPT Enables product
+administrator s to view,
+run, save, and schedule
+reports.
+F eder ation  / Web Single
+Sign-on /WebSingleSign-On
+(on page 1203)app Provides c on figur ation
+options  for authentic ation
+via SAML  (on page 923).
+Groups app  (on page 1204) app Allows users to request
+changes to group
+membership, or to create
+or update groups if they
+have assigned privileges.Menu link Program Description
+Requests  (on page 1249) app Allows users to track the
+status of requests they
+have made, or that have
+been made on their behalf.
+They can also cancel
+requests. Users who are
+assigned as authorizers can
+authorize, unapprove,
+abstain, escalate or deny
+requests. Users who are
+assigned as implementers
+can accept or decline
+manual implemen t ation
+tasks.
+Privileged access  (on page
+1251)app Allows regular users to
+request temporary access
+to privileges.
+Session monitor  (on page
+1255)app Allows users to submit
+requests to search, view
+and download recorded
+sessions.
+See also: 
+For more in f ormation  about the diff er en t  types of users, and how to create them in Bravura Security
+Fabric , see User types and access rules  (on page 671).
+Enable and disable modules
+Most modules are enabled by default. You can disable modules that are not required by Bravura Security
+Fabric . For example, you can disable the View and update pr ofile  (IDR) module to prevent users from
+submitting  requests while you are c on figuring  Bravura Security Fabric .
+To enable or disable a module:
+1.Click Modules , then select the appropriate module. 1.
+2.In the <module > ENABLED row, select the: 2.
+▪On radio button  to enable the module, or ▪
+▪ Off radio button  to disable the module. ▪
+3.Click Update at the bottom  of the page. 3.
+Modifying general behavior
+The following sections  describe behaviors you can set globally for consoles and modules. Navigate to
+Modules > Options  to access the Module options  page.Aut omatic  storage/retrieval of field  values
+After  initial  login, users may find it useful if some fields  are aut omatic ally  filled  in on subsequent logins.
+Bravura Security Fabric  can recognize users and aut omatic ally  populate certain fields,  such as the number
+of records to display on search pages, using cookies or its database.
+The database method will not work if proxy servers are being used. Bravura Security Fabric uses IP to
+recognize users and retrieve inf ormation.
+Enable the following options:
+AUTO SET COOKIE to store previously entered values on cookies on a user’s w ork s t ation.
+AUTO FILL SET COOKIE MODULE EXACT to store previously entered module-specific  values.
+AUTO FILL SET COOKIE USER EXACT to store previously entered user -specific  values.
+AUTO FILL COOKIE to retrieve values from cookies.
+AUTO FILL COOKIE MODULE EXACT to retrieve only module-specific  values only from cookies.
+AUTO FILL COOKIE USER EXACT to retrieve only user -specific  values from cookies.
+AUTO SET DB to store previously entered values in the Bravura Security Fabric
+database.
+AUTO FILL SET DB MODULE EXACT to store module-specific  database values.
+AUTO FILL SET DB USER EXACT to store user -specific  database values.
+AUTO FILL DB to retrieve values from Bravura Security Fabric ’s database.
+AUTO FILL DB MODULE EXACT to retrieve only module-specific  values from Bravura Security Fabric ’s
+database.
+AUTO FILL DB USER EXACT to retrieve only user -specific  values from Bravura Security Fabric ’s
+database.
+When either method is used Bravura Security Fabric  aut omatic ally  populates pr ofile  ID and email address
+fields.  Other fields  can be set up for aut omatic  setting  or filling  by editing  Bravura Security Fabric  m4 files.
+For example, you may want to populate the request notes field  with some boilerplate text.
+Set the API session inactivity  timeout  period
+By default, Bravura Security Fabric  shuts a user out after  600 seconds of inactivity  during an API session.
+To change the default inactivity  timeout  for an API session, type the number of seconds required in the
+DEFAULT API SESS EXPIRY SECONDS field.  It accepts a value between 60 and 999999.
+Set the inactivity  timeout  period
+By default, Bravura Security Fabric  shuts a user out after  600 seconds of inactivity .  To change the default
+inactivity  timeout  for a session, type the number of seconds required in the DEFAULT EXPIRY SECONDS
+field.  It accepts a value between 60 and 999999.Set the maximum size of stored sessions
+By default, when Bravura Security Fabric  stores user session data in the sessdata  directory, it will
+terminate any sessions whose data file exceeds 5242880 Bytes in size. To change the maximum size of
+stored sessions, set a new value for maximum size in bytes in the SESSION MAX BIN SIZE field.  It accepts
+a value between 0 and 2147483647.
+Set the default time  for schedule tasks
+By default, Bravura Security Fabric  sets time  to run at 01:00 (1AM) when you add a scheduled job. To
+change the default time,  type the time  in 24-hour format (HH:MM) in the DEFAULT SCHEDULE TIME field.
+You can change the time  for individual jobs in the Time to run field.  This field  a ff ects  scheduled tasks
+added for:
+▪Manage the system > Maintenance > Scheduled jobs▪
+▪Manage the system > Policies > User notific ations  > Batch notific ations ▪
+▪Manage reports > Reports  > Reports ▪
+Digitally sign files
+You can use a plugin to digitally sign files created by the Bravura Security Fabric  server. Use this to sign
+MSI files for installing on local service mode resources.
+To use a digital signature plugin, ensure that the plugin is located in the plugin directory, then type the
+plugin name in the Modules > Options  > DIGITAL SIGN PLUGIN field.
+There are no shipped plugins for this plugin point. See more in f ormation  on how to write a custom plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+This plugin is run when Bravura Privilege  creates local-service-mode ins t allation  keys, whether they are
+manually-created in the Manage the system  (PSA) module, or by a r eplic ating  server g ener ating  the
+ins t allation  files.
+Input
+The plugin accepts the following input:
+    "" "" = {
+      "FILES" "" = {
+          "name" = "<file name>"
+          "name" = "<file name>"
+          .
+          .          .
+      }
+    }
+Output
+The plugin expects the following output:
+    "" "" = {
+      "retval" = "0"
+      /* optional
+      "errmsg"  = "<message>"
+      "warnmsg" = "<message>"
+      "infomsg" = "<message>"
+   }
+For retval, 0 indicates success and non-zero indicates failure.
+.
+Display simplified  login IDs
+By default, when users view account in f ormation  Bravura Security Fabric  displays the c on t e x t -sensitiv e
+login ID (long ID). You can c on figur e  Bravura Security Fabric  to present users with a simplified  login ID
+(short ID) by enabling the DISPLAY ALIAS SIMPLIFIED  option.
+For example, if DISPLAY ALIAS SIMPLIFIED is enabled, the LDAP login ID is reduced to just the UID value.
+This option  does not apply to any of the c ertific ation  pages.
+Display group IDs
+In the user interface, Bravura Security Fabric  generally lists groups by their IDs and descriptions.
+Sometimes  it is preferable to display the short ID rather than long ID or vice versa. For example, a
+company could have a group with the short ID of DEV and the description  Development in
+Calgary , with the long ID something like:
+cn=DEV,ou=CalgaryOffice,dc=company,dc=com
+You can change the way group IDs are displayed by enabling the DISPLAY GROUPID PLUGIN option  in the
+Modules > Options  menu. The default is to display the short ID.
+You can also c on figur e  when to display the group IDs one way or another depending on which page it is
+being displayed.
+Bravura Security Fabric  has two built-in plugin programs:
+▪longid.pss always displays groups’ long ID ▪
+▪shortid.pss always displays groups’ short ID ▪See more in f ormation  on writing  a custom plugin
+Requirements
+The plugin must be placed in the \<instance>\plugin\ directory and runs on the Bravura Security Fabric
+server. See W riting  plugins  for general requirements.
+Ex ecution  points
+This plugin is executed whenever Group IDs are displayed.
+Input
+Input to this plugin must include the hostid,  platform,  gr oup shortid,  grouplongid, and groupdesc fields
+from the nosgroups table. It will also include which module called the plugin, and the na vig ation  it took.
+ "" "" = {
+   "GROUPDESC" = "CN=sales1,CN=Users,DC=example,DC=com"
+   "GROUPLONGID" = "CN=sales1,CN=Users,DC=example,DC=com"
+   "GROUPSHORTID" = "sales1"
+   "HOSTID" = "AD"
+   "PLATFORM" = "WIN2K"
+   "module" = "idr"
+   "navigation" "" = {
+      "wfpage" = "useracct"
+                   }
+   "sessionid" = "Sa29ad806-4e15-4119-b02f-4b79ec90b05a"
+ }
+Output
+Output includes GROUPID value. For example:
+ "" "" = {
+   "GROUPID" = "AD - sales1"
+ }
+.
+Filter users
+You can restrict access to certain user pr ofiles  by using the appropriate user filt er  or list g ener ation
+plugin.
+For example, the FILTER USER PLUGIN and KEEP USER PLUGIN controls who can view and manage which
+users. By default, regular users and help desk users can make access change requests for any user with a
+pr ofile  ID in the database. You may want to set up a filt er ,  for example, to allow users to manage onlytheir subordinates or members of their own group. The GENERATE USER PLUGIN generates a white list of
+accepted users to manage; whereas the filt er  plugin excludes users.
+FILTER USER PLUGIN , KEEP USER PLUGIN , and GENERATE USER PLUGIN  can also utiliz e  user classes as
+filt er  criteria. You can do this instead of using a plugin, or in c onjunction  with a plugin. You may want to
+set up a r elational  user class to allow users to manage only their subordinates or members of their own
+group. See more in f ormation  on using user classes with these plugin points
+User class de finitions  can be added to the following plugin points:
+▪Manage the system > W orkflo w  > Options  > Esc alation  > ESCALATION PLUGIN ▪
+▪Manage the system > W orkflo w  > Options  > Esc alation  > FIRST CHANCE ESCALATION PLUGIN ▪
+▪Manage the system > W orkflo w  > Options  > Plugins >  AUTHORIZATION DETAIL MASK PLUGIN ▪
+▪Manage the system  > Modules  > Options  > FILTER USER PLUGIN ▪
+▪Manage the system  > Modules  > Options  > KEEP USER PLUGIN ▪
+▪Manage the system  > Modules  > Options  > GENERATE USER PLUGIN ▪
+These plugin points include the Use user classes option,  which allows you to filt er  or generate lists of
+users based on user user classes.
+If you choose to use user classes, then you do not need to write a plugin. However, user classes can also
+be used in c onjunction  with a plugin.
+For example, if you:
+Use user classes then the specified  user classes are used to filt er  or generate lists of users.
+Use user classes and write a plugin then the specified  user classes and plugin script are both used to filt er  or
+generate lists of users, with the plugin taking its input from results
+provided by the user class.
+Write a plugin then the plugin is used to filt er  or generate lists of users.
+For details, see:
+▪Filter users  (on page 1049) to learn how to write a user filt er  or user ▪
+g ener ation  plugin
+▪About esc alation  (on page 1386) to learn how to write an esc alation ▪
+plugin
+▪Hiding authoriz ation  details  (on page 1428) to learn how to write an ▪
+authoriz ation  mask plugin.
+To c on figur e  the Use user classes option:
+1.Click Use user classes under the field  for the plugin point you want to modify. 1.
+A page loads related to the option  you are modifying. For example, if you are modifying FILTER USER
+PLUGIN, then the Filter Criteria filt er_user_plugin  page loads. If user class de finitions  already exist for
+this option,  they are listed.
+2. De fine  your user classes. You can choose e xisting  user classes, create new user classes, or both: 2.
+▪To select from e xisting  user classes: ▪
+i.Click Select... . i.

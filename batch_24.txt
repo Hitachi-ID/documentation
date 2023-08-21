@@ -1,0 +1,345 @@
+5 Installing Bravura Security Fabric  from the command line
+setup
+Use the setup program, located at the root of the dis tribution  folder, to:
+▪Modify (add or remove) features for an instance▪
+▪Repair an instance▪
+▪Upgrade an instance▪
+▪Uninstall an instance▪
+▪Install a new instance▪
+You can only upgrade the software  if your Bravura Security Fabric release supports those actions.
+The setup program gathers initial  c on figur ation  in f ormation  then launches the Bravura Security Fabric
+installer package file (idm.msi  by default).  
+Requirements
+The setup program requires Windows Installer version 3.0.1 or later. This program should be run by a
+member of the Windows Administrators group.
+The setup program calculates required disk space before ins t allation,  and will prompt the
+administrator if more is needed. However, additional  space may be required for backups when modifying
+or upgrading an e xisting  ins t allation.  If the system runs out of disk space during ins t allation  or backup,
+you will be prompted to make more space available before c ontinuing.
+Backing up files is not supported when upgrading from versions earlier than 10.0.1.
+Usage
+Use the Windows command prompt to run setup with additional  arguments, listed below.
+setup.exe [arguments]
+The -queuestrategy option  was implemented in Bravura Security Fabric 12.4.0.
+Argument Description
+-backup Backup files before oper ation.
+--createdbuser Create a database user for the IDMSuite ins t allation.
+--dbadmin Database administrator.
+--dbadmpwd Database administrator password.
+-h, --help Display usage in f ormation.Argument Description
+-hidekeys <option> Hide the Communic ation  and/or Database keys from
+being displayed in the UI. If this option  is not specified,
+both keys are shown. Options  available are:
+▪comm to hide the c ommunic ation  key ▪
+▪data to hide the database key▪
+▪auth to hide the w ork s t ation  authentic ation  key ▪
+▪idmlib to hide the IDMLib key▪
+▪connector to hide the connector key▪
+▪all to hide all keys▪
+-v, --version Display version in f ormation.
+-i, --install Install a new instance.
+-instance <instancename> Specify the name of the instance.
+-loadplt-force Load both c on flicting  and non-c on flicting  connector
+settings  into a ff ect ed  instances.
+-loadplt-include <instance names> Comma-separated list of instances that should be
+included when running pos t -ins t allation  c on figur ation
+actions.
+-log <logFile> The loc ation  and name of the log file.
+If this option  is not specified,  the default log file name is:
+<ins t ance>_<action>.log ,  where:
+▪<instance> is the current instance name▪
+▪ <action>  is one of install, modify, repair upgrade, or ▪
+uninstall
+-m, --modify Modify an e xisting  instance.
+-msi <msiFile> The MSI file to read.
+-opts <msiOptions> Options  and parameters to pass through to msiexec.
+See idm.msi  (on page 233) for a list of Bravura Security
+Fabric -specific  parameters.
+-queuestrategy <strategy> Specify a strategy for upgrading queue files.  A strategy
+must be specified  when upgrading.
+Options  available are:
+default to have the installer aut omatic ally  choose the
+best strategy to use based on the queue file
+c ompatibility .
+nowait  to have the installer use the strategy that does
+not wait for queues to be flushed.
+flush  to have the installer verify that the queues have
+been flushed  before proceeding with upgrade.
+-r, --repair Repair an e xisting  instance.
+-silent Suppress the UI when performing actions  (no user
+in t er action).Argument Description
+-u, --uninstall Uninstall an e xisting  instance.
+-U, --upgrade Upgrade an e xisting  instance.
+-nodefaultdata Use when you do not want to populate the tables with
+default data. Use with -noinstallschema when you want
+to connect to an e xisting  schema that contains data.
+-noinstallschema Use when you do not want to create a new schema as
+part of the ins t allation  process. The installer will not
+create database objects (tables, stored procedures) as
+part of the ins t allation.
+Examples
+To install a Bravura Security Fabric  instance named my_instance :
+setup.exe -msi idm.msi -i -instance my_instance
+idm.msi
+Bravura Security Fabric  is distributed as a Windows installer package (MSI) file named idm.msi .  
+Usage
+Generally, you launch the Windows installer package (MSI) using the Bravura Security Fabric  setup
+program  (on page 231).
+You cannot use the Windows msiexec program to install Bravura Security Fabric.
+Consult Windows help for more inf ormation  about Windows Installer technologies.
+You can set parameters for non-in t er activ e  ins t allation,  or preset values for in t er activ e  ins t allation,  with
+the command:
+setup -opts <parameters>
+Example
+To install Bravura Pass  when using a Micr osoft  SQL database backend, type:
+setup.exe -opts "ADDLOCAL=PSYNCH INSTANCEDESCRIPTION=\"Example Instance
+\"
+PASSWORD=letmein! HELPDESK_PASSWORD=letmein! DBMS_SERVER=<SERVER_NAME> DBMS_PASSWORD=letmein1 DBMS_USERID=psadmin DBMS_DBNAME=HID /
+norestart"
+Parameters for features  (on page 234) and pr operties  (on page 235) are described in detail in the
+following sections.Features
+You use the ADDLOCAL parameter to specify certain features when running setup from the command line
+(on page 231). The format for the ADDLOCAL parameter on the command line is:
+ADDLOCAL=<feature>,<feature>,...
+You can only install features for which you are licensed. Options  marked with a 
+  do not need to be
+specified.  They are selected aut omatic ally  when installing <IDENITY>.
+ADDLOCAL ins t allation  features
+Feature Description
+IDACCESS Installs Bravura Group .
+IDARCHIVE Installs Bravura Privilege .
+SMON Installs the Privileged Session Monitor.
+IDCERT Installs Access Certifier .
+ IDTRACKInstalls the ID-Track sub-system.
+IDORGInstalls Org Manager.
+IDSYNCH Installs Bravura Identity .
+PSYNCH Installs Bravura Pass .
+You can specify the following add-ons:
+▪PSYNCHADDONS grouping feature▪
+▪INTCPT grouping feature▪
+▪ADINTCPT AD interceptor ins t allation  packages ▪
+▪LDAPINTCPT LDAP interceptor files ▪
+▪PSLOCALRCLIENT Local Password Reset ins t allation ▪
+packages
+▪NTFCLIENT Notific ation  Client ins t allation  packages. ▪
+▪SKAGINA Login Assistant ins t allation  packages ▪
+SSO Installs Login Manager.
+SAMPLES The following add-ons can be specified:
+▪DESIGNSAMPLES UI design samples (excluding mobile▪
+UI files)
+▪UTILSAMPLES utility  and plugin samples ▪
+▪IDFILEREPSAMPLES manual File R eplic ation  samples ▪
+▪PSLANGSAMPLES PSLang sample files ▪
+▪PSQSAMPLES security question  sample files ▪
+▪SCPINSAMPLES SmartCard PIN reset samples▪
+▪IDAPINATIVECLIENTLIBSAMPLES files for using the ▪
+idapi.dll to communicate with the API SOAP Service
+(idapisoap).
+▪ADVANCEDPLUGINSAMPLES Advanced Plugin Samples▪
+▪MOBILEDESIGNSAMPLES UI mobile design sample files ▪Pr operties
+You can use the following idm.msi  parameters to set Bravura Security Fabric  specific  pr operties.  The
+general format for a parameter on the command line is:
+<parameter>=<value>
+Parameters must be separated by spaces. If a value contains spaces, the value must be enclosed in
+escaped double quotes; for example:
+PSTEMDIR=\"C:Program Files\Bravura Security\Bravura Security Fabric
+\Logs\Example Instance\\"
+idm.msi general parameters
+Option Description
+AUTHKEY The 64 hexadecimal-digit key used for 256-bit encrypted
+c ommunic ation  for w ork s t ation  service to authentic ation
+through the Bravura Security Fabric .
+COMMKEY The 64 hexadecimal-digit key used for 256-bit encrypted
+c ommunic ation  between the Bravura Security Fabric  sub-
+systems.
+DATAKEY The 64 hexadecimal-digit key used to encrypt sensitiv e
+data stored in the Bravura Security Fabric  database.
+CONNECTORKEY The 64 hexadecimal-digit key used as a 256-bit
+encr yption  key for sensitiv e  data passed to connectors.
+IDMLIBKEY The 64 hexadecimal-digit key used as a 256-bit
+encr yption  key for sensitiv e  data generated in IDMLib.
+FORCEHELPDESK Force the setting  of superuser password during
+ins t allation,  in the event the value is already set in the
+database; for example where there a shared schema, or
+an old database is restored.
+HELPDESK_USER The name of the Bravura Security Fabric  administrator
+account. The default is superuser.
+HELPDESK_PASSWORD The password for HELPDESK_USER.
+IDDBPORT The port for the Database Service (iddb). The default is
+5555.
+IGNOREMAORPHANS The flag to set if orphaned managed accounts should be
+ignored during an upgrade. Set to 1 to ignore the
+orphans.
+INF The full path to the ins t allation  property file
+(idmsetup.inf ).
+INSTALLDIR The directory that the instance will be installed in. The
+default is <Program Files path>\Bravura
+Security\Bravura Security Fabric
+\<instance>\ .Option Description
+INSTALLLEVEL This parameter is usefull in a silent ins t allation.  Set to
+greater than 10 for a typical install, or greater than 100
+for a complete install. The default is 10.
+The ADDLOCAL parameter overrides INSTALLLEVEL.
+INSTALLONLYLICENSED 0|1 Set to 1 to install only licensed sub-systems when
+doing a complete install, or when INSTALLLEVEL is greater
+than 100.
+INSTANCEDESCRIPTION A description  for the instance. This in f ormation  is stored
+in the instance.cfg file.
+LICENSEFILE The name and path of the license file. The license file
+must be valid.
+NO_MIN_PASSWORD_LENGTH 0|1 The HELPDESK_PASSWORD and PASSWORD fields
+require a minimum of 6 characters unless this property is
+set to 1.
+This only applies to UI ins t allations.
+PASSWORD The password for the psadmin account.
+PSLOCKDIR The locks directory. The default is <Program Files
+path>\Bravura Security\Bravura Security
+Fabric\Locks\.
+PSTEMPDIR The temporary directory for this instance. The default is
+<Program Files path>\Bravura Security
+\Bravura Security Fabric\Logs
+\<instance>\.
+RECIPIENT_EMAIL The email address of the administrator to receive
+notific ation  emails.
+SERVER_GUID The server ID that will be used for the instance. This
+parameter is useful for reusing a server ID to reinstall an
+instance on the server.
+REPORT_SERVER_URL The Report Service Web Service URL. This parameter
+c on figur es  Bravura Security Fabric  to use Micr osoft’ s  SQL
+Server R eporting  Services (SSRS)
+REPORT_SERVER_ADMIN The Fully Qualified  Domain name of the SSRS server
+administrator. In the format of <domain name
+\Administrator account>.
+REPORT_SERVER_PASSWORD The password for the SSRS server administrator.
+CREATE_REPORT_USER_CHECK 0|1 Set to 1 to create a dedicated report user.
+DB_REPORT_USER The new dedicated report user.
+DB_REPORT_PASSWORD The dedicated report user’s password.
+DB_REPORT_CONFIRM_PASSWORD Con firm  the dedicated report user’s password.
+RESTAPI_PASSWORD The dedicated REST API users's passwordWeb server pr operties
+Property Description
+BASE_IDSYNCH_URL The URL for the Bravura Security Fabric  server.
+REPLACEDEFAULT 0|1 Set to 1 to replace the default web page with the
+index page for this instance.
+Set to 0 if you do not want to replace the default web
+page with the index page for this instance.
+This also creates a registry entry called
+ReplaceDefaultSite in the root of the instance’s registry
+key and determines whether or not the default web page
+is replaced on upgrades s t arting  from 11.1.0.
+The default is 0.
+SITENAME Set to the web site name for this instance. In IIS, this
+might look like "/LM/W3SVC/1/ROOT"; by default, it
+chooses the fir s t web site available on the specified
+WEBSERVER.
+VIRTUALDIR Set to the name of the virtual directory for this instance.
+This defaults to the instance name.
+Database pr operties
+Property Description
+DBMS_USERID The ID of the dedicated user that you created for Bravura
+Security Fabric .
+DBMS_PASSWORD The password for DBMS_USERID.
+DBMS_SERVER For Micr osoft  SQL Server this is name of the server
+hosting  the database, followed by a backslash, followed
+by the database instance name; for example, dbserver
+\SQLEXPRESS.
+Micr osoft  SQL Server database pr operties
+Property Description
+DBMS_DBNAME The name of the database hosting  the schema.
+DBMS_INSTALL_PWD The password for DBMS_INSTALL_USER.
+DBMS_INSTALL_USER The ID of the user to install the schema as.
+DBMS_MSSQL_CUSTOM_OPTIONS Pass Micr osoft  SQL server custom parameters; for
+example
+"DBMS_MSSQL_CUSTOM_OPTIONS=
+\"\"\"MultiSubnetFailover=yes\"\"\"" .
+For documen t ation  for possible parameters visit: .Property Description
+DBMS_MSSQL_CUSTOM_OPTIONS_POOLED Pass Micr osoft  SQL server custom parameters for pooled
+c onnections;  for example
+"DBMS_MSSQL_CUSTOM_OPTIONS_POOLED=
+\"\"\"MultiSubnetFailover=true\"\"\"" .
+Bravura Pass -specific  parameters
+Property Description
+FILEREPORT The TCP/IP port for the File R eplic ation  Service. The
+default is 2380.
+IDPMPORT The TCP/IP port for the Password Manager service
+(idpm ). The default is 3334.
+ 
+proxy.msi
+The Bravura Security Fabric  Proxy Server softw ar e  is distributed as an Windows installer package (MSI)
+file named proxy.msi.  
+Usage
+Generally, you launch the MSI using the Bravura Security Fabric  setup program  (on page 231).
+You cannot use the Windows msiexec program to install Bravura Security Fabric.
+Consult Windows help for more inf ormation  about Windows Installer technologies.
+You can set parameters for non-in t er activ e  ins t allation,  or preset values for in t er activ e  ins t allation.  with
+the command:
+setup -msi proxy.msi -opts <parameters>
+The features and pr operties  tables below describe these parameters in detail
+Features
+Use the ADDLOCAL parameter to install the Proxy Service when running setup from the command line
+(on page 231). The format for the ADDLOCAL parameter on the command line is:
+ADDLOCAL=PROXY
+P r operties
+You can use the following parameters to set pr operties  when running setup from the command line  (on
+page 231). The general format for a parameter on the command line is:
+<parameter>=<value>
+Key-value pairs must be separated by spaces. If a value contains spaces, the value must be enclosed in
+escaped double quotes; for example:PSTEMDIR=\"C:Program Files\Bravura Security\Bravura Security Fabric
+\Logs\Example Instance\\"
+proxy.msi msi pr operties
+Property Description
+INSTALLDIR The directory in which the Proxy Server softw ar e  will be
+installed. The default is <Program Files path>
+\Bravura Security\Bravura Security
+Fabric\<instance>\ . The path must be the same
+as the main Bravura Security Fabric  server.
+INSTALLLEVEL This parameter is used in a silent ins t allation  and is
+mutually exclusive with ADDLOCAL. Set to a value of 10
+or greater to install the PROXY feature. The default is 10.
+COMMKEY The 64 hexadecimal-digit key used for 256-bit encrypted
+c ommunic ation  between the Bravura Security Fabric  sub-
+systems.
+CONNECTORKEY The 64 hexadecimal-digit key used as a 256-bit
+encr yption  key for sensitiv e  data passed to connectors.
+PSTEMPDIR The temporary directory for this instance. The default is
+<Program Files path>\Bravura Security
+\Bravura Security Fabric\Logs
+\<instance> .
+PSLOCKDIR The directory used for locked files.  This defaults to
+<Program Files path>\Bravura Security\Bravura Security
+Fabric\Locks . Bravura Security does not recommend
+changing this directory.
+PASSWORD The password for the psadmin account.
+PROXYPORT The port number that the Proxy service will listen on. The
+default is 3344.6 Installing add-on softw ar e
+This chapter describes Bravura Security  add-on softw ar e  that can be installed on external servers or client
+w ork s t ations.  Files for add-on softw ar e  are loaded onto the Bravura Security Fabric  server, in the addon
+directory, when you install the core softw ar e.
+In some cases the softw ar e  is installed using an MSI installer. This chapter also provides general
+ins tructions  for using the installers manually, or by setting  a global policy for unattended  ins t allation.
+All of Bravura Security ’s *.exe, *.ocx, *.dll, and *.msi files are digitally signed.
+About add-on softw ar e
+The following add-on softw ar e  is distributed with Bravura Security Fabric :
+▪Transparent password s ynchr oniz ation  trigger softw ar e ▪
+▪Domain-level secure kiosk account softw ar e  (on page 241) ▪
+▪Local secure kiosk account softw ar e  (on page 241) ▪
+▪Security Fabric local reset extension  (on page 241) ▪
+▪ Notific ation  client  (on page 242) ▪
+▪Lotus Notes Extension client tools  (on page 242) ▪
+▪Local w ork s t ation  service  (on page 242) ▪
+▪Access disclosure plugins  (on page 242) ▪
+Transparent password s ynchr oniz ation  trigger softw ar e
+When you implement transparent s ynchr oniz ation , you install special softw ar e  on the trigger system to
+monitor password changes and test the strength of new password choices. This softw ar e  communicates
+with the Password Manager service on the Bravura Pass  server, using an encrypted TCP socket
+c onnection.
+Softw ar e  for the following triggers are shipped with Bravura Security Fabric :
+▪Password Change Notific ation  Module The psintcpt program intercepts nativ e  password changes ▪
+on Micr osoft  Activ e  Directory domain controllers and Windows servers, and triggers transparent
+password s ynchr oniz ation.
+You install this softw ar e  using the intcpt.msi  or intcpt-x64.msi  (on page 249) installer.
+▪LDAP password filt er  plugin ( psldap ) The psldap  program intercepts nativ e  password changes on ▪
+LDAP Directory Service servers and triggers transparent password s ynchr oniz ation.
+Softw ar e  for Windows-based LDAP servers is stored on the Bravura Security Fabric  server when you
+install Bravura Security Fabric . You copy it and c on figur e  it on the LDAP server.
+Softw ar e  for Unix-based LDAP servers is stored on the Bravura Security Fabric  server when you install
+Connector Pack . You copy it and c on figur e  it on the LDAP server.

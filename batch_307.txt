@@ -1,0 +1,352 @@
+Criteria Description
+Only include groups without direct owners Presented only when report type is set to Show managed
+group and authoriz ation  summary . When this option  is
+enabled only groups without direct owners will be listed.
+Owners via groups that own a subgroup are not
+considered as direct owners.
+Include deleted memberships Include deleted group memberships in the results. This
+option  is only available for the Show managed group
+members report  type, and will only return the most
+recent deletion  from each group, per user.
+Membership deleted by: Filter results when including deleted memberships to
+only include deletions  initia t ed  from a specific  source.
+(All) Include all deleted memberships in results
+Bravura Security Fabric  Only include group memberships
+deleted via Bravura Security Fabric , including: processed
+user requests, aut omatic  management oper ations,  and
+exit traps.
+Out-of-band  Only include group memberships deleted by
+means outside the control of the Bravura Security Fabric ,
+including local deletion  from the group’s target system.
+This option  will only return results for managed groups
+with the Track Changes option  enabled.
+Resource attribut e Filter results using a resource attribut e  and criteria. The
+type of criteria is dependent on the attribut e  selected.
+Up to four resource attribut e  filt er s  can be de fined.
+Users who belong to the user class c on figur ed  in the Manage the system > Modules> Manage reports
+(RPT) > GROUPAPP REPORT ACCESS field  can run this report from the Groups app.
+Group membership consistency
+Purpose : Identifies  group memberships with a consistency score based on comparing users by attribut e
+values.
+Executable : consistencygroups
+Search Criteria :
+Criteria Description
+User ID Search for one or more users for which you want to run
+the report. All users are included by default.
+Alt ernativ ely ,  you can type the short ID of a user or a
+pattern  of user IDs using wildcard characters, ’*’
+r epr esenting  any string of characters and ’?’ r epr esenting
+any single characterCriteria Description
+Group ID Search for the group you want to report on. Alt ernativ ely ,
+you can type the long ID of a group or a pattern  of group
+IDs using wildcard characters, ’*’ r epr esenting  any string
+of characters and ’?’ r epr esenting  any single character. All
+groups are included by default.
+Target system ID Type a comma-and-space-delimited list of target system
+IDs for which you want to run the report. Alt ernativ ely ,
+you can search for one or more target systems.
+User attribut es  to collect users into peer groups Select at least one attribut e  to collect users into peer
+groups. A peer group is a group of users with some
+attribut e  in common; for example, users working at the
+same loc ation  or department, or having the same
+manager.
+Minimum size of a user peer group Specify the size of a peer group If a peer group has fewer
+members than this, their entitlemen t  consistency will not
+be calculated. Instead, an in f ormation  icon will be
+displayed in the consistency column for these users in the
+report. Default value is 2: The value should be 2 or
+greater.
+Mark items as inconsistent if fewer than this percent of
+peers share the itemEdit the value to determine how out -of -pattern
+entitlemen ts  will be highlighted. By default, if consistency
+c alculations  are enabled and fewer than 20% of users
+share an entitlemen t,  it will be highlighted in the review.
+Mark items as consistent if at least this percent of peers
+share the itemEdit the value to determine how in-pattern  entitlemen ts
+will be highlighted. By default, if consistency c alculations
+are enabled and at least 80% of user share an
+entitlemen t,  is will be highlighted in the review.
+This report can be a bit slow when you try to run for a lot of data, in order to generate a report, you can
+schedule the report to run at a later time,  with options  to email or export the output.
+Membership
+Purpose : Provides details about managed groups membership.
+Executable : membership
+Search Criteria :
+Criteria Description
+User ID Search for one or more users for which you want to run
+the report. All users are included by default.
+Alt ernativ ely ,  you can type the short ID of a user or a
+pattern  of user IDs using wildcard characters, ’*’Criteria Description
+r epr esenting  any string of characters and ’?’ r epr esenting
+any single character.
+Group ID Search for the group you want to report on. Alt ernativ ely ,
+you can type the long ID of a group or a pattern  of group
+IDs using wildcard characters, ’*’ r epr esenting  any string
+of characters and ’?’ r epr esenting  any single character. All
+groups are included by default.
+Pr ofile  attribut e Filter results using a pr ofile  attribut e  and criteria. The
+type of criteria is dependent on the attribut e  selected.
+Up to two pr ofile  attribut e  filt er s  can be de fined.
+User attribut es  to display Select user attribut es  to display in reports.
+Membership attribut es  to display Select attribut es  on group account membership or child
+group membership to display in reports.
+Member type Select the member types to display:
+▪Account▪
+▪Group▪
+▪Unknown object▪
+Leaving it blank is the same as selecting  all types.
+Group members and group owners are considered
+unknown when:
+▪They are not in the same OU as that of the managed▪
+group, or;
+▪They are of a type other than account or group; that▪
+is, contact or computer object.
+Membership type Select the membership types to display:
+▪Direct▪
+▪Indirect▪
+Leaving it blank is the same as selecting  all types.
+Target system ID Type a comma-and-space-delimited list of target system
+IDs for which you want to run the report. Alt ernativ ely ,
+you can search for one or more target systems.
+Include deleted memberships Include deleted group memberships in the results.
+Include invalid users and accounts Include or exclude users and accounts that may have
+become invalid during the last auto discovery.
+Membership attribut e Filter results using a membership attribut e  and criteria.
+The type of criteria is dependent on the attribut e
+selected. Up to two membership attribut e  filt er s  can be
+de fined.
+Users who belong to the user class c on figur ed  in the Manage the system > Modules> Manage reports
+(RPT) > GROUPAPP REPORT ACCESS  field  can run this report from the Groups app.Group changes
+Purpose : Provides details about changes a ff ecting  managed groups.
+Executable : groupchanges
+Search Criteria :
+Criteria Description
+Report type Select a report type:
+▪Group changes Select this option  to only show ▪
+changes to groups that are managed. Selecting  this
+report type displays the Create group, Delete group,
+and Update group as selectable inputs in Display
+oper ations.
+▪Group membership changes Select this option  to ▪
+show changes to group membership. Selecting  this
+report type displays the Assign group, Revoke group,
+Add child group, and Delete child group as selectable
+inputs in Display oper ations.
+▪Group ownership changes Select this option  to show ▪
+changes to managed group ownership. Selecting  this
+report type displays the Add group owner, Delete
+group owner, Add owner group, and Delete owner
+group as selectable inputs in Display oper ations.
+Leaving it blank is the same as selecting  all types.
+Display oper ations Select an oper ation:
+▪Create group Groups that are created are displayed in▪
+report.
+▪Delete group Groups that are deleted are displayed in▪
+report.
+▪Update group Groups that have group attribut e ▪
+updates are displayed in report.
+▪Assign group Groups which new members join are▪
+displayed in report.
+▪Revoke group Groups which members leave are▪
+displayed in report.
+▪Add child group Groups that have new child groups▪
+are displayed in report.
+▪Delete child group Groups from which child groups are▪
+deleted are displayed in report.
+▪Remove unknown object from a group Groups from▪
+which unknown members are removed are displayed
+in report.
+▪Add group owner Groups that have new owners are▪
+displayed in report.Criteria Description
+▪Delete group owner Groups whose owners are▪
+removed are displayed in report.
+▪Remove unknown owner from a group Groups from▪
+which unknown owners are removed are displayed in
+report.
+▪Add owner group Groups that have new group owner▪
+are displayed in report.
+▪Delete owner group Groups whose owner group is▪
+removed are displayed in report.
+Leaving it blank is the same as selecting  all oper ations.
+Resource attribut e  to display Select resource attribut es  to be displayed in report.
+Time range Select time  range.
+Use r elativ e  date Selecting  this time  range displays the
+Choose r elativ e  request entry date: input field  with a list
+of inputs to select
+▪Current date▪
+▪Current calendar week▪
+▪Current month▪
+▪Current quarter▪
+▪Current year▪
+▪Previous day▪
+▪Previous calendar week▪
+▪Previous month▪
+▪Previous quarter▪
+▪Previous year▪
+Use selected date
+You can de fine  a specific  date range for your
+report. The fir s t da t e/time  field  selects the
+earliest start time  to include, and the second
+selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do 2.
+not want to start on the hour.
+3.Click the lower da t e/time  field  to specify the 3.
+end date and hour.
+4.Type an end time  in HH:MM format if you do 4.
+not want to start on the hour.
+The allowed years range from 1970 to 2038
+Selecting  this time  range displays the Earliest request
+entry start date : and Latest request entry start date :
+input fields.
+Use within the last N days : Selecting  this time  range
+displays the Number of days: input field.
+Use N or more days ago : Selecting  this time  range
+displays the Number of days: input field.Criteria Description
+Resource attribut e Filter results using a resource attribut e  and criteria. The
+type of criteria is dependent on the attribut e  selected.
+Up to four resource attribut e  filt er s  can be de fined.
+Authorizer ID Type a comma-and-space-delimited list of authorizer IDs.
+Alt ernativ ely ,  you can search for one or more authorizers.
+Requester ID Type a comma-and-space-delimited list of requester IDs.
+Alt ernativ ely ,  you can search for one or more requesters.
+Managed groups Search for the group you want to report on. Alt ernativ ely ,
+you can type the long ID of a group or a pattern  of group
+IDs using wildcard characters, ’*’ r epr esenting  any string
+of characters and ’?’ r epr esenting  any single character. All
+groups are included by default.
+Group owner Type a comma-and-space-delimited list of group owners.
+Alt ernativ ely ,  you can search for one or more group
+owners.
+Users who belong to the user class c on figur ed  in the Manage the system > Modules> Manage reports
+(RPT) > GROUPAPP REPORT ACCESS field  can run this report from the Groups app.
+Auto-assignment surplus and de ficit
+Purpose : Variances between roles and groups that users do have and roles and groups that users should
+have, based on policy.
+Executable : autoassignmentdetails
+Search Criteria :
+Criteria Description
+Resource type Select a resource type:
+Managed group : Select this option  to only show
+managed groups.
+Role : Select this option  to only show roles.
+Group ID If Resource Type Managed groups  is selected, search for
+one or more managed groups for which you want to run
+the report. Alt ernativ ely ,  you can type the long ID of a
+managed group.
+Roles If Resource Type Roles is selected, search for one or more
+roles for which you want to run the report. Alt ernativ ely ,
+you can type the ID of a role.
+Type of variance Select an auto assignment deviance type:
+(All): Select this option  to show all surpluses and de ficits.
+De ficit : Select this option  to only show de ficits.
+Surplus : Select this option  to only show surpluses.Criteria Description
+Auto-assignment status Select an auto-assignment status:
+(All): Select this option  to show all auto assignments.
+Enabled : Select this option  to only show enabled auto
+assignments.
+Disabled : Select this option  to only show disabled auto
+assignments.
+Pr ofile  attribut e  to display Select the pr ofile  attribut es  to show for each user listed.
+Summarize report Select this option  to summarize the report.
+In this mode, the report includes a count of the number
+of members and members not in compliance for each
+selected resource.
+Auto-assignment de viations
+Purpose : Provides surplus and de ficit  de viations  s t atistic al  summary of auto resource assignments for
+managed groups and roles.
+Executable : autoassigndeviation
+Search Criteria :
+Criteria Description
+Resource type Select a resource type:
+Managed group : Select this option  to only show
+managed groups.
+Role : Select this option  to only show roles.
+Group ID If Resource Type Managed groups  is selected, Search for
+one or more managed groups for which you want to run
+the report. Alt ernativ ely ,  you can type the long ID of a
+managed group.
+Roles If Resource Type Roles is selected, Search for one or
+more roles for which you want to run the report.
+Alt ernativ ely ,  you can type the ID of a role.
+Auto-assignment status Select an auto-assignment status:
+(All): Select this option  to show all auto assignments.
+Enabled : Select this option  to only show enabled auto
+assignments.
+Disabled : Select this option  to only show disabled auto
+assignments.
+Minimum de ficits  remaining Only display resources with the minimum number of
+de ficits  remaining.
+Minimum de ficits  requested Only display resources with the minimum number of
+de ficits  requested.Criteria Description
+Minimum surpluses remaining Only display resources with the minimum number of
+surpluses remaining.
+Minimum surpluses requested Only display resources with the minimum number of
+surpluses requested.
+Auto-assignment setup
+Purpose : Reports on c on figur ation  of roles and groups that are assigned and/or revoked as a matter  of
+policy.
+Executable : autoassignconfig
+Search Criteria :
+Criteria Description
+Resource type Select a resource type:
+Managed group : Select this option  to only show
+managed groups.
+Role : Select this option  to only show roles.
+Group ID If Resource Type Managed groups  is selected, Search for
+one or more managed groups for which you want to run
+the report. Alt ernativ ely ,  you can type the long ID of a
+managed group.
+Roles If Resource Type Roles is selected, Search for one or
+more roles for which you want to run the report.
+Alt ernativ ely ,  you can type the ID of a role.
+Auto-assignment status Select an auto-assignment status:
+(All): Select this option  to show all auto assignments.
+Enabled : Select this option  to only show enabled auto
+assignments.
+Disabled : Select this option  to only show disabled auto
+assignments.
+Auto-assignment policy compliance per user
+Purpose : User centric view of surplus and de ficit  de viations  in auto resource assignments for managed
+groups and roles.
+Executable : autoassignusers
+Search Criteria :Criteria Description
+User ID Type a user’s pr ofile  ID to only list the surpluses and
+de ficits  that apply to that user. Alt ernativ ely ,  you can
+search for one or more pr ofile  IDs.
+Type of variance Select an auto assignment deviance type:
+(All) : Select this option  to show all surpluses and de ficits.
+De ficit : Select this option  to only show de ficits.
+Surplus : Select this option  to only show surpluses.
+Auto-assignment status Select an auto-assignment status:
+(All): Select this option  to show all auto assignments.
+Enabled : Select this option  to only show enabled auto
+assignments.
+Disabled : Select this option  to only show disabled auto
+assignments.
+Pr ofile  attribut e  to display Select the pr ofile  attribut es  to show for each user listed.
+Summarize report Select this option  to summarize the report.
+In this mode, the report includes a count of the number
+of roles and groups that may be surplus or de ficien t  for
+each user selected.
+Minimum number of total surpluses Filter out rows that have less than the specified  threshold
+value for number of surpluses with the role.
+Graph type Select a type of graph to generate for the report.
+None : no graph will be generated.
+Horizontal bar chart : a horizontal bar chart will be
+generated for the report.
+Number of rows for graph The maximum rows for graph to display. The selected
+rows will be displayed with the number of entitlemen ts
+in descending order.
+Compare numbers of group memberships
+Purpose : Compare numbers of group memberships by c ounting
+▪group memberships that are consistent or not consistent with assigned roles▪
+▪group memberships that are consistent or not consistent with auto-assignment▪
+▪group memberships by how they were assigned▪
+Executable : comparenumberofgroupmemberships
+Search Criteria :
+Criteria Description
+Data set 1 label Type a label for data set 1.

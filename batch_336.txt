@@ -1,0 +1,309 @@
+Criteria Description
+the fir s t set of date / time  controls to select the earliest
+time  to include, and the second set of date / time
+controls to select the latest time  to include.
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Skin / Language pack utiliz ation
+Purpose : Provides skin and language pack utiliz ation  in f ormation  within a specified  time  period in a
+summarized or detailed report to show which skins and languages have been used to login to the
+instance.
+Executable : languagepackutilization
+Search Criteria :
+Criteria Description
+Skin Skin utiliz ation  in f ormation  within a specified  time
+period. Select one or more skins to include in the report.
+The list includes only the installed skins have been used
+to successfully login to the instance.
+The default skin in the list is the default skin compiled for
+the instance.
+Language Language pack utiliz ation  in f ormation  within a specified
+time  period. Select one or more language packs to
+include in the report.
+The list includes only the installed language packs that
+have been used to successfully login to the instance.
+The default language pack in the list is United States
+English (EN-US).
+Choose date range Choose one of the following options  to de fine  a date
+range.
+Date not required : This is the default setting.  Skin and
+language pack utiliz ation  is reported regardless of the
+date range.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. ThisCriteria Description
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.Criteria Description
+Option Description
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: The utiliz ation  of a skin and language pack is only
+included in the report if the time  of a successful login
+using that specific  skin and language pack falls within the
+selected r elativ e  date range.
+The selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+The start time  is the time  that the report was
+executed. To set a selected date range:Criteria Description
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: The utiliz ation  of a skin and language pack is only
+included in the report if the time  of a successful login
+using that specific  skin and language pack falls between
+the selected date range.
+Use within the last N days:  The utiliz ation  of a skin and
+language pack is only included in the report if the time  of
+a successful login using that specific  skin and language
+pack falls within the specified  last number of days.
+Use N or more days ago : The utiliz ation  of a skin and
+language pack is only included in the report if the time  of
+a successful login using that specific  skin and language
+pack was more than the specified  number of days ago.
+Report type Choose one of the following to determine which type of
+report to run.
+(All): This is the default setting  to run the report for both
+the skins and language packs.
+Skin : Include only the skin utiliz ation  in the report.
+Language : Include only the language pack utiliz ation  in
+the report.
+Show detailed report The default is to have this option  unchecked to show the
+summary report. Only the total number of users and
+sessions will be shown for the selected skins and
+languages that were used to login to the instance.
+When this option  checked, a more detailed report will be
+shown to show which specific  languages have been used
+for each of the selected skins and alt ernativ ely  which
+specific  skins have been used for each of the selected
+languages to login to the instance.
+Graph type Select the graph type:
+(None ): No graph generated
+Pie chart : a pie chart will be generated
+This option  is only shown when Show detailed report is
+not selected and All is not selected as the report type.User and service metrics
+Purpose : Lists user and service s t atistics.
+Executable : userservicemetrics
+Search Criteria :
+Criteria Description
+R eporting  mode Select a metrics group that you want to add to the report
+output. The default option  is General user and service
+metrics :
+▪General user and service metrics▪
+▪Accounts on each target▪
+▪User and service s t atistics ▪
+Choose date range Choose one of the following options  to de fine  the da t e/
+time  that the oper ation  was executed. This search
+criterion is only available in User and service s t atistics
+r eporting  mode:
+Date not required : This is the default setting.  Oper ations
+are reported regardless of their e x ecution  date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.Criteria Description
+Option Description
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: Oper ations  are only included in the report output if
+their e x ecution  date falls within the selected r elativ e  date
+range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Oper ations  are only included in the report output if
+their e x ecution  date falls between the selected dates.
+Use within the last N days : Oper ations  are only included
+in the report output if their e x ecution  date falls within
+the specified  last number of days.SQL utility  history
+Purpose : Ex ecution  history of sqlutil.p y .
+Executable : sqlutilityhistory
+Search Criteria :
+Criteria Description
+Choose date range: Choose one of the following options  to de fine  the da t e/
+time  that the oper ation  was executed.
+Date not required : This is the default setting.  Oper ations
+are reported regardless of their e x ecution  date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.Criteria Description
+Option Description
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: Oper ations  are only included in the report output if
+their e x ecution  date falls within the selected r elativ e  date
+range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Oper ations  are only included in the report output if
+their e x ecution  date falls between the selected dates.
+Use within the last N days : Oper ations  are only included
+in the report output if their e x ecution  date falls within
+the specified  last number of days.
+Script e x ecution  status: Select the script e x ecution  status that you want to see to
+the report output. The default option  is All:

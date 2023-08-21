@@ -1,0 +1,114 @@
+This value must be equal to or greater than the value for Mark items as consistent if at least
+this percent of peers share the item .
+f.Edit the value for Include this note for aut omatic ally  certified  entitlemen ts  to suit your needs. f.
+Use the question  mark icon to view available variables.
+6.If you want to aut omatic ally  identif y  inconsistent items as candidates for r e v oc ation: 6.
+a.Click the Identif y  r e v oc ation  candidates by resource attribut e  checkbox. a.
+b.Click the magnifying glass icon to select the Resource attribut e  to compare . b.
+c.Set the Comparison method . c.
+The methods available are determined by the resource attribut e  type.
+d.For date, string or integer type attribut es,  set the Resource attribut e  value . d.
+e.Edit the value for Identif y  candidates for r e v oc ation  if fewer than this percent of peers share e.
+the item and auto-revoke attribut e  expression is met .
+This value must be equal to or less than the value for Mark items as inconsistent if fewer than
+this percent of peers share the item .f.Edit the value for Include this note for r e v oc ation  candidates to suit your needs. f.
+Use the question  mark icon to view available variables.
+g.Depending on the items selected, select the pr e-de fined  request to aut omatic ally  revoke the g.
+item, if the option  is available.
+Next: 
+Start, save, or schedule the c on figur ation  (on page 2627).Unsaved changes are lost if you navigate away from the c ertific ation  menu.
+Create a c on figur ation  certific ation  campaign
+To create a new certific ation  campaign, click Manage certific ation  process  > Start c on figur ation
+certific ation  campaign .
+The certific ation  setup menu for new campaigns includes a series of tabbed pages to guide you through
+the process of cr eating  a certific ation  campaign. The fir s t page in the series allows you to select the
+entitlemen ts  or c on figur ations  that will be part of the campaign. You can proceed through the required
+steps by clicking Next: <tab>  or clicking any tab on the certific ation  menu to:
+1.Select c on figur ations  to review 1.
+Con figur ations  that can be certified  include:
+▪Roles▪
+▪ Segr eg ation  of duties  rules ▪
+To select a c on figur ation  to certif y:
+1.Navigate to the c on figur ation  page for a new or saved campaign. 1.
+2.Click the Items to review tab, then select the c on figur ation  you want to certif y . 2.If you select All, a question  mark is displayed next to the entitlemen t  to indicate that ?? (p??) is in
+e ff ect.
+3.Click Next: Reviewers or another certific ation  tab to proceed. 3.
+Next:
+Select reviewers for c on figur ation  certific ation  campaigns to determine the certific ation  method.
+2.Select reviewers for c on figur ation  certific ation  campaigns 2.
+To determine who will certif y  c on figur ations:
+1.Navigate to the config ur ation  page for a new or saved campaign. 1.
+2.Click the Reviewers tab, then select a sub-tab to select: 2.▪Single reviewer▪
+Use the single reviewer method when one person is easily able to review all the c on figur ations
+included in the campaign.
+Search or browse the list to select the reviewer.  
+Next: 
+Submit the c on figur ation  review to launch, save, or schedule it.  (on page 2627)
+▪ Con figur ation  authorizers ▪
+When you use the c on figur ation  authorizers method, you c on figur e  reviewers based on
+authoriz ation  settings  for selected c on figur ation  items. This allows you to divide the work
+among multiple  reviewers.
+If a c on figur ation  does not have an authorizer, you can manually select a user to be the
+reviewer.
+Manually assigning c onfigur ation  authorizers
+To manually assign c on figur ation  authorizers:1.Select a c on figur ation  row to select the reviewer for the c on figur ation. 1.
+2.Search or browse the list to select the reviewer.2.3.Click Next: Submit 3.
+Next: 
+Submit the c on figur ation  review to launch, save, or schedule it.  (on page 2627)
+Unsaved changes are lost if you navigate away from the c ertific ation  menu.
+Use saved certific ation  setups
+Product administrators with the Manage certific ation  process privilege can load saved certific ation
+setups that they created or that other product administrator s have shared.
+Product administrators with the Initia t e  entitlemen t  certific ation  campaigns privilege can load saved
+certific ation  setups that they created or that other product administrator  have shared, provided they are
+c on figur ed  with a single reviewer.
+To start or schedule a campaign based on a saved certific ation  setup:
+1.Navigate to the Manage certific ation  process (CERT) module  (on page 2567) and select Saved 1.
+certific ation  setups .2.Select the row to load the certific ation  setup. 2.
+You can now modify the certific ation  setup as required by selecting  tabs in the certific ation  menu,
+then start a new campaign.
+Default single user certific ation  setup 
+SINGLE_USER_CERTIFICATION_DEFAULT_CAMPAIGN is the default setup for a single user certific ation
+campaign. You can modify this setup on the Saved certific ation  setups page. To use another setup, typethe ID of the saved setup in the CERT SINGLE USER CONFIGURATION field  at Manage the system  >
+Modules  > Manage certific ation  process  (CERT ).  
+Notes on saved certific ation  setups 
+On the Saved certific ation  setups page:
+▪A valid certific ation  setup is shown with a green checkmark 
+ . ▪
+▪An invalid certific ation  setup (missing entitlemen t,  users, or reviewer) is flag g ed  with a red cross 
+ . ▪
+You cannot start a campaign or schedule a campaign based on the certific ation  setup until  you update
+it and make it valid.
+▪If a reviewer is invalid, for example because his account has been deleted, the reviewer ID is displayed▪
+with a strike line.
+▪A certific ation  setup that is in use for a scheduled campaign is denoted with a question  mark (with ▪
+appropriate hover text). You cannot delete this certific ation  setup unless the scheduled campaigns
+based on this certific ation  setup is deleted fir s t.
+Click the view icon in the Activ e  campaigns column to view the activ e  certific ation  campaigns that use
+the selected saved certific ation  setup.
+▪A certific ation  setup that another product administrator has shared is denoted with a question  mark ▪
+(with appropriate hover text). You can use this certific ation  setup to start or schedule a campaign but
+you cannot delete nor modify this certific ation  setup. You can make a copy using Save new...
+Only a superuser (who has all adminis tr ativ e  privileges) may modify a certific ation  setup owned by
+another product administrator.
+▪A certific ation  setup that used a saved search cannot be shared with other users. Any saved searches ▪
+are recalculated when the setup is loaded.
+Next: 
+The c on figur ation  menu for saved campaigns includes a series of tabbed pages to guide you through the
+process of initiating  a certific ation  campaign. You can proceed through the required steps by clicking
+Next:<tab>  or clicking any tab on the certific ation  menu.
+For entitlemen t  certific ation  campaigns:
+▪Select entitlemen ts  to review ▪
+Entitlemen ts  are resources that have been assigned to users. For the purposes of certific ation  they
+can include:
+▪Target systems▪
+▪Roles▪
+▪Managed groups▪
+▪ Segr eg ation  of duties  rules ▪
+▪ Pr ofiles▪▪ Pr ofile  attribut es ▪
+When entitlemen ts  are assigned to a user via a role, they can only be c ertified  through that role.
+Reviewers cannot view or c ertif y  the member entitlemen ts  individually.
+Empty manage groups will not be shown in group selection  list.
+To select an entitlemen t  on which to certif y  users:
+1.Navigate to the c on figur ation  page for a new or saved campaign. 1.
+2.Select the Items to review tab, then select the entitlemen ts  you want to certif y . 2.

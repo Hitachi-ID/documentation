@@ -1,0 +1,380 @@
+The request rewrite plugin is launched before parameters such as authoriz ation  are c ommitted;  for
+example, when the plugin launches during request submission, it may modify some actions,  requiring
+authorizers to be assigned after  it is run.
+The following is an example of the input to the request rewrite plugin:
+# KVGROUP-V1.1
+"" "" = {
+  "sessionid" = "Scf7e0618-8b44-4304-aed0-cabd17e45ed2"
+  "module" = "idwfm"
+  "firstrun" = "false"
+  "navigation" "" = {
+    "wfpage" = "requestsubmitpredefinedrequest"
+    "prequest" = "UPD-SELF-CONTACT"
+  }
+  "event" = "EVENT_POST_BATCH"
+  "request" "" = {
+    "requestID" = "5488CCB03DB901864DE53DDB63695AE7"
+    "macroStatus" = "U"
+    "requester" = "WOOD0000"
+    "requesterName" = "Maddox, Woodrow"
+    "requesterEmail" = "woodrow.maddox@norse.bravurasecurity.com"
+    "recipient" = "WOOD0000"
+    "recipientEmail" = "woodrow.maddox@norse.bravurasecurity.com"
+    "entryDate" = "1418251465"
+    "notes" = ""
+    "reason" = ""
+    "segment" = ""
+    "reservationid" = "00000000-0000-0000-0000-000000000000"
+    "autoressig" = ""
+    "prequest" = "UPD-SELF-CONTACT"
+    "resource" "5488CCB5CEA4B8264491733F52D03D02" = {
+      "longIDSet" = "false"
+      "itemType" = "accountID"
+      "targetid" = "AD"
+      "accountID" = "WOOD0000"
+      "userid" = "WOOD0000"
+      "enact" = "true"
+      "pseudoOp" = "false"
+      "pseudoTag" = ""
+      "pseudoData" = ""
+      "finalized" = "false"      "authtype" = "P"
+      "operation" = "UPDT"
+      "status" = "O"
+      "statusreason" = ""
+      "notes" = ""
+      "reason" = ""
+      "result" = "I"
+      "implicit" = "true"
+      "groupApproval" = "00000000-0000-0000-0000-000000000000"
+      "parentRole" = ""
+      "autoselect" = "none"
+    }
+    "attribute" "EXCHANGE-ALIAS" = {
+      "value" "" = {
+        "value" = "WOOD0000"
+      }
+    }
+    "attribute" "HOME-COUNTRY" = {
+      "value" "" = {
+        "value" = "United States"
+      }
+    }
+    "attribute" "PROFILEID" = {
+      "value" "" = {
+        "value" = "WOOD0000"
+      }
+    }
+    "attribute" "WORKLOC-AD" = {
+      "value" "" = {
+        "value" = "Building  Floor  Cubicle "
+      }
+    }
+  }
+  "recipient" "user" = {
+    "id" = "WOOD0000"
+    "name" = "Maddox, Woodrow"
+  }
+  "requester" "user" = {
+    "id" = "WOOD0000"
+    "name" = "Maddox, Woodrow"
+  }}
+Output
+The request rewrite plugin returns the following output:
+"" "" = {
+  "changed" = "true|false" # Indicates whether request has changed.
+                 # Default value is true if the key is missing.
+  "rerun" = "true|false|
+auto" # If present in the KVGroup and set to true
+                   # the script will be rerun.  When set to false, the
+                   # script will not be rerun and when set to auto, the
+                   # script will be rerun if changes are detected from the
+                   # previous run.
+  "infomsg" = ""   # Informational message returned, if any.
+                   # The value is displayed in the CGIs if this is returned.
+  "errmsg" = ""    # Error message returned, if any.
+                   # The value is displayed in the CGIs if this is returned.
+                   # This represents an error in the request that
+                   # the requester needs to correct.
+  "retainResources" = "<true|
+false>" # If true, only resources returned will be added, removed, updated.
+                                     # If false, resources not returned will be removed.
+  "retval" = "<N>" # Mandatory; zero is success and non-zero is failure
+  "password" = "<newpassword>" # This is now obsolete and has been moved to
+                               # resource section
+  "skip_role" = "1" # If returned when preselect_role is passed in,
+                    # role selection will be skipped by the CGIs.
+  "skip_template" = "1" # If returned when preselect_template is passed in,
+                        # template selection will be skipped by the CGIs.
+  "skip_nosgroup" = "1" # If returned when preselect_nosgroup is passed in,
+                        # managed group selection will be skipped by the CGIs.
+  "skip_summary_pdr" = "1" # If set during a pre-defined request,
+                           # the final summary page will be skipped by the CGIs.
+  # Followed by any number of resource entries.
+  # When retainResources is true, resources that are updated, added, or removed
+  # are the only that need to be returned.
+  # When retainResources is omitted or false, resources that are not returned
+  # are considered removed.  All resources will be added or changed on the request.
+  "resource" "<resource id from input>|<empty>" = {
+    "remove" = "true" # If present in the KVGroup, the resource is removed                      # from the request.
+  } # 0 or more
+}
+The follow are examples of KVGroup plugin output:
+1.To add a group membership add to the request:  1.
+"" "" = { 
+  "changed" = "true" 
+  "infomsg" = "" 
+  "retval" = "0" 
+  "resource" "4E12EZ11531ABAB574AB4B4295C4872D" = { 
+    "authorizationsReceived" = "0" 
+    "authorizationsRequired" = "1" 
+    "authorizer" = "crysta.soria" 
+    "implicit" = "false" 
+    "itemType" = "accountID" 
+    "notes" = "" 
+    "operation" = "UPDT" 
+    "parentRole" = "" 
+    "pseudoData" = "" 
+    "pseudoOp" = "false" 
+    "pseudoTag" = "" 
+    "reason" = "" 
+    "result" = "O" 
+    "accountID" = "steve.benes" 
+    "targetid" = "NORSE" 
+  } 
+  "resource" "" = { 
+    "accountID" = "steve.benes" 
+    "itemType" = "groupID" 
+    "operation" = "GRUA" 
+    "targetid" = "NORSE" 
+    "groupID" = "CN=FIN-
+AR,OU=resources,OU=staff,DC=norse,DC=bravurasecurity,DC=com" 
+    "autoselect" = "true" 
+   } 
+}  
+2.To add a group membership add to the request and retain resources:  2.
+"" "" = { 
+  "changed" = "true" 
+  "infomsg" = ""   "retval" = "0" 
+  "retainResources" = "true" 
+  "resource" "" = { 
+    "accountID" = "steve.benes" 
+    "itemType" = "groupID" 
+    "operation" = "GRUA" 
+    "targetid" = "NORSE" 
+    "groupID" = "CN=FIN-
+AR,OU=resources,OU=staff,DC=norse,DC=bravurasecurity,DC=com" 
+    "autoselect" = "true" 
+   } 
+}  
+3.To add a group membership add to the request and role:  3.
+# KVGROUP-V1.0 
+"" "" = { 
+  "changed" = "true" 
+  "infomsg" = "" 
+  "retval" = "0" 
+  "resource" "3G34GB22672CDCD574BC4C4295D5983F" = { 
+    "authorizationsReceived" = "0" 
+    "authorizationsRequired" = "0" 
+    "autoselect" = "none" 
+    "groupApproval" = "00000000-0000-0000-0000-000000000000" 
+    "implicit" = "false" 
+    "itemType" = "template" 
+    "notes" = "" 
+    "operation" = "ACUA" 
+    "parentRole" = "" 
+    "pseudoData" = "" 
+    "pseudoOp" = "false" 
+    "pseudoTag" = "" 
+    "reason" = "" 
+    "result" = "O" 
+    "template" = "NORSE_TEMPLATE" 
+    "targetid" = "NORSE" 
+  } 
+ 
+ "resource" "" = { 
+    "itemType" = "groupID" 
+    "operation" = "GRUA"     "targetid" = "NORSE" 
+    "groupID" = "CN=FIN-
+AR,OU=resources,OU=staff,DC=norse,DC=bravurasecurity,DC=com" 
+    "autoselect" = "true" 
+    "template" = "NORSE_TEMPLATE" 
+   } 
+  "resource" "" = { 
+    "itemType" = "role" 
+    "operation" = "RLUA" 
+    "pseudoOp" = "false" 
+    "autoselect" = "mandatory" 
+    "role" = "EXCHANGE_ROLE" 
+  } 
+}  
+4.To remove a resource and retain resources:  4.
+# KVGROUP-V1.0 
+"" "" = { 
+  "changed" = "true" 
+  "infomsg" = "" 
+  "retval" = "0" 
+  "retainResources" = "true" 
+  "resource" "3G34GB22672CDCD574BC4C4295D5983F" = { 
+    "removed" = "true" 
+  } 
+}  
+5.To set a default password for the resources in the request:  5.
+# KVGROUP-V1.0 
+"" "" = { 
+  "changed" = "true" 
+  "infomsg" = "" 
+  "retval" = "0" 
+  "resource" "3G34GB22672CDCD574BC4C4295D5983F" = { 
+    "autoselect" = "none" 
+    "enact" = "true" 
+    "finalized" = "false" 
+    "groupApproval" = "00000000-0000-0000-0000-000000000000" 
+    "implicit" = "false" 
+    "itemType" = "template" 
+    "longIDSet" = "false" 
+    "itemType" = "template"     "notes" = "" 
+    "operation" = "ACUA" 
+    "parentRole" = "" 
+    "password" = "defaultPassword" 
+    "pseudoData" = "" 
+    "pseudoOp" = "false" 
+    "pseudoTag" = "" 
+    "reason" = "" 
+    "result" = "O" 
+    "template" = "NORSE_TEMPLATE" 
+    "targetid" = "NORSE" 
+  } 
+}  
+Setting  the password using the request rewrite plugin causes Bravura Security Fabric to bypass the
+password entry page in View and update profile  (idr) module. This overrides PASSWORD GEN PLUGIN.
+Group Approval
+The request parameter groupApproval is used to group resource authoriz ation.  Each unique
+groupApproval value represents a group of common resources.
+For all request resources, that share the same groupApproval value, the following is true:
+▪If one resource authoriz ation  request is denied, then the other resources are denied. The other ▪
+resources are denied once authoriz ation  for the entir e  request is completed.
+▪If all resources are approved, then the group of resources can be processed.▪
+If the request rewrite plugin omits the groupApproval or clears the value with
+"00000000-0000-0000-0000-000000000000", any authoriz ation  dependency is removed. If a value is set
+for groupApproval on an added resource, it will require authoriz ation  of other resources with the same
+value in addition  to its own authoriz ation.
+The following is an output example of r e writing  the request so that the group add oper ation  requires the
+user cr eation  to be approved in tandem:
+"" "" = {
+  "changed" = "true"
+  "infomsg" = ""
+  "retval" = "0"
+  "resource" "3G34GB22672CDCD574BC4C4295D5983F" = {
+    "authorizationsReceived" = "0"
+    "authorizationsRequired" = "0"
+    "autoselect" = "none"
+    "groupApproval" = "49583745-3242-6364-3453-384850692934"
+    "implicit" = "false"    "itemType" = "template"
+    "notes" = ""
+    "operation" = "ACUA"
+    "parentRole" = ""
+    "pseudoData" = ""
+    "pseudoOp" = "false"
+    "pseudoTag" = ""
+    "reason" = ""
+    "result" = "O"
+    "template" = "NORSE_TEMPLATE"
+    "targetid" = "NORSE"
+  }
+  "resource" "" = {
+    "itemType" = "groupID"
+    "groupApproval" = "49583745-3242-6364-3453-384850692934"
+    "operation" = "GRUA"
+    "pseudoOp" = "false"
+    "accountID" = "cecil.crysta"
+    "targetid" = "NORSE"
+  }
+  "resource" "" = {
+    "itemType" = "role"
+    "operation" = "RLUA"
+    "pseudoOp" = "false"
+    "autoselect" = "mandatory"
+    "role" = "EXCHANGE_ROLE"
+  }
+}
+Hiding authoriz ation  details
+You can control whether authoriz ation  details about the request should be displayed to the user viewing
+the request. By default, all request viewers can view authoriz ation  details for all requests. Alt ernativ ely
+you can write a plugin that will mask authoriz ation  details for a specific  type of viewer (such as recipient),
+or a specific  type of request.
+You can also Use user classes instead of using a plugin to hide authoriz ation  details to users within a
+specified  user class. See Using user classes with plugin points
+User class de finitions  can be added to the following plugin points:
+▪Manage the system > W orkflow  > Options  > Esc alation  > ESCALATION PLUGIN ▪
+▪Manage the system > W orkflow  > Options  > Esc alation  > FIRST CHANCE ESCALATION PLUGIN ▪
+▪Manage the system > W orkflow  > Options  > Plugins >  AUTHORIZATION DETAIL MASK PLUGIN ▪▪Manage the system  > Modules  > Options  > FILTER USER PLUGIN ▪
+▪Manage the system  > Modules  > Options  > KEEP USER PLUGIN ▪
+▪Manage the system  > Modules  > Options  > GENERATE USER PLUGIN ▪
+These plugin points include the Use user classes option,  which allows you to filt er  or generate lists of
+users based on user user classes.
+If you choose to use user classes, then you do not need to write a plugin. However, user classes can also
+be used in c onjunction  with a plugin.
+For example, if you:
+Use user classes then the specified  user classes are used to filt er  or generate lists of users.
+Use user classes and write a plugin then the specified  user classes and plugin script are both used to filt er  or
+generate lists of users, with the plugin taking its input from results
+provided by the user class.
+Write a plugin then the plugin is used to filt er  or generate lists of users.
+For details, see:
+▪Filter users  (on page 1049) to learn how to write a user filt er  or user ▪
+g ener ation  plugin
+▪About esc alation  (on page 1386) to learn how to write an esc alation ▪
+plugin
+▪Hiding authoriz ation  details  (on page 1428) to learn how to write an ▪
+authoriz ation  mask plugin.
+To c on figur e  the Use user classes option:
+1.Click Use user classes under the field  for the plugin point you want to modify. 1.
+A page loads related to the option  you are modifying. For example, if you are modifying FILTER USER
+PLUGIN, then the Filter Criteria filt er_user_plugin  page loads. If user class de finitions  already exist for
+this option,  they are listed.
+2. De fine  your user classes. You can choose e xisting  user classes, create new user classes, or both: 2.
+▪To select from e xisting  user classes: ▪
+i.Click Select... . i.
+ii.Enable the checkboxes next to the user classes you want to select, then click Select . ii.
+The list of user class members is displayed.
+iii.Complete the participan t  de finitions  for the newly added user classes by selecting  from the iii.
+drop-down menu.
+iv.Click Update . iv.
+▪To create a new user class:▪
+i.See Adding user classes  (on page 738) for details on how to create a user class. i.
+ii.Once created, complete the participan t  de finition  for your new user class by selecting  from the ii.
+drop-down menus.
+Once you’ve added at least one user class to the list of user class members, you can also:▪Delete user classes from the list.▪
+▪Update the participan t  de finitions  for the user classes in the list. ▪
+If you have multiple  user classes in the list of user class members, then The participan ts  have to
+match which of the user classes option  is displayed.
+This can be set so that:
+▪The participan ts  can match Any of the user classes listed ▪
+▪The participan ts  must match All of the user classes listed ▪
+for details.
+The plugin is set by the W orkflo w  > Options>  Plugins >AUTHORIZATION DETAIL MASK PLUGIN  field.
+There are no shipped plugins for use with this plugin point. See more in f ormation  on writing  a custom
+plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+This plugin is called by Requests app before request details are displayed on Bravura Security Fabric
+module pages or written  in email.
+Input
+The input presented to the plugin during the initial  call includes the viewer in f ormation  and the request
+in f ormation.
+    "" "" = {
+        "viewer" "user" = {
+            "id" = "<Profile ID>"
+            "name" = "<Alias>"
+            "viewas" "" = "<DMANAGER|WMANAGER|AUTHORIZER|REQUESTER|
+RECIPIENT|DELEGATE|IMPLEMENTER>"
+        }
+        "request" ""= {...}
+    }
+Output
+The plugin can provide the option  to display authoriz ation  details about the request. If the option
+returned is true, the authoriz ation  details will be hidden.
+output AuthMask = {
+hideAuthDetails = "<true|false>";
+};

@@ -1,0 +1,104 @@
+2.End user performs primary authentic ation  with Activ e  Directory username and password. Primary 2.
+authentic ation  can be c on figur ed  to authentic a t e  users against any connected system or
+authentic a t or .
+3. After  primary authentic ation  the end user is presented with a list of secondary factors that are 3.
+available to them.
+4.End user selects Azure MFA Push notific ation  for a second factor. The Bravura Security  RADIUS 4.
+connector initia t es  an authentic ation  request against the NPS server with the NPS Extension for Azure
+MFA installed.
+5.NPS Extension for Azure MFA triggers MFA request to Micr osoft  Azure. 5.
+6.End user receives push notific ation  on their Micr osoft  Authentic a t or  mobile applic ation  and approves 6.
+the request.
+7.NPS server responds with authentic ation  status to the Bravura Security  RADIUS connector. 7.
+8.End user is successfully authentic a t ed  into the Bravura Pass  self-service portal. 8.
+Setting  up Azure MFA through Radius
+Azure MFA is a feature of Azure Activ e  Direcorty that can be used as an additional  form of identific ation.
+By using Azure MFA, users can be prompted during the sign-in process to provide a code on their mobile
+phone, Face ID, a fing erprin t  scan, or other authentic ation  factor.
+ABravura Security Fabric  instance can be c on figur ed  to use Azure MFA through RADIUS, enabling cloud-
+based MFA c apabilities  to an e xisting  network without having to install, c on figur e,  and maintain new
+servers. Azure MFA can be used directly as a passwordless Bravura Security Fabric  login method, or as a
+provider of 2FA.
+This use case illustrates a sample setup to use Azure MFA for Bravura Security Fabric  login.
+This sample setup uses:
+1.Local Activ e  Directory server  (on page 881) 1.
+2.Bravura Security Fabric  Instance  (on page 882) 2.
+3.Azure AD tenant  (on page 882) 3.
+4.Network Policy Server (NPS) with NPS extension for Azure MFA  (on page 893) 4.
+Local Activ e  Directory server
+In this example a local Activ e  Directory server is used to manage the office  network. This AD server will
+be used as a target system of the Bravura Security Fabric  instance so that users can log into the Bravura
+Security Fabric  instance using their AD cr edentials.
+You will also need to sync users from the AD server to the Azure AD tenant, so that those users can be
+authentic a t ed  by Azure AD when performing MFA through RADIUS.
+In the sample setup, an AD server running on a Windows 2016 environment (named "CorpAD") is used.Bravura Security Fabric  Instance
+This example includes a Bravura Security Fabric  instance for users to log on using Azure MFA through
+RADIUS.
+In the sample setup, the Bravura Security Fabric  instance is running on a Windows 2016 server (named
+"Corp1").
+Once the Bravura Security Fabric  instance is installed and ready to use, users are loaded from the local
+Activ e  Directory server by adding the server as an Activ e  Directory DN target system .
+Azure Activ e  Directory tenant
+Azure MFA is a feature provided through Azure Activ e  Directory. An Azure AD tenant is needed in order to
+use the Azure MFA.
+Create an Azure Activ e  Directory tenant
+If you don't have an Azure AD tenant with premium P1/P2 license to use, you can acquire a 30-day P2
+trial license by cr eating  a new free Azure account (credit card info required to register.) If you have an
+e xisting  Azure account to use, then create an Azure AD tenant using the Azure account. See this link for
+details:
+http s://docs.micr osoft.c om/ en-us/ az ur e/ activ e-dir ect or y/de v elop/quick s t art -cr ea t e-ne w -t enan t .
+The Azure AD tenant can be accessed and managed through Azure AD portal: http s://port al.az ur e.c om .
+Create a cloud-only global administrator account
+Create a cloud-only global administrator account on the Azure AD tenant (see "Prerequisites" section  in
+http s://docs.micr osoft.c om/ en-us/ az ur e/ activ e-dir ect or y/ cloud-s ync/tut orial-single- f or es t ). Using an
+account that does not exist on our local AD target system ensures that you won't get locked out of the
+tenant. For details on how to create an account, see: http s://docs.micr osoft.c om/ en-us/ az ur e/ activ e-
+dir ect or y/fundamen t als/ add-user s-az ur e-activ e-dir ect or y .
+In addition  to managing and c on figuring  the Azure AD, this global administrator account can also be used
+as a work or school account upon ins t allation  of the NPS extension for Azure MFA. You can see and verify
+the assigned roles of the user .You should now be able to log into the Azure portal with the global administrator account, to manage
+and c on figur e  the Azure Activ e  Directory.
+Enable MFA for Azure portal login
+Enabling MFA for Azure portal login allows  users to register using the Micr osoft  Authentic a t or  app on
+their mobile devices. Registered users can use the Micr osoft  Authentic a t or  app to receive and approve
+push notific ations  sent during Azure portal login.
+Azure MFA must be c on figur ed  to send these push-mode notific ations  before users can authentic a t e
+using the Micr osoft  Authentic a t or  app. To do this:
+Log onto the Azure portal with the global administrator account to manage the Azure Activ e  Directory.
+1.From the directory Overview page, left side menu, click Security > Multif act or  authentic ation . 1.
+2.Click Additional  cloud-based multif act or  authentic ation  settings  from the Con figur e  menu. 2.3.Select Allow users to create app passwords to sign in to non-browser apps . 3.
+4.Under Methods available to users , select Notific ation  through mobile app . 4.5.Enable Azure MFA for users/groups on the Azure AD. For details see:5.
+http s://docs.micr osoft.c om/ en-us/ az ur e/ activ e-dir ect or y/ authentic ation/tut orial-enable-az ur e-m f a
+After  c ompletion  of MFA c on figur ation,  at the next Azure portal login, each user will be instructed to
+register on Micr osoft  Authentic a t or  app using their mobile phone. The Micr osoft  Authentic a t or  app can
+then receive push notific ations  from Azure AD for users to approve user authentic ation  requests.
+Conditional  Access policies vs per-user multif act or  authentic ation
+Enabling Azure AD Multi-F act or  Authentic ation  using Conditional  Access policies is the recommended
+approach. Conditional  Access is an Azure AD Premium P1 or P2 feature that lets you apply rules to
+require MFA as needed in certain scenarios. An activ a t ed  Premium P1/P2 license may be needed for
+Conditional  Access to work.
+For Azure AD free tenants without Conditional  Access, you can use security defaults to protect users.
+Users are prompted for MFA as needed, but you cannot define  your own rules to control the behavior.
+Conditional  Access policies should not be used in c onjunction  with security defaults..For details about using security defaults see : http s://docs.micr osoft.c om/ en-us/ az ur e/ activ e-dir ect or y/
+fundamen t als/ c oncep t - fundamen t als-security -de f aults .
+If needed, you can manually enable each account for per-user Azure AD Multi-F act or  Authentic ation.
+When users are enabled individually, they perform multi- f act or  authentic ation  each time  they sign in
+(with some e x ceptions,  such as when they sign in from trusted IP addresses or when the remember MFA
+on trusted devices feature is turned on). To do this:1.Click "Per-user multif act or  authentic ation"  on the Users >All users  page. 1.
+2.On the per-user multif act or  authentic ation  page, review each user's current MFA status, and enable/ 2.
+disable MFA for selected users.Both per-user MFA and c onditional  access can enable/disable MFA for users, and the per-user MFA may
+take precedence over c onditional  access.
+To learn about using per-user MFA and how to convert users from per-user MFA to Conditional  Access
+based MFA, see:
+http s://docs.micr osoft.c om/ en-us/ az ur e/ activ e-dir ect or y/ authentic ation/ho w t o-m f a-user s t a t esIf a user wants to retry the Azure MFA r egis tr ation  process, or wants to switch to a new mobile phone, an
+admin can use the Require re-register multif act or  authentic ation  link to force a user to re-register MFA
+at the next Azure portal login.
+Sync user accounts
+Next, you need to sync user accounts on the local Activ e  Directory server to the Azure AD tenant.
+In this sample setup, a single domain is synced to the Azure AD tenant, so there is no need for the local
+domain to have a public domain name, and there is no need to create any custom domain name on the
+Azure Activ e  Directory.
+For details about syncing a single domain to the Azure AD see:
+http s://docs.micr osoft.c om/ en-us/ az ur e/ activ e-dir ect or y/ cloud-s ync/tut orial-single- f or es .
+Syncing your directory to Azure requires that the "Azure AD Connect" applic ation  be locally installed on a
+machine in your domain. It is recommended to install it on the server hosting  your RADIUS NPS

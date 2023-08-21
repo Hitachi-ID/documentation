@@ -1,0 +1,305 @@
+directmanager Direct manager
+groupsearch Group ID
+attrk e y Account attribut e
+userid User ID
+name User name
+allmanagers Direct and indirect managers
+rolesearch Role ID
+hostsearch Target system ID
+▪SYSTEMMSP▪
+Advanced key Description
+workstnid Managed system ID
+platform type Platform  type
+desc Description
+▪TARGET▪
+Advanced key Description
+desc Target system description
+aut oassocia t eattr Account attribut e  to aut omatic ally  attach  accounts to
+user pr ofiles
+targetsysgrp Target system group
+platform Target system type
+url Help URL
+rbacenforce Role enforcement
+id Target system ID
+address Address
+adminid Administrator ID
+aut oassocia t e flag Aut omatic ally  attach  accounts
+hasaccount Users must have accounts
+source Source of pr ofile  IDs
+▪TARGETGROUP▪
+Advanced key Description
+description Description
+t ar g etid Target system ID
+targetgroup ID
+▪TEMPLATE▪
+Advanced key Descriptionacc ountid Account to clone when cr eating  a new user
+address Address
+desc Template description
+id Template ID
+inv_type Inventory type
+loc ation Loc ation
+targetDesc Target system description
+t ar g etid Target system ID
+platform Target system type
+Dynamic group Description
+attrk e y Resource attribut e  keys
+▪UCPAUTORESVARIANCE▪
+Advanced key Description
+directmanager Direct manager
+groupsearch Group ID
+attrk e y Account attribut e
+userid User ID
+inreq With open requests to resolve
+name User name
+allmanagers Direct and indirect managers
+rolesearch Role ID
+hostsearch Target system ID
+▪USER▪
+Advanced key Description
+allmanagers Direct and indirect managers
+directmanager Direct manager
+groupsearch Group ID
+hostsearch Target system ID
+name User name
+rolesearch Role ID
+userid User ID
+Dynamic group Description
+pr ofileattr Pr ofile  attribut e  keys
+▪USERCLASS▪Advanced key Description
+description User class description
+explicit_user Explicit user ID
+group_id Group ID
+id User class ID
+num_explicit_users Number of explicit users
+num_participan ts Number of participan ts
+num_policies Number of policies
+policy Policy
+pslang PSLang expression
+Dynamic group Description
+pr ofileattr Pr ofile  attribut e  keys
+▪USERGROUP▪
+Advanced key Description
+privileges Privileges
+id Rule ID
+userclass User class
+description Rule description
+▪WORKSTATION▪
+Advanced key Description
+workstnid Managed system ID
+mode Mode
+desc Managed system description
+address Address
+▪WSTNBATCH▪
+Advanced key Description
+wstnname Managed system description
+mspdesc Managed system policy description
+mspid Managed system policy ID
+status Randomiz ation  results
+wstnid Managed system IDacc ountid Account
+▪WSTNBATCHACCOUNT▪
+Advanced key Description
+oper ation Oper ation
+resourcetype Object type
+objectid Object ID
+retcode Results
+t ar g etid Target system ID
+▪WSTNBATCHINFO▪
+Advanced key Description
+status Status
+enddate End date
+startdate Start date
+desc Initia t ed  from
+initia t or Initia t or
+▪WSTNPWD▪
+Advanced key Description
+acc ountid Account
+t ar g e t description Target system description
+targetaddress Target system address
+workstndesc Managed system description
+workstnid Managed system ID
+templateid Template ID
+platform type Platform  type
+▪WSTNPWDCICO▪
+Advanced key Description
+userid User ID
+acc ountid Account
+wstnname Managed system description
+wstnid Managed system ID
+username User name
+▪WSTNPWDTYPE▪
+▪WSTNRECENTGSETREQ▪
+Advanced key Descriptionwstnid Managed system ID
+wstnname Managed system description
+gsetid Group set ID
+gsetdesc Group set description
+▪WSTNSERVICE▪
+Advanced key Description
+group group
+svcname service
+.
+▪comparator Must be one of: ▪
+▪"EQUAL" (or "EQ")▪
+▪"LESS_THAN" (or "LT")▪
+▪"LESS_THAN_OR_EQUAL" (or "LTE")▪
+▪"GREATER_THAN" (or "GT")▪
+▪"GREATER_THAN_OR_EQUAL"(or "GTE")▪
+▪"CONTAIN" (or "CT")▪
+▪"START_WITH" (or "SW")▪
+▪"IS"▪
+▪"ON"▪
+▪"BEFORE" (or "BF")▪
+▪"BEFORE_OR_ON" (or "BFO")▪
+▪"AFTER" (or "AF")▪
+▪"AFTER_OR_ON" (or "AFO")▪
+▪value What is compared by comparator. When comparator is "IS", <value> must be "SET" or "EMPTY". ▪
+When comparator is "EQ" or "EQUAL", <value> CAN be "(1—0—t—f—T—F) ". When comparator is
+"CT" or "SW", <value> can contain wildcards "*" and "?". Otherwise, <value> is a wide string (can
+contain unicode characters).
+▪operator Required when "position"  is greater than 1. Must be "OR" or "AND". The logical operator is ▪
+applied before "filt er",  in order to logically connect "filt er"s  together, in order of "position"  value. AND
+always has precedence over OR.
+▪ field  Optional  key to specify field  when the key is not sufficien t;  for example, when dealing with ▪
+attribut es,  field  = attribut e  key; when dealing with resource groups, field  = resource group id.
+▪negate When "1", this generates the logical NOT of "filt er". ▪
+Example
+The following is an example of the output KVG file:
+▪Saved search name: "ROLE_DEV"▪
+▪Filter: advanced key "Role ID" contains "DEV"▪# KVGROUP-V1.0
+"output" "saved_search_plugin_sample" = {
+"savedSearches" "" = {
+ "savedSearch" "" = {
+"id" = "plugin for ROLE2"
+"label" = "ROLE_DEV"
+"isDefault" = "1"
+"criteria" "" = {
+"filter" "" = {
+"position" = "1"
+"key" = "id"
+"comparator" = "CONTAIN"
+"value" = "DEV"
+"negate" = "0"
+}
+}
+}
+}
+"retval" = "0"
+}
+.
+Example: Con figur e  sample saved search component
+This example demonstrates the processes of c on figuring  the sample saved search component:
+1.On the Bravura Security Fabric  instance server, locate the <instance>\samples\idmlib \component 1.
+\ Functional  folder.
+2.Copy the hid_saved_search_sample folder to the <instance>\component\Custom \ Functional 2.
+folder.
+3.As a product administrator, log onto Bravura Security Fabric . 3.
+4.From the main menu, click Manage components . 4.
+5.Click the action  Reload DB and wait for the component database to reload. 5.
+6.Search for and install the Functional.hid_saved_search_sample component. 6.
+7.Navigate to Manage the System > Resources > Target systems  > Manually de fined . 7.
+8.Click the saved search drop-down list.8.
+The plugin saved search "AD Target" should be listed under the "Searches" section.
+9.Click the saved search ” AD Target”.9.Con figur ation  notes
+Below are the important points when cr eating  saved searches:▪Plugin saved searches cannot be deleted from the UI (No trash can icon displays).▪
+▪All saved searches have an ID (hidden) and a label (shown in drop-down list).▪
+▪All saved searches must have unique IDs and labels. My Searches have unique, generated ”guid-like” ▪
+IDs. Plugin saved search (Searches) IDs are de fined  by the plugin creator.
+▪Plugin saved searches override my searches. When you have both a plugin and a my search with the▪
+same label, my search is not shown.
+▪Characters <, >, /, &, " and ' are forbidden in plugin saved search IDs as they are signific an t ▪
+characters in XML and/or HTML.
+▪There is a hard limit of fiv e criteria for each saved search. Extra criteria are simply dropped with a log ▪
+warning.
+▪Duplicate plugin labels are detected and rejected with a logged warning.▪
+▪Plugin saved search labels are not case sensitiv e.  Labels that are identic al  except for c apit aliz ation  will ▪
+be considered duplicates, and will be skipped and logged with warnings.
+▪Label clashes between my searches and plugin saved searches are prevented. You cannot create a▪
+saved search with a label that already exists among plugin saved searches. On the contrary, you can
+create a plugin saved search with a label that already exists among my searches.
+▪Saved searches are ordered alphabetic ally . ▪
+Con figur e  initial  search results
+You can improve the performance of certain search pages by removing the default ”search all” behavior
+on the initial  search page, and specifying minimum search requirements. To do this, set the SEARCH NO
+INIT RESULT option  on the Manage the system  > Modules  > Options  page.
+Type the r es trictions  as a comma-delimited list in the format:
+<TYPE>:<MINLENGTH>[:<SESSDATA_KEY>=<VALUE>],...
+where:
+▪TYPE is one of the following:▪
+▪HOST –aut omatic ally  discovered target systems search ▪
+▪FOUNDCOMPUTER – discovered system search▪
+▪FOUNDACCOUNT – discovered accounts search▪
+▪NOSGROUP – managed and unmanaged groups search .▪
+▪MANAGEDGROUP – managed groups search only▪
+▪PAACCESS – privileged access search in the Privileged access menu▪
+▪USER – user search▪
+▪WSTNPWDTYPE – managed accounts search in the Request toaccess accounts menu▪
+▪MINLENGTH specifies  the minimum length for the search criteria; for example, if you set SEARCH NO ▪
+INIT RESULT to USER:3 , then users must enter search criteria with a minimum of three characters
+before results are displayed.
+▪SESSDATA_KEY=VALUE specifies  session data to be used in search. ▪
+The following are currently supported:▪SEARCH_HOST_TYPE=A for HOST type searches▪
+▪1_CURRENT=PWDVIEWREQ for WSTNPWDTYPE type searches▪
+To set other SESSDATA_KEY=VALUE fields,  contact <SUPPORT>.
+The default value for SEARCH NO INIT RESULT is:
+HOST:0:SEARCH_HOST_TYPE=A,FOUNDCOMPUTER:0,FOUNDACCOUNT:0,NOSGROUP:0,MANAGEDGROUP:0,USER:0,WSTNPWDTYPE:0:1_CURRENT=PWDVIEWREQ 
+Restrict advanced search
+You can limit the advanced search feature by enabling the SEARCH REDUCED USER ADV SEARCH option.
+This will restrict the searches against user ID, user name, and attribut es.
+Include account IDs in basic user search
+By default, basic search will not search account IDs. To include account IDs in basic search where
+available, enable SEARCH USER WITH ACCOUNTS system variable. This may degrade performance for
+that search.
+Adding new functionality  and HTML
+The Bravura Security Fabric  GUI is a set of HTML snippets loaded into the CGI program at run-time  to
+dynamically construct web pages. Every time  a Bravura Security Fabric  CGI program displays an HTML
+page, it loads the relevant HTML snippets, replaces code in those snippets with session specific  data and
+displays the r esulting  page in the user’s web browser.
+CGI plugins provide additional  HTML snippets and extend the functionality  of Bravura Security Fabric  web
+pages, including the:
+▪Change password s page of the Help users  (IDA) module ▪
+▪Change passwords  page of the Change passwords  (PSS) module ▪
+▪Password change  results (password status) page of the Change passwords  (PSS) module ▪
+▪Main menu  (self-service options)  page of the Front-end  (PSF) ▪
+CGI plugin sequence of events
+In general, a CGI program executes a CGI plugin at least twice; once to retrieve HTML for initial  display
+(the form elements that the user can access to invoke plugin functionality),  and again to process the
+user’s input.
+This is illustrated by the following sequence of events:
+1.CGI program runs the plugin with one of the inputs being action = "PRINT-FORM" . 1.
+2.Plugin prints state variables (which the CGI stores on behalf of the plugin), a list of HTML tags that if2.
+received the CGI should forward to the plugin, and an HTML snippet to display to the user.
+3.CGI program assembles an HTML page from the normal page functionality  and the HTML snippet 3.
+received from the plugin.
+4.CGI program displays the r esulting  c ombination  on the user’s web browser. 4.5.CGI program accepts input (form submission) from the user.5.
+6.CGI program determines whether one of the plugin’s buttons  was pressed. Terminate this logic if not. 6.
+7.CGI program runs the plugin with the action = "PROCESS-FORM"  input. 7.
+8.CGI program forwards all previously-stored state in f ormation  and form input variables to the plugin. 8.
+9.Plugin produces the next HTML snippet, to be included in the next HTML page, possibly including new9.
+state in f ormation.
+By default, new HTML code supplied by the plugin is inserted at the bottom  of the page. You can change
+the loc ation  as described in CUSTOMIZATION  (on page 3471)  > Change the layout  (on page 3496).
+Read the following sections  to lean about each type of CGI plugin.
+Provide HTML to the change passwords pages
+You can use a cgi plugin to supply HTML code, including in t er activ e  form elements, to the Change
+passwords  page of the:
+▪Help users  (IDA) module ▪
+This page allows help desk users to change passwords.
+▪Change passwords  (PSS) module ▪
+This page allows users to change their own passwords.
+The plugin for the Help users  (IDA) module is set by the A RESET EXT plugin point on the Modules > Help
+users (IDA)  c on figur ation  page.
+The plugin for the Change passwords  (PSS) module is set by the S CHANGE EXT plugin point on the
+Modules > Change passwords (PSS) c on figur ation  page.
+The shipped scpinplugin plugin program  (on page 1648) can be used with the A RESET EXT and S
+CHANGE EXT plugin points to provide smart card PIN reset.
+See more in f ormation  about writing  a custom plugin program
+Requirements
+The CGI plugin is a console executable, which accepts in f ormation  on standard input and writes results to
+standard output. See W riting  plugins  for general requirements.
+Ex ecution  points
+The Change passwords  (PSS) module and Help users  (IDA) module invoke a plugin to add HTML content to
+the main menu. Each time  the page is requested, the plugin executes. See CGI plugin sequence of events
+(on page 1149).
+Input
+Input to the plugin includes:
+"" "" = {
+  "action" = "PRINT-FORM|PROCESS-FORM" # The action of the CGI

@@ -1,0 +1,276 @@
+▪Track changes to this attribut e  option  on the Pr ofile  and request attribut e  in f ormation  page. ▪
+Users require the View pr ofile  history user access rule to use this feature.
+History is kept for seven days by default. To control the number of days of history to display, c on figur e  the
+USER HIST INTERNAL option  at Manage the system  > Modules  > View and  update pr ofile  (IDR).
+Changes to file attribut es  are not tracked and included in profile  history.Target system groups
+The target system groups menu allows you to apply:
+▪Password policy▪
+▪Web-based password change r es trictions ▪
+▪Password s ynchr oniz ation  rules ▪
+By default, all target systems belong to the default target system group, and are subject to a single, global
+set of password strength rules. You may want to add additional  groups to:
+▪Apply diff er en t  password policies to sets of target systems. ▪
+You may want to do this if some target systems have inc ompatible  password strength rules, or some
+target systems require stronger passwords than others.
+You can also apply diff er en t  password policies within a target system group, by linking user classes to
+policies.
+▪Apply diff er en t  s ynchr oniz ation  rules. ▪
+You can require passwords for all members in a group to be synchronized, or force users to choose a
+diff er en t  password for each member of a group of target systems.
+▪Restrict the access rights of groups of help desk user s to certain target systems. ▪
+Bravura Security  recommends that all target systems belong to a single target system group, and are
+subject to a single password policy. Synchronizing passwords signific an tly  reduces help desk call
+volume. Even passwords on systems notorious for "weak” passwords, such as mainframes, can be
+made strong with a good c ombination  of password strength rules. Forcing users to change passwords
+often  also strengthens security. Grouping target systems is usually only done for legacy applic ations  or
+to comply with internal policy.
+You add target systems to groups on the Target system in f ormation  page ( Manage the System >
+Resources > Target systems ). You can see which target systems belong to a group by clicking the
+Members tab on the Target system group in f ormatio n page.
+Adding a target system group
+To add a target system group:
+1.Click Manage the system > Resources > Target system groups . 1.
+2.Click Add new … . 2.
+3.Type a unique ID and a Description . 3.
+The target system group identifier  must contain only letter s,  digits, dashes, and underscores. It may
+not contain spaces. The description  is displayed to end users.
+4.If required, type a URL to a web page related to the group. Users can open the URL by clicking the 4.
+group description  text wherever the text appears in the user interface.
+5.Determine Web password change r es trictions . 5.
+See Applying web password change r es trictions  (on page 563) for details.6.Select the S ynchr oniz ation  rules to apply to this group. 6.
+See Applying s ynchr oniz ation  rules  (on page 564) for details.
+7.Use the Default password policy drop-down menu to select a pr e-de fined  policy that a new password 7.
+must pass.
+8.Click Add. 8.
+You can now:
+▪ De fine  user-class selected password policies to apply diff er en t  password policies to diff er en t  sets of ▪
+users. See Applying password policies by user class  (on page 564).
+▪Assign target systems to the group on the Target system in f ormation  page in Bravura Security Fabric . ▪
+See Target Systems  (on page 480).
+If you make changes to target system group c onfiguration,  you must update Bravura Security Fabric
+for the changes to take eff ect.  See Applying c onfiguration  changes  (on page 494).
+Applying web password change r es trictions
+You apply web password change rules globally, to the default group, or to groups of target systems, to
+control how passwords on member systems are related (must be the same, can be the same, must be
+diff er en t)  and how much control the user should have over this.
+In the simplest scenario, users have passwords on a single target system group where s ynchr oniz ation  is
+required. For users the procedure is as simple as choosing a new password. In more complex scenarios,
+where varied policies are enforced, users may need to select the target system group before proceeding
+to the Change password web  page.
+To apply web password change r es trictions:
+1.Click Manage the system > Resources > Target system groups  then select the target system group you 1.
+want to modify.
+2.In the Web password change r es trictions  section  select one of the following: 2.
+▪Any number of accounts can be selected for a password change▪
+The user can choose which target systems (one, some, all) to change his password on. The
+password is changed and synchronized only for the selected target systems.
+By default, the Change passwords page is displayed with all accounts selected, and users must
+deselect the account if they do not want the password changed. You can change this behavior in
+the Change passwords (PSS) module settings.
+▪All accounts are selected for a password change▪
+The user can only select the whole target system group. Individual target systems cannot be
+chosen. The password is changed and synchronized for all target systems belonging to the target
+system group.
+▪Only one account can be selected for a password change▪
+The user can only select one target. The password is only changed for that target. This forces users
+to choose a diff er en t  password for each target system in the group. See also: 
+▪Target Systems  (on page 480) to learn how to c on figur e  individual settings  for individual target ▪
+systems, including whether to allow password changes on a target system, or whether to display a
+target system on the Change passwords page.
+Applying s ynchr oniz ation  rules
+You can apply password s ynchr oniz ation  globally, to the default group, or to groups of target systems. To
+apply s ynchr oniz ation  rules:
+1.Click Manage the system > Resources > Target system groups  then select the target system group you 1.
+want to modify.
+2.In the S ynchr oniz ation  rules section,  select: 2.
+▪Synchronize passwords within this group to apply transparent s ynchr oniz ation  to the target ▪
+system group. When the user changes a password nativ ely  on a target system, the change is
+propagated to other target systems in the group.
+▪Select Password unique to this group to ensure that the user’s password for target systems in this ▪
+group are diff er en t  from passwords used for other target system groups. Passwords used in other
+groups cannot be used for this group.
+For this setting  to take e ff ect,  the Enforce password history  password rule must be enabled for all
+other target system groups.
+Applying password policies by user class
+You can use user classes to apply diff er en t  password policies for segments of the user population  on the
+same target system group; for example to apply stricter rules to Activ e  Directory administrators than to
+regular users on the same domain. The rules are applied whenever a user changes passwords using the
+web interface or transparent s ynchr oniz ation  is triggered.
+To add user-class-selected password policies:
+1.Click Manage the system > Resources > Target system groups  then select the target system group you 1.
+want to modify.
+2.Select the Password policies tab. 2.
+3.Click Select to de fine  a user-class-selected password policy: 3.
+4.Select a Password policy from the drop down list. 4.
+a. De fine  user classes: a.
+▪Select e xisting  user classes: Click Select... and enable the checkboxes for the user classes you ▪
+want to add, then click Select .
+▪Create new user classes: Click 
+  Add new… . ▪
+b.If required, c on figur e  P articipan t  mapping for each user class that you add. b.
+c.If your membership criteria includes multiple  user classes, de fine  whether users are required to c.
+match All of the user classes or Any of the user classes .5.Click on the Password policies tab or the General sub-link to list all user-class-selected password 5.
+policies that have been assigned to the target system group.
+The target system group’s default password policy will be applied to:
+▪Console-only users▪
+▪Users who do not belong to any user class selected on the group’s password policies page▪
+Prioritizing  user-class-selected password policies
+Only one password policy per target system group is enforced for a user. Where there are multiple
+password policies set for a target system group, use the 
+  icons to set the priority order of user-class-
+selected policies. The higher priority policy is applied when a user belongs to multiple  user classes.
+T esting  user-class-selected password policies
+Click on the Test sub-link to test whether a password policy will be enforced for the tested user. Bravura
+Security Fabric  displays the rules that will be enforced if the tested user has an account on an applicable
+target system.
+See also: 
+▪The Transparent Password S ynchr oniz ation  (on page 1651) for more in f ormation  about how to ▪
+implement transparent password s ynchr oniz ation.
+▪"Password Policy" to learn how to set up alt ernativ e  password policies. ▪Account attribut es
+The term account attribut es  refers to the attribut es  of user accounts on target systems; for example,
+most target systems store the “fir s t  name” and “last name” of the users on that system. In Activ e
+Directory, the attribut e  that stores the fir s t name is givenName , and the attribut e  that stores the last
+name is sn. There are also special account attribut es,  called p seudo-attribut es , that exist only in Bravura
+Security Fabric . They are used to compose values or set flags  on a target system.
+Each target system type has a diff er en t  list of account attribut es.  Each target system also has its own set
+of requirements for each of its account attribut es;  for example, an attribut e  may:
+▪Be required (it cannot be blank)▪
+▪Contain multiple  values ▪
+▪Be writable only by the underlying OS▪
+▪Have f ormatting  constraints (date, phone number, email) ▪
+▪Require a specific  data type (binary, boolean, character, memo, numeric) ▪
+▪Be dependent on other attribut es ▪
+Read this chapter to learn about how Bravura Security Fabric  handles account attribut es  and p seudo-
+attribut es  when managing users on a target system, and how you can override its default c on figur ation.
+See also
+▪The Connector Pack Documen t ation  for in f ormation  about p seudo-attribut es  and select attribut es  on ▪
+each system.
+▪The documen t ation  provided with your target system softw ar e  for more in f ormation  about attribut es ▪
+specific  to that system.
+▪Building user pr ofiles  (on page 539) for general in f ormation  about user pr ofile  building and attribut e ▪
+listing.
+Handling account attribut es
+Bravura Security Fabric  includes a “catalog” of shipped default attribut es  for each target system type. The
+catalog includes each attribut e’ s  nativ e  name, and default requirements, c on figur ed  actions,  and pr ofile
+and request attribut e  mappings.
+Attribut e  inf ormation  may not be available for some target system types (Telnet, Win32 Console,
+database script target systems), this is because these target systems are generally custom applic ations
+unique to each environment.
+Bravura Security Fabric  uses the attribut e  catalog to determine rules for “handling” each attribut e  when
+managing users on a target system. For example, the sequence number  (on page 569) tells Bravura
+Identity  the order in which the attribut es  should be set when a new account is created. The catalog also
+determines which attribut es’  values should be loaded during auto discovery .
+Bravura Security Fabric  enables you to override the default rules for handling account attribut es.  Using
+the Manage the system  (PSA) module you can:▪Control how accounts are created, updated, or deleted▪
+▪Determine which attribut es  to load during auto discovery ▪
+▪Add new attribut es ▪
+For example, do this if you want to use an attribut e  that is not included in the attribut e  catalog, if your
+target system has a modified  schema or if you are t ar g eting  a custom applic ation.
+▪Map account attribut es  to pr ofile  and request attribut es,  or change e xisting  attribut e  mappings ▪
+▪Discover accounts in the case of sid (for Windows NT) and/or objectSid (for Activ e  Directory) ▪
+attribut es.
+The following sections  detail how to override account attribut es.
+Overriding default account attribut e  c on figur ation
+To override the default c on figur ation  for an individual account attribut e:
+1.Select an override level  (on page 569). 1.
+2.Select the Defaults tab. 2.
+3.Browse to select the attribut e  you want to override. 3.
+Bravura Security Fabric  displays a page containing c on figur ation  in f ormation  for the attribut e.
+4.Click Override to display the override c on figur ation  page. 4.
+5.Click Add at the bottom  of the form. 5.
+Additional  c on figur ation  options  are now available to you.6.Proceed to:6.
+▪Changing the c on figur ed  action  (on page 568) ▪
+▪Modifying attribut e  cr eation  sequence  (on page 569) ▪
+▪Modifying attribut e  value constraints  (on page 570) ▪
+▪Loading attribut es  (on page 571) ▪
+▪Mapping account attribut es  to pr ofile  and request attribut es  (on page 571) ▪
+▪Tracking account attribut e  changes  (on page 572) ▪
+▪Specifying attribut e  values  (on page 572) ▪
+▪ Deleting  specified  attribut e  values  (on page 573) ▪
+7. Con firm  and test changes  (on page 573). 7.
+Changing the c on figur ed  action
+The c on figur ed  action  determines how Bravura Identity  should create the account attribut e  during the
+“create account” and “update attribut es”  oper ation.
+To change the c on figur ed  action  for individual account attribut es:
+1.Navigate to the override c on figur ation  page. 1.
+2.Select the appropriate action  from the Action  when cr eating  account drop-down list: 2.
+▪Copy from template – Copy attribut e  values from the model account to the user’s account. ▪
+▪None – Ignore the attribut e  when setting  up a new account. ▪
+▪Copy from template but replace account – Copy attribut e  values but replace the account. ▪
+▪Set to specified  value – Set the attribut e  to specific  values or according to pr ofile  and request ▪
+attribut es.
+You cannot select an action  that is not supported for the attribut e.
+3.Select the appropriate action  from the Action  when updating  account drop-down list: 3.
+▪Set to specified  value – Set the attribut e  to specific  values or according to pr ofile  and request ▪
+attribut es.
+▪Set to specified  value when mapped pr ofile  attribut e  changes – Set the attribut e  to specific  values ▪
+or according to pr ofile  and request attribut es  only when the pr ofile  attribut e  has changed.
+▪None – Ignore the attribut e  when updating  the account. ▪
+You cannot select an action  that is not supported for the attribut e.
+4.Click Update . 4.
+ Next: 
+If the set action  for the attribut e  is Set to specified  value , do one of the following:
+▪Specify a pr ofile  and request attribut e.  Proceed to Mapping account attribut es  to pr ofile  and request ▪
+attribut es  (on page 571).
+▪Specify values in the “ Attribut e  value” column. Proceed to Specifying attribut e  values  (on page 572). ▪Selecting  an override level
+There are two levels at which account attribut e  values can be overridden. Use the following override
+levels to modify attribut e  behavior:
+Target system Modify the attribut e  c on figur ation  for a specific  target system.
+For example, one of your Activ e  Directory target systems might have a diff er en t
+schema.
+Target system type Modify the attribut e  c on figur ation  for all target systems of a given type.
+For example, set an attribut e  value for accounts on all Activ e  Directory target
+systems.
+Target-system level overrides take priority over target-system-type overrides. If you change the default
+action  for a target system type, and change the same action  for a specific  target system, the target-
+system level override determines the attribut e  action  when accounts are created on the specified  target
+system. All other target systems of that target-system-type will use the target-system-type override.
+To select an override level:
+1.Click Manage the system > Resources > Account attribut es . 1.
+2.Select:2.
+▪Target system type , select the target system type from the drop-down list, then click Select . ▪
+▪Target system , then select the target system you want to modify. ▪
+Use the search function  if necessary.
+Bravura Security Fabric  displays the Account attribut e  page for the level. Attribut es  for which default
+settings  apply are listed in the Defaults tab. When you make changes to the account attribut e
+c on figur ation,  the attribut e  is listed in the Target system type level overrides or Target system level
+overrides  tab.
+Modifying attribut e  cr eation  sequence
+In most cases, the default sequence number will not need changing. In some cases, attribut es  should be
+set:
+▪In a particular  order; for example, if a room number depends on a building loc ation,  then the loc ation ▪
+attribut e  should be created fir s t.
+▪Upon cr eation;  for example, LDAP target systems require that objectClass is set upon cr eation. ▪If a “ cr eation  attribut e”  fails, then the “create account” oper ation  also fails.
+You control the r elativ e  order in which attribut es  should be set by assigning an attribut e  a sequence
+number.
+Only use a sequence number less than 0 for attribut es  that are necessary to create the base account.
+To do this:
+1.Navigate to the override c on figur ation  page. 1.
+2.Type a value for the Sequence number : 2.
+This value … Means …
+<less than 0> Required attribut e  to create the base account. Not used
+for optional  attribut es.
+0 The sequence is not important for this attribut e.
+<more than 0> Set after  new account cr eation.
+The attribut e  with the lowest number is set fir s t.  If more than one attribut e  has the same sequence
+number, they are set in an arbitrary order r elativ e  to each other.
+3.Click Update . 3.
+Modifying attribut e  value constraints
+Account attribut e  value constraints determine rules for attribut e- v alue  c omposition.  By default,
+attribut es  are loaded as single-valued.
+Account attribut e  value constraints must be c ompatible  with the mapped profile  and request attribut e  or
+the attribut e  values you specify. For example, you cannot map a required account attribut e  to an optional
+profile  and request attribut e,  or a single-valued account attribut e  to a multi- valued  profile  and request
+attribut e.
+To modify attribut e  value constraints:
+1.Navigate to the override c on figur ation  page. 1.
+2.Change the following fields  as required: 2.
+▪Minimum number of values – determines whether an attribut e  is required. Type 0 to make this ▪
+attribut e  optional  or type a number greater than zero to require a minimum number of values.
+▪Maximum number of values – determines whether more than one value is allowed. Type -1 to ▪
+indicate that there is no maximum or type a number greater than zero to set the maximum
+number of values.
+The maximum number of values must be at least as big as the minimum number of values.
+▪ Attribut e  type – select one of the following types: Binary, Boolean, String, Memo, Integer or File. ▪
+▪Encoding used to store value – select: No encoding, or Base 64. ▪
+3.Click Update . 3.

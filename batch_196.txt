@@ -1,0 +1,361 @@
+Option Description
+RES CONNECTION TO SERVER
+FAILED TEST PASSED MSGThe message to display to users when a remote
+desktop c onnection  cannot be established, but
+c onnectivity  to the remote system exists. This is
+used by the remote desktop access disclosure
+module ( pswxtsvc ). The message is controlled
+by the !!!
+RES_CONNECTION_TO_SERVER_FAILED_TEXT_PASSED_MSG_DEFAULT
+M4 tag, which displays in English: “Connectivity
+to remote system exists but rdp c onnection  could
+not be established.”
+RES FAILED TO CREATE PROCESS
+MSGThe message to display to users when an access
+disclosure plugin fails to launch. The message is
+controlled by the !!!
+RES_FAILED_TO_CREATE_PROCESS_MSG_DEFAULT
+M4 tag, which displays in English: “Failed to
+launch access disclosure plugin.”
+RES LOGIN FAILED MSG The message to display to users when the remote
+desktop c onnection  encounters authentic ation
+problems. The message is controlled by the !!!
+RES_LOGIN_FAILED_MSG_DEFAULT M4 tag,
+which displays in English: “Unable to log into
+remote system using managed account and
+password.”
+RES PASSWORD EXPIRED MSG The message to display to users when they try to
+access an account that has expired because it has
+been aut omatic ally  randomized. The message is
+controlled by the !!!ERROR_EXPIRED_PASSWORD
+M4 tag, which displays in English: “The password
+has expired.” This value only applies to Account
+access request.
+RES PROGRAM PATH INVALID
+MSGThe message to display to users when a required
+program cannot be found on their system. This is
+used by the command prompt access control
+(pswxcmd ). The message is controlled by the !!!
+RES_PROGRAM_PATH_INVALID_MSG_DEFAULT
+M4 tag, which displays in English: “Unable to
+launch applic ation. ”
+RES SESSION EXPIRED MSG The message to display to users when they try
+view or use a password after  their session has
+expired. The message is controlled by the !!!
+ERROR_EXPIRED_SESSION M4 tag, which displays
+in English: “The session has expired. Please re-log
+in.”Option Description
+RES SHOW PASSWORD ANYWAY
+MSGThe message to display to users who try to access
+an expired password. The
+message is controlled by the !!!
+WARNING_RES_PASSWORD_EXPIRED M4 tag,
+which displays in English: “You are attempting  to
+use an expired password. Do you want to
+c ontinue?  Refresh the page to load the current
+password.”
+This value only applies to Account access request.
+Check-in / check-out notific ations
+The following settings  a ff ect  notific ations  sent to users when a checked out account is about to expire,
+and can be set in the Account access request  tab:
+Bravura Privilege  check-out expiry notific ation  options
+Option Description
+RES NOTIFY IMMINENT
+CHECKINProgram to notif y  users that their check-outs are
+about to expire. Con figur e  this event to specify
+the details of the check-out expiry email
+notific ation.  Use this in c onjunction  with RES
+NOTIFY IMMINENT CHECKIN INTERVAL.
+RES NOTIFY IMMINENT
+CHECKIN INTERVALThe time  interval (in minutes) before check-out
+expiry that notific ations  (c on figur ed  in RES
+NOTIFY IMMINENT CHECKIN) will be sent and
+that warning messages (c on figur ed  in RES
+CHECKOUT EXPIRY WARNING MSG) will start
+appearing.
+By default, this field  is blank and no check-out
+expiry notific ations  are sent. If this field  is blank,
+check-out expiry warning messages will start
+appearing 5 minutes before the check-out
+expires. If this field  is set to 0, no check-out
+expiry notific ations  will be sent and no warning
+messages will appear.
+Users are notified  in the following cases for:
+▪Account access request notific ation  events  (on page 1953) ▪
+▪Group set access request notific ation  events  (on page 1953) ▪Account access request notific ation  events
+▪When an account access request is approved, the recipient receives an email including a link to the▪
+account access page. The link requires the user to verify their identity  as the recipient of the request.
+▪When the check-out limit is reached, Bravura Privilege  warns users who request a check-out, and ▪
+notifies  users who currently have checked out the account access.
+▪When an account access is checked out, Bravura Privilege  notifies  other users who currently have ▪
+checked out access for the same account, listing  the status of all other requests on the account. You
+can control the details in the notific ation  using the RES PWD CICO VIEW DETAILS setting  in the
+Manage the system  > Modules  > Privileged access  menu.
+▪If a checked out account password is checked in and the password is randomized, depending on the▪
+RES CHECKIN RANDOMIZE , Bravura Privilege  notifies  other users who currently have checked out
+access to the same account and asks them to get the updated password.
+▪If a checked out account’s password expires, Bravura Privilege  notifies  users who have checked it out. ▪
+If the password was randomized, depending on the RES CHECKOUT PASSWORD RANDOMIZATION
+MODE , Bravura Privilege  notifies  other users who currently have checked out the password and asks
+them to get the updated password.
+▪When a check-out request is denied or canceled, Bravura Privilege  notifies  the user that the request is ▪
+denied or canceled r espectiv ely .
+▪When a user’s permission to access an account is checked in by another user, Bravura Privilege ▪
+notifies:
+▪The recipient user▪
+▪Other users who currently have checked out the access accounts▪
+▪Other users w aiting  to check out the password ▪
+▪Authorizers, if the request was submitted  through w orkflo w . ▪
+If the password is randomized, depending on the RES REVOKE RANDOMIZE  setting ,  Bravura
+Privilege  notifies  other users who currently have checked out the password and asks them to get
+the updated password.
+▪When a managed account’s password is manually randomized, Bravura Privilege  notifies  all users who ▪
+currently have checked out the access to that account and asks them to get the updated password.
+▪When the MAX CHECKOUT PASSWORD CHANGE INTERVAL is reached and if a password is ▪
+randomized, depending on the RES CHECKOUTEXP RANDOMIZE setting ,  Bravura Privilege  notifies  all
+users who currently have checked out access for that password and asks them to get the updated
+password.
+Group set access request notific ation  events
+▪When a temporary group membership access request is approved, the recipient receives an email▪
+including a link to the temporary group membership access page. The link requires the user to verify
+their identity  as the recipient of the request.
+▪When the check-out limit is reached, Bravura Privilege  warns users who request a check-out, and ▪
+notifies  users who currently have checked out the temporary group membership access.▪When a temporary group membership access is checked out, Bravura Privilege  notifies  other users ▪
+who currently have checked out access for the same temporary group membership.
+▪If a checked out temporary group membership expires, Bravura Privilege  notifies  users who have ▪
+checked it out.
+▪When a check-out request is denied or canceled, Bravura Privilege  notifies  the user that the request is ▪
+denied or canceled r espectiv ely .
+▪When a user’s permission to access a temporary group membership is checked in by another user,▪
+Bravura Privilege  notifies:
+▪The recipient user▪
+▪Other users w aiting  to check out the temporary group membership access. ▪
+▪Authorizer(s), if the request was submitted  through w orkflo w . ▪
+Email notific ation
+You can set the following email notific ation  options  in the Manage the system > Privileged access >
+Options  > Email notific ation  menu:
+Privileged access: email options
+Option Description
+EMAIL NOTIFICATION TIME Set times  of day to send out notific ation
+emails for adminis tr ativ e  password resets.
+Write times  in the format HH:MM in a
+comma-delimited list. If no time  is
+specified,  an email is sent immediately
+after  a password reset event.
+RES RECIPIENT EMAIL A comma-delimited list of email addresses
+to notif y  of password change issues.
+RES FAIL RECIPIENT EMAIL A comma-delimited list of email addresses
+to notif y  of password change failures.
+RES SUCCESS RECIPIENT EMAIL A comma-delimited list of email addresses
+to notif y  of successful password changes.
+If you alter the reminder times  or interval, messages that have already been queued will be sent at the
+previously set time.  The new time  values apply to messages triggered after  you make the changes.
+See also: 
+See Email notific ation  (on page 412) for detailed in f ormation  on general settings  for email.
+Using the API to retrieve adminis tr ativ e  passwords
+You can use API functions  to access the API via:
+▪Using a product administrator with OTP rights  (on page 1955) ▪
+▪Using the API to check out passwords  (on page 1956) ▪Using a product administrator with OTP rights
+You can access the API and retrieve, randomize, and override passwords, or download large cr edentials,
+via a product administrator  with one time  password (OTP) rights.
+Con figur ation
+To c on figur e  Bravura Privilege  access to privileged access API functions:
+1.Create an _OTP_USER product administrator  account with the "OTP IDAPI caller" adminis tr ativ e 1.
+privilege.
+The IP address with CIDR bitmask field  must specify the list of IP addresses from which the product
+administrator  will access the API Service.
+2.Create a user class with the following pr operties: 2.
+▪ID: _EXPLICIT_OTP_USERS_▪
+▪ P articipan ts:  USERID ▪
+▪Explicit user: _OTP_USER▪
+3.Create a user group3.
+▪ID: _OTP_USERGROUP▪
+▪Access control: For the managed system  from which you are r equesting  passwords, grant Pre- ▪
+approved check-out of managed accounts  managed accounts and Request check-out of managed
+accounts  check-out of managed accounts
+▪membership criteria: _EXPLICIT_OTP_USERS_▪
+API functions
+In order to retrieve an account password that Bravura Privilege  is managing you must:
+1.Use the LoginEx function  to log in to the API Service. 1.
+After  a successful login, LoginEx aut omatic ally  resets the product administrator ’s password to a new 64
+byte string. The new password is made available through the newapw argument. The new password
+has to be used for the next log in.
+2.Use the KMKeyGetByAccount function  to retrieve a password. 2.
+When using KMKeyGetByAccount, note that the accountID is case sensitiv e  and that the resourceID
+must be uppercase.
+Best pr actices
+Note the following:
+▪If the password is accessed by IDAPI SOAP , either ws binding or basic binding over HTTPS is used.▪
+▪When saving the OTP password, ensure that it remains encrypted.▪
+▪When using the OTP account, the calling program cannot access the IDAPI service concurrently. Use a▪
+MUTEX or serial access to the OTP account or one OTP account per program/caller.▪Once the password is given, it is the caller’s responsibility to use the password correctly and dispose▪
+of the password. Storing the current password is not recommended. It should be encrypted if it is
+stored.
+Using the API to check out passwords
+You can use API functions  Login, WFRequestCheckout, and WFRequestCheckin, to access the API and
+retrieve passwords being managed by Bravura Privilege , via a w orkflo w -based  approval to check out
+access privileges.
+In order to checkout a privileged account password via the API you must use the Login function  to log in
+to the API Service, via a user with the IDAPI Caller privilege. The user must e ff ectiv ely  log in as the
+recipient, using the AuthConsoleUser option  for Login.
+The checkout availability windows must be valid at the time  the WFRequestCheckout/WFRequestCheckin
+functions  are executed.
+You can use the API at each stage of the w orkflo w ,  using the Login function  with AuthConsoleUser option
+to impersonate the appropriate user; that is, you can:
+1.Issue a request for checkout via Privileged access  app, or the API (as the requester) using the 1.
+WFRequestCreate, WFRequestSubmit, WFR eques tAttr sSe t  (PPM_VIEW_TIME_BEGIN,
+PPM_VIEW_TIME_END), and WFR eques tActionsGet  (ARCHREQPWD).
+2.Issue a request to approve the checkout request via Requests  app, or the API (as the authorizer) using 2.
+the WFApprove function.  Ensure the primary field  is set correctly in the WFApprove input.
+3.Issue a request to fetch the password via Privileged access  app, or the API (as the recipient) using the 3.
+WFRequestCheckout function.
+4.Issue a request to check in the password via Privileged access  app, or the API (as the recipient) using 4.
+the WFRequestCheckin function,  or check in the password using Privileged access  app.
+For generic access check-outs, the following API functions  must be used instead of the
+WFRequestCheckout and WFRequestCheckin functions:
+▪WFRequestGenericCheckout▪
+▪WFRequestGenericCheckin▪
+▪GenericCheckoutStatusGet▪
+▪GenericCheckoutDisclose▪Access disclosure plugins
+ABravura Privilege  uses access disclosure plugins to permit secure access to a password for a privileged
+account. In addition  to disclosing the password, some controls can aut omatic ally  authentic a t e  into
+systems, programs and websites.
+You c on figur e  managed system policies  (on page 1834) to use access disclosure plugins to allow product
+administrators and end users to access the privileged accounts. By default, new managed system policies
+do not have any access disclosure plugins c on figur ed.  Depending on the authentic ation  types de fined  for
+the managed system policy, only applicable disclosure plugins can be added to the policy. You can
+c on figur e  any number of controls to allow users to access current privileged passwords, SSH keys, and
+group sets. You can c on figur e  only one control to disclose old passwords.
+ See also: 
+▪Privileged access management options  (on page 1932) for in f ormation  about other privileged access ▪
+management options.
+▪ De fining  access disclosure plugins  (on page 1849) to learn how to select access disclosure plugins at ▪
+the managed system policy level and override global settings.
+Types of access disclosure plugins
+There are several types of access disclosure plugins:
+▪ Nativ e  access disclosure plugins: These are Javascript controls that can be installed on users’ ▪
+w ork s t ations  prior to disclosing passwords. Alt ernativ ely ,  a one-time  disclosure method can be used to
+access the plugins.
+▪Guacamole access disclosure plugins: Unlike nativ e  access disclosure plugins, these are controls that ▪
+are viewed directly from a web browser and do not require ins t allation  of plugins or client softw ar e.
+These controls work on any browser that supports HTML5. A Guacamole gateway is required in order
+to use it.
+▪Website access disclosure plugins : These controls launches either a browser tab or a secure browser ▪
+window and aut omatic ally  logs into a website using a c on figur ation  de fined  in a JSON file. Ins t allation
+of a browser extension or client softw ar e  is required in order to use it.
+Bravura Privilege  ships with the following nativ e  access disclosure plugins:
+▪Run command: pswcmdrun is used with account set access requests. It allows users to run ▪
+commands or scripts on multiple  managed systems using managed account cr edentials.
+When a user checks out an account set, Bravura Security Fabric  displays a command e x ecution
+window if any of the member systems support the run command oper ation.
+Details: Run command: pswcmdrun  (on page 1959).
+▪Command prompt: pswxcmd provides users with access to managed systems by e x ecuting  an ▪
+external program and providing cr edentials.There are three types of command prompt controls; one is specific ally  for accessing managed
+accounts, and the other two are for temporary group membership, where the password can either be
+passed onto the command line, or specified  upon c onnection  to the remote server.
+This plugin is c ompatible  with session recording.
+Details: Command prompt: pswxcmd  (on page 1960).
+▪PuTTY over SSH▪
+This is a pr ec on figur ed  pswxcmd  access disclosure plugin used for accessing managed accounts with
+SSH keys instead of passwords.
+This plugin is c ompatible  with session recording.
+Details: PuTTY over SSH: pswxcmd  (on page 1963).
+▪Copy: pswxcopy provides users with access to a password by copying it into the clipboard of the ▪
+client w ork s t ation.
+Details: Copy: pswxcopy .
+▪Remote desktop / Remote App RDP: pswxtsvc provides users with access to Windows server or ▪
+client managed systems and RemoteApp programs using Remote Desktop Connection  (RDC). The
+plugin provides aut omatic  c onnection  to the managed system without the need to enter the
+adminis tr ativ e  cr edentials  for the managed account.
+This plugin is c ompatible  with session recording.
+Details: Remote desktop / Remote APP RDP: pswxtsvc  (on page 1964).
+▪Display: pswxview provides users with access to a password by displaying it within the browser. ▪
+When the secure method is enabled, Bravura Security Fabric  uses JavaScript to decrypt the privileged
+password embedded in the page.
+If the insecure method is enabled, the browser can store passwords in plain text in the page source,
+and users can access the accounts in browsers that do not have JavaScript enabled. Users access the
+managed system by hovering their cursor over the View button.
+Details: Display: pswxview  (on page 1970).
+Bravura Privilege  ships with the following Guacamole access disclosure plugins:
+▪In-browser RDP: guacamole-rdp provides users with access to Windows server or client managed ▪
+systems using Remote Desktop Connection  (RDC).
+Details: In-browser RDP: guacamole-rdp  (on page 1975).
+▪In-browser Remote App: guacamole-remote-app provides users with access to a remote ▪
+applic ation  (RemoteApp) hosted on a Windows server or client managed systems.
+Details: In-browser Remote App: guacamole-remote-app  (on page 1976).
+▪In-browser SSH: guacamole-ssh provides users with remote access to a server using Secure Shell ▪
+(SSH).
+Details: In-browser SSH: guacamole-ssh  (on page 1977).
+▪In-browser telnet: guacamole-telnet provides users with remote access to a server using ▪
+Telnet.Details: In-browser Telnet: guacamole-telnet  (on page 1977).
+▪In-browser VNC: guacamole-vnc provides users with remote access to a managed system with ▪
+Virtual Network Computing  (VNC) enabled.
+Details: In-browser VNC: guacamole-vnc  (on page 1978).
+All Guacamole access disclosure plugins provide aut omatic  c onnection  to the managed system without
+the need to enter the adminis tr ativ e  cr edentials  for the managed account and are c ompatible  with
+session recording.
+A Guacamole gateway is required in order to use Guacamole access disclosure plugins. See Installing and
+c on figuring  Guacamole  (on page 1979) on how to set up a Guacamole gateway and c on figur e  the controls
+to use it.
+Bravura Privilege  ships with the following website access disclosure plugins:
+▪Secure browser: securebrowser launches a dedicated program that aut omatic ally  logs into a ▪
+website using a c on figur ation  de fined  in a JSON file. This is c ompatible  with session recording.
+Requires ins t allation  of the Bravura Security Secure Browser program.
+Details: Secure browser: securebrowser  (on page 2010).
+▪Web app privileged sign-on: pswxwebapp launches a separate browser tab that aut omatic ally  logs ▪
+into a website using a c on figur ation  de fined  in a JSON file. Requires ins t allation  of the Bravura Security
+browser extension extension.
+Details: Web app privileged sign-on: pswxwebapp  (on page 2010).
+Nativ e  access disclosure plugins
+Run command: pswcmdrun
+The pswcmdrun  access disclosure plugin is used with account set access requests. It allows users to run
+commands or scripts on multiple  managed systems using managed account cr edentials.
+When a user checks out an account set, Bravura Privilege  displays a command e x ecution  window if any of
+the member systems support the run command oper ation.
+Currently the following target systems support the run command oper ation:
+▪Windows NT Server▪
+▪Secure Shell (SSHD Host)▪
+▪Telnet target system▪
+▪Python Script▪
+▪Oracle Database▪
+▪ Micr osoft  SQL Server ▪
+▪Sybase AES Database▪
+▪Console Script▪
+Additional  pr epar ation  is required before pswcmdrun can run PowerShell commands on a Windows
+Server / w ork s t ation  target. See Windows Server  in the Connector Pack documen t ation  for details.If the plugin is enabled but an account set contains no managed system that supports the run command
+operation,  Bravura Privilege displays the following message upon check-out:
+None of the checked out systems support command execution operation.
+Command execution interface is not available.
+You can modify the following default attribut es  to control the behavior of pswcmdrun :
+command The command to run.
+deleteexpired Delete command output after  e xpir ation.
+retry Retry failed commands run via T r ansaction  Monitor Service.
+savecmd Allow users to save commands.
+saveresult Retrieve command output and save on server.
+Command attribut e
+value %command%
+replacement By default, the command or script that the user specifies  in an account set request will be used
+to populate the command e x ecution  window upon check-out. If you customize this value, the
+customized value (command or script) will be used to populate the command e x ecution
+window. It overrides any command or script specified  in the request.
+Command prompt: pswxcmd
+The pswxcmd access disclosure plugin provides users with access to managed systems by e x ecuting  an
+external program and providing cr edentials.  The default program is PuTTY .exe, which opens an ssh/telnet
+terminal to a Windows machine. The external program must meet the following requirements:
+▪User cr edentials  must be accepted as part of the arguments ▪
+▪ Connection  details must be accepted as part of the arguments ▪
+▪The program must be installed on the user w ork s t ation ▪
+▪The program must either exist on the full path specified  as part of the “program” attribut e;  or if no ▪
+path has been specified,  the external program must be specified  on the w ork s t ation  system path
+▪SMON HTTP URL must resolve to the server from client w ork s t ations ▪
+There are three types of command prompt controls; one is specific ally  for managed accounts, and the
+other two are for temporary group membership, where the password can either be passed onto the
+command line, or specified  upon c onnection  to the remote server.
+You can modify the following default attribut es  to control the behavior of pswxcmd :
+arguments Arguments to supply to the external program. See Arguments attribut e  (on page 1961)
+for details.
+checkout expiry If set to true, the external program closes when the user’s access checkout expires.
+cr edentialpr omp t If set to true, a user is prompted for a user name and password. They are made
+available for arguments as %curruser% and %currpwd% . This is enabled for use
+with unmanaged passwords, where the user will be prompted for a password that wil
+be passed on the command line to the command.

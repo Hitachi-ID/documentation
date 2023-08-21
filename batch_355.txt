@@ -1,0 +1,328 @@
+dbarc
+Use the dbarc program to c on figur e  the range of data Bravura Security Fabric  will use during normal
+oper ation.  It can partition  and archive data in the database; for example, you can divide data into
+partitions  for 2007+older, 2008, 2009, 2010+newer. This allows you to reduce the amount of data that
+Bravura Security Fabric  queries on a regular basis, which improves performance. You can also move the
+storage of chunks of data onto diff er en t  devices with diff er en t  performance char act eristics.
+The views created by dbarc can be used for exit traps and CGI programs when the relevant in f ormation
+is requested.
+Reports always use the full table, with an option  to set the date range to limit the in f ormation,  rather
+than using views.
+If the owner of the applic ation  objects is diff er en t  to the database user used by the Database Service
+(iddb), then you must create a file with dbarc and execute it manually on the client.
+Table partitions  and views are grouped in categories:
+Group Description
+checkout Privileged access checkout in f ormation
+pwhistory Password reset history
+request W orkflo w  request in f ormation
+rtaudit Auditing  in f ormation
+sesslog Report-related in f ormation
+sessmon Session monitoring in f ormation
+userhistory User and account de finition  in f ormation
+When dbarc.exe  is executed for the firs t time  the process can impact the performance of Bravura
+Security Fabric and take several hours to complete. Subsequent e x ecutions  only take a few minutes.
+Before running any code, including dbarc without the -f option,  check with Support if the (dbarc-)
+rendered SQL is correct for your needs; send support@bravurasecurity.com  the following:
+ - The planned SQL statements in a text file.
+ - The counts of rows resulting  from one of the queries from the section  above, as tab-separated text,
+with headers.
+In diff eren t  versions of the product dbarc may handle diff eren t  tables; check the help string of the
+utility  to see which tables are supported in your version:
+util\dbarc -h
+The following is a list of tables to consider when deciding how many days Bravura Security Fabric  will
+keep data:
+▪All products:▪
+▪sesslog - The largest group because it retains data from all sessions into the product. This group in▪
+some cases can retain half of the used space into the database usage.▪pwhistory - Check how many days is c on figur ed  on the password policy allow reuse of old ▪
+passwords after  N days  rule.
+▪userhistory▪
+▪rtaudit▪
+▪Bravura Identity: ▪
+▪request▪
+▪Bravura Privilege:▪
+▪checkout▪
+▪sessmon▪
+Before running dbarc:
+▪Test the results by running dbarc with its - file argument and the other arguments for each data ▪
+group that has to be handled fir s t.
+For example, to see how dbarc will try to remove any event log data older than a year, run the
+following from a command prompt:
+<Program Files path>\Bravura Security\Bravura Security Fabric\<instance>\ util\dbarc -delete sesslog -
+deletemaxage 366 - file reduceSesslog.sql
+▪Always a backup the data before making any changes.▪
+▪Replace the DELETE with SELECT * in the r esulting  queries, and before running the DELETEs. Save the ▪
+results of the SELECTs to a file from which you can search and recover the removed data if needed at a
+later date.
+Usage
+dbarc.exe  -listgroups
+dbarc.exe  -list Bravura Group
+dbarc.exe  -split Bravura Group -splitinterval <days> -
+splitadvance <num>
+dbarc.exe  -drop Bravura Group [-dropdate <YYYYMMDD>]|[-
+dropmaxage <days>]
+dbarc.exe  -delete Bravura Group -deletemaxage <days>
+dbarc.exe  -hideolder Bravura Group [-hidedate<YYYYMMDD|none> ]|[-
+hidemaxage <days|none>]
+dbarc.exe  -extract Bravura Group [-extractdir <directory>]
+dbarc.exe  -extractreset Bravura Group -
+extractresettime <YYYYMMDDHHMMSS>
+dbarc.exe  -file <filename>
+Argument Description
+-delete Bravura Group Delete partition  group content older than a specified  age
+of data (-deletemaxage).Argument Description
+-deletemaxage <days> Delete content from partition  group older than this
+number of days from current.
+-drop Bravura Group Drop partitions  in the specified  group either older than a
+specified  date (-dropdate) or older than a specified  age of
+data (-dropmaxage).
+-dropdate <YYYYMMDD> Date value for dropping old data partition.
+-dropmaxage <days> Drop partitions  older than this number of days from
+current.
+-extract Bravura Group Extract data not previously extracted from the specified
+group to CSV files.
+-extractdir <directory> Extract data to this directory. The default is \Logs
+\<instance>\archive_extract\.
+-extractreset Bravura Group Clear ar chiv etime  previously set by "extract".
+-e x tr actr esettime  <YYYYMMDDHHMMSS> Earliest ar chiv etime  value previously set by "extract" to
+reset.
+- file <filename> Write commands to specified  file instead of running
+them.
+-force Allow oper ations  that may be dangerous or time-
+c onsuming  to be executed.
+-hidedate <YYYYMMDD> Date value for hiding old data from full tables and put
+into views. Date can be none to disable hiding to retrieve
+full table content into views.
+-hidemaxage <days> Hide partitions  older than this number of days. Can be
+none to disable hiding.
+-hideolder Bravura Group Hide records older than the specified  date from the core
+product for the selected group.
+-list Bravura Group List partitions  in the specified  group.
+-listgroups Display a list of valid partition  groups.
+-split Bravura Group Split partitions  such that sufficien t  future partitions  are
+reserved. This in intended for scheduled tasks.
+-splitadvance <N> Number of intervals into the future to create partitions.
+-splitin t er v al  <days> Number of days between newly-split partitions.
+When splitting ,  dropping, hiding, e x tr acting  or r esetting  extract time  for partitions  in groups, you can
+specify all to have the oper ation  a ff ect  all groups.
+Examples
+1.To create 30 partitions  for the request group, with each partition  10 days apart from now: 1.
+dbarc -split request -splitadvance 30 -splitinterval 10
+2.To create 6 partitions  for all groups, with each partition  183 days apart from now: 2.dbarc -split all -splitadvance 6 -splitinterval 183
+3.To cache the sesslog group into a view for in f ormation  newer than June 15, 2013: 3.
+dbarc -hideolder sesslog -hidedate 20130615
+4.To drop pwhistory group partition  named and dated at ’20101215’: 4.
+dbarc -drop pwhistory -dropdate 20101215
+5.To drop all group partitions  older than 365 days. 5.
+dbarc -drop all -dropmaxage 365
+6.To extract checkout group data into CSV files: 6.
+dbarc -extract checkout
+7.To clear all groups of ar chiv etime  previously set by "extract" on June 15, 2013 at 01:00:00 or later: 7.
+dbarc -extractreset all -extractresettime 20130615010000
+IMPORTANT!
+▪When a large amount of rows need to be removed (the fir s t time  sesslog group data is removed), ▪
+depending on the amount of data in the database and the indexes fr agmen t ation,  the process can
+take hours and a ff ects  the access to the UI. In a pr oduction  environment, consider a do wntime
+window to have it done. 
+▪Before performing these oper ations,  ensure there is enough free space in the partitions  where the ▪
+data files are maintained by MSSQL. At least 2.5 times  the size of the data files should be free before
+s t arting  the process.
+▪Ask your DBA to re-build indexes periodically specially for the tables on the sesslog group. These▪
+tables are the most used by the product and data is added every minute in there.
+dbcmd
+The dbcmd program is used to read and update records in Bravura Security Fabric  database tables.
+This utility  allows non-validated access to the database. Contact support@bravurasecurity.com  before
+using this utility .  Use of this utility  without guidance by support voids the Bravura Security Fabric
+softw ar e  warranty.
+dbperfchk
+Use the dbperfchk program to provide metrics to test database performance in a r eplic ation
+environment.
+Usage
+dbperfchk.exe  <options>
+Argument Description
+-a, --all Run all testsArgument Description
+-ert, --e xpect ed-r eplic ation-time  <N> The amount of time  (in minutes) to wait for r eplic ation  to
+complete before timing  out; default 10 minutes.
+-xt, --maxThreads <N> Maximum number of threads to test (default 5)
+-mt, --minThreads <N> Minimum number of threads to test (default 1)
+-mcl, --multi-c ommit -la t ency Run concurrent commit latency test
+-mcr, --multi-c ommit -r eplic ation Run a multi-thr eaded  test of r eplic ation  throughput using
+only one replicated server
+-mcrt, --multi-c ommit -r eplic ation-thor ough Run a multi-thr eaded  test of r eplic ation  throughput using
+all replicated servers (auto-detect)
+-port, --port <port> R eplic ation  secondary server port
+-secondary, --secondary <address> R eplic ation  secondary server address
+-scl, --single-commit-latency Run single-threaded commit latency test
+-sro, --single-read-ops Run a single-threaded read-only oper ations-per -sec ond
+test
+-t --time  <N> Number of milliseconds to run for
+Examples
+1.To test all r eplic ation  partners running a multi-thr eaded  test: 1.
+dbperfchk.exe -mcrt -mt 2 -xt 3
+2.To test the local instance database latency:2.
+dbperfchk.exe -scl
+or,
+dbperfchk.exe -mcl
+3.To check database performance on 10.0.xx.xx server with port 5555 in 60 seconds with a minimum3.
+thread of 4 and maximum thread of 6:
+dbperfchk.exe -a -xt 6 -mt 4 -port 5555 -secondary 10.0.xx.xx -
+t 60000
+4.To check database performance on 10.0.xx.xx server with port 5555 in 60 seconds with single thread4.
+read-only test:
+dbperfchk.exe -sro -port 5555 -secondary 10.0.xx.xx -t 60000
+iddbadm
+Use the iddbadm program to modify and c on figur e  the cr edentials  used by iddb to connect to the
+database backend.
+Usage
+Run iddbadm with the following arguments:  iddbadm.exe -instance <bravura_instance> -dbtype MSSQL
+   [-database <database>] [-dbserver <dbserver>]
+   -dbuser <bravura_dbuser>  -password <password>
+   [-iddbport <iddbport>] 
+   [-integrated]
+Argument Description
+-database <database> The MSSQL database name
+-dbserver <dbserver> The MSSQL database server or instance c onnection  string
+-iddbport <iddbport> The database service TCP port
+-dbtype <dbtype> The database type (MSSQL)
+-dbuser <dbuser> The ID of the user that connects to the database
+-instance <instance> The Bravura Security Fabric  instance name
+-password <password> The database server user password
+-integrated Use Windows Integrated Authentic ation  instead of a
+password
+-sho w c on fig  <sho w c on fig> Show current DBMS backend c on figur ation
+Example
+1.To change the dbms cr edentials  for a MSSQL server: 1.
+iddbadm -dbtype MSSQL -dbuser mssqluser -instance idminstance -
+password 
+dbuserpassword -database dbname -dbserver dbserver.com 
+2.To change the authentic ation  mode for a MSSQL server from SQL Server authentic ation  to windows 2.
+authentic ation:
+iddbadm -integratedlimitedsynccheck
+Use the limitedsynccheck  program to checks the consistency of a limited subset of tables across all
+nodes. This program can only serve as a s t arting  point and you should further in v estig a t e  any pot ential
+problems.
+The limitedsynccheck  program is not a general-purpose health checker and should not be run on a
+nightly basis. It does not guarantee that all possible types of des ynchroniz ations  will be caught. It does
+not attemp t  to fix anything. It cannot and does not try to handle normal des ynchroniz ations  that happen
+as a result of replic ation  delay.
+This program can check:
+▪The absence/presence of objects▪
+▪The consistency of a very specific  number of important fields ▪
+▪A pr ede fined  list of object types ▪
+For example, it does not check that target system descriptions  are synchronized; it checks their absence/
+presence, their address, and their platform.  Similarly, it does not check anything about import rule
+c on figur ation  (other than managed system policy assignments, which is only indirectly related).
+The program should be run as a sanity check when reasonable. For example:
+1.Immediately after  performing a r es ynchr oniz ation  oper ation.  If limitedsynccheck  reports any 1.
+des ynchr oniz ations  after  such an oper ation,  then the oper ation  was not successful.
+2.Prior to going live. If limitedsynccheck  reports any des ynchr oniz ations,  resolve them before 2.
+going live.
+3.If you suspect that there is a problem caused by a major des ynchr oniz ation,  to quickly gather 3.
+tr oubleshooting  in f ormation.  Review the output with a critic al  eye as some results may not be cause
+for concern. It might be valuable to run the program a few days in a row and compare what it reports
+on each day to filt er  out such things.
+The limitedsynccheck  program can be run from any node as long as the Database service ( iddb ) is
+running on all nodes.
+Usage
+limitedsynccheck [-<table>...]
+Run with no parameters to check all object types. This may be slow if there are a lot of objects. You can
+specify any number of object types to check.
+Argument Description
+-account Check accounts. This may be slow .
+-acl Check access controls
+-attribut e Check attribut e  de finitions
+-attribut egr oup Check attribut e  group de finitionsArgument Description
+-msp Check managed system policies
+-mspacctassign Check managed system policy account assignment. Note
+that if accounts are not in sync, then their assignments
+will not be either. This may be slow.
+-mspwstnassign Check managed system policy managed system
+assignment. This may be slow .
+-prequest Check pr e-de fined  requests
+-prequestmember Check pr e-de fined  request members
+-prequestwizard Check pr e-de fined  request wizard c on figur ation
+-rbacrole Check RBAC roles
+-rbacsod Check RBAC segr eg ation  of duties  rules
+-resgroup Check resource groups
+-resmember Check resource group members
+-sysvar Check system variables
+-target Check target systems
+-template Check account templates
+-userclass Check user class
+-userclassactor Check user class actors
+-user classde f attr Check user class attribut e  de finitions
+-userclassdefgroup Check user class group de finitions
+-userclassdefpslang Check user class PSLang de finitions
+-userclasspoint Check user class points
+-userclasspointactor Check user class point actors
+Examples
+1.To check if target systems are synchronized (not missing or surplus) across all nodes:1.
+limitedsynccheck -target
+2.To check if attribut es  and attribut e  groups are synchronized across all nodes: 2.
+limitedsynccheck -attribute -attributegroup
+migratedata
+Use the Bravura Security Data Migr ation  Utility  to migrate user data from an older version of Bravura
+Pass  to a current version.
+See migratedata  in Upgrade and migr ation  for details.sqlutil
+Use the sqlutil python script to run SQL scripts to apply database fix es,  procedure replacements,
+and so on. The utility  aut omatic ally  handles schema string replacement and r eplic ation.  This eliminates
+the need to manually connect to multiple  databases (multi-node  setups) via MSSMS and run the same
+script for each.
+Usage
+Before running sqlutil , navigate to the <instance>\ directory and run instance.bat to c on figur e
+necessary environment variables.
+ sqlutil.py <script> [-force]
+Argument Description
+-force Forces the SQL script to run if it has been run before.
+See also
+You can run a report on script e x ecution  history. See REPORTS  (on page 2891).
+Login assistant utilities
+sk autil
+Use the skautil program to update cached registry values for VPN c onnection  cr edentials  or the
+Login Assistant (LSKA) ( help ) userID and/or password used in the secure kiosk account. The program
+does not change the underlying password; only the cached registry values.
+Usage
+skautil.exe -vpnuser <vpnuser> | -vpnpass <vpnpass> | -helpuser help
+desk user | -helppass <helppass>
+Argument Description
+-vpnuser <vpnuser> The new VPN user to write into the registry.
+-vpnpass <vpnpass> The new VPN user’s password to write into the registry.
+-helpuser help desk user The new help account to write into the registry.
+-helppass <helppass> The new help account’s password to write into the
+registry.Logging utilities
+logcensor
+You can use the logcensor  program to replace sensitiv e  data with their r espectiv e  GUIDs. This can be
+used to sanitiz e  your logs before sending them outside your or g aniz ation.
+Sanitizing  your logs could result in a loss of inf ormation  in the resulting  output file. For example, if the
+same description  is used in more than one place, the output file will not diff erentiat e  between the two.
+Please remember to review your outputs.
+Usage
+ logcensor.exe [options] -log <log file> -out <output file>
+The record separator character 0x1F  will wrap all censored text in the output file.
+Argument Description
+-h — --help Print out the help usage.
+-v — --version Print out the version.
+-accounts Censor account in f ormation.
+-acct attrk e y s  <Account attribut e  keys> Only censor the values of specified  account attribut es.
+This argument requires acctattrs  argument.
+-acct attr s Censor account attribut e  values.
+-auto Run in "easy" mode. Aut omatic ally  choose what settings
+to use:
+Aut omatic ally  finds  the log directory and censors it.
+Strict mode is off .
+Log is generated in \<instance>\Logs\.
+Replacement log is generated in \<instance>
+\Logs_replaced\.
+Target replacement is off .
+Pr ofle  names are listed.
+Account names are listed.
+All account attribut es  are listed except those in default
+exlusion file (\<ins t ance>\util
+\log censor_ignor eacct attrk e y s. tx t).
+All pr ofile  attribut es  are listed except those in default
+exlusion file (\<ins t ance>\util
+\log censor_ignor epr ofileattrk e y s. tx t).
+-e x cludeacct attrk e y s  <Account attribut e  keys to exclude> Censor the values of account attribut es  not including
+these. This argument requires acctattrs argument.
+-e x cludeacct attrk e y s file  <file> File containing a newline-delimited list of account
+attribut e  keys to exclude. This argument requires
+acctattrs argument.

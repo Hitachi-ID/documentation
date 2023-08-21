@@ -1,0 +1,244 @@
+"password": {
+"order": 3,
+"type": "XPATH",
+"value": "//input[@name='password']",
+"input_value": "%password%" ,
+"keypress_event": true,
+"click": false,
+"settle_time_be f or e":  5,
+"settle_time_after":  0,
+"stop_on_fail": false
+},
+"submit": {
+"order": 4,
+"type": "XPATH",
+"value": "//div[@r ole='button']//*/ span[t e x t()='Log  in']",
+"input_value": "" ,
+"keypress_event": false,
+"click": true,
+"settle_time_be f or e":  2,
+"settle_time_after":  0,
+"stop_on_fail": false
+}
+}
+Sample website disclosure c on figur ation  (JSON) for AWS
+{
+"info": {
+"url": "http s:// c onsole.a w s.amaz on.c om"
+},
+"root_user": {
+"order": 1,
+"type": "CSS",
+"value": "input#r oot_user_r adio_button",
+"input_value": "",
+"keypress_event": false,
+"click": true,
+"settle_time_be f or e":  5,
+"settle_time_after":  0,
+"stop_on_fail": false
+},
+Sample website disclosure c on figur ation  (JSON) for Outlook
+{
+"info": {
+"url": "http s://login.liv e.c om/"},
+"username": {
+"order": 1,
+"type": "CSS",
+"value": "input[type='email']",
+"input_value": "%username%",
+"keypress_event": false,
+"click": false,
+"settle_time_be f or e":  5,
+"settle_time_after":  5,
+"stop_on_fail": false
+},
+"next": {
+"order": 2,
+"type": "CSS",
+"value": "input[type='submit']",
+"input_value": "",
+"keypress_event": false,
+"click": true,
+"settle_time_be f or e":  0,
+"settle_time_after":  3,
+"stop_on_fail": false
+},
+"password": {
+"order": 3,
+"type": "CSS",
+"value": "input[name='passwd']",
+"input_value": "%password%" ,
+"keypress_event": true,
+"click": false,
+"settle_time_be f or e":  0,
+"settle_time_after":  0,
+"stop_on_fail": false
+},
+"passwordNext": {
+"order": 4,
+"type": "CSS",
+"value": "input[type='submit']",
+"input_value": "" ,
+"keypress_event": false,
+"click": true,
+"settle_time_be f or e":  0,
+"settle_time_after":  0,"stop_on_fail": false
+}
+if the website you want to access is not available with Bravura Security Fabric .
+It is recommended the JSON files are stored in a shared loc ation  available to all web applic ation
+administrators.
+Create a website disclosure c onfigur ation
+1.Log in to Bravura Security Fabric  as a web applic ation  administrator. 1.
+2.Click Manage Resources . 2.
+3.Select Website Disclosure Con figur ation:  Create . 3.
+4.Enter a Name , Description , search for, and select a Con figur ation  file (json) . 4.5.Click Submit . 5.
+The request should be aut omatic ally  approved.  
+Example: Con figur e  a vault account to use the web app privileged sign-on disclosure method
+Once website disclosure c on figur ations  are c on figur ed,  managed and vault accounts can use them for
+web app privileged sign-on and secure browser methods.
+This example demonstrates how to create a vault account and c on figur e  that account to use the web app
+privileged sign-on method and will allow the account access to a website disclosure c on figur ation  at time
+of check out.
+Additional  requirements 
+This example assumes that:
+▪A team has been created and c on figur ed. ▪
+▪A team vault has been c on figur ed. ▪
+▪A vault trustee has been c on figur ed  for the team vault. ▪
+▪A website disclosure c on figur ation  is c on figur ed  and available. ▪
+▪Scenario.pam_webapp_management is installed.▪
+Create a vault account to use the web app privileged sign-on method1.Log in to Bravura Security Fabric  as a vault trustee. 1.
+2.Click Manage Resources . 2.
+3.Select Vault Account: Create . 3.
+4.Select a managed system.4.
+5.Click Next . 5.
+6.Enter Account Name . 6.
+7.Enter Account Password and c on firm. 7.
+8.Select one or more c on figur ations  in Website disclosure c on figur ation  for web app privileged sign- 8.
+on.
+The website disclosure c on figur ations  chosen here will be the only c on figur ations  available at check
+out. If this field  is left empty, the web app privileged sign-on method will not be displayed.
+9.Click Submit . 9.The request should be aut omatic ally  approved if submitted  by the team’s vault trustee; otherwise the
+appropriate trustee will need to approve the request.  
+Update a vault account  
+To update a vault account:
+1.Log in to Bravura Security Fabric  as a vault trustee. 1.
+2.Click Manage Resources . 2.
+3.Select Vault Account: Update . 3.
+4.Select a managed account.4.
+5.Click Next . 5.
+6.Click Next . 6.
+7.Select/deselect one or more c on figur ations  in Website disclosure c on figur ation  for web app 7.
+privileged sign-on .
+The website disclosure c on figur ations  chosen here will be the only c on figur ations  available at check
+out. If this field  is left empty, the web app privileged sign-on method will not be displayed.
+8.Click Submit . 8.
+The request should be aut omatic ally  approved if submitted  by the team’s vault trustee; otherwise the
+appropriate trustee will need to approve the request.
+Example: Con figur e  a managed account to use the secure browser method
+Once website disclosure c on figur ations  are c on figur ed,  account trustees and vault trustees can select
+Secure browser  or web app privileged sign-on  as a disclosure option  when onboarding accounts and
+cr eating  vault accounts.
+This example demonstrates the process involved to onboard a managed account and c on figur e  that
+account to use the secure browser disclosure method.
+Additional  requirements 
+This example assumes that:
+▪A team has been created and c on figur ed. ▪
+▪A team trustee has been c on figur ed. ▪
+▪Scenario.pam_webapp_management is installed.▪
+▪The optional  Scenario.pam_webapp_social scenario has been installed; providing the Gmail website ▪
+disclosure c on figur ation.
+Onboard a managed account
+To onboard a managed account to use secure browser:
+1.Log in to Bravura Security Fabric  as a team trustee. 1.
+2.Click Manage Resources . 2.3.Select Account: Onboard. 3.
+4.Select an account to be managed.4.
+5.Click Next . 5.
+6.Select at least one Website disclosure c on figur ation  for secure browser . 6.
+The website disclosure c onfigurations  chosen for an account will be the only c onfigurations  available
+to that account at the time  of check out.
+You can leave website disclosure c onfiguration  field  blank and at the time  of check out, search and
+select from all c onfigurations  in Bravura Security Fabric.
+7.Click Next . 7.
+8.Select the account team to add the managed account to.8.
+9.Click Submit . 9.
+The request should be aut omatic ally  approved if submitted  by the team’s trustee; otherwise the
+appropriate trustee will need to approve the request.  
+Example: Update a vault account's disclosure c on figur ation
+Additional  requirements 
+This example assumes that:
+▪A vault account has been onboarded▪
+▪A website disclosure c on figur ation  is c on figur ed  and available ▪
+Update a vault account
+1.Log in to Bravura Security Fabric  as a vault trustee. 1.
+2.Click Manage Resources . 2.
+3.Select Vault Account: Update . 3.
+4.Select a managed account.4.
+5.Click Next . 5.
+6.Click Next . 6.7.Select one or more c on figur ations  in Website disclosure c on figur ation  for web app privileged sign- 7.
+on.
+8.Select one or more c on figur ations  in Website disclosure c on figur ation  for secure browser . 8.
+9.Click Submit . 9.
+The request should be aut omatic ally  approved if submitted  by the team’s vault trustee; otherwise the
+appropriate trustee will need to approve the request.
+Examples: Update and delete an access disclosure c on figur ation
+Update a website disclosure c onfigur ation
+To update a website disclosure c on figur ation:
+1.Log in to Bravura Security Fabric  as a web applic ation  administrator. 1.
+2.Click Manage Resources . 2.
+3.Select Website Disclosure Con figur ation:  Update . 3.
+4.Select the website disclosure c on figur ation  you want to update. 4.
+5.Click Next . 5.
+6.Update the Name , Description , and/or Con figur ation  file. 6.
+Each website disclosure c onfiguration  is uniquely identified  by Bravura Privilege, so changing the
+name will not modify which website disclosure c onfiguration  is used.
+7.Click Submit . 7.
+The request should be aut omatic ally  approved.  
+Delete a website disclosure c onfigur ation
+To delete a website disclosure c on figur ation:
+1.Log in to Bravura Security Fabric  as a web applic ation  administrator. 1.
+2.Click Manage Resources . 2.
+3.Select Website Disclosure Con figur ation:  Delete . 3.
+4.Select the website disclosure c on figur ation  you want to delete. 4.
+5.Click Next . 5.
+6. Con firm  delete. 6.
+Number of accounts using this website disclosure c onfiguration  will be displayed.
+7.Click Submit . 7.
+The request should be aut omatic ally  approved.Example: Update a managed account to use the web app privileged sign-on disclosure c on figur ation
+This example demonstrates how to update a managed account that is currently using the secure browser
+method to use the web app privileged sign-on method.
+Additional  requirements 
+This example assumes that:
+▪A managed account has been onboarded.▪
+▪The managed account is c on figur ed  to use the secure browser method. ▪
+Update a managed account
+1.Log in to Bravura Security Fabric  as a team trustee. 1.
+2.Click Manage Resources . 2.
+3.Select Account: Update . 3.
+4.Select a Managed Account.4.
+5.Click Next . 5.
+6.Remove the disclosure c on figur ation  from Website disclosure c on figur ation  for secure browser . 6.
+7.Add a disclosure c on figur ation  to Website disclosure c on figur ation  for web app privileged sign-on. 7.
+8.Click Submit . 8.
+The request should be aut omatic ally  approved if submitted  by the team’s trustee; otherwise the
+appropriate trustee will need to approve the request.
+Example: Disclose website access to a user using the secure browser method
+Additional  requirements 
+This example assumes that:
+▪The Secure browser client is installed on a Windows 10 w ork s t ation. ▪
+▪A user is a member of the team with requester privileges.▪
+▪A managed account has been c on figur ed  to use the secure browser website disclosure method. ▪▪The requester logs in to Bravura Security Fabric  using SSL (HTTPS). See SSL enforcement for details. ▪
+Request, check out and disclose access
+1.Log in to Bravura Security Fabric  as an end user with requester privileges. 1.
+2.Click Privileged access . 2.
+3.Search and select the managed account c on figur ed  with a secure browser disclosure method. 3.
+4.Click Request check-out . 4.
+Complete the request form.
+5.Click Submit . 5.
+Wait for approval as required through your or g aniz ation’ s  process.
+6.Click Ready to check out  from the left panel. 6.
+7.Select the account to check out and click Check out . 7.
+8.Click Secure browser . 8.
+9.Click on the magnifying glass and select a website disclosure c on figur ation. 9.
+10. Click Login .  10.
+11. Select Open Bravura Security Secure Browser . 11.
+The Secure browser will be launched using the website disclosure c on figur ation  selected.

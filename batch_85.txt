@@ -1,0 +1,360 @@
+Authentic ation  chains: Con figur ation
+Authentic ation  chains off er  a fle xible  authentic ation  infrastructure, allowing you to customize the end-
+user authentic ation  experience. An authentic ation  chain contains authentic ation  methods off er ed  by
+available authentic ation  modules . Authentic ation  modules can provide a variety of authentic ation
+methods, such as password v erific ation,  internal/external security questions,  or the ability to select
+specific  chains. Using multiple  modules can form a stronger authentic ation  process and can off er
+alt ernativ es  to users having difficulty  authentic ating.
+Authentic ation  chains can:
+▪Be specialized for certain user groups▪
+▪Combine multiple  authentic ation  methods for a stronger authentic ation  process ▪
+▪Extend e xisting  authentic ation  measures with the use of plugins ▪
+The process of authentic ating  users can vary dr amatic ally  for each implemen t ation.  Authentic ation  chains
+make it easy to adapt Bravura Security Fabric ’s authentic ation  process to match your or g aniz ation’ s
+business logic, and aid in secure, transparent and e fficien t  in t egr ation  of Bravura Security Fabric .
+You can c on figur e  authentic ation  chains to react diff er en tly  to failures during authentic ation.  The
+c on figur ation  dictates whether all modules are required for a successful and strong authentic ation,  or if
+additional  modules only serve as alt ernativ e  means of authentic ation.  For example, a user entering his
+password incorrectly could cause the entir e  chain to fail, or the user could be given a chance to use some
+other method instead.
+Bravura Security Fabric  comes with fiv e built-in authentic ation  chains:
+Front-end login The DEFAULT_LOGIN authentic ation  chain can be c on figur ed  for use with
+the Front-end, to determine how users must authentic a t e.  By default,
+this authentic ation  chain presents authentic ation  methods c on figur ed  in
+the Modules >Front-end (PSF) menu.
+Help desk authentic ation The HELPDESK_LOGIN authentic ation  chain can be c on figur ed  for use
+with the Help users (IDA) module, to c on figur e  how help desk users must
+authentic a t e  on behalf of other users before accessing the user’s pr ofile.
+Generic login failure The GENERIC_LOGIN_FAILURE authentic ation  chain will simulate a fake
+user login to fool pot ential  intruders. This authentic ation  chain is
+activ a t ed  when the GENERIC LOGIN FAILURE system variable is enabled.
+User identific ation  service The USER_IDENTIFICATION authentic ation  chain can be c on figur ed  for
+use with the Front-end, to c on figur e  how users are identified.
+Standard two-phase login flo w The STANDARD_TWO-PHASE_LOGIN_FLOW authentic ation  chain
+handles the internal logic of when other authentic ation  chains are
+called, and can be c on figur ed  to enable use cases where certain chains
+are not required.
+It is recommended that you do not add individual authentic ation  modules to the DEFAULT_LOGIN or
+HELPDESK_LOGIN authentic ation  chains, but instead addyour own custom authentic ation  chains that can
+be used with a chain selector module.This helps prevent misc onfiguring  the default chains, and also helps troubleshoot any pot ential
+c onfiguration  issues that might occur.
+If you misc onfigure  the DEFAULT_LOGIN or HELPDESK_LOGIN authentic ation  chains, users may not be
+able to login.
+If your environment absolutely requires modifying the default chains, then it is highly recommended that
+you thoroughly test the c onfiguration  before implemen t ation,  or do so under the supervision of Bravura
+Security support s t aff .
+Getting  started
+Requirements
+▪You require the Manage policies adminis tr ativ e  privilege in order to access the Authentic ation  chains ▪
+menu item.
+Na vig ation  steps
+The Authentic ation  chains page gives you access to the c on figur ation  pages for the built-in chains, and to
+the Custom authentic ation  chains page, where you can add, enable, disable, and delete your own chains.
+To navigate to the Authentic ation  chains page:
+1.Click Policies > Authentic ation  chains . 1.
+2.Click the appropriate link or Custom  to modify an e xisting  authentic ation  chain  (on page 842). 2.
+or
+Click Custom to add a custom authentic ation  chain  (on page 844).
+Modifying an e xisting  authentic ation  chain
+In order to modify an authentic ation  chain, you must fir s t disable it. On the chain's c on figur ation  page
+(on page 842) click Disable .
+Once a chain is disabled, you can:
+▪Add authentic ation  modules to a chain  (on page 845) ▪
+▪ Con figur e  authentic ation  modules  (on page 847) ▪
+▪ Setting  authentic ation  module order  (on page 860) ▪
+Once you have modified  it click Enable to make it available for use.
+The rest of this section  provides notes on modifying built-in chains.
+Disabling built-in chains does not stop users from logging into Bravura Security Fabric. It only restores
+default identific ation  and authentic ation  settings  (on page 820), including Front-end  settings.
+If there are any errors in the authentic ation  chain that prevent regular users from logging in to the Front-
+end, product administrator  s can still login using their Bravura Security Fabric password. The Bravura
+Security Fabric password is either a t arge t -specific  password or a custom value, depending on how the
+product administrator  was set up. The fail-safe login method is invoked for these cases so that productadministrator  s can still access Bravura Security Fabric to fix or rec onfigure  the authentic ation  chains to
+allow access for regular users.
+Modifying general options
+Once a chain is disabled, you can modify the following general options:
+▪Abort login immediately if a module in this chain fails to cause the login process to abort when any ▪
+authentic ation  module fails.
+▪Allow caching of this chain’s module results to control whether the chain’s results are cached after ▪
+c ompletion.  This is enabled for most chains by default.
+Modifying Front-end Login – DEFAULT_LOGIN
+Modifying the select_chain module settings  of the DEFAULT_LOGIN authentic ation  chain changes the
+authentic ation  methods available to the Front-end . By default, it is set to use the PSFEXT VALUES and PSF
+EXT settings  (on page 829) implicitly, and can be overridden explicitly when required.
+It is recommended that you do not add individual authentic ation  modules to the DEFAULT_LOGIN or
+HELPDESK_LOGIN authentic ation  chains, but instead addyour own custom authentic ation  chains that can
+be used with a chain selector module.
+This helps prevent misc onfiguring  the default chains, and also helps troubleshoot any pot ential
+c onfiguration  issues that might occur.
+If you misc onfigure  the DEFAULT_LOGIN or HELPDESK_LOGIN authentic ation  chains, users may not be
+able to login.
+If your environment absolutely requires modifying the default chains, then it is highly recommended that
+you thoroughly test the c onfiguration  before implemen t ation,  or do so under the supervision of Bravura
+Security support s t aff .
+Modifying Help desk authentic ation  – HELPDESK_LOGIN
+Modifying the select_chain module settings  of the HELPDESK_LOGIN authentic ation  chain changes the
+authentic ation  methods available to the Help users  (IDA) module for help-desk users to authentic a t e  on
+behalf of other users (callers) before accessing their pr ofiles.
+By default, it is set to use the score based challenge and response ( scoreqna.pss ) module and is
+c on figur ed  to prompt for two questions  from the user’s pr e-de fined  question  set.
+Modifying Generic login failure – GENERIC_LOGIN_FAILURE
+The GENERIC_LOGIN_FAILURE authentic ation  chain simulates a fake user login to fool pot ential  intruders.
+This authentic ation  chain is activ a t ed  when the GENERIC LOGIN FAILURE system variable is enabled.
+Normally, when an invalid user or account ID is entered in the login screen Bravura Security Fabric
+displays a message informing the user that the account could not be found. If you enable the GENERIC
+LOGIN FAILURE option  (Manage the system > Policies > Options ), users are allowed to proceed to the
+Verify password screen and enter a password, despite having entered an invalid ID. Bravura SecurityFabric  simulates an attemp t  to verify the password, w aiting  10 seconds before returning with the
+message:
+Please verify that you entered your password correctly, otherwise contact your administrator.
+This feature is scheduled to be removed in a future release.
+Modifying User identific ation  service – USER_IDENTIFICATION
+Modifying the USER_IDENTIFICATION authentic ation  chain changes the identific ation  methods available
+in Front-end . By default, it includes the fedidp_ident module, which can capture SAML requests sent by a
+service provider for federated login or Web single sign-on, and the user_ident module, which captures
+the standard Bravura Security Fabric  login ID.
+Modifying the Standard two-phase login flo w  chain – STANDARD_TWO-PHASE_LOGIN_FLOW
+Modifying the STANDARD_TWO-PHASE_LOGIN_FLOW authentic ation  chain changes the logic through
+which all other default authentic ation  chains are called. By default, the USER_IDENTIFICATION and
+DEFAULT_LOGIN chains are always called alongside each other, and the STANDARD_TWO-
+PHASE_LOGIN_FLOW chain and its modules can be modified  or re-ordered to enable authentic ation
+methods that only require a portion  of this default chain.
+The ident_ctrl module of the STANDARD_TWO-PHASE_LOGIN_FLOW authentic ation  chain is called to
+check whether the user has been successfully identified.  If they were successfully identified,  this module
+does nothing; if they were not, this module directs them to the chain specified  in the parameter, or fails if
+the parameter is not set.
+The glf_control module of the STANDARD_TWO-PHASE_LOGIN_FLOW authentic ation  chain checks
+whether the system has generic login failure enabled, and directs users that fail USER_IDENTIFICATION to
+the GENERIC_LOGIN_FAILURE authentic ation  chain.
+The cgijump module of the STANDARD_TWO-PHASE_LOGIN_FLOW authentic ation  chain checks whether
+the user is allowed to access the page they’re attempting  to access, and the check_jump_dst parameter
+de fines  whether the results of this check are stored in the user’s session data.
+The select_chain module of the STANDARD_TWO-PHASE_LOGIN_FLOW authentic ation  chain initia t es  the
+DEFAULT_LOGIN chain by default, dir ecting  users to that chain to complete authentic ation.
+Adding a custom authentic ation  chain
+To add a custom authentic ation  chain:
+1.Navigate to the authentic ation  chain c on figur ation 1.
+The Authentic ation  chains page gives you access to the c on figur ation  pages for the built-in chains, and
+to the Custom authentic ation  chains page, where you can add, enable, disable, and delete your own
+chains.
+To navigate to the Authentic ation  chains page:
+1.Click Policies > Authentic ation  chains . 1.2.Click the appropriate link or Custom  to modify an e xisting  authentic ation  chain  (on page 842). 2.
+or
+Click Custom to add a custom authentic ation  chain  (on page 844).
+page
+2.Click Add new… 2.
+3.Set the ID, using only alphanumeric and underscore characters, and the Description  to display to 3.
+users.
+4. Optionally ,  select: 4.
+▪Abort login immediately if a module in this chain fails to cause the login process to abort when ▪
+any authentic ation  module fails.
+▪Allow caching of this chain’s module results to control whether the chain’s results are chached ▪
+after  c ompletion.  This is enabled for most chains by default.
+5.Click Add to add the authentic ation  chain. 5.
+Bravura Security Fabric  refreshes the page and displays the Modules table.
+Next: 
+1.Add authentic ation  modules to a chain  (on page 845) 1.
+2. Con figur e  authentic ation  modules  (on page 847) 2.
+3.Set authentic ation  module order  (on page 860) 3.
+4.Enable authentic ation  chains  (on page 861) 4.
+Adding authentic ation  modules to a chain
+To add an authentic ation  module to a chain:
+1.From the authentic ation  chain c on figur ation 1.
+The Authentic ation  chains page gives you access to the c on figur ation  pages for the built-in chains, and
+to the Custom authentic ation  chains page, where you can add, enable, disable, and delete your own
+chains.
+To navigate to the Authentic ation  chains page:
+1.Click Policies > Authentic ation  chains . 1.
+2.Click the appropriate link or Custom  to modify an e xisting  authentic ation  chain  (on page 842). 2.
+or
+Click Custom to add a custom authentic ation  chain  (on page 844).
+page, under Modules , click Add new... .
+Bravura Security Fabric  refreshes the page and displays the Module c on figur ation  section.
+2.Choose which type of module to use at the start of your authentic ation  chain, as listed in Table 2.
+Authentic ation  chain module types  (on page 846).3.Select the Control type to use for this module, as described in Table Authentic ation  chain module 3.
+control types  (on page 847).
+4.Enter a description  for this module. 4.
+5.Click Save . 5.
+Your new module is listed under Modules , highlighted in green.
+You must de fine  question  sets  (on page 1024) before creating  an authentic ation  chain which includes
+security questions.
+Ensure that the last module in an authentic ation  chain has its control type set to binding, required, or
+requisite for maximum security
+If a user selects the Mobile authentic ation  option  from a mobile device, they will not be asked for a
+QR Code. Instead the user will be authentic at ed  without being asked for any further inf ormation.
+Always ensure another authentic ation  option  is available to avoid users using the Mobile
+authentic ation  option  on mobile devices.
+Next
+Con figur e  authentic ation  modules  (on page 847)
+Authentic ation  chain module types
+Option Description
+Password authentic ation The user must enter a password.
+Security questions The user must successfully answer a series of questions.
+External program The user must verify against an external plugin.
+Security questions  with answer
+scoresThe user must successfully answer a series of questions  with a passing
+score for the authentic ation  threshold.
+Email/SMSPIN The user must enter a PIN that is sent to the user via Email or SMS.
+Connector package agent Allows for authentic ation  using either the user verify password or
+challenge response authentic ation  oper ations  directly on applicable
+target systems; for example a RADIUS Authentic ation  or RSA
+Authentic ation  Manager 7.1/8.2 target system may be used for the
+challenge-response.
+Authentic ation  chain selector Provides features for authentic ation  chain selection:
+▪Branching to a specified  chain ▪
+▪Allowing users to select which chain to use for authentic ation ▪
+▪Using an external plugin  (on page 981) to aut omatic ally  select which ▪
+chain should be used.
+Mobile authentic ation The user must scan a QR Code using the Bravura One  app registered on
+their mobile device.
+User identific ation The user must enter a user ID. This module is included in the built-
+in ”User identific ation  service” chain. It is not available for selection  in a
+custom chain.Option Description
+Federated login assertion This module is used when Bravura Security Fabric is acting  as an
+Identity  Provider for another web applic ation  (eg. Google, WebEx,
+Salesforce). It must be the last module of the last authentic ation  chain
+used for all c on figur ed  authentic ation  paths, because it is the one that
+will redirect the user’s browser back to the Service Provider.
+SAML Authentic ation This module is used when Bravura Security Fabric is acting  as a Service
+Provider, using one or more authentic ation  factors from an external
+Identity  Provider (eg. Google or Okta). The module can be placed
+anywhere in the authentic ation  path as it will not be available if the
+user logging in does not have an account on the target c on figur ed  as
+the Identity  Provider.
+Authentic ation  chain module control types
+Control type On success… On failure…
+binding If the request has not failed on any earlier
+module in the chain, then authentic ation  is
+considered complete and the user is
+granted access.The request proceeds through the chain
+but is ultima t ely  denied.
+required The request proceeds through the chain
+and the user is granted access, unless the
+request fails on another module.It proceeds through the chain but is
+ultima t ely  denied.
+requisite The request proceeds through the chain
+and, unless it fails on another module, the
+user is granted access.The chain is immediately terminated and
+the request is denied.
+sufficien t If the request has not failed on any earlier
+module in the chain, then authentic ation  is
+considered complete and the user is
+granted access.The result, by itself, is ignored and the
+request proceeds through the chain.
+If all modules in a chain are marked
+“ optional”  or “ sufficien t ” ,  at least one of
+the modules must succeed to clear the
+authentic ation.
+optional The result, by itself, is ignored and the
+request proceeds through the chain.The result, by itself, is ignored and the
+request proceeds through the chain.
+If all modules in a chain are marked
+“ optional”  or “ sufficien t ” ,  at least one of
+the modules must succeed to clear the
+authentic ation.
+Con figuring  authentic ation  modules
+A number of c on figur ation  options  are displayed in the Module c on figur ation  table, depending on the
+module type.
+To c on figur e  a module:1.On the authentic ation  chain's c on figur ation 1.
+The Authentic ation  chains page gives you access to the c on figur ation  pages for the built-in chains, and
+to the Custom authentic ation  chains page, where you can add, enable, disable, and delete your own
+chains.
+To navigate to the Authentic ation  chains page:
+1.Click Policies > Authentic ation  chains . 1.
+2.Click the appropriate link or Custom  to modify an e xisting  authentic ation  chain  (on page 842). 2.
+or
+Click Custom to add a custom authentic ation  chain  (on page 844).
+page, select the saved module so that it is highlighted in green, and the c on figur ation  options  are
+displayed below.
+2.Set options  as required: 2.
+▪Password authentic ation  module (password.pss)  (on page 848) ▪
+▪Security questions  module (response.pss)  (on page 849) ▪
+▪External program module (external.pss)  (on page 851) ▪
+▪Security questions  with answer scores module (scoreqna.pss)  (on page 852) ▪
+▪Email/SMS PIN (emailsmspin.pss)  (on page 856) ▪
+▪Connector package agent (agent.pss)  (on page 858) ▪
+▪ Authentic ation  chain selector (select_chain)  (on page 859) ▪
+▪Mobile authentic ation  (mobileapp)  (on page 860) ▪
+3.Click Update . 3.
+Password authentic ation  module (password.pss)
+The password authentic ation  module runs the built-in password.pss  authentic ation  program. Set the
+following for the password authentic ation  module:
+If module succeeds, bypass this module in failed
+attemp t  retriesThe module is not shown again for authentic ation  if the
+authentic ation  chain fails and is retried from a failed
+attemp t  and the module had succeeded in a previous
+attemp t.Increment lockout counter when this module fails Increments the global fail counter each time  a user fails
+authentic ation  for this module. It is enabled by default.
+The global fail counter is managed by the MAX
+USERAUTH FAILURE system variable. If the number of
+failed attemp ts  reaches MAX USERAUTH FAILURE, then
+the user is locked out.
+Note : If a product administratorhelps another user via
+the HELPDESK_LOGIN chain, and the Increment lockout
+counter when this module fails option  is disabled for
+any of the modules in that chain, then the global fail
+counter will still increase if the product
+administratorfails to correctly answer any of the
+questions  during help desk authentic ation.  However,
+this does not cause the user to be locked-out, even if
+the number of failed attemp ts  reaches or exceeds the
+value set by MAX USERAUTH FAILURE.
+Security questions  module (response.pss)
+The security questions  module runs the built-in response.pss  authentic ation  program.
+Set the following for the security questions  authentic ation  module:
+If module succeeds, bypass this module in failed
+attemp t  retriesThe module is not shown again for authentic ation  if the authentic ation  chain fails and is retried
+from a failed attemp t  and the module had succeeded in a previous attemp t.
+Increment lockout counter when this module fails Increments the global fail counter each time  a user fails authentic ation  for this module. It is
+enabled by default. The global fail counter is managed by the MAX USERAUTH FAILURE system
+variable. If the number of failed attemp ts  reaches MAX USERAUTH FAILURE, then the user is
+locked out.
+Note: If a product administratorhelps another user via the HELPDESK_LOGIN chain, and the
+Increment lockout counter when this module fails option  is disabled for any of the modules in
+that chain, then the global fail counter will still increase if the product administrator fails to
+correctly answer any of the questions  during help desk authentic ation.  However, this does not
+cause the user to be locked-out, even if the number of failed attemp ts  reaches or exceeds the
+value set by MAX USERAUTH FAILURE.If a user does not have a valid security questions
+pr ofileDe fines  which action  to take when a user does not have a complete security questions  pr ofile.
+If a user’s security question  pr ofile  is incomplete and this option  is set to:
+Abort login immediately – The entir e  authentic ation  chain is not available as an authentic ation
+method for the user and is not displayed.
+Fail this module – The response.pss module is treated as a failure. If the Control type for
+this module is set to either:
+▪ sufficien t  or optional , and the other modules in the authentic ation  chain are valid for the ▪
+user, then the user can still authentic a t e  using the other modules.
+▪binding , required or requisite then the entir e  authentic ation  chain is not available as an ▪
+authentic ation  method for the user and is not displayed.
+▪Bypass this module – The response.pss module is completely ignored regardless of ▪
+Control type , even if set to required .
+▪CAUTION: If this option  is set and the module is bypassed, and the remaining modules are ▪
+set to either sufficien t  or optional , then access is not immediately granted. At least one of
+the remaining modules must pass in order to gain authentic ation.
+Interval to re-sample questions  when a user fails to
+provide correct answersControls whether or not new questions  are selected for a user if they previously answered
+incorrectly. You can choose the period of time  before the questions  are re-sampled from the
+drop-down list. When this period of time  expires, a diff er en t  set of security questions  are
+randomly chosen for the user. The default is to re-sample security questions  after  an hour.
+Question  sets are often  c on figur ed  to select a random subset of the questions  in a user’s
+pr ofile.  For example, a user may have 5 questions  enrolled in a given question  set. The
+question  set may be c on figur ed  to prompt the user for a random 2 of those questions.
+One of the objectiv es  of random selection  is to make it harder for an attack er  to predict what
+questions  will be presented. An attack er  could respond to a displayed set of questions,  which
+he cannot answer, by abandoning the login process and trying again.
+This setting  allows you to prevent an attack er  from ”shopping” for a set of questions  to which
+he has gathered answers. It also prevents the attack er  from g etting  an e xhaustiv e  list of
+questions  which might be asked of a given user, which he can then research answers to.
+Number of questions  to ask during authentic ation Provides more control over how many questions  to ask from each question  set. If you do not
+change this setting ,  it defaults to the setting  for each individual question  set.
+You can choose:
+▪From all question  sets  Choosing a number from this drop-down list allows you to specify ▪
+how many questions  the user is asked.The questions  are randomly selected from all
+available question  sets. Setting  this value aut omatic ally  changes the value for individual
+question  sets to (None).
+Note:  This setting  is not intended to work for SecurID questions  when the user’s token is in
+extended mode, such as the next token code or new pin modes.
+▪From [<questionset>]  Each available question  set has a drop-down list, allowing you to ▪
+specify how many questions  the user is asked from each question  set. Changing this value
+aut omatic ally  changes From all question  sets  to (None).
+Note: If javascript is disabled, then you must manually set From all question  sets  to (None)
+before changing the value for any of the individual question  sets.
+Con figur ation  notes for the Security questions  module:

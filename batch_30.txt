@@ -1,0 +1,321 @@
+Replacing the license
+Bravura Security Fabric  license files occasionally need to be replaced. There are c onsider ations  to make
+when doing this in a r eplic ation  environment. The license file is read by the Database Service (iddb) when
+it starts up.
+When manually replacing the Bravura Security Fabric  license files in a r eplic ation  environment, you must:
+1.Manually replace the license file in the \<instance>\license\ directory of each node. 1.
+2.Restart the Database Service service on every node.2.
+The do wntime  should be minimal. If access to the nodes is slow or otherwise inconvenient, but you have
+adminis tr ativ e  access to the nodes, you could put the license on the primary node and synchronize files
+(Maintenance > File s ynchr oniz ation ) wait for it to end (look at idmsuite.log  until  updinst ends),
+and then start the Database Service remotely from the primary on all other nodes.
+Alt ernativ ely ,  you can use Windows’ built-in sc command to stop and start iddb services, and all other
+services dependent on it:
+sc \\server stop iddb_<instance_name>
+sc \\server start iddb_<instance_name>
+sc \\server start idpm_<instance_name>
+sc \\server start idfiler ep_<ins t ance_name>
+and so on, to start all Bravura Security services for that instance, which were stopped when Database
+Service stopped.
+Or, use SysInternals’ PsService to restart iddb:
+psservice \\server restart iddb_<instance_name>
+Using PsService is the simplest and fastest solution,  although it requires placing the PsService utility  on
+the primary node, from Windows’ SysInternals. See http s://docs.micr osoft.c om/ en-us/ s y sin t ernals/
+do wnloads/p sser vice .
+Removing a node from r eplic ation
+In some cases, a replicated node cannot be recovered quickly enough; that is, before other servers’
+queues fill up.
+In these cases, the c on figur ation  of still-health y  servers should be modified  to stop r eplic ation  with
+unavailable applic ation  nodes, as described below.
+After  finishing  any changes remember to verify the r eplic ation  c on figur ation.  See Cleaning up r eplic ation
+c on figur ation  (on page 293)
+Configuring  replacement servers
+Any settings  that the removed server was responsible for must be c on figur ed  to run on a surviving server,
+including:▪Service IDs in use by managed system policies.▪
+▪Proxy server settings  on target systems. ▪
+▪ R ec on figur e  email settings. ▪
+▪If required, update links, load balancers, or network settings  to direct users to log in using the new ▪
+front-end server
+▪Server r esponsibilities: ▪
+Use the servicemove program
+The servicemove failover program helps transfer a failed server’s workload to a secondary server.
+The program is run from the secondary server.
+For example, upon ins t allation,  each W orkflo w  Manager Service (idwfm) is assigned a unique ID on
+each server. Each W orkflo w  Manager Service (idwfm) handles only the IDs assigned to it. A w orkflo w
+request, when created, is bound to one of these IDs. So if one of the servers goes down,
+servicemove can be used to transfer the down W orkflo w  Manager Service to an activ e  server, so
+that the requests bound to this W orkflo w  Manager Service service could be processed.
+Usage
+servicemove.exe [options] ...
+Argument Description
+-force Forces a move to occur even when the remote service
+appears to be running.
+-list <server ID> Specify a server ID to list services for that server, or you
+can specify "all" to list services for all servers.
+-move <service name> Moves the specified  service to this server.
+-release <service name> Releases the specified  service back to its home server.
+-server <serverID> Specifies  the home server of the service.
+Examples
+1.To list services on all servers:1.
+servicemove.exe -list all
+2.To make the secondary server take over running the Password Manager service (idpm) on behalf of2.
+a failed primary server, and put all the requests in queue:
+servicemove.exe -server <primary server id> -move idpm
+3.To force a secondary server to take over running the Password Manager service even though the3.
+primary server is currently running:
+servicemove.exe -server <primary server id> -move idpm -force
+4.To release the Password Manager service back to its home server:4.
+servicemove.exe -server <primary server id> -release idpm
+to move the failed server’s workload to the new server.Removing a database node
+To remove an applic ation  node if administrators still log into the Bravura Security Fabric  interface:
+1.Log into any one of the working servers as a product administrator with the Maintain servers1.
+adminis tr ativ e  privilege.
+2.Click Manage the system  > Maintenance > Database r eplic ation . 2.
+3.Select the node that is causing the problem and click Delete.3.
+4.If at least one server is still available to replicate to, click Propagate and reload r eplic ation 4.
+c on figur ation  on all servers (without resynchronizing nodes)  to copy the changes to all remaining
+Bravura Security Fabric  servers and restart the database.
+To remove a shared schema applic ation  node, after  decommissioning the node see Cleaning up
+r eplic ation  c on figur ation  (on page 293).
+If the shared schema node applic ation  services ever come back up and that node can connect to the
+database, the node will re-register itself and will show up in shared schema with the node that replaced
+it.
+To remove an applic ation  node from a hybrid schema topology without replacing it, all applic ation  nodes
+that replicate to it from the other database nodes have to be removed as well. In e ff ect,  the reverse of
+adding an applic ation  node in shared schema has to be applied.
+Cleaning up r eplic ation  c on figur ation
+Bravura Security Fabric  records the details of applic ation  nodes that are part of an instance, in its
+backend database in the "servicelist" table; each time  a service starts (or stops gracefully) on a node, it
+updates its record in that table.
+Scheduled jobs which are c on figur ed  to run on specific  applic ation  nodes are stored in the "schedrun"
+table and refer to those nodes by their "guid", an alphanumeric string like
+"e6bf36ad-2cb6-4347-9d8c-52154d8234e6" which can be found in the "servicelist" table mentioned
+above.
+The c on figur ation  for the database service ( iddb ) is stored in each applic ation  node in the instance’s
+service\iddb.cfg file.
+After  changing r eplic ation  c on figur ation  it is recommended to verify in these three places that the change
+was as expected:
+▪"servicelist" table should contain only the nodes currently in r eplic ation. ▪
+▪"This table can be emptied  (on all databases involved), and then the Database Service has to be ▪
+restarted on all remaining applic ation  nodes, to re-populate the table.
+▪"schedrun" table should contain rows for only current node guids.▪
+▪If there are rows with guids for any old nodes, they have to be deleted.▪
+▪Before deleting  rows, make sure that scheduled jobs assigned only to those old nodes are reassigned ▪
+to other nodes (by updating  the "guid" field  on those rows).
+▪All direct-to-DB changes like the ones above must be done separately on all databases.▪▪iddb.cfg files on all app nodes have to be checked to make sure the correct nodes are set to data- ▪
+replicate.
+Any incorrect c on figur ation  has to be corrected.9 Load Balancer Con figur ation  for Bravura Security Fabric
+When deploying Bravura Security Fabric  in a load-balanced network environment, it is best pr actice  to
+c on figur e  cookie-based session persistence with an IP-based fallback option.  This c on figur ation  provides
+session stability for end-user HTTP sessions, SSO, and non-HTTP c ommunic ation  used by Bravura services
+where browser cookies cannot be employed.
+About load balancer c on figur ation  and session persistance
+Bravura Security Fabric  uses state-ful sessions which are locally stored on the specific  applic ation  node
+handling each request. Any load balancer c on figur ation  in place to direct web tr a ffic  to the product
+applic ation  nodes for any purpose must ensure that once a session is open on an applic ation  node, all
+subsequent requests are sent to the same node.
+If session persistence is not c on figur ed  properly, then core features of the product will begin to fail as
+stateful network tr a ffic  is redirected to a node with no knowledge of the activ e  session. The list of
+product features a ff ect ed  by session persistence includes:
+▪Normal use of the web interface by end-users▪
+When adminis tr ating  the product, you should connect directly to each applic ation  node that's being
+administered or troubleshot, instead of c onnecting  through the load balancer. Product c on figur ation
+should be done only on the Primary applic ation  node.
+▪Bravura Privilege  access disclosure, and session monitoring ▪
+▪SAML/Single Sign-On authentic ation ▪
+▪Bravura Pass  Login Assistant/SKA ▪
+▪Any use of the SOAP API in t egr ation  with the product ▪
+▪The Privilege Local W ork s t ation  Service or pamutil.e x e  remote in t egr ations ▪
+▪Bravura One  c on figur ations  using mobproxy . ▪
+The external c onnection  from Bravura One  App to mobproxy can have round-robin DNS or round-
+robin load-balancer in between, but not the c onnection  from mobworker to mobproxy . Because
+every mobile App's HTTP request is being separated by two mobworker's HTTP posts, round-robin
+DNS or round-robin load-balancer cannot ensure the same mobproxy for both requests.
+How Load Balancers Implement Session Persistence
+Most load balancers encapsulate their session persistence options  into "pr ofiles",  centralizing the various
+c on figur ations  involved. Bravura Security Fabric  was most prominently tested against the F5 "BIG-IP" load
+balancer, and the advice in this article  originates from that environment.
+In order to implement session persistence, the load balancer keeps a table of activ e  sessions which
+typically contains:
+▪The session ID▪
+▪The product applic ation  node(s) involved ▪
+▪The client and destination  IP involved ▪▪The persistence method▪
+The "Primary" persistence pr ofile  is the fir s t method used to check all incoming network tr a ffic  against
+the session table in order to determine if the tr a ffic  belongs to an e xisting  session. It also determines
+which persistence method will be used when cr eating  a new session.
+A "Fallback" persistence c on figur ation  checks incoming tr a ffic  against sessions tracked by the load
+balancer, in the event that no match was found for the primary persistence method. Fallback persistence
+is often  restricted to IP-based options.
+Fallback persistence pr ofiles  do not create new IP-based sessions if a pr ee xisting  session is not found;
+instead, they only improve the coverage of the primary persistence pr ofile.
+For the purposes of this discussion and demons tr ation,  the behavior is as follows:
+Session data exists in load balancer Load balancer has no knowledge of the session
+Request has session cookiePrimary persistence method succeeds.
+Request is forwarded to the node de fined
+by the session data.Primary persistence fails.
+Fallback persistence checks the list of activ e  sessions and fails.
+A new session is created.
+Request has no session cookiePrimary persistence fails.
+Fallback persistence checks the list of activ e
+sessions, and a match is found.
+Request is forwarded to the node de fined
+by the session data.Primary persistence fails.
+Fallback persistence checks the list of activ e  sessions and fails.
+A new session is created.
+Prefer Cookie-Based Persistence
+The load balancer should be c on figur ed  to use cookies as the primary method of establishing session
+persistence.
+The best approach is to have the load balancer insert its own cookies into incoming HTTP requests (that
+is, the "HTTP cookie insert" option),  as cookies used by Bravura Security Fabric  are more v olatile  than
+those inserted by a load balancer.
+Use "Source Address"-Based Persistence as a fallback
+Product features such as privileged access use the web GUI to create new network sessions with Bravura
+Security Fabric  services, which cannot make use of cookie-based session persistence.
+Using IP address-based persistence as a fallback option  ensures that new network c onnections  that lack
+cookies will be directed to the same node that is already handling that user's e xisting  browser session.
+Configur e  T r affic  Rules for API T r affic
+Because API tr a ffic  is never able to register a cookie-based session with the load balancer, API tr a ffic  can
+experience in t erruptions  as the load balancer c ontinually  tries to assign new cookies to HTTP tr a ffic  it
+considers "New."The best pr actice  here is to ensure that a tr a ffic  management rule is in place which checks the HTTP
+header for the value `SO AP Action`,  and enforces IP-based session persistence when this attribut e  is
+found. This ensures that API sessions are reliably handled by the correct node, regardless of whether a
+cookie-based session exists for that client.
+Manually partition  node r esponsibilities  if sticky  sessions cannot be achieved
+The alt ernativ e,  if sticky  sessions are not possible on the LB, is to target specific  nodes for specific
+purposes, and build the failover with a diff er en t  method (for example, remove round-robin; have the LB
+prefer a node for a specific  IP range, and fail over to another node only when that node is unresponsive)
+Con figuring  the F5 LTM load balancer
+The following procedures demonstrate how to c on figur e  a load balancer to implement session
+persistence with Bravura Security Fabric . T esting  has been done against the F5 BIG-IP load balancer.
+Requirements
+Before s t arting ,  ensure that the following prerequisites have been met:
+▪BIG-IP F5 Load balancer licensed for Local T r a ffic  Management. Version 13.1.1 in a single-NIC ▪
+c on figur ation  was used for this t esting.
+▪Bravura Security Fabric  instances installed in r eplic ation. ▪
+▪The load balancer, Bravura Security Fabric  instances, and all client and target systems have ▪
+c onnectivity  to each other.
+▪The BIG-IP load balancer’s management port is on a network or subnet that is separate from the▪
+Bravura Security Fabric  instances or their client and target systems.
+▪The BIG-IP Setup utility  has been run to c on figur e  initial  settings ▪
+▪The BIG-IP system has network interface, VLAN, server pool, and self IP c on figur ations  in place to ▪
+direct tr a ffic  to and from Bravura Security Fabric  nodes.
+For more in f ormation  on c on figuring  the F5 LTM load balancer, see the product manual and knowledge
+base available at: http:// support. f5.c om/ csp/kno wledg e-cen t er/ softw ar e/BIG-IP?module=BI G-IP%20L TM.
+c on fig-load
+Configur ation  overview
+Con figuring  the load balancer to support Bravura Security Fabric  is fairly s tr aightfor w ar d,  and involves the
+following steps:
+1. Con figur e  Bravura Security Fabric  system variables  (on page 298). 1.
+2. Con figur e  the Cookie Persistence Pr ofile  (on page 298). 2.
+3.Create an iRule to Enable Persistence for API Requests  (on page 300). 3.
+4. Con figur e  the Bravura Security Fabric  Virtual Server for Session Persistence  (on page 302). 4.Con figur e  Bravura Security Fabric  system variables
+The Bravura Security Fabric  system variables BASE_IDSYNCH_URL  and SMON_HTTP_URL  allow product
+administrators to specify where to send requests for features that need to be handled by specific  Bravura
+Security Fabric  instance nodes.
+The SMON_HTTP_URL system variable is relevant for Bravura Privilege  implemen t ations.  The session
+monitor client connects using this fully qualified  URL to smonc on a Bravura Privilege  server. The
+smonc  program is the high performance CGI program that receives in f ormation  from w ork s t ations.  Both
+privileged account check-out and account access session recording are prominently a ff ect ed  by changes
+in the server handling their requests, as in a load balanced environment, these requests have no
+knowledge of which server is handling their request.
+By c on figuring  the BASE_IDSYNCH_URL  and SMON_HTTP_URL  to point to the address of the load
+balancer, you ensure that these requests are always passed through the same tr a ffic  management
+policies used to initia t e  the request, ensuring that their session persistence is retained.
+To c on figur e  these variables:
+1. Identif y  the publicly-facing address of the load balancer that will handle Bravura Security Fabric  tr a ffic; 1.
+this should be the same address used to log into Bravura Security Fabric  by your end users. Record
+this in f ormation  for later.
+2.Log in to Bravura Security Fabric  as a product administrator. 2.
+3.Click Manage the system > Maintenance > System variables . 3.
+4.In the BASE IDSYNCH URL  field,  input the load balancer address recorded in Step 1 in the 4.
+accompanying text field,  in the format:
+http://<Load balancer address> .
+5.In the SMON HTTP URL . Input the load balancer address recorded in Step 1 in the accompanying text 5.
+field,  in the format:
+http://<Load balancer address>/<instance name>/smonc.exe .
+6.Click Update  at the bottom  of the page to commit your changes. 6.
+Con figur e  the cookie persistence pr ofile
+Modern tr a ffic  management systems off er  a wide variety of policies to enable session persistence, and it
+is important to know which policy is right for your system. Cookie Persistence is the most popular policy
+for the majority of web applic ations,  as cookie data is highly c on figur able,  robust, and is typically
+una ff ect ed  by network policies that modify packet data. The main drawback to cookie persistence is that
+applic ations  must be capable of sending the cookie with every request; a situation  that is not always
+feasible.
+For the F5 LTM, Bravura Security  recommends the HTTP Cookie Insert  policy of cookie persistence. When
+using the HTTP Cookie Insert  policy, the F5 LTM will insert a browser cookie into any tr a ffic  that does not
+already have that cookie de fined;  if the cookie exists in subsequent request or response headers, the F5
+LTM uses the cookie data to associate requests to a server and maintain session persistence.
+By default, the F5 LTM cookie uses the following format:BIGipServer<Pool name>=<Cookie data>
+where <Pool name> is the server pool de fined  on the F5 LTM, and <Cookie Data>  is the uniquely
+identif ying  in f ormation  for this session.
+See more in f ormation  on available session persistence strategies for the F5 LTM.
+In order to ensure that a load-balanced environment does not disrupt the normal oper ation  of the
+Bravura Security Fabric , the load balancer must have session persistence enabled for the services that
+need a predictable c onnection  to a single node. A detailed outline of BIG-IP’s supported persistence
+pr ofiles  is available in:
+http s://t echdocs. f5.c om/kb/ en-us/pr oducts/big-ip_ltm/manu als/pr oduct/ltm-pr ofiles-r e f er ence
+13-1-0/4.html
+A summary is provided here:
+Cookie Persistence  Cookie persistence uses the HTTP cookie header to ensure session persistence. This
+method is more robust than other persistence options,  but requires that client applic ations  are prepared
+to handle these cookies. More details on cookie persistence in the F5 LTM environment are available in
+the manual at http s:// support. f5.c om/ csp/ article/K83419154 .
+Cookie Hash  This method maps a specific  cookie value to a specific  node, allowing granular control of
+how tr a ffic  is routed. This requires that the web server creates the web cookie, and send it when new
+sessions are created.
+HTTP Cookie Insert  In this method, the BIG-IP injects an HTTP Cookie header into new sessions. Requests
+that include this header are directed to their r espectiv e  nodes.
+HTTP Cookie Passive  In this method, BIG-IP does not interact with cookie data. Instead, the server
+creates the cookie, which includes the server in f ormation  and timeout.  This method is not recommended
+for most environments.
+HTTP Cookie Rewrite  This method intercepts the Set-Cookie header created by the web server, and
+overwrites its name and content to contain the address and port in f ormation  needed for persistence.
+Destination  Address  This method directs tr a ffic  to the same server based on the destination  IP of the
+incoming packets.
+Hash  This method uses the data from request and response tr a ffic  to generate a hashed value that is
+used to associate sessions to a specific  server.
+Host  Host persistence uses the HTTP Host header to determine which server to direct tr a ffic  to.
+Micr osoft  Remote Desktop  This method tracks sessions between clients and servers running the Mi
+cr osoft  RDP service to ensure persistence.
+SIP SIP persistence is an applic ation-specific  protocol that tracks Session Initiation  Protocol messages
+exchanged by applic ations  who employ this protocol.
+Source Addres s Referred to as "simple persistence", this method routes tr a ffic  based on the source IP of
+a packet.
+SSL This method uses the SSL session ID to ensure persistence to a server.If using load balancers, do not c onfigure  any SSL options  for transparent s ynchroniz ation  traffic.  SSL
+options  should only be c onfigured  on load balancers for WebUI traffic,  not transparent s ynchroniz ation.
+Transparent s ynchroniz ation  is encrypted using a proprietary encr yption  algorithm. Contact
+support@bravurasecurity.com  for more details.
+Universal  This method uses data extracted from request and response packets to establish persistence,
+but requires that the BIG-IP is able to inspect the packet data in detail.
+To c on figur e  the cookie persistence pr ofile.
+1.Log in to the BIGIP F5 LTM as an administrator.1.
+2.Navigate to  Main > Local T r a ffic  > Pr ofiles  > Persistence . 2.
+3.If you want to use the default cookie pr ofile  for managing Bravura Security Fabric  session persistence, 3.
+select cookie  from this list, and skip to Step 8 below.
+If you want to create a custom persistence pr ofile  for Bravura Security Fabric  tr a ffic,  click Create...  and
+proceed from Step 4.
+4.In the Name  field,  input a unique name for this pr ofile. 4.
+5.In the Persistence Type  drop-down list, select cookie . 5.
+The Con figur ation  options  table appears, with values disabled by default. The Parent Pr ofile  field  also
+appears.
+6.In the Parent Pr ofile  field,  select Cookie . 6.
+7.Review the Con figur ation  table, and enable fields  that need to be modified. 7.
+In order to modify these settings,  you will need to specify which options  will not be inherited from the
+parent pr ofile.  Click the checkboxes on the right to enable modific ation  for individual fields  you wish
+to update, or click the checkbox labeled Custom  to enable all fields  for editing.
+8.Under Cookie Method , select HTTP Cookie Insert . 8.
+9.Under Expir ation , enable Session Cookie . 9.
+10. Click Finished  or Update  to commit your changes. 10.
+Enable session persistence for API calls through iRules
+While cookie persistence is a robust solution  for the majority of web applic ation  use cases, it is not
+functional  for applic ations  that are unable to handle cookie tr a ffic,  but require a persistent session
+regardless. In Bravura Security Fabric , a prominent example of this scenario is requests made to the
+Bravura Security Fabric  API. API calls can originate from a wide variety of client-scripted plugins and
+applic ations,  and each of these would need to support HTTP cookie retransmission in order for cookie
+persistence to support these c onnections.
+As API oper ations  require a persistent c onnection  to their server in order to function  properly, a tr a ffic
+management rule is required to handle API tr a ffic  for Bravura Security Fabric ; in the F5 LTM, these rules
+are known as "iRules." iRules are simple scripted solutions  that evaluate packet data in order to make
+various r outing  decisions and data modific ations.  To support the Bravura Security Fabric  API, an iRule that
+performs the following oper ations  for HTTP requests is required:
+▪ Con firm  the incoming tr a ffic  is an API request. ▪

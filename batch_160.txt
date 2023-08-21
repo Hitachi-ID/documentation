@@ -1,0 +1,317 @@
+A Hidden Network...  button  allows the user to specify an SSID and password for a hidden wifi
+c onnection.
+If AirCard is selected, the Login Assistant will display the third party applic ation.  Once the user has
+connected the applic ation  will disappear.
+What happens when users log in
+When users are on the log in page of their w ork s t ations  and use the Login Assistant, the runurl
+program is executed. If you are using the domain-level secure kiosk account, this program may berunning from a shared volume or public network share (typically on the Bravura Pass  server, or each
+logon server’s netlogon or sysvol share).
+If you are using a local secure kiosk account, this program is loaded from the local w ork s t ation.
+The runurl  program locks down w ork s t ations  by in t er cepting  certain input event types (keyboard,
+mouse), and starts a web browser in kiosk mode with the appropriate URL. Bravura Pass  determines
+from the URL that the incoming request is for a secure kiosk account (SKA) and displays a special, locked-
+down skin. Users then authentic a t e  to Bravura Pass  using security questions  or some other
+authentic ation  method to change their f or g otten  passwords.
+When the Login Assistant is launched, the login ID of the domain user that is currently logged into
+Windows is aut omatic ally  passed to the URL so that the domain user does not need to retype it in the
+Login Assistant. The login ID is passed to the URL when any of the following occurs:
+▪The user changes their password by pressing [Ctrl]+[Alt]+[Del]  and then clicking Change a Password . ▪
+▪The w ork s t ation  is locked and the user enters an invalid password to log back into Windows, then ▪
+clicks OK to change the password using Bravura Pass .
+▪The user attemp ts  to log into their account when it is locked, then clicks OK to unlock the account ▪
+using Bravura Pass .
+▪The domain user’s password is soon to expire or already expired, and the user enters the correct▪
+password to log in to Windows and clicks OK to change the password.
+The soon-to-expire, expired, account-locked and password-change cases are not supported by the
+Credential  Provider.
+Access to self-service password reset should be available at the work s t ation  login screen, which means
+deploying Login Assistant to all work s t ations.  If signific an t  numbers of users work off -sit e  and sign into
+their work s t ation  with cached AD domain credentials,  then integrate Login Assistant with the
+corporate VPN, to enable password reset and update of cached credentials  when off -sit e.  This process
+is further described in Self-Service Anywhere (SSA) for remote users.
+SSA also includes the ins t allation  of the Local Rest Extension, which allows Login Assistant to trigger
+updates to locally cached passwords after  a successful password reset.
+Since Login Assistant is most often  used for f or g otten  passwords, a secure and easy-to-use second
+authentic ation  method  (on page 1626) should be c on figur ed  for Login Assistant users that does not
+include password authentic ation.  An example of multi- f act or  authentic ation  to use for Login Assistant
+users, would be requiring users to answer their security questions  followed by QR code v erific ation  using
+the mobile Bravura One  app.
+User experience
+When using the Login Assistant on a corporate network for a f or g otten  password, the user experiences
+the following:
+▪User:  opens their w ork s t ation  to the user log in screen. ▪▪User:  triggers the Login Assistant by clicking an available "f or g otten  password" tile or link on the user ▪
+log in screen.
+▪Login server:  opens a web browser for the user with the appropriate Bravura Pass  applic ation  URL. ▪
+▪User:  authentic a t es  to Bravura Pass  using the c on figur ed  multi- f act or  authentic ation,  such as security ▪
+questions  and QR code v erific ation  through the mobile Bravura One  app.
+▪User:  clicks Change Passwords  on their self-service Bravura Pass  home page. ▪
+▪User:  successfully changes their password. ▪
+▪Bravura Pass : synchronizes the new password with the corporate domain and any other accounts ▪
+attached  to the user’s Bravura Pass  pr ofile.
+▪User:  closes the web browser and is returned to the user log in screen. ▪
+▪User:  logs in to their w ork s t ation  using the new password. Since the w ork s t ation  is connected to the ▪
+corporate network, the w ork s t ation  v erifies  the new password against their corporate domain
+password and successfully grants the user access. The locally cached Windows w ork s t ation  password
+is updated aut omatic ally  when the user successfully logs in to the w ork s t ation.
+Enabling password changes from a login prompt
+The following two sections  provide an overview of steps required to enable password changes from a
+login prompt using Bravura Pass  and either a domain-level secure kiosk account, or w ork s t ation  secure
+kiosk account.
+Domain-level secure kiosk account
+To implement password changes from a login prompt using a domain-level SKA:
+1.Create the domain help user  (on page 1611). 1.
+2.Remove the help account from the Bravura Security Fabric  account list, to prevent users from 2.
+changing the help account password or attaching  the ID.
+3. Optional:  Install Login Assistant softw ar e  (on page 1595) on users’ w ork s t ations  to allow them to 3.
+access the domain help account.
+Alt ernativ ely ,  if you do not want to install softw ar e  on users’ w ork s t ations,  carry out steps outlined in
+Setting  up on a Domain (No W ork s t ation  Softw ar e)  (on page 1611) and educate users to use the help
+account manually.
+W ork s t ation  secure kiosk account
+▪To implement password changes from a login prompt using a w ork s t ation-le v el  SKA, use the installer ▪
+for Windows to create the help account and install the required Login Assistant softw ar e  on users’
+w ork s t ations.
+See:
+▪Installing Login Assistant Softw ar e  on W ork s t ations  (on page 1595) for details about installing the ▪
+softw ar e.
+▪ Setting  up Login Assistant for Remote Users  (on page 1628) for a common use-case. ▪Best pr actice
+Con figur e  a special VPN account with a s t atic  password, which Login Assistant will use to connect to the
+network and update locally-cached passwords when users are off -sit e.
+Presuming that the VPN service you use is capable of this, apply the following limits to this account on
+the VPN server side:
+1.Create a new, dedicated read-only AD domain controller (DC).1.
+2. Con figur e  Bravura Pass  to always push new AD password resets to this DC along with any others. 2.
+along with any others. along with any others.
+3. Con figur e  the VPN user to only be able to access: 3.
+a.The IP of this DC (all TCP ports).a.
+b.The HTTPS URL of Bravura Pass  – typically via a load balancer. b.
+4.Set a c onnection  timeout  on the VPN user to 10 minutes. 4.
+5.Disable intruder lockouts on the VPN user, to minimize the pot ential  for a denial-of-service attack  on 5.
+user access to self-service.
+Notes on usage
+Local password cache
+When the Bravura Pass local reset extension  (on page 1578) client tool is not installed, a user must
+manually log out of Windows and then log back in to reset his locally cached password after  he uses the
+SKA to change his password within Windows by pressing [Ctrl]+[ALT]+[Delete]  and then clicking Change
+password .
+If a user uses the SKA to change his password, and the Bravura Pass  local reset extension
+(pslocalr.ocx ) client tool is installed, then he is not required to log out of Windows and then log
+back in.Login Assistant: Installing softw ar e  on w ork s t ations
+This chapter shows you how to install the Login Assistant client softw ar e  and set up the help account on
+local w ork s t ations.  Before you start, read R esetting  passwords from a login prompt  (on page 1587).
+Bravura Pass  provides installer packages, to create the help account and install the required softw ar e  on
+users’ w ork s t ations,  for Windows client w ork s t ations  version 7 and newer ( ska.msi , or ska-x64.msi
+for 64-bit systems)
+You cannot install Login Assistant on a Domain Controller. The installer will abort safely if a DC is
+detected.
+Windows
+The installer package can be executed on the following client oper ating  systems:
+▪Windows 11 (64-bit)▪
+▪Windows 10 (32-bit or 64-bit)▪
+▪Windows 8.1 (32-bit or 64-bit)▪
+▪Windows 8 (32-bit or 64-bit)▪
+Requirements
+▪In order to create the help accounts and install the softw ar e  on Windows w ork s t ations,  you must ▪
+launch the appropriate Windows Installer package using elevated privileges.
+If you need to launch the Windows Installer package from an account without the necessary elevated
+privileges, you can specify a privileged adminis trative  account to perform the ins t allation  using the
+ADMIN_USERNAME and ADMIN_PASSWORD ins t allation  options.
+▪Ensure that the CleanupPolicy GPO ("Delete user pr ofiles  older than a specified  number of days on ▪
+system restart") is disabled before installing Login Assistant. This policy is inc ompatible  with the use of
+the secure kiosk account.
+▪If users must use a domain help account, rather than a local w ork s t ation  account, ensure that you set ▪
+up the domain-level secure kiosk account according to requirements  (on page 1593) outlined earlier.
+Before ins t allation  on a Windows work s t ation,  you must assign the "SeBackupPrivilege" to the
+Windows Installer service.
+On a Windows 7 or Vista work s t ation,  execute MsiServerCfg.vbs from the command line under
+adminis trative  privileges. The script is located in the addon\login assistant\win\ directory.
+Alt ernatively ,  install the following Microsoft  hotfix:
+http:// support.microsoft.c om/kb/2514642
+If "SeBackupPrivilege" is not assigned, the installer provides the warning message: "Failed to load
+profile  for user help: A required privilege is not held by the client."
+▪If you are using a Cisco anyConnect VPN c onnection,  there are additional  settings  that can only be set ▪
+by running the MSI on the command line. See Command-line Cisco anyConnect VPNIf you are using a Cisco anyConnect VPN c onnection,  the following additional  settings  that can only be
+set by running the msi on the command line:
+VPN_CONNECT_STDINPUT  is a [~]  separated list of lines that go to standard input. The value is
+written  as a registry entry with multi-s tring  value called vpn-connect-stdinput . It does not
+allow for empty lines as the registry value type does not either.
+Run vpncli.exe  manually and in t er activ ely  to determine what input is needed. Input lines will
+replace % USERID%  with the VPN userid and %PASSWORD%  with the VPN password; for example:
+▪<vpn profile> ▪
+▪%USERID%▪
+▪%PASSWORD%▪
+▪y▪
+The <vpn profile>  should be replaced with VPN connect pr ofile,  and the y is to accept VPN terms of
+use. This translates into the following MSI command line parameter:
+VPN_CONNECT_STDINPUT="profile[~]%USERID%[~]%PASSWORD%[~]y"
+VPN_CONNECT_TERMINATE  is to optionally  terminate any running programs before trying to launch
+the VPN client, as Cisco anyConnect will fail if vpncli.exe  or vpnui.exe  are running. The value is
+written  as a registry entry called vpn-connect-terminate . This is optional  but recommended.
+The value is a comma-separated list of process names; for example:
+VPN_CONNECT_TERMINATE="vpncli.exe,vpnui.exe"
+VPN_HIDE_WINDOW  is used to hide the pop-up console window that vpncli.exe  starts. This is
+written  as a registry entry called vpn-hide-window . By default, it is off , as the showing of the
+console window is the default behavior and is required for some VPN clients. To disable set:
+VPN_HIDE_WINDOW = 1
+For other SKA installer command-line options,  see Add-on ins t allation  command-line options  (on page
+245).
+.
+Run the Login Assistant installer
+This sub section  shows you how to install or upgrade Login Assistant on a w ork s t ation.
+Command-line ins t allation
+You can install Login Assistant on w ork s t ations  from the command line or using a Windows Installer
+Transform file to de fine  parameters for ska.msi or ska-x64.msi .
+The ska.msi and ska-x64.msi  installers require Windows Installer 4.5.
+Featuresska.msi / ska-x64.msi ADDLOCAL ins t allation  features
+Feature Description
+SKA Parent feature, installs the Login Assistant SKA (secure
+kiosk account).
+CREDPROV Installs the Bravura Pass  Cr edential  Provider for Windows
+clients.
+P r operties
+ska.msi / ska-x64.msi generic pr operties
+Property Description
+INSTALLDIR The directory in which Login Assistant will be installed.
+The default is C:\Program Files\Bravura Security\Login
+Assistant\.
+INSTALLLEVEL This parameter is used in a silent ins t allation  and is
+mutually exclusive with ADDLOCAL. Set to a value of 1 or
+more (up to 32767) for a complete install: SKA
++CREDPROV.
+ADMIN_USERNAME Specify the username of a privileged administrator. When
+you need to launch the installer from an account with
+insufficien t  privileges, use this and ADMIN_PASSWORD to
+specify a more privileged account to perform the
+ins t allation.
+ADMIN_PASSWORD Specify the password of a privileged administrator. When
+you need to launch the installer from an account with
+insufficien t  privileges, use this and ADMIN_USERNAME to
+specify a more privileged account to perform the
+ins t allation.
+ska.msi / ska-x64.msi SKA pr operties
+Property Description
+SKATIMEOUT The maximum amount of minutes the Login Assistant
+secure kiosk account will stay open before it
+aut omatic ally  closes. Default is 15 minutes.
+URL The full path to the Front-end (psf) on the Bravura Pass
+server; for example, https://server:443/
+instance/ .
+USEVPN 0|1 If set to 1, use a VPN connect program.
+HELPADMINENABLED 0|1 No longer used.
+HELPACCOUNT The name of the Login Assistant "help" account (default
+is help).Property Description
+HELPPASSWORD The password for the help account specified  by
+HELPACCOUNT. If this option  is not set, you must set
+RANDOM_HELPPASSWORD to generate a random
+password. If neither option  is set, a blank password is
+created.
+RANDOM_HELPPASSWORD 0|1 Set to 1 to create a random password for
+HELPACCOUNT. This setting  is off by default.
+This setting  defaults to 0 for Login Assistant SKA-only
+ins t allations  and to 1 for CREDPROV installs – it is not
+recommended to use a random password in Login
+Assistant SKA-only ins t allations.
+Note that when HELPPASSWORD and
+RANDOM_HELPPASSWORD are both specified,  the
+RANDOM_HELPPASSWORD setting  is ignored.
+IMAGEFILE Fully -qualified  file name for the bitmap file used to
+replace the the Cr edential  Provider tile for CREDPROV
+ins t allations.
+The MSI can also be modified,  using an msi editing  tool,
+to add an "ImgFile" entry into the Binary table, where the
+binary file is the bitmap to use.
+LANGUAGEFILES Specifies  a pipe-separated list of gina.z files to use as
+additional  languages for the secure kiosk account and
+Cr edential  Provider. These must be fully -qualified  file
+names. The gina.z files are generated in the 12.3.0
+language packs. The list must be enclosed in double
+quotes.
+The MSI can also be modified,  using an msi editing  tool,
+to add an entry into the Binary table, of the form
+Lang_<language>-Rest of World, where the binary file is
+the gina.z file for the corresponding language. For
+example, Lang_fr-ca can be added with the contents of
+the gina.z file from the fr-ca skin.
+EN_US,
+<LANGUAGE>_Rest of World0|1 Indicates whether the specified  language is enabled
+for use. EN_US is installed by default. Additional
+languages are specified  with the LANGUAGEFILES setting.
+SHELLOPTIONS Command-line options  for the runurl command, used
+when invoking the web browser. The default is "-kiosk -
+no_icw -log off  -trapsesslock".
+RUNURLCFG Provide any additional  options  that may be required for
+runurl. This replaces the shell options  with "-cfg
+runurl.cfg", and generates a runurl.cfg file that includes
+the shell options  and any additional  options  specified  by
+this property. The default is no value.Property Description
+HIDEERRORS This setting  applies only to Bravura Security Fabric  12.4
+or older.
+ska.msi / ska-x64.msi VPN pr operties
+Option Description
+REMOTESKAACCESSENABLED 0|1 Enable or disable remote access to the SKA.
+VPN_CONNECT_PROGRAM Name and full path of the VPN connect program to run in
+order to establish a VPN c onnection.
+VPN_CONNECT_CMDLINE Command-line arguments for VPN connect program; for
+example -u %USERID% -p %PASSWORD% . This value
+cannot be blank.
+VPN_DISCONNECT_PROGRAM Name of the VPN disconnect program to run to
+disconnect from the VPN.
+VPN_DISCONNECT_CMDLINE Command-line arguments for VPN disconnect program;
+for example -u %USERID% -p %PASSWORD%.
+VPN_USER VPN user ID to be used with the VPN connect and
+disconnect programs.
+VPN_PASSWORD Password to be used with the VPN user ID.
+VPN_TIMEOUT The number of seconds to wait between retries. The
+default is 30.
+VPN_RETRIES The number of VPN retries to test for c onnectivity .  If this
+value is blank, there will only be one retry attemp t.  The
+default is 3.
+VPN_CONNECT_STDINPUT Standard input lines for Cisco anyConnect c onnections.
+See Run the SKA installer  (on page 1596) for details.
+VPN_CONNECT_TERMINATE For Cisco anyConnect, terminate any running programs
+before trying to launch the VPN client.
+VPN_HIDE_WINDOW For Cisco anyConnect, hide the pop-up console window
+that vpncli.exe starts.
+VPN_URL Set this to a URL to use as a test page for the SKA. If this
+page cannot be accessed by the SKA, then a VPN
+c onnection  will be established to access it.
+VPN_URL_SEARCH Set this to a marker in the HTML code to search for in the
+page set by VPN_URL.
+ska.msi / ska-x64.msi remote access pr opertiesOption Description
+RUNURL_EXTERNAL_URL This will be the URL of a website that used to determine
+if the computer is connected to the Internet, or still
+behind a r egis tr ation  screen or c aptiv e  portal. This
+defaults to http://www.msftncsi.com/
+ncsi.txt.
+Other options  for the external url are http://
+detectportal.firefox.com/success.txt
+with RUNURL_EXTERNAL_URL_EXPECTED_DATA set to
+success
+Or http://captive.apple.com/hotspot-
+detect.html with
+RUNURL_EXTERNAL_URL_EXPECTED_DATA set to
+Success
+RUNURL_EXTERNAL_URL_EXPECTED_DATA This is a string that is expected from the above website. It
+should be unique enough to ensure that a r egis tr ation
+page will not have the data, but always present on the
+external URL. The default is Microsoft NCSI.
+RUNURL_EXTERNAL_CONNECT_PROGRAM If users will be using an AirCard or Internet stick,  this is
+the name of the program to run in order to connect. This
+program will be run from the SKA to allow the user to
+connect.
+RUNURL_EXTERNAL_CONNECT_PROGRAM_TITLE If the Program to use to create a c onnection  is used, this
+is the main window title of the program when run. In
+AirCard, this is listed under the Task column on the
+Applic ations  tab.
+RUNURL_PORTAL_TIMEOUT The number of seconds to wait for a c aptiv e  portal
+c onnection.  The default is 300.
+RUNURL_REMOTE_HOST The address of the VPN server to test if the server is
+reachable.
+RUNURL_REMOTE_PORT
+ The port that the VPN server is listening on to test if the
+server is reachable.
+ 
+ska.msi / ska-x64.msi proxy pr operties
+Option Description
+PROXY_ENABLE 0|1 Enable or disable the installer to modify proxy
+c on figur ation.

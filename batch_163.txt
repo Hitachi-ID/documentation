@@ -1,0 +1,324 @@
+Policy Setting
+Remove All Programs list from the
+Start MenuEnabled
+Remove the "Undock PC" button  from
+the Start MenuEnabled
+Hide the notific ation  area Enabled
+Do not display any custom toolbars in
+the taskbarEnabled
+Desktop
+Hide and disable all items on desktop Enabled
+Remove My Documents icon on the
+desktopEnabled
+Remove Computer icon on the
+desktopEnabled
+Remove Recycle Bin icon from
+desktopEnabled
+Don’t save settings  at exit Enabled
+> Desktop
+Disable Activ e  Desktop Enabled
+Control Panel
+Prohibit access to the Control Panel Enabled
+> P er sonaliz ation
+Enable screen saver Disabled
+System
+Don’t display Getting  Started welcome
+screen at logonEnabled
+Custom user interface Enabled
+   Interface filename:  %logonserver%\sysvol\runurl.exe -cfg %logonserver%
+\sysvol\runurl.cfg
+Run only specified  Windows
+applic ationsEnabled
+   List of allowed applic ations:  runurl.exe
+> Ctrl+Alt+Del Options
+Remove Task Manager Enabled
+Remove Lock Computer Enabled
+Remove Change Password EnabledAdv ertise  Login Assistant
+If you do not install Cr edential  Provider softw ar e  on users’ w ork s t ations  to allow them to access the
+domain help account, users must be educated to use it when they cannot remember their passwords, or
+when their passwords have been locked out.
+There are several ways to do this:
+▪Add ins tructions  to the help desk voice response system, so that users who call for help are instructed ▪
+to try to log in with the help account.
+▪ Con figur e  a domain policy to display a message to users attempting  to logon. ▪
+▪Deploy a login screen background image to users’ w ork s t ations,  so that the ins tructions  to try the help ▪
+account are always on the users’ screens.
+▪Add ins tructions  about the help account to whatever media are distributed to users to tell them about ▪
+the corporate help desk. For example, some companies print in f ormation  about how to call the help
+desk on mouse pads.
+Display message text to users at logon
+You can c on figur e  Windows to display a message to users when they log on. You can customize the
+message to educate or remind users about the help account. The message appears after  the user presses
+[Ctrl]+[Alt]+[Del] . After  the user reads the message and clicks OK, they can proceed with the logon
+process.
+The message text to display to users is c on figur ed  by modifying the domain security policy.
+To display a message to users at logon:
+1.On the domain controller, start the Domain Security Policy  snap-in. 1.
+On Windows 2012, click Windows Button  > Apps > Local Security Policy .
+2.Expand Security Settings  > Local Policies > Security Options . 2.
+3.In the right pane, follow these steps to create the message text:3.
+On a Windows Server-based domain controller:
+a.Click In t er activ e  logon: Message title for users attempting  to log on , and then type the text that a.
+you want to appear in the dialog title bar.
+b.Click In t er activ e  logon: Message text for users attempting  to log on , and then type the text that b.
+you want to appear in the body of the message.
+The policy will take e ff ect  after  the client has been rebooted.Self Service Anywhere: Overview
+Bravura Pass  includes key features to assist remote users:
+1.Email notific ation  to users about upcoming password expiry, since the notice  displayed at the 1.
+Windows login prompt is not shown to users away from the office.
+2.Support for r esetting  f or g otten  passwords or PINs from the login prompt, even if the user is away from 2.
+the office  and is not physically attached  to the Internet.
+3.Support for r esetting  f or g otten  encr yption  keys for users whose PCs are protected with full disk 3.
+encr yption.
+4.Support for r esetting  PINs for remote users. 4.
+5.Password reset from a mobile phone.5.
+These features are c ollectiv ely  referred to as Self Service, Anywhere (SSA) . Using these features, users can
+resolve problems with their passwords, smart cards, tokens or full disk encr yption  softw ar e  both at the
+office  and remote, from any endpoint device.
+Password expiry warning for remote users
+Problem Remote users are not notified  by Windows when their passwords are about to expire. Users who
+infrequently connect their laptop to the office  network, instead checking email with a solution  such
+as Outlook Web Access, suff er  regular password expiry and require frequent password resets.
+Solution Bravura Pass  sends users emails warning of imminent password expiry. Users change passwords
+using a web browser. An Activ eX  control refreshes the password on their laptop.
+The solution  involves the following components:
+Components Purpose
+Notific ation  Service ( psntfsvc ) Updates the database with in f ormation  about
+notific ation  events and compliance rules, and runs
+plugins that:
+▪Check if a user is in compliance for a particular  event ▪
+▪Send reminders to non-compliant users, either by▪
+web or email
+▪Take action  if the reminder limit for a user is ▪
+exceeded
+▪Generate a list of non-compliant users for batch▪
+notific ation
+User notific ations  (PSN) module Can be used to notif y  users of pending password expiry
+via a web page.
+Change passwords (PSS) module Enables users to change passwords for one or more of
+their accounts.
+Password Manager service Can be used to queue password changes if they fail on
+a target system.Password Manager Local Reset Extension Resets passwords and clears cached cr edentials  on
+users' local w ork s t ations.
+cgilocalr.exe The program that supplies HTML to the password status
+page of the Change passwords (PSS) module for the S
+STATUS EXT plugin point.
+cgilocalr.cfg The c on figur ation  file for cgilocalr.exe.
+To set up self-service password reset for remote users:
+1.Set up web-based password management  (on page 1573) features, including expiry notific ation. 1.
+2. Con figur e  Local Reset Extension  (on page 1578). 2.
+Reset f or g otten,  cached passwords while away from the office
+Problem Laptop users sometimes  change their password before leaving the office  and may forget the new
+password when they need to use it while not attached  to the corporate network. Without a
+technical solution,  the IT help desk cannot resolve these users’ problem until  they return to the
+office.  User laptops are rendered inoperable until  they return to the office.
+Solution A Bravura Pass  client softw ar e  program  (on page 1628) allows users who forgot their primary,
+cached Windows password and cannot sign into their PC to connect to the Internet over a WiFi
+hotspot or using an AirCard. Locked-out users can also establish a temporary Internet c onnection
+using their home Internet c onnection  or a hotel Ethernet service. Once the user’s laptop is on the
+Internet, Bravura Pass  establishes a temporary VPN c onnection  and launches a kiosk-mode (full
+screen, locked down) web browser. The user steps through a self-service password reset process
+and Bravura Pass  uses an extension  (on page 1578) to reset the locally cached password to the
+same new value as was set on the network back at the office.
+The solution  involves the following softw ar e:
+Softw ar e Purpose
+Change passwords (PSS) module Enables users to change passwords for one or more of
+their accounts.
+Password Manager service Can be used to queue password changes if they fail on
+a target system.
+Login Assistant Client softw ar e  that works with a specially constructed
+and locked-down account, de fined  on a Windows
+w ork s t ation  (7 or higher). It is typically used to allow
+users, who forgot or otherwise disabled their login
+password, access to a self-service password reset
+facility.
+Local Reset Extension Resets passwords and clears cached cr edentials  on
+users' local w ork s t ations.
+cgilocalr.exe The program that supplies HTML to the password status
+page of the Change passwords (PSS) module for the S
+STATUS EXT plugin point.
+cgilocalr.cfg The c on figur ation  file for cgilocalr.exe.To set up local self-service password reset for remote users:
+1.Set up web-based password management  (on page 1573) features. 1.
+2. Con figur e  Local Reset Extension  (on page 1578). 2.
+3. Con figur e  Login Assistant for remote users  (on page 1628). 3.
+Unlock encrypted hard disk
+Problem Or g aniz ations  deploy full disk encr yption  (FDE) softw ar e  to protect against data leakage in
+the event that a corporate laptop is lost or stolen. Users with FDE on their PCs normally have
+to type a password to unlock their hard disk, before they can boot up an oper ating  system.
+This password is normally synchronized with the user’s primary Windows password, so that
+the user only has to remember and type a single password at login.
+If a user forgets his hard disk encr yption  unlock password, the user will be unable to start his
+oper ating  system or use his computer. This is a serious service disruption  for the user and
+can contribute to signific an t  support costs for the IT help desk.
+IVR solution Most FDE packages include a key recovery process at the PC boot prompt. This normally
+involves a challenge/response process between the FDE softw ar e,  the user, an IT support
+analyst and a key recovery server. Bravura Pass  can front-end this process using an
+integrated telephony option,  so that users can perform key recovery 24x7, from any loc ation,
+using their telephone and without talking to a human help desk technician.
+Web solution Users with access to the Bravura Pass  web interface can also recover an encrypted system
+through the Unlock encrypted systems/accounts (HDD) module, which will provide them
+with ins tructions  on how to acquire a challenge code for the system, if required. The relevant
+connector will use this challenge code to generate a response code that can be used to
+unlock the encrypted device.
+The components used in the solution  depend on the type of FDE softw ar e,  and other requirements of
+your or g aniz ation.  Connector Pack  ships with connectors for systems including Check Point, McAfee
+EndPoint Encr yption,  and PGP Whole Disk Encr yption  (WDE).
+▪The Check Point connector works with Phone Password Manager  or a custom applic ation  to ▪
+communicate between Check Point and Bravura Security Fabric  servers.
+▪The PGP WDE connector works with Phone Password Manager  and an Activ eX  control, nplocalr , to ▪
+updated locally protected resources.
+To set up the ability to unlock encrypted hard disks for remote users:
+▪Interface with in t er activ e  voice response (IVR) systems  (on page 1637). ▪
+▪ Con figur e  nplocalr  Local Reset Extension  (on page 1580). ▪
+▪ Con figur e  the Unlock encrypted systems/accounts  (HDD) module  (on page 1645). ▪
+See also:
+▪The Connector Pack documen t ation  for in f ormation  about in t egr ating  with hard drive encr yption ▪
+systems .
+▪Phone Password Manager  (on page 1742) for details on installing and c on figuring  the Bravura Pass  IVR ▪
+solution.Smart card PIN reset
+Problem Or g aniz ations  deploy smart cards to strengthen their authentic ation  processes. Users typically sign
+into their PC by inserting  their smart card into a reader and typing a PIN. If users forget their PIN or
+leave their smart card at home, they cannot sign into their PC. PIN reset is a complex support
+process since the new PIN has to be physically installed on the user’s smart card. This means that IT
+support may trigger a physical visit to the help desk.
+Solution Bravura Pass  allows users to access a self-service web portal from anywhere, including from the
+locked out login screen of their laptop, even away from the office  (even using WiFi, as described
+earlier). Once a user signs into the self-service portal, Bravura Pass  can download an Activ eX
+component to the user’s web browser, to communicate with the smart card and reset the f or g otten
+PIN. Bravura Pass  can also be used to assign a user a temporary login password (often  a very long
+and random one) to be used in the event that a user left his smart card at home.
+The solution  involves the following components:
+Components Purpose
+Change passwords (PSS) module Enables users to change passwords for one or more of
+their accounts.
+Password Manager service Can be used to queue password changes if they fail on
+a target system.
+scpinplugin The scpinplugin  works with the Activ eX  control
+HISCPINToolAX.ocx  to reset smart card PINs. PIN
+strength checking can be done by checking the
+c ombinations  of rules specified  in a c on figur ation  file
+and the Bravura Pass  password policy.
+To set up local self-service smart card PIN reset:
+1.Set up web-based password management  (on page 1573) features. 1.
+2. Con figur e  the smart card PIN reset  (on page 1648) plugin. 2.
+Low cost multi- f act or  authentic ation  using mobile phones
+Bravura Security Fabric  supports low-cost, multi- f act or  authentic ation  into its own request portal, using a
+smart phone as a secondary authentic ation  factor.
+This solution  is implemented using two technologies included with Bravura Security Fabric :
+1.Managed enrollment, which aut omatic ally  invites users to: 1.
+a.Provide their mobile phone number; and/ora.
+b.Provide their personal email address; and/orb.
+c.Install the Bravura One  app on their phone. c.
+2.Having enrolled,2.
+a.If the user connects from outside the private/secure corporate network, start with a CAPTCHA.a.
+b.Next, prompt for the user’s login ID.b.c.Fingerprint the user’s browser – if the indicated user has signed on successfully from the samec.
+browser before, this fact can act as an unobtrusive authentic ation  factor.
+d.If the user connects from a browser or loc ation  not seen before, prompt for another factor, which d.
+may be any of the following:
+i.If the user has been activ a t ed  to use a third party MFA technology, such as a one time  password i.
+token (e.g., RSA SecurID) or a third party app (e.g., Duo Security, Okta Verify), use that.
+ii.If the user had previously installed Bravura One  on their phone, either use push notific ation  to ii.
+display a PIN on their phone or display a cryptographic challenge in the login screen as a QR
+code, which the user scans with the app.
+iii.If the user had previously enrolled their mobile phone number, send a PIN to the user’s phone,iii.
+via SMS and prompt the user to enter it.
+iv.If the user had previously enrolled their personal email address, send a PIN to that address, oniv.
+the assumption  that the user has email access on their phone.
+e.Users may be prompted to select one of several MFA options  or one of several alt ernativ es  for the e.
+same option  (e.g., send a PIN via SMS to one of multiple  mobile numbers or email addresses).
+f.Finally, depending on whether the user remembers his password, prompt the user to enter it orf.
+answer a series of security questions.  Using a second, ”knowledge” factor reduces the risk of
+compromised authentic ation  due to lost or stolen phones or hardware tokens.
+See Mobile Access  (on page 1444) for detailed in f ormation  about installing and c on figuring  Bravura One .Self Service Anywhere: Setting  up Login Assistant for remote users
+Consider the scenario where a corporate user is off -sit e  with their corporate-domain laptop. The user is
+at the Windows login screen and has f or g otten  their AD domain password, and cannot log in to Windows.
+A phone call to their corporate help desk would enable the user to have their domain account password
+reset by the help desk, but unfortunately the user is still off -sit e  (remote) and so the laptop’s locally
+cached cr edentials  cannot be updated with the new password.
+As a result, the new network password cannot yet be used by the user to log in to their laptop, and the
+password reset has not actually helped the remote user in the least.
+Laptop users sometimes  forget their password while off -sit e  from the corporate network. Without a
+technical solution,  the users’ laptops are rendered inoperable until  they return to the office.  In this
+scenario, the IT help desk can do nothing to assist.
+Bravura Security’s Self Service, Anywhere (SSA) solution  allows users to securely reset their Activ e
+Directory password and their locally cached password together, without needing to know the current
+value. This chapter describes the technologies and c on figur ation  required to deploy SSA in this scenario.
+User Experience
+In this scenario, the key client-side components are VPN, Login Assistant with Cr edential  Provider and the
+Local Reset Extension ( pslocalr ) softw ar e.  The Cr edential  Provider creates a password-less login tile –
+a Change my password  button  – within the Windows 8+ login screen.
+A user opens their Windows w ork s t ation  to the log in screen and realises they have f or g otten  their
+password. The user clicks the Cr edential  Provider tile and is aut omatic ally  logged into the help account.
+Instead of reaching the Windows desktop, however, a secure, kiosk-mode web browser is loaded. This
+applic ation  allows the user to:
+1. Neg otia t e  a corporate network and VPN c onnection, 1.
+2.Connect to the web interface of their or g aniz ation’ s  instance of Bravura Pass  (as a full-screen, non- 2.
+navigable web page) using Login Assistant,
+3.Log in to Bravura Pass  using security question  or other authentic ation, 3.
+4.Reset their password, including the locally-cached one using Local Reset Extension, and4.
+5.Exit out to the login screen. (This will also tear down any temporary corporate network c onnections 5.
+that were established.)
+Because the Password Manager Local Reset Extension provides the ability to refresh locally-cached
+passwords during a password reset from the user’s w ork s t ation,  the user is able to log into their
+Windows w ork s t ation  immediately and does not need to travel to an on-network loc ation  to
+resynchronize the cached and network password values.
+Technical requirements
+To deploy Login Assistant in the scenario described above, the following high-level requirements are
+needed:▪Set up VPN infrastructure  (on page 1630) to support the refreshing of locally cached network ▪
+cr edentials  on Windows w ork s t ations.
+▪Allocate/provision appropriate domain controllers and a dedicated "site" within Activ e  Directory  (on ▪
+page 1631).
+▪Provision an IP subnet  (on page 1632). ▪
+▪Install the Login Assistant  (on page 1595) with Cr edential  Provider softw ar e  on remote user laptops ▪
+and w ork s t ations,  and c on figur e  it to use the locally installed VPN command-line client with specified
+cr edentials.
+On Windows 7 and Vista systems, ins t allation  of the Credential  Provider software  may fail unless the
+Windows Installer service has the "SeBackupPrivilege" right.
+On a Windows 7 or Vista work s t ation,  execute MsiServerCfg.vbs from the command line under
+adminis trative  privileges. The script is located in the addon\login assistant\win\ directory.
+Alt ernatively ,  install the following Microsoft  hotfix:
+http:// support.microsoft.c om/kb/2514642
+On newer Windows systems, the installer can assign the "SeBackupPrivilege" when it is run with
+elevated privileges.
+▪Either install the Bravura Pass  Local Reset Extension  (on page 1578) on remote user w ork s t ations/ ▪
+lap t op s,  or set it up for remote e x ecution  from the Bravura Pass  server.
+Downloading the ActiveX  control over a very slow c onnection  (eg. hotel rooms) may take a minute or
+more, making a pre-ins t allation  approach beneficial.
+Network architecture diagram
+VPN requirements
+A VPN c onnection  is required during the cr edential  refresh phase, where the Local Reset Extension
+updates the local Windows cr edential  cache with the end user’s new AD password. If no VPN is available,
+then attemp ts  to refresh the cached AD cr edentials  will fail, and the user will still be locked out of their
+laptop.
+When setting  up the VPN infrastructure:
+▪A command-line capable VPN client must be installed on each end-user w ork s t ation  or laptop that will ▪
+be used for remote c onnections.
+To function  with Cr edential  Provider, it must be possible to start and stop this VPN c onnection  using a
+command-line program. When the OTP method is implemented, the VPN command-line connect
+command must launch an interface where the OTP can be manually input by the end user. On the
+other hand, if using s t atic  cr edentials,  the Cr edential  Provider supports dynamically sub stituting  two
+values — a “username” and a “password” — into the connect and disconnect command lines. Where
+used, these values are stored encrypted within the Windows registry.
+▪An applic ation-le v el  VPN user account must be provisioned for exclusive use by the Bravura Pass  client ▪
+components. (This should normally be distinct  from any VPN accounts assigned to individual end-
+users.)
+▪One or more VPN endpoints should be setup:▪
+▪These should be setup in perimeter networks ("DMZs").▪
+If using a s t atic  password for the VPN cr edential,  then VPN c onnections  should terminate in a
+perimeter network ("DMZ") rather than the main, corporate network.
+▪They must honor the above "applic ation-le v el"  VPN user cr edentials. ▪
+▪The VPN endpoints should be c on figur ed  with network address/port access control list r es trictions. ▪
+The VPN endpoints must also be c on figur ed  to issue IP addresses to the c onnecting  systems from a
+dedicated pool of IP addresses. This is needed as a part of a larger mechanism that will ensure that
+c onnecting  VPN clients use the correct AD domain controllers.
+Bravura Security  only tests the Cisco AnyConnect VPN client with product feature in t egr ations.  It is the only
+officially  supported VPN client in t egr ation  with Bravura Security  products. Other VPN clients may work, but
+Bravura Security  does not test nor officially  support them.
+As the user’s personal VPN cr edentials  may include the f or g otten  password, VPN authentic ation  for SSA
+cannot include this password. There are two alt ernativ es  for SSA VPN authentic ation:
+1. Authentic a t e  the VPN using the end-user’s pr e-e xisting  OTP cr edential.  For example, RSA SecurID or 1.
+similar. There is less need to restrict VPN network access in this case.
+2.Use a s t atic  password known to the cr edential  provider softw ar e,  but not to any human. Connections 2.
+made using this password should be severely restricted. There may be one password per device, one
+shared password for all devices, or one password per group of devices.
+Best pr actice

@@ -1,0 +1,362 @@
+Con figuring  the Bravura Security Fabric  Server
+This chapter describes how to set up your Bravura Security Fabric  server for Bravura One  and use with
+the Bravura One  app.
+The following steps are required:
+▪Set up the Mobile Worker Service ▪
+▪ Con figuring  the self-service rules ▪
+Optional:
+▪ Con figuring  the global help desk rules ▪
+You can also implement additional  c on figur ation  options  (on page 1471).
+Setting  up the Mobile Worker Service
+The Mobile Worker Service ( mobworker ) works in c onjunction  with the Bravura One mobile proxy
+server to allow for a Bravura One  app on mobile devices to access Bravura Security Fabric  servers and to
+send push notific ations  on a corporate and private network from a home or public WiFi hot spot or a cell
+phone data plan.
+The Mobile Worker Service uses the following components to communicate with the Bravura One mobile
+proxy  server:
+▪Bravura One mobile proxy  server authentic ation  encr yption  key. ▪
+▪Host name or IP address of the Bravura One mobile proxy  server. ▪
+▪Bravura One mobile proxy  push notific ation  server authentic ation  encr yption  key. ▪
+▪Host name or IP address of the Bravura One mobile proxy  push notific ation  server. ▪
+See Mobile Worker Service  (on page 2858) for help c on figuring  the Mobile Worker Service
+(mobworker ).
+Con figur e  the Mobile Worker Service
+To c on figur e  the Mobile Worker Service:
+If you need the c onfiguration  details after  the initial  ins t allation  you can can run setup-mobproxy.sh
+on the Bravura One mobile proxy server.
+1.Log in to Bravura Security Fabric  as a superuser. 1.
+2.Click Manage the system > Maintenance > Services . 2.
+3.Select Bravura Security (mobworker) Mobile Worker Service . 3.
+4. Con figur e  the Proxy server authentic ation  key to be the same as the authentic ation  encr yption  key 4.
+that is c on figur ed  on the Bravura One mobile proxy  server.
+5. Con figur e  the Proxy server  URL for the URL of the Bravura One mobile proxy  server. For example: 5.
+https://mobproxy.bravurasecurity.com/your_company/<instance>/Ensure that the instance name as set for the URL in Proxy server URL  is the same as the instance
+name as c on figur ed  for the Bravura Security Fabric  server.
+If a load balancer is being used for the Bravura One mobile proxy  servers, the load balancer URL must
+be specified  in Proxy server URL. This is also the public url in which the Bravura One  app will
+communicate with and to locate a Bravura One mobile proxy  server as designated by the load
+balancer.
+6. Con figur e  the Private proxy server URL  for this instance for the URL of the Bravura One mobile proxy 6.
+server that will be used for the persistent c onnection  for c ommunic ation  with this instance for when a
+load balancer environment is c on figur ed  for the proxy servers.
+This parameter is not required if a load balanced url has not been c on figur ed  for Proxy server URL.
+In load balanced environments for the Bravura One mobile proxy  servers, this value may be a single
+value for a specific  proxy server or it may be set to multiple  Bravura One mobile proxy  servers in a
+comma-separated list. Setting  it to multiple  proxy servers is to allow for failover for if a Bravura One
+mobile proxy  server is taken offline  or is unavailable. The next proxy server as designated by the load
+balancer and is in this list will be used for the c onnections  to ensure that the Bravura One  app may
+c ontinue  to be used uninterrupted. Each Bravura One mobile proxy  server used as a failover must in
+the comma-separated list for Private proxy server URL for this instance .
+When the Bravura Security Fabric  server is set up for database r eplic ation,  the value for Private proxy
+server URL for this instance  across the instance nodes may also be either set to the same Bravura One
+mobile proxy  server or they may each be set for their own proxy server.
+In all cases, the instance name as de fined  in each of the urls for the Private proxy server URL for this
+instance  must be the same as the instance name as c on figur ed  for the Bravura Security Fabric  server.
+See Con figuring  load balancing for the Bravura One  mobile proxy  (on page 1463) for more in f ormation
+on load balancing the Bravura One mobile proxy  servers.
+7. Con figur e  the URL of the local instance for the fully qualified  url of the Bravura Security Fabric  server 7.
+that the Mobile Worker Service is currently running on. This must be set on each server when a load
+balancer environment is c on figur ed  for the Bravura One mobile proxy  servers to ensure that they are
+unique on each instance and does not fall back to BASE_IDSYNCH_URL, which would end up being the
+same across all replicated nodes. The Bravura Security Fabric  server must also be c on figur ed  for
+HTTPS for the url for load balanced mobile proxy server environments.
+Set this using the following format: https://<fqdn>/<instance_name>
+8. Con figur e  the Push notific ation  server authentic ation  key to be the authentic ation  encr yption  key 8.
+that is c on figur ed  for the Bravura One mobile proxy  push notific ation  server.
+9. Con figur e  the Push notific ation  server URL  for the url of the Bravura One mobile proxy  push 9.
+notific ation  server.
+Contact support@bravurasecurity.com for assistance with the c onfiguration  and access of the Bravura
+One mobile proxy push notific ation  server and for the Push notific ation  server authentic ation  key and
+Push notific ation  server URL for your environment.
+10. If the Bravura Security Fabric  server uses a self-signed certific a t e  for HTTPS encr yption,  check the 10.
+checkbox for Ignore all server certific a t e  warnings .11. If the Bravura Security Fabric  server is c on figur ed  separately to use a corporate proxy server, such as 11.
+for Windows updates for example, then set HTTP proxy to use for outgoing c onnections
+(address:port)  to the corporate proxy server. For this c on figur ation,  the Bravura One mobile proxy
+server will need to be added to a bypass list. For example, using winhttp , this may be c on figur ed
+with the following command:
+netsh winhttp set proxy proxy-server="http://
+corporateproxy.bravurasecurity.com:80" bypass-list="https://
+mobproxy.bravurasecurity.com"
+12. Con figur e  the rest of the parameters as needed. The defaults values may also be used. 12.
+The Mobile Worker Service timeout  should be a smaller value than the minimum value of the timeout
+setting  for Mobile Proxy Service and any proxy time,  or fire wall  timeout  in between the Mobile Worker
+Service and Mobile Proxy Service.
+If Aut omatic ally  determine proxy server timeout  is checked, the Mobile Worker Service will
+aut omatic ally  decrease the given setting  to an appropriate one if the c ommunic ation  is broken
+unexpectedly.
+13. Click Update to update the settings. 13.
+See Mobile Worker Service  (on page 2858) for help c on figuring  the Mobile Worker Service
+(mobworker ).
+Enable the Mobile Worker Service
+After  you have c on figur ed  the Mobile Worker Service, you must enable and start the service. On the
+Service in f ormation  page:
+1.Click Enable the service . 1.
+2.Click Start the service . 2.
+Con figur e  load balancing for the Bravura One  proxy servers
+By default, c ommunic ation  between the Bravura One mobile proxy  server and the Bravura Security Fabric
+is established using the Proxy server URL  parameter for the Mobile Worker Service.
+Load balancing of the Bravura One mobile proxy  servers may be c on figur ed  in order to distribute out the
+load for use with the Bravura One  apps on mobile devices and access to the Bravura Security Fabric
+servers.
+Once a c onnection  has been established, the session should be bound to that server via a "sticky
+sessions" or persistent c onnection  mechanism. This is because the Bravura Security Fabric  server and
+Mobile Worker Service must maintain a consistent c onnection  with a single Mobile Proxy Service running
+on a Bravura One mobile proxy  server so that it is always using the same server. This must be c on figur ed
+from the load balancer to require persistent c onnections.
+To c on figur e  a load balancer from the Mobile Worker Service, set the Proxy server URL  to the load
+balanced url. This will also be the public url that is used by the Bravura One  app itself.The Private proxy server URL for this instance  parameter for the Mobile Worker Service must then be
+specified  for the specific  Bravura One mobile proxy  server that the Bravura Security Fabric  will
+communicate with.
+In load balanced environments for the Bravura One mobile proxy  servers and when the Bravura Security
+Fabric  server is set up for database r eplic ation,  the value for Private proxy server URL  may be set to be
+the same proxy server url across instance nodes to share the same Bravura One mobile proxy  server url,
+each set to unique Bravura One mobile proxy  server urls, or set to a comma-separated list of Bravura One
+mobile proxy  servers.
+Setting  it to multiple  proxy servers is to allow for failover for if a Bravura One mobile proxy  server is taken
+offline  or is unavailable. The next proxy server as designated by the load balancer and is in this list will be
+used for the c onnections  to ensure that the Bravura One  app may c ontinue  to be used uninterrupted. Each
+Bravura One mobile proxy  server used as a failover must in the comma-separated list for Private proxy
+server URL for this instance .
+The URL of the local instance  must be set to the fully qualified  url of the Bravura Security Fabric  server
+that the Mobile Worker Service is currently running on. It must be for each individual Bravura Security
+Fabric  server so that it doesn’t fall back to using the url set for BASE_IDSYNCH_URL, which would end up
+being the same across all replicated nodes.
+The URL must also be c on figur ed  for HTTPS for the Bravura Security Fabric  server.
+Set this using the following format: https://<fqdn_or_ip_address>/<instance_name>
+Each Bravura Security Fabric  server must also be c on figur ed  for database r eplic ation  in order to
+synchronize the Bravura One  app r egis tr ations  and other in f ormation  between each of the servers.
+See R eplic ation  and Recovery Guide  for more in f ormation  on setting  up database r eplic ation  between
+instances.
+The updinst.exe  utility  may be used to synchronize the registry entries between the replicated
+servers, as well as the values for the Mobile Worker Service services. The Mobile Worker Service service
+will still need to be manually enabled and started on each node as well as having the Private proxy server
+URL for this instance parameter manually de fined  for each one.
+See updinst
+The updinst program synchronizes files and registry settings  between servers in a multiple-ins t ance
+environment, or a r eplic ation  environment. The program is run during auto discovery when the
+Maintenance > Options  > PSUPDATE FILE REPLICATION  setting  is enabled. This is the default setting.
+This program also collects and synchronizes proxy log files onto the instance server.
+This program is used in c onjunction  with the File R eplic ation  Service ( idfilerep ).
+To determine which files and registry settings  updinst  replicates, there are whitelists and blacklists that
+specify what data to include and what data to omit in the context of file/r egis tr y  r eplic ation  You can write
+an updinst.cfg file to provide additional  c on figur ation.
+A sample of updinst.cfg is located in the samples directory. This c on figur ation  file must be placed in
+the \<instance> \ p sc on fig \ directory before it can be used by the File R eplic ation  Service. Use thisc on figur ation  file to control which files and registry settings  are replicated to other instances (whitelist)
+and which are not replicated (blacklist). The whitelist settings  override blacklist settings.
+All file and c onfiguration  modific ations  should be done on the same server (the primary). When
+attempting  to run updinst from a node other than the primary, an error will occur, and the operation
+will be aborted. In extreme circumstances there is an option  to force external data store replic ation  (-
+extdb -forcerun) from a secondary node; however that should be done only when that database was
+corrupted on the primary (and its backups that are created every time  the external data store is updated,
+were also corrupted) but the database, or a backup, survived on a secondary node. If updinst is run
+from more than one server, or if file or registry changes are made on secondary nodes, it is possible for it
+to overwrite newer files or settings  that exist on secondary nodes. If a server with missing files runs
+updinst , that will remove those same files on all other instances.
+Do not attemp t  to replace Database Service ( iddb ) files using updinst or the File R eplic ation  Service.
+Updating  the Database Service and related files (such as iddbmssql.dll) must be done manually on all
+instances. This only applies to the Database Service service. All other services can be updated using the
+File R eplic ation  Service. To update the Database Service files manually, shut down all services on the
+instance, back up all services, and then replace the Database Service files.
+If a problem occurs during file r eplic ation  then a notific ation  email is sent to the administrator, and the
+FILE REPLICATION FAILURE event is triggered.
+Usage
+updinst.exe [-list] | [-showconfig] |
+  [-synchfile] [-syncreg] [-globalcp] [-serverid <serverid>...] [-dry-
+run] |
+[-extdb[-forcerun]] | [-getlogs] [-proxyfile <proxylist.csv>] [-
+removelogs]
+Argument Description
+-dry-run Only show what would be done without making changes.
+-getlogs Retrieve and synchronize all logs from all proxies
+c on figur ed  onto the instance server. Logs will be under
+their r espectiv e  \Logs\proxy_<proxy_IP> directory.
+-globalcp Synchronize the global connector pack in addition  to the
+current instance. Used in c onjunction  with the -s yncfile
+argument.
+-list List file r eplic ation  services involved and exit. Display the
+status of each service, node ID, address, and port. If the
+service is unreachable, check the c onnection  of the
+Database Service for each server.
+-pr o xy file  <proxylist.csv> Retrieve and synchronize all logs from proxies listed in
+the \<ins t ance>\p sc on fig\pr o xylis t.cs v  file. Logs will be
+under their r espectiv e  \Logs\proxy_>proxy_IP< directory.Argument Description
+Where proxylist.csv contains a list of proxy IP addresses
+and their ports.
+This is only used in c onjunction  with -getlogs.
+-serverid <serverid> … Synchronize to specified  servers; can be used with
+multiple  server IDs. The server ID can be found using the
+-list argument. If no server is specified,  all servers are
+updated.
+-sho w c on fig Show built-in c on figur ation  and exit.
+-s yncfile Synchronize files to other servers.
+-syncreg Synchronize registry settings  to other servers.
+-extdb Synchronize the extdb tables.
+-forcerun Forces the current node to synchronize the extdb tables.
+-removelogs Remove all previously fetched logs from all proxies. Can
+be used in c onjunction  with -getlogs to remove logs that
+no longer exist on the remote server.
+- filedir  <filedir> Specific  file path from which files are synchronized to
+other servers. This is the r elativ e  path under the
+instance’s main file folder.
+-registrydir <registrydir> Specific  registry path from which settings  are
+synchronized to other servers. This is the r elativ e  path
+under the instance’s main registry folder.
+Examples
+1.To show the default c on figur ation  file: 1.
+updinst -showconfig
+2.To show a list of all file r eplic ation  services that are running: 2.
+updinst -list
+3.To synchronize all files and registry settings  on all servers: 3.
+updinst -syncfile -syncreg
+4.To synchronize a specific  file directory on all servers: 4.
+updinst -syncfile -filedir <filedir>
+5.To synchronize multiple  file directories on all servers: 5.
+updinst -syncfile -filedir <filedir1> -filedir <filedir2> ...
+6.To synchronize a specific  registry setting  on all servers: 6.
+updinst -syncreg -registrydir <registrydir>
+7.To run a dry-run on a specific  server: 7.
+updinst -serverid <server id (guid)> -syncfile -syncreg
+8.To update global Connector Pack files: 8.
+updinst.exe -globalcp -syncfile9.To collect and synchronize logs from all proxies:9.
+updinst.exe -getlogs
+10. To collect and synchronize logs from all proxies listed in the proxylist file: 10.
+updinst.exe -getlogs -proxyfile <proxylist.csv>
+Where the proxylist.csv contains:
+::proxy, port:: 
+10.0.39.111, 3344 
+10.0.39.121, 3344
+11. To synchronize the extdb tables: 11.
+updinst.exe -extdb
+12. To remove all previously fetched logs: 12.
+updinst.exe -removelogs
+13. To remove logs that no longer exist on the remote server: 13.
+updinst.exe -removelogs -getlogs
+Update updinst c onfig  file
+In the updinst c on fig  file, all file paths are rooted at the backslash immediately after  the
+instance_name directory.
+Each item in the lists contained in the file is a regular expression (regex).
+While the sample .cfg file contains some entries from the default values built into the updinst binary
+(for regex illus tr ation  purposes), it's recommended that the cfg file actually used contain only new/
+custom values, which do not show up in the four lists when checking the c on figur ation  with no
+updinst.cfg  file in the p sc on fig  directory (it saves on comparisons, and the instance contains a lot of
+files and directories to compare with each declared regex string).
+If the file to add an e x ception  for is script\somefile.py , the most precise regex expression for it is:
+^\\\\script\\\\somefile.py$
+The s t arting  ^ represents the beginning of the string, so it would not match, for example, \samples
+\script\somefile.py.
+Similarly, the trailing $ represents the end of the string, so it won't match, for example, an extension
+like .pyg
+To exclude a whole directory, you can leave the $ off and the expression will match everything in that
+directory: files and other directories with their files.  This default option  for example matches all auto-
+discovered target list files:
+psconfig\\\\discovered
+Each backslash is escaped with a backslash, so \ becomes \\, and since that is itself inside of a KVG
+string, \\ becomes \\\\  (\s would simply escape the s).
+Below is an example that adds blacklisted registry entries and file entries (meaning that they will not be
+sent from the primary to secondary applic ation  nodes).# KVGROUP-V2.0  
+"updinst" "cfg" = {  
+}  
+# Registry path blacklist.  Registry paths that match the regular  
+# expressions here are not considered for replication, unless they  
+# appear in regWhitelist.  All paths are relative to the instance  
+# registry root.  Registry keys (and value names) are separated by  
+# double-escaped backslashes (\\\\).
+ "regBlacklist" = { "^IDAPISOAP\\\\endpoints",  
+                     "SENDER_EMAIL",  
+                     "ServerAddress" };
+# File path blacklist. Filesystem paths that match the regular
+# expressions here are not considered for propagation, unless they
+# appear in regWhitelist (see above). All paths are relative to the
+# instance root directory. Directories and files are separated
+# by double-escaped backslashes (\\\\).
+"fileBlacklist" = { "^\\\\psconfig\\\\.*\\.db$";
+"plugin\\\\debug\\\\.*";
+"design\\\\src\\\\ui.build\\\\.*";
+"design\\\\src\\\\ui\\\\node_modules\\\\.*"
+};
+}
+In the above:
+▪ Blacklisting  these entries ensures that the SENDER_EMAIL  and ServerAddres s are not ▪
+propagated from the primary to the secondaries. These two entries will be unique to each server.
+▪SENDER_EMAIL  system variable, so that each node can be given a separate "From:" field  in ▪
+outgoing emails, to be able to quickly distinguish  what node originates what email.
+▪ServerAddres s bypasses the aut omatic  computer-name de t ection  on each node (for example, ▪
+when iddb detects only the hostname in a node whose OS is not joined to a domain, and Bravura
+Privilege needs to register FQDNs instead - so that link passing between nodes, as in downloading
+recording archives, can succeed the TLS check in IIS)
+▪The entry blacklisting  the IDAPISOAP\endpoints  registry key exists by default in the ▪
+c on figur ation  file, in case each node has to provide diff er en t  SOAP endpoints (directly to the
+hostname, or for zoning purposes).
+▪Most registry changes are system variables listed in the registry section  at Manage the system ▪
+>Maintenance > System variables .
+▪psconfig\*\*.db  is where Bravura Privilege keeps list files from discovered systems in 12.0.0+: by ▪
+default, those files are useful only on the primary node and sending them to replica nodes is a waste
+of resources, especially at the end of each Auto discovery.▪For the same reason, check the output of updinst -showconfig  to make sure that the ▪
+psconfig\*.db  files are also blacklisted (and if not, add a blacklist rule for ^psconfig\\\
+\*.db )
+▪Filtering the logs for psupdate or updinst dur ations  can suggest what other large files can be ▪
+excluded from auto discovery if they take too long.
+▪plugin\debug \ is where (mostly c omponentiz ed)  Python scripts using IDMLib-based logging place ▪
+their input/output KVGs and like other log files,  those are usually not needed on secondaries from the
+primary.
+▪design\src\  files should never change after  patching. They are Angular app requirements and ▪
+there is no need for them to be propagated to secondary servers, let alone proxies.
+▪Whitelists trump blacklists. This means if the same item is matched both by a blacklist regex and a▪
+whitelist one, the whitelist wins and the item is propagated.
+▪If an entry is not blacklisted (or if it was by default blacklisted, but is modified  with a whitelist entry): ▪
+▪It copies any files changed on the primary inside the instance folder and subfolders, and it ▪
+overwrites any changes. In other words, it deletes any new files created on the secondary nodes
+and if files are modified  on secondaries, the changes are reverted and not backed up.
+▪It copies any registry changes made on the primary node and overwrites any changes on the▪
+secondary nodes (removes them if they were not on the primary).
+▪The main Bravura Security Fabric  installer only installs/checks for the 64-bit VC++ redistributables. The ▪
+Connector Pack MSI will install/check for both 32-bit and 64-bit, so do not depend on file pr opag ation
+to copy all the connector pack files over to other nodes and proxies.
+for more in f ormation  on the updinst.exe  utility .
+Without the use of a load balancer, the Bravura One  app on a mobile device will communicate directly
+with the Mobile Proxy Service running on the Bravura One mobile proxy  server which will then
+communicate with the Mobile Worker Service for the Bravura Security Fabric  server.
+When a load balancer is in place, the Bravura One  app on a mobile device will communicate fir s t with the
+load balancer (as de fined  by the Proxy server URL  parameter for the Mobile Worker Service).
+The load balancer will then choose one of the Bravura One mobile proxy  servers. Multiple  proxy servers
+may be c on figur ed  to be contacted by the load balancer.
+The Bravura One mobile proxy  server that is contacted will then communicate with one of the Bravura
+Security Fabric  servers in which the proxy server has been de fined  by the Private proxy server URL  for
+the Mobile Worker Service for that instance.
+Con figur e  the self-service rules
+You must update user access rules in order to determine who is allowed to register and activ a t e  mobile
+devices.
+To modify the user access rules for Bravura One  for users:
+1.Click  Manage the system > Security > Access to user pr ofiles . 1.
+2.Select Self-service rules . 2.3.Either add a new self-service rule or select ALL_SELF_REQUEST  for all users. 3.
+4.Add the "Manage mobile devices" privilege.4.
+5.Click Update  to update the self-service rule. 5.
+Con figur e  the global help desk rules
+You must update user access rules in order to determine who is allowed to view or delete mobile devices
+on behalf of other users.
+To modify the global help desk rules for help-desk users to view or delete Bravura One  app r egis tr ations  for
+other users:
+1.Click Manage the system > Security > Access  to user pr ofiles. 1.
+2.Select Global help desk rules . 2.
+3.Either add a new global help desk rule or select GLOBAL_HELP_DESK  or HELP_DESK_MANAGERS  for 3.
+one of the help desk rules.
+4.Add the "Manage mobile devices" privilege.4.
+5.Click Update  to update the global help desk rule. 5.
+Force users to activ a t e  a mobile device
+You can force users to register and activ a t e  a mobile device as part of the enrollment process. Users are
+redirected to the Mobile devices page when forced enrollment for mobile devices has been enabled.
+From an authentic ation  chain point of view, if mobile devices are going to be required as a form of multi-
+f act or  authentic ation,  the mobile authentic ation  module should only be activ a t ed  for users that have
+registered devices. This c on figur ations  allows users to log in to Bravura Security Fabric  without a device,
+in the event one has not been registered yet. The forced enrollment module can then direct the user to
+the mobile device r egis tr ation  page.
+To force users to activ a t e  a mobile device:
+▪Ensure that the Bravura Security Fabric  and Bravura One mobile proxy  servers have been c on figur ed ▪
+for Bravura One .
+▪Ensure that a self-service rule has been c on figur ed  so that the users have the "Manage mobile ▪
+devices" privilege. This may be c on figur ed  either for a new self-service rule or ALL_SELF_REQUEST  for
+all users.
+▪Add the mobiledevice  value to PSF FORCE ENROLLMENT . ▪
+a.Click Manage the system > Modules > Front-End (PSF) . a.
+b.Locate the PSF FORCE ENROLLMENT  option. b.
+c.Add ,mobiledevice  to the e xisting  list of comma-separated values. c.

@@ -1,0 +1,85 @@
+9.Exit SQL Server Management Studio.9.
+Note the database name, and the name and password of the login that you create. You will need
+these values, as well as the in f ormation  you gathered earlier, when you install Bravura Security Fabric .
+Cr eating  a dedicated report database user and schema
+The Analytics  app requires a dedicated report database user and schema.
+You can allow Bravura Security Fabric  setup to do this for you, as described in SSRS settings  , or use the
+following ins tructions  to set up the user and schema yourself.
+To create the report user and schema and c on figur e  permissions:
+1.Start Micr osoft  SQL Server Management Studio. 1.
+2.Connect to the server as a system administrator (sysadmin role).2.
+You can do this using SQL Server authentic ation  and the sa account, or using Windows authentic ation
+if the Windows user has the sysadmin role.
+For example, to connect to the server using the sa account, set:
+Server type : Database Engine
+Server name:  <host name or IP address> \<instance>
+Authentic ation:  SQL authentic ation
+Login:  sa
+Password  <password for sa>
+Click Connect .
+3.Create a new schema in the database:3.
+a.In the Object Explorer pane expand Databases > <instancedatabase> > Security . a.
+b.Right-click Schemas , then click New Schema… . b.
+c.Type the Schema name . c.
+d.Set the Schema owner to dbo . d.e.Click OK. e.
+4.Create a new login:4.
+a.In the Object Explorer pane, expand Security . a.
+b.Right-click Logins , then click New Login… . b.
+c.On the General page, type the Login name . c.
+d.Select SQL Server Authentic ation . d.
+e.Type and c on firm  the password for the new login. e.f.Deselect the User must change password at next login and Enforce password e xpir ation f.
+checkboxes.
+g.Set Default database to the instance database created either in a previous install or in step 3. g.
+h.Click User Mapping on the left. h.
+i.Map the <instance database> to this new user and set the default schema to the schema created ini.
+the previous step.j.Click OK. j.
+5.Set the user in the database:5.
+a.In the Object Explorer pane, expand Databases > <instancedatabase> > Security >  Users . a.
+b.Right-click the user created in step 4 and click Pr operties . b.
+c.Click General on the left. c.
+d.Set the Default schema to the schema you created in step 3. d.e.In the Membership area, enable: e.
+▪db_datareader▪f.Click Securables on the left. f.
+g.Search and select Schema object types.g.h.Select the instance database's schema.h.
+i.Deny this user access to the instance database's schema.i.j.Search and select the report schema you created in step 3.j.
+k.Grant Execute and Select permissions.k.l.Click OK. l.
+Removing public/guest permissions
+By default, in SQL Server, most objects have public permissions granted. If you remove the default public
+and guest permissions from your database, for example in SQL server 2014 and after ,  you must ensure
+the following steps are performed to ensure Bravura Security Fabric  operates correctly:
+1.Start Micr osoft  SQL Server Management Studio. 1.2.Connect to the server as a system administrator (sysadmin role).2.
+For example, to connect to the server using the sa account, set:
+Server type : Database Engine
+Server name:  <host name or IP address> \<instance>
+Authentic ation:  SQL authentic ation
+Login:  sa
+Password  <password for sa>
+3.Click Connect . 3.
+4.Create a new user:4.
+a.In the Object Explorer (left)  pane, expand Databases > SystemDatabases > master > Security , a.
+right-click Users , then select New User… .
+b.Type the User name . b.
+c.Select Login name created in previous section  (on page 178). c.
+d.Select Default schema (for example, sys ). d.
+e.Select Securables to search and grant select permission on schemas sys and e.
+INFORMATION_SCHEMA.
+f.Click OK. f.
+5.Create a new database role for sp_describe_first_result_set : 5.
+a.In the Object Explorer (left)  pane, expand Databases > System Databases > master > Security > a.
+Roles , right-click Database Roles , then select New Database Role… .
+b.Type the Role name . b.
+c.Add user created in previous step to Role Members . c.
+d.Select Securables page, and click Search . d.
+e.Select sp_describe_first_result_set (Extended Stored Procedures). e.
+f.Grant Execute permission, and click OK. f.
+6.Repeat last step to create a new database role for sp_executesql . 6.
+7.For upgrade or migr ation,  repeat to create a new database role for sp_rename . 7.
+8.For upgrade or migr ation,  ensure your login user can connect: 8.
+a.In the Object Explorer (left)  pane, expand Security > Logins , and select your login user. a.
+b.Select Securables page, and click Search . b.
+c.Select your server.c.
+d.Under the Permissions for <server> check the following permissions: d.
+▪Connect SQL▪
+▪Control server▪
+▪Create any database▪
+▪Create availability group▪
+▪Create DDL event notific ation ▪

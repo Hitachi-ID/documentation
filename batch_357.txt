@@ -1,0 +1,304 @@
+SpecialBuild:          not found
+The following is an example of the return for a custom build:
+FileName:              <filepath>\<filename>
+File has been customized.
+MajorVersion:         6
+MinorVersion:         3
+BuildNumber:          0
+RevisionNumber (QFE): 2066
+FileFlags: 0x20
+FileVersion:          6.3.0.02121
+SpecialBuild:         Custom build by <developer's name>instdump
+The instdump program is run at the end of the auto discovery process and writes a c on figur ation
+summary to a file named c on fig-<y y y y>-<mm>-<dd>.kv g  in the Logs directory. The file can be used by
+Bravura Security support to help provide assistance.
+The psupdate program runs the instdump program when the Maintenance > Options  > PSUPDATE
+INSTDUMP  setting  is enabled (disabled by default).
+Some arguments are dependent on the Bravura Security product license.
+Usage
+instdump.exe [ <options> ] -outfile <outfile>
+Argument Description
+-acl Output ACL in f ormation.
+-attr grp Output attribut e  group in f ormation.  Requires Bravura
+Identity .
+-authenidlist Output authentic ation  target system list in f ormation.
+-authorizer Output authorizer in f ormation.  Requires Bravura Identity .
+-binaryversion Output binary version in f ormation.
+-consoleuser Output product administrator in f ormation.
+-cus t om file Output custom file in f ormation.
+-e xittr ap Output event action  (exit trap) in f ormation.
+-inventory Output inventory in f ormation.  Requires Bravura Identity .
+-managedgrp Output managed group in f ormation.  Requires Bravura
+Identity .
+-outfile  <outfile> File name for output (required).
+-plugin Output plugin in f ormation.
+-pr ofileattr Output attribut e  in f ormation.
+-registry Output registry in f ormation.
+-role Output role in f ormation.  Requires Bravura Identity .
+-service Output service in f ormation.
+-strength Output strength in f ormation.
+-system Output system c on figur ation  variables.
+-target Output target in f ormation.
+-t ar g e t attr Output account attribut e  in f ormation.
+-template Output template in f ormation.  Requires Bravura Identity .
+-userclass Output userclass in f ormation.
+-verbose Use a more readable format for output.licviewer
+Use the licviewer program to view the details of your Bravura Security Fabric  license. It presents the
+license expiry date, licensed modules, and numbers of licensed users and target systems.
+Usage
+licviewer.exe <license file> [-o <output file>]
+Argument Description
+<license file> License file
+-o <output file> File to output the license details to
+Example
+To use licviewer to read the idmsuite.lic license file and output the results to
+licensedetails.txt , type:
+licviewer ..\license\idmsuite.lic -o licensedetails.txt
+pscp
+Use pscp  to copy files.  The pscp  program combines the DOS copy  command with the Unix cp
+command.
+Usage
+ pscp.exe [-r] [-u] <source> [<source> ...] <destination>
+ pscp.exe [-r] [-u] <source> [destination]
+Argument Description
+-r Copy files,  directories and sub-directories recursively.
+-u Copy only updated files.  The pscp  program will copy
+files if the time  stamp of the source file is later than the
+time  stamp of the destination  file, or if the destination
+file does not exist.
+<source> The source file or directory.
+You can use the wild card * for any number of characters,
+or ? for a single character.
+Note : If you specify multiple  source statements, you must
+specify a destination  directory.
+If the source is a directory, you must also specify the -r
+option.
+<destination> Specify the destination  file or directory.
+If the destination  directory does not exist, pscp  will
+create it as long as only one source statement is
+specified.Argument Description
+-- Indicate that the following arguments are filenames.  Use
+this option  if you are copying a filename  that begins with
+"-". Option  is specified  by a double-dash. See example 4.
+Examples
+1.To copy the file test.log from the current directory to the C:\temp directory, type: 1.
+    pscp test.log "C:\temp\test.bak.log"
+2.To copy all updated log files from C:\temp subdirectories to the current directory on the C drive, type: 2.
+    pscp -ru "C:\temp\*.log" "C:"
+3.To copy all updated log files from C:\temp subdirectories to the root directory on the C: drive, type: 3.
+    pscp.exe -ru "C:\temp\*.log" "C:\"
+4.To copy the updated file -dash.log to C:\temp, type: 4.
+    pscp.exe -u -- -dash.log "C:\temp"psdonechk
+The psdonechk  program checks the PSQ_DONE and PSL_DONE compliance tags for all users. This
+program is aut omatic ally  scheduled to run once when you modify:
+▪The minimum number of accounts each user must have across target systems.▪
+This is set by Manage the system > Modules > Attach  other accounts (PSL) > PSL MIN ACCOUNTS .
+▪The minimum number of security questions  that a user must answer from internal question  sets. ▪
+This is set by Minimum number of answered questions  per user for each question  set in the Manage
+the system > Policies > Question  sets menu.
+By default, the program is scheduled to run once at 2.30 am the following day.
+To modify the scheduled job, click Manage the system  >Maintenance > Scheduled jobs , then select
+PSDONECHK .
+Usage
+psdonechk.exe -autocheck
+psdonechk.exe -psq_done
+psdonechk.exe -psl_done
+Argument Description
+-autocheck Checks compliance for all users for the PSQ_DONE and
+PSL_DONE tags.
+-psq_done Checks compliance for all users for the PSQ_DONE tag.
+-psl_done Checks compliance for all users for the PSL_DONE tag.
+psmount
+Use the psmount  program to mount Windows network drives.
+Usage
+ psmount.exe [option]
+Argument Description
+-domain <domain> Specifies  the target system domain.
+-host <host> This argument must be included; it specifies  the target
+system ID. The cr edentials  are aut omatic ally  retrieved
+when using the -host argument.
+-share <share> This argument must be included; it specifies  the share
+name.
+Examples
+1.To mount a network drive using the minimum required options: 1.psmount.exe -host AD -share \\10.10.74.45\share
+2.To log into the share as a domain user using the -domain option: 2.
+psmount.exe -host AD -share \\10.10.74.45\share -domain userdomain
+psproxycmd
+Use the psproxycmd  program to communicate with a Bravura Security Fabric  proxy server which is
+running the psproxy  service.
+Usage
+psproxycmd.exe -server <server> -port <port> [-version] [-
+exist<filename>] 
+[-list <filepattern>] [-listmd5 <filename>]
+[-download <localfile[remotefile]>] [-upload
+<localfile[remotefile]>] [-delete <filepattern>] [-run[i|o]
+<command>] [-timeout <seconds>]
+Argument Description
+-server <server> The name of the proxy server.
+-port <port> The port for the proxy server.
+-version Prints out the version of the psproxy service.
+-exist <filename> Checks if <filename>  exists, and returns the MD5 hash
+and last modified  time.
+-list <filepattern> Lists directory contents. Uses wildcards.
+-listmd5 <filename> Generates a list of MD5s for files and outputs to
+<filename>.  The generated file is located on the master
+server, and includes a list of proxy server files.  Use ’ -’ to
+pipe the list through stdin.
+-download < loc alfile  [r emot e file]> Downloads <r emot e file>  from the server and calls it
+<loc alfile>.  If <r emot e file>  is not specified,  the value is
+the same as <loc alfile>.
+-upload <loc alfile  [r emot e file]> Uploads <loc alfile>  to the server and calls it <r emot e file>.
+If <r emot e file>  is not specified,  the value is the same as
+<loc alfile>.
+-delete <filepattern> Deletes file(s)  from the server. Uses wildcards. The
+<filepattern>  must be the full file path with escaped
+backslashes.
+-run[i—o] <command> Runs <command> on the server. Use one or both i and o
+suffix es  to specify whether sending/receiving data
+through stdin/stdout r espectiv ely .
+-timeout  <seconds> Sets the timeout  period for the -run command.When using psproxycmd -run[i|o] to run programs, escape both quot ations  and slashes. For
+example:
+psproxycmd.exe -runo "\"C:\\Program Files\\Bravura Security\Bravura
+Security Fabric\\default\\service\\idmlogsvc.exe\" -rotatelog 3" -
+server mercury -port 3344
+When using psproxycmd -delete  to delete files,  escape slashes. For example:
+psproxycmd.exe -server mercury -port 3344 -delete "C:\\Program Files\
+\Bravura Security\Bravura Security Fabric\\default\\util\\a.txt"
+Examples
+1.Using the -exist argument:1.
+psproxycmd.exe -server mercury -port 3344 -exist "C:\Program Files
+\Bravura Security\Bravura Security Fabric\default\service
+\idmlogsvc.exe"
+2.Using the -list argument:2.
+psproxycmd.exe -server mercury -port 3344 -list "C:\Program Files
+\Bravura Security\Bravura Security Fabric\default"
+3.Using the -listmd5 argument, with filelis t. tx t  located on the master server, which includes proxy server 3.
+files:
+psproxycmd.exe -server mercury -port 3344 -listmd5 "C:\Program Files
+\Bravura Security\Bravura Security Fabric\default\filelist.txt"
+4.Using the -upload argument:4.
+psproxycmd.exe -server mercury -port 3344 -upload "C:\Program Files
+\Bravura Security\Bravura Security Fabric\default\service
+\idmlogsvc.exe"
+5.Using the -download argument:5.
+psproxycmd.exe -server mercury -port 3344 -download "C:\Program Files
+\Bravura Security\Bravura Security Fabric\default\service
+\idmlogsvc.exe"
+6.Using the -delete argument:6.
+psproxycmd.exe -server mercury -port 3344 -delete "C:\\Program Files\
+\Bravura Security\Bravura Security Fabric\\default\\util\\a.txt"
+7.Using the -run[i—o] argument:7.
+psproxycmd.exe -server mercury -port 3344 -run "C:\\Program Files\
+\Bravura Security\Bravura Security Fabric\\default\\service\
+\idmlogsvc.exe" -rotatelog 3proxydelaycalculator
+The proxydelaycalculator  utility  aut omatic ally  sorts a list of proxy servers by shortest ping time
+for a set of target systems.
+This is accomplished by sending the proxypinger  utility  to each of the proxy servers and recording
+how long it takes each proxy server to ping each target system. The timing  data is then used to create a
+sorted list of proxy servers for each target system.
+Configur ation
+To c on figur e  the proxydelaycalculator :
+1. De fine  target systems that need a proxy list assigned. 1.
+2. (optional)  If loc ation  attribut es  are used they must be loaded into the instance for each target system. 2.
+3.Create a CSV file containing a list of proxy servers 3.
+4.Install and c on figur e  the Bravura Security Fabric  proxy service on each of the servers in the CSV list. 4.
+This includes a shared c ommunic ation  key for all servers.
+5.Run the proxydelaycalculator utility . 5.
+Proxy file format
+The default format for the proxy file is as follows:
+  server,port
+  <proxy-server>,<proxy-port>
+Where <proxy-server> is either a resolvable host name or the IP address of the proxy server, and <proxy-
+port> is the port on which the Bravura Security Fabric  proxy server is listening.
+An example file:
+  server,proxy
+  proxy01.company.com,3344
+  proxy02.company.com,3344
+  10.0.35.1,3344
+If the proxy list is segmented based on a loc ation  code, the CSV file should contain an additional  column
+to de fine  each proxy’s loc ation.  A proxy may only have a single loc ation  de fined.  The format for the file
+will be:
+  server,port,location code
+  <proxy-server>,<proxy-port>,<proxy-location>
+An example file:
+ server,proxy,location code
+ proxy01.company.com,3344,MAIN-LAN
+ proxy02.company.com,3344,MAIN-LAN
+ 10.0.35.1,3344,COMPANY-DMZ1Usage
+    proxydelaycalculator.exe -port <port> -timeout <seconds>
+    -all|-hostfile <file>
+      [[-discovered][-hostgroup <group ID>]
+      [-source <target ID> ][-locationattr <location attribute>]
+      [-manual][-platform <platform>][-testunassigned]]
+    |-hostid <target ID>
+    [-clear]
+    [-threads <N threads>]
+    [-sqloutfile <sqllite database>]
+    [-enablesim
+      [-simulatemintime <time>][-simulatemaxtime <time>] [-
+simconnfail <percent> ]]
+    [-balancetime]     [-proxyfile <proxylist.csv>]
+Argument Description
+Required arguments:
+-port This is the test-port that the proxy servers will try to
+"ping" each of the target systems on.
+-timeout The maximum amount of time  (in seconds) that the proxy
+server should wait for a single ping request to a target
+system.
+One of the following is required to determine which set of target systems to try to ping:
+-all Include all target systems de fined  in the instance.
+-hostid Include a single (specified)  target system.
+-clear Clears the proxy entries on specified  hosts.
+-hos ts file A file containing list of target systems to run against. This
+file should be placed in the p sc on fig  directory, and target
+systems should be specified  one per line.
+Optional  arguments:
+-hostgroup Run only against hosts in the specified  host group. Works
+with -all or hos ts file.
+-source Only include machines discovered from this source target
+system. This option  is useful for selecting  machines that
+were auto-discovered by a specific  target. Works with -all
+or hos ts file.
+-platform Specifies  that tests should only be run against targets
+with the specified  target type, only works with the -all
+option.
+-thread Number of threads to be used, default is 10.Argument Description
+-sqloutfile Optional  filename  to write (and/or) update the proxy
+results to. This will be a SQL/Lite database with the
+following columns:
+▪hostId▪
+▪proxyIp▪
+▪port▪
+▪LastRunTime▪
+▪proxyStatus▪
+▪ utilitySt a tus▪
+▪overallStatus▪
+▪connectTime▪
+-enablesim Enables simulated data from the proxies.
+-simula t emintime Sets minimum time  returned from simulation,  should
+only be used along with the "enable simulation"  option.
+-simula t ema xtime Sets maximum time  returned from simulation,  should
+only be used along with the "enable simulation"  option.
+-simconnfail Sets simulated failure percentage, should only be used
+along with the "enable simulation"  option.
+-testunassigned Forces agent to only run on targets that do not have a
+proxy server set.
+-balancetime Load balance time,  if best times  are within this value will
+randomly choose one of them.
+-pr o xy file Filename which contains the list of proxies to include in
+the test. File should be placed in the p sc on fig  directory,
+default filename  is proxylist.csv. See above for file format
+details and additional  requirements.
+-loc ationattr Specifies  a computer attribut e  (from the f oundc ompattr
+table) to use as a loc ation  identifier  for proxy filt ering.  If
+specified,  the proxy list CSV file must include a loc ation
+column (see above for details). If this attribut e  is not
+specified,  no loc ation  based filt ering  will be done.
+Examples
+1.To run the utilities  against all targets that are c on figur ed  in the instance, c onnecting  over port 80 with 1.
+a 60 second timeout:
+proxydelaycalculator.exe -all -port 80 -timeout 60
+2.To run the utilities  against a list of targets in a file and a list of proxy servers both found in the p sc on fig 2.
+directory:
+proxydelaycalculator.exe -port 80 -timeout 60 -
+hostsfile hostfile.txt -proxyfile proxylist.csv

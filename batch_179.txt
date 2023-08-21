@@ -1,0 +1,332 @@
+The Speech Service can only be installed once on a Phone Password Manager server. If you install a
+second instance of Phone Password Manager on the same server, then the Speech Service will be unable
+to run on the new instance.
+When speech r ec ognition  is enabled, users can enunciate their pr ofile  IDs, new password values, and
+perform key recovery strings without having to use the numeric keypad.
+To set up speech r ec ognition:
+1.On the Phone Password Manager server, copy psynch.speech.psl  and speech.psl from the samples* 1.
+directory to the \<instance>\script\ directory.
+2.Modify the idtel.cfg  file, located in the <instance>\service\ directory, by changing ScriptName as 2.
+follows:
+ScriptName = "psynch.speech.psl"
+3. Con figur e  the Speech Service. 3.
+Modify idtel.cfg  by changing the SpeechService Dll line as follows:
+▪For local Speech Service, specify speechapi.dll : ▪
+SpeechService "" = { 
+  Dll = "speechapi.dll" 
+  //Server = <server> 
+  //Port = <port> 
+  //Timeout = <timeout> 
+ }
+▪For remote Speech Service, specify speechapix.dll : ▪
+SpeechService "" = { 
+  Dll = "speechapix.dll" 
+  Server = <speech service server name or IP address> 
+  Port = <speech service port> 
+ }
+4.Restart the Phone Password Manager service.4.
+Speech r ec ognition  is now c on figur ed  and ready to use. To test speech r ec ognition,  place a phone call to
+the IVR server and try to use speech instead of the numeric keypad to enter your details.
+Con figuring  the speech service
+The Speech Service can be c on figur ed  using the following options,  which are located in the idtel.cfg
+file:
+Option Description
+V oiceActivityDet ectThr eshold Controls the sensitivity  of the input threshold for the
+Speech Service. The range of possible values for this
+option  is between -54 and +3; the default value is -40.
+Lowering the numeric value lowers the input threshold,Option Description
+which increases the sensitivity  of the Speech Service.
+Raising the numeric value raises the input threshold,
+which decreases the sensitivity  of the Speech Service. For
+example, a value of -54 recognizes even the quietest
+sounds, whereas a value of +3 only recognizes louder
+sounds.
+SpeechR ec ognitionMode Controls which speech r ec ognition  mode is used. Possible
+values:
+0 – enables "File based mode", which creates a file in the
+temp directory before processing the audio file for
+speech r ec ognition.
+1 – enables "Stream mode", which does not create a file,
+but simply analyzes the stream of audio for speech
+r ec ognition.  This was the only mode available in releases
+before Bravura Security Fabric  version 8.0.
+By default, stream mode is enabled.
+KeepIntermediateSpeechFiles Controls whether or not to save the audio files created
+when SpeechR ec ognitionMode  is set to "File based
+mode." Possible values:
+0 – files are not saved; they are deleted after  speech
+r ec ognition  is complete.
+1 – files are saved in the temp directory: C:\Documents
+and Settings\p sadmin\Loc al  Settings\t emp
+Building .wav files  using SAPI
+Use the voicebuild  program to create audio .wav files based on a vocal script .txt file using SAPI.
+View voicebuild usage in f ormation
+Use the voicebuild  program to create audio .wav files based on a vocal script .txt file using SAPI.
+Usage
+voicebuild.exe [<options>]
+Argument Description
+-f <folder> The output folder to store the newly-created .wav files.
+-o Overwrite e xisting  .wav files.
+-r <rate> The rate of the speech. This value can range from -10 to
+10; the default value is 0.
+-d <speech api dll> Speech API dynamic load library which can load either
+speechapi.dll or speechapix.dll. The speechapix.dll file
+loads from a remote server. By default, speechapi.dll is
+loaded.Argument Description
+-i <speechinit> Specifies  a KVG file to load speech api initializ ation
+c on figur ation.
+-s <vocal-script> The vocal script file, read from standard input by default.
+-c <voice> The voice used to speak the vocal script.
+-a Enumerate available voices.
+-l <volume> The volume of the speech. This value can range from 0 to
+100; the default value is 100.
+Examples
+1.List all the installed voices on the current system:1.
+voicebuild.exe -a
+2.Create .wav audio files in the \tmp directory, using the listing  file vocal-script.txt, and the voice 2.
+"Cepstral William-8kHz":
+voicebuild.exe -f tmp -s ..\audio\en-us\vocal-script.txt -
+c "Cepstral William-8kHz"
+3.Re-create a set of .wav audio files,  and change the volume and rate: 3.
+voicebuild -l 30 -r 5 -o -f tmp -s ..\audio\en-us\vocal-script.txt -
+c "Cepstral William-8kHz"
+.
+Monitoring Line Status
+Use the d42util program to examine a line when transferring or placing a call with Phone Password
+Manager.
+View d42util usage in f ormation
+Use the d42util program to examine a line when transferring or placing a call with Phone Password
+Manager.
+Usage
+d42util.exe [<options>]
+Argument Description
+-b Specify the board name; the default device is dxxxB1.
+-c Specify the channel number; the default channel is 1.
+-d Dial the specified  string, then exit. By default, the hook
+state is "off -hook"  before dialing the string. If the string
+starts with = then the program dials the string without
+changing the hook state. If the string starts with ! thenArgument Description
+the program sets the hook state to "on-hook" before
+dialing the string.
+-i Specify the refresh interval in milliseconds; the default is
+1000.
+Examples
+To monitor the dxxxB1 line, channel 2 status, and display:
+d42util -b dxxxB1 -c 2
+To make a call to extension 332:
+d42util -d "<ESC>K1,332,,"
+To monitor with a specified  interval of 10 milliseconds:
+d42util -i 10
+.
+Call Modes
+Call modes de fine  how Phone Password Manager initia t es  telephone calls with users.
+There are three diff er en t  call modes in Phone Password Manager:
+▪Auto-answer mode▪
+▪Inbound mode▪
+▪Outbound mode▪
+In order to specify a call mode, edit the idtel.cfg  file, and change how the ScriptName  is de fined.
+The syntax for each ScriptName entry is as follows:
+"<script-name>" = "LineNo|[,LineNo]|[BeginLineNo-EndLineNo]:[mode]"
+The call mode can be:
+▪a|0 – auto-answer mode ( default mode )▪
+▪i|1 – inbound ( call can be answered selectiv ely  ) ▪
+▪o|2 – outbound▪
+The line mode can also be retrieved and set using global variable ’lineMode’, when c on figuring  the
+Psynch.psl call logic script.
+Auto-answer mode
+Auto-answer mode is the default mode. IVR calls are answered by default, call logic scripts run and audio
+plays according to the scripts.Inbound mode
+Inbound mode is similar to auto-answer mode, but instead of calls being answered by default, calls are
+only answered if the PSLang function  "se tHookOff"  is triggered. This allows calls to be answered
+selectiv ely .
+The "se tHookOff"  PSLang function  for this call mode is specified  in the psynch.psl script  (on page 1767).
+In this example, the inbound call is answered if the callerID is "123":
+ if ( $callerID == "123" )
+{
+  setHookOff();
+}
+The callerID is one of several global variables that contain in f ormation  about the current call. See
+Chapter 16 for details on call logic global variables.
+Outbound mode
+Outbound mode allows the IVR system to make outbound calls, and is c on figur ed  in the psynch.psl script.
+When this is c on figur ed,  the IVR system can forward the call to another phone number. Once the call is
+received, it proceeds according to the call logic scripts.
+The phone number to which the calls are forwarded is specified  in the psynch.psl script  (on page 1767).
+For example:
+for( var $i = 0; $i < 30; $i++ )
+  {
+  sleep( 1000 );
+  }
+$ret = MakeCall( "9,403-2737373", 30, $errbuf );
+log( "MakeCall returned: " + $ret + ", error: " + $errbuf );
+In order for outbound mode to function,  idtel.cfg must be modified  as follows:
+▪Comment-out the "R egis tr ation"  part of the script. For example, if your c on figur ation  does not include ▪
+a proxy server, then the part to comment-out appears as follows:
+Registration "" = { 
+Server = 10.0.59.100 
+Realm = bravurasecurity.com //SIP only 
+PhoneNumber = 168 
+Password = "168" 
+}
+▪Set the value of ipSignalPort, which diff er s  depending on the protocol you use: ▪
+▪H.323 ("ipProtocolName = 0") – set ipSignalPort to "1720"▪
+▪SIP ("ipProtocolName = 1") – set ipSignalPort to "5060"▪▪Modify idtel.cfg to include the following:▪
+ScriptNames "" = { 
+  "filename.psl" = "2-2:o" 
+}
+This loads "filename.psl"  from the \<instance>\script\ directory of the VoIP instance, and uses line 2
+with Outbound mode. The two numbers specify the range of lines, and o specifies  outbound mode. By
+default, this call is included in idtel.cfg , but is commented-out.
+Call Transfer
+Phone Password Manager can be c on figur ed  to support call transfers on SIP and H323 protocols if it is
+c on figur ed  to use Dialogic®  PowerMedia Host Media Processing Softw ar e.
+Pr e-c on figur ation
+Before the function  "TransferCall" can be added to Phone Password Manager to support call transfers,
+you must complete the following c on figur ation:
+1.Change the ipDTMFmode setting  in idtel.cfg  (on page 1764): 1.
+ipDTMFmode = 6
+This enables the DTMF key after  a c onnection  has been established.
+2.Install SIP softphone  on the Phone Password Manager server. 2.
+3.For t esting  purposes, install SIP softphone  on another Windows machine as well. This machine 3.
+receives the transferred call.
+Next:
+▪ Con figur e  TransferCall for SIP protocol  (on page 1786). ▪
+Or,
+▪ Con figur e  TransferCall for H323 protocol  (on page 1787). ▪
+Con figuring  TransferCall for SIP protocol
+To c on figur e  Phone Password Manager to use the SIP protocol:
+1.On the Phone Password Manager server, c on figur e  the SIP softphone  to use the "SIP" protocol with 1.
+"RFC2833" type.
+2.Modify the idtel.cfg  file for "SIP": 2.
+ipBindAddress = Auto 
+ipSignalPort = 5060 
+ipProtocolName = 1 // sip = 1,h323 = 0 
+ipDTMFmode     = 6
+Add the following script into psynch.psl :if( $digits == "<telephone number|extension number>" ) 
+  { 
+    $ret = TransferCall( "<Telephone Password Manager server address>", $errbuf ); 
+    log( "TransferCall returned: " + $ret + ", error: " + $errbuf ); 
+    return 1; 
+  }
+To test the c on figur ation:
+1.Call the Phone Password Manager server using the SIP softphone. 1.
+2.When prompted for the user ID, type the telephone number or extension number that you want to2.
+transfer to, followed by the # sign. For example, 123# .
+3.From the other machine with SIP softphone  installed, pick up the line and listen. 3.
+Con figuring  TransferCall for H323 protocol
+To c on figur e  Phone Password Manager to use the H323 protocol:
+1.On the Phone Password Manager server, c on figur e  SIP softphone  to use the "H323" protocol type. 1.
+2.Modify the idtel.cfg  file for "H323": 2.
+ipBindAddress = Auto 
+ipProtocolName = 0 // sip = 1,h323 = 0 
+ipDTMFmode     = 6
+Add the following script into psynch.psl script:
+if( $digits == "<telephone number|extension number>" ) 
+  { 
+    $ret = TransferCall( "TA:<Telephone Password Manager server address>", $errbuf ); 
+    log( "TransferCall returned: " + $ret + ", error: " + $errbuf ); 
+    return 1; 
+  }
+To test the c on figur ation:
+1.Call the Phone Password Manager server using the SIP softphone. 1.
+2.When prompted for the user ID, type the telephone number or extension number that you want to2.
+transfer to, followed by the # sign. For example, 123#.
+3.Check the Phone Password Manager log file. The message "TransferCall API called" should be 3.
+included, indic ating  that the api was triggered.
+Bridge Transfer
+Phone Password Manager can connect two phone lines to each other, which is known as a bridge
+transfer, hairpin transfer, or supervised transfer call. You can c on figur e  bridge transfers in two ways:▪Both the end-user and the help desk user call the Phone Password Manager system, and the system▪
+connects their calls together. For details, see the bridge-demo1.psl sample script.
+▪Only the end-user has to call the Phone Password Manager system. The system then makes an▪
+outbound call to a help desk user. For details, see the bridge-demo2.psl  sample script.
+The scripts bridge-demo1.psl and bridge-demo2.psl are located in the samples directory.
+Phone Password Manager currently supports bridge transfers using both Dialogic® voice boards and
+Dialogic® PowerMedia Host Media Processing Softw ar e.
+Once the system is able to complete bridge transfers, it works as follows:
+Line A:
+1.The end-user calls the Phone Password Manager system and authentic a t es. 1.
+2.The end-user presses a key to request the help desk.2.
+3.The end-user is placed in queue.3.
+4.The end-user’s status in the queue is updated until  a help desk user becomes available. 4.
+5.The two lines are bridged together.5.
+Line B:
+1.The help desk user either:1.
+▪Calls the Phone Password Manager system and checks the queue for help requests.▪
+Or,
+▪Receives a call from the Phone Password Manager system.▪
+2.The system reports the end-user’s in f ormation,  and the help desk user either: 2.
+▪Accepts the request for help▪
+Or,
+▪Places the request back in the queue; the call maintains its position  in the queue. ▪
+3.If the help desk user accepts the request, then the two calls are bridged together.3.
+4.The system waits until  the line is dropped. 4.
+If required, the c on versation  can be recorded. See Recording bridge transfers for details.
+Pr e-c on figur ation
+Before the bridge transfer function  can be added to Phone Password Manager, you must change the
+ipDTMFmode setting  in idtel.cfg:  (on page 1764)
+ipDTMFmode = 6
+This enables the DTMF key after  a c onnection  has been established.
+If you are using a softphone,  then you must:
+1.Install the softphone  on the Phone Password Manager server. 1.2.Install the softphone  on another Windows machine as well. This machine receives the transferred call. 2.
+Next:
+Con figur e  bridge transfers  (on page 1789).
+Con figuring  bridge transfers
+If you are c on figuring  the bridge-demo2.psl  script, then you must specify the help desk number as
+follows:
+var $HelpDeskNumber = "SIP:<Server IP>";
+Where:
+▪<Server IP> is the IP address for the outbound call to the help desk user. This address should connect▪
+to the softphone  which can receive a call from Phone Password Manager.
+Modify the idtel.cfg  file as follows:
+▪bridge-demo1.psl:▪
+ScriptName = "bridge-demo1.psl"
+▪bridge-demo2.psl:▪
+ScriptName = "bridge-demo2.psl" 
+ScriptNames "" = { 
+   "bridge-demo2.psl" = "4-4:o" 
+}
+Where: 4-4:o specifies  to only use line four in outbound mode.
+The two numbers specify the range of lines, and o specifies  outbound mode.
+Recording bridge transfers
+You can record a call that has been transferred to the help desk by a bridge transfer. This function  is
+controlled by the recorder-demo.psl  script, which is located in the samples directory. The recorded
+call produces a wav file.
+This script is provided to help test the bridge transfer function  (on page 1787).
+Both sides of a call (caller and automated voice) are recorded. However, it is possible to write a script to
+record the callers on two diff er en t  lines. The "RecordFileEx" function  has the ability to record two time
+slots simultaneously.
+To c on figur e  call recording, you must modify idtel.cfg  to assign an outbound mode channel for
+recorder-demo.psl and to start the recording. It is recommended that you do so under guidance
+from Bravura Security s t a ff .Con figur ation  notes
+Optionally ,  you can c on figur e  the bridge transfer script to play on-hold music or other programming while
+a user is w aiting  in queue. See bridge-demo1.psl  or bridge-demo2.psl  for details.
+HTTPS Encr yption
+Phone Password Manager and Bravura Pass  support HTTPS c onnections.
+To c on figur e  Phone Password Manager and Bravura Pass  to use HTTPS:
+1.Install the "Certific a t e  server" role on the Bravura Pass  server. 1.
+2.Issue an SSL certific a t e  and enable HTTPS on the Bravura Pass  server. 2.
+3.Modify \<ins t ance>\idapiser vice\W eb-SSL.c on fig  to replace <instancename> with your instance name 3.
+in the <appSettings>  section.  For example:
+<add key="instanceName" value="<instance>" />
+Be sure to use W eb-SSL.c onfig,  because it contains additional  HT TPS-specific  inf ormation  that is not
+found in W eb.c onfig.
+4.Verify the HTTPS setup is correct by opening the following link in a web browser:4.
+http s://<hos t  server>/<Instance>/idapi
+If the setup is incorrect, you are notified  by an e x ception  or error message.
+5.Install Phone Password Manager on another server.5.
+6.Place a call using the IVR system to test Phone Password Manager functionality . 6.
+Viewing logs
+You can use the Bravura Security Fabric  Manage reports (rpt) module to view log details for the following
+Phone Password Manager oper ations:
+▪unlock  (on page 1790) ▪
+▪reset  (on page 1795) ▪
+This allows you to see how many of these oper ations  are being completed by Phone Password Manager.
+Viewing the unlock logs
+To view the logs for the unlock oper ation:
+1.Navigate to the Event log report by clicking Manage reports > Reports > System oper ation  > Event 1.
+log.
+2. Con figur e  the following options: 2.
+▪Select the Oper ation  code ULCK Unlock account on target system . ▪
+▪Specify the Requester by typing the name of the IDAPI caller that you de fined  in Con figuring  an ▪
+IDAPI caller  (on page 1757). By default, this is _API_USER_TPM.
+▪Enable the checkbox for Show each detailed event.▪

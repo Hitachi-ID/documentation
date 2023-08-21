@@ -1,0 +1,301 @@
+        } 
+        "mv_attributes" "" = { 
+            #...multi-valued attributes go here... 
+        } 
+    } 
+    "sessionid" = "< session id>" # The session ID 
+} 
+The expected output of the plugin is an account and unencrypted password:
+ "" "" = { 
+       "admin" = "<account name>"; 
+       "adminPW" = "<unencrypted password>"; 
+       "isSysPWD" = "[true | false]"; //optional 
+       "isConnPWD" = "[true | false]"; //optional 
+       "isUpdByPAM" = "[true | false]"; //optional 
+       "retval" = "0" 
+   } 
+Alt ernativ ely ,  the output of the plugin can be a managed account:
+ "" "" = { 
+       "admin" = "<managed account ID>"; 
+       "adminPW" = ""; 
+       "resourceid" = "<managed system ID>"; 
+       "accountID" = "<managed account ID>"; 
+       "isSysPWD" = "[true | false]"; //optional 
+       "isConnPWD" = "[true | false]"; //optional 
+       "isUpdByPAM" = "[true | false]"; //optional 
+       "retval" = "0" 
+   } 
+Multiple  cr edentials  can be created using the following format:
+ "" "" = { 
+      "version" = "2" 
+      "resultgroup" "" = { 
+         "credential" "" = { 
+            "admin" = "<account name>"; 
+            "adminPW" = "<unencrypted password>"; 
+            "isConnPWD" = "[true | false]"; //optional 
+            "isUpdByPAM" = "[true | false]"; //optional 
+         } 
+         "credential" "" = {             "admin" = "<account name>"; 
+            "adminPW" = "<unencrypted password>"; 
+            "isConnPWD" = "[true | false]"; //optional 
+            "isUpdByPAM" = "[true | false]"; //optional 
+            //
+To create a system credential add the following kvg group to 
+            //a credential 
+            "sys" "" = { 
+               "admin" = "<sys account name>"; 
+               "adminPW" = "<unencrypted password>"; 
+               "isConnPWD" = "[true | false]"; //optional 
+               "isUpdByPAM" = "[true | false]"; //optional 
+            } 
+         } 
+      } 
+      "retval" = "0" 
+   } 
+Add ”switch_strategies” in the output KVGroup to switch between using cr edentials  from the plugin or
+discovery template:
+▪"switch_strategies" = "true" will use cr edentials  from the discovery template ▪
+▪"switch_strategies" = "false" or not present will use cr edentials  from the plugin ▪
+output.
+.
+Cr eating  new cr edentials  on a managed system
+Con figur e  Bravura Privilege  to create new cr edentials  on a managed discovered system by setting  the
+options  de fined  in Table Cr eating  new cr edentials  on a managed system  (on page 2123).
+When Bravura Privilege  creates the new cr edentials,  it uses the default global password policy. The
+description  for created accounts notes that the account was created by Bravura Privilege , and states
+which rule (if any) was used to create it.
+If account cr eation  fails on the discovered system, then the system is not managed by Bravura Privilege . If
+evaluated against an import rule:
+▪For push mode, the system will be re-evaluated on the next run and Bravura Privilege  will attemp t  to ▪
+create the administrator account on the system again.
+▪For local w ork s t ation  mode, Bravura Privilege  will attemp t  to create the administrator account again ▪
+according to the RES ADMIN CREATE RETRY INTERVAL (default 1440 minutes).
+If Bravura Privilege  fails to add the new account to any of the selected administrator groups, then the
+system is not managed. However, the account remains in the groups that were joined successfully. If this
+occurs, either fix or remove the incorrect/missing group ID.Options  for cr eating  new cr edentials  on discovered systems
+Option Description
+Initial  cr edentials  to use when
+cr eating  new local accountThis applies to push mode systems only. Select:
+▪Use valid cr edential  from template target system ▪
+▪Use cr edentials  from source system ▪
+▪Plugin to get cr edentials , and then type the name of a plugin that ▪
+de fines  which cr edentials  to use for each discovered system. See Plugin
+to get cr edentials  for cr eating  new account  (on page 2124).
+Login ID type Set this to de fine  what to use as the administrator ID:
+▪String allows you to specify the Login ID to be created on each ▪
+discovered system. Use this if you want to use a common ID for the
+Bravura Privilege administrator on each discovered system. Or,
+▪PSLANG expression  allows you to de fine  the Login ID based on the ▪
+discovered system’s attribut es.  Use this if you want a unique
+administrator account for each discovered system. For example, using
+the expression  "admin"+$comp["name"][0]  could generate the
+ID admin_user1-ws .
+Security group type De fine  permissions for the new account:
+▪String allows you to type a space-delimited list of group IDs for the ▪
+groups into which to add the new account; for example,
+"Administrator" "Domain users" "Custom group" . Use
+this if you know the group IDs for the groups that you want all new
+accounts to be added.
+▪SID allows you to select from a list of common group SIDs to into which ▪
+to add the new account. Use this if your discovered systems use non-
+standard administrator group names. This option  is only available for
+template types that recognize SID.
+This option  is only available when an Activ e  Directory or Windows NT
+Server template target system is used.
+Reuse e xisting  account if found Enable this option  to reuse the ID if it already exists on the discovered
+system.Plugin to get cr edentials  for cr eating  new account
+The plugin will receive as input, the computer attribut es.  You can view the available attribut es  by going to
+Manage the system > Resources > Discovered objects > Systems , and clicking on the system.
+The plugin, in the form of a KVGroup should look like:
+"" "" = { 
+    "resource" "" = { 
+        #...single-valued attribut es  go here... 
+    } 
+    "sessionid" = "<session id>" # The session ID 
+} 
+The expected output from the plugin:
+ "" "" = { 
+       "admin" = "..."; 
+       "adminPW" = "<unencrypted password>"; 
+       "return" = "0"; 
+   } 
+Using valid cr edentials  from a template target system
+Con figur e  Bravura Privilege  to test and copy administrator cr edentials  from the target system template if
+you have groups of systems using the same set of cr edentials.  This way you can select which
+administrator cr edentials  to use based on the target system template selected.
+This is also useful if the administrator accounts are unique on each system; for example, IDs that use the
+format Admin_ <computer name >. In this case, the passwords must be identic al.
+If the cr edentials  are invalid, then the system is not imported or managed by Bravura Privilege . Target
+systems that require a system password  (on page 518) only have the administrator cr edential  validated,
+not the system cr edential.  If the system is imported and managed by Bravura Privilege , then the system
+password is copied. If multiple  system passwords are c on figur ed,  then the fir s t alphabetic ally -sort ed
+password is copied.
+Using cr edentials  from a source system
+Copy administrator cr edentials  from the source system if you intend to use a domain administrator
+account to manage all discovered systems. This setting  applies to push mode systems only. It is
+recommended that the administrator ID on the source system follows the format
+<adminid >@<domain >. Bravura Security Fabric  does not verify whether the source system cr edentials
+are valid.
+If the cr edentials  change on the source system, then Bravura Privilege  aut omatic ally  propagates the new
+cr edentials  to the managed systems that are using them. However, if the imported cr edentials  get
+removed from the managed system, then Bravura Privilege  stops pr opag ating  source system changes to
+that system.E v aluating  import rules
+It is highly recommended that you test import rules before running auto discovery  to ensure that they are
+c on figur ed  correctly.
+Import rules can be manually evaluated against one or more discovered objects (systems or accounts).
+You can evaluate:
+▪One import rule  (on page 2125) ▪
+▪ Multiple  import rules  (on page 2125) ▪
+You can then choose to apply the e v aluation  results to manage systems that pass all the c onditions.
+You can set all enabled import rules to be re-evaluated and applied on the next auto discovery , by clicking
+Force a r e-e v aluation  of all enabled import rules on the next auto discovery on the Import rules  page.
+You can also carry out a trial run to evaluate an import rule against all discovered objects.
+Managed system and Managed account import rules must be associated with at least one managed
+system policy before they can be tested.
+Ensure that discovered systems  (on page 2088) have already been c onfigured,  and that accounts have
+been listed before e valuating  import rules.
+E v aluating  one import rule
+You can evaluate one import rule against discovered objects; Target system and Managed system rules
+are evaluated against computers, and Managed account  rules are evaluated against accounts.
+To evaluate a single import rule against discovered objects:
+1.Navigate to the Import rules  page. 1.
+2.In the Test c onditions  section,  select which objects to evaluate: 2.
+▪Leave the field  blank to evaluate all discovered objects. ▪
+You can override the TEST IMPORT RULE MAX LENGTH by entering a value in the Maximum
+number of systems to run the test against field.
+▪Click the search icon, select the objects to evaluate, and click Select... . ▪
+▪Type a space-delimited list of discovered object names.▪
+3.Click Test. 3.
+4. Optionally ,  you can manage objects that passed all c onditions  (on page 2126). 4.
+The e valuation  only runs if there is at least one enabled c ondition  for the rule being evaluated.
+E v aluating  multiple  import rules
+You can evaluate multiple  import rules and their c onditions  simultaneously. You can evaluate all import
+rules to simulate all rules running aut omatic ally  during auto discovery .
+To evaluate multiple  import rules:1.Navigate to the Import rules  page. 1.
+2.Enable the checkboxes for the rules you want to evaluate.2.
+3.Click Test. 3.
+4. Optionally ,  you can manage objects that passed all c onditions  (on page 2126). 4.
+Applying e v aluation  results
+After  an e v aluation  is complete Bravura Security Fabric  displays the results including which objects
+(systems and accounts) have passed all the c onditions,  and which objects have failed. If they failed,
+Bravura Security Fabric  indicates which c onditions  caused them to fail; however, if an import rule’s
+c onditions  is set to “Match any expression”, then the results cannot include an e xplanation  of why an
+object failed the e v aluation.
+On pr oduction  systems, or with a large set of test matches, run auto discovery  to process discovered
+objects and make them into managed systems and managed accounts.
+Alt ernativ ely ,  on a test system, you can click Apply  on the Import rules  page to make all objects that
+passed all c onditions  into managed systems and managed accounts.
+It is not recommended to use the Apply button  with production  systems, or with a large set of Test
+matches. It s intended only for t esting.
+Once an import rule has processed all discovered objects, either by running auto discovery  or by
+e v aluating  the rule and clicking Apply , then those objects are not re-evaluated against the same import
+rule again. This includes both passed and failed results.
+Discovered systems which pass all c onditions  for a target systems import rule but fail to obtain valid
+cr edentials  on subsequent c onnections  are re-evaluated against the import rule, unless they pass and
+obtain valid cr edentials  from another rule. This process for local service mode discovered systems will
+occur over a few intervals where the client connects to the server.
+Use the TEST IMPORT RULE MAX LENGTH system variable ( Manage the system > Resources > Options ,
+or from the Import rules tab in Manage the system > Privileged access > Options ) to limit the number of
+computers or accounts to evaluate a rule against. The default number of objects is 10. You can increase
+this value to evaluate the import rules on more discovered objects.
+On the test section  of each import rule you can override the TEST IMPORT RULE MAX LENGTH value by
+entering a new value in the Maximum number of systems to run test rule against field.
+Ex ecuting  a trial run
+You can execute a trial run to test all objects that have not already been evaluated against a rule. The
+diff er ence  between a test and a trial run is that:
+▪A trial run is run against all objects, regardless of the TEST IMPORT RULE MAX LENGTH value. ▪
+▪A report on a trial run is emailed to a designated address.▪
+To execute a trial run on an import rule:
+1.Navigate to the Import rules  page  (on page 2095). 1.2.Select the Trial run tab. 2.
+3.Type an email address to receive results of the test.3.
+4.Click Trial run . 4.
+To cancel a trial run, click Cancel on the Import rule <rule type > page for the rule. You can only cancel a
+trial run from the instance on which it was started.
+You can c on figur e  two event actions  (exit traps)  (on page 1524) in Manage the system > Resources >
+Options , or from the Import rules tab in Manage the system > Privileged access > Options :
+Import rule events that launch interface programs
+Option Description
+IMPORT RULE TRIAL RUN BEGIN An import rule trial starts.
+IMPORT RULE TRIAL RUN END An import rule trial ends.
+R e-e v aluating  import rules
+Import rules are only run once on each discovered object. They are not re-run on objects that have
+already been evaluated.
+If the import rule changes, or if the attribut es  being used in an import rule are changed, then the import
+rule is re-evaluated against the discovered objects. You can also manually re-evaluate an import rule by
+clicking Update on the Import rules <rule type > page. This resets the rule and re-evaluates all discovered
+objects.
+Discovered objects can be re-evaluated manually through the import rules test page or when changes are
+detected during an auto discovery . Local service mode discovered objects can also be re-evaluated when
+they connect to the Bravura Security Fabric  server after  it has detected a change in an attribut e  used by
+an import rule.
+The behavior when r e-e v aluating  import rules is diff er en t  for each rule type:
+▪Target systems import rules  (on page 2127) ▪
+▪Managed systems import rules  (on page 2128) ▪
+▪Managed accounts import rules  (on page 2128) ▪
+Target systems import rules
+Discovered systems that satis f y  Target systems import rules and become managed systems are not re-
+evaluated by any import rules, regardless of changes to the managed systems or import rules.
+To modify the settings  for a managed system, you can:
+▪Click Manage the System > Resources > Target systems  > Aut omatic ally  discovered and manually ▪
+change settings.
+Or,
+▪Delete the target system (manually or with an import rule), then re-evaluate it.▪Managed systems import rules
+Managed system import rules are re-evaluated against managed systems whenever a change is detected
+in the managed system during auto discovery , or when the import rules have changed.
+If a change is made to a managed system that causes the system to fail the import rule, depending on the
+c on figur ation  of the managed system import rule, it may archive the system. If there are managed
+accounts on this system, the password changes no longer occur, but regular users can still request access
+to these accounts, and product administrator  s can still access them.
+Managed accounts import rules
+Managed accounts import rules are re-evaluated against discovered accounts whenever a change is
+detected:
+▪In the accounts during auto discovery ▪
+▪In member system attribut es  that were used to de fine  c onditions ▪
+▪In the import rules, such as:▪
+▪Services, tasks, IIS, or DCOM objects that have been added, removed, or set up for use by a new▪
+user
+▪ Modific ations  to attribut es  that are being used by managed accounts import rules ▪
+▪ Modific ations  to c onditions  and associated policies on managed accounts import rules ▪
+All accounts managed by a managed system policy are evaluated, including discovered accounts that
+were manually added to the policy and those added to the policy by an import rule.
+If a change is made to a managed account that causes the account to fail the import rule, depending on
+the c on figur ation  of the managed account import rule, it may archive the account. If this account’s
+password is being managed, the password changes no longer occur, but regular users can still request
+access to this account, and product administrator  s can still access it. If the managed system is removed
+from the policy the system’s managed account passwords are archived.Part III Bravura Privilege P atternPrivilege P attern:  Overview
+Businesses often  struggle with how to create an authentic ation  w orkflo w  that will control which
+passwords are granted to users after  c ollecting  approval from account holders. Main challenges include:
+▪ Specific  accounts or users may not require any authoriz ation  at all whereas others will. ▪
+▪ Diff er en t  users may require diff er en t  permissions towards accounts, such as having the ability to reset ▪
+an account password or only having the ability to request a password.
+▪Management of employees being given access to specific  accounts requires easy c ommunic ation  with ▪
+privileged account owners that can be easily traced.
+The Bravura Privilege P attern  deploys a team-based management and access model. This means that
+every resource within Bravura Privilege  is managed by a team and all users’ access to those resources are
+governed by the teams that they are assigned privileges in.
+Teams
+Team management in Bravura Privilege P attern  delegates onboarding of systems and accounts and
+de finition  of access control rules to business stake-holders.
+Team management is constructed around a number of concepts:
+▪A team may represent a group of people, an applic ation  or an or g aniz ational  unit. ▪
+▪Teams contain:▪
+▪Managed systems  with which Bravura Privilege  is integrated. ▪
+▪Managed accounts  that appear on managed systems and whose passwords Bravura Privilege  may ▪
+set.
+▪Team groups  used to assign privileges to Bravura Privilege  users. ▪
+▪Team groups contain:▪
+▪Privileges  such as trustee, approver, requester. See Privileges and appropriate users for more. ▪
+▪Individual Bravura Privilege  users . ▪
+▪Managed groups A managed group is a group of accounts de fined  on a target system, such as AD ▪
+or LDAP , whose membership is monitored and managed in Bravura Security Fabric . On some target
+systems this can include groups inside groups.
+▪Team vaults Used to store and retrieve cr edentials  for target systems that do not communicate with ▪
+Bravura Security Fabric  or other secrets (ie. a safe's c ombination).  They are not intended to set or
+randomize cr edentials  stored within them. Team vaults contain:
+▪System vaults R epr esen t ations  of systems in the environment, but without a connector or ▪
+technical in t egr ation.
+▪Vault accounts R epr esen t ations  of accounts on system vaults, along with stored (but not activ ely ▪
+managed) passwords.
+▪Proxy zone A set of Bravura Security Fabric  proxy servers responsible for running connectors that ▪
+communicate with a set of systems, typically in the same loc ation  or on the same network segment.
+This is typically required when direct c onnection  is blocked by a fir e w all. Bravura Privilege  may also

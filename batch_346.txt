@@ -1,0 +1,47 @@
+Certific ation  s t atistics
+This report provides s t atistics  of reviewed,unreviewed or in progress of all users and entitlemen ts,
+entitlemen ts  of current certific ation  campaigns initia t ed  by me, direct subordinates and all subordinatesAssigned reviewers
+This report provides s t atistics  of reviewers who have activ e  or completed segments in activ e  certific ation
+campaignsMaintenance analytics  reports
+Platform  c onsumption
+This report represents as a matrix displaying the c onsumption  of accounts and groups on target systems
+for the purposes of neg otiating  license agreements.
+For this report to show useful in f ormation  the following must be selected on the target systems:
+▪Track account changes▪
+▪Track group changes▪
+▪ Aut omatic ally  discover resources to load ▪
+▪Load computer server objects▪
+▪Load computer w ork s t ation  objects ▪▪Track discovered computer changes▪
+Create a custom analytics  report
+This use case demonstrates how to create a new category, to create a paginated report and add that
+report to the newly created category. In short, to create a custom analytics  category and report you
+must:
+1.Create a category for the Analytics  app 1.
+2.Build the report dataset using Micr osoft’ s  Report Builder. 2.
+3.Design the report appearance.3.
+4.Check that the report appears in the Analytics  app. 4.
+See below for detailed steps.
+Create a category for the Analytics  app
+To create a report category:1.Click Manage the system > Maintenance > System variables . 1.
+2.Add a new category to CUSTOM ANALYTIC CATEGORIES . 2.
+3.Click Update . 3.
+4.Navigate to the <instance>\ReportItems folder and create a folder with the same name as the new4.
+category.
+5.Sign into the report server portal.5.
+The URL is in the following format:
+http://<servername><port>/Reports/browse/<report_folder_id>
+6.Open the ReportItems folder. 6.
+7.Click New > Folder . 7.
+8.Name the folder the same name as the new category.8.
+Build the report on the report server
+1.From the report server portal, click New > Paginated Report . 1.If Report Builder is not installed yet, download and install it.
+2.Click Open Micr osoft  Report Builder . 2.
+3.Click Blank Report . 3.
+4.Right mouse click on Data Sources  and click Add Data Source.. .. 4.5.Use the default name DataSource1 or change it to a diff er en t  name. 5.6.Click Browse and open the <report_folder_id>. 6.
+7.Open the DataSources folder . 7.
+8.Double click idmsuite . 8.
+9.Click Test Connection  to ensure the c onnection  is successful. 9.10. Click OK to close the window. 10.
+11. Click OK again. 11.
+12. Right mouse click on Datasets and select Add Dataset... . 12.13. Use the default name or change it to a diff er en t  name. 13.
+14. Select the radio button  Use a dataset embedded in my report . 14.
+15. Select the data source you previously added from the drop down menu in Data source . 15.

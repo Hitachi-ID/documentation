@@ -1,0 +1,370 @@
+Account access request behavior
+The following settings  a ff ect  privileged account access request behavior:
+Bravura Privilege  account access request behavior options
+Option Description
+MAX CHECKOUT PASSWORD
+CHANGE INTERVALThe maximum interval time,  in days, that a
+checked-out account’s password stays
+unchanged. Passwords are randomized once
+this interval has passed.
+The default is 2 days. Setting  this to 0 allows
+passwords to remain unchanged until  a user
+checks it in.
+Once a password is checked out, it is not
+randomized according to the RESOURCE
+PASSWORD CHANGE INTERVAL.
+It is recommended that MAX CHECKOUT
+PASSWORD CHANGE INTERVAL be set to a
+value greater than RESOURCE PASSWORD
+CHANGE INTERVAL. This will prevent
+passwords from being randomized while they
+are checked out regardless of the RES
+CHECKOUT PASSWORD RANDOMIZE MODE
+setting.
+RES CHECKIN RANDOMIZE The managed account’s password is
+randomized when the user checks in.
+RES CHECKOUTEXP RANDOMIZE The managed account’s password is
+randomized when the check-out interval has
+expired.
+RES CHECKOUT LIMIT The number of users allowed to check out
+account access simultaneously.
+The default is 1.Option Description
+RES CHECKOUT PASSWORD
+RANDOMIZE MODEChoose the r andomiz ation  mode for cases
+where passwords can be checked out by
+multiple  users simultaneously (the RES
+CHECKOUT LIMIT is greater than 1).
+Choose EXTEND to have passwords
+randomized when the MAX CHECKOUT
+PASSWORD CHANGE INTERVAL is passed or
+when all users who have checked out the
+password check it in.
+Choose RESET to have a password randomized
+at expiry time  or whenever any user checks in.
+Users who have checked out the password are
+notified  that it has changed, and that they
+should log in again to re-access the password.
+RES DEFAULT CHECKOUT INTERVAL The default interval, in minutes, at which
+managed account passwords can be checked
+out. The value must be smaller than RES
+MAXIMUM CHECKOUT INTERVAL and larger
+than RES MINIMUM CHECKOUT INTERVAL.
+This value is used to pre-load the Dur ation  and
+Dur ation  unit values on the check-out access
+request page and the check-out extension
+request page. The default is 240 minutes, or 4
+hours.
+You can also set this value in the Group set
+access request tab.
+RES MAQ CHECKOUT ABORT Enable this setting  to disallow an account set
+check-out if one of the member accounts fails
+to be checked-out; for example if the check-
+out limit for the individual account has been
+reached.
+RES MAQCHECKOUT LIMIT The number of users allowed to check out an
+account set simultaneously.
+The default is 1.
+RES MAQ CMDFILE CLEANUP
+INTERVALThe interval (in days) that account set access
+command output files can exist on the
+Bravura Privilege  server. The default is 365
+days. This does not a ff ect  command output
+files generated with "Never delete command
+output file from server" option.Option Description
+RES MAXIMUM CHECKOUT
+INTERVALThe maximum interval, in minutes, at which
+privileged access can be checked out. When
+RES VALIDATE EXTENSION is disabled,
+approved check-out extension requests may
+exceed this limit. The default is 1440 minutes,
+or 24 hours.
+You can also set this value in the Group set
+access request tab.
+This should be less than the RESOURCE
+PASSWORD CHANGE INTERVAL, in order to
+prevent scheduled password changes from
+being skipped.
+RES MINIMUM CHECKOUT
+INTERVALThe minimum interval, in minutes, at which
+managed account passwords can be checked
+out. The default is 5 minutes.
+You can also set this value in the Group set
+access request tab.
+RES PORT TEST The port to use when t esting  for c onnectivity
+on remote systems. The default is 445.
+Set this value to "0" to disable port checks on
+c onnection  failures.
+RES PWD ACL PLUGIN Plugin to determine user access controls when
+viewing passwords via the API.
+See Using a plugin to de fine  access to
+passwords  (on page 2049) for more
+in f ormation.
+RES REVOKE RANDOMIZE The managed account’s password is
+randomized when a user’s access to it is
+checked in by another user.
+RES VALIDATE EXTENSION The setting  to c on figur e  if check-out extension
+requests are restricted by RES MAXIMUM
+CHECKOUT INTERVAL. Enable to only allow
+extension requests when the current check-
+out interval does not exceed the maximum
+check-out interval. Disable to always allow
+privileged access check-out extension
+requests. The default is disabled.
+You can also set this value in the Group set
+access request tab.
+Account access check-out external program triggers
+Managed system policy exit points do not override global settings  and vice versa; however, in the case
+where an exit point is c on figur ed  to run the same program from both loc ations,  only one instance of theprogram is run. The following settings  relate to account access requests and can be set in the Account
+access request tab:
+Bravura Privilege  account request events that launch interface programs
+Option Description
+RES ACCESS REVOCATION CHECKIN Program to execute when an account access
+check-in action  has failed.
+RES CHECKIN FAILURE A password check-in action  has failed.
+RES CHECKIN SUCCESS A password check-in action  is successful.
+RES CHECKOUT EXPIRY A checked out password expires.
+RES CHECKOUT FAILURE A password check-out action  has failed.
+RES CHECKOUT LIMIT REACHED The check-out limit is exceeded.
+RES CHECKOUT SUCCESS A password check-out action  is successful.
+In f ormation  passed to this exit trap includes
+the status of all requests on the password.
+RES REQUEST PASSWORD FAILURE Bravura Privilege  fails to generate a random
+password.
+RES REQUEST PASSWORD SUCCESS Bravura Privilege generates a random
+password.
+RES VIEW PASSWORD A product administrator requests access to a
+privileged account on a managed system.
+RES VIEW PASSWORD HIS A product administrator requests to access
+privileged account access history on a managed
+system. The trap is triggered when a user views
+the access history of a managed account. The
+account can viewed from either the Managed
+system policies or Managed systems menus.
+Viewing a privileged account’s access history
+from either loc ation  triggers the exit trap.
+Bravura Privilege  account set access  access request events that launch interface
+programs
+The following settings  relate to account set requests and can be set in the Account access request tab:
+Option Description
+RES MAQ ACCESS REVOCATION
+CHECKINAn account set access is checked in by another
+user.Option Description
+RES MAQ CHECKIN FAILURE An account set access check-in has failed.
+RES MAQ CHECKIN SUCCESS An account set access check-in is successful.
+RES MAQ CHECKOUT EXPIRY A checked out account set access expires.
+RES MAQ CHECKOUT FAILURE A checked out account set access has failed.
+RES MAQ CHECKOUT LIMIT
+REACHEDAn account set access check-out limit has
+exceeded.
+RES MAQ CHECKOUT PARTIAL An account set access check-out is partially
+successful.
+RES MAQ CHECKOUT SUCCESS An account set access check-out is successful.
+ See also: 
+▪Privileged access app  (on page 1251) for c on figuring  external program triggers for generic access ▪
+check-outs.
+▪Event c on figur ation  (exit traps)  (on page 1523) for more in f ormation  about c on figuring  event actions. ▪
+Generic access check-in and check-out failure retries
+In the event that a generic access check-out fails for a managed account, the check-out is retried every 10
+minutes (by default) until  successful or the check-out expiry time  has passed. In addition,  recipients are
+able to manually retry the check-out in the Privileged access  app.
+In the event that a generic access check-in fails for a managed account, the check-in is retried once every
+minute (by default) until  successful or the retry timeout  (default 10 minutes) has been reached.
+See also: 
+Generic access check-in and check-out retries  (on page 1936) for modifying interval or timeout  values for
+generic access check-in and check-out retries.
+Privileged access app  (on page 1251) for more details on c on figuring  event actions  to trigger an external
+program for generic access check-outs and check-ins.
+Group set check-out options
+The managed system policy must have the group set authentic ation  type in order to c on figur e  group set
+check-out options.  Use options  available in the Manage the system > Privileged access > Options  >
+General > Group set access request  menu to control:
+▪Group set access request behavior  (on page 1946) ▪
+▪Group set access check-out external program triggers  (on page 1947) ▪Options  that can be c onfigured  on both Group set access request and Account access request tabs
+share the same value.
+Group set access request behavior
+The following settings  a ff ect  group set access request behavior:
+Bravura Privilege  group set access requestbehavior options
+Option Description
+RES DEFAULT CHECKOUT INTERVAL The default interval, in minutes, at
+which managed account passwords
+can be checked out. The value must
+be smaller than RES MAXIMUM
+CHECKOUT INTERVAL and larger than
+RES MINIMUM CHECKOUT
+INTERVAL. This value is used to pre-
+load the Dur ation  and Dur ation  unit
+values on the check-out access
+request page and the check-out
+extension request page. The default
+is 240 minutes, or 4 hours.
+You can also set this value in the
+Account access request tab.
+RES GSET ACCT SEL PLUGIN Specify a program to aut omatic ally
+select an account that will receive
+temporary group membership.
+RES GSET CHECKOUT AGENT POLICY Specify the connector behavior used
+when a group set check-out fails. The
+available options  are "Ignore failure",
+"Roll back", and "Abort."
+RES GSET CHECKOUT LIMIT The number of users allowed to
+check out group set access
+simultaneously.
+This limit is based on a single group
+set for a single managed system. The
+default is 1.Option Description
+RES MAXIMUM CHECKOUT
+INTERVALThe maximum interval, in minutes,
+at which privileged access can be
+checked out. When RES VALIDATE
+EXTENSION is disabled, approved
+check-out extension requests may
+exceed this limit. The default is 1440
+minutes, or 24 hours.
+You can also set this value in the
+Account access request tab.
+RES MINIMUM CHECKOUT
+INTERVALThe minimum interval, in minutes, at
+which managed account passwords
+can be checked out. The default is 5
+minutes.
+You can also set this value in the
+Account access request tab.
+RES PORT TEST Port to use when t esting  for
+c onnectivity  to remote systems.
+Default is 445.
+Set this value to "0" to disable port
+checks on c onnection  failures.
+RES VALIDATE EXTENSION The setting  to c on figur e  if check-out
+extension requests are restricted by
+RES MAXIMUM CHECKOUT
+INTERVAL. Enable to only allow
+extension requests when the current
+check-out interval does not exceed
+the maximum check-out interval.
+Disable to always allow privileged
+access check-out extension requests.
+The default is disabled.
+You can also set this value in the
+Account access request tab.
+Group set access check-out external program triggers
+Managed system policy exit points do not override global settings  and vice versa; however, in the case
+where an exit point is c on figur ed  to run the same program from both loc ations,  only one instance of the
+program is run. The following events can trigger email or other external program actions:
+Bravura Privilege  group set request events that launch interface programsOption Description
+RES GSET ACCESS REVOCATION
+CHECKINA group set access check-in action
+has failed..
+RES GSET CHECKIN FAILURE A group set check-in action  has failed.
+RES GSET CHECKIN PARTIAL A group set check-in action  is partially
+successful.
+RES GSET CHECKIN SUCCESS A group set check-in action  is
+successful..
+RES GSET CHECKOUT EXPIRY A checked out group set request
+expires.
+RES GSET CHECKOUT FAILURE A group set check-out action  has
+failed.
+RES GSET CHECKOUT LIMIT
+REACHEDA group set check-out limit has been
+exceeded.
+RES GSET CHECKOUT PARTIAL A group set check-out action  is
+partially  successful.
+RES GSET CHECKOUT SUCCESS A group set check-out action  is
+successful.
+See Event c on figur ation  (exit traps)  (on page 1523) for more in f ormation  about c on figuring  event actions.
+Aut omatic ally  selecting  user accounts to receive temporary group membership
+Users can have many accounts from a single target or across multiple  targets. You can filt er  the amount
+of accounts that are available to the user for temporary group membership. Use the RES GSET ACCT SEL
+PLUGIN setting  to specify a plugin that will be used to aut omatic ally  return a single user account or a
+subset of the user’s accounts.
+See the sample script plugin-tmp_gset_acct_sel.psl in the sampes directory for more
+details.
+Determining the connector behavior of group set check-out failures
+Use the RES GSET CHECKOUT AGENT POLICY setting  to specify the behavior of the connector when group
+membership fails to be added to at least one group when checking out a group set from a push-mode
+managed system policy. A behavior policy is used to determine how group set check-out failures should
+be treated.
+This policy can be one of three states:
+▪Ignore failure : skips any failures encountered by the agent and c ontinues  to process subsequent ▪
+groups. This is the default policy.
+▪Roll back : revert any successful group memberships made before the failure was encountered. ▪
+▪Abort : halt processing subsequent groups after  failure is encountered; e xisting  group memberships ▪
+are left as-is.These policies do not apply when checking in a group set. Any failures encountered during check-in are
+skipped and reported back, to be retried at a later time.
+Group set check-in failure retries
+The following system variables can be c on figur ed  in Manage the system  > Modules  > Privileged access .
+In the event that an account fails to be removed from one or more groups in the group set during check-
+in, the check-in can be retried at a later time.  Use RES GSET CHECKIN MAX RETRY to set the maximum
+number of group set check-in retries.
+You can also c on figur e  event actions  to trigger external programs when group membership has been
+successfully removed after  subsequent retries or when group membership fails to be removed after
+e xhausting  all retries, using RES GSET CHECKIN RETRY SUCCESS and RES GSET CHECKIN RETRY FAILURE ,
+r espectiv ely .
+Con figur e  event actions  RES GSET CHECKIN GRP NO SUCH MEMBER if an account loses its group
+membership before the group set has been checked-in, or RES GSET CHECKIN GRP NOT FOUND if a
+group in the group set cannot be located on the managed system. In these situations,  the check-in is
+considered successful and will not be retried.
+See Privileged access app  (on page 1251) for more details.
+Checking in access
+Users who are granted the "Check in access" privilege can check in the access of other users by clicking
+Check in button  in Privileged access  app. This only applies to activ e  check-outs.
+Superuser accounts (the ones with "All" privileges granted in Manage the system > Security > Access to
+product features > Individual administrators  or Administrator groups ), are product administrators, so
+they cannot get the Privileged Access  link on their login page to perform a check-in. The check-in
+oper ation  is available to end users, usually a manager who is granted "revoker" privileges.
+You can grant the check-in privilege to a set of users:
+▪By gr anting  "Check in access" privilege in Security > Access to user pr ofiles  > Global help desk rules > ▪
+<user group> .
+▪Adding users to the built-in  Policies > User classes > _ACCESS_ALL_ACTIVE_CHECKOUTS  if the user ▪
+class exists.
+On the user group page, you can check who gets the privilege by using the Test...  button  on Membership
+criteria  tab.
+The check-in oper ation  carries out an emergency check-in. For privileged accounts, it immediately
+randomizes any password the user has checked out. For privileged accounts checked out using SSH keys,
+it removes the user’s SSH key from the target. For temporary group membership, it revokes group
+memberships from all group sets the user has checked out. By default, the recipient user can still request
+permission to check out privileged access. Other users who have permission to access the a ff ect ed
+account are advised that the password has been changed.Requests that are in the status of checking out cannot be checked in.
+Privileged access request messages
+The following settings  a ff ect  messages displayed to users when certain events occur when r equesting
+access check-outs, and can be set in either the Account access request tab or Group set access request
+tab:
+Bravura Privilege  check-in / check-out message options
+Option Description
+RES CHECKOUT EXPIRED MSG The message to display to users when their
+c onnection  is terminated when their access
+session reaches the forced check-in time.  The
+message is controlled by the !!!
+ERROR_EXPIRED_CHECKOUT M4 tag, which by
+default displays in English: “Your check-out time
+has expired. Please request the account access
+again.
+RES CHECKOUT EXPIRY
+WARNING MSGThe message to display to users when their
+c onnection  will be terminated X minutes before
+their access session reaches the forced check-in
+time.  The value of X is controlled by RES NOTIFY
+IMMINENT CHECKIN INTERVAL.
+The message is controlled by the !!!
+WARNING_CHECKOUT_EXPIRY_APPROACHING
+M4 tag, which displays in English: “This session
+will be terminated in X minutes when the check-
+out time  expires.”
+RES CONNECTION TO SERVER
+FAILED MSGThe message to display to users when a remote
+desktop c onnection  cannot be established. This is
+used by the remote desktop access disclosure
+module ( pswxtsvc ). The message is controlled
+by the !!!
+RES_CONNECTION_TO_SERVER_FAILED_MSG_DEFAULT
+M4 tag, which displays in English: “Unable to
+contact remote system.”
+RES CONNECTION TO SERVER
+FAILED TEST FAILED MSGThe message to display to users when a remote
+desktop c onnection  cannot be established, and
+c onnectivity  to the remote system does not exist.
+This is used by the remote desktop access
+disclosure module ( pswxtsvc ). The message is
+controlled by the !!!
+RES_CONNECTION_TO_SERVER_FAILED_TEXT_FAILED_MSG_DEFAULT
+M4 tag, which displays in English: “Connectivity
+to remote system does not exist".

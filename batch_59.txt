@@ -1,0 +1,322 @@
+4.Select the appropriate Filter on radio button  to determine whether the rule should apply to: 4.
+▪(All) network resources ▪
+▪A specific  Target system ▪
+You must also select the target system that you want the rule to apply to from the drop-down list.
+▪A specific  Resource ▪
+You must also select the resource that you want the rule to apply to from the drop-down list.
+Filter rules at diff er en t  levels are not cumulativ e.  Only the lowest-level rules are sent to the
+network resource plugin. For example, if you set up rule 1 to filt er  on all target systems, and rule 2
+to filt er  on a specific  resource, rule 2 is sent to the plugin whenever a user views the privileges for
+that resource.
+5.Click Update . 5.
+Resource group filt er  plugin
+The resource group filt er  plugin works as a pos t - filt er .  It is responsible for filt ering  the list of groups
+returned by the target system’s network resource plugin. This method is more fle xible  than using filt er
+rules because the filt er  plugin has access to additional  in f ormation  about the requester and recipient.
+To use a resource group filt er  plugin:
+1.Click Modules > Options . 1.
+2.Type the name of the plugin program or PSLang script in the FILTER RESOURCEGROUP PLUGIN  field. 2.
+3.Click Update . 3.
+There are no shipped plugins for use with this plugin point. See more in f ormation  on how to write your
+own plugin
+Ex ecution  points
+The plugin is run by the View and update pr ofile  (IDR) module when users view resource details.
+Filter plugins operate diff er en tly  from most plugins, which are synchronous. All filt er  plugins support
+asynchronous calling. There are two forms of asynchronous calling:
+▪Standard input/output mode that processes standard filt er  plugin input/output ▪
+In standard input/output (stdio) mode, filt er  plugins work in the following way:
+1.An event triggers a CGI program to call the plugin program or script and sends it standard user1.
+data.
+2.The calling program c ontinues  to stream input from stdin, one item at a time  until  there are no 2.
+more items.
+3.For each item, the plugin returns the filt er  result to stdout. 3.
+4.The calling program receives the final  standard output and c ontinues. 4.
+InputInput is similar for all resource filt er  plugins. The plugin fir s t receives standard data in the format:
+"" "" = {
+  "sessionid" = "<session ID>" # The session ID of the request.
+  "module" = "<idr|ids|idp|idwfm>"
+  "accountID" = "<account ID>" # The account ID of the recipient.
+  "template = "<template ID>" # The selected template ID.
+  "targetid" = "<target ID>" # The target ID for the recipient.
+  "navigation" "" = { ... } # User navigation data
+  "recipient" "<user|empty>" = {
+     # The "recipient" group contains standard information about the
+     # subject of the request.
+   }
+  "viewer" "user" = {
+     # The "viewer" group contains standard information about the
+     # person using the CGI.
+   }
+  "request" "" = {
+     # The "request" group contains standard information about the
+     # the request.
+   }
+ }
+Some of the values above may be empty, due to the stage and type of the request.
+The plugin then receives a series of KVGroups; one for each item.
+Input to the fir s t KVGroup also includes the following key-value pairs:
+  "netresourcetype" = "<F|P|M>"
+     # The resource type related to a !\IDACCESS{}! request.
+  "netresourceunc" = "<UNC path>"
+     # The UNC path related to a !\IDACCESS{}! request.
+Subsequent input is passed for each group that the plugin must
+evaluate. Each item is as follows:
+"group" "<long ID of the group>" = {
+  "desc" = "<group desc>" # Description of the group
+  "hassubgroups" ="<true|false>" # Sub-group flag
+  "member" = "<true|
+false>"  # Indicates the recipient's current membership status.
+  "owners" "" = { # Existing owners
+      "owner" = "<profile ID>" # 0 or more
+  }
+  "perm" "" = {      "read" = "<true|false>" # false if omitted
+      "write" = "<true|false>" # false if omitted
+  }
+}
+For example:
+"group" "CN=arch_frv_owners,OU=groups,OU=staff,DC=norse,DC=bravurasecurity,DC=com" = {
+  "desc" = "arch_frv_owners"
+  "hassubgroups" ="false"
+  "member" = "true"
+  "owners" "" = {
+    "owner" = "steven.benes"
+  }
+  "perm" "" = {
+      "read" = "true"
+      "write" = "true"
+  }
+}
+Output
+For each item, one output KVGroup is expected on stdout, with an optional  "filt er"  = "true" pair to
+indicate that the item should not be displayed:
+"" "" = {
+"filter" = "true|false"
+       # If false, the user is displayed
+       # If true, the user is not displayed
+"retval" = "<#>"
+       # Optional, if non-zero returned, abort the plugin
+}
+A plugin that encounters errors in its processing can add standard output pairs for individual items,
+which should cause the plugin e x ecution  to be aborted.
+.
+▪Callback mode that uses two functions  to process the input/output ▪
+In callback mode the network resource filt er  plugin uses two functions:
+OnFilterInit(const $inkvg, output $detail)  This function  is called once to initializ e  the environment
+based on the cgi user.
+▪$inkvg – the viewer▪
+▪$detail – if 0, no detail provided on input kvg for each user▪
+– if 1, detail is provided on input kvg for each user– can also be expressed as a KVGroup
+OnItemFilter(const $inkvg, output $msg, output $allow)  This function  is called once per item to
+determine what network resources the user can view or manage.
+▪$inkvg – the network resource to filt er ▪
+▪$msg – error message▪
+▪$allow – if 1, this user is displayed and available▪
+– if 0, this user is not displayed and is unavailable
+.
+This mode can be used to reduce processing time  in environments with large numbers of users.
+.  Groups
+This chapter shows you how to manage target system groups in Bravura Security Fabric . Groups are not
+only resources that can be managed using Bravura Security Fabric  , they can be used to apply access
+controls and policies.
+This chapter includes:
+▪About managed groups  (on page 585) ▪
+▪ Getting  started  (on page 586) ▪
+▪Managing groups aut omatic ally  (on page 587) ▪
+▪Managing groups manually  (on page 590) ▪
+▪ Updating  group options  (on page 591) ▪
+▪ Con figuring  group-level authoriz ation  (on page 592) ▪
+▪Tracking changes to group membership  (on page 599) ▪
+▪ Con figuring  group-level resource oper ations  (on page 601) ▪
+▪ Con figuring  group-level role enforcement  (on page 604) ▪
+▪ Con figuring  aut omatic  group assignment  (on page 606) ▪
+▪Managing invalid groups  (on page 608) ▪
+▪ Deleting  unknown objects  (on page 609) ▪
+▪Stopping management of all groups on a target system  (on page 609) ▪
+About managed groups
+On almost every system, users’ access privileges are determined by their membership in groups . These
+groups may have diff er en t  names on diff er en t  types of systems; for example, roles, activity  groups, or job
+codes. In all cases, groups are c ollections  of user rights that have a name and are assigned as a unit to
+one or more users.
+Email dis tribution  groups, such as those on Micr osoft’ s  Activ e  Directory, can also be managed by Bravura
+Security Fabric .
+Some target systems support the concept of group owners . A group owner is a user that is responsible for
+the management of a group, and who can directly modify the list of group members and (possibly) group
+owners. For example, Activ e  Directory supports group owners; however, it refers to owners as
+“managers”.
+To determine whether a particular  target system supports group management oper ations,  refer to the
+Connector Pack Documen t ation .
+Managed vs. unmanaged groups 
+A managed group is a group of accounts de fined  on a target system, such as AD or LDAP , whose
+membership is monitored and managed in Bravura Security Fabric . On some target systems this can
+include groups inside groups. An unmanaged group is simply a group whose membership is not
+monitored and managed in Bravura Security Fabric .During auto discovery , Bravura Security Fabric  lists all available groups from supported target systems,
+then loads the group in f ormation  into its database. By default, Bravura Security Fabric  only lists group
+membership for managed groups. This option  can be modified  on the Target system inf ormation  page.
+When a group is managed:
+▪Users can submit requests to join or leave the group.▪
+▪The group can be included in roles, so that when a requester selects a role, the request aut omatic ally ▪
+includes group membership.
+▪Group owners and authorizers can manage membership and ownership.▪
+▪The group can be included in segr eg ation  of duties  (SoD) rules so that users’ membership can be ▪
+examined when identif ying  possible access c on flicts.
+▪The group can be included in certific ation  campaigns so that users’ memberships can be reviewed. ▪
+▪The group’s membership can be used to segment users into user classes.▪
+ Nested groups 
+Some target systems support the concept of a nested group . A nested group is a group that is a member
+of another group. For example, in Activ e  Directory you can add a group as a member of another group.
+The nested group then inherits the rights of the parent group .
+Bravura Security Fabric  also calls these groups parent groups and child groups . If an account is a member
+of a child group, they have what is called indirect membership to the parent group.
+Unless otherwise stated, if the target system supports the concept of nested groups, ”group membership”
+in Bravura Security Fabric refers to both direct and indirect group membership.
+Depending on the target system’s options,  it is possible to aut omatic ally  list all the members of a child
+group if the parent group is managed. However, the child group must be managed before Bravura
+Security Fabric  can control who can have membership.
+To view group membership details, including listing  direct and indirect members, you can run the groups
+report. From the main menu click  Manage reports > Reports > Roles and groups >  Groups .
+Getting  started
+ Requirements 
+▪You require the Manage resources adminis tr ativ e  privilege in order to access the Manage the system ▪
+> Resources > Groups  menu.
+▪Before you can manage a group, you must run auto discovery  to generate a list of available groups from ▪
+target systems.
+See Target Systems  (on page 480) for more in f ormation  about target systems, and "Auto Discovery"
+for more in f ormation  about auto discovery .
+Any group whose long group ID contains more than 200 characters is ignored, is not loaded during
+auto discovery  and cannot be managed. If this happens, an error message is written  to the log file.
+Proceed to:▪Managing groups aut omatic ally  (on page 587) to learn how to aut omatic ally  load and manage groups. ▪
+▪Managing groups manually  (on page 590) to learn how to manually manage groups using the Manage ▪
+the system  (PSA) module.
+Managing groups aut omatic ally
+Rather than c on figuring  each group individually, you can:
+▪Allow Bravura Security Fabric  to aut omatic ally  manage groups that are attached  to network resources. ▪
+▪ Con figur e  Bravura Security Fabric  to aut omatic ally  manage groups during auto discovery . ▪
+▪Use the managegrp program to c on figur e  managed groups in batches. The program reads entries ▪
+from a file and c on figur es  all the specified  groups as moderated managed group s.
+See managegrp usage in f ormation
+Use the managegrp program to rapidly c on figur e  managed groups. The program can:
+▪Read entries from a file and c on figur e  all the specified  groups as moderated managed groups. ▪
+▪Modify the name of a group, its short ID, or description  on a target system. Any associated ▪
+managed groups, w orkflo w  c on figur ation,  and e xisting  requests are transferred to use the new
+group.
+▪Unmanage all groups, or all groups managed for a target system, providing they are not currently▪
+being used (have no dependent resources).
+Usage
+managegrp -rename -targetid <target> -oldgroupid <oldgroup> [-
+newgroupid <newgroup>][-newshortid <newshort>][-newname <newdesc>]
+managegrp [-override] -file <filename>
+managegrp -unmanage [-list] -all|-targetid
+Argument Description
+-rename Rename a group. This option  requires -t ar g etid,  -
+oldgroupid, and one or more of -newgroupid, -
+ne w shortid,  or -newname.
+-t ar g etid  <target> The target system on which to rename a group or
+unmanage groups.
+-oldgroupid <oldgroup> The current name of the group to be renamed.
+-newgroupid <newgroup> Rename <oldgroup> to <newgroup>.
+-ne w shortid  <newshort> Change the short ID of <oldgroup> to <newshort>.
+-newname <newdesc> Change the description  of <oldgroup> to <newdesc>.
+- file <filename> Indicates the file to be read.
+-override Override e xisting  managed groups with new list of
+authorizers. Managed groups to override and a list of
+new authorizers for each group are specified  in
+<filename>.Argument Description
+-unmanage Unmanage applicable managed groups, if -list option  is
+specified,  only return the list without actually performing
+the action.  This option  requires the -t ar g etid  or -all.
+-all All groups that are currently managed and not in-use will
+be unmanaged.
+If - file is used, the input file must contain a list of entries. Each entry must be in the following format:
+<target ID> <group ID> <list of authorizers> <minimum number of authorizers>
+where:
+▪target ID  Is the identifier  for the target system the group is on. ▪
+▪group ID  Is the identifier  for the group on the target system. If the group ID name contains a space, ▪
+the name must be enclosed in quotes ("").
+▪list of authorizers  Is a comma delimited list of authorizers; for example, mod1,mod2,mod3. The list ▪
+can only contain c on figur ed  authorizers (W orkflo w  > Authorizers).
+▪minimum number of authorizers  Is the minimum number of authorizers required to process a ▪
+request to the group. The value must be equal to or less than the number of listed authorizers. This
+value is set to 1 by default.
+The <minimum number of authorizers> for an entry is set to 1 by default. You must ensure that the
+<list of authorizers> contains at least this many authorizers.
+Modifying an e xisting  managed group’s authorizers or number of authorizers using the managegrp
+program is best accomplished by editing  the original entry and rerunning the program. See examples
+2, 3, 4, and 5 below.
+When managegrp runs, it processes all valid entries in the specified  file. Invalid entries are skipped
+but are logged in the log file for the program. Notific ation  of invalid entries is provided on the
+command line. You should review the log file, correct the invalid entries, and rerun the program with
+the updated file.
+Examples
+The following examples show how to construct the entries in the specified  file.
+1.To manage the Calgary Users group on the W2K target system, using one authorizer (charlie), type:1.
+W2K ‘‘Calgary Users'' charlie 1
+2.To manage the Administrators group on the WIN2K target system, specifying three authorizers for2.
+the group (authorizer1, authorizer2, and authorizer3), type:
+WIN2K Administrators authorizer1,authorizer2,authorizer3 3
+3.To modify the Administrators group to only require two authoriz ations  from the list of authorizers, 3.
+change the entry to:
+WIN2K Administrators authorizer1,authorizer2,authorizer3 24.To manage the UserGroup group on the AD target system using three authorizers (user1, user2,4.
+and user3), type:
+AD cn=UserGroup,ou=Domain_Users,dc=domain,dc=com user1,user2,user3 3
+5.To modify the UserGroup group so that it only requires two authorizers (user2 and user3), change5.
+the entry to:
+AD cn=UserGroup,ou=Domain_Users,dc=domain,dc=com user2,user3 2
+To rename a group on target AD:
+managegrp.exe -rename -targetid AD -
+oldgroupid CN=oldname,OU=resources,OU=staff,DC=domain,DC=local -
+newgroupid CN=newname,OU=resources,OU=staff,DC=domain,DC=local -
+newshortid newname
+To unmanage groups:
+1.To perform a dry run for unmanaging the groups on the AD target system1.
+managegrp.exe -unmanaged -list -targetid AD
+2.To unmanage the groups on the AD target system2.
+managegrp.exe -unmanaged -targetid AD
+.
+Aut omatic ally  managing groups attached  to network resources
+Bravura Group  allows users to browse and request access to network resources even before the groups
+attached  to the resource have been enabled for management. When a user chooses an action  for
+resource; for example, a requester selects a group to join, or an owner clicks the owners icon – managed
+group checks the status of the group. If the group is not already managed, managed group aut omatic ally
+c on figur es  and enables it for group management.
+In addition  to adding the group owners as authorizers for the group, managed group changes the default
+values for the managed group as follows:
+Option/v ariable Value
+Aut omatic ally  add group owners as authorizers Checked
+Minimum number of authorizers 1
+Aut omatic ally  managing groups via auto discovery
+If supported by the target system, Bravura Security Fabric  connectors can list groups during auto
+discovery. Group owner in f ormation  is included if it is available. You can c on figur e  Bravura Security Fabric
+so that it aut omatic ally  manages groups and assigns the owner as the group authorizer.To do this, c on figur e  the Aut omatic ally  manage groups to be moderated by owners option  on the
+applicable Target system inf ormation  page. This option  applies to Activ e  Directory, Oracle Database, or
+Domino Server Script target system types. Select one of the following:
+▪(Disabled) : When this value is selected, groups on this target system will not be aut omatic ally ▪
+managed. This is the default setting  for this option.
+▪Only groups with owners, moderated by owners : Only manage groups that have an owner. Assign the ▪
+owner as the group authorizer.
+▪All groups, approval required : Manage all groups on the target system. If a group has an owner, then ▪
+the owner is assigned as the group authorizer. If a group has no owner, then no authorizer is assigned.
+Groups without authorizers require manual c on figur ation.
+In addition  to adding the group owners as authorizers for the managed group, Bravura Security Fabric
+uses the following default values for managed groups:
+Option/v ariable Value
+Aut omatic ally  add group owners as authorizers Checked
+Minimum number of authorizers 1
+Number of denials before a change request is
+terminated1
+Bravura Security Fabric  does not change the c on figur ation  for groups that are already managed.
+Managing groups manually
+You use the Managed group in f ormation  page to to start or stop managing a group, and to c on figur e
+other options  for a group. To access this page for a given group:
+1.Click Manage the system > Resources > Groups . 1.
+Bravura Security Fabric  displays a list of e xisting  target systems.
+2.Select the target system on which the group resides.2.
+Bravura Security Fabric  displays a list of available groups for the target system, indic ating  which groups
+are currently managed.
+3.Select the group that you want to c on figur e. 3.
+4.Set required settings  on the Authoriz ation  tab: 4.
+▪Minimum number of authorizers▪
+▪Number of denials before a change request is terminated▪
+See Con figuring  group-level authoriz ation  (on page 592) for details.
+5.Click Manage . 5.
+6.Run auto discovery  to load group membership into the Bravura Security Fabric  database. 6.
+Click Maintenance > Auto discovery .

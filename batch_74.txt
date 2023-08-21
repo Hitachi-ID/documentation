@@ -1,0 +1,325 @@
+The built-in plugin, userOperationFilter.psl , allows the permitted  oper ations,  based on user
+access rules, to be overridden by a requester. This plugin is not enabled by default. The default behavior
+is for Bravura Security Fabric  to use user access rules to de fine  permitted  oper ations.  You can also set a
+filt er  plugin to filt er  the users that a logged-in user can manage.
+See more in f ormation  about customizing the plugin
+The userOperationFilter.psl plugin script, stored in the \<instance>\plugin\ directory, is
+written  in the PSLang scripting  language. You can customize the script to grant requesters additional
+control, or write a customized script.
+Granting  requesters additional  control can weaken security. For example, if users are allowed to perform
+delete operations,  they may be able to delete accounts belonging to other users.
+Ensure that authorizers are assigned to target systems, and that the target systems require at least one
+authorizer. If you don’t, users’ requests to disable other user’s accounts are auto-approved, since they
+are not acting  on any template.
+Ex ecution  points
+This plugin is run from the Front-end (PSF), Help users (IDA) module, View and update pr ofile  (IDR)
+module, Browse the OrgChart (IDO) module, Manage the OrgChart (IDG) module.
+Options  which the user cannot perform will not appear on the menus or request forms. When a recipient
+is not included in the input, the plugin provides user access rules for any pot ential  user.
+If the user is not allowed to perform any options  on a request form, a message is displayed: "You cannot
+manage this user".
+Input
+Input passed to the plugin is as follows:
+   "" "" = {
+      "OP_ALLOWED" = "{ ... } # Operation type
+        # Can have one or more OP_ALLOWED keys
+      "delegId" = "<Profile ID>" # The user receiving delegated access
+      "recipient" "user" = { ... } # Recipient's data
+        # When the recipient is omitted then the \uarule{}s are
+        # evaluated for any potential user.
+      "viewer" "user" = { ... } # Viewer's data
+   }
+The following is an example of input to the plugin:
+"" "" = {
+  "OP_ALLOWED" = "NETRES"
+  "OP_ALLOWED" = "CREATE"
+  "reservationid" = ""  "recipient" "user" = {
+    "id" = "ADAM0000"
+    "name" = "Adams, Lane"
+  }
+  "viewer" "user" = {
+    "id" = "ACOS0000"
+    "name" = "Alyce G Acosta"
+  }
+}
+Output
+The program outputs an oper ation  keyword with a value "ALLOW" for each oper ation  the user is
+permitted  to perform. The user cannot perform any oper ation  that is not explicitly allowed.
+The oper ation  keywords are listed in User access rule privileges  (on page 714).
+The plugin also outputs the return value (0=success, non-zero=fail) and an error message if the return
+value if non-zero.
+The following is an example output:
+"" "" = {
+  "NETRES" = "ALLOW"
+  "CREATE" = "ALLOW"
+  "DELEGATE" = "ALLOW"
+  "DELETE" = "ALLOW"
+  "DISABLE" = "ALLOW"
+  "MANAGEGROUPS" = "ALLOW"
+  "MOVECTX" = "ALLOW"
+  "RENAME" = "ALLOW"
+  "ROLES" = "ALLOW"
+  "UPDATE" = "ALLOW"
+  "retval" = "0"
+  "errmsg" = "Successful"
+}
+.User classes
+In Bravura Security Fabric , a user class is a way to segment users. A user class de fines  the criteria for
+segmenting  users.
+User classes are used throughout Bravura Security Fabric , to help c on figur e  product administrator s, user
+access rules, plugins, membership, and r elationship s  between users.
+These terms apply to user classes:
+P articipan ts Describes types and in t er actions  of class members; it does not refer to the
+members themselves. P articipan ts  may sometimes  be referred to as
+actors .
+Personal user classes Personal user classes have a single participan t,  de fined  by attribut e  or
+group membership. This participan t  can simply be identified  as USERID.
+R elational  user classes R elational  user classes have multiple  participan ts;  for example, MANAGER
+and SUBORDINATE. Users may be included in this class if they meet the
+criteria of any participan t,  or all participan ts.
+Built-in user classes These user classes are pr e-de fined  and cannot be modified.
+Policies These are places within Bravura Security Fabric  that are able to utiliz e
+user classes, such as pr e-de fined  requests, administrator groups, plugin
+points, user access rules, authorizer groups. Policies may contain one or
+both types of user class points (below).
+Policy P articipan ts These are participan ts  in policies that are de fined  by user class
+participan ts  using participan t  mapping.
+PSLang PSLang is a scripting  language developed by Bravura Security. The
+language uses a syntax much like C, but with a large set of built-in
+functions,  some of which are geared towards the Bravura Security Fabric
+environment.
+User class test points These are policies used to determine whether or not the participan ts
+satis f y  the user class criteria.
+User class list points These are policies used to list the participan ts  that satis f y  the user class
+criteria.
+ 
+User class criteria 
+There are three types of criteria that you can use to determine segmen t ation:
+▪ Attribut e  criteria – de fined  by pr ofile  and request attribut es ▪
+▪Membership criteria – de fined  by group membership ▪
+▪PSLang criteria – de fined  by PSLang expressions ▪Built-in user classes
+There are default user classes set up for basic w orkflo w  and security. Installing Bravura P attern  also adds
+several user classes.
+The following are built-in user classes installed with the base product:
+User classes marked with a 
+  cannot be modified.
+_ACCESS_ALL_ACTIVE_CHECKOUTS_ This includes all users that will be granted the All and Active
+privileged access check-out filt er s.
+_ACCESS_DASHBOARD_ This class includes all users who can access dashboards.
+_ALLUSERS_ This built-in user class includes all users. Users that are pr e-e xisting
+and those that do not yet exist.
+_ANALYTICS_READERS_ The user being included can run, save, and read reports. The user
+can access the Analytics  if it has been installed.
+_EXISTING_USERS_ In this built-in user class the participan t  is a pr e-e xisting  user.
+_EXPLICIT_API_USERS_ This includes dedicated users of the API. Users assigned to this
+class have default API access.
+_EXPLICIT_API_USERS_TPM_ This includes dedicated users of the API. Users assigned to this
+class have default API access, which is used by Phone Password
+Manager.
+_GLOBAL_HELP_DESK_ This includes all basic, front-line, help desk users.
+_GROUP_CREATE_USERS_ This includes users who can create groups.
+_HELP_DESK_MANAGERS_ This includes help desk users who have elevated privileges,
+including access to help other help desk users and help desk
+managers.
+_IT_SECURITY_ This is for all IT Security users. Ins t allation  of Bravura Workforce
+P attern  c on figur es  criteria, where participan ts  who have the DEPT
+attribut e  of IT-SECURITY will be a member of this user class.
+_MANAGER_DIRECT_ The recipient of an access change request is the direct subordinate
+of the requester.
+This user class is useful in pr e-de fined  requests and access
+certific ation.
+By default this built-in user class is an equivalent, though
+optimiz ed,  version of the PSLang expression
+reportsTo($RECIPIENT,$REQUESTER,1) .
+_MANAGER_INDIRECT_ The recipient of an access change request is a subordinate of the
+requester, directly or via other managers. This built-in user class is
+similar to the _MANAGER_DIRECT_ user class, except it also
+includes their manager’s manager, etc.
+_MOBILE_USERS_ This built-in class includes users who have registered mobile
+devices.
+_NEWUSER_ In this built-in user class the participan t  does not yet exist as a user._PARTICIPANTS_DIFFER_ In this built-in user class, the two participan ts  are diff er en t  users.
+_PARTICIPANTS_SAME_ In this built-in user class, both participan ts  are the same user. This
+r elationship  is often  used to restrict access to specific  requests for
+self service only.
+_REPORT_READERS_ The user being included can run, save, schedule, and read reports.
+_UC_ATTR_AUTO_PROPAGATE_REQUESTER_ The user in the ATTR_AUTO_PROPAGATE_REQUESTER system
+variable , used to aut omatic ally  propagate pr ofile  attribut e  value
+changes.
+_UC_RBAC_AUTO_PROPAGATE_REQUESTER_ The user in the RBAC_AUTO_PROPAGATE_REQUESTER system
+variable, used to aut omatic ally  re-align users with their expected
+RBAC entitlemen ts.
+_USER_IS_MANAGER_ The user being included is a manager.
+By default this built-in user class is an equivalent, though
+optimiz ed,  version of the PSLang expression
+isManager($USERID) .
+User classes for segmented certific ation  campaigns
+When you set up an access certific ation  campaign, the user population  for a resource (applic ation  or
+group) can be too large for a single reviewer; nonetheless access should be certified  by those with
+knowledge of the resource, rather than by each user’s manager.
+In this case, it is desirable to:1.Enable multiple  reviewers to certif y  diff er en t  segments of a user population. 1.
+2.Ensure that every user is reviewed – that is, no uncertified  users remain after  certific ation  campaigns 2.
+are complete.
+You can do this by segmenting  users into personal user classes, and assigning reviewers according to class
+when you create a certific ation  campaign. Any user can be assigned to certif y  a segment.
+It is possible for a user class that contains no users to be included in a c ertific ation  campaign. Reviewers
+can, in e ff ect,  be asked to c ertif y  that there are no users in a user class, or not included in a user class.
+R elational  user classes do not apply to access certific ation.
+User class policies
+A user class policy is a point within Bravura Security Fabric  where user classes can be utiliz ed  to de fine  a
+group of users. This can sometimes  remove the need for writing  complicated scripts.
+The user class policies available within Bravura Security Fabric  are:
+▪[Shared] – available to all user class policies. ▪
+▪ Pr e-de fined  request – user classes can de fine  access to pr e-de fined  requests. ▪
+▪Administrator group – user classes can de fine  membership to administrator groups. ▪
+▪Filter user plugin – user classes can filt er  out users with the FILTER USER PLUGIN. ▪
+▪Keep user plugin – user classes can filt er  users to keep with the KEEP USER PLUGIN. ▪
+▪Generate user plugin – user classes can generate lists of users with the GENERATE USER PLUGIN. ▪
+▪Delegated administrator rule – user classes can de fine  membership to delegated adminis tr ation  rules. ▪
+▪Global help desk rule – user classes can de fine  membership to the global help desk rules. ▪
+▪Self-service rule – user classes can de fine  membership to the self-service rules. ▪
+▪ Pr ofile  comparison rule – user classes can de fine  membership to the pr ofile  comparison rules. ▪
+▪Authorizer group for template – user classes can de fine  membership to the authorizer group for ▪
+templates.
+▪Authorizer group for target system – user classes can de fine  membership to the authorizer group for ▪
+target systems  (on page 480).
+▪Authorizer group for role – user classes can de fine  membership to the authorizer group for roles. ▪
+▪Authorizer group for segr eg ation  of duties  rule – user classes can de fine  membership to the ▪
+authorizer group for segr eg ation  of duties  rule.
+▪Authorizer group for managed group – user classes can de fine  membership to the authorizer group ▪
+for managed groups  (on page 585).
+▪Authorizers for a request to search recorded sessions – user classes can de fine  membership to the ▪
+authorizer group for requests to search recorded sessions.
+▪Authorizers for a request to view a recorded session – user classes can de fine  membership to the ▪
+authorizer group for requests to view recorded sessions.
+▪Authorizers for a request to access accounts – user classes can de fine  membership to the authorizer ▪
+group for requests to access accounts.▪Implementer group for template – user classes can de fine  membership to the implementer group for ▪
+templates.
+▪Implementer group for target system – user classes can de fine  membership to the implementer ▪
+group for target systems  (on page 480).
+▪Implementer group for managed group – user classes can de fine  membership to the implementer ▪
+group for managed groups  (on page 585).
+▪ Esc alation  plugin – user classes can determine to whom a request should be escalated, or provide a ▪
+short list with ESCALATION PLUGIN.
+▪First change esc alation  plugin – user classes can determine to whom a request should be escalated, ▪
+or provide a short list with FIRST CHANCE ESCALATION PLUGIN.
+▪ Certific ation  – user classes can determine who will be reviewed in certific ation  campaigns. ▪
+▪ Certific ation  by user class – user classes can determine reviewer r elationship s  in certific ation ▪
+campaigns by de fined  r elationship.
+▪ Notific ation  – user classes can determine pr e-c onditions  for notif ying  users. ▪
+▪User groups: Access to pr ofile  and request attribut es  – user classes can de fine  membership in user ▪
+groups for access controls on pr ofile  and request attribut es.
+▪User groups: Access to resource attribut es  – user classes can de fine  membership in user groups for ▪
+access controls on resource attribut es.
+▪User groups: Privileged access to systems – user classes can de fine  membership in user groups for ▪
+issuing Bravura Privilege  requests.
+▪Automated group membership – user classes can determine who should aut omatic ally  be assigned or ▪
+removed from roles.
+▪Automated role membership – user classes can determine who should aut omatic ally  be assigned or ▪
+removed from roles.
+▪Password policy for target system group – user classes can determine which password policies ▪
+applies to groups of users, via target system groups  (on page 562).
+Getting  started
+ Requirements 
+Before you add a user class:
+▪You require the "Manage policies" adminis tr ativ e  privilege in order to access the User classes menu ▪
+item.
+▪If you want to use pr ofile/r eques t  attribut e  values as user class criteria, you must fir s t c on figur e  those ▪
+specific  pr ofile/r eques t  attribut es.
+▪If you want to segment users based on Bravura Group membership, you must fir s t c on figur e  those ▪
+specific  managed groups.
+ Na vig ation  steps 
+Use the Select a user class page to add and c on figur e  user classes. To navigate to this page:
+1.Click Manage the system > Policies > User classes . 1.2.To de fine  a: 2.
+▪New user class – click Add new... if Bravura Security Fabric  displays a list of e xisting  user classes. ▪
+The page is displayed by default if there are no de fined  user classes.
+▪ Existing  user class –search for, or select the user class you want to view or modify. ▪
+The bottom  of the general User class de finition  page displays a summary of all participan ts,  criteria
+and explicit users for that user class.
+The summary includes any errors in the user class c on figur ation.  For detailed error in f ormation
+look in the c on figur ation  tabs, or run the user class errors report
+Adding user classes
+To add a user class:
+1.Navigate to the User class de finition  (on page 737) page for a new user class. 1.
+2.Type an ID and Description  to search on and identif y  the user class. 2.
+3.Click the drop-down menu to select the policy type  (on page 736) for your new user class. Select 3.
+"[Shared]” if you want your new user class to be available to all user class policies.
+4.Click Add. 4.
+The P articipan t  specific ation  page loads.
+Specifying participan ts
+Each user class requires at least one participan t.  R elational  user classes require at least two.
+The P articipan ts  tab of the User class definition  pages de fines  the meaning of the user class, not
+necessarily the pr ofile  "members" of the user class.
+▪A one-participan t  class, or personal user class, is just a fla t list of user pr ofiles;  for example: product ▪
+administrators  (on page 672), or help desk users  (on page 706) who can manage everyone in the
+system, or (for Identity  or Privilege ) catch-all managers who can approve requests for everyone in the
+system.You can add segments of users  (on page 792) or explicit users  (on page 799) to a personal user class.
+▪A tw o-participan t  class is a direct r elationship;  for example: a manager and their direct subordinates, a ▪
+group owner and its group members, an approver  (on page 808) and the user pr ofiles  whose requests
+he is assigned to approve, a site manager and all employees at that site, and so on.
+See Example: Segr eg ating  help desk privileges  (on page 799).
+▪A thr ee-participan t,  or multiple-participan t  are much more esoteric r elationship s,  in which some of ▪
+the "participan ts"  change the r elationship  between the other participan ts;  for example: a manager of
+a specific  type over a set of employees (HR manager, Site manager, Direct manager, and so on), the
+type being the third "P articipan t"  in the r elationship,  based on which specific  privileges can be granted
+to manager over employees, or vice-versa.
+Single-participan t  user class membership is cached  (on page 804) at the end of the auto discovery
+process ( psupdate ) (on page 2716), so when they are used to display segments of the Pr ofile  lists in
+the WebUI, they are faster.
+Multi-participan t  user classes are not cached, so their criteria are evaluated on-the fly when the user
+class is used (similar to script-driven plugin points  (on page 806))
+Adding a new participan t  specific ation
+If you have just added a new user class, the P articipan t  specific ation  page loads aut omatic ally .  Skip to
+Step 4 in the following procedure. To add a participan t  for an e xisting  user class:
+1.Navigate to the User class de finition  (on page 737) page. 1.
+2.Click the P articipan ts  tab. 2.
+3.Click Add new… if Bravura Security Fabric  displays a list of e xisting  participan ts. 3.
+The page is displayed by default if there are no de fined  participan ts.
+4.Type an ID and Description  to identif y  the participan t.  The ID is used to diff er entia t e  participan ts  in 4.
+r elational  user classes; for example, “Recipient” and “Requester”. In personal user classes, ID is simply
+a placeholder. For consistency with the default personal user classes, type USERID .
+5.If you want to restrict user listing ,  then see Using list expressions  (on page 740) for details on the 5.
+Listing  members option.
+6.Click Add. 6.
+Next:
+▪If you are de fining  a r elational  user class, click Add new… to add another participan t,  which returns ▪
+you to step 4.
+or
+▪ De fine  user class criteria  (on page 792). ▪
+Modifying a participan t  specific ation
+To modify an e xisting  participan t  specific ation:
+1.Navigate to the User class de finition  (on page 737) page. 1.2.Click the P articipan ts  tab to view the P articipan t  criteria page. 2.
+3.Select the participan t  you want to view or modify. 3.
+4.Modify the Description  if required. 4.
+5.If you are modifying a user class list point and want to restrict user listing ,  then see Using list 5.
+expressions  (on page 740) for details on the Listing  members option.
+6.Click Update . 6.
+Using list expressions
+The Listing  members function  allows you to modify the default listing  behavior for a user class. This
+optional  function  is only relevant to user class list points using PSLang
+PSLang scripts are broken down into functions.  Each function  must include a name, function  parameters
+(if applicable), and a sequence of statements to execute:
+ function <FunctionName>( <p1>, <p2>, … )
+   {
+   <statement>
+   <statement>
+   …
+   }
+The scripts can contain a mix of user -de fined  functions , and built-in functions  which are used to pass
+in f ormation  to the agent.
+Remember to remove all debugging statements and to review all statements that will create logs before
+using the script in a production  environment. Ensure that no sensitive  inf ormation  is being captured in the
+logs.
+User -de fined  functions
+In order for agtdos , agttelnet , or agtssh to perform an agent oper ation,  you must implement
+the corresponding function  in your script. Write these functions  to provide in t er action  details between
+Bravura Security Fabric  and the target.
+The agents use the following functions:
+▪list( const $wantGroups, const $wantAttributes )  Lists accounts on the target ▪
+system, and the attribut es  for each account.
+The parameters passed to the function  are as follows:
+▪$wantGroups  – determines if this function  should retrieve group membership. ▪
+If the value of $wantGroups  is a non-zero value, write your function  to retrieve the group(s) to
+which each account belongs while listing  accounts.
+▪$wantAttributes – determines if this function  should retrieve attribut es  for each account. ▪
+If the value of $wantAttributes  is a non-zero value, write your function  to list the attribut es
+for each account.

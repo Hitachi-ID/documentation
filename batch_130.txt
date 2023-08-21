@@ -1,0 +1,357 @@
+4.Bravura Security Fabric  redisplays the page. You can c on figur e  the plugin so that Bravura Security 4.
+Fabric  displays messages indic ating  what has changed, or that the user needs to modify the value, and
+why. Disabled fields  are “grayed out”.
+The attribut e  v alidation  plugin overrides c on figur ed  settings  for enforcing v alidation  for attribut e  groups
+or individual attribut es.  Since the plugin can be used to supply values for “hidden” attribut es,  it is not
+subject to access controls set for user-controlled attribut es.
+Some of the functionality  provided by the plugin applies to products that you may not have installed.
+The plugin program must be listed in the ATTR VALIDATION PLUGIN field  in the Manage the system  >
+W orkflo w  > Pr ofile  and request attribut es  > Attribut e  logic menu. For Bravura Privilege  requests, the
+plugin program must be listed in the PAM ATTR VALIDATION PLUGIN field  instead.
+There are no shipped plugins in use with this plugin point. A sample plugin script, attribute-
+validation-plugin.psl , is located in the samples directory.See more in f ormation  on writing  a
+custom plugin
+The attribut e  v alidation  plugin point is one of the most important plugin points in Bravura Security Fabric .
+Some of the oper ations  implemented by this plugin point include:
+▪ V alidation  of values entered by the person submitting  the request. ▪
+▪ Gener ation  of hidden values. ▪
+V alidation  of values
+Bravura Security Fabric  provides some rudimentary v alidation  of values out of the box. The de finition  of a
+pr ofile  and request attribut e  allows for c on figur ation  of v alidation  rules based on structured text
+(NN/NN/NNNN for dates or NNN-NNN-NNNN for phone numbers) and use of regular expression.
+In many cases advanced attribut e  v alidation  is required. For example an external source, such as LDAP or
+SQL, might provide the in f ormation  for proper attribut e  v alidation.  In such cases the attribut e  v alidation
+plugin is most useful. It has the ability to look at the in f ormation  the user has entered and, based on
+business rules, decide if the value is acceptable.
+The attribut e  v alidation  plugin can use business rules to deny the value entered by the user or accept it.
+Along the way, the plugin informs the user of the result by displaying a custom message on the Bravura
+Security Fabric  user interface.
+You can "turn off" the enforcement of v alidation  rules at the attribut e  group or single attribut e  level, in
+cases where an incorrectly f ormatted  value should not block a whole request. For e xisting  accounts, you
+can also set v alidation  rules to be enforced only if the value is changed. The attribut e  v alidation  plugin
+executes in all cases and overrides c on figur ed  settings.
+Gener ation  of hidden values
+On many occasions, the cr eation  of a user object requires a number of attribut es  with values that are
+calculated or generated. The best pr actice  dictates that it is easier for a user to only enter in f ormation
+that is required. All other attribut e  values should be generated. The less in t er action  that is needed with
+the requester, the better  the usability experience.Access control lists in Bravura Security Fabric  dictate which attribut e  group are displayed on the user
+request screen. If a pr ofile  and request attribut e  is not displayed on the request form, it is considered
+hidden. Such hidden attribut es  are still available for processing within the attribut e  v alidation  plugin
+point.
+All hidden attribut es  can be populated with generated values based on values from other attribut es  or
+external sources (LDAP , SQL). The values are not displayed to users.
+For example, if the requester enters the country loc ation  of the new user (US, Canada, UK), the attribut e
+v alidation  plugin can generate the country code and populate a hidden attribut e  called COUNTRY_CODE.
+As a result, the target system where the account is created will accept the country code rather than the
+country name. In this example, the user works with a human readable country name, where the account
+cr eation  uses a code number for the country instead.
+Ex ecution  points
+The attribut e  v alidation  plugin is executed in various places and during various w orkflo w  steps. Attribut e
+v alidation  is required every time  the value of a given attribut e  is changed. Such attribut e  change
+oper ations  occur in the View and update pr ofile  (idr) module , Requests app and W orkflo w  Manager
+Service:
+The attribut e  v alidation  plugin is executed when:
+▪A pr ofile  and request attribut e  value for an e xisting  user is added or modified ▪
+▪A new user request is submitted,  reviewed, or authorized ▪
+▪A request to add or remove a resource is made for an e xisting  user ▪
+When the WF ATTRVAL PLUGIN RUN IDR SUMMARY setting  is enabled, the attribut e  v alidation  plugin will
+execute on the request summary page. This will allow any additional  attribut es  to be added to the
+request prior to submission. By default, this option  is disabled. You can enable it at Manage the system
+> W orkflo w  > Options  > General .
+An attribut e  validation  plugin can generate values for profile  and request attribut es.  It is the responsibility
+of the author of an attribut e  validation  plugin to ensure that the plugin only sends c onfirmation  to the
+CGI program that an attribut e’ s  value has changed when the value has actually changed. If the output of
+the attribut e  validation  plugin defines  that the value for a profile  and request attribut e  has changed, the
+CGI program will not carry out any validation  to c onfirm  that the value has in fact changed. The end
+result is that the value for the "changed" profile  and request attribut e  will be pushed to all target systems
+where the profile  and request attribut e  is linked to a account attribut e.  This could create problems if no
+actual change to the attribut e’ s  value has occurred.
+Requirements
+The plugin must be placed in the \<instance>\plugin\ directory and runs on the Bravura Security Fabric
+server. See W riting  plugins  for general requirements.
+InputThe plugin receives all attribut es  in addition  to the other standard in f ormation  contained in the session. It
+also receives in f ormation  about users’ na vig ation  on the CGI.
+Input passed to the plugin is as follows:
+"" "" = {
+   "module" = "<idp|ids|idr|idwfm>"
+     # Where the plugin is being run from.
+   "operation" = "<operation code>"
+     # The possible operation that can be requested; 0 or more
+     # See Operation codes  (on page 3672)  for a list of codes.
+   "sessionid" = "<session ID>"
+     # The session ID for the viewer
+   "valuessubmitted" = "true|false"
+     #If the value is false, the plugin is expecting pre-
+set values, and no
+     #reservation is done.  If the value is true, it is safe to do
+     #reservation. See Reservation ID on Page 115.
+   "navigation" "" = { ... } # User navigation data
+   "attribute" "<attribute id>" = {
+    "parent" = "<parent attribute>" #present if set
+     "oldValue" "" = { # Applies to the workflow manager service only
+       "value" = "<old request value>" # 0 or more
+     }
+     "value" "" = {
+       "value" = "<request value>" # 0 or more
+     }
+   } # 0 or more
+   "recipient" "user" = { ... } # Recipient's data
+   "request" "" = { ... } # Request data
+   "requester" "user" = { ... } # Requester's data
+   "viewer" "user" = { ... } # Applies to Requests app or View and
+update profile (idr) module only
+   "model" "user" = { ... } # Data of the model user used in profile comparison
+   "event" = "<event id>"
+     # The event context where the plugin is being called.
+   "postedByAPI" = "<false|true>"
+     # This key value is present when the request is posted.  If true, the request
+     # is submitted through IDAPI.  Otherwise, the value is false.
+}
+For example:# KVGROUP-V1.0
+"" "" = {
+  "module" = "idr"
+  "operation" = ""
+  "operation" = "GRUA"
+  "preselect_nosgroup" = "1"
+  "preselect_role" = "1"
+  "preselect_template" = "1"
+  "sessionid" = "Scced6c11-2387-4e0d-a09a-d42ed23360cc"
+  "valuessubmitted" = "false"
+  "attribute" "APIUSER_CIDR" = {
+    "value" "" = {
+    }
+  }
+  "attribute" "COUNTRY" = {
+    "value" "" = {
+    }
+  }
+  "attribute" "EMAIL" = {
+    "oldValue" "" = {
+      "value" = "andersch@EXAMPLE.local"
+    }
+    "value" "" = {
+      "value" = "andersch@EXAMPLE.local"
+    }
+  }
+  "attribute" "FIRST_NAME" = {
+    "oldValue" "" = {
+      "value" = "Christopher"
+    }
+    "value" "" = {
+      "value" = "Christopher"
+    }
+  }
+  "attribute" "LAST_NAME" = {
+    "oldValue" "" = {
+      "value" = "Anderson"
+    }
+    "value" "" = {
+      "value" = "Anderson"
+    }  }
+  "attribute" "LUPD_AUTO_ASSOCIATE" = {
+    "value" "" = {
+    }
+  }
+  "attribute" "ORGCHART_MANAGER" = {
+    "value" "" = {
+    }
+  }
+  "attribute" "OTHER_NAME" = {
+    "value" "" = {
+    }
+  }
+  "attribute" "PROFILE_PIC" = {
+    "value" "" = {
+    }
+  }
+  "attribute" "RBACENFORCE" = {
+    "value" "" = {
+      "value" = "T"
+    }
+  }
+  "attribute" "STATE" = {
+    "parent" = "COUNTRY"
+    "value" "" = {
+    }
+  }
+  "attribute" "UPDATE_ONLY_CHANGED_ATTRS" = {
+    "value" "" = {
+      "value" = "F"
+    }
+  }
+  "attribute" "VIEWABLE_BY_RECIPIENT" = {
+    "value" "" = {
+    }
+  }
+  "navigation" "" = {
+    "wfpage" = "selectpredefinedrequestoper"
+  }
+  "recipient" "user" = {
+    "id" = "andersch"    "name" = "Anderson, Christopher"
+  }
+  "request" "" = {
+    "autoressig" = ""
+    "entryDate" = "1399619891"
+    "macroStatus" = "U"
+    "notes" = ""
+    "prequest" = "PDR"
+    "reason" = ""
+    "recipient" = "andersch"
+    "recipientEmail" = ""
+    "requestID" = "536C813022AB69E86D9E8BC35E234625"
+    "requester" = "andersch"
+    "requesterEmail" = ""
+    "requesterName" = "Anderson, Christopher"
+    "reservationid" = "00000000-0000-0000-0000-000000000000"
+    "segment" = ""
+  }
+  "requester" "user" = {
+    "id" = "andersch"
+    "name" = "Anderson, Christopher"
+  }
+  "viewer" "user" = {
+    "id" = "andersch"
+    "name" = "Anderson, Christopher"
+  }
+}
+Output
+The plugin returns the following KVGroups:
+"" "" = {
+   "<errmsg|warnmsg|infomsg>" = "<request message>"
+     # If supplied, the message is logged, and
+     # an errmsg is displayed in red,
+     # warnmsg in orange, and infomsg in green.
+   "retval" = "0" # Mandatory; zero is success and non-zero is failure
+   "reservationid" = ""
+     # Optional reservation ID but required if it was passed into attribute
+     # validation or idm-suite id plugins
+     # See "Reservation ID" notes below.   "attribute" "<attribute ID>" = {
+     # Required for each attribute to be modified or failed.
+     # Optional if no change.
+     # All the following are optional:
+        "<errmsg|warnmsg|infomsg>" = "<attribute message>"
+          # If supplied, logged and displayed for the attribute
+          # in addition to any request message.
+        "failedValidation" = "0|1"
+          # 0 = the attribute was validated
+          # 1 = the attribute could not be validated
+        "forceRequired" = "0|1"
+          # 0 = the attribute value is not required
+          # 1 = the attribute value is required --
+ the user cannot proceed
+          #     until a value is supplied
+        "forceDisabled" = "0|1"
+          # 0 = the attribute is enabled  -- the value can be changed
+          # 1 = the attribute is disabled -- changes are disallowed
+        "display" = "0|1"
+          # 0 = the attribute is hidden
+          # 1 = the attribute is visible to the user
+        "modifiedValue" "" = { #if values are modified
+           "value" = "<first_value>"
+           "value" = "<second_value>"
+           ...
+              }
+      }
+      ...
+   }
+R eser v ation  ID
+The r eser v ation  ID is a unique ID that is recorded in the database for the life of the request. It can be
+passed as input to other plugins along with request details; for example template and role filt er  plugins.
+It is also passed as input into subsequent runs of the attribut e  v alidation  plugin.
+If there is no r eser v ation  ID for a request, then the value is "00000000-0000-0000-0000-000000000000".
+Once a r eser v ation  has been made for a request, the unique ID looks something like this:
+"4dc9e603-0e50-4503-b152-4a76de77a5f6"".
+Examples
+The following are examples of KVGroup plugin output:1.To replace an attribut e  value then disable the field: 1.
+  "attribute" "LAST_NAME"  = { 
+    "forceDisabled" = "1" 
+    "modifiedValue" "" = { 
+      "value" = "Johns" 
+    } 
+  }  
+2.To change an attribut e  from optional  to required: 2.
+  "attribute" "OTHER_NAME"  = { 
+     "warnmsg" = "You must provide a middle name" 
+     "forceRequired" = "1" 
+    }  
+.
+Controlling attribut e  priority
+When auto discovery  is run, if target systems are c on figur ed  to list attribut es,  account attribut es  are
+loaded into the Bravura Security Fabric  database.
+You can set up an attribut e  priority scheme, so that when attribut es  from more that one target system
+are mapped to the same pr ofile  and request attribut e,  the diff er ences  can be reconciled as part of the
+loading process. To illustrate with an example, assume you have:
+▪A Windows Server 2016 target system (WIN) and an LDAP target system (LDAP).▪
+▪Both have their “ description”  attribut e  mapped to the pr ofile  and request attribut e  “DESC”. ▪
+▪There is a user JDOE with an account on both the WIN and LDAP target systems.▪
+▪JDOE’s W2K8 description  attribut e  = ”userjohndoe”. ▪
+▪JDOE’s LDAP description  attribut e  = ”LDAP userjohndoe”. ▪
+If the attribut e  priority scheme prioritiz es  WIN over LDAP , then during auto discovery  the attribut e  will be
+updated with the value userjohndo ; if LDAP has the higher priority, the value will be
+LDAPuserjohndoe .
+You can de fine  pr ofile  and request attribut e  priority at three levels of granularity: all attribut es,  per
+attribut e,  and one-time  override.
+all attribut es Target systems with mapped attribut es  are listed in a
+priority sequence. All pr ofile  and request attribut es
+take their de finitions  from the highest priority target
+system with an equivalently mapped attribut e.
+You set the priority for all attribut es  on the Manage the
+system  > W orkflo w  > Pr ofile  and request attribut es  >
+Attribut e  priority page.per attribut e Target systems with mapped attribut es  are prioritiz ed
+for this specific  pr ofile  and request attribut e.  This
+attribut e  takes its de finition  from the target system
+with the highest priority. This takes precedence over
+the “all attribut e”  priority sequence. Other attribut es
+not de fined  at the per attribut e  level still follow the “all
+attribut e”  priority sequence, unless overridden by a
+one-time  override.
+You set the priority per attribut e  on the attribut e’ s
+Priority tab.
+one-time  override An additional  field  can be used to give priority to a
+target system only when the de finition  of the mapped
+attribut e  on that target system is changed. This is
+primarily intended for use in situations  where you want
+to preserve a particular  priority sequence, but allow for
+a one-time  override.
+For example, a target system that is the authorit ativ e
+source for a particular  attribut e  is known to contain
+incorrect in f ormation,  and the group responsible for
+managing the target system will not or cannot make the
+required data changes for some time.  You can use the
+Override on change field  to give higher priority to
+another target system, then update the attribut e  value
+on that target system to the correct value. That value
+will now be applied to the attribut e  for that user in
+Bravura Security Fabric , and the original priority
+sequence will remain intact.
+Note that the value that is applied to the attribut e  on
+Bravura Security Fabric  will be o v er written  by the next
+auto discovery process. The value is not persistent.
+One-time  overrides take precedence over per -attribut e
+and all-attribut e  overrides.
+You set the Override on change option  on the
+attribut e’ s  Priority tab.
+All three priority methods can be used together to de fine  an attribut e  priority scheme that suits your
+particular  needs. You can set up a default priority scheme that applies to all the pr ofile  and request
+attribut es  and which will work for most of them, then create specific  priority sequences for the pr ofile
+and request attribut es  that need to be treated diff er en tly .
+Setting  up an attribut e  priority sequence for all pr ofile  and request attribut es
+To de fine  a general attribut e  priority sequence order for all pr ofile  and request attribut es:
+1.Click Manage the system  > W orkflo w  > Pr ofile  and request attribut es  > Attribut e  priority . 1.
+2.If required, search to narrow the list of target systems.2.3.Drag and drop one of the double dir ection  arrows in the ID field  to change the attribut e  groups’ order 3.
+in the list.
+4.Click Update at the bottom  of the form. 4.
+If target systems are not included in the attribut e  priority list, their priority will be based on their physical
+sequence in the database, after  any target systems included in the list.
+If you modify the attribut e  rec onciliation  order, user attribut e  values will not be reloaded unless a user’s
+profile  has been updated since the last time  attribut es  were listed. To ensure that all user attribut e  values
+are loaded:
+1. Navigate to the c onfiguration  page for each aff ect ed  target.
+2. Locate the List attribut es  setting.
+3. Click Generate full list .
+Once auto discovery  runs, the user profile  attribut es  are updated.
+Setting  up an attribut e  priority sequence for a specific  pr ofile  and request attribut e
+To de fine  the target system priority sequence for a specific  pr ofile  and request attribut e:
+1.Click Manage the system  > W orkflo w  > Pr ofile  and request attribut es  > Pr ofile  and request 1.
+attribut es .
+2.Select the attribut e  you want to set the priority for. 2.

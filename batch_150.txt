@@ -1,0 +1,291 @@
+8.User : finds  the user in the mobile device’s Contacts list that was added from the Bravura One  app. It 8.
+contains the contact record from the vCard pr ofile  attribut es.
+9.User : calls the user using the mobile device. 9.Accessing Bravura Security Fabric  via a mobile browser
+Users can access a c on figur ed  Bravura Security Fabric  instance via browsers on a mobile device.
+Supported devices are:
+▪Android version 4.4 or higher▪
+▪iOS version 9 or higher▪
+Supported browsers are:
+▪Chrome▪
+▪Safari▪
+To access the Bravura Security Fabric  instance connect your device to an appropriate network, open a
+browser window, and enter the instance URL. Follow the standard procedures to log into the Front-end
+(PSF).
+Desktop and mobile view
+Most browsers will default to the correct view for Bravura Security Fabric  aut omatic ally .  However, a link is
+available on the login page to switch views if necessary.
+Click Switch to mobile view to view Bravura Security Fabric  on a mobile device. The mobile view displays
+a mobile-friendly version of Bravura Security Fabric , optimiz ed  specific ally  for browsers on mobile
+devices.Click Switch to desktop view to view Bravura Security Fabric  on a desktop machine. The desktop view
+has been designed for accessing Bravura Security Fabric  on a desktop or laptop computer.
+The selected view will be remembered for that browser, until  the browser cache is cleared.Part VIII PluginsCon figuring  plugins
+Bravura Security Fabric  includes an extensive plugin architecture that allows you to extend its
+functionality  and customize its interface with other programs. Some built-in plugin programs are
+distributed with Bravura Security Fabric . You can also write custom plugin programs or scripts. All plugin
+programs and scripts must be placed in the plugin directory. The programs and scripts use plugin points
+that you enable when c on figuring  Bravura Security Fabric  using the Manage the system  (PSA) module.
+In general, most plugin points are synchronous. They work in the following way:
+1.An event triggers a CGI program to call the plugin program or script and send it input.1.
+2.The calling program waits while the plugin program or script executes.2.
+3.The plugin program or script finishes  e x ecuting  and sends its output to the calling program. 3.
+4.The calling program receives the response from the plugin program or script and then c ontinues. 4.
+Filter plugins are an e x ception  to this general rule. They receive “streaming” input from stdin, and output
+a result to stdout, for each item being filt er ed.  See Filter users  (on page 1049) and Filter resources  (on
+page 2354) for more in f ormation  about writing  filt er  plugins.
+Exit traps diff er  from plugin points in that all exit traps are asynchronous. That is, the calling program
+starts the interfaced program and does not wait for a response. See Event actions  (exit traps)  (on page
+1523) for more in f ormation  about exit traps.
+Plugin points and programs
+Plugin programs with a .pss extension are built-in.
+Plugin points and programs
+Plugin point Purpose Shipped / Built-in
+Manage the System > Resources > Target systems
+Program to generate a list
+of target systemsGenerate a list of sub hosts for the target
+systems.
+See Target systems composed of multiple
+servers  (on page 503).dcselect, discgrpw, unixsub,
+w2kranddc  (on page 503)
+Program to set the case of
+new IDsDe fines  the case of new IDs created on a
+target system or creates numerical ID
+based on a user attribut e.
+See Compose t ar g e t -specific  account IDs
+(on page 2398)upper.pss, lower.pss  (on page 2398)
+Manage the system > Policies > Password policies
+require the password to be
+approved by this pluginDisplays and enforces additional  password
+strength rules.
+See Adding new rules with a plugin  (on
+page 1011).pass filt.p sl  (on page 1012) or
+netvalidatepwpol.exe  (on page 1014)warn if the password is not
+approved by this pluginA warning will be generated if the
+password does not pass the password
+policy of the specified  plugin.pass filt.p sl  (on page 1012)
+generate random
+passwords using this
+pluginSpecify a plugin to generate random
+passwords instead of the built-in password
+generator.
+See Gener ating  random passwords with a
+plugin  (on page 1020).randpasswd.exe  (on page 1020)
+Manage the system  > Policies  > Login options
+LOGOUT REDIRECT PLUGIN Provides a method to redirect users after
+logging out.
+See R edir ecting  users on logout  (on page
+831).None
+Manage the system > Policies > Question  sets
+External program Print questions  that the user or help desk
+user must answer, and either print or
+validate answers.
+See External question  sets and
+authentic ation  plugins  (on page 1032).odbcqa  (on page 1037), resextqa  (on
+page 1039)
+Plugin for v alidating
+answersTest the strength of questions  and answers
+when a user is updating  their Question
+sets.
+See Security question  response v alidation
+(on page 1040).None
+Manage the system > Policies > Segr eg ation  of duties  rules
+Plugin to enable e x ception Allow e x ceptions  in some cases when the
+Ex ceptions  not allowed  option  is enabled.
+See Plugin to enable e x ception  (on page
+813).None
+Manage the system > Policies > System interfaces
+GET PASSWORD EXT Supply a password to the Change
+passwords  page when a help desk user
+changes a caller’s password from the Help
+users (IDA) module.
+See Keeping passwords secret from
+product administrators  (on page 836).None
+PARSE ACCOUNT EXT Not currently supported. None
+Manage the system  > W orkflo w  > Pr ofile  and request attribut es > Attribut e  logic
+ATTR VALIDATION PLUGIN Validates and provides values for attribut es
+according to business logic.
+See V alidating  and g ener ating  attribut e
+values  (on page 1290).NonePAM ATTR VALIDATION
+PLUGINValidates and provides values for attribut es
+according to business logic for Bravura
+Privilege  requests.
+See V alidating  and g ener ating  attribut e
+values  (on page 1290).None
+Plugin used to generate a
+list of restricted valuesSupplies values for pr ofile  and request
+attribut es.
+See Restricted values  (on page 1279).None
+Manage the system > W orkflo w  > Email c on figur ation
+GLOBAL MAIL PLUGIN Sends email, either to users or to a file.
+See Modifying global mail settings  (on
+page 415).global-mail-plugin.py,  (on page 417)
+plugin-email-domino.exe  (on page
+417)
+Manage the system > W orkflo w  > Options  > Deleg ation
+DELEGATION OPTIONS
+PLUGINRestricts deleg ation  options  such as to
+whom a primary can delegate.
+See Con figuring  a deleg ation  plugin  (on
+page 1383).deleg ation-de f ault.p sl  (on page 1383)
+Manage the system > W orkflo w  > Options  > Esc alation
+ESCALATION PLUGIN Determines to whom a request should be
+escalated when an authorizer does not act
+in time.
+See Esc alation  (on page 1386).escorgchart.pss  (on page 1386)
+FIRST CHANCE
+ESCALATION PLUGINDetermines whether a request should be
+escalated at the time  an authorizer is fir s t
+assigned to a request.
+See Esc alating  requests immediately when
+authorizers are assigned  (on page 1392).None
+Manage the system > W orkflo w  > Options  > Aut omation
+AUTO ASSIGNMENT
+REQUEST SPLITThe name of the plugin script to split an
+aut omatic  assignment request into
+separate requests.
+See Aut omatic  assignment request splitting
+(on page 2446).None
+AUTO ASSIGNMENT
+VARIANCE FILTERThe name of the plugin script to filt er
+aut omatic  assignment variance de t ections
+before aut omatic  submission.
+See Aut omatic  assignment filt ering  (on
+page 2449).None
+Manage the system  > W orkflo w  > Options  > PluginsIDACCESS OWNERS
+PLUGINDynamically assigns group owners in
+addition  to, or instead of, those assigned
+by the network resource plugin.
+See Group owner selection  using a plugin
+(on page 2491).None
+AUTHORIZATION DETAIL
+MASK PLUGINDetermine whether authoriz ation  details
+about the request should be displayed to
+the user viewing the request.
+See Hiding authoriz ation  details  (on page
+1428).None
+IDSYNCH AUTH CRITERIA
+MOD PLUGINDynamically assigns authorizers to approve
+requests. Adds or removes authorizers
+after  the request has been worked on.
+See Selecting  authorizers using a plugin  (on
+page 1363).None
+IDSYNCH ID PLUGIN Aut omatic ally  generates a pr ofile  ID.
+See Assigning Pr ofile  IDs (on page 2387).plugin-id.psl  (on page 2387)
+IDSYNCH IMPLEMENTER
+PLUGINProduces a list of implementers who can
+be assigned to fulfill  requests.
+See Determining implementers  (on page
+2402).None
+IDSYNCH IMPLTASK
+PLUGINDecides if an oper ation  is performed by an
+implementer or connector.
+See Assigning tasks to implementers  (on
+page 2404).None
+IDSYNCH USERS EMAIL
+PLUGINDetermines users’ email addresses.
+See Using the email address plugin  (on
+page 414).None
+IDSYNCH WORKFLOW
+MOD VIEW PLUGINModify what oper ations  are displayed to
+viewers of a request.
+See Modifying how oper ations  are viewed
+(on page 1431). 
+IDWFM REQUEST REWRITE
+PLUGINRewrites requests before they are sent to
+authorizers.
+See R e writing  custom requests  (on page
+1418).None
+PAM IDWFM REQUEST
+REWRITE PLUGINRewrites requests before they are sent to
+authorizers for Bravura Privilege  requests.
+See R e writing  custom requests  (on page
+1418).None
+VIEW GROUPS PLUGIN Allow members of a user class to access
+group reports. The reports can be saved in
+CSV format and downloaded for viewing.
+See View groups plugin  (on page 1203).vie w_gr oup_filt er_and_click able_link.py
+(on page 1203)WF WIZARD PLUGIN Allows requests to be validated and
+updated. Provides control over user
+in t er action  when submitting  a request.
+See R e writing  pr e-de fined  requests  (on
+page 1416).None
+PASSWORD GEN PLUGIN Aut omatic ally  generates initial  passwords
+for new requests.
+See Gener ating  passwords for new
+accounts  (on page 2399).None
+Manage the system > Inventory > Options
+CHECK INVENTORY PLUGIN Checks levels of inventory and notifies
+inventory managers when stocks are low.
+See Checking inventory levels  (on page
+2696).checkstock.exe  (on page 2696)
+EXT INVENTORY PLUGIN Manages inventory item in f ormation  in an
+external source.
+See Managing inventory lists on an
+external source  (on page 2696).None
+Manage the system > Modules > Digital ID (DID)
+DID REG VALIDATION
+PLUGINValidate incoming requests for new Digital
+ID r egis tr ation  requests.
+See Digital ID r egis tr ation  (on page 1173).nos-validate.pss  (on page 1173)
+Manage the system > Modules > External Data Store (DBE)
+DBE ACL PLUGIN Grant write access to the Manage external
+data store to particular  product
+administrators.
+See External Data Store  (on page 1163).
+Manage the system  > Modules > Front-end (PSF)
+DOWNLOAD PLUGIN Downloads files from the Front-end user
+page.None
+PSF PLUGIN Displays additional  HTML on the Front-end
+user page.
+See Adding new functionality  and HTML
+(on page 1149).control/plugin_psf.py
+Manage the system  > Modules > Change passwords (PSS)
+S CHANGE EXTSupply HTML to the Change passwords
+page of the Change passwords (PSS)
+module.
+See Adding new functionality  and HTML
+(on page 1149).scpinplugin  (on page 1648)S STATUS EXT Supply HTML to the password status page
+of the Change passwords (PSS) module.
+See Adding new functionality  and HTML
+(on page 1149).cgilocalr  (on page 1580)
+Manage the system  > Modules > Help users (IDA)
+A RESET EXT Supply HTML to the Change passwords
+page of the Help users (IDA) module.
+See Adding new functionality  and HTML
+(on page 1149).scpinplugin  (on page 1648)
+Manage the system  > Modules > Manage certific ation  process (CERT)
+CERT DELEGATION PLUGIN Specify a plugin to select a reviewer and
+delegate to a certific ation  segment.
+See Manage certific ation  process (CERT)
+(on page 1158).certifier_and_deleg a t es
+Manage the system  > Modules > Privileged access
+PSW DISCLOSURE PLUGIN Determine what access disclosure plugins,
+and with what settings,  are available to
+users when attempting  to access privileged
+passwords.
+See Use a plugin to de fine  access
+disclosure plugins  (on page 1856).None
+Manage the system > Modules > Session monitor
+SMON OPTIONS PLUGIN Activ a t e  session monitoring based on the
+requester, privileged account, or system,
+and override policy settings
+See Session monitor app  (on page 1255).plugin-smon-options.p sl
+Manage the system > Modules > User notific ations  (PSN)
+PSN MODIFY ORDER AND
+REDIRECT PLUGINModify the order of notific ations  and
+redirect users as they navigate and act on
+notific ations.
+See Modify notific ations  and redirect users
+(on page 1189).None
+Manage the system  > Modules> Manage reports (RPT)
+REPORT GRAPH PLUGIN Generate report graphs.
+See Report graph plugin  (on page 1200).plugin-graph-phantomjs  (on page
+1200)
+REPORT TO PDR REQUEST
+CANCELLATION PLUGINAllow c ancellation  of requests generated
+from reports.
+See Report to pr e-de fined  request
+c ancellation  plugin  (on page 1201).report_to_pdr_request
+_c ancellation_plugin  (on page 1201)
+REPORT CRITERIA PLUGIN Control report search criteria.
+See Report criteria plugin  (on page 1202). 
+Manage the system  > Modules> Options

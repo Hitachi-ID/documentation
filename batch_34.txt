@@ -1,0 +1,361 @@
+Finding the component
+To change the association_attr s  row value in the hid_global_configuration  ExtDB table, the
+component we are trying to alter needs to be found. The component for an ExtDB entry can be found by
+viewing the ComponentOwnerFQN field  in the row you are looking to alter.
+For the row containing the association_attr s  setting ,  the component name in the ComponentOwnerFQN
+field  is Scenario.im_corp_loaddb .
+Finding appropriate CSV rows
+Finding the appropriate .csv  file that contains the configdata  in f ormation  for the component is a
+similar process to finding  the appropriate .json  for IDMCon fig  overrides.
+For the Scenario.im_corp_loaddb component:
+1.Open the \<instance>\component\Default\Scenario  directory. 1.
+2.Search through the list of Scenario components and locate the im_corp_loaddb  component 2.
+folder.
+3.Inspect the manifest.xml  file within the \<instance>\component\Default\Scenario 3.
+\im_corp_loaddb  directory.
+4.Its contents contain lines similar to:4.
+<component>
+<description>
+Corporate loaddb processing logic.
+</description>
+...
+<configdata
+component="Functional.hid_global_configuration.model.GlobalConfiguration">
+<filename>data\global_configuration.csv</filename>
+</configdata>
+</component>
+It becomes clear that the data\global_configuration.csv  file is the one containing
+configdata  entries due to its placement in the configdata  portion  of the manifest.
+5.Open the \<instance>\component\Default\Scenario\im_corp_loaddb\data 5.
+\global_configuration.csv  file. The contents show:
+namespace,setting,key,value,description
+LOADDB,skip_list,,,Optional semicolon separated list of targets to
+skip
+LOADDB,target_list,,,Optional semicolon separated list of targets to
+use
+LOADDB,association_attrs,,"@shortID,employeeNumber",Add an
+associationattribute based on the attributes defined here
+LOADDB,admin_association_attrs,,@shortID,Add an admin association
+attribute
+based on the attributes defined here
+The third row of the global_configuration.csv  is the one containing the default value
+"@shortID,employeeNumber " we want to override to " @shortID,mail " for the
+association_attr s  setting.
+6.When indic ating  the third row in the environment file, count rows s t arting  at zero "0". This means that 6.
+the third row in the .csv  corresponds to using the syntax [2]. The environment file then looks like:
+{
+"Scenario": {
+"im_corp_loaddb": {
+"data\\global_configuration.csv": {
+"[2]": {
+"value": "@shortID,mail"
+}
+}
+}
+},
+"Functional": {},
+"Data": {}
+}
+Other useful CSV row syntax
+Add or exclude rows
+Rows can be added or removed from .csv  files by adding appropriate syntax to the environment file.
+This is done by adding a plus + or minus - sign to the row indicator. For example:
+{"+[0]":{1,2,3}}
+would insert three integers as the fir s t three values in the fir s t row and:
+{"-[1]", {}}
+would exclude the second row from the indicated .csv  file.
+Be careful when overriding specific  elements in arrays, such as "[0]"  (the fir s t element) in the example
+above. If you use a number out of range, you will get an error at component install that will not mention
+the environment file. This will make it difficult  to trace the source of the error. What you will see is, after
+an info entry saying the Data component c on fig.json  has been loaded, a long python Traceback that ends
+in a statement about an item type mismatch.
+Replace all values with the same variable in a listTo replace an item for all the rows in a .csv  list with the same input, you would use a * row indicator.
+Here is an example where the "value" item is changed for all rows of the
+global_configuration.csv  file to equal "@shortID,mail" :
+{
+"Scenario": {
+"im_corp_loaddb": {
+"data\\global_configuration.csv": {
+"[*]": {
+"value": "@shortID,mail"
+}
+}
+}
+},
+"Functional": {},
+"Data": {}
+}
+Components with two csv files
+Components that have multiple  .csv  files can have numerous files,  rows and items altered within the
+same environment file.
+In the example below, the Scenario.pam_vault_management component has one specified  row item
+replaced in the policy_attrval_validation.csv  and a diff er en t  item in two diff er en t  specified
+rows replaced within the policy_attrval_calculation.csv  file:
+{
+"Scenario": {
+"pam_vault_management": {
+"data\\policy_attrval_validation.csv": {
+"[0]": {
+"set_visible": "True"
+}
+},
+"data\\policy_attrval_calculation.csv": {
+"[1]": {
+"SkipRemaining": "Stage"
+},
+"[2]": {
+"SkipRemaining": "All"
+}
+}
+}},
+"Functional": {},
+"Data": {}
+}
+Using an environment file
+Environments are managed through the manage_components.py  program located in your instance’s
+\scripts  directory. To use the manage_components program:
+1.Open a command prompt as an administrator.1.
+2.Navigate to your <instance>  directory and run the command: 2.
+instance.bat
+3.Navigate to <instance>\scripts  to run the manage_components.py  program. 3.
+Loading an environment file
+Environment files must be loaded before the ins t allation  of the components it is overriding in order for it
+to provide the c on figur ation  override values. Any components being overridden in the environment file
+will be installed during the loading of the environment file, along with any of their component
+dependencies.
+To load an environment file, use the command:
+manage_components.py env load <environment filename>
+Where environment filename  corresponds to the name of the .json  file in the <instance>
+\environments  directory.
+You can only load one environment file at any given time.  If an environment file has already been loaded
+and you try to load it again or try to load a diff er en t  environment file, you will be presented with an error
+message akin to, An environment (environment name) is already loaded , and the
+environment file will fail to load. The reason for this is environments are intended to be applied before
+c on figur ation  starts to enter the system. Changing an environment file and reloading it requires the load
+to be forced to signify pushing new in f ormation,  rather than changing incoming data, which is the
+standard in t ention  of an environment file. This error will also occur if you have mistakenly loaded the
+wrong environment file and attemp t  to load the correct one after w ar ds.
+To force the system to load the new environment file add " --force " to your load command:
+manage_components.py env load <environment filename> --force
+This command will cause Bravura Security Fabric  to attemp t  a reload of any c on figur ation  data attached
+to installed components and make the c on figur ation  sub stitutions  your environment file de fines.
+There have been known issues with certain types of components and the reloading of environment files
+not working. If a force command does not work contact the Bravura Security support department for
+advice on how to proceed.Loading environments on a system where components are already installed is risky. If you already have
+an environment loaded and then try to switch environment files,  it could break. There are some
+components that do not uninstall nicely and these might complain and break upon the new install. It is
+best practic e,  and highly recommended, to install environment files before the ins t allation  of your firs t
+component because of this.
+Example: Create environment files  to capture idmc on fig  changes
+In this use case, a product implementer for ABC company has set up two product server environments,
+one for development and one for pr oduction.  Each environment has a diff er en t  Activ e  Directory (AD)
+target address.
+The following ins tructions  will walk you through the steps required to create and c on figur e  the
+environment files for both the development (dev) and pr oduction  (prod) environments. When the
+environment files are loaded into their r espectiv e  environments, they will install the component to create
+the AD target and input the correct address for their environment specific  AD system within the target
+c on figur ation.
+Environment details
+The Activ e  Directory (AD) target address for each environment is:
+▪dev.corp for the dev environment.▪
+▪prod.corp for the prod environment.▪
+Cr eating  the dev and prod environment files
+The Data.hid_target_ad component provides a base AD target with a sample t ar g eting  address. The
+Data.hid_target_ad component is called upon and installed as a dependency to many other scenario and
+functional  components.
+The sample placeholder AD target address that the Data.hid_target_ad component inputs is
+server=demo.local;listNestedGrps=true. We know the addresses we want the component to set when
+installed for both the dev and prod environments, so we need to write the files dict ating  those addresses.
+We start by cr eating  two environment files,  one for dev and one for prod.
+To create the environment files:
+1.Navigate to the \<instance>  directory. 1.
+2.If the folder called \<instance>\environments  does not currently exist in the instance 2.
+directory, create it.
+3.Create two files within the newly created environments folder. One called abc-dev.json  and the 3.
+other abc-prod.json .
+Identif y  the component that you want to add the override for
+To be able to override c on figur ation  data provided by a component, the component you need to override
+must be identified  fir s t.  For IDMCon fig  changes there is no direct way to tell which component isresponsible for the c on figur ation  in f ormation,  so there is no de finitiv e  way to figur e  this out. It requires
+using in tuition  to guess and then c on firm  you are correct by searching through the component files.  Here
+are some tip s to help identif y  the component you need to override.
+To identif y  the component:
+▪Note the type of object you are trying to override; in this case the aim is to override a target address,▪
+so we care about a target component of sorts.
+▪If the component is installed as the dependency of a RefBuild component, you can sometimes  identif y ▪
+the component by visually inspecting  the manifest.xml of the RefBuild or Scenario components.
+▪Most product IDMCon fig  changes will be housed in the Data component directory. In this use case you ▪
+are looking for a target address IDMCon fig  change, so a good guess would be that you are looking for
+a Data component.
+▪Most base product Data components follow the naming c on v ention  hid_<type>_<identifier> . ▪
+Using the pointers noted above, it can be deduced that for overriding the AD target addresses, you
+should be looking at Data components.
+1.Open the \<instance>\component\default\Data  directory. 1.
+2.Searching through the list of Data components you will find a folder called \Data 2.
+\hid_target_ad . In tuitiv ely  this seems like the correct Data component because it includes both
+"target" and "ad" in the name, but you should verify by inspecting  the files.
+3.Inspect the files within the \<instance>\component\Default\Data\hid_target_ad 3.
+directory. It becomes clear that we’re interested in the ad.json  file, as it provides the target address
+field.
+4.The address  field  from the ad.json  file is the one that provides the default placeholder of 4.
+server=demo.local;listNestedGrps=true  when the component is installed, so we know
+that the address  field  is what we have to write the override for in the abc-dev.json  and abc-
+prod.json  environment files.
+Now that the data component and specific  file we want to provide an override has been determined,
+the override needs to be specified  in our r espectiv e  environment files for dev and prod. We will start
+with the abc-dev.json  file for the dev environment.
+Write the override in the environment files
+We have identified  the component and field  we need to provide an override for and will now specify the
+override in our r espectiv e  environments, s t arting  with abc-dev.json .
+A good s t arting  point for your environment file is to add three keys, one for each component directory
+(Data, Functional,  Scenario) to help visualize how the overrides apply according to the directory the
+component resides in. This helps when adding a large number of overrides to environment files since it
+will keep them organized by component type.
+To start the dev environment file:
+1.Open the abc-dev.json  file in a plain-text file editor, and add the 3 keys to indicate the 1.
+component directories by entering the following:{
+"Scenario": {},
+"Functional": {},
+"Data": {}
+}
+2.Now that there is a basic skeleton, you know our component of interest is in the Data directory, so add2.
+the component name to the Data  key. The file now looks like:
+{
+"Scenario": {},
+"Functional": {},
+"Data": {
+"hid_target_ad": {
+}
+}
+}
+3.Next, specify which file from the component is being overridden. It was determined above that file 3.
+will be the ad.json  file. Adding that in f ormation  makes the environment file look like:
+{
+"Scenario": {},
+"Functional": {},
+"Data": {
+"hid_target_ad": {
+"ad.json": {}
+}
+}
+}
+4.For the c on figur ation  override itself, the right dictionar y  structure needs to be used to enter into the 4.
+abc-dev.json  environment file to ensure the replacement is applied in the correct loc ation.  To do
+this, navigate to the <instance>\default\Data\hid_target_ad  directory and open the
+ad.json  file.
+You will notice  that it is a .json  file with a dictionar y  inside. By inspecting  the objects, find the target
+address field  you want to override. From the contents of the ad.json  file, the "address"  is
+located under "Fields" . The dictionar y  structure is then ad.json["Fields"]["address"] ,
+so that is what we need to add to the abc-dev.json  file.
+5.Navigate back to the abc-dev.json  file , open it in the file editor and add the dictionar y  structure 5.
+ad.json["Fields"]["address"]  so your file looks like the following:
+{
+"Scenario": {},
+"Functional": {},
+"Data": {"hid_target_ad": {
+"ad.json": {
+"Fields": {
+"address": "{server=dev.corp;listNestedGrps=true}"
+}
+}
+}
+}
+}
+From the addition,  now abc-dev.json  is applying an override to the ad.json  file provided by
+Data.hid_target_ad  to change the value of the ["Fields"]["address"]  to the dev
+environment's custom server=dev.corp  value.
+6.Save the abc-dev.json  file. 6.
+7.Now we can complete a similar change to our abc-prod.json , but using the required value of 7.
+server=prod.corp  for the pr oduction  environment. Open the abc-prod.json  file in the file
+editor and add the following:
+{
+"Scenario": {},
+"Functional": {},
+"Data": {
+"hid_target_ad": {
+"ad.json": {
+"Fields": {
+"address": "{server=prod.corp;listNestedGrps=true}"
+}
+}
+}
+}
+}
+8.Save the abc-prod.json  file. 8.
+Load the dev environment
+The environment files have been successfully written.  In order to apply the c on figur ation  overrides from
+the environment file to the product, the environment file needs to be loaded. To do this for the dev
+environment:
+1.On your development product server install the product. This is your dev environment.1.
+2.Create the \environments  directory as described above and place the abc-dev.json  file into 2.
+it.
+3.Launch a command prompt as an Administrator and navigate to the \<instance>  directory. 3.4.Run the command:4.
+instance.bat
+5.Navigate to the \<instance>\script  directory. 5.
+6.Load the environment by running the commands:6.
+manage_components.py load
+manage_components.py env load abc-dev
+Install the Data.hid_target_ad component
+It is important to note that you can install the data component individually or as part of the Scenario or
+Functional  component that has it listed as a dependency. Either way, the data component will be
+installed with the environment file overrides. In this case we will install the data component directly.
+1.While still in the \<instance>\script  directory, install the Data.hid_target_ad component by 1.
+running the command (note: the component is case sensitiv e):
+manage_components.py install Data.hid_target_ad
+You know that the command has run successfully if the command prompt shows the skins being built
+and installed.
+2.Verify that your Activ e  Directory target address has now been changed to 2.
+server=dev.corp;listNestedGrps=true  by clicking Manage the system > Resources >
+Target systems > Manually de fined  > AD  and looking at the value for the Address .
+If the address is changed to server=dev.corp;listNestedGrps=true  in the AD target
+c on figur ation,  then you know you have written  and applied the environment file correctly.
+Example: Create environment files  to capture ExtDB changes
+For this use case, a product implementer for XYZ company has set up two product server environments,
+one for development and one for pr oduction.  Each environment has diff er en t  requirements for the
+method emails are sent, the amount of failed login attemp ts  permitted  before user lockout is triggered
+and the length of the PIN required for multi- f act or  authentic ation.  These c on figur ation  requirements
+diff er  from the defaults c on figur ed  by components.
+This c on figur ation  example shows how to create dev and prod environment files to capture entry
+diff er ences  within the ExtDB tables for authentic ation  chains and email behavior. Then, it demonstrates
+how to load the development environment file during an ins t allation  on the development environment.
+The environment c on figur ation  requirements are:
+▪Emails should be sent to:▪
+▪FILE only in dev.▪
+▪SMTP only in prod.▪
+▪The number of failed login attemp ts  permitted  are: ▪
+▪6 attemp ts  for dev. ▪
+▪default attemp ts  for prod (default value is 3). ▪▪The PIN lengths for multi- f act or  authentic ation  are: ▪
+▪PIN length of 4 for dev.▪
+▪default PIN length for prod (default value is 5).▪
+The following steps need to be completed:
+1. Identif y  the component needed for the desired external data store override using a test environment 1.
+with the product installed.
+2.On the test product instance, review the default c on figur ations  that the 2.
+Functional.hid_policy_w f email  component enters into the hid_policy_wfemail  policy table.
+3.Create the dev environment file. 3.
+4.Create the prod environment file. 4.
+5.Load the dev environment file on the development environment. 5.
+6.Install the Functional.hid_policy_w f email  component on the development environment. 6.
+Requirements
+This use case assumes that:
+▪A test product instance is available for t esting  c on figur ations  with the Functional.hid_policy_w f email ▪
+component installed.
+By default installing the Functional.hid_policy_w f email  component results in emails being sent both to
+FILE and SMTP server.
+▪On a development and pr oduction  environment, the following is true: ▪
+▪Bravura Security Fabric  and Bravura Security Connector Pack are installed. ▪
+▪An Activ e  Directory target system is added as a source of pr ofiles. ▪
+Identif y  the component that you want to add the override for
+A test instance has been setup with a variety of components installed in order to identif y  the component
+that c on figur ation  changes need to be made to.
+Identif ying  the component for an External data store override is much easier than identif ying  one for
+idmc on fig  changes (in most cases). If you already have an e xisting  instance, you can generally determine
+which component provides specific  rows to a table by looking at the ComponentOwnerFQN field  that is
+included in all external data store tables.
+To identif y  the component:
+1.Log in to Bravura Security Fabric  Front-end (PSF) as superuser . 1.
+2.Click Manage External Data Store . 2.
+3.Navigate to the table in question.  This might take some guess work until  you find the table and rule 3.
+responsible for the c on figur ation  you're trying to alter. For this example, since email settings  need to
+be altered, it’s a good guess to check the hid_policy_wfemail  table.
+4. Identif y  the row you want to override, and note the value of its ComponentOwnerFQN  field.  For this 4.
+example, the fir s t rule in this table, where EventID  = _DEFAULT_POLICY , shows SendSMTP  and

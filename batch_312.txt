@@ -1,0 +1,324 @@
+Criteria Description
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if theCriteria Description
+Option Description
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: In f ormation  is only included in the report output if the
+start date falls within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+The start time  is the time  that the report was
+executed. To set a selected date range:Criteria Description
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: In f ormation  is only included in the report output if the
+start date and time  falls within the Start date range . Use
+the fir s t set of date / time  controls to select the earliest
+time  to include, and the second set of date / time
+controls to select the latest time  to include.
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Last action  date This is the date that the reviewer last acted on an activ e
+campaign. Choose one of the following options  to de fine
+an end date:
+Date not required : This is the default setting.  In f ormation
+is listed regardless of end date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date optionsCriteria Description
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+:: In f ormation  is only included in the report output if the
+end date falls within the selected r elativ e  date range.
+Use selected dateCriteria Description
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: In f ormation  is only included in the report output if the
+start date and time  falls within the End date range . Use
+the fir s t set of date / time  controls to select the earliestCriteria Description
+time  to include, and the second set of date / time
+controls to select the latest time  to include.
+Use within the last N days : In f ormation  is only included
+in the report output if the end date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the end date was more than the
+specified  number of days ago.
+Unreviewed data
+Purpose : Lists entitlemen ts  that do not have valid certific ation  on the specified  date. Either the
+entitlemen t  has expired or it has never been reviewed before that date.
+Executable : uncertifieddata
+Search Criteria :
+Criteria Description
+Type of unreviewed data to search for Select one or more types of data that you want to include
+in the report:
+▪User pr ofiles ▪
+▪Target system▪
+▪Managed group▪
+▪Role▪
+▪Approved e x ception  to segr eg ation  of duties  rules ▪
+Target system ID Type a comma-and-space-delimited list of target system
+IDs to include for accounts or managed groups. This
+option  is only displayed if Target system  or Managed
+group is included in Type of unreviewed data to search
+for. Alt ernativ ely ,  you can search for one or more target
+system IDs.
+Managed groups Type the group ID of the managed group to include in the
+report. This option  is only displayed if Managed group is
+included in Type of unreviewed data to search for. To
+select multiple  groups, you can search for group IDs.
+Roles Type a comma-and-space-delimited list of role IDs to
+include in the report. This option  is only displayed if Role
+is included in Type of unreviewed data to search for.
+Alt ernativ ely ,  you can search for one or more roles.
+Segr eg ation  of duties  rules Type a comma-and-space-delimited list of SoD rule IDs to
+include in the report; only approved e x ceptions  to valid
+rules are displayed. This option  is only displayed ifCriteria Description
+Approved e x ception  to segr eg ation  of duties  rules  is
+included in Type of unreviewed data to search for.
+Reviewed by Type a pr ofile  ID that matches the "actual reviewer" for
+whom you want to run the report. Alt ernativ ely ,  you can
+search for one or more pr ofile  IDs.
+The "actual reviewer" is the user who last reviewed the
+data, and is not necessarily a user who is assigned as a
+reviewer for the campaign (the user can be a delegate).
+Select date when resource is unreviewed Select a date on which you like to check for unreviewed
+entitlemen ts:
+Use date when report runs : This option  is recommended
+if you schedule this report.
+Select unreviewed date : Allows you to set a specific  date
+to check for data. Entitlemen ts  that are unreviewed on
+that date are returned. Set the Unreviewed as of da t e/
+time  field.
+Reviewed entitlemen ts  by user
+Purpose : Lists entitlemen t  certific ation  status for a user.
+Executable : certifiedbyuser
+Search Criteria :
+Criteria Description
+User ID Type a pr ofile  ID to include in the report. Alt ernativ ely ,
+you can search for one or more pr ofile  IDs.
+Display more detailed review history Select this checkbox to show review history for each
+entitlemen t.
+Choose range of review dates This is the date that the entitlemen t  was reviewed.
+Choose one of the following options  to de fine  a review
+date:
+Date not required : This is the default setting.  Display the
+entitlemen t  review in f ormation  regardless of the review
+date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type ofCriteria Description
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.Criteria Description
+Option Description
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: Entitlemen t  review in f ormation  is only included in the
+report output if the review date falls within the selected
+r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.Criteria Description
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Entitlemen t  review in f ormation  is only included in the
+report output if the review date falls within the Start date
+range. Use the fir s t da t e/time  field  to select the earliest
+time  to include, and the second da t e/time  field  to select
+the latest time  to include.
+Use within the last N days : Entitlemen t  review
+in f ormation  is only included in the report output if the
+review date falls within the specified  last number of days.
+Use N or more days ago : Entitlemen t  review in f ormation
+is only included in the report output if the review date
+was more than the specified  number of days ago.
+Resources not in saved certific ation  setups
+Purpose : This report displays, for a given resource type (target system, group, role, SOD), the list of
+resources not included in any saved certific ation  c on figur ation.
+Executable : resourcemissingcertification
+Search Criteria :
+Criteria Description
+Resource type By default, all types are selected. You may select one or
+more resource types:
+▪Target systems▪
+▪Managed groups▪
+▪Roles▪
+▪ Segr eg ation  of duties ▪
+Target systems Search for one or more target systems for which you
+want to run the report. Alt ernativ ely ,  type a comma-and-
+space-delimited list of target system IDs.
+Include target systems not allowed in the certific ation
+processCheck to also show target systems not allowed in the
+certific ation  process.
+Managed groups Search for one or more managed groups to include in the
+report. Alt ernativ ely ,  type a comma-and-space-delimited
+list of managed groups.
+Include managed group on target systems not allowed
+in the certific ation  processCheck to also show managed group on target systems not
+allowed in the certific ation  process.

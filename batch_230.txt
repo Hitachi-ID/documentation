@@ -1,0 +1,141 @@
+6.Select the Windows system team to manage the system.6.
+Click Next
+7.Enter the system cr edentials. 7.
+8.Click Submit . 8.
+Bravura Security Fabric  notifies  authorizers to review the request if required.
+9.Click the View request link at the top of the page to view the status of the request. 9.Once the request has been approved, trustees can manage accounts on this system.
+Set discovery options
+1.Log into Front-end (PSF) as a superuser.1.
+2.Click Manage the system > Resources > Target systems > Aut omatic ally  discovered . 2.
+3.Select the Windows system you recently onboarded.3.
+4.Click the Discovery options  tab. 4.
+5.Select the following:5.
+▪Link accounts on this target system to subscribers▪
+▪Load scheduled task subscribers▪
+▪Load service manager subscribers▪
+▪Load IIS manager subscribers▪
+▪Load DCOM manager subscribers▪6.Click Update . 6.
+7.Execute Auto discovery.7.
+Onboard Windows service account
+Ensure the subscribers have been set up and discovered before onboarding the account. For example;
+your scheduled tasks and services set to use a managed account and auto discovery is ran to discover
+those accounts (subscribers).
+1.Log into Front-end (PSF) as the account trustee for the windows system team.1.
+2.Click Manage Resources. 2.
+3.Click Account: Onboard . 3.4.Select the service account to be managed by the Windows system team4.
+5.Click Next . 5.
+6.Select the standard policy as the Managed System Policy ID.6.
+7.Click Next . 7.
+8.Select the Windows system team as the Account Team . 8.
+9.Click Next . 9.
+10. Click Next . 10.
+11. Click Submit . 11.
+Bravura Security Fabric  enters the request into the authoriz ation  w orkflo w .
+12. As a superuser, execute auto discovery to generate subscriber v alidation  requests. 12.
+13. Log into Front-end (PSF) as a subscriber trustee for the windows system team. 13.
+14. Click There is 1 request(s) a w aiting  your approval link at the top of the page. 14.
+15. Select the request from the Results panel . 15.16. Click Edit request. 16.
+17. Set Notif y  subscriber of r andomiz ation  to a value: 17.
+▪ After  randomizing ▪
+▪Before and after  randomizing ▪
+▪Before randomizing▪
+▪No Notific ation ▪18. Set Restart subscriber after  r andomiz ation  to either Yes or No. 18.
+19. Click Save . 19.
+20. Approve the request. 20.
+The password or ches tr ation  is now successfully set up.
+Example: Con figur e  import rules to onboard, update and offboar d  systems and accounts
+By default, import rules do not a ff ect  systems and accounts managed through self service management.
+However, import rules can be used to c on figur e  resource attribut es  generally set through self service
+management to onboard, update and offboar d  systems and accounts.
+The following resource attribut es  can be set by managed systems import rules:
+▪ Attribut es  of a resource ▪
+▪Resource Team▪
+The following resource attribut es  can be set by managed accounts import rules:
+▪Personal privileged owner▪
+▪Privileged access owner▪
+▪Password R ese t/Randomiz ation ▪
+▪Allow override▪
+▪Allow r andomiz ation ▪
+▪PAM Account Disclosure Attribut es ▪
+▪Direct c onnection ▪
+▪Copy password▪
+▪Download file ▪
+▪View password▪
+▪ Attribut es  for the PAM OTP accounts ▪
+▪Teams to be permitted  to view PAM OTP Account ▪
+▪OTP Accounts▪
+▪ Attribut es  of a resource ▪
+▪Resource Team▪
+▪PAM Account Sessmon Attribut es ▪
+▪Clipboard▪
+▪Keystroke▪
+▪Screenshot▪
+Sample import rules
+Sample rules are available to be installed as components:
+▪Scenario.pam_sample_import_rules▪
+▪Data.pam_importrule_acct_onboard_admin▪▪Data.pam_importrule_set_policy▪
+▪Data.pam_importrule_sys_onboard_winnt▪
+▪ Da t a.pam_importrule_tg t_import_non_critical▪
+They can be found in the <instance> \samples \idmlib \component \ directory.
+RefBuild.pam_team_management must be installed before installing samples.
+Once installed, the following rules are available:
+▪Target systems: IMPORT_NON_CRITICAL – enabled by default and imports non-critic al  systems ▪
+▪Managed systems:▪
+▪ONBOARD_WINNT – enabled by default and manages all Windows NT systems listed from the▪
+demo.local domain
+▪OFFBOARD_OFFLINE_SYS – enabled by default and offboar ds  systems that cannot be contacted for ▪
+40 days or more
+▪Managed accounts:▪
+▪MANAGE_ADMINS – disabled by default, but when enabled will manage all ”admin” accounts▪
+▪OFFBOARD_OFFLINE_ACCT – enabled by default and offboar ds  accounts on systems that cannot be ▪
+contacted for 30 days or more
+By default, the sample rules are c on figur ed  with dummy data to:
+▪run against demo.local ▪
+▪assign team_winnt as the resource team ▪
+▪enable session recording▪
+▪disclose a direct c onnection  (remote desktop) upon check-out ▪
+Update the import rules  (on page 2095) as required.
+Con figur e  import rules to set resource attribut es
+To use import rules to set management resource attribut es:
+1.Create and c on figur e  import rules  (on page 2095). 1.
+2.Select an import rule.2.
+3.Under the General tab, set resource attribut e  values to be assigned upon match. 3.
+4.Run the import rule, either manually or through discovery.4.
+By default, import rules will not overwrite e xisting  resource attribut e  values if they have already been
+set.
+Con figur e  import rules to update resource attribut es
+Resource attribut es  that have already been set through self service management pr e-de fined  requests
+are not updated by import rules by default. To allow import rules to overwrite set values, enable IMPORT
+ACCOUNT RESATTR OVERWRITE and/or IMPORT SYSTEM RESATTR OVERWRITE for managed accountsand systems r espectiv ely .  These system variables are found at Manage the system  > Maintenance >
+System variables .
+Example: Import systems using a pr e-de fined  request
+In this example the client has a CSV file that is kept up to date by the administrators. This CSV file can be
+used to onboard systems using a pr e-de fined  request.
+CSV Column Descriptions
+Column Name Description
+HOST Optional:  The host name of the system.
+ADMIN The username of the admin user.
+ADMIN_PASS The password of the admin user.
+FQDN The fqdn of the server.
+MS_TEAM The team name the server will be onboarded to.
+SYSTEM_TYPE The connector platform  type. For example, "WINNT" is the platform  associated to the agtnt connector for Micr osoft  Windows servers and
+w ork s t ations.
+ZONE Optional:  Used to specify the zone to tell which proxy to use if the system requires a Bravura Security Fabric  proxy.
+OWNER Optional:  The owner of the system.
+USEMANAGEDCREDENTIAL Optional:  This is set to True if you wish to use a managed cr edential.
+INSTANCE Optional:  Used to specify a particular  instance.
+PORT The port to use for c ommunic ation  - This can be left blank in most cases.
+MYSTS Optional: This is the managed system hostid  containing the managed account.
+MACCT Optional:  This is the managed account name.
+REQUEST_TEAM The team in which its system trustee(s) will be used to authorize the request.
+Below is the contents of the source CSV file used in this case:
+To import systems using a pr e-de fined  request:
+1.From the administrator home page, click Manage components . 1.
+2.Search for and install the Functional.hid_ba t ch_r eques t_submit  component. 2.
+3.Log in to Bravura Security Fabric  as a team trustee. 3.
+Click Manage Resources in the Requests section  on the main menu.4.Click Submit a request batch via CSV PDR to launch the wizard. 4.
+The PDR reads the CSV file and submits a request for each row in the CSV.
+5.Enter the following values:5.
+Pr e-de fined  request to submit System: Onboard.
+Batch request reason The reason for your request
+CSV Request File Search for and select your CSV file.

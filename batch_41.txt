@@ -1,0 +1,214 @@
+adm_set -user superuser -pass greatone -type A -
+name "IDM administrator"
+2.To grant the Manage reports adminis tr ativ e  privilege to an e xisting  user, type: 2.
+adm_set -user SmithBob -acl runreport
+3.To create a console-only user that can access the API Service (idapi), type:3.
+adm_set -user APIUser1 -pass 5*Epxag1 -acl apicaller -
+ipmask 10.0.26.5/32
+4.To unlock the default superuser after  too many failed login attemp ts,  type: 4.
+adm_set -user superuser -unlock
+.
+See also: 
+▪Expiring product administrators’ passwords  (on page 837) to learn how to set the password expiry ▪
+interval for product administrator s whose password is stored in Bravura Security Fabric .
+▪Product administrators  (on page 672) to learn how to set up product administrator s, including password ▪
+options.
+▪Password Policy  (on page 999) to learn how to c on figur e  general password policy. ▪
+Manage components
+The Manage components  menu enables you to install and manage components which provide extra
+functionality  to Bravura Security Fabric .
+The Manage Components  link is only visible to superuser-type product administrators  (on page 672) .
+See:
+For in f ormation  about installing and managing components, see Components  (on page 312).6 Bravura Security Fabric features
+This chapter provides an overview of Bravura Security Fabric  product features and licensing, and a quick
+guide to common implemen t ation  tasks.
+Overview
+The Bravura Security Fabric  is an integrated solution  for identity  and access management (IAM). It
+streamlines and secures the management of identities,  security entitlemen ts  and cr edentials  across
+systems and applic ations,  on-premises and in the cloud. Or g aniz ations  deploy the Bravura Security Fabric
+to strengthen controls, meet regulatory and audit requirements, improve IT service and reduce IT
+oper ating  cost.
+The Bravura Security Fabric  is designed as IAM middleware, in the sense that it presents a uniform user
+interface and a consolidated set of business processes to manage user objects, identity  attribut es,
+security rights and cr edentials  across multiple  systems and platforms.
+This is illustrated below:
+Bravura Security Fabric  Overview: Identity  Middleware
+The Bravura Security Fabric  includes several functional  identity  management and access governance
+modules:
+▪Bravura Identity  – Manage identities,  accounts, groups and roles: aut omation,  requests, approvals, ▪
+reviews, SoD and RBAC .
+▪Monitoring systems of record to update user pr ofiles  and aut omatic ally  r equesting  matching ▪
+changes to identities  and access rights.
+▪A portal where users may requests changes to identities  and access rights, with advanced search ▪
+and access controls.
+▪ W orkflo w  to route change requests to authorizers and implementers. ▪
+▪ Analytics,  including risk scores and SoD. ▪
+Bravura Identity  includes the following additional  features, at no extra charge:
+▪Access certific ation  – Periodic review and cleanup of security entitlemen ts . ▪▪ Deleg ating  review of access rights, policy c on figur ation  and identity  attribut es  to business stake- ▪
+holders.
+▪Engagement with managers, resource owners and policy owners.▪
+▪Bravura Group– Full lifecycle management of groups and memberships . ▪
+▪Self-service and delegated requests for access to resources and the groups that have rights to▪
+them.
+▪Bravura Group is also available as a stand-alone product, as well as a component of Bravura ▪
+Identity .
+▪OrgChart management – Delegated c ons truction  and maintenance of OrgChart data. ▪
+▪ Deleg ating  the c ons truction  and maintenance of manager/subordinate r elationship s  to ▪
+managers.
+▪Read/write in t egr ation  with directories and HR systems. ▪
+▪Bravura Pass  – Integrated cr edential  management: Passwords, security questions,  certific a t es,  tokens, ▪
+smart cards and biometrics .
+▪Password s ynchr oniz ation,  via browser or by in t er cepting  nativ e  password changes. ▪
+▪Self-service and assisted reset of passwords and PINs.▪
+▪Self-service unlock of encrypted drives, where users may have f or g otten  a pre-boot password. ▪
+▪Access from anywhere - browser, smart phone app, voice phone call, PC login screen, pre-boot▪
+password prompt, on-premises or off -sit e.
+▪Two factor authentic ation  for all users, using either e xisting  cr edentials  (RSA, etc.) or by introducing ▪
+new mechanisms, such as browser fing erprinting ,  sending a PIN to the user’s phone or an included
+smart phone app.
+▪Federated access via a Security Assertions  Markup Language (SAML) identity  provider (IdP) to ▪
+c ompatible  applic ations.
+▪A personal vault, where users can securely store and retrieve unmanaged cr edentials. ▪
+▪Managed enrollment of security questions,  mobile phone numbers, etc. ▪
+Bravura Pass  includes the following additional  features, at no extra charge:
+▪Phone Password Manager  – Telephone self service for passwords and tokens . ▪
+▪Turn-key telephony-enabled password and PIN reset, including for RSA SecurID tokens.▪
+▪Self-service unlock for f or g otten  pre-boot drive encr yption  passwords. ▪
+▪ Authentic ation  with either numeric security questions  or voice print biometrics. ▪
+▪Support for multiple  spoken languages. ▪
+▪Bravura Privilege  – Securing access to administrator, embedded and service accounts . ▪
+▪ Aut omatic ally  discover and classify systems, accounts, groups and services to manage. ▪
+▪Periodically randomize and vault passwords to privileged accounts.▪
+▪ Authentic a t e,  authorize and log user access to privileged accounts and groups, including built-in ▪
+2FA for all users.
+▪Provide account access to resources through regulated disclosure methods.▪
+▪Orchestrate changes to service account and embedded account passwords.▪▪Discover, analyze and modify SSH trust r elationship s. ▪
+▪Risk scores and analytics,  at request time  and after  the fact. ▪
+▪Record sessions (video, keylog, etc.) with search and playback.▪
+▪Bravura Group  is available both as a stand-alone product and as a component of Bravura Identity . ▪
+The r elationship s  between the Bravura Security Fabric  components is illustrated below:
+Components of the Bravura Security FabricLimited features
+Privileged access 
+All Bravura Security Fabric  component products aut omatic ally  include a limited license for Bravura
+Privilege . A limited license includes:
+▪The ability to manage target administrator cr edentials ▪
+▪Frequent password r andomiz ation  eliminating  s t atic,  shared passwords and controls former IT s t a ff ▪
+knowledge of passwords
+▪The ability to run scripts on managed systems▪
+▪Access controls to limit who can see passwords▪
+▪The ability to create vault-only managed systems▪
+▪The ability to create vault-only managed system policies▪
+▪Logging and r eporting  of access disclosure facilitates to audit compliance and for faster ▪
+tr oubleshooting
+▪ Encr yption,  which secures passwords in storage and transit so that physical compromise will not ▪
+expose passwords
+▪ R eplic ation,  which ensures passwords are stored on multiple  servers in diff er en t  sites so that ▪
+password access and security survives server failures or site disasters
+A full Bravura Privilege  license provides additional  features such as:
+▪The ability to manage access on many systems that may not be permanently connected to the domain▪
+(laptops, w ork s t ations,  etc)
+▪The ability to manage any user, not just target administrators▪
+▪Session recording capability▪
+▪Approvals process▪
+▪The ability to run commands on multiple  systems ▪
+▪Temporary group membership▪
+▪A large variety of access disclosure plugins to utiliz e ▪
+▪The ability to create push and pull managed system policies▪
+Encr yption  methods
+All c ommunic ation  between users and each Bravura Security Fabric  server is over HTTPS. This means that
+client devices make TLS-encrypted c onnections  to the Bravura Security Fabric  server and check that the
+server’s certific a t e  matches its DNS name, before initiating  any meaningful c ommunic ation.
+Bravura Security Fabric  in any of its license types (Pass, Identity ,  or Privilege), stores secret data in two
+forms:
+▪Hashes, for secrets the applic ation  does not have to use, only compare historically ▪
+▪Symmetrically encrypted, for secrets the applic ation  has to use, including: ▪
+▪To allow console users  (on page 672) or API aut omation  (on page 699) to login to the applic ation ▪
+▪To allow connector pack agents' logons into target systems  (on page 517) and other in t egr ations ▪▪To disclose as privileged data with disclosure plugins or remote disclosure  (on page 1957) ▪
+▪For SSH key authentic ation  infrastructure  (on page 1910) ▪
+User passwords and password history are hashed using Salted SHA-512 passwords. The e x ception  are the
+passwords of the product administrator  (on page 688) and API pr ofiles,  which are AES-encrypted.
+Passwords used by Bravura Security Fabric  are encrypted in the Bravura Security Fabric  database using a
+sit e-specific  encr yption  key. This key is stored on the Bravura Security Fabric  server, in the Windows
+registry and is itself encrypted using an ob fusc ation  key embedded in the Bravura Security Fabric
+softw ar e  (in accordance with best pr actices  prescribed by NIST SP 800-38F - http s:// csr c.nis t. g o v/
+public ations/de t ail/ sp/800-38f/final ).
+▪All encr yption  here is symmetric, using 256-bit AES. ▪
+▪The same goes for w ork s t ation  keys and all other keys listed in the table below. ▪
+Both the live data maintained by Bravura Security Fabric  and backups of its data set require pr ot ection
+against would-be intruders. To provide this pr ot ection,  Bravura Security Fabric  must be c on figur ed  on a
+hardened, locked-down server, in a physically secure site. Bravura Security  provides a server hardening
+guide  (on page 302) for this purpose.
+Communic ation  between applic ation  servers for data and file r eplic ation  with product proxies  (on page
+260) and other add-ons such as password change interceptors  (on page 1651) is encrypted with a
+proprietary AES protocol. That c on figur ation  is part of the product ins t allation  settings  (on page 210).
+Later on, some of these keys can be managed using the resetkey  (on page 3577) tool.
+The following table lists the various encr yption  methods employed throughout Bravura Security Fabric .
+Bravura Security Fabric  key Data Algorithm Key
+Communic ation  Key Shared with other Bravura Security Fabric  services on the
+network and is used to neg otia t e  session keys when two
+Bravura Security Fabric  remote services communicate
+over the network.256-bit AES Random
+Database Encr yption  Key The database encr yption  key is typically used for any data
+at rest encr yption.  All sensitiv e  data in the Bravura
+Security Fabric  database is encrypted using this key. It is
+also used to encrypt sensitiv e  registry values. For
+example, passwords used to log in to target systems and
+answers to security questions.256-bit AES Random
+Connector Encr yption  key Used to encrypt sensitiv e  data for c ommunic ation  with
+the connectors; for example, Bravura Security Fabric  uses
+the Connector encr yption  key to encrypt and decrypt
+passwords and adminis tr ativ e  cr edentials  used by
+connectors and exit traps as well as all c ommunic ation
+and oper ations  run by the connectors.256-bit AES RandomBravura Security Fabric  key Data Algorithm Key
+IDMLib Encr yption  keyThe IDMLib encr yption  key is used to when performing
+encr yption  or decr yption  of data from within a Python
+base plugin. Typically this data is both encrypted and
+decrypted by the plugin and is not used directly by the
+core product suite.256-bit AES Random
+W ork s t ation  Initial  Authentic ation  Key This key is used for the initial  authentic ation  of a new
+w ork s t ation  to an instance server. The key is generated
+during the instance install and must be the same for all
+nodes in an instance. The purpose of this key is to protect
+c ommunic ations  while the w ork s t ation  key is neg otia t ed
+or r e-neg otia t ed.256-bit AES Random
+W ork s t ation  Communic ation  Key This key is used for encr ypting  bi-dir ection
+c ommunic ations  between w ork s t ation  add-ons and
+instance servers. This key unique to a particular
+w ork s t ation  and is neg otia t ed  when the w ork s t ation  add-
+on fir s t registers itself with the instance. Periodically the
+w ork s t ation  and instance will r e-neg otia t e  new keys and
+expire old ones. If multiple  add-ons are installed on the
+w ork s t ation,  each add-on will share the same
+w ork s t ation  c ommunic ation  key.256-bit AES Random
+Session Key This is the encr yption  key used to encrypt session data
+that is passed between the CGIs and the web browser
+clients.256-bit AES Random
+M-Tech Key Hard-coded single s t atic  key that is the same for all
+customers. This key is only used in a few places. For
+example, license file encr yption.256-bit AES Random
+Key Encr yption  Key A s t atic  key embedded in the Bravura Security binaries
+that is used to protect and validate against key tampering
+for all of the other encr yption  keys in the product. It is
+possible to externalize this key to any supported
+Hardware security module for some use cases.256-bit AES Random
+ 7 Initial  setup tasks
+This section  describes common implemen t ation  tasks that are usually done during initial  setup:
+1.Set up email notific ation 1.
+Bravura Security Fabric activ ely  notifies  users about events that may require their attention;  this is
+generally done through email. It is recommended that all users have email addresses c on figur ed.
+Ensure that the email server and port are correctly c on figur ed  on the Manage the system > W orkflo w
+> Email c on figur ation  page.
+See Notific ation  > Email Notific ation  (on page 412) .
+2.Add at least one target system as a source of pr ofile  IDs 2.
+Add at least one target system that will be an authorit ativ e  list of users to be imported into Bravura
+Security Fabric . If supported, ensure that all users have email addresses c on figur ed  on the target. At
+least one target system should be able to verify passwords for users.
+See Target Systems  (on page 480).
+3.Import users3.
+Run auto discovery to import a list of users, their accounts and other attribut es,  from one or more
+target systems.
+See   Users and Accounts  (on page 538).
+4. Con figur e  authentic ation 4.
+Ensure that the Authentic ation  priority list and Identific ation  priority list are c on figur ed  on the
+Policies menu. This is required to allow users to access the main menu.
+See Authentic ation  (on page 819) > Login and authentic ation  (on page 820).Part V BASE CONFIGURATION

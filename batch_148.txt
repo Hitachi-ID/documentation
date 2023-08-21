@@ -1,0 +1,265 @@
+Additional  c on figur ation  for Bravura One
+Adjust the mobile activ ation  timeout
+Modify the PSF MOBILE REGTIMEOUT  system variable if you want to change the amount of time  to allow
+for a user to scan the QR code when they are activ ating  their mobile device with the Bravura One  app. By
+default, the time  for activ ation  will expire in 300 seconds.
+Set the maximum number of mobile device r egis tr ations  per user
+Modify the MAX MOBILE DEVICES  system variable in order to set the maximum number of mobile
+devices that a user may register for themselves.
+Add the Mobile authentic ation  module for an authentic ation  chain
+Add an authentic ation  chain for the Mobile authentic ation  module. This will allow for users to
+authentic a t e  using a QR Code that is provided by this module for two factor authentic ation.
+The QR Code must be scanned from the Bravura One  app that is registered for Bravura One  for the user.
+See Authentic ation  chains: Con figur ation  (on page 841)Installing the Bravura One  app
+Before you install the Bravura One  app, ensure that your mobile device is c ompatible.  The Bravura One  app
+is available for both Android (4.4 or higher) as well as iOS (9 or higher).
+To install from a mobile device:
+1.From either the Google Play Store on Android mobile devices or the Apple app store on iOS mobile1.
+devices, search for " Bravura One ".
+2.Download the Bravura One  app from the app store. 2.
+3.Follow the ins tructions  in the app store for ins t allation. 3.
+In t egr ating  the Bravura One  app with Bravura Security Fabric
+Read this chapter to learn how to register and activ a t e  a mobile device using the Bravura One  app.
+Before you begin
+1.Ensure that the Bravura One  app has been installed on a mobile device. 1.
+2.The Bravura One mobile proxy  server has been c on figur ed  and is available for use for Bravura One . 2.
+3.The Bravura Security Fabric  server has been c on figur ed  for Bravura One . 3.
+4.The user that is activ ating  a mobile device has the "Manage mobile devices" privilege. 4.
+In t egr ation  steps
+To activ a t e  a mobile device using the Bravura One  app:
+1.From a w ork s t ation,  browse to the Front-end (PSF) self-service and login as a user that has the 1.
+"Manage mobile devices" privilege.
+2.Click the Register mobile devices  link. 2.
+3.If a device has previously been registered, click Add new… 3.
+4.Click Register . 4.
+5.Open the Bravura One  app on the mobile device. 5.
+6.If the mobile device does not have any pr ofiles  previously set up, tap through the welcome screens to 6.
+learn more about the Bravura One  app and how to register the mobile device.
+7.Tap through all of the welcome screens or skip the ins tructions. 7.
+8.If the camera view is not immediately launched, tap the  Scan QR Code  control or Register Device  link 8.
+from the Connection  pr ofile  screen to scan a new QR Code.
+9.Using the Bravura One  app, scan the QR Code that is shown on the w ork s t ation. 9.
+10. Tap the Save control on the Bravura One  app. 10.
+11. Enter a unique pr ofile  name for the c onnection  for the new user pr ofile  and tap OK. 11.
+The w ork s t ation  should indicate that the device is successfully activ a t ed  and the Bravura One  app will
+be authentic a t ed.  The new device is shown in the list of mobile devices on the self-service page.The Bravura One  app opens the instance within the app. The registered user’s userid is aut omatic ally
+passed in and the page lists available authentic ation  methods to log into the Front-end (PSF).
+Language pack support
+The Bravura One  app supports additional  languages to be used for the Bravura Security Fabric  instances.
+See Supporting  multiple  languages and locales  (on page 3479).
+The languages must be previously installed on the Bravura Security Fabric  server.
+The language and locale must also be set on the iOS and Android mobile devices.
+On iOS this may be modified  from Settings  > General > Language & Region and checking values for iPhone
+Language and Region.
+On Android, this is modified  from Settings  > Languages & input > Languages. The fir s t language and locale
+found in the list that is also installed on the Bravura Security Fabric  instance will be used.
+If the en-us default skin is compiled and installed, the Mobile Worker Service will need to be restarted.
+Register multiple  pr ofiles
+The Bravura One  app supports multiple  user pr ofiles  on a mobile device. Each user pr ofile  must be from
+separate Bravura Security Fabric  instances with diff er en t  Bravura One mobile proxy  server URLs
+c on figur ed.
+To register multiple  pr ofiles  on the Bravura One  app:
+1. Con figur e  another Bravura Security Fabric  server for Bravura One . 1.
+2.Follow the same ins tructions  to register the mobile device for another user pr ofile  via QR code. 2.
+3.Open the Bravura One  app on the device. 3.
+The Front-end (PSF) authentic ation  page will be loaded for a user already registered in the app.
+4.Tap the gear or ellipsis icon to go to the Settings  page. 4.
+5.Tap the Scan QR Code  control or Register Device  link to scan a new QR Code. 5.
+To delete a pr ofile  on the Bravura One  app:
+1.Tap the gear or ellipsis icon to go to the Settings  page. 1.
+2.Tap the recycle bin icon to delete the pr ofile. 2.
+Scan a QR Code for two factor authentic ation
+The Bravura One  app supports two factor authentic ation  to be able to scan a QR Code from a user’s mobile
+device using an authentic ation  chain c on figur ed  for the Mobile authentic ation  module.
+The QR Code must be scanned from the Bravura One  app that is registered for Bravura One  for the user, to
+be accepted as a form of authentic ation.
+To login using a QR Code for multi- f act or  authentic ation  on the Bravura One  app:1. Con figur e  an authentic ation  chain for the Mobile authentic ation  mobile. Add additional  modules as 1.
+needed for added security and authentic ation.
+See Authentic ation  chains: Con figur ation  (on page 841)
+2.Follow the ins tructions  to register the mobile device for a user pr ofile  via QR Code. 2.
+3.Log into Bravura Security Fabric  from a browser on a desktop for the user that has a registered mobile 3.
+device.
+4.Choose the authentic ation  chain c on figur ed  for the Mobile authentic ation  module. 4.
+5.Open the Bravura One  app on the device for the user. 5.
+6.Tap the Computer Login  unlock icon. 6.
+7.Tap Authentic a t e  User  on iOS or the Scan QR Code  (wheel) icon on Android. 7.
+8.Scan the QR Code provided on the Front-end (PSF) authentic ation  page. 8.
+Scanning the QR Code is bypassed when a user logs in from a mobile device if they choose this
+authentic ation  option.  For this reason, additional  modules should be c onfigured  for added security.
+Push notific ations  on mobile devices
+Push Notific ations  are available two ways:
+1.Subscribe to the Bravura Security  hosted Bravura One mobile proxy  server for push notific ations: 1.
+▪Bravura Security  host the Bravura One mobile proxy  server used for the push notific ations. ▪
+▪Bravura Security  create the Apple and Google store tokens. ▪
+▪The required certific a t es  for the push notific ations  are also c on figur ed  on the host Bravura One ▪
+server.
+▪Bravura Security  create custom mobile apps. ▪
+▪The Bravura One  app communicates fir s t by c on t acting  the Bravura One mobile proxy  server and ▪
+then to the Bravura Security Fabric  server.
+The stock mobile apps can not be used in the above scenario.
+Please talk to your Bravura Security  Account Manager for further more details.
+2.Host your own smart device app delivery infrastructure:2.
+▪Host a Bravura One mobile proxy  server which is c on figur ed  for the push notific ations. ▪
+▪Create the Apple and Google store tokens.▪
+▪Install the certific a t es  required for the push notific ations  on the Bravura One mobile proxy  server. ▪
+▪Create custom mobile apps that make use of the Apple and Google store tokens.▪
+▪The Bravura One  app communicates fir s t by c on t acting  the Bravura One mobile proxy  server and ▪
+then to the Bravura Security Fabric  server.
+Bravura Security  can provide ins tructions  to the customer’s packaging team for building the Bravura
+One applic ation  packages. Please talk to your Bravura Security  Account Manager for more details.
+The stock mobile apps can not be used in the above scenario.Push notific ations  sent to mobile devices will appear either on the lock screen or as a drop down from
+the top of the screen if the device is unlocked.
+When the mobile device is locked:
+▪The notific ation  is shown with the title and message body on Android mobile devices. ▪
+▪The notific ation  is shown with the message body on iOS mobile devices. ▪
+▪Swiping to the left or right on the notific ation  on Android mobile devices will dismiss the notific ation. ▪
+▪Swiping to the right on the notific ation  on iOS mobile devices will launch the Bravura One  app. ▪
+▪Swiping to the left on the notific ation  on iOS mobile devices will allow you to dismiss the notific ation. ▪
+▪ Multiple  push notific ations  on iOS mobile devices will each be shown on the lock screen in sequential ▪
+order.
+▪Only the most recent push notific ation  will be shown on Android mobile devices when multiple ▪
+notific ations  are sent to these devices.
+When the mobile device is unlocked:
+▪On Android mobile devices, a Bravura Security icon appears on the top left corner. Swiping down will ▪
+show the notific ation.
+▪On iOS mobile devices and when the Bravura One  app is not currently open, the notific ation  will appear ▪
+as a drop-down from the top of the screen. Tapping on the notific ation  will launch the Bravura One  app.
+▪Push notific ations  will not appear on iOS mobile devices when the Bravura One  app is currently open. ▪
+See more in f ormation  about using mobpushcli
+Use the mobpushcli  program to send push notific ations  to mobile devices for users that have the
+Bravura One  app registered on their devices.
+The requests are sent to the Bravura One  mobile proxy  push notific ation  server  (on page 1447) which will
+then send them to the Apple and Google notific ation  servers. The notific ation  messages are placed in a
+queue and will then be pushed out to the registered mobile devices. They will appear as a notific ation
+message on a user’s mobile device.
+Usage
+mobpushcli.exe -u <profile ID> -t <message title> -m <message body>
+   [-b <number>] [-n] [-q] [-s <sound clip>]
+   [-w] [-l <seconds>]
+Argument Description
+-h — --help Print out the help usage.
+-v — --version Print out the version.
+-u <pr ofile  ID> — --users <pr ofile  ID> Specifies  the pr ofile  ID for a user to sent the push
+notific ation  to.
+Multiple  users may be specified  individually with "-u
+pr ofileid1  -u pr ofileid2  ...".
+-t <message title>  — --title  <message title> The title of the notific ation  message.Argument Description
+-m <message body> — --body <message body> The message body of the notific ation  message.
+-b <number> — --badge <number> Specifies  a positiv e  numeric value for the badge.
+Specifying "-b 1" will add a "1" to the top right hand
+corner of the app icon.
+Applicable to iOS devices only.
+-n — --nourgent This will determine how fast that the notific ations  will
+reach an Android device.
+Messages submitted  from the notific ation  queue from
+Google will be sent faster and will be marked as urgent
+and as a high priority message when this option  is not
+specified.  They are marked as non-urgent when -n has
+been specified.
+-q — --quiet This option  will suppress most of the command line
+output and will only show the value for "errmsg" for the
+success or error message.
+-s <sound clip> — --sound <sound clip> Specifies  a sound clip on the mobile devices.
+The default sound clip is currently available. User
+specified  sounds are not currently supported.
+-w — --sync When this option  is not specified,  notific ations  are sent
+directly to the push notific ation  server and put into the
+queue. mobpushcli will only return a message indic ating
+that the notific ation  has been queued, regardless of
+whether or not the notific ation  was sent successfully or
+not.
+When -w has been specified,  mobpushcli will wait for the
+result to be returned from the push notific ation  server
+and will immediately return the status of the notific ation,
+for example if it was successful or if an e x ception  has
+occurred.
+-l <seconds> — --ttl <seconds> Determines how long that the notific ation  will last in the
+queue for the Apple or Google push notific ation  server
+when the message cannot be delivered.
+The default value if this option  is not specified  is 86400
+seconds (24 hours).
+Examples
+1.To send a push notific ation  to the mobile device for a user that has a registered device, type: 1.
+  mobpushcli -u msmith -t "message title" -m "message body"
+2.To send a push notific ation  and set the badge icon to show a 1 in the top right hand corner of the 2.
+Bravura One  app on iOS mobile devices:
+  mobpushcli.exe -u msmith -t "message title" -m "message body" -b 13.To send a push notific ation  and wait for the result to be returned by mobpushcli so that it can be 3.
+immediately shown:
+  mobpushcli.exe -u msmith -t "message title" -m "message body" -w
+4.To send a notific ation  to multiple  users at the same time: 4.
+  mobpushcli.exe -u jjackson -u cbrown -u msmith -t "message title" -
+m "message body" -w
+to send push notific ations  to the mobile devices.Using the Bravura One  app
+Read this chapter to learn how to use the Bravura One  app when accessing a Bravura Security Fabric
+instance.  
+Before you begin
+Ensure that the Bravura One  app has been activ a t ed  and may access the c on figur ed  Bravura Security
+Fabric  instance.
+Access the Bravura One  app from a mobile device
+To access the Bravura One  app from a mobile device:
+1.Launch the Bravura One  app. 1.
+The ID of the user who activ a t ed  the mobile device is aut omatic ally  passed in. The app lists the user’s
+available authentic ation  methods for the Front-end (PSF).
+2.Choose an authentic ation  method and enter valid answers. 2.
+The user is authentic a t ed  and accesses the Front-end (PSF) for the instance.
+Some common tasks that may be performed include:
+▪Users r esetting  passwords to a new and random value. ▪
+▪Users checking out a password for a managed account.▪
+▪Users viewing captured data for a recorded session.▪
+▪Users reviewing requests that they have submitted  and are a w aiting  approval or processing, or ▪
+optionally  updating  or canceling the requests.
+▪Authorizers approving requests, or optionally  r ejecting ,  updating ,  or deleg ating  to another authorizer. ▪
+▪Downloading vCard contact records for users from the pr ofile  in f ormation  pages and importing  them ▪
+into the nativ e  contacts lists for Android and iOS mobile devices.
+▪Users storing passwords in their personal vault.▪
+See Example process  (on page 1481) for more detailed scenarios.
+Bravura One  app nativ e  controls
+The Bravura One  app includes nativ e  controls that are specific  to Android and iOS.
+Android nativ e  controls
+On Android mobile devices, the nativ e  controls may be found along the top border of the Bravura One
+app:
+▪The ellipsis icon on the right hand side on the top border provides access to the Settings  page. From ▪
+this page you can view the values that have been imported after  scanning a QR code for the Bravura
+One app activ ation  or scan a new QR code via the Scan QR code  control.▪The ellipsis icon also provides access to the Home, Refresh, and Logout controls depending on which▪
+self-service page that you are on.
+▪The Home control will return the user back to the main Front-end (PSF) self-service menu page.▪
+▪The Refresh control will refresh the current self-service page.▪
+▪The Logout control will log the user out of the current Bravura Security Fabric  instance. ▪
+▪The unlock icon on the right hand side of the top border provides access to the Phone assisted login ▪
+page. Tap the wheel icon on the bottom  right corner of the page to open the QR code scanner.
+▪The pr ofiles  icon on the right hand side of the top border displays the list of user pr ofiles  the mobile ▪
+device is registered to. It provides quick access and switching to other pr ofiles.  This icon will only
+appear if there are multiple  pr ofiles  registered in the app.
+▪ Additional  tabs will sometimes  appear on the top border depending on which self-service page you ▪
+are on. For example:
+▪When logged in as a help desk user viewing the Help users  page, additional  tabs will appear to ▪
+allow options  to view the Help users page or St atistics  page.
+▪When logged in as an authorizer and viewing requests that require authoriz ation  via the legacy ▪
+Authorize requests  page, additional  tabs will appear to enable quick switching between the
+Authorize requests page or Search requests page.
+iOS nativ e  controls
+On iOS mobile devices, the nativ e  controls may be found along the bottom  border of the Bravura One  app:
+▪The Settings  control in the right side of the bottom  border provides access to the Settings  page. From ▪
+this page you can view the values that have been imported after  scanning a QR code for the Bravura
+One app activ ation  or scan a new QR code via the Register Device  control.
+The Settings  page also includes a recycle bin icon to delete the current pr ofile  displayed and a
+checkmark to save a new pr ofile  on the top right hand corner of the page.
+▪The self-service page title and header link on the right side of the top border provides access to the ▪
+Home, Refresh, and Logout controls depending on which self-service page that you are on.
+▪The Home control will return the user back to the main Front-end (PSF) self-service menu page.▪
+▪The Refresh control will refresh the current self-service page.▪
+▪The Logout control will log the user out of the current Bravura Security Fabric  instance. ▪
+▪The Phone assisted login  control on the left side of the bottom  border provides access to the Phone ▪
+assisted login  page. Tap the Authentic a t e  User  link on the bottom  of the page to open the QR code
+scanner.
+▪The Pr ofiles  control on the center of the bottom  border displays the list of user pr ofiles  the mobile ▪
+device is registered to. It provides quick access and switching to other pr ofiles.  If there is only one
+pr ofile  registered, this control will not do anything.
+▪A left arrow control on the left hand corner of the top border will navigate to the previous page when ▪
+browsing through the pages on the Bravura One  app.
+▪ Additional  tabs will sometimes  appear on the top border depending on which self-service page you ▪
+are on. For example:▪When logged in as a help desk user viewing the Help users  page, additional  tabs will appear to ▪
+allow options  to view the Help users page or St atistics  page.
+▪When logged in as an authorizer and viewing requests that require authoriz ation  via the legacy ▪
+Authorize requests page, additional  tabs will appear to provide quick switching between the
+Authorize requests  page or Search requests page.

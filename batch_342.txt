@@ -1,0 +1,358 @@
+Criteria Description
+modified  time  falls within the specified  last number of
+days.
+Use N or more days ago : System variable modific ations
+are only included in the report output if their last
+modified  time  was more than the specified  number of
+days ago.
+Show only changes If checked, the report output lists only system variables
+that have been modified.
+User and account history
+Purpose : Audit trail of changes to target systems that are being tracked. This includes:
+▪Target system account changes▪
+▪Managed group membership▪
+▪Role membership▪
+▪ Pr ofile  attribut es ▪
+▪Account attribut es ▪
+Profile  attribut e  changes are not propagated back to target systems by default.
+The Track changes  option  must be enabled for target systems, managed groups, profile  attribut es,  or
+account attribut es  in order for data on these entitlemen ts  to be collected.
+Executable : trackedchanges
+Search Criteria :
+Criteria Description
+Account Type the long ID, not the short ID, of the account for
+which you want to list changes.
+User ID Type the pr ofile  ID of the user for whom you want to list
+changes. Alt ernativ ely ,  you can search for one or more
+pr ofile  IDs.
+Target system ID Type a comma-and-space-delimited list of target system
+IDs for which you want to list changes. All target systems
+are included by default. If this field  has a value, the
+report only lists group membership changes r elating  to
+the specified  targets. Alt ernativ ely ,  you can search for
+one or more target systems.
+Managed groups Type the long ID of one or more managed groups for
+which you want to list changes. If this field  has a value,
+the report only lists group membership changes r elating
+to the specified  groups. Alt ernativ ely ,  you can search for
+one or more managed groups.Criteria Description
+Roles Type the role ID of one or more roles for which you want
+to list changes. If this field  has a value, the report only
+lists role changes r elating  to the specified  role.
+Alt ernativ ely ,  you can search for one or more roles.
+User attribut e Type the ID of one or more pr ofile  attribut es  for which
+you want to list changes. Multiple  attribut es  must be a
+comma separated list. Alt ernativ ely ,  you can search for
+one or more pr ofile  attribut es  to select. By default, the
+report will list all pr ofile  attribut es  changes.
+Account attribut e Type the ID of one or more account attribut es  for which
+you want to list changes. Multiple  attribut es  must be a
+comma separated list. Alt ernativ ely ,  you can search for
+one or more account attribut es  that have been previously
+overridden. By default, the report will list all account
+attribut e  changes.
+Choose date range Choose one of the following options  to de fine  a date
+range:
+Date not required : This is the default setting.  Changes
+are reported regardless of their audit date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.Criteria Description
+Option Description
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: Changes are only included in the report output if their
+audit time  falls within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: Changes are only included in the report output if their
+audit time  falls within the Date range. Use the fir s t da t e/
+time  field  to select the earliest time  to include, and the
+second da t e/time  field  to select the latest time  to
+include.Criteria Description
+Use within the last N days : Changes are only included in
+the report output if their audit time  falls within the
+specified  last number of days.
+Use N or more days ago:  Changes are only included in
+the report output if their audit time  was more than the
+specified  number of days ago.
+Display tracked changes for Select from the following:
+▪Target system account changes▪
+▪Managed group membership▪
+▪Role membership▪
+▪ Pr ofile  attribut e  changes ▪
+▪Account attribut e  changes ▪
+If you do not specify any search criteria, the report output includes all tracked changes.
+Trend reports
+Account access check-out trend
+Purpose : Trend analysis of account access check-outs.
+Executable : pwdcicotrend
+Search Criteria :
+Criteria Description
+Trend by Select the type of trend report to run:
+Account : Lists privileged accounts and its managed
+systems that were requested and/or checked out.
+Managed system : Lists managed systems that privileged
+accounts were requested from and/or checked out.
+Recipient : Lists recipients who requested and/or checked
+out privileged account access.
+Managed system ID Type a comma-and-space-delimited list of IDs for
+managed systems you want to include in the report. This
+field  is only visible when Trend by  is set to Account or
+Managed system .
+Alt ernativ ely ,  you can search for one or more managed
+systems.
+Managed account Search for one or more managed accounts you want to
+report on. Alt ernativ ely ,  you can type a managed account
+ID or a pattern  of managed account IDs using wildcard
+characters, ’*’ r epr esenting  any string of characters
+and ’?’ r epr esenting  any single character. This field  is only
+visible when Trend by  is set to Account .Criteria Description
+Recipient ID Type a comma-and-space-delimited list of recipients you
+want to include in the report. This field  is only visible
+when Trend by is set to Recipient .
+Alt ernativ ely ,  you can search for one or more recipient
+pr ofile  IDs.
+Oper ation  to perform for check-out and check-in Select one or more oper ations:
+▪Password▪
+▪SSH key▪
+Specify time Specify a date range for user check-outs.
+Choose r elativ e  date Specify a r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.Criteria Description
+Option Description
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+for user check-outs. The content from this field  will vary
+depending on which Specify time  you choose.
+R eporting  time  interval Specify a time  interval for the collected data. Records can
+be organized by day, week, month, quarter, or year.
+Summarize report Select this if you prefer to have a numerical summary of
+the trend type.
+Graph type Specify the type of graph for a visual r epr esen t ation  of
+the data. The available graph types are V ertic al  bar chart
+and Line chart. This field  is only visible when S ummarize
+report  is selected.
+Group set access check-out trend
+Purpose : Trend analysis of group set access check-outs.
+Executable : managedgroupsetcotrend
+Search Criteria :
+Criteria Description
+Trend by Select the type of trend report to run:Criteria Description
+Group set : Lists group sets that were requested and/or
+checked out and the managed system policy it belongs
+to.
+Recipient : Lists recipients who requested and/or checked
+out group set access.
+Managed system policy : Lists managed system policies
+from which group sets were requested and/or checked
+out.
+Group set ID Type a group set ID you want to include in the report.
+This field  is only visible when Trend by  is set to Group
+set.
+Alt ernativ ely ,  you can search for one or more group sets.
+Recipient ID Type a comma-and-space-delimited list of recipients you
+want to include in the report. This field  is only visible
+when Trend by  is set to Recipient .
+Alt ernativ ely ,  you can search for one or more recipient
+pr ofile  IDs.
+Managed system policy ID Type a comma-and-space-delimited list of managed
+system policy IDs you want to include in the report. This
+field  is only visible when Trend by  is set to Managed
+system policy .
+Alt ernativ ely ,  you can search for one or more policies.
+Specify time Specify a date range for user check-outs.
+Choose r elativ e  date Specify a r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.Criteria Description
+Option Description
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+for user check-outs. The content from this field  will vary
+depending on which Specify time  you choose.
+R eporting  time  interval Specify a time  interval for the collected data. Records can
+be organized by day, week, month, quarter, or year.
+Summarize report Select this if you prefer to have a numerical summary of
+the trend type.Criteria Description
+Graph type Specify the type of graph for a visual r epr esen t ation  of
+the data. The available graph types are V ertic al  bar chart
+and Line chart. This field  is only visible when Summarize
+report  is selected.
+Access disclosure plugins e x ecution  trend
+Purpose : Trend analysis of access disclosure plugin e x ecutions.
+Executable : pluginexecutiontrend
+Search Criteria :
+Criteria Description
+Trend by Select the type of trend report to run.
+The following are available:
+▪Plugin▪
+▪Plugin/User/System/Account▪
+Plugin file name Select access disclosure plugins:
+▪guacamole-rdp▪
+▪guacamole-ssh▪
+▪guacamole-telnet▪
+▪guacamole-vnc▪
+▪pswcmdrun▪
+▪pswxcmd.cab▪
+▪pswxcopy.cab▪
+▪pswxdom.cab▪
+▪pswxtsvc.cab▪
+▪pswxview.cab▪
+<any custom disclosure plugins>
+User ID Type a comma-and-space-delimited list of user IDs.
+Alt ernativ ely ,  search to find the matching user.
+Managed system ID Type a comma-and-space-delimited list of managed
+system IDs. Alt ernativ ely ,  search to find the matching
+managed systems.
+Account Enter the ID of the account.
+Specify time Specify a date range for user check-outs.
+Choose r elativ e  date Specify a r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.

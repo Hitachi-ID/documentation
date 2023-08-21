@@ -1,0 +1,375 @@
+.
+Modifying how oper ations  are viewed
+You can use the workflo w  view modific ation  plugin to modify which oper ations  are visible to viewers of
+w orkflo w  requests in Bravura Security Fabric . This is useful in cases where access changes such as
+account cr eation,  additions  to groups, or role changes are known only at an abstract level. This plugin can
+be used where:
+▪Viewing oper ation  details may be excessive or confusing ▪
+▪Details should be accessible but a summary would be more appropriate▪
+▪Some details are irrelevant to an authorizer who is authorizing a single group addition ▪
+▪It may be inappropriate for an authorizer of one oper ation  to see what else is being requested ▪
+This is an alt ernativ e  to mapping several oper ations  to a single request using the oper ation  rewrite
+plugin. The following use cases demonstrate how the oper ations  view modific ation  plugin might be used:
+ 
+Use case 1: Showing authorizers only what they are authorizing 
+Normally, authorizers can see all oper ations  that are part of a request, including those that they are not
+required to authorize. This may be confusing for an authorizer who only needs to authorize part of a
+request, and may even lead them to mistakenly deny the request.
+The w orkflo w  view modific ation  plugin can run to only display oper ations  for which the viewer is the
+authorizer.
+Use case 2: Abstract modific ations  
+The requester wants to remove a user’s “floor  fir e marshal” role. This entails the user being removed
+from a dis tribution  list, and from three groups, and r es tricting  their access within the building’s security
+system.
+End users – the requester, recipient and the assigned authorizers – do not understand the list, the
+groups, or the security system. All they understand or care about is that the user is no longer the floor
+fir e marshal.
+The requester changes some attribut es  on the user’s pr ofile  page and submits the request.
+Bravura Security Fabric  runs the request rewrite plugin to “fan out” the request to include oper ations
+a ff ecting  the list, the groups and the security system (using an implementer target). It also includes a
+psuedo oper ation  to “update the user” to remove her from the floor  fir e marshal role.
+The w orkflo w  view modific ation  plugin rewrites what the users see so that the request only contains the
+removal from the role. The plugin can make the real oper ation  details available if the user clicks a Details
+button  where a summary of the request is listed.
+The plugin is run by the Requests  app whenever a request is viewed on the request details pages.To use this plugin, type the name of the plugin in the IDSYNCH WORKFLOW MOD VIEW PLUGIN  field  on
+the W orkflo w  > Options  > Plugins c on figur ation  page.
+There are no shipped plugins in use with this plugin point. A sample, plugin-wf-modview.psl , is
+available in the samples\ directory. See more for in f ormation  on writing  a custom plugin program
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The plugin is run by the W orkflo w  Manager Service.
+Input
+Input to the plugin includes:
+"" "" = {
+  "module" = "<module>"
+  "recipient" "user" = { } #Recipient's data if they are an
+                         # existing user
+  "request" "" = { #Standard request data listing resources
+    "resource" "" = {}
+      }
+  "detailResource" = "<itemID>" #If this is present,
+                   # the user has just clicked the 'Details' button
+                   # next to the resource with the itemID.
+                   # The plugin should return only resources
+                   # that are considered details of that resource.
+  "requester" "user" = {} #Requester's data
+  "viewer" "user" = {} #Viewer's data
+                       # -- requester, recipient, or authorizer
+   }
+The "resource" KVGroup includes an "enact" key that is used to indicate which resources are a ff ect ed
+during the request. This can be used to hide resources that are not a ff ect ed  during the request. For
+example, if the resource "enact" key is set to false, then the action  on the resource is not executed, so it
+could be hidden.
+Output
+The oper ation  view modific ation  plugin returns the following output:
+"" "" = {
+ "errmsg" = ""    # error message, if any
+ "retval" = "<N>"   # 0 is success, anything else is failure "changed" = "(true|false)"  # If this is included and set to false, it
+                             # will be assumed that all items will be
+                             # visible.
+  "resource" "" = {
+                   #Followed by any number of resource entries
+          "display" = "(true|
+false)" # If this is present and set to false,
+                             # hide the resource.  If the item is not in
+                             # the output, it will be displayed.
+          "detailsAvailable" = "(true|
+false)" # If this is present and set to
+                             # true, display a button to allow details to
+                             # be viewed for this resource. The plugin
+                             # determines what resources are considered to
+                             # be details of this resource.
+    }
+  }
+.
+Using pseudo oper ations
+In some or g aniz ations  the cr eation  of accounts, additions  to groups, or role changes are known to users
+only at an abstract level. Showing what modific ations  are going to be done is:
+▪ P ot entially  excessive ▪
+▪ P ot entially  time-c onsuming  to have the authorizer sift through the in f ormation  to determine what is ▪
+“really” being requested
+▪Confusing for end users who “just want to do what sales people do”▪
+Bravura Security Fabric  allows you to display pseudo operations  that describe what is being done at an
+abstract level as part of a request. The oper ations  can be searched on and audited, but nothing is actually
+done by any connector. Pseudo oper ations  simply allow end users to understand what is being requested
+even if they do not understand the details.
+They can be standard oper ations  that contain pseudo data; for example to add a user to a group that
+doesn’t actually exist on a target system. They can also be completely customized oper ations;  for
+example, users can request to “update a user” to make them the new “floor  fir e marshal”.
+The request rewrite plugin  (on page 1418) must be used to generate output for a pseudo oper ation.  That
+in f ormation  can then be used to display details of the request to users, and as input for the w orkflo w
+view modific ation  plugin . The Abstract modific ations  use case in Modifying how oper ations  are viewed
+(on page 1431) illustrates how pseudo oper ations  are used.
+See more detailed in f ormation  about how plugins handle pseudo oper ations
+InputPlugins receive in f ormation  about pseudo oper ations  in three key-value pairs within the main "request"
+KVGroup:
+"request" "" = {
+     ...
+  "resource" "<resource identifier>" = {
+    "authorizationsReceived" = "<number of authorizations received>"
+    "authorizationsRequired" = "<number of authorizations required>"
+    "authorizer" = "<authorizers for this resource>" ⋆
+    "notes" = ""  # empty - only filled in upon provisioning
+    "operation" = "<operation code>"
+    "pseudoData" = "<Data for replacement in pseudoTag>"
+    "pseudoOp" = "true|false" #Is this a pseudo Operation?
+         # If true, this operation is NOT handled by idtm
+    "pseudoTag" = "<m4 tag for display in the GUI>"
+    "result" = "<status of the resource>"
+    "itemType" = "<item type>"
+    ...
+    }
+ }
+See Request data  (on page 1506) for a listing  of the full request KVGroup.
+Data about pseudo oper ations  is included in the reqacct table along with other oper ations  data. Any
+normally requested oper ation,  such as create and update, can be passed in as a pseudo oper ation.  For
+example:
+    "operation" = "GRUA" #add the user to a group
+    "pseudoData" = ""
+    "pseudoOp" = "true" #The group does not exist on a target system.
+    "pseudoTag" = ""
+Custom oper ations
+You can also use custom oper ation  tags CUST1, CUST2, CUST3 for requests that are not standard to
+Bravura Security Fabric . For example:
+    "operation" = "CUST1" #Update the user
+    "pseudoData" = "Fire marshal"
+    "pseudoOp" = "true" #
+    "pseudoTag" = ""
+You can customize the description  for these oper ations  in M4 files,  so that they can be displayed and
+searched on as request types in the Bravura Security Fabric  user interface.These operations  diff er  from the OPC1, OPC2, OPC3, and OPC4 operations,  which can be used to trigger
+events resulting  from input to custom fields  in the user interface  (on page 3505).
+To use pseudo data with standard oper ations,  customize:
+▪!!!JOB_SEARCH in batchmod.m4  to allow it to be specified ▪
+▪The _BATCHMOD_PSEUDO_DATA_ tag in en-us-language.kvg ▪
+▪The BATCHMOD_PSEUDO_DATA tag in en-us-errmsg.kvg ▪
+To use custom oper ations,  customize:
+▪!!!JOB_SEARCH_OPERATION_OPTIONS in batchmod.m4 ▪
+▪One or more of the following in en-us-language.kvg : ▪
+_BATCHMOD_SELECT_CUST1_
+_BATCHMOD_SELECT_CUST2_
+_BATCHMOD_SELECT_CUST3_
+▪One or more of the following in en-us-language.kvg:▪
+_BATCHMOD_REQ_CUSTOM1_ACCT_
+_BATCHMOD_REQ_CUSTOM2_ACCT_
+_BATCHMOD_REQ_CUSTOM3_ACCT_
+▪One or more of the following in batchmod.kvg : ▪
+!!!BATCH_LONG_CUSTOM1_ACCT_ROW
+!!!BATCH_LONG_CUSTOM2_ACCT_ROW
+!!!BATCH_LONG_CUSTOM3_ACCT_ROW
+▪Customize messages in en-us-errmsg.kv g for: ▪
+REQACCT_OPERATION_CUST1
+REQACCT_OPERATION_CUST2
+REQACCT_OPERATION_CUST3
+▪Customize messages in en-us-errmsg.kvg  for: ▪
+REQOPERTYPE_CUST1
+REQOPERTYPE_CUST2
+REQOPERTYPE_CUST3
+▪Customize messages in en-us-errmsg.kvg  for: ▪
+WF_REQACCT_DESC_CUSTOM1
+WF_REQACCT_DESC_CUSTOM2
+WF_REQACCT_DESC_CUSTOM3
+Below is an example of customized batchmod.m4:
+!!!JOB_SEARCH_OPERATION_OPTIONS
+<!-- JOB_SEARCH_OPERATION_OPTIONS --><SELECT name="SEARCH_OPERATION">
+   <OPTION value="" %NONE_SELECTED%>_BATCHMOD_SELECT_NONE_
+   <OPTION value="RLUA" %RLUA_SELECTED%>_BATCHMOD_SELECT_RLUA_
+   <OPTION value="ACUA" %ACUA_SELECTED%>_BATCHMOD_SELECT_ACUA_
+   <OPTION value="UPDT" %UPDT_SELECTED%>_BATCHMOD_SELECT_UPDT_
+   <OPTION value="DELU" %DELU_SELECTED%>_BATCHMOD_SELECT_DELU_
+   <OPTION value="TERM" %TERM_SELECTED%>_BATCHMOD_SELECT_TERM_
+   <OPTION value="RENU" %RENU_SELECTED%>_BATCHMOD_SELECT_RENU_
+   <OPTION value="MVCU" %MVCU_SELECTED%>_BATCHMOD_SELECT_MVCU_
+   <OPTION value="ENAU" %ENAU_SELECTED%>_BATCHMOD_SELECT_ENAU_
+   <OPTION value="DNAU" %DNAU_SELECTED%>_BATCHMOD_SELECT_DNAU_
+   <OPTION value="GRUA" %GRUA_SELECTED%>_BATCHMOD_SELECT_GRUA_
+   <OPTION value="GRUD" %GRUD_SELECTED%>_BATCHMOD_SELECT_GRUD_
+   <OPTION value="GROA" %GROA_SELECTED%>_BATCHMOD_SELECT_GROA_
+   <OPTION value="GROD" %GROD_SELECTED%>_BATCHMOD_SELECT_GROD_
+   <OPTION value="CRTG" %CRTG_SELECTED%>_BATCHMOD_SELECT_CRTG_
+   <OPTION value="DELG" %DELG_SELECTED%>_BATCHMOD_SELECT_DELG_
+   <OPTION value="CUST1" %CUST1_SELECTED%>_BATCHMOD_SELECT_CUST1_
+<!--   <OPTION value="CUST2" %CUST2_SELECTED
+%>_BATCHMOD_SELECT_CUST2_ -->
+<!--   <OPTION value="CUST3" %CUST3_SELECTED
+%>_BATCHMOD_SELECT_CUST3_ -->
+</SELECT>
+!!!BATCH_LONG_CUSTOM1_ACCT_ROW
+<!-- BATCH_LONG_CUSTOM1_ACCT_ROW -->
+  <TR>
+    TABLE_TDBD
+     Available for replacement are:
+     HostId(%HOST_ID%) (target ID) ACCT_ID(%ACCT_ID
+%) (long ID) ACCT_NAME(%ACCT_NAME%) (user fullname)
+     SRC_ID(%SRC_ID%) TFR_ID(%TFR_ID%) GROUP_ID(%GROUP_ID%)
+     REQ_OPERATIONS(%REQ_OPERATIONS%) PSEUDO_DATA(%PSEUDO_DATA
+%) PSEUDO_TAG(%PSEUDO_TAG%) %DETAILS_BUTTON%
+      &nbsp;
+    TABLE_TDE
+  </TR>
+Below is an example of customized en-us-errmsg.kvg
+"language" "EN_US" = {
+  "codepage" = "28591"
+  "encoding" = "iso-8859-1"  "version" = "fox 1234"
+  "REQACCT_OPERATION_CUST1" "" = {
+    "text" = "Cust1 is in the dropdown"
+  }
+  "REQOPERTYPE_CUST1" "" = {
+    "text" = "Cust1 description"
+  }
+  "WF_REQACCT_DESC_CUSTOM1" "" = {
+    "text" = "reqacct custom1 description"
+  }
+  "CUSTOM_PSEUDO_TAG" "" = {
+    "text" = "contents of the tag that is the pseudo data"
+  }
+  "CUSTOM_TAG_OKAY" "" = {
+    "text" = "contents of the OKAY tag that is the pseudo data"
+  }
+}
+Below is an example of customized en-us-language.kvg
+"language" "EN_US" = {
+  "codepage" = "28591"
+  "encoding" = "iso-8859-1"
+  "version" = "fox 1234"
+  "_BATCHMOD_REQ_CUSTOM1_ACCT_" "" = {
+    "text" = "This introduces custom1 requests (customized)"
+  }
+  "_BATCHMOD_SELECT_CUST1_" "" = {
+    "text" = "Search for cust1 (I'm in the dropdown)"
+  }
+  "_BATCHMOD_PSEUDO_DATA_" "" = {
+    "text" = "Here is the intro to the pseudo data:"
+  }
+}
+Output
+The output for the plugin is:
+"" "" = {
+  "errmsg" = ""
+  "retval" = "<N>" # 0 is success, non-0 is failure.
+  "resource" "" = {    ...
+   }
+}
+There may be 0 or more resource KVGroups. The resources returned will replace the ones in the request.
+If you do not want to modify the request, all resources passed into the plugin must be returned as
+output.
+The format and contents of the resource KVGroup should be the same as the input would be if the
+resource was part of a normal request. It is recommended that you issue a request for the resource
+requested to gather the input format for that specific  oper ation.
+.
+General w orkflo w  options
+To c on figur e  general settings  related to w orkflo w:
+1.Click W orkflo w  > Options  > General . 1.
+Enable options  and type values for the fields  listed in Table General w orkflo w  options  (on page 1438).
+2.If required, c on figur e  event options  listed in Table W orkflo w  general events that launch interface 2.
+programs  (on page 1441), W orkflo w  general events that launch interface programs  (on page 1532)
+and Table W orkflo w  manager service (idwfm) events that launch interface programs  (on page 1442),
+W orkflo w  manager service (idwfm) events that launch interface programs  (on page 1533).
+3.Click Update . 3.
+Some of the options  on this page may apply to products that you do not have installed.
+Options  marked with a 
+  in this document can also be c onfigured  from the Modules menu.
+General w orkflo w  options
+Option Description
+ENABLE DELETE OTHER OWNER Activ e  Directory network resource owners are allowed to delete other
+group owners.
+HIDE PLUGIN ERRMSG FROM USERS Hide detailed plugin error messages from end users. When enabled, end
+uses only see "Plugin failed". When disabled (default) plugin error messages
+include the path to the plugin, and if possible, the script line number and
+error message.
+IDACCESS GROUPS THRESHOLD If the number of groups with access to a network resource is greater than
+or equal to this threshold, consider the resource pr oblematic.  This value is
+used by the IDACCESS TOO MANY GROUPS event option.
+For example, too many groups with access to a resource may indicate an
+infrastructure management issue. The interface program set by IDACCESS
+TOO MANY GROUPS can check to see if the pr oblematic  resource has been
+reviewed before, and if not, send in f ormation  about the resource to the
+system administrator.Option Description
+IDP APPROVE SINGLE RESOURCE If enabled, authorizers can approve or deny requested resources
+individually.
+See Act on individual entitlemen ts  in the end user documen t ation  for more.
+Note: This is setting  is temporarily disabled if the request is for a group set
+or account set access. This is to prevent users from gaining access to denied
+requests of this type if a single resource is approved.
+IDP REQUIRES REASON
+APPROVALAuthorizers are required to enter a reason when they approve a request.
+IDP REQUIRES REASON
+REJECTIONAuthorizers are required to enter a reason when they deny a request.
+IDSYNCH FULL NAME FORMAT How the full name of a user displays in email and Bravura Security Fabric
+web pages.
+IDV REQUIRES REASON
+COMPLETEDImplementers must enter a reason for marking a task as completed.
+IDV REQUIRES REASON COULD
+NOT COMPLETEImplementers must enter a reason for being unable to complete a task.
+IDWFM AUTH PHASE PROPAGATION If an authorizer is c on figur ed  to be in more than one phase, allow the
+authorizer’s response in the fir s t phase to be propagated to later phases.
+IDWFM AUTO APPROVE Allow requests where the requester is also the authorizer to be
+aut omatic ally  approved.
+IDWFM AUTO REJECT TIME Number of days before a request is aut omatic ally  denied if it is not
+processed. This field  ignores the REQUIRES REASON DELETION option  if it is
+set.
+IDWFM CURRENT EVENT CACHE
+TIMECache events in the W orkflo w  Manager Service that are younger than this
+many hours. Default is 12.
+The larger the number, the more memory spaces are allocated to the
+W orkflo w  Manager Service for cache; however, if this number is too big, it
+may break Windows memory management, causing unexpected results.
+IDWFM DAYS COUNT WEEKDAY
+ONLYIf enabled, the W orkflo w  Manager Service auto reject time  and esc alation
+time  only includes weekdays.
+MAX AUTH ALLOWED The maximum number of authorizers or implementers that the w orkflo w
+service can assign to each resource in a request. When the number of
+authorizers or implementers exceeds this value, the request is put on hold.
+The value can be from 0 to 200. The default is 20.
+MAX UPLOAD FILE SIZE The maximum file size allowed for uploaded pr ofile  and request attribut es.
+The default is 1000KB.
+REQUIRES REASON DELETION Requesters and recipients are required to enter a reason when they delete
+a change request when using the Requests.
+WF ATTRVAL PLUGIN RUN IDR
+SUMMARYWhen enabled, the attribut e  v alidation  plugin will execute on the request
+summary page. This will allow any additional  attribut es  to be added to the
+request prior to submission. By default, this option  is disabled.Option Description
+WF CLEAN RESERVEOBJ When a request is initia t ed,  and before it is posted, Bravura Security Fabric
+reserves IDs to ensure that they are unique. By default, Bravura Security
+Fabric  cleans up a request’s reserved objects when a request fails to post or
+goes into “On hold pending administrator in t er v ention”  status.This allow
+r eser v ations  to be made again if a previous request attemp t ed  to make the
+r eser v ation  and failed.
+Turn this off if you want clean up of reserved IDs to be handled in another
+way, for example, by calling API processes, to avoid situations  where valid
+r eser v ations  are deleted.
+WF HIDE AUTHORIZERS When enabled, the list of authorizers assigned to a request is hidden on the
+request details page. By default, this option  is enabled. Authorizers can
+choose to see who else may be reviewing a request by selecting  the
+Authorizers checkbox. When disabled, the authorizers list is always shown.
+WF HIDE OTHER OPERATIONS When enabled, authorizers only see oper ations  they are assigned to when
+reviewing a request. By default, this option  is enabled. Authorizers can
+change this view by selecting  a Show all—Show mine toggle, or by selecting
+an All oper ations  checkbox on the request details page. When disabled, all
+oper ations  that are part of a request are always shown.
+WF ONLY PROP ATTRS ON UPDATE When enabled, pr ofile  and request attribut e  changes are only propagated
+to target system attribut es  during pr ofile  update requests. By default, this
+option  is disabled. When disabled, all updates to attribut es  are propagated
+to a ff ect ed  target systems, regardless of the oper ation  being performed.
+WF ONLY SHOW EXPECTED
+OPERATIONSWhen a request is viewed and a resource is not enacted the default view
+will to show all oper ations  expected. When this is set to enabled the
+request will show only the oper ations  that will occur. Users can change this
+view on the request page with a Show all and Hide button.
+WF PHASED AUTH Enable this option  to allow phased authoriz ation  of resources and policies.
+To disable this option,  you must fir s t delete all phases from resources and
+policies.
+WF RESERVE ON PRIMARY Enable this option  to send reserve requests to the primary instance when
+the requests are made from a r eplic ation  node.
+WF RESOURCE RELATEDONLY Enable this option  to include only resources assigned to the recipient in
+authorizer notific ation  emails
+WF WAIT AUTHORIZER
+CALCULATIONEnable this option  to get Bravura Security Fabric  to wait while authoriz ation
+requirements are being calculated before returning to CGI pages where
+requests are issued.
+This may be useful in cases where users who are auto-approved may be
+confused when the request status is temporarily shown as w aiting  for
+authoriz ation.
+WF ROLE USERADDDEL IGNORE
+DEPSWhen this option  is enabled, role membership will be added or deleted
+even if some dependent oper ations  fail.

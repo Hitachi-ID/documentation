@@ -1,0 +1,342 @@
+These are useful when working with either a smaller set or c onditions  for specific  systems, or if you
+want to add e x ceptions  to the c ondition.
+De fining  c onditions  using plugins
+You can write a plugin to de fine  import rule c onditions.  All plugins have access to the data stored in the
+variables for PSLang expressions  (on page 2107). Scripts that are not written  in PSLang need to be
+wrapped in a PSLang script in order to access these variables.
+To add an import rule c ondition  using a plugin:
+1.Navigate to the Import rules  page 1.
+Use the Privileged access tab in the Manage the system  (PSA) module to add, test, and delete import
+rules for managed systems and accounts. You can also use this page to access additional  c on figur ation
+settings.
+To navigate to the import rules page for managed systems and managed accounts:
+1.Click Manage the system  > Privileged access  > Import rules . 1.
+2.Select an import rule type:2.
+▪Managed systems – to determine managed system policy membership for managed systems ▪
+▪Managed accounts – to determine which accounts to manage on member systems in managed ▪
+system policies
+3.Click Add new... to add a new managed system or managed account import rule  (on page 2097). 3.
+Or,
+Select an e xisting  import rule to update rule settings,  associate the rule with managed system
+policies , modify c onditions,  and evaluate c onditions
+You can also enable, disable, delete or test rules  (on page 2125) on this page.
+for a managed system or managed account.
+2.Select the Conditions  tab. 2.
+3.Click Add new… 3.
+4.Enter an ID, and optionally  a Description . 4.
+5.Enable the c ondition  for this import rule by checking the box, or leave it unchecked to exclude the 5.
+c ondition.
+6.Set the c ondition  Type to ”Plugin”. 6.
+7.Select Used attribut es  you want to have passed into the plugin. 7.
+8.Click Add. 8.
+See more in f ormation  about writing  a custom import rule plugin
+Input
+There are two options  for input:
+▪In-process PSLang with direct variable references for the managed system/object▪▪External process with standard input/ouput▪
+The following is an example of a PSLang plugin script for import rule requirements:
+function  main()
+{
+     var $outkvg = kvgCreate( "", "" );
+     if ($name=="user1-ws") || ($comp["name"][0] == "user1-ws")
+     {
+          kvgAddValue( $outkvg, "retval", "0" );
+          return $outkvg;
+          # or return 1;
+     }
+     else
+     {
+          kvgAddValue( $outkvg, "retval", "1" );
+          kvgAddValue( $outkvg, "errmsg", "server name does not match");
+          return $outkvg;
+          # or return 0;
+     }
+}
+If an external interpreter is used (set in PLUGIN PROGRAM  (on page 1504)), then the following input is
+passed into the external call:
+ "" "" = {
+  "<system/account attribute>" = "<value>" # one or more
+         }
+Output
+The following is an example of output from a plugin script for import rule requirements:
+"" "" = {
+    "retval" = "1"
+    "errmsg" = "Defining requirements has failed."
+}
+Where:
+▪retval is zero on success or non-zero on failure. ▪
+▪errmsg is an optional  failure message that can be displayed. ▪
+See more in f ormation  on writing  PSLang expressions
+PSLang is a scripting  language with a syntax much like C, but with a large set of built-in functions.
+You can use PSLang expressions to de fine:▪account attribut e  values (other than boolean types) ▪
+▪The format of pr ofile  IDs ▪
+▪User classes▪
+▪Managed system policy memberships and managed accounts▪
+PSLang expressions let you use the value of a profile  attribut e  indirectly. That is, you can modify them,
+add them to another fix ed  value, or combine them with another pr ofile  attribut e.   
+Syntax
+An expression is some sequence of oper ations  that yields a result. A literal value, a variable, or a function
+by themselves can be an expression. The following are valid expressions:
+5
+"3"
+m y function(  1 )
+5+3
+5 + "3"
+"5" + "3"
+"5" + m y function(  innerfunction()  - 6 )
+$x + $y + $z
+A PSLang expression can include a sequence of variable declar ations  (including initializ er s)  and function
+calls. The final  statement  must be an expression; its value is taken as the overall result.
+Here is a sequence of statements:
+var $a = "hello";
+var $b = ", world";
+var $c = strlen( $a );
+$a + $b + " - length: " + $c
+This is acceptable as a PSLang expression because the last statement is itself a normal expression. The
+result here would be: hello, world - length: 5 .
+In the Bravura Security Fabric  GUI, the same sequence of statements would be written  on one line:
+var $a = "hello"; var $b = ", world"; var $c = strlen( $a ); $a + $b + " - length:" + $c
+Types of expressions
+PSLang supports the following types of expressions:
+Oper ation Description
+<string literal > string literal<integer literal > integer literal
+- <integer literal > negate an integer
+< floating-poin t  literal > floating-poin t  literal
+- < floating-poin t  literal > negate a floating-poin t  literal
+$var the value of the variable
+$var[expr] string and array indexing
+(expr ) for clarity or to change order of e v aluation
+expr + expr addition  or string c onc a t enation
+expr - expr sub tr action
+expr * expr multiplic ation
+expr ∕ expr division
+expr % expr modulus
+expr isin expr is left a substring of right?
+expr == expr equality
+expr ! = expr inequality
+expr ≤ expr left is less than or equal to right?
+expr < expr left is less than right?
+expr ≥ expr left is greater than or equal to right?
+expr > expr left is greater than right?
+~expr bitwise neg ation
+expr & expr bitwise and
+expr — expr bitwise or
+expr && expr logical and
+expr—— expr logical or
+$var++ post increment operator
+$var– post decrement operator
+! expr logical neg ation
+func(...) function  call
+iif( test, true_part , false _part ) ternary operator
+A boolean expression yields an integer result, where zero is interpreted as false , and any value other than
+zero is interpreted as true.
+Bitwise operators (~, &, —) must not be confused with logical operators ( !, &&, ——). Although PSLang
+does not support “^”, the bitwise exclusive or operator ( xor), you can achieve the same results using:
+( A & ~B ) | ( ~A & B ) .
+The PSLang + operator can be used with numerical values, or to append string values. In an expression
+such as  x+y , where x is a string and y is a number, y is converted to a string and appended to x.The ternary operator works the same way as the C++ ternary operator ( ?:). The test expression is
+evaluated, and if the result is non-zero, the true_part expression is evaluated and returned. Otherwise,
+the false _part expression is evaluated and returned.
+Order of e v aluation
+The order of e v aluation  proceeds according to the precedence of the operators in the expression. The
+following table lists the precedence of the operators, with the highest priority at the top of the list.
+Precedence Level Operators
+1 [ ]
+2 ! ~
+3 * ∕ %
+4 + -
+5 isin
+6 ≤  ≥  <  >
+7 == ! =
+8 &
+9 |
+10 &&
+11 ||
+12 parentheses
+E v aluation  of the expression moves left to right and stops at the earliest possible pass/fail decision;
+unnecessary c onditions  are not evaluated.
+PSLang aut o-c ompletion
+The user interface can be c on figur ed  to off er  aut o-c ompletion  of variable or function  calls when writing
+PSLang expressions. Enabling auto-complete provides quick access to help and f ormatting  in f ormation.
+Only the PSLang functions  that are in the string, time,  and misc sections  are available for aut o-
+c ompletion.
+The auto-complete drop-down list appears as you type a valid expression into a PSLang text area. Only
+variables, functions  and c ompletion  options  that match what you are typing are displayed. For detailed
+in f ormation,  click the ? link to the right of each listed item.
+To see the complete drop-down list of all available options:
+▪Click in an empty PSLangtext field. ▪
+▪Press the [ ↓] key at a word break while typing an expression in a PSLang text area. ▪
+▪Press the [ ↓] key mid-word while typing an expression that does not match any of the available ▪
+expressions.
+Na vig ation  through the list can be done with the mouse, or using the [ ↑] and [ ↓] keys. Selections  can be
+made using the [Enter] or [Tab] keys. The [Esc] key closes the menu.The PSLang aut o-c ompletion  functionality  can be disabled or enabled by clicking disable auto c ompletion
+or enable auto c ompletion  beneath any PSLang text area.
+The default settings  for the PSLang auto-complete functionality  are controlled by the config.js
+script, located in the \<instance>\design\src\js\ directory. In this script, the AutoCompletePslang group
+has the following options:
+<PSLANG>PSLang auto-complete options  inc on fig.js
+Option Description
+enabled Controls whether the script is available to users.The
+default value is true.
+initiallyOff Controls whether PSLang aut o-c ompletion  is
+enabled when a page loads. The default value is
+false. If set to true, then PSLang aut o-c ompletion  is
+off by default when a page loads..
+Default expressions
+This section  illustrates the use of <PSLANG> expressions by explaining expressions used by default by
+Bravura Security Fabric .
+Each of these expressions use an iif() function,  which takes 3 parameters –
+iif(boolean expression, "true-part", "false-part" )
+It evaluates the boolean expression, and when it’s true, it returns the true-part. Otherwise, it returns the
+false-part.
+In PSLang, a variable is pr e fix ed  by $. The variables discussed in this chapter represent a string of
+characters, or an array of strings.
+The characters [n] are placed after  variable names to index the nth character in a string, or the nth
+value in an array, s t arting  from 0. This is used with pr ofile  attribut es,  which can have multiple  values. The
+fir s t of an array of values is represented by $ATTRIBUTE[0] , the second by $ATTRIBUTE[1] , and so
+on.
+All built-in attribut es  must be expressed as an array. That is – $FIRST_NAME[0] , $OTHER_NAME[0] ,
+$LAST_NAME[0]
+IDSYNCH ID PLUGIN MASK
+The default function  for the IDSYNCH ID PLUGIN MASK is:
+iif( (size($LAST_NAME) > 0 && size($FIRST_NAME) > 0),
+substr($LAST_NAME[0], 0, 5) + substr($FIRST_NAME[0],
+0, 1),
+"")
+First, the boolean expression ensures that there are values for $FIRST_NAME  and $LAST_NAME . If
+check is successful, then it takes the 0-5 characters (fir s t  6) of LAST_NAME and the 0-1 characters (fir s t
+2) of FIRST_NAME and put them together to form a user’s <PROFILEID>.
+If the safety check fails, then it returns an empty string.
+FULLNAME
+This is used for the value of many target attribut es  (e.g., displayName on Activ e  Directory):
+iif( size($OTHER_NAME) > 0,
+$FIRST_NAME[0] + " " + $OTHER_NAME[0] + " " +
+$LAST_NAME[0],
+$FIRST_NAME[0] + " " + $LAST_NAME[0]
+)
+This fir s t checks whether $OTHER_NAME has any values. If it does, then it composes a string such as
+“John Angus Doe”. If $OTHER_NAME does not have any values (the user has no middle name) then it
+composes a string such as “Bill Smith”.
+MIDDLE INITIAL
+This PSLang expression, also used for the value of target attribut es  (e.g., initials  on Activ e  Directory),
+contains more than one statement:
+var $other = iif( size($OTHER_NAME) > 0,
+$OTHER_NAME[0], "" );
+$other[0];
+This retrieves the fir s t character of a user’s “other name”. The $OTHER_NAME  variable is an array of
+strings. Like other pr ofile  attribut es  it could be de fined  to accept more than one value. So, the expression
+assigns the fir s t element of $OTHER_NAME (assuming it exists, otherwise it returns a blank string) to
+$other . Since the variable $other is just a string, and not an array, the expression $other[0] gets just
+the fir s t character of the “other name”.
+.
+Define  requirements for multi- v alued  attribut es  using plugins
+To de fine  a requirement for multi- v alued  attribut es,  you must use functions:
+function <name>() {
+         for (var $i = 0; $i < size(<multi-value-attribute>); $i++) {
+                  if (condition on <multi-value-attribute>[$i]) {
+                  return 1;
+                  }
+         }         return 0;
+}
+<name>();
+Examples
+If the discovered system is a member of "Domain Computers":
+function membership() {
+         for (var $i = 0; $i < size($comp["memberOf"]); $i++) {
+                  if ($comp["memberOf"]
+[$i] == "CN=Domain Computers,CN=Users,DC=domain,DC=com") {
+                  return 1;
+                  }
+         }
+         return 0;
+}
+membership();
+If the fir s t listed IP address of the discovered system is 10.0.1.199:
+ function firstIP() {
+                  if ($comp["ip"][0] == "10.0.1.199") {
+                  return 1;
+         }
+         return 0;
+}
+firstIP()
+If the discovered system has an IP address within the 10.0.1.0 to 10.0.1.9 range:
+function iprange() {
+         var $i = 0;
+         for($i = 0; $i < size($comp["ip"]); $i++) {
+                   var $j = 0;
+                   for ($j = 0; $j < 10; $j++) {
+                   log ("Comparing: 10.0.1."+$j + " with " + $comp["ip]
+[$i]);
+                            if ($comp["ip"][$i] == "10.0.1."+$j) {
+                                           return 1}
+                                               }
+                   }
+                   return 0;
+}
+iprange();.
+De fining  source systems
+Source systems are manually -de fined  systems from which systems are listed. These are usually domain
+target systems that are c on figur ed  to list computer server objects and computer w ork s t ation  objects on
+the domain.
+For push mode target system and managed system import rules, you can:
+▪Include all source systems▪
+▪Include some source systems▪
+▪Exclude some source systems▪
+In the initial  phase of deployment, it is recommended that you start small with a small set of machines.
+The Activ e  Directory connector is capable of discovering all computers in a domain; however this may
+take a long time.  You may want to start by t ar g eting  a specific  segment of the domain; for example:
+<domain>/basedn=OU=<org structure on domain>
+In large deployments, it is recommended that you import systems in batches. This will allow you to adjust
+the import rules as necessary for each new batch of systems being added.
+De fining  c onnection  methods
+When adding target system import rules or manually managing discovered systems, you must de fine
+which cr edentials  the Bravura Privilege  server uses when it attemp ts  to connect to the systems. A
+discovered system will only pass a target system import rule once it has valid cr edentials.
+There are fiv e methods for de fining  c onnection  cr edentials:
+▪Using no cr edentials  (on page 2120) (local service mode systems only) ▪
+▪Using a plugin to get cr edentials  (on page 2120) ▪
+▪ Cr eating  new cr edentials  on a managed system  (on page 2122) ▪
+▪Using valid cr edentials  from a template target system  (on page 2124) ▪
+▪Using cr edentials  from a source system  (on page 2124) (push mode systems only) ▪
+Push mode systems 
+For push mode target systems, these cr edentials  are evaluated immediately, and if they are not valid, the
+target system will be removed and re-evaluated.  Local service mode systems 
+For local service mode target systems, this e v aluation  may take a few polls to c on firm  – one to receive
+the in f ormation  on the adminis tr ativ e  cr edential  (either verify or create), and one to report back the
+results.
+To view the status of these c on firmations  go to Manage the system > Resources > Discovered objects >
+Systems > Local service mode systems and view the Admin ID status column.During the time  that Bravura Security Fabric  attemp ts  to verify valid administrator cr edentials  based on a
+discovered system, the Admin ID status of the discovered system is set to Pending . The managed
+system will have limited c apabilities.  Once the administrator cr edentials  have been v erified  the Admin ID
+status of the discovered system is set to Verified , and the managed system will be ready for use.
+If the administrator cr edentials  are not v erified,  then depending on the LWS RESVALID ADMIN
+CREDENTIAL setting ,  the following will occur:
+▪If the setting  is Disabled , the system will be a managed system but the administrator cr edentials  will ▪
+be shown as Failed . Warning messages will inform product administrators which systems have
+failed to verify administrator cr edentials.
+The managed system will have limited c apabilities.  Product administrators can manually provide
+cr edentials  for the discovered target system.
+Even if product administrators manually provide credentials  for the discovered target system, the
+status for its administrator ID will still be shown as Failed to mark that it had failed during the
+creation  process.
+▪If the setting  is Enabled , the aut omatic ally  discovered target system will be deleted. ▪
+The discovered system will attemp t  to validate against the next local service mode target system
+import rule until  all rules have been evaluated. Once that occurs, the discovered system will remain
+unmanaged.
+Set the LWS RES VALID ADMIN CREDENTIAL option  at Manage the system  > Modules  > Privileged
+access .
+Using no cr edentials
+For local service mode systems, Bravura Privilege  does not require cr edentials  to be specified.
+Using a plugin to get cr edentials
+To c on figur e  Bravura Privilege  to use pr e-e xisting  administrator cr edentials  on a managed discovered
+system using a plugin, type the name of the plugin in the Plugin to get cr edentials  field.
+Alt ernativ ely ,  you can de fine  a default plugin in IMPORT ADMIN CRED DEFAULTPLUGIN in Manage the
+system > Resources > Options . This pre-populates the Plugin to get cr edentials  field  when cr eating  target
+system import rules.
+See more in f ormation  about writing  an import admin cr edentials  plugin
+The plugin will receive as input, the computer attribut es.  You can view the available attribut es  by going to
+Manage the system > Resources > Discovered objects > Systems , and clicking on the system.
+The plugin, in the form of a KVGroup should look like:
+"" "" = { 
+    "ead_computer_attributes" "" = { 
+        "sv_attributes" "" = { 
+            #...single-valued attributes go here... 

@@ -1,0 +1,343 @@
+diagutil
+Use the diagutil program for tr oubleshooting  the Bravura Security Password Change Notific ation
+Module interceptor. Once executed, it submits real requests to the Password Manager service ( idpm ) to
+process according to the password interceptor service ( intcptsvc ) c on figur ation  file.
+This program acts as a real time  logging utility  to monitor the activities  between the interceptor and the
+Password Manager service ( idpm ) on the Bravura Security Fabric  server; for example, if an account
+password is changed, using net user <accountName> <Password>  in another command prompt,
+the activities  are displayed in the diagutil prompt until  [Ctrl]+[C] is used to stop logging.
+This program is installed by intcpt.msi  or intcpt-64.msi  on a Windows transparent password
+s ynchr oniz ation  trigger system and can be found in the following directory:
+<Program Files path>\Bravura Security\Password Filt er\util\
+Usage
+diagutil.exe [-l <debug level> ] [ -t <timeout> ]
+              -u <userID> -p <userPassword>
+Argument Description
+-l, --level <N> The debug level 1-6. The default is 4.
+-t, --timeout  <N> The timeout  in seconds to receive diagnostic  in f ormation.
+The default is 60 seconds.
+-u, --user <userID> The user to be diagnosed.
+-p, --password The user’s password.
+Examples
+For example:
+diagutil.exe -u qa1000 -p letmein!
+returns:
+User account name: qa1000
+Checking the password filter Dll system registry setting...passed
+Checking the password filter Dll if it has been loaded...passed
+Checking the password filter service if it is running...passed
+Setting password for user [qa1000]:
+2010-02-02 11:15:28.561.2903 -
+ [] psintcpt.dll [388,2172] Info: Logging has been enabled, Log level: 4
+2010-02-02 11:15:28.576.5698 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], entered PasswordFilter, sequential number ( SNO ): 1
+2010-02-02 11:15:29.675.4688 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], SNO: 1, PasswordFilter returned [1]2010-02-02 11:15:29.717.0218 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], entered PasswordChangeNotify
+2010-02-02 11:15:29.720.6418 - [] psintcpt.dll [388,456] Info: User:
+[qa1000], PasswordChangeNotify finished
+2010-02-02 11:15:29.724.6046 - [] diagutil.exe [3244,452] Info:
+***** User:[qa1000]'s password has been reset successfully *****
+If the debug level is greater than 4 (default), diagutil returns more detail on how the account falls
+into which categories.
+t estidpm
+Use the testidpm program to test Bravura Security Fabric  interceptors, API functions,  and CGI
+programs such as PSA, that send requests to the Password Manager service ( idpm ).
+Usage
+Run testidpm with the following arguments:
+testidpm [-host <host>] [-port <port>] [-targetid <targetid>]
+    [-account <account>]  [-userid <userid>] [-pass Bravura Pass]
+    <-option> "<argument>" [<argument 2>] ...
+Argument Description
+-account <account> The account/longID on <TARGETID>.
+-block Adds a blocking record and deletes all old requests in
+queue for the specified  user.
+-both Used with "-strength" and "-reset". Sends strength fir s t,
+and if OK, sends reset.
+-cgiresetqueued Resets an account’s password asynchronously.
+-cgiresetsynch Resets an account’s password synchronously. This is a cgi
+service function.  You must specify the account to reset.
+The caller uses shared memory, and gets a reply only
+after  the connector run is finished.
+Calls made for an interceptor use the -reset argument.
+-cgiunlocksynch Unlocks a locked-out account synchronously.
+-cgiverifysynch Verify an account’s password synchronously.
+-checknchange Checks the password against strength rules. If passed, it
+resets/synchronizes a user’s password.
+- finduser Finds a Bravura Security Fabric  user based on targetID
+and account.
+-host <host> Host where idpm is running.
+-pass Bravura Pass Password for the user.
+-port <port> TCP port on which idpm is listening.Argument Description
+-pwrules Displays the password policy, either default, or for a
+specified  account.
+-reset Resets/synchronizes a user’s password. This is for an
+interceptor oper ation,  coming in through socket, and all
+accounts in the same target system group of the trigger
+account can be reset, depending on the target system
+group setting.
+Calls made for a cgi program use the -cgiresetsynch
+argument.
+-sessionid <sessionid> A GUID produced by the caller of Password Manager
+service (idpm) cgi functions,  such as pss, psk or ida, to
+identif y  a round of requests on one or more accounts.
+Requests with the same sessionid are considered to be in
+the same group for running GROUP_SUCCESS/FAILURE
+external interface triggers (exit traps).
+-strength Checks the password against strength rules.
+-t ar g etid  <t ar g etid> Target ID for the specified  account.
+-threads <threads> Number of threads to send concurrent requests.
+-timeout  <timeout> Socket c onnection  timeout  value in seconds.
+Note : The default value is 60 seconds, however the
+Windows System default for connect timeout  is 21
+seconds maximum.
+If not specified,  the timeout  value defaults to 60 seconds.
+-userid <userid> UserID for the user.
+Examples
+1.To test the ability of Password Manager service to check a password against Bravura Pass  strength 1.
+rules (assuming you are on the Bravura Pass  server):  
+testidpm.exe -host localhost -port 3333 -account acct1 -
+pass mypass1234 -targetid w2kserver -strength  
+2.To test r esetting  a user’s password through Password Manager service:  2.
+ testidpm.exe -host localhost -port 3333 -account acct1 -
+pass mypass1234 -targetid w2kserver -reset  
+3.To print the Bravura Pass  password rules retrieved by idpm:  3.
+testidpm.exe -host MyPasswordManager -port 3334 -pwrules -timeout 90
+ 
+4.To check if a Bravura Pass  ID exists:  4.
+testidpm.exe -host localhost -port 3333 -finduser -user user1  
+5.To check if a user has an account on a target system:  5.testidpm.exe -host localhost -port 3333 -targetid win2kserver -
+finduser -user user1  
+user attr s
+Use the userattrs program to query account attribut es  in Micr osoft  Activ e  Directory; to find specific
+useful attribut es  that may be used as search criteria in designing the intcptsvc c on figur ation  file.
+This program is installed by intcpt.msi  or intcpt-64.msi  on a Windows transparent password
+s ynchr oniz ation  trigger system and can be found in the following directory:
+<Program Files path>\Bravura Security\\Password Filt er\util\
+Usage
+userattrs.exe [-p <ADsPath> ] [-a <attributes>] [-
+c <admin account> <admin password>] [ -f <ADsSearchFilter>] -
+u <accounts>
+Argument Description
+-p, --adspath <ADsPath> Specify the domain path (ADsPath). Available macros are
+%PDC%, %DC%, %DN%. The default is LDAP://%DC
+%/%DN%.
+-a, --attribut es  <attribut es> Specify the attribut es  to query, separated by a space. If
+none are specified,  all attribut es  are queried.
+-c, --cr edential  <admin account> <admin password> Specify administrator account and password separated
+by space. If no cr edentials  are specified,  the security
+context of the current process is used to bind the object.
+-p, -- filt er  <filt er> Specify the account searching criteria (ADsSearchFilter).
+The default is sAMAccountName=%USER%.
+-u, --users Specify the users’ accounts to query, separated by a
+space.
+Examples
+For example:
+userattrs.exe -a DisplayName distinguishedName -u brownwi
+returns:
+Open an ADs object: LDAP://%DC%/%DN%...succeeded.
+Retrieving user [brownwi]'s attributes...
+Attribute: [DisplayName]:
+  Brown, William
+Attribute: [_AccountName_]:
+  brownwiAttribute: [distinguishedName]:
+  CN=brownwi qa,CN=CertCo,DC=example,DC=local
+Cost : 437 (ms)
+verifycfg
+Use the verifycfg program to verify that a given account will be bypassed by password strength
+checking and/or s ynchr oniz ation,  according to per-target criteria set in the specified  intcptsvc
+c on figur ation  file. Neither actual account strength checking, nor s ynchr oniz ation,  is performed by this
+utility .  This tool is useful for verifying whether the c on figur ation  file is designed properly before putting
+the interceptor online.
+This program is installed by intcpt.msi  or intcpt-64.msi  on a Windows transparent password
+s ynchr oniz ation  trigger system and can be found in the following directory:
+<Program Files path>\Bravura Security\\Password Filt er\util\
+Usage
+ verifycfg.exe  [-c <file>] [-l <level>] -u <user>
+Argument Description
+-c, --cfg <cfg> Specify the intcptsvc c on figur ation  file. The default is
+intcptsvc.cfg
+-l, --level <N> The debug level 1-6. The default is 4.
+-u, --user The user to be v erified  (required).
+Examples
+For example:
+verifycfg.exe -c ..\service\intcptsvc.cfg -u qa1000 -l 4
+returns:
+Loading service configuration file:[..\service
+\intcptsvc.cfg]...succeeded.
+Retrieve user:[qa1000]'s attributes and evaluate settings...
+User: qa1000
+Session has been created successfully
+Target: End_Users --
+ None bypass      <<== It means this account will be strength checked and synchronized against 'End_Users' target
+Retrieve target: [End_Users], user: [qa1000]'s status...( FindUser )
+If return code belongs set [( 100 )] will be treated as strength check failed
+Target: [End_Users], user: [qa1000]'s status = 200, message = userid=qa1000 username=qa 1000
+Returned [200] [userid=qa1000 username=qa 1000], strength check will be successful    <<== The account was found in Pass through idpm.Target: Admin_Users --
+ Bypass both strength check and synchronization <<== It means this account will be NOT strength checked and synchronized against 'Admin_Users' target
+If the debug level is greater than 4 (default), verifycfg returns more detail on how the account falls
+into which categories.
+Phone Password Manager utilities
+d42util
+Use the d42util program to examine a line when transferring or placing a call with Phone Password
+Manager.
+Usage
+d42util.exe [<options>]
+Argument Description
+-b Specify the board name; the default device is dxxxB1.
+-c Specify the channel number; the default channel is 1.
+-d Dial the specified  string, then exit. By default, the hook
+state is "off -hook"  before dialing the string. If the string
+starts with = then the program dials the string without
+changing the hook state. If the string starts with ! then
+the program sets the hook state to "on-hook" before
+dialing the string.
+-i Specify the refresh interval in milliseconds; the default is
+1000.
+Examples
+To monitor the dxxxB1 line, channel 2 status, and display:
+d42util -b dxxxB1 -c 2
+To make a call to extension 332:
+d42util -d "<ESC>K1,332,,"
+To monitor with a specified  interval of 10 milliseconds:
+d42util -i 10
+voicebuild
+Use the voicebuild  program to create audio .wav files based on a vocal script .txt file using SAPI.
+Usage
+voicebuild.exe [<options>]Argument Description
+-f <folder> The output folder to store the newly-created .wav files.
+-o Overwrite e xisting  .wav files.
+-r <rate> The rate of the speech. This value can range from -10 to
+10; the default value is 0.
+-d <speech api dll> Speech API dynamic load library which can load either
+speechapi.dll or speechapix.dll. The speechapix.dll file
+loads from a remote server. By default, speechapi.dll is
+loaded.
+-i <speechinit> Specifies  a KVG file to load speech api initializ ation
+c on figur ation.
+-s <vocal-script> The vocal script file, read from standard input by default.
+-c <voice> The voice used to speak the vocal script.
+-a Enumerate available voices.
+-l <volume> The volume of the speech. This value can range from 0 to
+100; the default value is 100.
+Examples
+1.List all the installed voices on the current system:1.
+voicebuild.exe -a
+2.Create .wav audio files in the \tmp directory, using the listing  file vocal-script.txt, and the voice 2.
+"Cepstral William-8kHz":
+voicebuild.exe -f tmp -s ..\audio\en-us\vocal-script.txt -
+c "Cepstral William-8kHz"
+3.Re-create a set of .wav audio files,  and change the volume and rate: 3.
+voicebuild -l 30 -r 5 -o -f tmp -s ..\audio\en-us\vocal-script.txt -
+c "Cepstral William-8kHz"
+vpcmd
+Use the vpcmd  program, installed with Phone Password Manager, to test the g ener ation  or v erific ation
+of voice print audio files.
+Usage
+vpcmd.exe -c (generate|verify) -f <file> -u <userID> -vi <n> (-ei <n>|-
+en <n>) [ -p "<payload>"][ -s 1|0]
+Option  / Argument Description
+-c <generate—verify> The voiceprint command to perform. Valid commands:
+generate, verify (required)Option  / Argument Description
+-ei <1—2—3> The enrollment index to generate (users attemp t  to
+record speech 3 times).
+-en <1—2—3> The enrollments to verify.
+-f <file> The speech audio file (required)
+-l Prevent voiceprints being running concurrently.
+-p <CELL—LAND> The payload to attach  to the generated voiceprint.
+-s <1—0> Whether to save the speech voice: 1 to save, 0 to ignore.
+-u <userID> The user ID (required)
+-vi <n> The v erific ation  phrase index (required)
+Examples
+1.To generate voice print audio file "a.wav" with user "user1" using cellphone as the recording type: 1.
+vpcmd.exe -c generate -f a.wav -u user1 -vi 2 -ei 1 -p "CELL"
+2.To verify the user voice print with "a.wav" on "user2" using "land-line".2.
+vpcmd.exe -c verify -f a.wav -u user2 -vi 2 -en 2 -p "LAND"
+vputil
+The vputil  program is installed with Phone Password Manager and helps to clean the voice print
+database by removing enrollment data for users who do not have a valid Bravura Pass  pr ofile.
+Usage
+vputil.exe [query|list|clean][<options>]
+Option  / Argument Description
+query Reports specified  user’s v erific ation  threshold and
+enrollment consistency threshold. It also shows all
+enrollments, v erific ation  phrases and r enditions.
+list Lists users who have completed voice print enrollment,
+but do not have a valid Bravura Security Fabric  pr ofile.
+Optionally ,  this can be used in c onjunction  with the -a
+option  to list all enrolled users, instead of only listed
+those without valid pr ofiles.
+clean Removes enrollment data for users who have completed
+voice print enrollment, but do not have a valid Bravura
+Security Fabric  pr ofile.  For example, this option  removes
+data for users who have previously enrolled, but their
+pr ofiles  have since been deleted.
+-a Lists all enrolled users instead of only listing  those
+without valid pr ofiles.  Used in c onjunction  with the list
+option.Option  / Argument Description
+-n Searches for and aut omatic ally  removes enrollment data
+for users who do not have a matching Bravura Security
+Fabric  pr ofile.
+-t <target system ID> Specifies  which target system to search. If a target system
+is not specified,  then the default target system is chosen.
+-u <list file> Specifies  the name of the list file that specifies  which
+users to clean. Used with the clean option.
+-w Specifies  the voice print interface dll. By default, vputil.dll
+is used.
+Examples
+1.To list all users who have completed voice print enrollment:1.
+vputil.exe list -a
+2.To list users from Activ e  Directory target "AD" who have completed voice print enrollment: 2.
+vputil.exe list -t AD
+3.To remove enrollment data for users who have completed voice print enrollment but do not have a3.
+valid Bravura Security Fabric  pr ofile:
+vputil.exe clean -n
+Privileged access management utilities
+discoverystatussync
+The discoverystatussync utility  attemp ts  to resolve out of sync discovery c ompletion  statuses for
+a specific  Bravura Privilege  Local W ork s t ation  Service ( hipamlws ) system. This is useful if the Local
+W ork s t ation  Service client is no longer submitting  new changes as a result of one or more r eplic ation
+nodes r eporting  a diff er en t  discovery status than the primary node. This utility  can also be used to
+compare the status of each r eplic ation  node to determine whether there are possible inconsistencies.
+The utility  can be run on the primary r eplic ation  node only .
+Usage
+ discoverystatussync.exe -query -systemid <LWS system ID>
+ discoverystatussync.exe -resolve -systemid <LWS system ID>
+Argument Description
+-query Set this flag to query the discovery status of a specific
+Local W ork s t ation  Service system.
+-resolve Set this flag to attemp t  to aut omatic ally  resolve out-of-
+sync discovery status for a specific  Local W ork s t ation
+Service system.Argument Description
+-systemid <systemid> The ID of the Local W ork s t ation  Service system.
+(required)
+Examples
+1.To query the status of a given Local W ork s t ation  Service system: 1.
+discoverystatussync.exe -query -systemid <LWS system ID>
+2.To resolve out-of-sync discovery status of a given Local W ork s t ation  Service system: 2.
+discoverystatussync.exe -resolve -systemid <LWS system ID>
+pswxdom2webapp
+The pswxdom2webapp  utility  converts e xisting  Browser Driver ( pswxdom ) c on figur ation  to JSON that
+can be used for web apps. The utility  locates all Browser Driver access disclosure plugins, including ones
+created globally, as well as those overridden in the managed system policy (MSP) level. By default, a
+corresponding web app will be generated for each converted Browser Driver access disclosure. Browser
+Driver access disclosures used in the MSP-level will not be converted if none of the disclosure attribut es
+values are overridden.
+The pswxdom2webapp utility  can be found in the util directory.
+The following Browser Driver disclosure attribut e  settings  are converted:
+▪checkboxdata▪
+▪ c onstfieldda t a▪
+▪ f ormatted  username ▪
+▪ pass w or dfieldids▪
+▪ settletime▪
+▪ submitbuttonids▪
+▪url▪
+▪ username fieldids▪
+The following Browser Driver disclosure attribut e  settings  are not converted:
+▪denypopups▪
+▪ f ormatted  title ▪
+▪height▪
+▪uicontrols▪
+▪width▪
+▪simulatekeypress▪
+Notes:

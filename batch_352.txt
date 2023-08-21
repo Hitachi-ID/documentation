@@ -1,0 +1,345 @@
+3.Modify the text argument for C_DISPLAY_MANAGEGRP .3.
+4.Modify the text argument for C_DISPLAY_MANAGEGRP_NEW.4.
+5.Generate the skin files;  for example: 5.
+make.bat default en-us 
+make.bat install default en-us
+To find out what options  are available for a embedded link:
+1.Navigate to \<instance>\design\.1.
+2.Generate debug skin files: 2.
+make.bat debug default en-us 
+make.bat install default en-us
+3.In the product, inspect elements on the embedded link you are modifying to view a list of available3.
+objects.
+Modify embedded links through component templates
+You can modify the appearance of the embedded links that appear when submitting  a request or when
+c ompleting  a review. You can choose to use the id, name, or guid of the object.
+For example, to change the embedded link of users so that only the name is displayed and not their
+username:
+1.Open the clickable-link.component.ts  file found in 1.
+\<instance>\design\src\ui\src\app\shared\components\clickable-link\.
+2.Copy the file to 2.
+\<instance>\design\custom\ui\src\app\shared\components\clickable-link\.
+3.Find the following row in the templates section: 3.
+      user: '%name% (%id%)',   
+4.Modify the text:4.
+      user: '%name%',  
+5.Generate the skin files;  for example: 5.
+make.bat default en-us 
+make.bat install default en-us
+Modify external link attribut es
+You can determine whether external links open in the same tab/window or in a new tab/window by
+using the target attribut e  in the HTML reference tag. When the attribut e  value is _BLANK the linked site
+opens in a new tab. When the attribut e  value is _TOP the linked site opens in the same tab.
+For example:
+<a hr e f="http:// g oogle.c om"  rel="external" target="_blank">LINK _BLANK</a>
+opens in a new tab.<a hr e f="http:// g oogle.c om"  rel="external" target="_top">LINK _TOP</a>
+opens in the same tab.
+Block web crawlers
+The Bravura Security Fabric allows you to block the web crawling by adding web crawlers to the
+robots.txt file located in the samples directory. To block web crawlers, place robots.txt file in
+C:\inetpub\wwwroot .
+By default Robot.txt comes with blocking following web crawlers:
+# Block all but AdsBot crawlers
+User-agent: *
+Disallow: /
+# Block Google AdsBots
+User-agent: AdsBot-Google-Mobile
+User-agent: AdsBot-Google
+User-agent: AdsBot-Google-Mobile-Apps
+Disallow: /
+Con figur e  response headers
+Bravura Security Fabric  allows you to c on figur e  response headers using customized meta tags supplied in
+setupiis.cfg  file for all pages of the product to make them searchable by search engines.
+This can be achieved using setupiis.cfg file located in the samples directory and place it in the
+p sc on fig  directory.
+Using command line interface, from util directory, run:
+setup_iis.exe -r
+Then execute:
+setup_iis.exe -pwd <password>
+See more setup_iis usage in f ormation
+Use setup_iis  to modify the Internet In f ormation  Services (IIS) c on figur ation  for a Bravura Security
+Fabric  instance. Normally, the installer for Bravura Security Fabric  will handle adding or removing the
+c on figur ation  when installing or uninstalling the product. However, in the event of an installer error,
+setup_iis  can be used to perform these oper ations.  In addition,  setup_iis  can be used to
+c on figur e  response headers using customized meta tags.
+setup_iis  must be run from within the directory of the installed instance.
+Usage
+setup_iis [-i] | -pwd <password> | -rOption Description
+-i Install oper ation
+-pwd Password of the account ID used to run Bravura Security
+Fabric services
+-r Remove oper ation
+Examples
+1.To install the IIS c on figur ation: 1.
+setup_iis -i -pwd accountpwd1234
+2.To uninstall the IIS c on figur ation: 2.
+setup_iis -r
+3.To c on figur e  response headers, copy the setupiis.cfg  file from the instance's samples directory 3.
+to its p sc on fig  directory. Open the copied setupiis.cfg  in a text editor, and modify it for the tags
+to be added. Then, run setup_iis  as you would to install the IIS c on figur ation.
+.
+Login Assistant Cr edential  Provider
+You can modify text and images used in the local secure kiosk account Cr edential  Provider.
+Before installing the softw ar e  and setting  up the account:
+1.Obtain the required language packs and generate the language skins. See Supporting  Multiple 1.
+Languages and Locales  (on page 3479) for details.
+2.Copy the generated gina.z files to the w ork s t ation  on which the Cr edential  Provider is to be installed. 2.
+You can also edit the ska.js  file using the example ska skin to modify the web skin by adding or
+removing HTML elements to adjust the user experience of the kiosk-style browser; for example, disabling
+external links.
+The example skins are installed if the "User Interface Design Samples" option  is enabled during
+ins t allation.  Copy the \<instance>\design\examples\ska\ directory to the \<instance>\design\custom\
+directory.
+Make any required changes to ska.js and then run the following commands, using the American English
+language as an example:
+make.bat ska en-us 
+make.bat install ska en-us
+Install the Cr edential  Provider with modified  text or images:
+▪Using the command line:▪
+ska.msi LANGUAGEFILES="<pipe-separated list of fully-
+qualified filenames>"  IMAGEFILE="<fully qualified filename>"For example:
+ska.msi LANGUAGEFILES="c:\gina-es-es.z|c:\gina-ja-
+jp.z" IMAGEFILE="c:\image.bmp"
+▪By editing  the msi: ▪
+Add entries for languages to the binary table in the form LANG_<language>-Rest of World
+and provide the necessary gina.z file.
+Add entries for bitmap image files for the Cr edential  Provider button  to the Binary table in the form
+ImgFile  and provide the bitmap file.
+Specifying a language file on command line overrides entries in the binary table for that language, but
+any languages specified  only in the Binary table will still be present in the ins t allation.
+In Window 7, you must change the system locale to access the Cr edential  Provider in a specific  language.
+See also:
+Add-on ins t allation  command-line options  (on page 245) for more in f ormation  about local secure kiosk
+account MSI pr operties.
+Modify the noconnect page
+To modify the noconnect page that displays when a local secure kiosk account is unable to connect to the
+Bravura Security Fabric  server:
+1.Make a copy of the noconnect.m4 file in the \<instance>\design\src\ directory and rename it. 1.
+2.Modify noconnect.m4  to suit your requirements. 2.
+3.Generate and install a new skin3.
+To generate and install new or modified  skin files,  use the following format for the commands to run
+from the <instance>\design\ directory, where en-us  is American English:
+1.Compile the skins:1.
+make.bat default en-us
+Changes are saved in the instance's <instance>\design\skin\ directory
+2.Install the skins:2.
+make.bat install default en-us
+The compiled files are copied to the instance's skin\ directory
+3.If necessary, reload and review any changes to Bravura Security Fabric  web pages. 3.
+Do not run the second command to install the skins if they fail to compile, especially if the firs t m4
+file (links.m4) fails to compile.
+Skins can fail to compile if something in the environment is locking the skin files.  That can be a
+malware program, an automated backup tool running at the time,  but more likely the product UI itself
+being in use at the time  of the skin c ompilationHave a test instance where you can compile the skins when the instance is not being used. Make a
+backup copy of the files on the production  instance in case you need to quickly roll them back. Review
+changes on the test instance, then copy the skin files to the production  instance.
+.
+4.Copy the new noconnect.html  to C:\Program files\Br a vur a  Security\Login Assistant\ where Login 4.
+Assistant is installed.
+Add account attribut es  to Change password pages
+You can add specified  account attribut es  to the Change passwords (PSS) module pages by customizing
+pss.m4. For example, when users click the Change passwords link, you can add accounts’ enabled/
+disabled status where users select target system groups, as illustrated below:
+You can also add attribut es  such as fir s t name and last name on account selection  page, as illustrated
+below:
+To add account attribut es  to Change passwords (PSS) module pages:
+1.Create a file named pss.m4  in the \<instance>\design\custom\ directory. 1.
+2.Add the following tags as required:2.
+     !!!S_SELECT_TGROUP_ACCTATTR  
+     !!!S_CHANGE_ACCTATTR       !!!S_ACCTATTR_SEP  
+where:
+▪S_SELECT_TGROUP_ACCTATTR  de fines  account attribut es  to place on the target system group ▪
+selection  page.
+▪S_CHANGE_ACCTATTR  de fines  account attribut es  to place on the account selection  page. ▪
+▪S_ACCTATTR_SEP  de fines  the separator for multi- v alue  attribut es. ▪
+3.Copy the appropriate tags from the pss.m4 file in the \<instance>\design\ directory. 3.
+4.Edit the table layout to accommodate the account attribut es,  as illustrated in the sample custom 4.
+pss.m4 file below.
+5.Save and close the file. 5.
+6.Generate and install the new skin files 6.
+To generate and install new or modified  skin files,  use the following format for the commands to run
+from the <instance>\design\ directory, where en-us  is American English:
+1.Compile the skins:1.
+make.bat default en-us
+Changes are saved in the instance's <instance>\design\skin\ directory
+2.Install the skins:2.
+make.bat install default en-us
+The compiled files are copied to the instance's skin\ directory
+3.If necessary, reload and review any changes to Bravura Security Fabric  web pages. 3.
+Do not run the second command to install the skins if they fail to compile, especially if the firs t m4
+file (links.m4) fails to compile.
+Skins can fail to compile if something in the environment is locking the skin files.  That can be a
+malware program, an automated backup tool running at the time,  but more likely the product UI itself
+being in use at the time  of the skin c ompilation
+Have a test instance where you can compile the skins when the instance is not being used. Make a
+backup copy of the files on the production  instance in case you need to quickly roll them back. Review
+changes on the test instance, then copy the skin files to the production  instance.
+.
+Sample custom pss.m4 file
+!!!S_SELECT_TGROUP_ACCTATTR
+@accountEnabled
+!!!S_CHANGE_ACCTATTR
+givenName
+sn
+!!!S_ACCTATTR_SEP
+,!!!S_SELECT_TGROUP_ROW
+  <!--@tablerow()-->
+    <!--@cell()-->
+      <!--@prompt( class="bold" text="%TGDESC%" )--><!--@endprompt()-->
+      <!--@table( class="list" )-->
+        <!--@tablerow()-->
+          <!--@headercell()-->
+            <!--@prompt( text="_NPHPSS_ACCOUNT___" )--><!--@endprompt()-->
+          <!--@endheadercell()-->
+          <!--@headercell()-->
+            <!--@prompt( text="_NPHPSS_TRGT______" )--><!--@endprompt()-->
+          <!--@endheadercell()-->
+          <!--@headercell()-->
+            <!--@prompt( text="Enabled" )--><!--@endprompt()-->
+          <!--@endheadercell()-->
+          <!--@headercell( width="RWIDTH" )-->
+            <!--@nbsp()--><!--@endnbsp()-->
+          <!--@endheadercell()-->
+        <!--@endtablerow()-->
+        %ACCTS%
+      <!--@endtable()-->
+    <!--@endcell()-->
+    <!--@cell( class="right" width="CWIDTH" )-->
+      <!--@button(  image="select.png" name="SUBMIT-SELECT-%TGID%" text="BUTTON_SELECT" )--
+><!--@endbutton()-->
+    <!--@endcell()-->
+  <!--@endtablerow()-->
+!!!S_SELECT_TGROUP_ACCOUNT_ROW
+        <!--@tablerow()-->
+          <!--@cell()-->
+            <!--@prompt( text="%ALIAS%" )--><!--@endprompt()-->
+          <!--@endcell()-->
+          <!--@cell()-->
+            <!--@prompt( text="%HOSTNAME%" )--><!--@endprompt()-->
+          <!--@endcell()-->
+          <!--@cell( colspan="2" )-->
+            <!--@prompt( text="%ACCTATTR_ACCOUNTENABLED%" )--><!--@endprompt()-->
+          <!--@endcell()-->
+        <!--@endtablerow()-->
+!!!S_CHANGE_ACCOUNTS
+<!--@cell( width="50%" )-->
+  <!--@prompt( class="bold" text="_NPHPSS_RESET_PAS" )--><!--@endprompt()-->
+  <!--@table( class="list" )-->
+    <!--@tablerow()-->      <!--@headercell( class="center checkAll" width="CWIDTH" )-->
+        %HEADERIMG%
+        <!--@nbsp()--><!--@endnbsp()-->
+      <!--@endheadercell()-->
+      <!--@headercell()-->
+        <!--@prompt( text="_NPHPSA_ACCOUNT___" )--><!--@endprompt()-->
+      <!--@endheadercell()-->
+      <!--@headercell()-->
+        <!--@prompt( text="_NPHPSA_TRGT______" )--><!--@endprompt()-->
+      <!--@endheadercell()-->
+      <!--@headercell()-->
+        <!--@prompt( text="First name" )--><!--@endprompt()-->
+      <!--@endheadercell()-->
+      <!--@headercell()-->
+        <!--@prompt( text="Last name" )--><!--@endprompt()-->
+      <!--@endheadercell()-->
+    <!--@endtablerow()-->
+    %ROWS%
+  <!--@endtable()-->
+<!--@endcell()-->
+!!!S_CHANGE_ROW
+  <!--@tablerow()-->
+    <!--@cell( class="center" )-->
+      %ROWCHECK%
+    <!--@endcell()-->
+     <!--@cell()-->
+      <!--@prompt( text="%ALIAS%" )--><!--@endprompt()-->
+    <!--@endcell()-->
+    <!--@cell()-->
+      <!--@prompt( text="%HOSTNAME%" )--><!--@endprompt()-->
+    <!--@endcell()-->
+    <!--@cell()-->
+      <!--@prompt( text="%ACCTATTR_GIVENNAME%" )--><!--@endprompt()-->
+    <!--@endcell()-->
+    <!--@cell()-->
+      <!--@prompt( text="%ACCTATTR_SN%" )--><!--@endprompt()-->
+    <!--@endcell()-->
+  <!--@endtablerow()-->
+Modify JavaScript behavior
+This section  explains how to c on figur e  various JavaScript options  for the Bravura Security Fabric  user
+interface.Default JavaScript options  are described in in the c on fig.js  file in the \<instance>\design\src\js\ directory.
+Do not edit this file, as it is overridden during upgrades.
+To modify which scripts are enabled for all skins, copy the c on fig.js  file from \<instance>\design\src\js\
+into \<instance>\design\custom\js\ and modify accordingly. Note that when the custom c on fig.js  is
+present, it is used instead of \<ins t ance>\design\sr c\js\c on fig.js.  Script modific ations  are not inherited as
+they are with m4 cus t omiz ations.
+To modify which scripts are enabled for a specific  skin, copy the config.js  file from \<instance>
+\design\src\js\ into \<instance>\design\custom\<skin>\js\. Note that if this skin-specific  c on fig.js  exists it
+completely overrides both the installed defaults in \<instance>\design\src\js\ and those in the
+\<instance>\design\custom\js\.
+Once you have made changes, generate and install the skins  (on page 3477). This compiles all of the
+Bravura Security Fabric  JavaScript into the scripts.js file in wwwdocs\<skin>\js\.
+The scripts.js  file is minimized; that is, stripped of all of its comments and extra white space. The
+scripts.js file is not considered human readable. When debugging JavaScript in a test environment, use
+the debug flag to prevent minimiz ation.  Never use debug skins in a pr oduction  environment. Building in
+debug enables some JavaScript debugging console messages and errors, that may show as browser
+errors. These messages and errors can confuse users, and interfere with the smooth oper ation  of the
+product.
+When de fining  an arbitrary custom JavaScript file, that is, one without an equivalent JavaScript file in
+\<instance>\design\src\js\, add it to the \<instance>\design\custom\js\ or \<instance>\design\custom
+\<skin>\js\ directory. The make.bat batch file will include this file in the scripts.js file and minimize it.
+If you do not want the custom JavaScript file to be combined with scripts.js , place the custom file in
+\<instance>\design\custom\js\copy-only\. The make.bat batch file will copy this file to wwwdocs\default
+\js as its own file, and it will not be combined with the scripts.js  file.
+In order to use a custom JavaScript file (for example custom.js) you need to reference it in index.html
+(\design\src\ui\src\index.html). Add:
+<script type="text/javascript" src="docs/default/js/custom.js"></
+script> before:  <!-- End Script -->  and then rebuild the skins.
+The browser limits the number of c onnections  to the server. The more files a page has to download, the
+longer it can take to load the page. It is generally better  to include custom JavaScript files in
+scripts.js . However, if the custom JavaScript file is of a sub s t antial  size, for example, over 250K, and
+only used on a few pages, it may be more desirable to keep that file separate from scripts.js .
+The following JavaScript options  are enabled by default:
+Option Description
+Con fig. Aut oGr o wField Aut omatic ally  increase the size of text areas while typing, to fit content.
+The default setting  is true.
+Con fig. Aut oR emo v eQuestions Remove already-used questions  from remaining drop down boxes in
+security questions.  The default setting  is true.Option Description
+Con fig. Aut oComple t eP slang Display auto-complete help when editing  PSLang fields.  When the page
+loads, the initiallyOff  setting  turns off auto c ompletion  by default, while
+allowing it to be turned on by the user. The default setting  for
+Con fig. Aut oComple t eP slang  is true; for initiallyOff  the default is false.
+Con fig. CheckAll Add a checkbox to the header cell of some tables to check/un-check all.
+The default setting  is true.
+Con fig. CheckP ass w or dRules Displays live password v alidation  as a password is typed. The default
+setting  is true.
+Con fig. Con firmSelection Display c on firmation  dialog when preforming certain actions  like delete.
+The default setting  is true.
+Con fig.F ocusField Bring user focus to the primary text input when the page loads. The
+default setting  is true.
+Con fig.P opupCalendar Display a pop-up calendar when date fields  are focused. The default
+setting  is true.
+Con fig.P opupNot e Display additional  in f ormation  when hovering over info icons. The
+default setting  is true.
+Con fig.R elativ eDa t es Display dates in the Front-end (psf) and in the applic ations,  using
+r elativ e  times t amp s.  For example, the date you last logged in will
+display as 3 days ago. Hovering over the text reveals the real date as a
+tool tip. Any element with a "date-date" attribut e  set to a valid date will
+be replaced by the r elativ e  date, with additional  tool tip. The default is
+setting  is true. When set to false, the actual date and time  is shown.
+Con fig.R eplaceImag esWithHiR es If a Hi-Res display is detected, replace images with hi-res equivalents.
+The default setting  is true.
+Con fig.R esiz eT e x t Add resize text controls to the page footer. The default setting  is false.
+Con fig.Scr ollT oElemen t Scroll down to an object when the page loads (certain pages only). The
+default setting  is true.
+Con fig.Sear chActions Enables the search actions  box in the page header. The default setting  is
+true; the shortcut is [’f’].
+Con fig.Sear chT able De fines  the keyboard shortcut to focus the search actions  field.  The
+default is [s].
+Con fig.SortT able Expand the clickable region on sortable tables from an icon to the
+whole header cell. The default setting  is true.
+Con fig. UseSug g es t edP ass w or d Populate password fields  with a suggested password when selected.
+The default setting  is false.
+Con fig.Z oomImag e Zoom pr ofile  image thumbnails to fill more of screen during mouse
+over. The default setting  is true.
+Modify the display of connector return messages
+After  each oper ation,  a connector returns a message and a return code. You can modify the connector
+messages a user sees displayed on  Bravura Security Fabric  page by modifying the error_agent_<N> tags

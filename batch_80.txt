@@ -1,0 +1,318 @@
+var $other = iif( size($OTHER_NAME) > 0,
+$OTHER_NAME[0], "" );
+$other[0];
+This retrieves the fir s t character of a user’s “other name”. The $OTHER_NAME  variable is an array of
+strings. Like other pr ofile  attribut es  it could be de fined  to accept more than one value. So, the expression
+assigns the fir s t element of $OTHER_NAME (assuming it exists, otherwise it returns a blank string) to
+$other . Since the variable $other is just a string, and not an array, the expression $other[0] gets just
+the fir s t character of the “other name”.
+.
+St atic  vs dynamic user membership
+When specifying user class membership, a decision has to be made whether to assign members s t atic ally
+via the Explicit users tab, and/or dynamically via the "Criteria" tab or s t atic ally  via the "Explicit users" tab.
+Data processing speed during discovery and admins tr ativ e  e ff ort  must be considered when making this
+decision.
+De fining  membership criteria according to membership in a specific  group or by attribut e  values can
+result in more data processing time  during discovery, but it can also avoid adminis tr ativ e  e ff ort  when
+large numbers of users are involved. This is particularly  true if a suitable group already exists or if
+identific ation  by attribut e  criteria is feasible (for example, to identif y  all users that are part of a specific
+department).
+Declaring s t atic  "explicit users" is the fastest method from a data-processing per spectiv e,  and the least
+error-prone during initial  setup, particularly  for small to medium-size or g aniz ations  where there are a
+small number of employees responsible for specific  tasks. However, explicit user de finitions  require
+manual changes whenever s t a ffing  or role changes occur. This adminis tr ativ e  e ff ort  can become
+signific an t  for larger or g aniz ations.  Explicit user de finitions  become more prone to errors as time  passes
+and s t a ffing  changes occur.
+Many businesses implement a c ombination  of both s t atic  explicit user and dynamic criteria-based
+memberships.
+In Bravura Privilege implemen t ations,  Bravura Privilege P attern  makes it easier to use team management
+(which uses dynamic workflo w).
+Here are pros and cons to be considered for each approach:
+St atic  Explicit user - Pros
+▪Bravura Pass  administrator has full control. ▪
+▪Changes made on the "Explicit users" list take e ff ect  right away. ▪
+▪No need to create new groups in AD for specific  Bravura Security Fabric  purposes. ▪
+▪No dependency on the AD in t egr ation  listing  a group without error. ▪
+▪Suitable, and often  best pr actice,  as the method for: ▪
+▪smaller Bravura Pass  environments. ▪▪environments that do not already have security groups c on figur ed,  or other ways of establishing ▪
+the access rules required in the Bravura Security Fabric  solution.
+▪busy environments with multiple  admin teams performing maintenance on targets without ▪
+c ommunic ating  changes to other teams, or excessive red tape between Bravura Security Fabric  and
+AD teams.
+St atic  Explicit user - Cons
+▪Bravura Pass  administrator must keep up-to-date with employee and role changes, pot entially ▪
+r epeating  work done in AD.
+▪Explicit user selection  must be done one by one from the list of valid Pr ofiles. ▪
+▪this can be a bene fit,  since if a user is not yet valid (listed from a Source of Pr ofile  target), the ▪
+Bravura Pass  administrator will notice  during explicit user selection.
+Dynamic Criteria - Pros
+▪Recommended when very large groups of users require segr eg ation  to achieve particular  w orkflo w s, ▪
+or for gr anting  diff er en t  privileges.
+▪ Existing  user-grouping structure can be leveraged when it already exists on target systems and it must ▪
+be used v erbatim  in Bravura Security Fabric .
+▪Used more often  for larger clients and with Bravura Privilege  and Bravura Identity  product licenses. ▪
+This option  is used less for Bravura Pass  clients.
+Dynamic Criteria - Cons
+▪Can require data processing resources for both the target and Bravura Security Fabric . ▪
+▪Dependant on Autodiscovery:▪
+▪Changes made to group membership in AD must wait for a successful autodiscovery to be▪
+propagated to Bravura Security Fabric .
+▪Any Autodiscovery listing  or object-loading issue becomes a security -c on figur ation  issue as well. ▪
+▪ Listing  too many groups/group member s/ attribut es,  as well as c alculating  userclass membership ▪
+caches can slow autodiscovery. It is advised to only list data used in the product solution.
+De fining  criteria for segmenting  users
+Criteria allow you to test users in order to de fine  which users belong to a user class. They are extremely
+fle xible  filt er s  which act in series. Users only pass the test if they satis f y  all de fined  criteria. This provides
+many options  that can be used in any c ombination.
+There are three types of user class criteria that you can use to determine segmen t ation:
+▪ Attribut e  criteria – de fined  by pr ofile  and request attribut es,  and only apply to personal user classes. ▪
+▪Membership criteria – de fined  by group membership, and only apply to personal user classes. ▪
+▪PSLang criteria – de fined  by PSLang expressions, and apply to both types of user classes. ▪
+You can de fine  as many criteria as you require to properly de fine  your segment of users for the user class.
+To de fine  criteria for segmenting  users:1.Navigate to the User class de finition  (on page 737) page for an e xisting  user class. 1.
+2.Click the Criteria tab. 2.
+3.Click Add new… in the appropriate section  for the type of criteria that you want to add. 3.
+Bravura Security Fabric  displays a new page for the selected criteria type.
+▪Enter the required in f ormation  on the criteria page. ▪
+▪ Attribut e  criteria ▪
+▪Membership criteria▪
+▪PSLang criteria▪
+To learn how to do this see Adding attribut e  criteria  (on page 794)
+4.Test the user class  (on page 804). 4.
+5.If required, repeat the above procedure to add additional  criteria to the user class. 5.
+Continue  to test the user class membership after  you add each criteria. This allows for much easier
+troubleshooting  if a mistake occurs while adding user class criteria.
+Cr eating  either/or rules for user class memberships
+Either/or rules for user class criteria are necessary when users do not have overlapping criteria, but you
+want them to be part of the same user class. For example, an either/or rule would be required if there
+was a need for users with membership from two diff er en t  Activ e  Directory groups to be part of the same
+user class, but the users did not have membership of both groups. Adding both groups to the user class
+criteria would result in only users that are members of both groups becoming user class members.
+Therefore, we need a diff er en t  c on figur ation.
+To achieve either/or rules for user classes, it is best pr actice  to create multiple  user classes. User classes
+themselves do not have the ability to contain either/or criteria rules unless using a PSLang expression.
+However, the areas of the product that require membership from user classes to assign access and
+privileges do have the ability to assign multiple  user classes. Once multiple  user classes are assigned,
+options  appear to determine if users need to be members of both user classes or just one of them to gain
+the assigned privileges. This is determined by selecting  the options  for "Any" or "All" for the member
+user classes listed.
+Although it is an option  to create a PSLang rule to create either/or criteria definitions,  PSLang rules can
+cause lengthy user class membership c alculations,  especially for companies with product environments
+that have many systems and users.
+To assign security privileges to users that are part of two diff er en t  AD groups:
+1.Create user class A for users that have group memberships matching AD group 1. 1.
+2.Create user class B for users that have group memberships matching AD group 2. 2.
+3.Create a security user group containing the desired privilege to be assigned.3.
+4.In the membership criteria tab of the user group, add both user class A and user class B as members. 4.
+An option  for users to be part of "All" or "Any" of the multiple  user classes appears.5.For the option,  The participan ts  have to match which of the user classes:  select Any of the user 5.
+classes .
+Membership criteria for the security user group is now de fined  as a user needs to be a member of either
+user class A or user class B. Users from AD group 1 OR AD group 2 will now have the allowed privileges of
+the security user group.
+For a more detailed example, see Example: Either/or rules for user class memberships  (on page 801).
+Adding attribut e  criteria
+On the criteria page:
+1.Select a P articipan t  if you are adding criteria to a r elational  user class. The participan t  is aut omatic ally 1.
+selected for personal user classes.
+2.Search for or type the pr ofile/r eques t  Attribut e  to use for the comparison. 2.
+3.If required, enable the P articipan t ’ s  value must equal the value of this other participan t  option  to 3.
+compare attribut es  with another participan t.  This option  is only displayed for r elational  user classes.
+If this option  is:
+▪Disabled (default) then you must select a Comparison method . ▪
+▪Enabled, then the Comparison method menu and Value field  are replaced by a drop-down list of ▪
+participan ts.  Select a participan t  to compare attribut es  with.
+When enabled, you can only compare the same attribut e,  and the values must be equal to satis f y
+the criteria. You can compare against a fix ed  value, or the same attribut e  of a diff er en t  user. You
+cannot de fine  asymmetrical r elationship s  through attribut e  criteria; for example, the MANAGER
+INDIRECT user class.
+4.If required, select the Comparison method. 4.
+The available comparison methods depend on the type of attribut e  selected. For example, “starts
+with” does not appear for date or boolean attribut e  types.
+5.Disable the Case sensitiv e  comparison checkbox if you want the comparison to be c ase-insensitiv e. 5.
+By default, this option  is enabled, making comparisons c ase-sensitiv e.
+This option  is only available for relational  user classes with “character” or “memo” attribut e  types.
+6.Click Add. 6.
+Adding group membership criteria
+On the criteria page:
+1.Select a P articipan t  if you are adding criteria to a r elational  user class. The participan t  is aut omatic ally 1.
+selected for personal user classes.
+2.Choose the appropriate value from the Membership drop-down list. Select: 2.
+▪Required – to include users who belong to the specified  group in the user class. ▪
+▪Disallowed – to include users who do not belong to the specified  group in the user class. ▪3.Search for, or type the ID of the Target system to which the group belongs. 3.
+4.Search for the ID of the managed Group . 4.
+5.Click Add. 5.
+Adding PSLang criteria
+On the criteria page, type your PSLang expression, then click Add.
+Users are included in the class if the expression evaluates to true. Depending on the type of user class,
+you can include the P articipan t  IDs in your expression. For example:
+▪$USER – In a personal user class, where the participan t  ID is set to USER . ▪
+▪$REQUESTER – In a r elational  user class, where the participan t  ID of the requester is set to ▪
+REQUESTER .
+▪$RECIPIENT – In a r elational  user class, where the participan t  ID of the recipient is set to ▪
+RECIPIENT .
+To learn the diff er ence  between personal and r elational  user classes, see User Classes  (on page 733).
+You can also use the following helper functions,  intended specific ally  for PSLang expressions that de fine
+user classes:
+g e tUser sB yAttrV alue
+ getUsersByAttrValue( $attrid, $value ) 
+Gets a list of users by attribut e  value.
+Parameters
+attrid The pr ofile  attribut e  ID to search on.
+value The exact value to match on.
+Return value An array of users that match the pr ofile  attribut e  value.
+getUsersByGroup
+  getUsersByGroup( $targetid, $groupid ) 
+Gets a list of users that have group membership to the specified  managed group.
+Parameters
+t argetid The target system ID.
+value The long ID of the managed group on the target system.
+Return value An array of users that belong to a managed group.
+getUsersByManager
+   getUsersByManager( $manager, $direct ) Gets a list of subordinates by manager.
+Parameters
+manager The manager pr ofile  ID.
+direct If 0, the function  will return all the managers
+subordinates in the management chain. If non-zero, the
+function  will return only the managers direct
+subordinates.
+Return value An array of subordinates for the manager.
+getUsersByRole
+   getUsersByRole( $roleid ) 
+Gets a list of users by role.
+Parameters
+roleid The role ID to search on.
+Return value An array of users that have a specified  role.
+g e tUserAttrV alueFir s t
+  getUserAttrValueFirst ( <userID>, <attributeID> ) 
+Gets the fir s t value of a given attribut e  for a given user.
+Parameters
+userID The pr ofile  ID of the user being evaluated.
+attribut eID The ID of the pr ofile/r eques t  attribut e.
+Return value The value of the user’s pr ofile/r eques t  attribut e.
+g e tUserAttribut eV alues
+  getUserAttributeValues ( <userID> , <attributeID> ) 
+Gets multiple  values of a given attribut e  for a given user.
+Parameters
+userID The pr ofile  ID of the user being evaluated.
+attribut eID The ID of the pr ofile/r eques t  attribut e.
+Return value An array containing the values of the user’s pr ofile/r eques t  attribut e.isGroupMember
+  isGroupMember ( <userID>, <hostID>, <groupID> ) 
+Checks if a user is a direct or indirect member of a given group.
+Parameters
+userID The pr ofile  ID of the user being evaluated.
+hostID The target on which the group exists.
+groupID The long ID of the group.
+Return value 1 if true, 0 if false.
+isRoleMember
+  isRoleMember (<userID>, <roleID> ) 
+Checks if a user has the specified  role.
+Parameters
+userID The pr ofile  ID of the user being evaluated.
+roleID The ID of the role.
+Return value 1 if true, 0 if false.
+hasAccount
+  hasAccount ( <userID>, <hostID> ) 
+Checks if a user has an account on the specified  target system.
+Parameters
+userID The pr ofile  ID of the user being evaluated.
+hostID The ID of the target system to check.
+Return value 1 if true, 0 if false.
+isManager
+  isManager ( <userID> ) 
+Checks if a user is a manager in the OrgChart.
+Parameters
+userID The pr ofile  ID of the user being evaluated.
+Return value 1 if true, 0 if false.acc oun tAttribut eGe t
+   accountAttributeGet( <accountID>, <hostID>, <attributeID> ) 
+Gets the value of a specified  account attribut e  for the specified  account.
+Parameters
+accountID The long ID of the account.
+hostID The target system on which the account exists.
+attribut eID The ID of the account attribut e.
+Return value The value of the account attribut e.
+isLocked
+ isLocked ( <userID> ) 
+Checks whether a user’s pr ofile  is locked.
+Parameters
+userID The pr ofile  ID of the user being evaluated.
+Return value 1 if true, 0 if false.
+reportsTo
+  reportsTo ( <subordinate>, <manager>, <is_direct>) 
+Checks whether a user reports to the specified  manager.
+Parameters
+subordinate The pr ofile  ID of the subordinate to check.
+manager The pr ofile  ID of the manager.
+is_direct If 0, the function  checks the entir e  management chain.
+If non-zero, the function  checks the subordinate’s direct
+manager only.
+Return value 1 if true, 0 if false.     
+Examples 
+The following examples illustrate how you can use PSLang expressions when de fining  user classes:
+1.Get a user’s fir s t name and store it in a variable for later use:  1.
+var $fname = getUserAttrValueFirst( $USERID, "FIRST_NAME" ) 
+2.Check if a user is in the Acc ounting  group on target system ADCAN:  2.isGroupMember( $USERID, "ADCAN", "CN=Accounting,OU=Groups,DC=mtdemo,DC=com" ) 
+3.Check if a subordinate reports directly to a manager:  3.
+reportsTo ( $RECIPIENT, $REQUESTER, 1)  
+Examples 1 and 2 apply to personal user classes. Example 3 applies to r elational  user classes.
+See also
+PSLang Manual ( pslang.pdf ) has more detail about the PSLang language.
+Selecting  explicit users
+Personal user classes, which have only one participan t,  allow you to specify explicit users.
+Explicit users are included in the user class regardless of the user class criteria.
+To select explicit users:
+1.Navigate to the User class de finition  (on page 737) page. for the personal user class you want to 1.
+modify.
+2.Click the Explicit users tab. 2.
+3.Click Select... . 3.
+4.Enable the checkboxes for the users you want to select as explicit users.4.
+Alt ernativ ely ,  you can search for a user.
+5.Click Add. 5.
+The users you have added are displayed on the Explicit users page.
+Explicit users can also be removed from a class on this page.
+Example: Segr eg ating  help desk privileges
+A tw o-participan t  r elationship  (on page 738) user class would allow group owners (for example, team
+Managers) to provide help desk duties  for their group members (for example DirectSubordinate). Those
+two r elationship  endpoints (Manager and DirectSubordinate) would be the participan ts  of the class.
+With such a c on figur ation,  when managers log in and use the Help user  link, they would have access to
+only the employees in their own group.
+That user class could be used to provide access of managers to provide help desk duties  to their direct
+employees in Manage the system> Security> Access to user pr ofiles>  Delegated adminis tr ation  rules.
+The same user class can control pr ofile  visibility: c on figur ed  in a user-class-based user filt er  (on page 806)
+like GENERATE_USER_PLUGIN (for specifying who should be managed) or the reverse,
+FILTER_USER_PLUGIN (to specify who should not be managed) Both plug-in points are in Manage the
+system> Modules> Options
+The security rule provides access, while the user filt er  plugin provides visibility.So if the user class is used in the security rule, but not in the user filt er ,  all pr ofiles  would be listed for
+everyone, but the managers would have access to see only the details of their own employees.
+In pr actice,  managers are usually too busy to help their employees with their self-service or approval
+functionality  provided by Bravura Security Fabric , so most of the time  there would be specific  help desk
+teams in specific  regions working the same time  zones as the employees they are supposed to help, and
+the class r elationship  would be based on the city or region attribut e,  with a thr ee-participan t  user class.
+Do not use tw o-participan t  classes with pslang expressions that check on attribut es  for these use cases.
+Even though it's feasible for small companies, and easier to c on figur e  than writing  plugin scripts or thr ee-
+participan t  classes, the performance would be impacted both at auto discovery time  and at use time
+(display of the list of users who can be helped by the viewer and using Helpdesk features).
+Example: Segments by group
+This example demonstrates how to add a user class to segment users by managed group:
+1.Click Manage the system > Policies > User classes . 1.
+2.Click Add new… . 2.
+3.Type an ID and Description  to search on and identif y  the user class. 3.
+4.Select the "[Shared]” Policy type . 4.
+5.Click Add. 5.
+Bravura Security Fabric  displays the participan t  specific ation  page.
+6.Type any placeholder value for the ID and an appropriate Description  to identif y  the participan t;  for 6.
+example USERID .
+7.Click Add. 7.
+8.Select the Criteria tab. 8.
+Bravura Security Fabric  displays the criteria specific ation  page.
+9.Click Add new… in the group membership criteria section. 9.
+Bravura Security Fabric  displays the add criteria page.
+10. Choose the appropriate value from the Membership drop-down list. Select: 10.
+▪Required – to include users who belong to the specified  group in the user class. ▪
+▪Disallowed – to include users who do not belong to the specified  group in the user class. ▪
+11. Search for, or type the ID of the Target to which the group belongs. 11.
+12. Search for the ID of the Managed group . 12.
+13. Click Add. 13.
+14. Click the Test tab to test a specific  ID, or list all users who fit the criteria. 14.
+15. If required, repeat the above procedure to add additional  criteria to the user class. 15.
+Continue  to test the user class membership after  you add each criteria. This prevents mistakes in the
+class being rendered irreversible if a faulty user class is used for c ertific ation.

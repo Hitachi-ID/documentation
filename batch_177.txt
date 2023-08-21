@@ -1,0 +1,330 @@
+It is recommended that you do not change the install Loc ation. Click  Next.
+10. If you chose a custom or complete ins t allation,  choose the loc ations  for the: 10.
+▪Directory to store log files  This directory should be unique for each instance. The default is ▪
+<Program Files path>\Bravura Security\\Telephone Password Manager\Logs\<instance>\
+Click Next .
+11. Type and c on firm  a password for the Service user ID . 11.
+If the account does not already exist, the installer creates it with the specified  password. The default
+user ID is .\psadmin .
+This is the account the Phone Password Manager service will run as. It is aut omatic ally  added to the
+server’s Administrators group. You can change this group membership as long as the account has the
+right to logon as a service.
+Click Next .
+12. If you chose a custom ins t allation,  select which version of Bravura Pass  to integrate with. 12.
+Click Next.
+13. Type the c ommunic ation  key. Enter the same key here as you did on the main Bravura Pass  server 13.
+(c ommunic ation  key (or Master Key)). If you did not record the key in a secure loc ation,  copy the
+idmsetup.inf  file from \<ins t ance>\p sc on fig\  on the Bravura Pass  server to the same loc ation  as
+the installer. The installer will extract the c ommunic ation  key (or Master Key) value from the file.
+14. Con figur e  the Phone Password Manager server: 14.
+API Web Service Path  This is the URL for the Bravura Security Fabric  server to the idapi ’s web
+interface. The default path should be:
+http://server/instance/idapi
+Administrator account ID  This is the API caller’s user ID. For example, this could be set to
+_API_USER_TPM for the default API caller. See User types and access rules  (on page 671) for details on
+API callers.
+Password  This is the API caller’s password.
+Ignore certific a t e  for secure c onnections  Enable this box to ignore the SSL certific ation  check.
+Click Next  to verify that the in f ormation  provided for the API Web Service Path is correct. The installer
+will check that it is able to contact the API Service, and will display an error if it cannot.
+15. Click Install  to start the ins t allation. 15.
+The installer begins copying files to your computer.
+16. Click Finish  to exit after  the installer has Completed the Phone Password Manager (<instance>) Setup 16.
+Wizard .
+Phone Password Manager is now installed on your IVR server.
+Next:
+Integrate Bravura Pass  and Phone Password Manager  (on page 1763).Managing alternate instances
+You can use setup  to install one or more Phone Password Manager instances. For example, if you are
+running multiple  instances of Bravura Pass .
+You can also use the setup  program to manage instances. The setup  program detects that you already
+have an instance of Bravura Security Fabric  installed, and presents you with a list of choices.
+Click:
+▪Modify  to add or remove features for an instance ▪
+▪Repair  to reinstall any files that may be missing from the instance ▪
+▪Uninstall  to remove an instance ▪
+▪Install new  to install another instance ▪
+Uninstalling the softw ar e
+To uninstall Phone Password Manager:
+1.Run the setup program  (on page 1759). 1.
+2.Click Uninstall  next to the instance that you want to remove. 2.
+3.If prompted to remove the service user, select Yes or No to c ontinue. 3.
+Note that you are not prompted to remove the service user account if:
+▪It existed before the ins t allation  of the Phone Password Manager softw ar e ▪
+▪It is used by other instances of Phone Password Manager.▪
+4.Click Close  to exit the installer. 4.
+You can also use setup  to remove additional  modules.In t egr ating  Bravura Pass  and Phone Password Manager
+Read this chapter to learn about the steps that you must perform in order to c on figur e  the Phone
+Password Manager service, and to customize the in t er action  between Bravura Pass  and Phone Password
+Manager.
+In t egr ating  Bravura Pass  and Phone Password Manager provides:
+▪Self-service password reset and password s ynchr oniz ation  from a telephone ▪
+▪Self-service token management from a telephone▪
+▪ Activ e  enrollment of biometric voice print sample r egis tr ation ▪
+In t egr ation  Mechanisms
+Bravura Pass  exposes APIs suitable for use by an IVR system using HTTPS web access. The API
+implements strong encr yption  policies for all c onnections,  allowing you to securely locate the IVR system
+at a diff er en t  site from the Bravura Pass  server.
+Web service
+A web service allows IVR systems and other applic ations  to remotely invoke methods on the Bravura Pass
+server to perform functions  such as user and account lookup, security question  authentic ation,  random
+password g ener ation,  and to initia t e  password resets or to clear intruder lockouts. Remote applic ations
+normally access the web service over HTTPS for security. Security is also accomplished by use of a secure
+transport layer, an API user and password, and a one-time-use  session ID. Or g aniz ations  w anting  an extra
+level of security can limit the range of IP addresses that are permitted  to access the api to just legitima t e
+IVR systems or other applic ations.
+IVR systems that support in t egr ation  using web services include those from Intervoice and Nortel/
+Periphonics.
+Example function  call sequence
+The t ouch-t one-authentic a t ed  password reset process, described here
+Allowing users who have experienced a password problem to access self-service from a telephone to
+resolve their own problem is advantageous for several reasons:
+▪It allows users who forgot their initial  network login password to resolve their own problem without ▪
+any special measure to make this available from the w ork s t ation  login prompt.
+▪It allows users who forgot their remote access (RAS or VPN) password to access self-service problem▪
+r esolution  without fir s t c onnecting  to the network.
+▪It encourages the use of self-service password reset in or g aniz ations  where users are accustomed to ▪
+g etting  service primarily with a telephone.
+Since user authentic ation,  password g ener ation  and password resets are all processed by the Bravura
+Pass  server, the process aut omatic ally  bene fits  from Bravura Pass ’s auto discovery process, user pr ofiles,
+password policy engine, email in t egr ation  and call tracking system in t egr ation., is implemented by calling the following library functions  using any of the API variants described above:
+▪Login – initializ e  the API session and connect with a valid username and password. Required to start ▪
+any API session.
+▪UserIVRList – Return a list of users matching a numerical ID. This function  returns all users which ▪
+match the numerical identifier .  For more in f ormation  on mapping users to a numerical ID, see:
+Chapter 19
+▪ UserQuestionsGe t  – get a random selection  of authentic ation  questions  that the user might be ▪
+required to answer. The IVR system must be pre-programmed with speech recordings for every
+available question,  or a text-to-speech engine.
+▪UserAnswersValidate – validate that the answers keyed in by the user are correct. ▪
+▪PasswordRandomGet – called at least once, and possibly several times,  to generate a random valid ▪
+password, and read it out to the user as a possible new password.
+▪UserPasswordSync Reset one or more passwords associated to a user account. Depending on the ▪
+parameters passed, this call can also allow the user to reset individual passwords, rather than every
+one.
+▪Logout – close the current API session. ▪
+See Bravura Security Fabric  Remote API ( api.pdf ) for more in f ormation  on writing  customized API calls.
+Event actions
+The following event actions  (on page 1523) are supported for Phone Password Manager, and can be
+c on figur ed  on the Bravura Pass  server:
+▪ET_ADMIN_RESET_SUCCESS Triggered when Phone Password Manager successfully attemp ts  to reset ▪
+a user’s password using the UserPasswordSync API Service call.
+▪ET_ADMIN_RESET_FAILURE Triggered when Phone Password Manager fails an attemp t  at r esetting  a ▪
+user’s password using the UserPasswordSync API Service call.
+▪ET_ADMIN_UNLOCK_SUCCESS Triggered when Phone Password Manager successfully attemp ts  to ▪
+unlock a user’s account using the UserAccountsUnlock API Service call.
+▪ET_ADMIN_UNLOCK_FAILURE Triggered when Phone Password Manager fails an attemp t  to unlock a ▪
+user’s account using the UserAccountsUnlock API Service call.
+For more in f ormation  on using these API Service calls, see Bravura Security Fabric  Remote API ( api.pdf ).
+E diting  the c on figur ation  file
+The Phone Password Manager service uses one of two c on figur ation  files,  named tpm.cfg , or
+idtel.cfg  to determine:
+▪The names of script files that de fine  call flo w  and logic ▪
+▪Supported languages▪
+▪Enrollment types▪
+▪Audio file types ▪
+▪The play back volume adjustment▪▪Dialogic® voice board setup:▪
+▪The number of lines supported on the boards▪
+▪The type of boards▪
+▪The number of boards installed▪
+▪Whether or not the boards use SCBus r outing ▪
+▪Any custom tones the boards support (if loop-current de t ection  is not supported) ▪
+▪Dialogic® Host Media Processing Softw ar e  setup: ▪
+▪Playback volume levels▪
+▪The number of lines supported▪
+▪Audio file type ▪
+▪Audio codec▪
+When you install Phone Password Manager, the installer program aut omatic ally  detects your IVR system
+c on figur ation  and creates this file in the \<instance>\service\ directory on the IVR server. The
+idtel.cfg  file is only created when a Dialogic® Voice board, or Dialogic® PowerMedia Host Media
+Processing is detected. The idtel.cfg  file is used in place of tpm.cfg  to handle calls received from
+Dialogic® equipment.
+You can modify idtel.cfg if your system c on figur ation  diff er s  from what was auto-detected, or if you
+want to modify the default settings.  The file includes ins tructions  for modifying each setting  in-line as
+comments.
+There are settings  within idtel.cfg  that only apply to VoIP and softphone  systems, which can be
+found under "VoIP Proxy Server R egis tr ation".
+You must restart the Phone Password Manager service in order for your c onfiguration  changes to take
+eff ect.
+If you are using a Dialogic® voice board and loop disconnect supervision is provided as a tone or cadence,
+you can c on figur e  Phone Password Manager to detect the c ondition  of the calling party prematurely
+hanging up. This can be done either by de fining  the disconnect tone or cadence in idtel.cfg , or by
+cr eating  a tsf file containing call progress tone in f ormation.
+If loop disconnect supervision is provided with a loop current drop, it is not necessary to de fine  this
+in f ormation,  and the change in line status will be detected aut omatic ally  if your voice board supports
+loop current supervision.
+E diting  the Asterisk® c on figur ation  file
+Phone Password Manager uses the file asterisk.cfg  to determine the following settings  when
+in t er acting  with an Asterisk® server:
+▪The port used to listen for Asterisk® c ommunic ation. ▪
+▪The IP range to listen for.▪
+▪The number of channels upon which c ommunic ation  can be accepted. ▪
+▪The list of IP addresses with which c ommunic ation  is permitted. ▪▪The name of the Asterisk® server’s audio file directory ▪
+▪If Phone Password Manager should aut omatic ally  upload files to the Asterisk® server. ▪
+▪Which folders to exclude if auto-uploading is enabled.▪
+▪Whether or not to keep the temporary files created during auto-upload. ▪
+▪ (Optional)  Which call logic scripts to run when a call is received from an Asterisk® server. ▪
+Phone Password Manager aut omatic ally  c on figur es  this file to the default settings  when the Asterisk®
+module is installed, however you may use these options  to restrict which c ommunic ations  your Phone
+Password Manager server accepts, for the sake of security.
+Using 3CX PBX systems
+Phone Password Manager is also capable of registering to a 3CX PBX system, in a manner similar to the
+Dialogic®  c on figur ation.  To enable a 3CX c on figur ation,  alter the idtel.cfg  file to include the
+following settings:
+Registration "" = {
+  Server = 10.0.1.1
+  Realm  = "3CXPhoneSystem" // SIP only
+  PhoneNumber = 333
+  Password    = "333" // SIP only
+}
+Setting  the Realm = "3CXPhoneSystem" value will enable Phone Password Manager to register a 3CX
+system when the next call is placed.
+De fining  disconnect tones in idtel.cfg
+Disconnect tones can be explicitly de fined  within idtel.cfg . To do this:
+1.Create a KVGroup in idtel.cfg  with one of the following types, according to the example provided 1.
+in idtel.cfg :
+▪SingleTone▪
+▪SingleCadenceTone▪
+▪DualTone▪
+▪DualCadenceTone▪
+1.Populate the KVGroup with the tones, timings,  and tolerances provided by the local loop on 1.
+disconnect. The name of the KVGroup can be arbitrary.
+2. De fine  the ToneType parameter and set it to the name of the KVGroup de fining  the tone or cadence. 2.
+3.Restart all the Phone Password Manager services.3.
+This method, called Global Tone De t ection , is unreliable on many Dialogic® cards. It is strongly
+recommended that a tsf file be specified  if possible.De fining  disconnect tones with a TSF file
+Dialogic® cards can be c on figur ed  to use a tsf file to recognize call progress tones, including loop
+disconnect. The contents of this file must be de fined  according to the environment providing the call
+progress tones to the voice board. To implement this:
+1.Use the PBX Expert applic ation  provided as part of the Dialogic® drivers to discover the call progress 1.
+tones. It is only necessary to discover the disconnect tones.
+2.Before saving the TSF file, mark the discovered tone set for c onsolidation,  consolidate it, compile it, 2.
+and enable it. Save it under the Dialogic® data directory.
+3.Use the Dialogic® Con figur ation  Manager to enable tsf file support globally and set the TSF file name 3.
+to the file you created.
+4.Restart the Dialogic® card.4.
+5.Restart all the Phone Password Manager services.5.
+If this process was successful, when the Phone Password Manager service starts it will print an
+in f ormational  log message containing the text TSF has been loaded successfully . It will now
+treat the specified  disconnect tones as a loop current off event.
+W riting  call logic scripts
+The Phone Password Manager service uses scripts to determine the logic and flo w  of each call to the IVR
+system. These scripts are used to de fine  the w orkflo w  of any call received, including which sound files to
+play to the user, what kind of user input to expect following a prompt, and what oper ations  to perform
+based on that user input. Descriptions  for each section  of the script and ins tructions  for customizing the
+file are included in-line as comments.
+The call logic scripts are written  in PSLang – a scripting  language with a syntax much like C, but with a
+large set of built-in functions,  some of which are specific  to Phone Password Manager. The Phone
+Password Manag er -specific  functions  can:
+▪Interact with the Dialogic® voice boards and Dialogic® PowerMedia Host Media Processing Softw ar e. ▪
+▪Interact with the Bravura Pass  remote API. ▪
+▪Perform voice print related oper ations. ▪
+Phone Password Manager is shipped with a default script, psynch.psl , that is c on figur ed  to guide
+users through log in and authentic ation  using their challenge-response questions  stored in Bravura Pass .
+After  login, the script off er s  users the option  to perform password resets, account unlocks, and SecurID
+token management (If available).
+Script files must be located in the \<instance>\script\ directory on the IVR server. If required, you can
+change the name of the script file or enable multiple  script files by modifying idtel.cfg.
+To use the VoiceVantage script instead of the DTMF script, rename the psynch.voiceprint.psl
+sample script to psynch.psl , and put it in the \<instance>\script\ directory.
+There are several global variables which can be called from within a call logic script:call logic global variables
+Variable Description
+$trunk An integer r epr esenting  the current line number for this
+call.
+$lineMode An integer r epr esenting  the call mode. Values include:
+0 - Auto-answer mode. (Default)
+1 - Inbound mode.
+2 - Outbound mode.
+See Call Modes  (on page 1784) for details.
+$supportedLanguages A space-delimited String containing the languages
+de fined  in the c on figur ation  file.
+$enrollmentTypes A space-delimited String containing the enrollment types
+de fined  in the c on figur ation  file.
+$callerId A string containing the caller’s phone number, or URI.
+$callerName A string containing the caller’s name, if available.
+$calledId A string containing the number or URI dialled by the
+caller.
+See also
+▪The PSLang Manual ( pslang.pdf ) for more in f ormation  about the PSLang and its Phone Password ▪
+Manager specific  functions.
+▪The Phone Password Manager samples directory for additional  call logic scripts, including a script that ▪
+contains voice-print related oper ations  ( psynch.voiceprint.psl ).
+Managing audio files
+Phone Password Manager is shipped with most of the audio files necessary for complete oper ation  in
+English, however you must provide and c on figur e  the audio files for:
+▪Any additional  questions  (on page 1768) that you will add for touch-tone authentic ation. ▪
+▪The names of any custom target systems  (on page 1769) available to IVR users.. ▪
+▪Any modific ations  that you will make to the call logic scripts  (on page 1770). ▪
+Adding custom authentic ation  questions
+In order to create custom questions  with which to authentic a t e  users of Phone Password Manager, you
+must c on figur e  the question  de finition  on your Bravura Pass  instance, and provide an audio file which
+Phone Password Manager will associate to that question.
+Firstly, de fine  your new authentic ation  questions.  See IVR with touch-tone authentic ation  (on page 1640)
+for more in f ormation  on c on figuring  question  sets.
+When you de fine  the new question,  the following c onditions  must be met:▪The description  field  must be in the format: !!!DEFAULT_PREDEFQSET_<QID>_DESC ▪
+▪A KVG file has been c on figur ed  in <Instance>\design\custom to translate the machine-readable ▪
+question  de finition  for each language you wish to support. See: the " Bravura Security Fabric  Base
+Con figur ation  Guide" for more in f ormation.
+▪An audio file exists on your IVR server, in each <Instance>\audio\<Language> directory, titled  QD- ▪
+PREDEFINED_<QID>, that corresponds to the newly de fined  question.
+To properly ID additional  questions:
+1.Modify en-us-errmsg.kvg , located in the <instance>\design\src\common directory, to include a 1.
+new tag for the additional  question.
+2.Use the tag ID as the question  description. 2.
+3.Generate and install the new skin files. 3.
+The vocal should prompt the user to type the answer the question  followed by pound; for example,
+"Enter the year you graduated high school, followed by the pound key."
+See User Authentic ation  (on page 1773) for details.
+De fining  custom target systems
+Each target system that users can reset their passwords or unlock their accounts for.
+These files must be named reset_<target ID>.wav and unlock_<target ID>.wav r espectiv ely .
+The vocal should prompt the user to perform the action  for the specific  target system; for example, "To
+unlock your account on Windows" or "To reset your password on Unix".
+Phone Password Manager is shipped with a set of files for these common target systems:
+▪ Micr osoft  Activ e  Directory – reset_AD.wav, unlock_AD.wav ▪
+▪Novell Directory Services (NDS) – reset_NDS.wav, unlock_NDS.wav ▪
+▪ Micr osoft  Windows server – reset_NT.wav, unlock_NT.wav ▪
+If you want to use these shipped files,  simply rename each file so that the <target ID> portion  matches
+your actual target IDs.
+De fining  custom target system groups
+When a user has accounts in more than one target system group, Phone Password Manager off er s  them
+the ability to select those groups when initiating  a password reset.
+In order to provide the user with a menu from which to select target groups, Phone Password Manager
+will individually spell out each letter  of the custom group’s ID value.
+In order to c on figur e  a custom audio file to present these target groups to users, create a new audio
+recording of the target group’s name, and save it to the appropriate <Instance>\Audio\<Language code>
+directory, depending on the language the audio file will be used for. The name of this file should exactly
+mirror the target group’s ID value: <Group ID>.wav .You will need to restart your Phone Password Manager Windows services in order for the changes to take
+eff ect.  Additional  steps for Asterisk®  backends may be required. For more inf ormation,  see Asterisk®
+audio files (on page 1800).
+Supporting  custom call logic
+You will need to c on figur e  the audio files for any modific ations  that you will make to the call logic scripts
+(on page 1767).
+If you are not using the default call script, or if you have modified  it, ensure that you have appropriate
+audio files for each PlayFile() or PlayFileEx() function.  See the PSLang Manual ( pslang.pdf ) for more
+details on these functions.
+All audio files used for play back must be stored in the <instance>\audio\<lang>-<locale> directory on the
+Phone Password Manager server. The value of<lang>-<locale> refers to the language and locale of the
+user. For example, use en-us for United States (us) English (en).
+Additionally ,  all audio files must be recorded in the format specified  in the idtel.cfg  file (on page
+1764). The default is a MuLaw-encoded, PCM Wave file, with 8 bit sample size, 8kHz sample rate, and
+64kbps bit rate. Audio files should always be recorded in monaural format.
+Adding additional  languages
+To add a foreign language:
+1.Add a new Language  key-value pair to the idtel.cfg  file (on page 1764) and restart the Phone 1.
+Password Manager service.
+For example, add the line:
+Language = fr-ca
+2.In psynch.psl , set the value: 2.
+$selectlang = 1;
+This value enables the language select menu, which prompts users to select their language preference
+before entering the main menu.
+3.Create a subdirectory in <instance>\audio\ that matches the language code (<lang>-<locale>) for the3.
+language you will be adding.
+For example, create a directory named fr-ca, to handle files for Canadian French. This code must
+match the key-value pair c on figur ed  in step 1.
+4.Record a complete set of new vocals in the appropriate language, and save the files in the newly 4.
+created directory. These new files should use the same names as their counterparts in the default en-
+us folder.
+5. (Optional)  Enable language support by extension. Uncomment the following code block in psynch.psl: 5.
+      // Extension to language mapping table: 
+      var $langmapping[]; 

@@ -1,0 +1,311 @@
+setupanalytics.exe --db SERVER01\database1 --username  reportuser  --
+password reportuserpassword
+2.Add the Analytics  app after  the Bravura Security Fabric  ins t allation: 2.
+setupanalytics.exe --admin sa --adminpwd password --
+db SERVER01\database1 --url http://SERVER01:80/ReportServer --
+username  reportuser  --password reportuserpassword
+Inventory management utilities
+listunassigned
+The listunassigned  program lists available inventory items from RSA Authentic ation  Manager
+7.1/8.2 target systems (unassigned and unexpired) as well as from Vasco IDENTIKEY Server target
+systems.
+The list is written  to a file called <targetid>-unassigned.db  in the \<ins t ance>\p sc on fig\
+directory.
+Usage
+Run the program in the util directory as follows:
+listunassigned -targetid <target ID>
+See also:
+manageinv  (on page 3613) can be used to manage inventory items using the <targetid>-
+unassigned.db  file.
+managegrp
+Use the managegrp program to rapidly c on figur e  managed groups. The program can:
+▪Read entries from a file and c on figur e  all the specified  groups as moderated managed groups. ▪
+▪Modify the name of a group, its short ID, or description  on a target system. Any associated managed ▪
+groups, w orkflo w  c on figur ation,  and e xisting  requests are transferred to use the new group.
+▪Unmanage all groups, or all groups managed for a target system, providing they are not currently▪
+being used (have no dependent resources).
+Usage
+managegrp -rename -targetid <target> -oldgroupid <oldgroup> [-
+newgroupid <newgroup>][-newshortid <newshort>][-newname <newdesc>]
+managegrp [-override] -file <filename>
+managegrp -unmanage [-list] -all|-targetidArgument Description
+-rename Rename a group. This option  requires -t ar g etid,  -
+oldgroupid, and one or more of -newgroupid, -
+ne w shortid,  or -newname.
+-t ar g etid  <target> The target system on which to rename a group or
+unmanage groups.
+-oldgroupid <oldgroup> The current name of the group to be renamed.
+-newgroupid <newgroup> Rename <oldgroup> to <newgroup>.
+-ne w shortid  <newshort> Change the short ID of <oldgroup> to <newshort>.
+-newname <newdesc> Change the description  of <oldgroup> to <newdesc>.
+- file <filename> Indicates the file to be read.
+-override Override e xisting  managed groups with new list of
+authorizers. Managed groups to override and a list of
+new authorizers for each group are specified  in
+<filename>.
+-unmanage Unmanage applicable managed groups, if -list option  is
+specified,  only return the list without actually performing
+the action.  This option  requires the -t ar g etid  or -all.
+-all All groups that are currently managed and not in-use will
+be unmanaged.
+If - file is used, the input file must contain a list of entries. Each entry must be in the following format:
+<target ID> <group ID> <list of authorizers> <minimum number of authorizers>
+where:
+▪target ID  Is the identifier  for the target system the group is on. ▪
+▪group ID  Is the identifier  for the group on the target system. If the group ID name contains a space, ▪
+the name must be enclosed in quotes ("").
+▪list of authorizers  Is a comma delimited list of authorizers; for example, mod1,mod2,mod3. The list ▪
+can only contain c on figur ed  authorizers (W orkflo w  > Authorizers).
+▪minimum number of authorizers  Is the minimum number of authorizers required to process a request ▪
+to the group. The value must be equal to or less than the number of listed authorizers. This value is
+set to 1 by default.
+The <minimum number of authorizers> for an entry is set to 1 by default. You must ensure that the <list
+of authorizers> contains at least this many authorizers.
+Modifying an e xisting  managed group’s authorizers or number of authorizers using the managegrp
+program is best accomplished by editing  the original entry and rerunning the program. See examples 2, 3,
+4, and 5 below.
+When managegrp runs, it processes all valid entries in the specified  file. Invalid entries are skipped but
+are logged in the log file for the program. Notific ation  of invalid entries is provided on the command line.
+You should review the log file, correct the invalid entries, and rerun the program with the updated file.Examples
+The following examples show how to construct the entries in the specified  file.
+1.To manage the Calgary Users group on the W2K target system, using one authorizer (charlie), type:1.
+W2K ‘‘Calgary Users'' charlie 1
+2.To manage the Administrators group on the WIN2K target system, specifying three authorizers for the2.
+group (authorizer1, authorizer2, and authorizer3), type:
+WIN2K Administrators authorizer1,authorizer2,authorizer3 3
+3.To modify the Administrators group to only require two authoriz ations  from the list of authorizers, 3.
+change the entry to:
+WIN2K Administrators authorizer1,authorizer2,authorizer3 2
+4.To manage the UserGroup group on the AD target system using three authorizers (user1, user2, and4.
+user3), type:
+AD cn=UserGroup,ou=Domain_Users,dc=domain,dc=com user1,user2,user3 3
+5.To modify the UserGroup group so that it only requires two authorizers (user2 and user3), change the5.
+entry to:
+AD cn=UserGroup,ou=Domain_Users,dc=domain,dc=com user2,user3 2
+To rename a group on target AD:
+managegrp.exe -rename -targetid AD -
+oldgroupid CN=oldname,OU=resources,OU=staff,DC=domain,DC=local -
+newgroupid CN=newname,OU=resources,OU=staff,DC=domain,DC=local -
+newshortid newname
+To unmanage groups:
+1.To perform a dry run for unmanaging the groups on the AD target system1.
+managegrp.exe -unmanaged -list -targetid AD
+2.To unmanage the groups on the AD target system2.
+managegrp.exe -unmanaged -targetid AD
+manageinv
+Use the manageinv program to add, remove, and update inventory items.
+manageinv may be used to import assigned and unassigned inventory items from RSA Authentic ation
+Manager 7.1/8.2 and Vasco IDENTIKEY Server target systems.
+Usage
+manageinv [-nooverwrite] -add -id <itemID> -type <type> -
+location <location> [-user <userID>] [-notes "<notes>"] [-
+target <target>] [-state <state>] [-desc "<description>"]manageinv -rm -id <itemID> -type <type>
+manageinv -rm [-type <type>] | [-location <location>] | [-
+user <userID>] | [-target <target ID>]
+manageinv -add|-rm [<arguments>] -f <filename>
+manageinv -add|-rm -target <target> -type <type> -
+location <location> [-state <state>] -listfile <filename>
+Commands are de fined  using the following arguments:
+Argument Description
+-add Adds inventory items to the database, or updates e xisting
+entries.
+-rm Removes inventory items from the database.
+-nooverwrite Checks if the item being added to the inventory already
+exists or not. If the item already exists then the record is
+not updated.
+-id <ItemID> The item ID in Bravura Identity .
+-type <type> The type as de fined  in Bravura Identity . The <type> must
+be entered in uppercase; for example, -type TOKEN.
+-loc <loc ation> The loc ation  as de fined  in Bravura Identity .
+-user <userID> The ID of the user assigned to the item.
+-notes <notes> In f ormation  to be read by Bravura Identity  users. Must be
+enclosed in double quotes.
+-desc <description> Optional  description  of the item.
+-state <state> The state of the item (see list of available states below).
+-target <target ID> Bravura Security Fabric  target system the item belongs
+to. The <target ID> must be entered in upper case; for
+example, -target RSAAM.
+-f <t e xtfile> Uses a file listing  inventory items to be acted upon. See
+Adding multiple  items.
+-listfile  <t e xtfile> Uses a list file from an inventory type target system for
+items assigned to users or from a listing  file generated by
+listunassigned for unassigned items. See Adding multiple
+items.
+Adding a single item
+To add a single item, the item’s ID, type, and loc ation  are required. For example:
+manageinv -add -id 0000000111 -type TOKEN -loc NY
+Optional  arguments include:
+   [-state <state> | -desc <description> | -notes ‘‘<notes>'' | -user
+   <user> |  -target <target>]Adding multiple  items
+To add multiple  items, either the -f or -listfile  options  may be specified.   Specifying the -f option:    When
+using -f, only this option  is required. For example:
+manageinv -add -f items.txt
+The text file must be in the format:
+   itemid type location state description notes user target
+Where <state> can be any of:
+▪N - Available▪
+▪V - In stock▪
+▪R - Reserved▪
+▪U - Undelivered▪
+▪A - Assigned▪
+▪O - Outstanding▪
+▪P - Approved purchase▪
+▪o - Ordered▪
+▪D - Permanently damaged▪
+▪L - Lost/Stolen▪
+▪r - In repair▪
+▪d - Disposed▪
+▪T - In transit to user▪
+▪C - Received by user▪
+Use "" for any blank fields.  For example, the following text file row adds an unassigned item:
+00000000111 TOKEN CALGARY A "rsa token" "Notes for Calgary token" "" TOKEN1
+If you specify any of the values for -type, -loc ation,  -user, -notes, or -target, those values can be skipped
+in the text file. For example, if you use the options:
+-add  -type TOKEN  -notes "" -f items.txt
+then the text file would be in the format:
+itemid location user target
+Specifying the -listfile  option:   
+When using the -listfile  option,  the -target, -type, and -loc options  are also required.
+The -listfile  option  uses the <target>.db listing  file from an inventory type target system to add items that
+are assigned to users (such as for RSA Authentic ation  Manager 7.1/8.2 or for Vasco IDENTIKEY Server).
+For example:After  setting  up an RSA Authentic ation  Manager 7.1/8.2 target system, run auto discovery. Use the
+r esulting  list file to populate the Inventory items list with the assigned tokens:
+manageinv -add -target RSAAM -type TOKEN -loc NY -state A -
+listfile ..\psconfig\RSAAM.db
+The listing  file for unassigned items may also be used to add items from a listing  file generated by
+listunassigned  (on page 3611).
+For example:
+To populate the Inventory items list with unassigned tokens from the target system:
+Use the listunassigned program to get a list:
+listunassigned.exe -targetid RSAAM
+This writes a list of available tokens to a file, RSAAM-unassigned.db in the \<ins t ance>\p sc on fig\
+directory.
+Populate the Inventory items list:
+manageinv -add -target RSAAM -type TOKEN -loc NY -state N -
+listfile ..\psconfig\RSAAM-unassigned.db
+Removing a single item
+To remove a single item, -id and -type are required. For example:
+manageinv   -rm -id 00000000111 -type TOKEN
+Removing multiple  items using criteria
+You can use any c ombination  of -type, -loc ation,  -user, or -target to remove all items with those values.
+For example:
+manageinv -rm -type TOKEN -loc NY
+The list files may also be used to remove items found in those files.  For example:
+manageinv -rm -target RSAAM -type TOKEN -loc NY -listfile ..\psconfig
+\RSAAM.db
+manageinv -rm -target RSAAM -type TOKEN -loc NY -listfile ..\psconfig
+\RSAAM-unassigned.db
+Removing multiple  items using a file
+To remove multiple  items, only the -f option  is required. For example:
+manageinv -rm -f items.txt
+The text file must be in the format:
+itemid typeUpdating  an item
+To update an item in the INVOBJ table, use the -add argument to specify new in f ormation  about the item.
+Role based access control utilitiesautores
+Use the autores program to determine the aut omatic  role and group de ficits  and surpluses and issue
+requests. When aut omatic  assignment is c on figur ed,  the program is run aut omatic ally  at the end of the
+auto discovery process.
+Usage
+autores.exe -all [-submit | [-limitsubmit <max submissions> | -
+outfile <outfile> ] | -listfile <listfile> ] [-threshold <N>]
+autores.exe -group <targetid> <groupid> [-submit | [-
+limitsubmit <max submissions> | -outfile <outfile> ] | -
+listfile <listfile> ] [-threshold <N>]
+autores.exe -role <role id> [-deleteonly | -submit | [-
+limitsubmit <max submissions> | -outfile <outfile> ] | -
+listfile <listfile> ] [-threshold <N>]
+autores.exe -inputfile <inputfile> [-submit | [-
+limitsubmit <max submissions> | -outfile <outfile> ] | -
+listfile <listfile> ] [-threshold <N>]
+Option Description
+-all Act on all resources.
+-group <t ar g etid>  <groupid> Act on the specified  target system group.
+-role <role id> Act on the specified  role.
+-deleteonly Aut omatic  unassignment to a specified  role.
+-inputfile  <inputfile> File containing changes to submit.
+-submit Submit the requests for changes.
+-limitsubmit <max submissions> Limit the number of requests generated. Will override
+AUTO ASSIGNMENT MAXSUBMIT DEFAULT setting.
+-listfile  <listfile> File to output violations  to (default is autores.kvg).
+-outfile  <outfile> Output file for printing  all violations  that did not get
+submitted  along with the error message returned.
+(default is aut or es-unsubmitted.kv g)
+-threshold <N> Do not submit any request if number of requests to be
+submitted  exceeds <N>. If N= 0, no threshold. Using this
+setting  overrides the AUTO ASSIGNMENT THRESHOLD
+system variable.
+Examples
+1.To evaluate all the resources with aut omatic  assignment c on figur ed  and submit requests 1.
+autores.exe -all -submit2.To evaluate all the resources with aut omatic  assignment c on figur ed,  output to a dryrun.kvg file 2.
+without submitting  requests
+autores.exe -all -listfile dryrun.kvg
+3.To submit the dryrun.kvg file 3.
+autores.exe -submit -inputfile dryrun.kvg
+4.To evaluate the role with aut omatic  assignment c on figur ed  and submit requests 4.
+autores.exe -role GENERAL -submit
+5.To evaluate the role with aut omatic  unassignment c on figur ed  and submit requests 5.
+autores.exe -role GENERAL -deleteonly -submit
+6.To evaluated a group with aut omatic  assignment c on figur ed  and submit requests 6.
+autores.exe -group AD FINANCE -submit
+7.To evaluate multiple  groups and roles with aut omatic  assignment c on figur ed  and submit requests 7.
+autores.exe -group AD FINANCE -group AD HR -role GENERAL -
+role HELPDESK -submit
+rbacenforce
+The rbacenforce program lists role-based access control (RBAC) violations  and issues w orkflo w
+requests in order to correct variances. The program is run by default by the psupdate program during
+auto discovery. This can be turned off by disabling the Resources > Options  > RBAC ENFORCEMENT
+NIGHTLY LIST  and RBAC ENFORCEMENT NIGHTLY SUBMIT  options.
+Usage
+rbacenforce.exe [ option  ]
+Argument Description
+-group Bravura Group Specify the group ID to check violations  on.
+-inputfile  <fileName> Input this KVGroup file with all requests to submit. The
+default is violation.kv g.
+-limitcheck <numUsers> Override the system c on figur ed  value to limit the number
+of users to check for violations.
+-limitlist <numViolations> Override the system c on figur ed  value to limit the number
+of violations  to list.
+-listfile  <fileName> Output the list of violations  to this file. The default is
+violation.kv g.
+-nolist Do not run the listing  of surplus and/or de ficit  violations.
+This option  can only be used with -submit.
+-norecordcheck Record that the user was checked. Users checked least
+recently are checked fir s t.
+-outfile  <fileName> Print all violations  that did not get submitted,  along with
+the error message returned, to this file.Argument Description
+-requester <requester> Submits requests using the specified  user ID. The default
+is the user specified  by the system variable RBAC AUTO
+PROPAGATE REQUESTER.
+-resourceenforce <0-2> ∙0 – check all resources
+1 – only check resources that are under enforcement
+(default)
+2 – only check resources not under enforcement
+-returnbatch Returns batch IDs of successfully submitted  requests.
+-roleonly Only de ficits  will be checked.
+-skipenforce Bypasses RBAC ENFORCEMENT ENABLED, so rbacenforce
+can check for violations  and submit requests, even if
+RBAC ENFORCEMENT ENABLED is disabled.
+-submit Submit requests for users with surplus and/or de ficit
+violations.
+-userenforce <0-2> 0 – check all users
+1 – only check users that are under enforcement (default)
+2 – only check users not under enforcement
+-userid <userID> Specify a user on which to check violations.  This defaults
+-userenforce to 0.
+-users <fileName> Specify a file containing a list of pr ofile  IDs on which to
+check violations.  In the file, each user should be in its
+own line. This defaults userenforce to 0.
+Examples
+1.To check for any violation: 1.
+rbacenforce.exe
+2.To check and make a request to resolve violations: 2.
+rbacenforce.exe -submit
+3.To check a single user:3.
+rbacenforce.exe -userid <userID>
+4.To check all resources and users, regardless of whether they are under enforcement or not, and if4.
+RBAC ENFORCEMENT ENABLED is disabled:
+rbacenforce.exe -skipenforce -userenforce 0 -resourceenforce 0
+Session monitoring utilities
+smonavi
+The smonsavemeta program triggers smonavi to create hour-long AVI video files from the re-
+generated screenshots. You can control the output, or choose to use another video cr eation  program

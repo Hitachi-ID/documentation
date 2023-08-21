@@ -1,0 +1,346 @@
+Discovered objects > Systems ). You can use target system import rules to aut omatic ally  create target
+systems for discovered systems.
+Bravura Privilege  also uses templates to automate the process of adding new target systems.
+Read this chapter to learn how to:
+▪Plan target systems  (on page 481) ▪
+▪Get started  (on page 489) ▪
+▪Add target systems  (on page 490) ▪
+▪Add (on page 517), Modify or delete an e xisting  target system  (on page 493) ▪
+▪Test c onnections  for a target system  (on page 519) ▪
+▪Run auto discovery to make t ar g e t -c on figur ation  changes take e ff ect  (on page 494) ▪
+▪View connector logs  (on page 521) ▪
+▪ Con figur e  target-system-level authoriz ation  (on page 523) ▪
+▪ Con figur e  target-system-level resource oper ations  (on page 525) ▪
+▪ Con figur e  target-system-level role enforcement  (on page 527) ▪
+▪Customize connector behavior  (on page 528) ▪
+▪ Con figur e  target system oper ation  locking  (on page 530) ▪
+▪Rewrite target system oper ations  (on page 532) ▪
+This chapter also includes a detailed e xplanation  about each of the options  listed on the Target system
+inf ormation  page (see Con figuring  general options  (on page 494)).
+See also: 
+The Connector Pack Documen t ation  contains specific  t ar g eting  and in t egr ation  in f ormation  on a per
+system basis. It also contains in f ormation  about the diff er en t  connectors and the oper ations  that they
+support.
+Planning target systems
+Use the following questions  to help you determine your target system c on figur ation:
+1.How should Bravura Security Fabric  determine user pr ofile  IDs? 1.
+Select a system or set of systems to designate as your pr ofile  ID source. This system or set of systems
+should contain a login ID for all (or most) of the Bravura Security Fabric  users in your or g aniz ation.  If
+possible, designate a system that uses the most common or standardized naming c on v ention.
+You can c on figur e  Bravura Security Fabric  to list email addresses from some systems (Activ e
+Directory), and they can be used to generate pr ofile  IDs. Alt ernativ ely ,  you can c on figur e  Bravura
+Security Fabric  to interface with an e xisting  user pr ofile  database or meta directory, instead of listing
+login IDs or email addresses from a target system.
+2.Are login IDs standardized in your or g aniz ation? 2.
+Does user John Smith log in with JOHNS on all of his systems? And, is the login ID JOHNS used only
+by John Smith on all systems?If some or all of your target systems use standard IDs, you can c on figur e  Bravura Security Fabric  to
+aut omatic ally  associate accounts on these systems with a pr ofile  ID.
+You must also decide if you want users to be able to attach  login IDs that are associated with another
+user’s pr ofile,  if they know the correct password.
+If any of your target systems do not use standard IDs:
+▪Users must be able to attach  non-associated IDs using the Attach  other accounts  (PSL) module. ▪
+or
+▪help desk user s must be able to assign or unassign IDs using the Help users  (IDA) module. ▪
+or
+▪You must map login IDs to pr ofile  IDs in a text file. ▪
+3.Are login IDs on your target system c ase-sensitiv e? 3.
+Does your system diff er entia t e  between the login ID neild and NeilD ? You must c on figur e
+Bravura Security Fabric  to match the behavior of your system.
+4.Should Bravura Security Fabric  discover accounts on your target system aut omatic ally? 4.
+Most of the Bravura Security Fabric  connectors support auto discovery. They are able to connect to
+target systems and collect an inventory of login IDs. Auto discovery is normally performed nightly. It is
+highly recommended that you enable auto discovery in order to keep the in f ormation  in the Bravura
+Security Fabric  database current.
+If auto discovery is not supported on your system or if for some reason you will not c on figur e  Bravura
+Security Fabric  to aut omatic ally  discover accounts, you must manually provide an inventory of login
+IDs. This is normally done using a batch process on the target system.
+5.Should users be able to change or verify passwords on your target system using Bravura Security 5.
+Fabric  ?
+When adding a new target system, the change password and verify password c apabilities  are enabled
+by default. You can disable one or both of these c apabilities  if:
+▪The functionality  is not supported on your particular  target system; for example, password ▪
+v erific ations  are possible, but adminis tr ativ e  resets are not.
+▪You do not want users to have access to the capability; for example, the system is not a trusted ▪
+system nor an authorit ative  system and therefore password v erific ations  should not be allowed.
+If password changes are enabled, you must determine if the target should be displayed on the help
+desk Change passwords screen or the self-service Change passwords screen. You must also
+determine if the target should be added to the authentic ation  priority list .
+You may also want to set an connector e x ecution  sequence to improve performance.
+6.Do targets need to be grouped to apply diff ering  password policies, s ynchr oniz ation  rules, or help 6.
+desk access rights?
+Bravura Pass  can apply global password strength rules, and synchronize a user’s password across all
+targets. You may want to set up target system groups; for example, if subsets of targets have
+inc ompatible  password strength rules, or if you want a user’s passwords to vary on two or more
+targets. You may also want to group targets if you want to restrict access rights of groups of help desk
+users.7.Does your target system incorporate a password expiry policy?7.
+Bravura Security Fabric  supports listing  users with soon-to-expire passwords from several target
+systems (Activ e  Directory, Micr osoft  Windows NT). If your target system incorporates a password
+expiry policy, and if listing  soon-to-expire users is supported on that system, you should determine
+whether or not you are going to implement expiry notific ation .
+If your target system does not have a nativ e  password expiry policy, you should determine whether or
+not Bravura Security Fabric  is going to track password history and force users to change their
+passwords. You can c on figur e  Bravura Security Fabric  to force users to change their passwords by
+modifying the Bravura Security Fabric  password pollicy.
+8.Is your target system composed of multiple  servers? 8.
+Some target systems are actually composed of multiple  servers. These include:
+▪ Multiple  Activ e  Directory domain controllers that comprise one domain or more (a forest) ▪
+▪An NIS master server and multiple  NIS secondary servers that make up an NIS domain ▪
+▪ Oper ating  system, DBMS, and applic ation  target systems that function  as a single logical applic ation ▪
+system
+Bravura Pass  supports these systems using the concept of a sub-host . A sub-host is one of multiple
+target systems on which Bravura Pass  can manage passwords that together form a single larger
+target system. See Target systems composed of multiple  servers  (on page 503)for details.
+9.Do other users have adminis tr ativ e  access to the target systems? Are there other unmanaged 9.
+means of access?
+Each administrated target system should be assessed for prior access, to ensure that any previous
+adminis tr ativ e  access has been restricted before cr eating  target systems and managed system s:
+▪Examine any non-standard adminis tr ativ e  accounts previously created. For example: Activ e ▪
+Directory, Windows NT, Unix, SQL Server, Oracle.
+▪Restrict adminis tr ativ e  group access. For example, Activ e  Directory, Unix. ▪
+▪Remove or revoke Unix SSH authorized remote access.▪
+▪Remove sudo access to Unix/Linux accounts.▪
+This is a list of examples; it is not a complete list.
+Target system types and connectors
+Applic ation  servers
+Bravura Security Fabric  uses connector programs to integrate with a variety of applic ation  servers
+including:
+▪One Identity  Activ e  Roles ▪
+▪Amazon Web Services▪
+▪Blackberry Enterprise▪
+▪Cisco Unity Connection ▪
+▪Cisco Unified  Communic ation  Manager ▪
+▪Lotus Domino Server▪▪Epic Server▪
+▪McAfee ePolicy Orchestrator Server▪
+▪Google Applic ations ▪
+▪Oracle Hyperion EPM Shared Services▪
+▪Bravura Security Suite▪
+▪JD Edwards EnterpriseOne▪
+▪ Micr osoft  Lync ▪
+▪Oracle E-Business Suite▪
+▪ P eoplesoft▪
+▪SAP Server▪
+▪SAP Portal Server▪
+▪SCIM: System for Cross-domain Identity  Management ▪
+▪Sharepoint Server▪
+▪IBM Tivoli Access Manager▪
+▪WebEx▪
+▪Webex Connect▪
+▪Workday▪
+See Applic ation  servers  in the Connector Pack documen t ation  for details on how to integrate Bravura
+Security Fabric  with these applic ations.
+Availability and monitoring softw ar e
+See Availability and monitoring softw ar e  in the Connector Pack documen t ation  site to learn how to target
+availability and monitoring softw ar e,  including:
+▪Dell Remote Access Card (DRAC)▪
+▪Hitachi Data Systems Hi-Track Monitor▪
+▪HP Universal Con figur ation  Management Database ▪
+▪Hitachi Storage Navigator Modular▪
+▪McAfee Vulnerability Manager▪
+▪Rapid7 Vulnerability Management▪
+Customer r elationship  management systems
+See Customer r elationship  management systems  in the Connector Pack documen t ation  for details on
+how to target Salesforce.
+Databases
+See Databases  in the Connector Pack documen t ation  for details on how to target database systems
+including:
+▪InterSystems Caché▪▪DB2/UDB▪
+▪ODBC▪
+▪Oracle▪
+▪ Micr osoft  SQL Server ▪
+▪SQLite▪
+▪SAP ASE▪
+▪SAP HANA▪
+Flat file systems
+Bravura Security Fabric can manage and update accounts and computers stored in the following formats:
+▪Google sheets▪
+▪CSV files ▪
+Hard drive encr yption  systems
+See Hard Drive Encr yption  Systems  in the Connector Pack documen t ation  to learn how to target hard
+drive encr yption  systems, including:
+▪BitLocker Hard Drive Encr yption ▪
+▪CheckPoint Softw ar e  Endpoint Security ▪
+▪McAfee Endpoint Encr yption  6.x ▪
+▪ Micr osoft  BitLocker Adminis tr ation  and Monitoring ▪
+▪Symantec Drive Encr yption  (formerly PGP Whole Disk Encr yption) ▪
+▪Sophos Safeguard Enterprise Server▪
+▪Symantec Endpoint Encr yption  11.1.x+ ▪
+▪WinMagic SecureDoc▪
+Help desk systems
+See Help Desk systems  in the Connector Pack documen t ation  to learn how to target help desk systems,
+including:
+▪FrontRange HEAT for Customers▪
+▪FrontRange HEAT for Administrators▪
+▪HP Service Manager Web Service▪
+▪JIRA Server▪
+▪Remedy Action  Request System ▪
+▪Remedy Action  Request System IT Service Manager ▪
+▪ServiceNow IT Service Management Suite▪Human resource management systems
+See Human Resource Management  in the Connector Pack documen t ation  to learn how to target human
+resource management systems, including:
+▪Ceridian Dayforce▪
+▪Concur▪
+▪Oracle Human Capital Management▪
+▪ P eopleSoft  Human Capital Management ▪
+▪SAP Human Capital Management (HCM)▪
+▪Success Factors▪
+IT service management (tick e t)  systems
+See IT Service Management (Ticket) Systems  in the Connector Pack  documen t ation  to learn how to
+integrate Bravura Security Fabric  with tick e t  systems, including:
+▪Axios Assyst▪
+▪CA Service Desk▪
+▪BMC FootPrints▪
+▪FrontRange HEAT▪
+▪HP Service Manager Web Service▪
+▪JIRA Server▪
+▪ Micr osoft  System Center Service Manager ▪
+▪Generic PSLang▪
+▪Generic ODBC▪
+▪Python Script▪
+▪Remedy Action  Request System ▪
+▪BMC Remedyforce▪
+▪SOAP Web Service▪
+▪ServiceNow IT Service Management Suite▪
+▪Cherwell IT Service Management▪
+Email systems
+▪Exchange server▪
+See Exchange server  for details on how to target Micr osoft  Exchange 2007+ Server.
+▪GroupWise Domain▪
+See Novell GroupWise Domain  for details on how to target GroupWise.Networking devices
+See Networking Device s in the Connector Pack documen t ation  to learn how to target networking devices,
+including:
+▪Checkpoint NGX networking equipment▪
+▪Checkpoint Secure Platform  R70 networking equipment ▪
+▪Cisco Secure ACS TACACS+▪
+▪Cisco Adaptiv e  Security Appliance ▪
+▪Cisco IOS networking equipment▪
+▪Cisco Nexus networking equipment▪
+▪Cisco PIX networking equipment▪
+▪Brocade Fabric OS networking equipment▪
+▪F5 Networks BigIP TMOS Network Load Balancer▪
+▪HP ProCurve▪
+▪Juniper OS 9.x networking equipment▪
+▪Palo Alto Networks fir e w all  with PAN-OS ▪
+▪Riverbed Steelhead CX Network Optimiz er ▪
+Network oper ating  systems
+Connector Pack includes a connectors to integrate with various network oper ating  systems, including:
+▪Windows, including:▪
+▪ Activ e  Directory ▪
+▪Azure Activ e  Directory ▪
+▪Windows Server NT c ompatible ▪
+▪Unix, including▪
+▪AIX, HP-UX,▪
+▪Oracle Solaris▪
+▪Linux▪
+▪Mainframe▪
+▪iSeries (OS/400)▪
+▪eDirectory (NDS)▪
+See Network oper ating  systems  in the Connector Pack documen t ation  for details.
+Script systems
+See Script systems  in the Connector Pack documen t ation  to learn how to write scripts for fle xible
+connectors, including:
+▪Console Script▪
+▪NULL Target▪▪PowerShell Script▪
+▪Python Script▪
+▪SOAP▪
+▪Secure Shell (SSHD Host)▪
+▪TCP , Telnet, HTTP , or HTTPS Access▪
+▪XML▪
+Social media systems
+See Social Media systems  in the Connector Pack documen t ation  to learn how to target social media
+systems, including:
+▪ T witter▪
+▪Linkedin▪
+Single sign-on systems
+See Single Sign-On systems  to learn how to target single-sign-on systems, including:
+▪RSA Access Manager▪
+▪IBM Security Access Manager▪
+▪Imprivata OneSign▪
+▪Oracle Access Manager (formerly NetPoint)▪
+▪Netegrity SiteMinder▪
+▪Tivoli Access Manager for Enterprise SSO▪
+Storage systems
+See Storage Systems  in the Connector Pack documen t ation  to learn how to target storage systems,
+including:
+▪Box Cloud Storage▪
+▪Hitachi Command Suite 8.x (User Management)▪
+▪Hitachi Content Platform  (HCP) ▪
+▪Kubernetes Cluster▪
+Authentic ation  (tokens/MFA) systems
+See Authentic ation  (Tokens / MFA)  in the Connector Pack documen t ation  to learn how to target
+authentic aion  systems, including:
+▪DUO Authentic ation ▪
+▪Entrust IdentityGuar d ▪
+▪Bravura OneAuth▪
+▪Okta▪▪RADIUS Authentic ation ▪
+▪RSA Authentic ation  Manager 7.1/8.x ▪
+▪Vasco IDENTIKEY Server▪
+VMWare
+See Virtualiz ation  platform  in the Connector Pack documen t ation  to target virtualiz ation  systems,
+including:
+▪Citrix Xen Server▪
+▪VMWare Hypervisor▪
+▪VMWare vSphere▪
+Getting  started
+ Requirements 
+Before you add a target system to Bravura Security Fabric  :
+1.Plan ahead. For example, determine the purpose of the target system: Is it a source of pr ofile  IDs? Is it 1.
+a trusted system that can be used to authentic a t e  users? What resources should Bravura Security
+Fabric  manage on the target system?
+2. Con figur e  the actual target system as described in the Connector Pack Documen t ation . 2.
+Depending on the type of system, this may be as simple as cr eating  a target system administrator
+account on the target system. Some systems require that you install client softw ar e  on the Bravura
+Security Fabric  server and/or that you perform more c on figur ation  on the target system itself to allow
+Bravura Security Fabric  to perform the required oper ations  using the administrator accounts you
+provided. Other systems require that you write a script to de fine  oper ations.  Ensure that you read and
+follow all steps described in the ”Pr epar ation”  section  of each target system chapter in Connector
+Pack Documen t ation .
+3.Determine the settings  that you must c on figur e  when you add the target system to Bravura Security 3.
+Fabric .
+The “ T ar g eting ”  section  of each target system chapter in the Connector Pack Documen t ation  describes
+the required or recommended settings.  Con figuring  general options  (on page 494) in this document
+describes all available options.
+ Na vig ation  steps 
+You use the Target system in f ormation  page to add or modify general c on figur ation  in f ormation  for a
+target system. To navigate to this page:
+1.Click Manage the System > Resources > Target systems . 1.
+For target systems on which you can manage inventory items, you can also click Manage the system >
+Inventory > Target systems .
+2.Click:2.▪Manually de fined  to manually c on figur e  a new target system, or modify an e xisting  target system ▪
+that was manually de fined.
+▪Discovery templates to add, modify, or remove templates used to de fine  target systems. ▪
+▪ Aut omatic ally  discovered to modify or remove target systems that have been aut omatic ally  set up ▪
+from discovery templates, via manually-managed discovered objects or aut omatic ally  via import
+rules.
+3.To de fine: 3.
+▪A new manually -de fined  target system, or template, click Add new... ▪
+▪An e xisting  target system or template, search for, or select the target system you want to view or ▪
+modify
+From an e xisting  target system’s in f ormation  page, you can access additional  c on figur ation  pages by
+clicking the appropriate tab:
+Cr edentials De fines  administrator IDs for the target system.
+Authoriz ation De fines  authoriz ation  requirements for the target system – how many
+authorizers, and which authorizers. You can also de fine  how many
+authorizers must deny the request for the assignment to be denied.
+Resource oper ations Con figur e  resource oper ations  to determine whether the softw ar e
+connector or a human implementer will carry out tasks on target
+systems.
+Role enforcement The role enforcement engine can identif y  users who have excessive or
+insufficien t  access according to their role and issue w orkflo w  requests
+to correct the variance. This tab allows you to set target-level
+enforcement settings,  and generate reports.
+Discovery options Con figur e  discovery options  to extract in f ormation  about w ork s t ation
+or server objects found on an Activ e  Directory or Windows server
+target system.
+Test c onnection Test administrator cr edentials  and user listing.  This tab is hidden for IT
+Service Management (Ticket) systems.
+Logs View target system log files.
+From any of these pages, you can click the General tab to return to the Target system in f ormation  page.
+Adding target systems
+The following example demonstrates the minimum requirements for manually adding a target system
+that will be a source of pr ofiles  in Bravura Security Fabric  :
+1.Click Manage the System > Resources > Target systems  > Manually de fined . 1.
+For target systems on which you can manage inventory items, you can also click Manage the system >
+Inventory >  Target systems .
+2.Click Add new… 2.
+3. De fine  the target system ID, type and description;  for example: 3.
+ID CODIR

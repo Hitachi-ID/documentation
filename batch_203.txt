@@ -1,0 +1,307 @@
+This is an example of adding the Remote Desktop disclosure plugin to a checkout for a user accessing a
+Windows server. This example assumes that the default Remote Desktop disclosure plugin has not been
+changed.
+Policy Table:
+Field Value Notes
+StageNumber 1 This number will depend
+on the rest of your policy
+rules and stages.
+RuleNumber 1 This number will depend
+on the rest of your policy
+rules.
+SkipRemaining [No selection] This can be switched to
+Stage if you want this to
+be the last rule that
+processes.
+Comment Check to see if the user is r equesting
+access to an account on a Windows server.
+FilterID WINDOWS_SERVER
+PlatformT ype WINNT WINNT is the windows
+platform  ID.
+Action  Table:
+Field Value Notes
+Action  ID WINDOWS_RDP
+FilterID WINDOWS_SERVER This will link to the policy
+that will trigger this
+action.
+DisclosureID !!!PSW_PLUGIN_TSVC_DESC
+Comment Add the Remote Desktop disclosure plugin
+Setting  up AD disclosure based on group membership
+This is an example of adding multiple  disclosure plugins based on the user’s group membership. This
+example assumes that you have managed the Activ e  Directory security group
+“security_appliance_admins” and run Auto discovery. This example also assumes you have c on figur ed
+new disclosure plugins in Bravura Privilege for Cisco Iron Port and Blue Coat.This example is going to look at the platform  the account exists on, and the security group. Once it
+c on firms  that the account being accessed exists on an Activ e  Directory domain and a security group, it
+will add both Cisco Iron Port and Blue Coat to the list of disclosure controls available to the user.
+Generally, this type of policy would be paired with a generic Activ e  Directory policy that would add a
+disclosure control(s) that all users have access to, such as Remote Desktop.
+Policy Table:
+Field Value Notes
+StageNumber 1 This number will depend
+on the rest of your policy
+rules and stages.
+RuleNumber 2 This number will depend
+on the rest of your policy
+rules.
+SkipRemaining [No selection] This can be switched to
+Stage if you want this to
+be the last rule that
+processes.
+Comment Check to see if the user is r equesting
+access to an account on Activ e  Directory,
+and if they are a member of the security
+group
+FilterID AD_SECURITY_TEAM
+PlatformT ype AD AD is the platform  ID for
+Activ e  Directory.
+GroupFQNrecipientMembershipTargetID AD_TARGETID The Activ e  Directory
+target where the group
+exists.
+GroupFQNrecipientMembership security_appliance_admins The short id of the group
+we want to test
+membership of
+Action  Ironport Policy:
+Field Value Notes
+ActionID AD_IRONPORT
+FilterID AD_SECURITY_TEAM This will link to the policy
+that will trigger this actionField Value Notes
+DisclosureID Iron Port Web GUI This needs to match
+exactly what you entered
+in the description  when
+cr eating  the Iron Port
+browser disclosure plugin
+in Bravura Privilege.
+Comment Add the Cisco Iron Port web portal
+disclosure plugin
+Action  Bluecoat Policy:
+Field Value Notes
+ActionID AD_BLUECOAT
+FilterID AD_SECURITY_TEAM This will link to the policy
+that will trigger this action
+DisclosureID Blue Coat Web GUI This needs to match
+exactly what you entered
+in the description  when
+cr eating  the Blue Coat
+browser disclosure plugin
+in Bravura Privilege.
+Comment Add the Blue Coat web portal disclosure
+pluginSession monitoring
+The session monitoring feature enables the monitoring, recording, searching, and viewing of actions
+performed during adminis tr ativ e  sessions using Bravura Privilege  cr edentials.
+When c on figur ed,  session monitoring works in the following way:
+1.A self-service user logs in and requests privileged access via command prompt control or remote1.
+desktop control.
+2.The user checks out access, triggering a monitoring session.2.
+3.Recorded movie, image, or XML data files are stored on the Bravura Security Fabric  server. 3.
+4.Users with appropriate permissions can search files and download recorded sessions. 4.
+ Terminology 
+The follow terms are relevant to session monitoring:
+Monitored session A session that has been monitored and recorded. A monitored
+session may process specific  or full system content.
+User device The device from which the privileged session was initia t ed.
+User login The login used for the User device . This is often  the requester’s
+login.
+Managed system The managed system the privileged access was checked out
+from.
+Access The privileged access checked out.
+Monitored user Uses Bravura Privilege  cr edentials  to perform adminis tr ativ e
+tasks on sensitiv e  servers. They are often  administrators.
+Requester Issues requests to search for and review monitored sessions.
+They are also called auditors.
+Authorizer Authorizes requests to search for and review of monitored
+sessions.
+Session monitoring architecture
+The architecture for Session Monitoring and Recording includes three primary interfaces(one client side
+and two server side):
+▪ Collection  and Monitoring (Client Side) ▪
+▪ Ag gr eg ation  and Storage (Server Side) ▪
+▪Searching and Viewing (Server side)▪
+Session Monitoring ArchitectureCollection  modules
+You can c on figur e  Bravura Privilege  session monitoring to use one or more c ollection  modules :
+▪Key stroke capture  (on page 2039) – to record keys that were pressed during a session. ▪
+▪Screen capture  (on page 2040) – to periodically capture screen shots during a session. ▪
+▪Clipboard capture  (on page 2041) – to collect copy/paste in f ormation  during a session. ▪
+▪Process name – to capture process created.▪
+▪User interface editable data capture  (on page 2040) – to capture editable data from user interface ▪
+elements during a recorded session.
+▪User interface selectable meta data recording  (on page 2040)– to capture selected data from user ▪
+interface elements during a recorded session.
+▪User interface title meta data recording  (on page 2040). – to capture title data from user interface ▪
+elements during a recorded session.
+▪Webcam data capture  (on page 2041) – to periodically capture images from any attached  web cams ▪
+during a recorded session.
+Ag gr eg ation  and storage
+When session monitoring is enabled, the smonprocessmeta  program processes harvested data and
+inserts the data into the database in a series of batch oper ations.  If a signific an t  amount of data has been
+collected, this could result in signific an t  work for the database. smonprocessmeta  executes
+periodically while a session monitoring session is activ e.  Text-based data such as keystroke, clipboard and
+UI data will not be available to search engines or in zip packages until  smonprocessmeta  is executed.The smonsavemeta  program creates session data packages when requested, and fir es  any additional
+utilities  such as smonavi  or another video g ener ation  utility .  Screenshots are aggregated into hour-long
+video segments.
+You can use the Manage the system  > Modules  >Recorded session management  (smon ) menu to control:
+▪Video g ener ation  utility  and output ▪
+▪Recorded session file storage loc ations ▪
+Video data is not replicated. The server that collects the data is responsible for storing the data.
+Searching and viewing
+Regular users, with appropriate permissions, use the Recorded session management  (SMON) module to
+request and download recorded sessions of activity  requiring privileged cr edentials.  They may be able to
+access recorded data related to their own or another users’ activity .  Depending on access controls, they
+may be able to search and view session data without approval, or via authoriz ation  w orkflo w .
+The Recorded session management  (smon) module is paired with smonc , which is the high performance
+CGI program that receives in f ormation  from w ork s t ations .
+The Recorded session management  (smon) module uses a powerful search engine to search recorded
+session data. You control various options  for the search engine in the Manage the system  > Modules  >
+Recorded session management  (SMON) menu.
+You can control the range of data that users can search in the Recorded sessions request options  tab. See
+Con figuring  recorded session access request options  (on page 2042) for details.
+Recorded session data, depending on which recorded session modules are enabled, is compiled into a zip
+file when requested. The zip file to be downloaded is named as follows: <username> -<target computer
+name> -<CCYYMM-HHMMSS start time> .zip.
+The zip archive includes a general.xml  file, at its root, that contains general in f ormation  about the
+recorded session; including:
+▪Managed system ID▪
+▪Managed system policy ID▪
+▪Privileged account▪
+▪Source computer▪
+▪ Pr ofile  ID of the user who initia t ed  the session ▪
+▪ Dur ation  of the whole session ▪
+▪NetBIOS name of the w ork s t ation  where Bravura Security Fabric  softw ar e  executed ▪
+▪Accounts (local and/or domain) that were used on the w ork s t ation  where the softw ar e  was executed ▪
+▪ Dur ation  for which the local/domain accounts were activ e ▪
+The zip archive contains the following folders and files,  depending on which data c ollection  modules are
+enabled:
+▪video\ – contains movie files compiled from screenshots ▪▪webcam \ – contains image files taken from a webcam ▪
+▪text\ – contains XML files: ▪
+▪clipboard-data.xml – data copied and saved on the clipboard ▪
+▪keystroke-data.xml – keys pressed during a session ▪
+▪process-name-data.xml – process meta data ▪
+▪ui-editable-data.xml – editable data from a user interface ▪
+▪ui-focusable-data.xml – data focused on a (selected) user interface ▪
+▪ui-title-data.xml – titles  from user interface pages ▪
+Planning session monitoring
+Before implementing  session monitoring, determine who can do what with recorded sessions:
+▪Who should be able to search their own recorded sessions?▪
+▪Who should be able to search other people's recorded sessions?▪
+▪Who can be auto-approved to search or download recorded sessions?▪
+▪Who requires approval from an authorizer?▪
+In general, requesters are given permission to search, view and download their own sessions. This is so
+they can review their own work or if there is an error in the system, they can see what might have gone
+wrong in their last session. Requesters cannot usually see other people’s sessions. Auditors are usually
+given permission to search, view and download other people’s recorded sessions. It is also possible for
+auditors to view a session that is being monitored live. So while an account is checked out and in use an
+auditor can log onto Bravura Privilege  and watch the user make changes on the system.
+Users that need to review recorded sessions on a regular basis will be auto-approved to view them so
+that it will not slow down their work. Generally, 80% of requests should be auto-approved in Bravura
+Privilege  to avoid approver f atigue.  Only users that do not require consistent access to recorded sessions
+should require authoriz ation.
+Security and privacy c onsider ations
+Carefully consider the consequences of enabling each of these modules. Enabling all modules would
+provide the most comprehensive session data; however, this would have the greatest pot ential  impact on
+user privacy. For example, the web cam module can collect in f ormation  from the users surroundings. If
+the user can access managed systems from uncontrolled environments, such as public places or their
+home, enabling this module may not be appropriate.
+You can also tailor access to recorded session data depending upon security policy. For example, you may
+want to ensure that users know what is being monitored, when monitoring is activ e,  and that they will be
+able to review recorded sessions of their own activity .  Other security policies may require covert
+monitoring which can be enabled through c on figur ation  options.  By default, covert monitoring is
+disabled. Review security and user monitoring policies before enabling covert monitoring.
+In addition,  Bravura Security Fabric , by default, restricts the screen-shot and keystroke data monitoring
+scope to the terminal only, to protect the privacy of the user; for example when remote users orcontractors are accessing monitored systems from public or personal computers, personal data and
+applic ations  could also be activ e.  This behavior is controlled by the SMON RESTRICT SCOPE setting ,  which
+can be applied globally or per managed system policy.
+For disclosure options  that allow session recording, having SMON RESTRICT SCOPE enabled would mean:
+▪Child processes of the process that receives disclosed access are not recorded▪
+▪Local w ork s t ation  tools opened via pswxcmd  which open new sessions in the same process as ▪
+additional  tabs will record all tabs only in the fir s t open session on a w ork s t ation;  additional
+simultaneous sessions open to the same tool will record black rectangles.
+Disabling this setting  allows you to monitor the user’s display and keystrokes on their whole system both
+inside and outside the terminal when they initia t e  a privileged session. This provides better  security; for
+example if a user starts remote desktop, they may be able to copy sensitiv e  data from the remote
+terminal to an email or another applic ation  outside the terminal.
+Clipboard data is not restricted when SMON RESTRICT SCOPE is enabled. Bravura Security Fabric will
+c ontinue  to collect clipboard data inside and outside the terminal for the user's whole system.  
+Hardware requirements
+Before c alculating  the hardware requirements for your or g aniz ation,  you should consider:
+▪What business drivers you have for recording sessions▪
+▪What login sessions should be recorded▪
+▪What type of data should be captured▪
+Which login sessions should be recorded?
+When deploying a session recording system, the fir s t question  is which sessions to record. There are
+several possibilities:
+▪All sessions, by all users▪
+▪All sessions to sensitiv e,  but any user with access to those systems ▪
+▪All sessions by high-risk users; that is, users whose actions  could cause harm ▪
+The cost and impact of session recording technology directly a ff ects  how this question  is answered. If
+capturing more sessions is r elativ ely  inexpensive and if it does not noticeably  slow down the work of the
+a ff ect ed  users, then it makes sense to record more sessions. Conversely, as the cost of capture,
+transmission and storage rise, the motiv ation  to more carefully target what is and what is not recorded
+rises.
+In the context of session recording of system administrators, Bravura Security recommends that all logins
+to sensitiv e  accounts should be recorded.
+In the context of session recording of high-risk business users – for example, HR s t a ff ,  financial  trader –
+Bravura Security  recommends that all logins by those users, to any system, should be recorded.
+Over time,  as the cost of storage and bandwidth c ontinue  to decline, it may make sense to record all
+login sessions by all users to all systems.Determining required storage capacity
+Storage capacity requirements can vary greatly depending on:
+▪Number of sessions recorded▪
+▪Type of data captured▪
+▪Frame rate used▪
+▪Session dur ation ▪
+▪How often  content is being updated on the screen ▪
+▪Number of monitors used per session▪
+Storage capacity requirements are also a ff ect ed  by the following session monitoring options:
+▪Color depth▪
+▪Capture video type▪
+▪ R esolution  / frame height/width / pixel density ▪
+What data should be captured
+The data that can be recorded from a graphical user interface is extensive. It includes:
+▪Screen captures – image files of the contents of a single applic ation  or a user’s graphical desktop ▪
+▪Process in f ormation,  such as the names of arguments passed to running program ▪
+▪User interface elements, such as window titles,  labels and text from input fields ▪
+▪Keyboard events, such as key presses and releases▪
+▪Pointer device (mouse) events, such as movement and button  clicks ▪
+▪The contents of the oper ating  system copy buff er ▪
+▪File system events, such as mounting  or detaching network drives or removable media ▪
+▪File transfers, such as copying files from one file system to another ▪
+▪Video or image streams from a video capture device such as a webcam▪
+▪Network data transfers, such as emails or web pages.▪
+At a minimum, when recording the login sessions of a user into an administrator-level account, it makes
+sense to capture what they typed and what the system displayed. This means video capture as well as
+capture of input from both the keyboard and copy buff er .
+Regarding video capture, it may make sense to capture the user’s entir e  desktop, so that in the event that
+the user downloaded a file with sensitiv e  data to his computer, the recording will show what he then did
+with that file. For instance, if sensitiv e  file was brie fly  examined – as would be normal in the context of
+tr oubleshooting  – and then deleted, the action  can be taken to be innocuous. On the other hand, if a
+sensitiv e  file was copied to a USB flash  drive or sent to the user’s personal email account, the action  can
+be interpreted as malicious.
+Regarding input capture, it makes sense to capture both keyboard events and copy buff er  contents. This
+is because the user may have constructed commands in advance and pasted them into the login session,
+without g ener ating  any keyboard events.Finally, it may make sense to capture webcam video. This is useful in the event of serious misconduct
+leading to legal proceedings. When this happens, the user in question  is likely to claim that the recorded
+actions  were taken by someone else, that someone stole their access. Webcam capture will show who
+was performing those actions.
+Most corporate privacy regulations  will prevent the use of webcam recording.
+Screen capture trend analysis
+Screen captures (including webcam captures), are the most intensive session recording both in terms of
+storage and network usage. For this reason, the following is an analysis of a variety of variables and how
+they a ff ect  the total storage and network usage.
+Unless otherwise specified,  Activ eX  remote desktop disclosure is c on figur ed.  Guacamole uses
+considerably less disk space, and is not directly analyzed here.
+R esolution  trend analysis
+R esolution  does not greatly a ff ect  the performance of sessions or their recordings.
+The maximum dimension supported is 1280 x 720.
+Color depth comparison
+By default, sessions are recorded at 32-bit color depth. This can be reduced to 16-bit, and will reduce the
+raw disk space required by approximately 60%. The compressed disk space, however, will be only slightly
+less than that of 32-bit.
+Frame rate trend analysis
+The frame rate directly a ff ects  how much storage is required. When the frame rate is doubled, that is,
+twice as many screenshots are taken per second, the storage required is roughly doubled as well.
+Restricted scope comparison
+When restricted scope is disabled, more than one monitor can be recorded per session. In this case, the
+storage is directly pr oportional  to the increase area recorded.
+The storage required is doubled when two monitors are recorded instead of one, assuming the same
+frame height and width for both monitors.
+Concurrent session trend analysis
+The amount of storage required is directly related to the number of sessions being recorded. Recording
+100 sessions will require 10 times  more storage than recording 10 sessions.

@@ -1,0 +1,334 @@
+Using TPM ID ATTR If user “test123” has their “Telephone number”
+attribut e  specified  as “4035550740”, then set TPM ID
+ATTR to “Telephone number”, and enter 4035550740
+on the telephone keypad to find the user.
+For the TPM ID ATTR option  to work as defined  above, you must associate the “Telephone” profile/
+reques t  attribut e  with the account attribut e  “telephoneNumber”
+TPM ID ATTR requires the specified  attribut e  to only contain numeric characters; it cannot contain
+alphabetic  or special characters.
+Enable the tr anslation  interface (transcgi)
+To enable and control access to the tr anslation  interface (transcgi), use the TRANSCGI ALLOWED IP
+option.  Enter a comma-delimited list of IP addresses (with CIDR bitmask) that are allowed to use the
+tr anslation  interface (transcgi).  
+Display time  zone in f ormation
+By default, Bravura Security Fabric  displays date and time  to users as follows:
+▪On request-detail pages and in emails, the date and time  are displayed based on the (Windows) ▪
+regional settings  for the psadmin user on the Bravura Security Fabric  server.
+▪In HTML da t e/time  widgets, the date and time  are displayed by default in the format: ▪
+YYYY-MM-DD HH:mm
+To add time  zone in f ormation,  so that date and time  are displayed as:
+YYYY-MM-DD HH:mm (UTC+/-HH:mm)
+enable the DISPLAY TIMEZONE option  .
+Role app
+Bravura Security Fabric  12.0.0 introduced an experimental Role app  to request role membership and role
+c on figur ation  changes. This feature is disabled by default (via the ROLE APP option).
+Con figuring  search
+Modify the number of search results per page
+By default, Bravura Security Fabric  will provide the choice of 10,20,50 or 100 search records per page.
+You can change the default list by modifying RECORDS PER PAGE LIST . There is a minimum of 2 and a
+maximum of 500 records per page.
+Download search results
+You can c on figur e  a plugin program to allow the in f ormation  from a search results page to be available
+for download.The plugin, set by the SEARCH DOWNLOAD PLUGIN field,  can be called to determine if a download link is
+available to a user on the search results page, or provide the content of a file for download.
+The built-in plugin, plugin-download-csv.exe , allows any user to download user search results
+and external data store tables as CSV files,  given that they have permission to access those pages.
+This plugin is not enabled by default.
+See more in f ormation  on how to write a custom plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+This plugin is called by the View and update pr ofile  (IDR) module and the Manage external data store  external
+data store (DBE) module. It is called once when the user list or the table is displayed to decide whether to
+display the download link. It is called again when the user clicks the download link.
+Displaying the download link
+When enabled by the plugin, a download link or button  is displayed:
+Below the user search results
+Below an Manage external data store  (DBE) module table
+Input
+The input presented to the plugin during the initial  call includes the viewer in f ormation,  plugin mode,
+module, and search type.
+    "" "" = {
+        "sessionid" = "<session GUID>" # The user session
+        "queryMode" = "displayDownloadButton"
+        "module" = "<module>" # The module calling the plugin, such as idr.
+        "searchType" = "<type>" # The search type such as user or which table.
+        "viewer" "user" = {
+            "id" = "<Profile ID>"
+            "name" = "<Alias>"
+            "acl" "" = {
+              "<list of acls the user has>"
+            }
+        }
+    }
+OutputThe plugin can provide the option  to display a download link. If the option  returned is true, a download
+link is available to the user to download file.
+    "" "" = {
+        "displayDownloadButton" = "<true|false>"
+    }
+Returning a file
+When called in stream mode, the plugin will be sent a KVGroup providing the stream mode, search type
+and viewer. If a search query was used to limit the results being downloaded, that is also provided.
+    "" "" = {
+        "queryMode" = "streamResults"
+        "module" = "<module>" # The module calling the plugin, such as idr.
+        "searchType" = "<type>" # The search type such as user or which table.
+        "searchQuery" = "<query>"
+        "viewer" "user" = {
+            "id" = "<Profile ID>"
+            "name" = "<Alias>"
+            "acl" "" = {
+              "<list of acls the user has>"
+            }
+        }
+    }
+The plugin must then return in f ormation  on the suggested filename  and content type.
+    "" "" = {
+        "contentType" = "<MIME type>" # The mime type being streamed such as text/
+plin
+        "filename" = "<text>" # The suggested file name being returned.
+    }
+The plugin will then recieve a KVGroup for each of the items in the search results.
+Example:
+    "" "" = {
+        "id" = "<Profile ID>"
+        "name" = "<Alias>"
+    }
+Any output provided by the plugin following the KVGroup with filename  and content type, will be
+streamed to the client directly.
+.Limit search results
+You can limit the number of results returned for a search by c on figuring  SEARCHMAX RESULTS . This
+forces users to be more specific  in their search criteria. By default SEARCH MAX RESULTS is set to 10,000,
+which means that only the fir s t 10,000 matches are displayed. If there are more matches than this value,
+Bravura Security Fabric  warns users to r e fine  their search criteria.
+This value must be set to 100 or more.
+Filtering search results
+You can c on figur e  a plugin program to filt er  search results based on the type of search engine. You can
+use this plugin to set up some search criteria for an engine so that only search results that satis f y  the
+criteria will be visible to the user.
+To enable this plugin:
+1.Click Manage the system > Modules > Options . 1.
+2.Type the name of the plugin in the SEARCH FILTER PLUGIN  field. 2.
+3.Type a comma-delimited list of engines from which to call the plugin in SEARCH FILTER PLUGIN 3.
+ALLOWED ENGINES  .
+Allowable engines are listed here.
+Search engines and advanced search keys:
+▪ACCOUNT▪
+Advanced key Description
+isLinked Is linked to a pr ofile
+t ar g etid Target system ID
+name User name
+groupid Group ID
+acc ountid Account
+▪ACCOUNTFORGROUP▪
+Advanced key Description
+directmanager Direct manager
+groupsearch Group ID
+attrk e y Account attribut e
+userid User ID
+name User name
+allmanagers Direct and indirect managers
+rolesearch Role ID
+hostsearch Target system ID▪ADMIN▪
+Advanced key Description
+directmanager Direct manager
+groupsearch Group ID
+userid User ID
+privileges Privileges
+attrk e y Account attribut e
+name User name
+allmanagers Direct and indirect managers
+rolesearch Role ID
+hostsearch Target system ID
+▪ADMINGROUP▪
+Advanced key Description
+id ID
+userclass User class ID
+privileges Privileges
+desc Description
+▪ATTRDEF▪
+Advanced key Description
+load Load attribut e  values from target system
+attrid Account attribut e  ID
+minval Minimum number of values
+cr ea t eaction Action  when cr eating  account
+pr of attrid Mapped pr ofile  attribut e  ID
+upda t eaction Action  when updating  account
+type Account attribut e  type
+▪ATTRGRP▪
+Advanced key Description
+display_type Display type
+desc Attribut e  group description
+member Pr ofile  attribut e  member ID
+member_desc Pr ofile  attribut e  member description
+id Attribut e  group ID
+▪BBATTR▪Advanced key Description
+output_oper ation Output oper ation
+connector_key Connector key
+input_oper ation Input oper ation
+attrk e y Account attribut e
+input_target Input target system
+▪CERTATTR▪
+Advanced key Description
+type Type
+id ID
+desc Description
+▪CERTRESOURCE▪
+Advanced key Description
+cer_name Reviewer name
+roleid Role ID
+res_name Con figur ation  description  : Entitlemen t  description
+cer_id Reviewer ID
+targetname Target system description
+sodid Segr eg ation  of duties  rule ID
+soddesc Segr eg ation  of duties  rule description
+groupname Group description
+groupid Group ID
+t ar g etid Target system ID
+res_type Entitlemen t  type
+res_id Con figur ation  ID : Entitlemen t  ID
+roledesc Role description
+▪CERTROUND▪
+Advanced key Description
+method Certific ation  method
+datestarted Date started
+user User under review
+sa v edc on figid Certific ation  setup ID
+certtype Certific ation  type
+role Role ID
+initia t or Initia t or  IDdescription Description
+sa v edc on fig desc Certific ation  setup description
+certifier Reviewer ID
+status Campaign status
+target Target system ID
+resourcetype Entitlemen t  type
+group Group ID
+userclass User class ID
+sod Segr eg ation  of duties  rule ID
+▪CERTSEGMENT▪
+Advanced key Description
+cer_name Reviewer name
+ent_id Entitlemen t  ID
+seg_percentage % completed
+startdate Start date
+cer_id Reviewer ID
+ent_desc Entitlemen t  description
+enddate End date
+ent_type Entitlemen t  type
+userclass User class
+seg_desc Segment description
+▪CONFIGCERT▪
+Advanced key Description
+desc Con figur ation  description
+status Status
+id Con figur ation  ID
+type Con figur ation  type
+▪CONFIGCERTHISTORY▪
+Advanced key Description
+certifiername Reviewer name
+reason Notes
+certifier Reviewer ID
+▪FOUNDACCOUNT▪
+Advanced key Description
+acc ountid Accountdiscname Discovered object name
+discsid Discovered object SID
+disctype Discovered object type
+lastpwdmod Last password change
+managed Is managed
+mode Mode
+platform type Platform  type
+policyid Managed system policy ID
+t ar g etid Target system account exists on
+usedhost Target system account discovered from
+Dynamic group Description
+acc oun t attrk e y Account attribut e  keys
+f oundc ompattrk e y Discovered computer attribut e  keys
+f oundsub scriber attrk e y Discovered subscriber keys
+ma_attrk e y Managed account resource attribut e  keys
+t a_attrk e y Target system resource attribut e  keys
+▪FOUNDCOMPATTR▪
+Advanced key Description
+tagtype Attribut e  type
+tagname Attribut e
+▪FOUNDCOMPUTER▪
+Advanced key Description
+sourcename Source system
+name Discovered system name
+adminid_status Discovered system administrator ID status
+loadtime Last discovered
+state Discovered system status
+type Discovered system type
+▪GROUPFORGROUP▪
+Advanced key Description
+child_groups Child groups
+exclude_child_groups* Exclude direct and indirect child groups
+exclude_parent_groups** Exclude direct and indirect parent groups
+groupid Group ID
+groupname Group descriptiongrouptype Group type
+issecurity Is security group
+managed Managed
+members Accounts
+parent_groups Parent groups
+parentgroupid Parent group ID
+RB A Cflag Role enforcement
+targetdesc Target system description
+t ar g etid Target system ID
+url Help URL
+used In use
+valid Valid
+* Key exclude_child_groups is only available in parent group selection  page
+** Key exclude_parent_groups  is only available in child group selection  page
+Dynamic group Description
+attrk e y Resource attribut e  keys
+▪GROUPMEMBER▪
+Advanced key Description
+RB A Cflag Role enforcement
+longid Account
+userid User ID
+groupname Group description
+url Help URL
+used In use
+username User name
+valid Valid
+managed Managed
+groupid Group ID
+▪GSETMBR▪
+Advanced key Description
+groupdesc Group description
+groupid Group ID
+▪HOST▪
+Advanced key Descriptionaddress Address
+adminid Administrator ID
+aut oassocia t eattr Account attribut e  to aut omatic ally  attach  accounts to
+user pr ofiles
+aut oassocia t e flag Aut omatic ally  attach  accounts
+desc Target system description
+hasaccount Users must have accounts
+id Target system ID
+platform Target system type
+rbacenforce Role enforcement
+source Source of pr ofile  IDs
+targetsysgrp Target system group
+url Help URL
+Dynamic group Description
+attrk e y Resource attribut e  keys
+▪IDPMQUEUE▪
+Advanced key Description
+platform Target system type
+sourceacct Trigger account
+longid Account
+lasterr Recent errors
+reqby Requester
+numtries Total attemp ts
+userid User
+hostid Target system ID
+queued Queued
+ne xttr y Next attemp t
+sourcehost Trigger target system ID
+▪IMPORTRULE▪
+Advanced key Description
+autodisc Aut omatic ally  import during auto discovery
+req Condition  ID
+desc Description
+policy Managed system policy ID
+template Template target system

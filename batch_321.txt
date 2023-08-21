@@ -1,0 +1,325 @@
+Criteria Description
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Report type Select Discovered object  or Rule ID  to group the report
+by the selected type. Default is discovered object .
+Import rule trial run results
+Purpose : List discovered objects that have been given a trial run against import rules. For each
+discovered object only the most recent trial run is displayed.
+Executable : trialrun
+Search Criteria :
+Criteria Description
+Discovered object Type the discovered object that has been tested against
+import rules for which you want to generate the report.
+Discovered system Search for or type the ID of a discovered system.
+Rule type Select the type of import rule:
+▪All▪
+▪Target systems▪
+▪Managed systems▪
+▪Managed accounts▪
+Target systems rule ID Search for or type target systems import rules. This
+option  only appears if at least one target systems import
+rule is de fined.
+Managed systems rule ID Search for or type managed systems import rules. This
+option  only appears if at least one managed systems
+import rule is de fined.
+Managed accounts rule ID Search for or type managed accounts import rules. This
+option  only appears if at least one managed accounts
+import rule is de fined.
+Action  performed by Type either the service or user that performed the test.
+Current status Select the current status to include:
+▪All: This is the default setting. ▪
+▪Managed▪
+▪Unmanaged▪
+Result Select the results to be displayed:
+▪All: This is the default setting. ▪Criteria Description
+▪Passed▪
+▪Failed▪
+Import rule test date Choose one of the following options:
+Date not required : This is the default setting.  In f ormation
+is listed regardless of start date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.Criteria Description
+Option Description
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: In f ormation  is only included in the report output if the
+start date falls within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: In f ormation  is only included in the report output if the
+start date and time  falls within the Start date range . Use
+the fir s t set of date / time  controls to select the earliest
+time  to include, and the second set of date / time
+controls to select the latest time  to include.Criteria Description
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Import rule binding failures
+Purpose : Deactiv ation  of imported managed account or systems due to import rule c ondition  expression
+mismatch.
+Executable : importrulebindfailures
+Search Criteria :
+Criteria Description
+Discovered object type Choose:
+Discovered system : Returns only systems that were
+deactiv a t ed.
+Discovered account : Returns only accounts that were
+deactiv a t ed.
+Managed systems rule ID Search for or type managed systems import rules. This
+option  only appears if at least one managed systems
+import rule is de fined.
+Managed accounts rule ID Search for or type managed accounts import rules. This
+option  only appears if at least one managed accounts
+import rule is de fined.
+Discovered account Type the name of the discovered account to include in
+the report. This option  is only available when Discovered
+object type is set to "Discovered account".
+Discovered system Type a comma-and-space-delimited list of discovered
+systems to include in the report. Alt ernativ ely ,  search for
+one or more discovered systems.
+Managed system policy ID Type a comma-and-space-delimited list of managed
+system policy IDs to include in the report.
+Alt ernativ ely ,  you can search for one or more policies.
+Import rule test date Choose one of the following options:
+Date not required : This is the default setting.  In f ormation
+is listed regardless of start date.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. ThisCriteria Description
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.Criteria Description
+Option Description
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: In f ormation  is only included in the report output if the
+start date falls within the selected r elativ e  date range.
+Use selected date
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.Criteria Description
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+: In f ormation  is only included in the report output if the
+start date and time  falls within the Start date range . Use
+the fir s t set of date / time  controls to select the earliest
+time  to include, and the second set of date / time
+controls to select the latest time  to include.
+Use within the last N days : In f ormation  is only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago : In f ormation  is only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Managed system policies
+Purpose: Lists in f ormation  about managed system policies.
+Executable : resgroup
+Search Criteria :
+Criteria Description
+Managed system policy ID Type a comma-and-space-delimited list of managed
+system policy IDs to include in the report. Alt ernativ ely ,
+you can search for one or more policies.
+Managed system policy description Type the description  of the managed system policy to
+include in the report.
+Managed system policy type Select one or more managed system policy types.
+Managed by Select one or more node IDs.
+Push mode managed system policy status Select one or more managed system policy statuses.
+Scope of password s ynchr oniz ation Select one or more password s ynchr oniz ation  methods:
+▪No password s ynchr oniz ation ▪
+▪Synchronize accounts with same ID▪
+▪Synchronize all accounts in policy▪
+Authentic ation  type Select one or more authentic ation  types. This option  is
+only available if Report type  = Summary .Criteria Description
+▪Group set▪
+▪Password▪
+▪SSH key▪
+Report type Select what type of report to generate:
+▪Summary▪
+▪List managed accounts▪
+▪List target type summary▪
+▪Display managed system policy password policies▪
+▪Display password r andomiz ation  schedule details ▪
+▪List managed system import rules▪
+▪List managed system policies authorizers▪
+Managed system summary
+Purpose : List in f ormation  about managed systems.
+Executable : resourcesummary
+Search Criteria :
+Criteria Description
+Managed system ID Type a comma-and-space-delimited list of IDs for
+managed systems you want to include in the report.
+Alt ernativ ely ,  you can search for one or more managed
+systems.
+Managed system description Type the description  for a managed system you want to
+include in the report.
+Managed system policy ID Type a comma-and-space-delimited list of managed
+system policy IDs to include in the report. Alt ernativ ely ,
+you can search for one or more policies.
+Display only managed systems not associated to any
+policyEnable this checkbox to display only managed systems
+not associated to any managed system policy.
+Number of days for inactiv e  managed systems Enter a positiv e  number of days, and if a managed system
+has become inactiv e  within the specified  number of days,
+then it will be included in the report.
+Choose last c onnection  date This is the date of last contact between the managed
+system and Bravura Security Fabric . Choose one of the
+following options  to de fine  a last c onnection  date:
+Date not required : This is the default setting.  Managed
+system in f ormation  is listed regardless of last c onnection
+date.
+Use r elativ e  dateCriteria Description
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the

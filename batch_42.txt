@@ -1,0 +1,314 @@
+Part I Notific ationEmail notific ation
+Bravura Security Fabric  activ ely  notifies  users about events that may require their attention;  this is
+generally done through email. Some Bravura Security Fabric  features, such as authoriz ation  workflo w ,
+require the ability to notif y  users and rely heavily on this in t er action.  Some of the events that can trigger
+a notific ation  email include:
+When this event occurs… Bravura Security Fabric  sends email to…
+Product failure The system administrator, so that he or she can
+troubleshoot and repair the problem.
+Disk space running low The system administrator, so that he or she can r ectif y
+before disk space becomes a problem.
+A report is generated The help desk user who requested the report.
+Access change requested Authorizers, pr ompting  them to take action.
+A user’s access rights change The user, indic ating  that changes have been made to his
+or her pr ofile  or access.
+Access certific ation  begins Reviewers, reminding them to log in and complete their
+certific ation  campaigns.
+Or g aniz ation  chart c ons truction  begins Managers, asking them to update their lists of
+subordinates.
+A users' password is about to expire The user, indic ating  it is time  to change their password.
+Enrollment is required The user, asking them to enroll in security questions.
+Intruder lockout The user, indic ating  there is an intruder lockout on their
+account.
+One of the early tasks in a Bravura Security Fabric  deployment is to set up an email notific ation  system.
+Read this section  to learn about the diff er en t  ways Bravura Security Fabric  determines users’ email
+addresses, and how to c on figur e  settings  related to sending email.
+Determining users’ email addresses
+For a pr oduction  deployment, Bravura Security  recommends that all users have an email address de fined
+in Bravura Security Fabric . In most cases, Bravura Security Fabric  determines email addresses by the
+value of the EMAIL pr ofile  attribut e,  which can be mapped to an account attribut e  on a given target
+system; for example, the EMAIL pr ofile  attribut e  is mapped to the mail attribut e  in an Activ e  Directory
+target system by default.
+When Bravura Security Fabric  sends messages to users it attemp ts  to determine their email addresses
+using:
+1.An email override value provided by a requester or by  Bravura Security Fabric  (on page 413) 1.
+If no override exists then,
+2.The value of the EMAIL pr ofile  and request attribut e  (on page 413) 2.
+If no email user attribut e  is set then,3.The plugin de fined  by the IDSYNCH USERS EMAIL PLUGIN plugin point  (on page 414) 3.
+If that fails, Bravura Security Fabric  returns an empty string.
+The e x ception  is the address of the system administrator, which you set during ins t allation.  You can
+modify this address using the RECIPIENT EMAIL field,  which you can modify this setting  on the global
+email  (on page 415) page.
+Specifying email override values
+An email override value can be assigned to a:
+▪ St atic  authorizer—This value is provided by a product administrator  when he or she adds the authorizer ▪
+to Bravura Security Fabric . Bravura Security Fabric  sends email to the override address whenever the
+authorizer’s input is required for any request.
+▪Requester—This value is provided by the requester when they make a request. Bravura Security Fabric ▪
+sends email to the override address whenever the request is updated.
+▪Recipient—This value is provided by a requester when he or she creates an access change request on▪
+behalf of the recipient. Bravura Security Fabric  sends email to the override address whenever this
+request is updated.
+Bravura Security Fabric  sends all other messages to the user’s "regular” email address.
+Using the EMAIL pr ofile  and request attribut e
+The built-in EMAIL Pr ofile  and request attribut es  is used to gather and store users’ primary email
+addresses. There are several ways to populate this attribut e,  including:
+▪Loading email attribut es  listed from a target system (recommended) ▪
+By default, the EMAIL pr ofile  and request attribut e  is mapped to the account attribut es  listed in the
+table below.
+▪Allowing users to edit the attribut e  in the View and update pr ofile  (IDR) module. ▪
+Before you can do this, you must set up the built-in EMAIL attribut e  and add it to an attribut e  group to
+which requesters have read/write access.
+Email attribut e  mappings
+Target Attribut e
+Activ e  Directory mail
+Exchange 2000 Server mail
+IBM OLAP EMailID
+LDAP Directory Service mail
+Lotus Domino Server InternetAddress
+BMC Service Desk Express Suite (SDE) EMail Address
+Lotus Domino Server InternetAddress
+P eopleSoft  Applic ation  Server EmailAddressTarget Attribut e
+Remedy 6 Server email address
+Remedy 7 Server email address
+RSA Access Manager email_address
+SAP Server E_MAIL
+See also:
+▪Account attribut es  (on page 553) to learn how to change the default mappings. ▪
+▪You can also set up Enforced enrollment  (on page 1183) to direct users to the Password s ynchr oniz ation ▪
+r egis tr ation  (PSR) module to fill in their details.
+Using the email address plugin (IDSYNCH USERS EMAIL PLUGIN)
+The users’ email address plugin receives all in f ormation  about a user, including all attribut es  and
+accounts. It can return an email address according to any rule you specify. For example, you may want it
+to append the domain name to users’ pr ofile  IDs:
+profile ID@example.com
+To set the users’ email plugin, type the name of the executable or PSLang script in the IDSYNCH USERS
+EMAIL PLUGIN field  on the W orkflo w  > Options  > Plugins page.
+There are no shipped plugins for use with the plugin point. See more for in f ormation  on writing  a plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+When c on figur ed,  the plugin is run by the user notific ation  system and by the W orkflo w  Manager Service,
+if installed.
+Input
+The email address plugin is sent all data about the user whose email address is required.
+Input passed to the plugin is as follows:
+"" "" = {
+"authorizer" = "<profile ID>"
+"viewer" "user" = { ...}
+# The viewer's data. See ??
+}
+For example:
+# KVGROUP-V1.0"" "" = {
+"authorizer" = "marliese.capek"
+"viewer" "user" = {
+"id" = "marliese.capek"
+"name" = "Marliese Capek"
+}
+}
+Output
+Output passed from the plugin is as follows:
+"" "" = {
+"errmsg" = "<error message>" # Error messaged by the plugin
+"retval" = "0" # Mandatory; zero is success and non-zero is failure
+"authorizer" "<profile ID>" = {
+"email" = "<email address>"
+# The email address to use for the authorizer
+}
+}
+Following is an example of the output:
+"" "" = {
+"errmsg" = ""
+"retval" = "0"
+"authorizer" "marliese.capek" = {
+"email" = "marliese.capek@norse.bravurasecurity.com"
+}
+}
+.
+Modifying global mail settings
+Bravura Security Fabric  sends email using the GLOBAL MAIL PLUGIN plugin. The following plugin
+programs, shipped with Bravura Security Fabric , can be used with this plugin point:
+▪global-mail-plugin.py  (on page 417), which uses MAIL SEND METHOD to send an email or ▪
+writes the email to file. It is enabled by default.
+▪plugin-email-domino.exe  (on page 417), which sends mail via a Lotus Notes / Domino mail ▪
+system.
+To c on figur e  the global mail plugin and other required settings  for sending email:
+1.Click Manage the system > W orkflo w  > Email c on figur ation  > Email c on figur ation . 1.When you select the W orkflo w  menu, if the required settings  for sending email are not c onfigured,
+Bravura Security Fabric aut omatic ally  directs you to this page.
+2.Type values for the options  listed below as required. 2.
+3.Click Update . 3.
+Option Description
+GLOBAL MAIL PLUGIN The plugin to send email.
+GLOBAL MAIL PLUGIN
+MAILDIRThe directory path to store messages when they are written  to a
+file. The  default is <Program Files path>\Bravura
+Security\Bravura Security Fabric\Logs
+\<instance>\mail .
+Ensure that this directory exists.
+MAIL AUTH LOGIN The login ID for mailing systems that require authentic ation.
+MAIL AUTH PASSWORD The password for the login ID specified  by MAIL AUTH LOGIN.
+Note: If you change the MAIL AUTH LOGIN, MAIL SERVER, or
+MAIL SERVER PORT value later, you must also update this field.
+MAIL CONTENT TYPEEnable to display HTML content in email. When disabled (default)
+email content is plain text.
+MAIL SEND METHOD The delivery options  for notific ation  messages. This value is used
+by global-mail-plugin to send an email and/or write the message
+to a file. Valid values are:
+ SMTP Send email via MAIL SERVER
+ NOTES Send email via a Lotus Notes/Domino mail system
+ FILE Write to a file in the directory specified  by GLOBAL MAIL
+PLUGIN MAILDIR
+Multiple  methods can be used. If the MAIL SERVER is specified,
+the default is SMTP; otherwise, the default is FILE.
+MAIL SERVER The mail server address.
+MAIL SERVER PORT The port number for the SMTP mail server. Default is 25.
+RECIPIENT EMAIL A comma-delimited list of email addresses of Bravura Security
+Fabric  administrators who should receive notific ation  of events
+r elating  to the running of the server.
+This value is set during ins t allation.
+SENDER EMAIL The email address that will appear as the sender of emails. This is
+required if using Lotus Notes or SMTP to send email.
+The email server c onfiguration  data is saved in the registry. These settings  are not propagated to
+replic ation  nodes unless you run the File R eplic ation  Service  (on page 2862) .  Con figuring  node-specific  settings
+The email c on figur ation  settings  are node-specific,  so those system variables are not stored in the
+backend database, but in each node's registry.
+However, most registry settings  replicate by default  (on page 3581), to ensure that the settings  on
+secondary nodes are made from the primary node.
+Sometimes  it is useful to add some of these c on figur ation  settings  to the r eplic ation's  utility  blacklist, so
+that you can c on figur e  the setting  separately on each applic ation  node.
+After  blacklisting  the system variable, you must login separately to each node and change its value
+appropriately.
+Uses cases
+1. Applic ation  administrators usually want to know what node any alerts are coming from, so they can 1.
+address the issues on the specific  servers, without having to look at the hidden message headers to
+identif y  through which gateways the message moved (sometimes  all emails go through the same
+gateway, as in use case 2 below).
+Solution:
+▪Blacklist SENDER_EMAIL.▪
+▪Set its value to something like "instancename-nodename@company.com", for example "prod-▪
+pam-001@bravurasecurity.com".
+2.Some nodes running in diff er en t  data centers may use diff er en t  SMTP servers, or diff er en t  cr edentials. 2.
+Solution:  lacklist MAIL SERVER (and optionally ,  MAIL SERVER PORT).
+3.Some nodes in diff er en t  data centers may be managed by diff er en t  teams. 3.
+Solution:  Blacklist RECIPIENT EMAIL.
+Customizing the global mail plugin
+The following plugin programs, shipped with Bravura Security Fabric , can be used with the GLOBAL MAIL
+PLUGIN plugin point:
+▪global-mail-plugin.py , which uses MAIL SEND METHOD to send an email or writes the email ▪
+to file. It is enabled by default.
+This plugin should only be changed under supersion from Bravura Security support, as it is a base
+product script and any changes will be adding technical debt to be re-added after  any patches are
+applied, which will put in place the base version of the script.
+See more in f ormation  on tr oubleshooting  the global mail plugin
+Ex ecution  points
+This plugin is run by the idwfm service and by the psupdate and iddiscover programs. The
+plugin must be located in the \<instance>\plugin\ directory on the Bravura Security Fabric  server.Input
+The following is an example of input sent to the plugin:
+"" "" = {
+     "content" = "\nouadmin,\n \n  A request for account resources has been received, and is pending
+\nyour approval.\n\n\n\n
+\nTo accept, update, or deny the requested resources, please click on
+\nthe following link:\n\n  -->  http://w2k3archive2/51-5142/?LANG=en-
+us&userid=ouadmin&BATCH=2064&JUMPTOCGI=IDP\n\nAlternatively, visit\n
+\n  -->  http://w2k3archive2/51-5142/?LANG=en-us\n
+\nLog in, click the link for 'Authorize requests', and
+\nenter batch ID 2064.\n\n\n\nThis request's details:\n
+\n   Batch ID: 2064\n   Request Created at: \n   Requested By: test_request
+\n   Through delegate: \n   Requested User ID: test_recipient\n\n
+\n   Other Attributes:\n     \n
+\n     \n     \n     View managed password requests\n\n
+\n      AD, 7777\n\n\n\n     \n\n   Requester Notes:\n     \n
+\n   Reasons:\n     \n\n\n\n-- Identify Manager.\n\n
+\n-----------------------------------------------------------------\n
+\n"
+      # The body of the message
+     "fromemail" = "idmsuite_replies@YourEmailDomain.com"
+      # The value of SENDER EMAIL.
+     "fromname" = "ID Management Suite"
+      # This is always ID Management Suite, and is not configurable.
+     "frompass" = "mypass123"
+      # The value of SENDER PASSWORD.
+     "lockdir" = "E:\\Program Files\\Bravura Security\\Bravura
+Security Fabric\\Locks\\"
+      # The lock file directory.
+     "maildir" = "E:\\Program Files\\Bravura Security\\Bravura
+Security Fabric\\Logs\\default\\mail"
+      # The value of GLOBAL MAIL PLUGIN MAILDIR
+     "mailheader" = "From: $FROMNAME$ <$FROMEMAIL$>\nTo: $TONAME$ <
+$TOEMAIL$>\nSubject: $SUBJECT$\n\n$CONTENT$\n\n"
+     "mailserver" = "smtp.example.local"
+      # The value of MAIL SERVER.
+     "mailserverport" = "25"
+      # The value of MAIL SERVER PORT.
+     "primaryID" = "ouadmin"
+      # The profile ID of the primary authorizer,      # in case this is a delegated email.
+     "profileID" = "ouadmin"
+      # The profile ID of the user receiving the mail.
+     "subject" = "Access access request needs authorization"
+        # The subject of the email.
+     "toemail" = "ouadmin@"
+      # The email address to which the message is sent.
+      # If global mail plugin is run by psupdate or loaddb, this is the value
+      # of RECIPIENT EMAIL.
+     "toname" = "ouadmin"
+      # The full name of the recipient of the email message.
+     "content-type" = "1"
+      # Indicate the content type of the email, 1 = HTML
+     "triggeringEvent" = "EVENT_AUTH_EMAIL_INITIAL"
+      # The idwfm event that is triggering the mail.
+     "request" "" = {
+        # Standard request data.
+        }
+     "extraHeaders" "" = {
+         "In-Reply-To" = "<request ID>"
+         "References" = "<request ID>"
+         "X-Hitachi-ID-
+purposeTag" = "EM_WORKFLOW_REQ_INITIAL_AUTHORIZER_NEEDAUTH_CONTENT_PRIMARY"
+     }
+      # Provide extra email headers
+}
+Request data is optional.  It is empty if not supplied. The input can be used to change how email is sent
+based on the situation;  for example, only sending email if certain request in f ormation  is included.
+Output
+This plugin returns a success or failure message, using the errmsg key.
+For example, the output for a successful email is:
+        "" "" = {
+          "errmsg" = "success "
+          "retval" = "0"
+        }
+The output for a failed email would be:
+        "" "" = {
+          "errmsg" = "There was a problem because ..."
+          "retval" = "1"        }
+.
+▪plugin-email-domino.exe , which sends mail via a Lotus Notes / Domino mail system. ▪
+See more in f ormation  on c on figuring  this plugin
+To c on figur e  Bravura Security Fabric  to use plugin-email-domino :
+1.Install the Lotus Notes / Domino client as described in the "Connector Pack In t egr ation  Guide". 1.
+2.Copy the ID file that will be used to send email, to the Bravura Security Fabric  server. 2.
+3.Ensure that Bravura Security Fabric  can determine users’ email addresses. 3.
+Con figur e  the global mail settings  (on page 415) as follows:
+▪GLOBAL MAIL PLUGIN  plugin-email-domino.exe ▪
+▪GLOBAL MAIL PLUGIN MAILDIR  Empty. This option  is ignored. ▪
+▪MAIL AUTH LOGIN  The path to the ID file that will be used to send email; for example, ▪
+C:\idfiles\user.id.
+▪MAIL AUTH PASSWORD  The password for the ID file specified  by MAIL AUTH LOGIN. ▪
+▪MAIL SERVER PORT  Any numeric value. This option  is ignored. ▪
+▪MAIL SERVER Any value. This option  is ignored. The plugin determines this value from the Notes ▪
+API.
+▪RECIPIENT EMAIL  The Bravura Security Fabric  administrator’s full name or notes mail address; for ▪
+example:
+IDMS Admin/global@example.local .
+▪SENDER EMAIL  The address that appears as the sender when email is sent to addresses specified ▪
+in RECIPIENT EMAIL. plugin-email-domino  uses this to retrieve the sender’s ID file to use as
+the sender.
+.
+Modifying w orkflo w  options  for sending mail
+Bravura Security Fabric  allows you to customize settings  for sending messages during authoriz ation
+w orkflo w .  This includes the times  at which email should be sent.
+To c on figur e  w orkflo w  settings  for sending email:
+1.Click Manage the system > W orkflo w  > Email c on figur ation 1.
+When you select the W orkflo w  menu, if the required settings  for sending email are not c onfigured,
+Bravura Security Fabric aut omatic ally  directs you to this page.
+2.Type values for the options  listed in below as required. 2.
+3.Click Update . 3.

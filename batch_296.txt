@@ -1,0 +1,318 @@
+Criteria Description
+changes’ option  must be enabled on the account’s target
+system for it to be listed here.
+Out-of-band:  lists all accounts that were not deleted by
+Bravura Security Fabric . The ’track account changes’
+option  must be enabled on the account’s target system
+for it to be listed here.
+Other:  lists all deleted accounts that belonged to target
+systems where ’track account changes’ was not enabled.
+Report type Choose a report type from the drop-down list. The
+Account details setting  is selected by default.
+Account details:  lists accounts by status, User ID, target
+system, and target group.
+Account summary:  lists the number of accounts of each
+status.
+Account as source of pr ofile  IDs:  lists the number of
+accounts on target systems that are a source of pr ofile
+IDs; includes the attribut e  used to aut omatic ally  attach
+accounts to pr ofile  IDs, and account status.
+Account not as source of pr ofile  IDs:  lists the number of
+accounts on target systems that are a not a source of
+pr ofile  IDs; includes the attribut e  used to aut omatic ally
+attach  accounts to pr ofile  IDs, and account status.
+Graph type Specify the type of graph for a visual r epr esen t ation  of
+the data. The available graph types are v ertic al  bar chart,
+pie chart and horizontal bar chart. This field  is only visible
+when the account summary report type is selected.
+If you do not specify any search criteria, all valid accounts are included in the report.
+Resource authorizers
+Purpose:  Authorizers and the resources to which they are assigned.
+Executable:  authorizers
+Search Criteria:
+Criteria Description
+Authorizer ID Type a comma-and-space-delimited list of pr ofile  IDs that
+match the authorizers you want to list resources for.
+Alt ernativ ely ,  you can search for one or more authorizers.
+This option  is only displayed if Authorizer type  is set to
+List explicitly assigned .
+Target system ID Type a comma-and-space-delimited list of target system
+IDs to only include Accounts and Managed groups fromCriteria Description
+those systems in the report. Alt ernativ ely ,  you can search
+for one or more target systems.
+Roles Type a comma-and-space-delimited list of roles for which
+you want to list authorizers. Alt ernativ ely ,  you can search
+for one or more authorizers.
+Managed groups Type the long ID of one or more managed groups for
+which you want to list authorizers. Alt ernativ ely ,  you can
+search for one or more managed groups.
+Template accounts Select one or more template accounts for which you
+want to list authorizers.
+Managed system policy ID Select one or more managed system policy IDs for which
+you want to list authorizers.
+Segr eg ation  of duties  rules Select one or more segr eg ation  of duties  (SoD) rules for
+which you want to list authorizers.
+This option  is only displayed if there are SoD rules
+c on figur ed.
+Authorizer type Set the type of authorizers that you want to list:
+List explicitly assigned:  authorizers explicitly assigned to
+at least one resource
+List w orkflo w  managers:  w orkflo w  managers assigned by
+user access rules
+List deleg ation  managers:  deleg ation  managers assigned
+by user access rules
+List authoriz ation  user class:  user class assigned for
+authoriz ation
+Deleg ation
+Purpose:  Current and archived deleg ation  requests - details and s t atistics.
+Executable:  delegation
+Search Criteria:
+Criteria Description
+Primary user ID Type the pr ofile  ID of the primary authorizer for whom
+you want to generate the report. Alt ernativ ely ,  you can
+search for one or more pr ofile  IDs.
+Delegate user ID Type the pr ofile  ID of the delegate for whom you want to
+generate the report. Alt ernativ ely ,  you can search for one
+or more pr ofile  IDs.
+P articipan t Select the type of deleg ation:Criteria Description
+(All):  to include requests for all types of deleg ations
+(default)
+Authorizer:  to only include requests to delegate
+authoriz ation  tasks
+Implementer:  to only include requests to delegate
+implemen t ation  tasks
+Reviewer: to only include Certific ation  delegate
+Earliest esc alation  date This is the date that the deleg ation  is in e ff ect.  Choose
+one of the following options  to de fine  a start date:
+Date not required:  This is the default setting.  Deleg ations
+are reported regardless of their start time.
+Use r elativ e  date
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.Criteria Description
+Option Description
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+: Deleg ations  are only included in the report output if
+their start time  falls within the selected r elativ e  date
+range.
+Use selected date:
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+Deleg ations  are only included in the report output if their
+start time  falls within the Start date range. Use the fir s t
+da t e/time  field  to select the earliest time  to include, and
+the second da t e/time  field  to select the latest time  to
+include.Criteria Description
+Use within the last N days:  Deleg ations  are only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago:  Deleg ations  are only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Latest esc alation  date This is the date that the deleg ation  round ended. Choose
+one of the following options  to de fine  an end date:
+Date not required:  This is the default setting.  Deleg ations
+are reported regardless of their start time.
+Use r elativ e  date:
+It is recommended that you use a r elativ e  date for
+your date range when you schedule a report. This
+ensures that the date range would be valid when
+the schedule report executes.
+Choosing Use r elativ e  date  makes a drop-down list
+appear, which allows you to select the type of
+r elativ e  date. A r elativ e  date is calculated based on
+the day that the report is executed. The following
+options  are available in the drop-down list:
+All time  value ranges are from 00:00:00 to 23:59:59.
+R elativ e  date options
+Option Description
+Current day The 24 hour period that the report is executed within,
+from 00:00:00 to 23:59:59.
+Current calendar week The current seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday August 1st to
+Saturday August 7th.
+Current month The current month from beginning to end, determined by
+the day the report is executed. For example, if the report
+is run on August 3rd, then the date range would be from
+August 1st to August 31st.
+Current quarter The current quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+July 1st to September 30th.Criteria Description
+Option Description
+Current year The current year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2010-01-01 to 2010-12-31.
+Previous day The previous 24 hour period, from 00:00:00 to 23:59:59,
+determined by the time  the report is executed.
+Previous calendar week The previous seven day period, from Sunday to Saturday,
+which is calculated from the day the report is created. For
+example, if the report is run on Tuesday August 3rd, then
+the date range would be from Sunday July 25th to
+Saturday July 31st.
+Previous month The previous month from beginning to end, determined
+by the day the report is executed. For example, if the
+report is run on August 3rd, then the date range would
+be from July 1st to July 31st.
+Previous quarter The previous quarter from the fir s t day of the quarter to
+the last day of the quarter. For example, if the report is
+run on August 3rd, then the date range would be from
+April 1st to June 30th.
+Previous year The previous year based on when the report is executed.
+For example, if the report is run on August 3rd, 2010,
+then the date range would be 2009-01-01 to 2009-12-31.
+Deleg ations  are only included in the report output if their
+end time  falls within the selected r elativ e  date range,
+de fined  when you Choose r elativ e  date.
+Use selected date:
+You can de fine  a specific  date range for your report.
+The fir s t da t e/time  field  selects the earliest start
+time  to include, and the second selects the latest.Criteria Description
+The start time  is the time  that the report was
+executed. To set a selected date range:
+1.Click the upper da t e/time  field  to specify the 1.
+start date and hour.
+2.Type a start time  in HH:MM format if you do not 2.
+want to start on the hour.
+3.Click the lower da t e/time  field  to specify the end 3.
+date and hour.
+4.Type an end time  in HH:MM format if you do not 4.
+want to start on the hour.
+The allowed years range from 1970 to 2038
+Deleg ations  are only included in the report output if their
+end time  falls within the End date range. Use the fir s t
+da t e/time  field  to select the earliest time  to include, and
+the second da t e/time  field  to select the latest time  to
+include.Criteria Description
+Use within the last N days:  Deleg ations  are only included
+in the report output if the start date falls within the
+specified  last number of days.
+Use N or more days ago:  Deleg ations  are only included in
+the report output if the start date was more than the
+specified  number of days ago.
+Use within the next N days:  Deleg ations  are only
+included in the report output if their end time  falls within
+the specified  next number of days.
+Delegable Select:
+(All):  to include all deleg ation  requests regardless of
+whether the r esponsibilities  are delegable.
+True:  to only include deleg ation  requests where the
+r esponsibilities  are delegable
+False:  to only include deleg ation  requests where the
+r esponsibilities  are not delegable
+The term delegable  means that the delegate user is
+allowed to delegate the inherited r esponsibilities,  along
+with his or her own r esponsibilities,  to someone else.
+Status Select one or more statuses to include in the report. This
+is the status of the deleg ation  request.
+Required to accept Select:
+(All):  to include all deleg ation  requests regardless of
+whether the delegate was asked to respond
+True:  to only include deleg ation  requests where the
+delegate was asked to respond
+False:  to only include deleg ation  requests where the
+delegate was not asked to respond
+Report type Detailed: The default detailed output
+Summary by user:  The summary by user mode. In this
+mode, the report output contains deleg ation-r eques t
+s t atistics  for each primary authorizer, as well as for the
+entir e  system. St atistics  includes the total number of
+deleg ation  requests, and the total number of requests in
+each status.
+Total for all users:  The total summary mode. In this
+mode, the report output contains deleg ation-r eques t
+s t atistics  for all deleg ation  types. St atistics  include the
+total number of deleg ation  requests, and the total
+number of requests in each status.
+Graph type: Select the graph type:
+(None):  no graph will be generated.Criteria Description
+V ertic al  bar chart:  a v ertic al  bar chart for diff er en t
+deleg ation  type will be generated.
+If you do not specify any search criteria, the report is generated for all deleg ation  requests.
+Enrollment
+Purpose:  Detailed and s t atistic al  overview of the progress of user enrollment.
+Executable:  enrollment
+Search Criteria:
+Criteria Description
+User ID Type the pr ofile  ID of the user for whom you want to
+generate the report. Alt ernativ ely ,  you can search for one
+or more pr ofile  IDs.
+User name Type the full name of the user for whom you want to
+generate the report.
+Status match Select whether to display users with any of the statuses,
+or all of them.
+Status Select the enrollment statuses that you want to add to
+the report output.
+Enrollment type Select the types of enrollment that you want to add to
+the report output:
+▪Update security questions ▪
+▪Generate voice print enrollment PIN▪
+▪ Attach  other accounts ▪
+▪Enable password s ynchr oniz ation ▪
+▪Mobile devices▪
+▪View and update pr ofile ▪
+Show detailed report Select this checkbox to display additional  report details.
+Graph type Select the chart type for the graph. This option  will only
+show when Show detailed report option  is not selected.
+Password status on target systems
+Purpose:  Last-change date, expiry date and current status for passwords on target systems.
+Executable:  expiry
+Search Criteria:

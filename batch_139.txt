@@ -1,0 +1,309 @@
+If the approved AuthorEn  request shows " Processed " after  c ompleting  the approval process, then
+you know you have completed the lab successfully.
+Deleg ation  and esc alation
+About deleg ation
+Bravura Security Fabric  users can act on behalf of other users in one of two ways:
+▪A user’s r esponsibilities  can be delegated to another user. ▪
+▪By failing to act on a w orkflo w  request in a timely  manner, the request can be escalated to another ▪
+user.
+A user who initially  holds a responsibility is known as the primary . A user who acts on behalf of another is
+known as a delegate . Deleg ations  can be inde finit e,  or for a limited time,  and can be canceled at any
+time.  Any user can become a delegate. Both the primary and the delegate must have an email address
+c on figur ed  in Bravura Security Fabric .
+Users with the ”Delegate w orkflo w  requests” permission are known as delegation  managers . These users
+can delegate another user’s r esponsibilities.  They can also use API Service requests (Deleg ationCancel
+and Deleg ationLis t)  to clean obsolete deleg ations.  To send these API Service requests, a deleg ation
+manager also needs the "IDAPI caller" privilege. For details on the Deleg ationCancel  and Deleg ationLis t
+requests, see the “ Bravura Security Fabric  Remote API ” manual.
+Any user can request that all of their own r esponsibilities  be delegated. They can also delegate
+r esponsibilities  for a single request. The recipient of the request for deleg ation  follows a link in their
+email in vit ation  or uses an option  on the main menu to respond.
+When a delegate accepts a request for deleg ation,  they are given the same permissions as the primary.
+For example, if the primary can access reports, this right will be passed on to the delegate. When a
+deleg ation  ends or is canceled, those options  are no longer available to the delegate.
+Network resource ownership managed by Bravura Group is not delegable.
+In some cases, a delegate authorizer may have to review a request sent to them for approval more than
+once; as themselves and then as another primary, or if they have accepted multiple  deleg ation  requests.
+The delegate can choose who they are acting  as when they review a request for approval. This is
+necessary because users may have diff er en t  access to attribut es.  For example, using the figur e  below, if
+Carl Wong is a delegate for Sylvia Granger and Dan Singh, and a request is made that requires the
+approval of both authorizers, then Carl Wong as their delegate must review and approve the request as
+Sylvia Granger, then again as Dan Singh before it will be considered authorized.
+Users may be allowed to delegate r esponsibilities  that have in turn been delegated or escalated to them.
+This is referred to as sub-delegation . It is controlled by the user r equesting  the deleg ation,  or by a plugin.
+Or g aniz ation  chart exampleCon figuring  a deleg ation  plugin
+You can use a plugin to determine:
+▪To whom primaries can delegate▪
+▪Whether they should be able to sub-delegate by default▪
+▪Whether they should be able to override the sub-deleg ation  default ▪
+▪The default deleg ation  timeout  for no response ▪
+▪A minimum and maximum deleg ation  timeout  that they can request ▪
+▪The default action  to perform upon a timeout ▪
+▪The actions  they can specify to be performed upon a timeout  (accept, reject, escalate) ▪
+The default plugin is delegation-default.psl . You can modify delegation-default.psl
+to customize it for your environment. Rename the plugin so that it cannot be o v er written  during a
+Bravura Security Fabric  upgrade. Alt ernativ ely ,  you can copy the sample plugin-delegation.psl
+from the <instance>\samples\ directory to the <instance>\plugin\ directory and modify it for your
+environment.
+The deleg ation  options  plugin must be listed in the DELEGATION OPTIONS PLUGIN field  in the W orkflo w
+> Options  > Deleg ation  menu.
+See more in f ormation  on modifying this plugin.Requirements
+It is recommended that the plugin be written  in PSLang, which has functions  to aut omatic ally  deal with
+the input and output protocol (KVGroups). The plugin must be placed in the \<instance>\plugin\
+directory.
+See W riting  plugins  for general requirements.
+Ex ecution  points
+This plugin is run by the View and update pr ofile  (IDR) module and Requests app.
+Input
+The input to this plugin consists of:
+"" "" = {
+  "primary" "<primary's ID>" = {
+    "id" = "<primary ID>" # The user who is having their authorizations delegated
+    "name" = "<primary's full name>"
+    "account" "" = { ... }
+        # Present when PLUGIN DATA USER ATTRIBUTE DETAILS enabled
+        # See Optional user attribute, account and role detail KVGroups
+(on page 1520).
+    "attribute" "<attribute ID>" = { ... }
+        # Present when PLUGIN DATA USER ACCOUNT DETAILS enabled
+        # See Optional user attribute, account and role detail KVGroups
+(on page 1520).
+  }
+  "defaultAct" = "A"  # Default action to take at timeout (from the CGI)
+  "endDate" = "2147410800"  # Specified end date (from the CGI)
+  "needAccept" = "F" # Must accept (from the CGI)
+  "responseTime" = "1122825420" # Timeout (from the CGI)
+  "subDelegable" = "F"  # Sub delegate (from the CGI)
+  "delegate" "<delegate's ID>" = {
+    "id" = "<delegate's ID>" # The user specified as the delegate (from CGI)
+    "name" = "<delegate's full name>"
+    "account" "" = { ... }
+        # Present when PLUGIN DATA USER ATTRIBUTE DETAILS is enabled
+        # See  Optional user attribute, account and role detail
+KVGroups  (on page 1520).
+    "attribute" "<attribute ID>" = { ... }
+        # Present when PLUGIN DATA USER ACCOUNT DETAILS is enabled        # See  Optional user attribute, account and role detail
+KVGroups  (on page 1520).
+    # Note that this KVGroup will only be present after the primary
+    # has entered a delegate.
+  }
+}
+Output
+The output of this plugin should consist of:
+ "" "" = {
+   "errmsg" = "<error message>"
+   "retval" = "<number>"      # 0 is success, anything else failure
+   "delegates" "" = {
+     "allUsers" = "true|false" # true means the primary can delegate
+                               # to any user.  False will restrict the
+                               # list to the ones specified...  Lack
+                               # of this key will be interpreted as
+                               # "false".
+     "delegate" = "<a user to whom the primary can delegate>" ⋆
+     "validdelegate" = "true|
+false" # False means that the chosen delegate
+                                    # is not valid; the text will be
+                                    # cleared from the 'Delegate' field
+                                    # on the 'Delegation information' page.
+   }
+   "subDelegation" "" = {
+     "enabled" = "true|false"    # enable sub-delegation when they come
+                                 # to the page initially
+     "modifiable" = "true|false" # allow/
+disallow  the primary to enable
+                                 # or disable sub-delegation
+   }
+   "timeouts" "" = {
+     "enabled" = "true|false"    # enable/disable timeout of
+                                 # delegation requests when the
+                                 # primary initially comes to the page
+     "modifiable" = "true|false" # allow/disallow the primary to
+                                 # enable or disable timeouts
+     # If the proposed delegate does not respond to the delegation
+     # request in a given amount of time, 3 actions can be taken.
+     # accept   -> The delegation is automatically accepted     # reject   -> The delegation is automatically rejected
+     # escalate -> The delegation is escalated
+     "allowableAction" = "accept|reject|
+escalate" ⋆ # a list of actions
+                                                    # that are allowable
+     "action" = "accept|reject|escalate" # the action that will be
+                                         # initially selected
+     "timeout" = "<seconds since the epoch>" # Number of minutes that must elapse
+                                 # before the action is taken
+     "timeoutMin" = "<seconds since the epoch>" # The user will not be able to
+                                    # specify a timeout less than this.
+     "timeoutMax" = "<seconds since the epoch>" # The user will not be able to
+                                    # specify a timeout greater than this.
+   }
+   "times" "" = {
+     "startDate" = "<seconds since the epoch>"    # Initially filled in
+                                                  # delegation begin time.
+     "startDateMin" = "<seconds since the epoch>" # Primary cannot specify
+                                                  # a value less than this
+     "startDateMax" = "<seconds since the epoch>" # Primary cannot specify
+                                                  # a value greater than this
+     "endDate" = "<seconds since the epoch>"      # Initially filled in
+                                                  # delegation end time.
+     "endDateMin" = "<seconds since the epoch>"   # Primary cannot specify
+                                                  # a value less than this
+     "endDateMax" = "<seconds since the epoch>"   # Primary cannot specify
+                                                  # a value greater than this
+     "defaultEndDate" = "<seconds since the epoch>" # Return a default end
+                                                    # date which will be used
+                                                    # by the GUI if endDate
+                                                    # returned by the plugin is 0.
+   }
+ }
+About esc alation
+If an assigned authorizer does not respond to a request in time,  Bravura Security Fabric  can escalate the
+request to other authorizers. An authorizer who initially  holds a responsibility is known as the primary .
+An authorizer who acts on behalf of another is known as a delegate .
+Bravura Security Fabric  includes a built-in program, escorgchart.pss , that uses the authorizer’s
+calculated level in the OrgChart to escalate a request to the next authorizer in the r eporting  chain. SeeImplementing  or g aniz ation  chart management  (on page 2497) for in f ormation  about importing  OrgChart
+data.You can also write a custom plugin to escalate requests using other sources
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The esc alation  plugin is run by the W orkflo w  Manager Service service when:
+▪A new authorizer, implementer, reviewer, or escalate is added to the request▪
+▪The authorizer, implementer, reviewer, or escalate fails to act on the request for ESCALATION▪
+TIMEOUT seconds
+▪The requester forces an esc alation  after  EARLY ESCALATE TIME seconds have elapsed, by logging in to ▪
+Bravura Security Fabric  and clicking Escalate now  on his request.
+▪The FIRST CHANCE ESCALATION PLUGIN runs and determines that immediate esc alation  is required. ▪
+▪The time  has lapsed for a previous plugin retryInXSeconds value. ▪
+▪The dynamic esc alation  time,  set in the output of the plugin, is reached for the request. ▪
+Input
+The input is structured as follows:
+"" "" = { 
+   "checkWillHaveEscalates" = "<true|false>" 
+      # true, if the escalate is just added to the request 
+      # false, if the timeout or early escalation occurs 
+   "escalatetimes" = "<N>" 
+      # The number of times the plugin has run for the request 
+   "escalatingEarly" = "<true|false>" 
+      # true, if the request is escalated early 
+      # false, otherwise 
+   "sessionid" = "<Session ID>" 
+      # the session ID which spawned this request 
+   "escalate" "<Username>" = { 
+      "allowDelegatesToAuthorize" = "<true|false>" 
+      "timetorerun" = "20" 
+    } 
+      # escalation rules defined by a user class attached to this plugin. 
+      # this group may appear several times 
+   "firstEscalatedTime" = "<time since Jan 1, 1970 in seconds>" 
+      # time the request was first escalated. 
+   "lastEscalatedTime" = "<time since Jan 1, 1970 in seconds>" 
+      # time the request was escalated last.    "oldEscalate" "user" = { ... } # The current escalate to evaluate 
+     # See User data  (on page 1514). 
+   "path" "" = { 
+     "<primary's Profile ID>" "" = { 
+       "subsidiary" = "<person to whom request was delegated/
+escalated>" 
+       "action" = "<how this person got the power>" 
+         # Optional; is either delegation or escalation 
+      } 
+      # and then that subsidiary escalated/delegated to... 
+      "<subsidiary's Profile ID>" "" = { 
+        "subsidiary" = "<person to whom request was delegated/
+escalated>" 
+        "action" = "<how this person got the power>" 
+          # Optional; is either delegation or escalation 
+      } 
+   } # the path of escalation/delegation 
+   "primary" "user" = { ... } # authorizer or implementer that requires action 
+     # See User data  (on page 1514). 
+   "request" "" = { ... } 
+     # See Request data  (on page 1506). 
+}
+▪primary is the authorizer who was initially  in charge of doing something about the request. This will ▪
+not change for each subsequent esc alation.
+▪oldEscalate is the authorizer that did not act and caused this plugin to run. This can be the primary if ▪
+the primary had no delegates and did not act. This will change at each subsequent esc alation.
+▪subsidiary is a general term for someone’s delegate (from either a requested deleg ation  or automated ▪
+esc alation).
+Output
+Output to attach  new escalates:
+"" "" = { 
+  "errmsg" = "<message>" 
+  "retval" = "<number>"   # 0 means success, otherwise failure 
+  "timetorerun" = "60" #set the initial timeout value 
+  "escalate" "<escalate Profile ID>" = { 
+    "primary"    = "<primary>" # the primary authorizer of the request 
+    "oldEscalate"  = "<oldEscalate>" #the previous user escalated from 
+    "escalateType" = "user" 
+    "allowDelegatesToAuthorize" = "true|false|default"     "timetorerun" = "60" #dynamic timeout value 
+  } # Optional; 0 or more escalates 
+}  
+Valid values for allowDelegatesToAuthorize include default which uses the value of the ESCALATION IS
+DELEGABLE system variable.
+Output to set early esc alation:
+"" "" = { 
+  "errmsg" = "<message>" 
+  "retval" = "<number>"   # 0 means success, otherwise failure 
+  "canEscalateEarly" = "<true|false>" 
+}  
+Output to deny the request and end esc alation:
+"" "" = { 
+  "errmsg" = "<message>" 
+  "retval" = "<number>"   # 0 means success, otherwise failure 
+  "autoReject" = "<true|false>" 
+}  
+Output to postpone esc alation  and reevaluate it after  a set interval:
+"" "" = { 
+  "errmsg" = "<message>" 
+  "retval" = "<number>"   # 0 means success, otherwise failure 
+  "retryInXSeconds" = "<seconds from now to escalate>" 
+}  
+.
+Bravura Security Fabric  can also utiliz e  user classes to determine how to escalate a request. You can
+c on figur e  user classes  (on page 733) instead of, or in c onjunction  with, an esc alation  plugin. If both are
+used, the user class point runs fir s t,  and passes a short-list of delegates to the plugin, which determines
+the final  delegates to return. See more in f ormation  on using user classes with these plugin points
+User class de finitions  can be added to the following plugin points:
+▪Manage the system > W orkflo w  > Options  > Esc alation  > ESCALATION PLUGIN ▪
+▪Manage the system > W orkflo w  > Options  > Esc alation  > FIRST CHANCE ESCALATION PLUGIN ▪
+▪Manage the system > W orkflo w  > Options  > Plugins >  AUTHORIZATION DETAIL MASK PLUGIN ▪
+▪Manage the system  > Modules  > Options  > FILTER USER PLUGIN ▪
+▪Manage the system  > Modules  > Options  > KEEP USER PLUGIN ▪
+▪Manage the system  > Modules  > Options  > GENERATE USER PLUGIN ▪
+These plugin points include the Use user classes option,  which allows you to filt er  or generate lists of
+users based on user user classes.If you choose to use user classes, then you do not need to write a plugin. However, user classes can also
+be used in c onjunction  with a plugin.
+For example, if you:
+Use user classes then the specified  user classes are used to filt er  or generate lists of users.
+Use user classes and write a plugin then the specified  user classes and plugin script are both used to filt er  or
+generate lists of users, with the plugin taking its input from results
+provided by the user class.
+Write a plugin then the plugin is used to filt er  or generate lists of users.
+For details, see:
+▪Filter users  (on page 1049) to learn how to write a user filt er  or user ▪
+g ener ation  plugin
+▪About esc alation  (on page 1386) to learn how to write an esc alation ▪
+plugin
+▪Hiding authoriz ation  details  (on page 1428) to learn how to write an ▪
+authoriz ation  mask plugin.
+To c on figur e  the Use user classes option:
+1.Click Use user classes under the field  for the plugin point you want to modify. 1.
+A page loads related to the option  you are modifying. For example, if you are modifying FILTER USER
+PLUGIN, then the Filter Criteria filt er_user_plugin  page loads. If user class de finitions  already exist for
+this option,  they are listed.
+2. De fine  your user classes. You can choose e xisting  user classes, create new user classes, or both: 2.
+▪To select from e xisting  user classes: ▪
+i.Click Select... . i.
+ii.Enable the checkboxes next to the user classes you want to select, then click Select . ii.
+The list of user class members is displayed.
+iii.Complete the participan t  de finitions  for the newly added user classes by selecting  from the iii.
+drop-down menu.
+iv.Click Update . iv.
+▪To create a new user class:▪
+i.See Adding user classes  (on page 738) for details on how to create a user class. i.
+ii.Once created, complete the participan t  de finition  for your new user class by selecting  from the ii.
+drop-down menus.
+Once you’ve added at least one user class to the list of user class members, you can also:
+▪Delete user classes from the list.▪
+▪Update the participan t  de finitions  for the user classes in the list. ▪
+If you have multiple  user classes in the list of user class members, then The participan ts  have to
+match which of the user classes option  is displayed.
+This can be set so that:

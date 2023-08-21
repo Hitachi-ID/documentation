@@ -1,0 +1,96 @@
+16. Click Query Designer... . 16.
+17. Enter the report database user’s password. 17.
+18. Click OK. 18.
+19. Expand the database view in the left column to open Views . 19.
+20. Select account . 20.21. Click OK. 21.
+22. Click OK again. 22.
+The dataset is created.
+Design the report
+To finaliz e  the design of the port using Report Builder:
+1.Click Insert > Insert Table . 1.2.Click anywhere in the blank report to add the table.2.
+A default table of three rows and three columns is inserted into the blank report.
+3.Move the cursor to the right edge of the rectangle box in the third row, fir s t column. 3.
+A drop-down list is displayed.
+4.Select accountname . 4.
+5.Move to the next cell and select hostid . 5.
+6.Select fullname in the last cell. 6.
+7.Give the report a title. 7.8.Click File > Save . 8.
+9.Save the report under the report folder ReportItems\Example on the report server.9.
+10. Click Run to see the rendered report. 10.
+The report is rendered and displayed:11. Click Design to go back to edit mode. 11.
+Check the Analytics  app
+To check that the report appears correctly in the Analytics  app:
+1.Log in to Front-end (PSF).1.
+2.Click Analytics . 2.
+3.View the new report in the Analytics  app. 3.Analytics  report s ynchr oniz ation
+Applic ation  nodes may share an SSRS report server, or connect to their own SSRS report server. In either
+case, each node has it’s own report folder on the report server. A report file that exists on the report
+server can be viewed on that node’s Analytics  app. If users need to access the same reports from each
+r eplic ation  node, a copy of the report file must also exist on the Bravura Security Fabric  applic ation
+server.Applic ation  servers sharing same SSRS report server
+Report files that exist on the SSRS report server can be downloaded to the applic ation  node in the
+\<ins t ance>\analytics\R eportIt ems\  directory in order to synchronize them between applic ation  nodes.
+The following use case demonstrates how to synchronize a report between applic ation  nodes:
+1. Applic ation  node A connects to SSRS report server A, and applic ation  node B connects to SSRS report 1.
+server B.
+2.An administrator creates a custom report on an SSRS server that is accessed via the Analytics  app on 2.
+Bravura Security Fabric  applic ation  node A.
+3.The administrator uses the configureanalytics  utility  to copy report files from the report 3.
+server A to the applic ation  node A, using the command:
+configureanalytics.exe -publish
+4.The administrator types the number corresponding to the report that is "New on report server" and4.
+presses [Enter] .
+The report file is downloaded to the \<ins t ance>\analytics\R eportIt ems\  on applic ation  node A.
+5.The administrator synchronizes the files with Bravura Security Fabric  applic ation  node B using the 5.
+adminis tr ativ e  interface: Manage the system > Maintenance > File s ynchr oniz ation .
+During file s ynchr oniz ation,  the report files are copied from applic ation  node A to applic ation  node B,
+then aut omatic ally  uploaded to report server B.
+The same report can now be accessed from the Analytics  app on applic ation  node B.
+For more in f ormation  on file s ynchr oniz ation  and r eplic ation,  see R eplic ation  and Recovery .
+11 MORE...Part I API
+Bravura Security Fabric  supports two types of web services: REST API and SOAP API.
+REST (R epr esen t ational  State Transfer) API uses HTTP requests to retrieve and modify data. It follows a
+client-server architecture where the server provides data resources and the client interacts with these
+resources using standard HTTP methods like GET, POST, PUT, and DELETE. REST API uses standardized
+formats such as JSON (JavaScript Object Not ation)  or XML (Extensible Markup Language) for data
+exchange. It is stateless, meaning each request from the client to the server contains all the necessary
+in f ormation  to execute the request, and no session state is stored on the server. REST APIs are widely
+adopted in modern web, cloud and mobile applic ations  due to its lightweight nature.
+SOAP (Simple Object Access Protocol) API uses the XML format to send and receive data. Like the REST
+API, it also follows a client-server architecture. SOAP APIs use standardized methods such as GET, POST,
+PUT, and DELETE for data exchange, however the structure of the data is more complex. SOAP APIs are
+stateful, meaning they maintain session state on the server, and each request from the client to the
+server may rely on previous requests.
+REST API and SOAP API have signific an t  diff er ences  in their architecture, data formats, and
+char act eristics.
+REST API SOAP API
+Architecture Follows a stateless client-server
+architecture.Follows a stateful client-server architecture.
+Data Format Uses widely accepted data formats such
+as JSON, XML, or plaintext.Uses XML only.
+Message Structure Uses simple HTTP methods like GET,
+POST, PUT, and DELETE to access and
+manipulate data.Uses a more complex message structure and
+protocol.
+Web standard Uses common web standards such as
+Swagger/OpenAPI.Uses its own standard called Web Services
+Description  Language (WSDL)
+Performance Performs better  than SOAP API due to its
+stateless architecture, which eliminates
+the need to maintain session state on the
+server.Performs worse than REST API as its stateful
+architecture can lead to higher overhead.
+Flexibility More fle xible,  scalable, and adaptable to
+changing requirements.More rigid and complex because of its strict
+message format.
+Bravura Security Fabric  has a suite of built-in REST API endpoints which is c ontinuously  being expanded
+with each release, along with hundreds of built-in method functions  for the SOAP API.
+The Bravura Security Fabric  Remote API ( api.pdf ) guide provides a detailed overview of theSOAP API as
+well as a complete function  reference.
+See REST API reference documen t ation  for details on the REST API.REST API Authoriz ation  policies
+Product administrators can use the REST API authoriz ation  policies  page to search, download, and reset
+these policies to default.
+The user interface allows you to identif y  which policies apply to which endpoints, and if they have been
+modified  or if they are the default, shipped policies. You can also use this page to download the current
+policy for each endpoint.
+Click Manage the System > Polices >  REST API authoriz ation  policies.

@@ -1,0 +1,126 @@
+connect to managed systems discretely; that is, a connector runs locally on the Bravura Privilege
+applic ation  server and uses an appropriate API and network protocol to sign into the system in
+question.
+Team administrators
+Team administrators are users that are responsible for cr eating ,  deleting  and managing group
+memberships of teams. When cr eating  a team, a team administrator assigns trustees to the teams. Team
+administrators and team trustees can both manage team group memberships, but once a trustee is
+assigned, a team administrator will require permission from the team trustee to make changes. It is best
+pr actice  not to allow team administrators to also be team trustees.
+The team administrator role is generally given to a user within the company that is aware of how the
+business is structured. The user may be a technical person that also functions  as a product administrator
+for Bravura Privilege  or they may be more involved in the business oper ations  of the company.
+Users must be a member of the PAM_TEAM_ADMINS user class to be team administrator and create and
+delete teams.
+Team trustees
+Team trustees use Bravura Privilege to manage their assigned teams by controlling team group
+membership and privileges. They are also responsible for onboarding and offboar ding  systems and
+accounts to their teams.Users who are assigned as team trustees are aut omatic ally  added to the PAM_PRIV_TEAM user class to
+gain access to the appropriate PDRs.
+Do not add groups to the PAM_PRIV_TEAM user class.
+Privileges and appropriate users
+Within the team structure, team groups are created to assign privileges to. Team group members can be
+assigned the following privileges:
+▪Account trustee  A user who can onboard, offboar d,  and update privileged accounts. ▪
+▪Approver  A user who can allow or disallow access requests. ▪
+▪Approvers are also referred to as authorizers in the core Bravura Security Fabric  c on figur ation  and ▪
+documen t ation.
+▪Approvers are often  the owners of the managed account or an appropriate manager of the ▪
+requester.
+▪Auto_Approved  A user who can check-out access to systems and accounts without making an access ▪
+request. These users must also have permission to request access.
+▪Users that check out an account on a regular basis should be given the auto-approval privilege to▪
+avoid holding up their work and to avoid approver f atigue.
+▪ Cr edential_Manag e r A user who can override or randomize the stored password on a checked-out ▪
+account. These users must also have the requesters privilege.
+▪ Cr edential  manager privilege is often  given to the owners of the managed account. ▪
+▪LC trustees  a user who can create and update vaulted cr edentials. ▪
+▪OTP Trustees  a user who can create and use OTP accounts. ▪
+▪Requester  A user who can make access requests. ▪
+▪Requesters that require approvers are generally users that do not require access to the managed▪
+account on a regular basis, but should still have access to the account in the event of an emergency
+or a circumstance that arises on occasion.
+▪Subscriber trustee  a user who can make subscriber v alidation  requests. ▪
+▪System trustee  a user who can onboard, offboar d,  and update privileged systems. ▪
+▪Team trustee a user who can make team management requests. ▪
+▪Vault trustee  a user who can create, archive, and update vault systems and accounts. ▪Privilege P attern:  Ins t allation
+Features described in this document are provided by installing components  (on page 312) ( Manage
+components > RefBuild ):
+▪RefBuild.pam_team_management - provides c on figur ation  for both system onboarding and vault ▪
+management
+▪RefBuild.pam_team_onboard_management - provides c on figur ation  for system onboarding only ▪
+▪RefBuild.pam_team_vault_management - provides c on figur ation  for vault management only ▪
+The following are optional  scenario components you can install to provide c on figur ation  support for
+target systems:
+▪Scenario.pam_system_type_linux provides support for Linux type target systems▪
+▪Scenario.pam_system_type_oracle provides support for Oracle Database type target systems▪
+▪Scenario.pam_system_type_mssql provides support for SQL Server type target systems▪
+▪Scenario.pam_system_type_solaris provides support for Solaris type target systems▪
+▪Scenario.pam_system_type_vault provides a vault system type that can be used to emulate other▪
+target systems
+▪Scenario.pam_system_type_winnt support for Windows NT type target systems▪
+The following are optional  scenario components you can install to provide disclosure methods:
+▪Scenario.pam_account_management_disclosure_view_copy allows View and Copy access▪
+▪Scenario.pam_account_management_disclosure_guacamole_rdp allows remote desktop access to▪
+Windows NT c ompatible  systems using Guacamole
+▪Scenario.pam_account_management_disclosure_guacamole_ssh allows SSH access to SSH-enabled▪
+systems using Guacamole
+▪Scenario.pam_account_management_disclosure_ms_sql_studio allows SQL Management Studio▪
+access for Micr osoft  SQL Server
+▪Scenario.pam_account_management_disclosure_mysql_cli allows access via MySQL CLI▪
+▪Scenario.pam_account_management_disclosure_oracle_sql_plus allows SQL*Plus access for Oracle▪
+Database systems
+▪ Scenario.pam_acc oun t_manag emen t_disclosur e_putty  allows SSH access using PuTTY ▪
+▪Scenario.pam_account_management_disclosure_rdp allows remote desktop access to Windows NT▪
+c ompatible  systems
+▪Scenario.pam_account_management_disclosure_securecrt allows SecureCRT access to managed▪
+accounts
+▪Scenario.pam_account_management_disclosure_sqldeveloper allows SQL developer access for Oracle▪
+Database systems
+▪Scenario.pam_account_management_disclosure_toad allows access via Toad for Oracle systems▪
+▪Scenario.pam_account_management_disclosure_winscp allows access via WinSCP▪
+The following are optional  scenario components you can install to provide additional  functionality:▪Scenario.pam_personal_admin_management, to grant specific  users exclusive access to certain ▪
+onboarded accounts
+▪ Scenario.pam_sub scriber_v alidation,  to c on figur e  subscriber notific ation  for onboarded accounts ▪
+▪ Scenario.pam_s y s t em_aut oma t ed_offboar d,  to offboar d  accounts and disable systems using Resource ▪
+Management System (RMS) if the system cannot be contacted after  a certain amount of time
+▪ Scenario.pam_s y s t em_aut oma t ed_deletion,  to delete systems and its accounts using RMS if the ▪
+system cannot be contacted after  a certain amount of time
+Example: Installing Bravura Privilege P attern
+In this example you will load, list, view and install Bravura Privilege P attern  components using the
+Manage components app.
+To install Bravura Privilege P attern  components:
+1.Log in to the Front-end (PSF) as superuser  . 1.
+2.Click Manage Components > RefBuild. 2.
+3.Select RefBuild.pam_team_management . 3.
+If the RefBuild.pam_team_management  component is not showing up, try clicking Reload DB
+under the ACTIONS  header on the left panel.Click Install component(s) from the Actions  panel on the right.
+The component management program installs the components along with any dependencies. This
+may take some time  depending on c on figur ation  requirements and dependencies. You should see
+Completed install for component  messages for each selected component in the TASK
+STATUS section  of the Actions  panel.If the ins t allation  seems to by taking a very long time  or seems stuck, navigate back to the home page
+and return to the Manage Components > RefBuild  page to see if the installed status for the
+component has turned to true .When you install a component, the component management program creates the database tables,
+framework, and c on figur ations  that are necessary for the plug-in points to function.  Additional  in-
+product c on figur ation  may still be required to run the scenarios properly.
+4.Take a look at some of the new c on figur ation  support the reference build components add to the 4.
+manually de fined  target systems by na vig ating  to Home > Manage the system > Resources > Target
+systems > Manually de fined .
+Privilege P attern:  Team c on figur ation
+Normally when you create a team, you are prompted to create custom team groups to assign privileges
+to. To standardize your teams and save time  you can set up a global c on figur ation  for your teams so when
+new ones are created you start off with the appropriate groups available with the correctly assigned
+privileges. It is then up to the administrator who created the team to just add the appropriate users to
+each team group. These global groups are still customizable to allow non-standard team setups.
+You c on figur e  global team groups and privileges in the hid_global_c on figur ation  table in the Manage
+external data store  (DBE) module.
+Con figuring  global team groups
+To create a team group that will aut omatic ally  be c on figur ed  for team administrators when they create a
+new team, add a new entry to the hid_global_c on figur ation  table. Each entry must use the new group
+name as the key and each group can have one or more rows.
+Each diff er en t  key under the GROUP-PRIVILEGE-ASSIGNMENT setting  will assign a new group to the
+default groups for a team. Below is the default group that would be c on figur ed  for the "Team: Create"
+request:Con figuring  global privileges
+To pre-assign a privilege to a group, assign a value to a default group in the hid_global_c on figur ation
+table. Create a new row for each privilege that needs to be assigned to a group. The screenshot below
+shows an example of the same group g etting  Auto_Approve and Requester privileges:

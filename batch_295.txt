@@ -1,0 +1,82 @@
+If the product administrator is also a w orkflo w  manager, data in the "Submit date" column in
+"W orkflo w:P ending  request" box is presented as linkable. The request detail page will be opened by
+clicking these links.Graphs and data
+If you have the "View w orkflo w  dashboard" privilege, you can view in-depth data in a pop-up window by
+clicking on elements on the pie chart or circles on the line graph.OrgChart dashboard
+ Applies to Bravura Identity  
+ Applies to Bravura Privilege
+Product administrators with the "View OrgChart dashboard" privilege can click View dashboards
+> OrgChart  to see OrgChart s t atistics.  This includes numbers of managers and subordinates, orphan
+pr ofiles,  participan ts  in Org building rounds, request to attach  and detach.
+This dashboard does not use cached data.
+Enrollment dashboard
+Product administrators with the "View enrollment dashboard" privilege can click View dashboards
+> Enrollment  to see s t atistics  for the number of users who have completed enrollment requirements,
+such as c ompleting  a security question  pr ofile,  attaching  alternate login IDs, updating  pr ofile  in f ormation,
+enabling password s ynchr oniz ation,  g ener ating  voice print enrollment PINs, or registering mobile devices.
+A bar graph is included to display the enrollment s t atistics.
+This dashboard uses cached data. A total diff erenc e  of more than 50 users will trigger the dashboard to
+be recalculated. For example, if 55 users were added and 50 where removed before the page is revisited,
+the View dashboards (dash) module will only see a diff erenc e  of five users and will not recalculate the
+dashboard.Graphs and data
+If you have the "View enrollment dashboard" privilege, you can view in-depth data in a pop-up window
+by clicking on elements within a graph.Help desk dashboard
+Product administrators who have the "View help desk dashboard" privilege can click View dashboards
+> Help desk  to view in f ormation  about all oper ations  in the Help users (IDA) module by help desk users
+or help desk managers.
+Product administrators can view s t atistics  of both help desk users and help desk managers.
+The Help desk s t atistics  page  shows three bar graphs:
+▪Top fiv e users helped by a help desk user or a help desk manager along with a bar chart ▪
+▪Top fiv e oper ations  performed by a help desk user or a help desk manager along with a bar chart ▪
+▪Top fiv e help desk users or help desk managers performing help oper ations  along with a bar chart ▪Hover over anywhere on a bar to see s t atistic  details. Click on anywhere on a bar to view a pop-up
+window in which there is a list of detailed records performed for a specific  user helped, a specific  help
+oper ation,  or a help desk user or a help desk manager.
+The line graph included at the bottom  of the page displays the trend of performed oper ations  per day
+over a period of days. You can:
+▪Hover the cursor over the data set to see s t atistic  details. ▪
+▪Click on the data set to view a pop-up window in which there is a list of detailed records performed▪
+for a specific  help desk oper ation.  The in f ormation  includes the oper ation  that was performed, when
+the oper ation  was performed, the requester, the recipient and the result.
+▪Hover over an item in the legend to highlight the r elativ e  line on the graph. ▪
+▪Click on an item in the legend to enable/disable the r elativ e  line on the graph. ▪
+Use the facility to focus the s t atistic  on a particular  user.
+You can pin graphs by hovering over the pin symbol 
+  and selecting  Pin an object.Users reports
+Accounts
+Purpose:  Accounts with their associated pr ofile  and target system.
+In addition  to account long IDs, the report displays the target system that each account was listed from,
+and the user that owns each account.
+Executable: account
+Search Criteria:
+Criteria Description
+Account Type a comma-and-space-delimited list of long IDs (not
+short IDs) that match the accounts you want to include in
+the report. Alt ernativ ely ,  you can search for one or more
+accounts.
+Target system ID Type a comma-and-space-delimited list of target system
+IDs to only include accounts from those systems.
+Alt ernativ ely ,  you can search for one or more target
+systems.
+Target system group Select one or more target groups to include in the report.
+The list only includes target groups that are in use with
+the instance being c on figur ed.
+Account status Select one or more values to only include accounts with a
+matching account status. The possible values are:
+Auto associated:  accounts that were aut omatic ally
+associated with a pr ofile  ID.
+Manually claimed:  accounts that were manually
+associated with a pr ofile  ID.
+Unclaimed:  accounts that are not associated with a
+pr ofile  ID.
+Deleted:  accounts that can no longer be listed from a
+target system.
+Filtered:  accounts that have been filt er ed  out by ID
+filt er s.
+By default, all account statuses are selected. This field
+applies to detail or summary report types only.
+Deleted by Choose a method on which an account has been
+removed from the drop-down list. All method is selected
+by default.
+All: lists all deleted accounts
+Bravura Security Fabric : lists all accounts that were
+deleted by Bravura Security Fabric . The ’track account

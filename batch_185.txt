@@ -1,0 +1,306 @@
+3.Select the checkbox for the account ID that you want to remove from being managed, click Delete , 3.
+then click OK to c on firm  the action.
+De fining  group sets
+You can de fine  group set s in a managed system policy to determine which groups Bravura Privilege  can
+grant users membership to. The managed system policy must have the group set authentic ation  type in
+order to de fine  group sets. A group set can specify an individual group, such as Administrators on Activ e
+Directory, or inclusion criteria to de fine  a set with multiple  groups. A user can check out a group set,
+meaning their account is temporarily added to every matching group at checkout time,  and removed at
+checkin time.  This eliminates the need to manipulate passwords when gr anting  access.
+You can organize group sets, for example, to contain privileges that may be required to access files or
+folders, or to perform a specific  task on an Activ e  Directory domain, a Windows server, or a Linux server.
+A simple use case:
+1.An administrator admin1 wants to perform a task on a managed system that requires group 1.
+membership from groupA and groupB .
+2.admin1 requests access to a group set groupsetX , which contains the required groups groupA and 2.
+groupB .
+3.Once approved by an authorizer, admin checks out groupsetX . 3.
+4.admin1 is now given membership to groupA and groupB . 4.
+5.admin1 performs the task with the required elevated privilege. 5.
+6.Once finished  with the task, admin checks in groupsetX . 6.
+7.admin1 is detached from groupA and groupB . 7.
+If the user has membership in some groups in the group set prior to checkout of the group set, on
+checkin/expiry, membership in those groups will not be removed – only those added by the temporary
+checkout are removed.
+Requirement
+In order to de fine  group set s in a managed system policy , the Authentic ation  type on the General tab must
+include ”Group set”.
+Adding a group set
+To add a group set :
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.Select the Group sets tab. 2.
+3.Click Add new… to add a new group set . 3.
+4.Type a unique identifier  containing only ASCII characters, and a description  of the group set. 4.
+5.Select the Notif y  requesters of groups from this set that do not exist on the managed system they 5.
+have selected if you want to notif y  requesters by email.6.Click Add. 6.
+The group set should now appear in the list of Group sets.
+ Next: 
+Add groups as members of the group set.
+Adding groups
+You can de fine  group members in a group set  in several ways:
+▪ Selecting  from a list of groups ▪
+▪Adding a new group▪
+▪Using group inclusion rules▪
+Selecting  from the list of groups
+You can choose which groups to add to the group set by selecting  them from a list of groups. Each group
+contains a unique identifier ,  description,  and member system the group belongs to.
+To add groups from a list of groups:
+1.From the group set page  (on page 1841), add or select a group set and click the Explicitly attached 1.
+groups sub-tab.
+2.Click Select… to select from a list of groups to add to the group set. 2.
+3.Select the groups you want to include in the group set . 3.
+4.Click Select when you have finished  selecting  groups. 4.
+The groups should now appear in the list of explicitly attached  groups.
+Adding a new group to a group set
+You can manually de fine  a group with an identifier  to be searched against the groups on members of the
+managed system policy. If a group has a matching ID it will be included in the group set.
+For example:
+1.A managed system policy has member systems TargetA and TargetB . 1.
+2.Both member systems have the same group named ManagedGroup . 2.
+3.If you de fine  a new group named ManagedGroup , then Bravura Security Fabric  searches for this group 3.
+on all member systems of the policy. Using this common group identifier ,  ManagedGroup from
+TargetA and TargetB will be added to the group set.
+To manually de fine  a group:
+1.From the group set page  (on page 1841), add or select a group set and click the Explicitly attached 1.
+groups sub-tab.
+2.Click 
+ Add new… . 2.
+A virtual window appears.3.Specify a group identifier  and description. 3.
+The group identifier  is c ase-insensitiv e.
+4.Click Add. 4.
+5.Close the virtual window.5.
+The group should now appear in the list of explicitly attached  groups.
+De fining  group set members using rules
+You can de fine  groups aut omatic ally  for a group set  using inclusion rules. You can specify groups solely
+using this method, or in c onjunction  with explicitly attached  groups. The groups are determined at
+request time,  and are based on the groups that are currently discovered.
+To add a new group inclusion rule:
+1.From the group set page  (on page 1841), add or select a group set and click the Group inclusion rules 1.
+sub-tab.
+2.Click Add new… to create a new inclusion rule. 2.
+3.Specify a unique ID, rule Type to test against, and Value . 3.
+The value can be tested against:
+▪Long ID▪
+▪Short ID▪
+▪System ID▪
+▪ Description▪
+Select the Use SQL ’LIKE’ expression checkbox if you want the value to match only part of the rule
+type.
+Select Case-sensitiv e  if you want the value to be matched as entered.
+4.Click Add. 4.
+The rule should now appear in the list of group inclusion rules.
+ T esting  a group inclusion rule 
+After  you have added a group inclusion rule, you can test it to see if includes groups that are currently
+managed on member systems.
+1.On the Group inclusion rules sub-tab, select a rule and click Test. 1.
+Bravura Security Fabric  displays the Test group inclusion rules  page.
+2.Enter the Managed system ID you want to perform the test on, or leave the field  blank to include all 2.
+groups that satis f y  the rule.
+3.Click Test. 3.Specifying other target systems hosting  user accounts
+By default, requesters will be able to request temporary group access to a group set  that contains groups
+on the same managed system as the account requested for. However, it is also possible to de fine  target
+systems where the accounts do not belong to the same managed system as the groups in the group set .
+Some examples include, but are not limited to, r equesting  temporary access to domain groups for a
+domain account on another domain in the forest, or r equesting  temporary access to local groups for a
+domain account.
+If you only want to grant temporary access to the group set  using an account from the managed system,
+then specifying a target system is not required.
+To include a target system that will be used when applying group memberships:
+1.From the group set page  (on page 1841), add or select a group set and click the Target systems 1.
+hosting  user account sub-tab.
+2.Click Select... to add a target system hosting  user accounts. 2.
+3.Select the target system that will be added to the group set . 3.
+4.Click Select . 4.
+The target system should now appear in the list of Target systems hosting  user account list.
+Removing a group set from a managed system policy.
+You can manually remove a group set  and its member groups from a managed system policy. If you
+choose to remove a group set , all of its groups, inclusion rules and target systems de fined  in the group set
+will be removed as well.
+If a group set  is currently checked out, then it cannot be removed from a managed system policy.
+To remove a group set  from a managed system policy, select the group set and click Delete .
+Associating  import rules with a managed system policy
+Once you have c on figur ed  import rules, you can associate the rule with a managed system policy, so that
+discovered objects are aut omatic ally  added to the policy. You can do this from the Manage the system >
+Privileged access > Import rules  menu, or from the Managed system policies  menu.
+To associate an import rule with a policy from the Managed system policies  menu:
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). . 1.
+2.On the General tab, select: 2.
+▪Managed systems import rules to de fine  discovered managed systems as members of a push- ▪
+mode managed system policy .
+▪Managed accounts import rules to de fine  discovered accounts as managed accounts for a push- ▪
+mode or local service managed system policy .
+3.Click Update . 3.
+You can now manually evaluate the import rule, or run auto discovery  to apply the rule.Modify the password policy
+By default, Bravura Privilege  uses semi-complex password policy to generate random passwords for push
+mode and local service mode managed system policies . The password policy is set for a managed system
+policy  when the policy is created.
+The managed system policy must have the password or SSH key authentic ation  type in order to modify
+the password policy. You can modify the password policy for each managed system policy . To do this:
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.Select the Password policy tab. 2.
+3. Con figur e  the rules de fined  in Table E diting  password strength rules  (on page 1003). 3.
+4.Click Update . 4.
+Note that:
+▪If a managed system is a member of multiple  managed system policies , it uses the password policy of ▪
+the managed system’s primary Managed system policy option,  which by default is the fir s t policy it
+joined.
+▪It is recommended that you limit how many managed system policies  (with diff er en t  password policies) ▪
+a system belongs to. In the situation  where a managed system policy  is removed, all the managed
+systems that were using its password policy will use the password policy of the next managed system
+policy  that they belong to. This could result in unexpected behavior if you are not careful in how you
+construct your managed system policies , password policies, and managed system policy  memberships.
+▪It is highly recommended that you c on figur e  your password policies before Bravura Privilege  starts ▪
+managing system passwords.
+You can also write a plugin to decide which password policy to apply to a managed account. The plugin
+must be identified  in the RES PWDPOL GET setting  (Manage the system > Privileged access > Options  >
+Password r andomiz ation ). See more in f ormation  on how to write this plugin
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+The plugin is run when a managed account’s password strength is displayed and when the password is
+randomized or o v er written.
+Input
+The plugin has access to the following KVGroup for member attribut es:
+"" "" = {
+      "accountID" = "<account Id>"
+            "managedsystem" = "<Managed system ID>"
+              "resourcegroupid" = "<Managed system policy id>"                "sessionid" = "<session id>"
+}
+Output
+The plugin expects the following return value:
+"" "" = {
+      "retval" = "0"
+            "passwordpolicy" = "<global password policy ID>"
+            "errmsg" = "<error message>"
+}
+.
+See Password Policy  (on page 999) for more in f ormation  about c on figuring  password policy.
+Attaching  authorizers to managed system policies
+Assign Authorizers to a managed systems policy to allow users to:
+▪Request privileged access▪
+▪Search recorded session data▪
+▪Download recorded session data▪
+▪View recorded session data▪
+▪Extend a check-out▪
+Users must be loaded into the Bravura Security Fabric database before you can de fine  them as
+authorizers.
+You must assign enough authorizers to meet the minimum number of authorizers requirement. If you do
+not do this, requests involving the resource are aut omatic ally  denied unless authorizers are assigned by a
+w orkflo w  plug-in.
+The managed accounts will not be available for check-out if insufficien t  authorizers are assigned to the
+managed system policy .
+Con figuring  phased authoriz ation
+If phased authoriz ation  is enabled, navigate to the target system’s Authoriz ation  page, then:
+▪Click Add new… if you want to add a phase. ▪
+▪To change the order of phases, change the numbers in the Authoriz ation  phase column and click ▪
+Update .
+▪Select a phase to de fine  authorizers and settings. ▪
+Setting  the number of required approvals
+To set authoriz ation  thresholds for a managed system policy:1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.Select the Authorizers tab. 2.
+3.Select the appropriate sub-link:3.
+▪Access to managed systems▪
+▪Search recorded sessions▪
+▪Download recorded sessions▪
+▪View recorded sessions▪
+▪Extend a check-out▪
+Select a phase if phased authoriz ation  is enabled.
+4.Type a value for the:4.
+▪Minimum number of authorizers – A value of 0 means requests for the resource are auto- ▪
+approved.
+The default value is set by the MIN AUTHORIZERS  policy.
+▪Number of denials before a change request is terminated – A resource request is canceled when ▪
+this number of authorizers deny it, as long as the Minimum number of authorizers has not been
+reached.
+5.The default value is set by the MAX REJECTIONS  policy. 5.
+6.Click Update . 6.
+Assigning s t atic  authorizers
+To assign a s t atic  authorizer to a managed system policy:
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.Select the Authorizers tab. 2.
+3.Select the appropriate sub-link:3.
+▪Access to managed systems▪
+▪Search recorded sessions▪
+▪Download recorded sessions▪
+▪View recorded sessions▪
+▪Extend a check-out▪
+Select a phase if phased authoriz ation  is enabled.
+4.Click Select... at the bottom  of the Authorizers table. 4.
+5.Search for, or enable the checkboxes next to the authorizers that you want to assign.5.
+6.Click Select at the bottom  of the page. 6.
+7.Click Update . 7.
+CAUTION: Ensure that you do not select a managed account when cr eating  an
+authorizer. Managed accounts should not be used for any other purpose
+in Bravura Security Fabric .Removing an authorizer from a managed system policy aut omatic ally  denies any pending account check-
+out requests for the policy assigned to the authorizer.
+Policies that a pr e-de fined  authorizer is assigned to are also listed on the Authorizer in f ormation  page.
+Assigning authorizers by user class
+To assign authorizers to a managed system policy based on user class:
+1.Navigate to the Managed system policy in f ormation  page  (on page 1835). 1.
+2.Select the Authorizers tab. 2.
+3.Select the appropriate sub-link:3.
+▪Access to managed systems▪
+▪Search recorded sessions▪
+▪Download recorded sessions▪
+▪View recorded sessions▪
+▪Extend a check-out▪
+4.To de fine  membership criteria: 4.
+▪Select e xisting  user classes: Click Select... and enable the checkboxes for the user classes you want ▪
+to add, then click Select .
+▪Create new user classes: Click 
+ Add new… . See Adding user classes  (on page 738) for full details ▪
+on how to create a new user class.
+5. Con figur e  P articipan t  mapping for each user class that you add. 5.
+Select and create user classes until  you have de fined  membership.
+6.If your membership criteria includes multiple  user classes, de fine  whether users are required to match 6.
+All of the user classes or Any of the user classes .
+ Removing users from membership
+To remove users from membership, you can:
+1.Edit user classes to change the participan ts. 1.
+2.Delete user classes from the membership criteria.2.
+a.Navigate to the membership criteria  page where user classes are listed. a.
+b.Enable the checkbox next to the user classes you want to delete.b.
+3.Click Delete . 3.
+De fining  access disclosure plugins
+You must enable at least one access disclosure plugin  for a managed system policy before users can
+access the password for accounts managed by that policy. You can set plugins for SSH key access, but this
+is not required; users can simply use their e xisting  cr edentials  with the temporary SSH trust r elationship.
+You can set plugins for group set access, but this is not required; users can simply use their e xisting
+cr edentials  with temporarily heightened privileges.You can enable only one plugin to disclose old passwords for a managed system policy.
+Bravura Privilege  ships with the following nativ e  access disclosure plugins:
+▪Run command: pswcmdrun  is used with account set access requests. It allows users to run ▪
+commands or scripts on multiple  managed systems using managed account cr edentials.
+When a user checks out an account set, Bravura Security Fabric  displays a command e x ecution
+window if any of the member systems support the run command oper ation.
+Details: Run command: pswcmdrun  (on page 1959)
+▪Command prompt: pswxcmd provides users with access to managed systems by e x ecuting  an ▪
+external program and providing cr edentials.
+There are three types of command prompt controls; one is specific ally  for accessing managed
+accounts, and the other two are for temporary group membership, where the password can either be
+passed onto the command line, or specified  upon c onnection  to the remote server.
+This plugin is c ompatible  with session recording.
+Details: Command prompt: pswxcmd  (on page 1960)
+▪PuTTY over SSH▪
+This is a pr ec on figur ed  pswxcmd  access disclosure plugin used for accessing managed accounts with
+SSH keys instead of passwords.
+This plugin is c ompatible  with session recording.
+Details: PuTTY over SSH: pswxcmd  (on page 1963)
+▪Copy: pswxcopy provides users with access to a password by copying it into the clipboard of the ▪
+client w ork s t ation.
+Details: Copy: pswxcopy  (on page 1964)
+▪Remote desktop / Remote App RDP: pswxtsvc provides users with access to Windows server or ▪
+client managed systems and RemoteApp programs using Remote Desktop Connection  (RDC). The
+plugin provides aut omatic  c onnection  to the managed system without the need to enter the
+adminis tr ativ e  cr edentials  for the managed account.
+This plugin is c ompatible  with session recording.
+Details: Remote desktop / Remote APP RDP: pswxtsvc  (on page 1964)
+▪Display: pswxview  provides users with access to a password by displaying it within the browser. ▪
+When the secure method is enabled, Bravura Security Fabric  uses JavaScript to decrypt the privileged
+password embedded in the page.
+If the insecure method is enabled, the browser can store passwords in plain text in the page source,
+and users can access the accounts in browsers that do not have JavaScript enabled. Users access the
+managed system by hovering their cursor over the View button.
+Details: Display: pswxview  (on page 1970)
+Bravura Privilege  ships with the following Guacamole access disclosure plugins:
+▪In-browser RDP: guacamole-rdp provides users with access to Windows server or client managed ▪
+systems using Remote Desktop Connection  (RDC).

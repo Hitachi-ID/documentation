@@ -1,0 +1,371 @@
+▪Adjusted updinst to unc onditionally  synchronize the extdb table for all actions  and to synchronize the ▪
+component folder when loading components.
+▪Added ability to set a universally unique identifier  (UUID) for systems onboarded through API calls. ▪
+▪Adjusted disclosure filt er  to display web app/secure browser disclosure when the disclosure method is ▪
+set for accounts but no website disclosure c on figur ations.
+▪Added sample component "Scenario.pam_webapp_cloud_service" that includes website disclosure▪
+c on figur ations  for Micr osoft  Azure and AWS IAM/root accounts.
+▪Added sample component "Scenario.pam_w ebapp_cloud_c omputing"  that include a website ▪
+disclosure c on figur ation  for ServiceNow accounts.
+▪Onboarding and offboar ding  dashboard counts fix ed  for team management onboarding and ▪
+offboar ding  cases.
+Bravura Identity
+▪Added system variable IDR NETWORK RESOURCE SELECT ONE GROUP  (on page 1179) to control if ▪
+users can only select one group when r equesting  access to network resources.
+▪The im_c orp_aut oma t ed_attribut e_flo w  component now updates the appropriate external data store. ▪
+▪ Depr ec ation  warnings are no longer triggered without a deprecated function  being implemented in ▪
+idtrack related components.
+▪Updated the hid_authchain_smspin component to display a proper error message to inform the user▪
+there is no mobile number c on figur ed
+▪hid_sms_twilio has been improved to provide better  handling of Twilio service messages. ▪
+▪ Optimiz ed  sproc RBACVarianceUserListDetails when running against the entir e  user population  with ▪
+large number of roles c on figur ed  and requests in the instance.
+▪Removed c on figur ation  options: ▪
+▪Target systems▪
+▪ Aut omatic ally  manage groups : "All groups, no approval required" ▪
+▪ Authoriz ation  for joining group ▪
+▪ Authoriz ation  for leaving group ▪
+▪Managed groups▪
+▪ Authoriz ation  for joining group ▪
+▪ Authoriz ation  for leaving group ▪
+▪Target system  and Group settings  are only applicable if the Authoriz ation  for joining group  or ▪
+Authoriz ation  for leaving group is set to "Open to members of another group, without
+approval".
+▪API changes:▪
+▪AccountGroupGet▪
+▪removed from output: authorjoin, authorleave, sub t ar g etid,  subgroupid ▪
+▪AccountGroupManage▪
+▪removed from input: authorjoin, authorleave, sub t ar g etid,  subgroupid ▪▪Added the new input argument optional  to API RoleResourceAdd, so that the API caller can ▪
+explicitly specify if the role member is optional.
+See Bravura Security Fabric  Remote API ( api.pdf ).
+▪Added display type check to date attribut e  v alidation  for entitlemen t  attribut es. ▪
+▪Added a Requester notes fields  to the Request access to network resources page. ▪
+▪When the system variable IDR REQUIRES REASON NEWREQUEST is enabled, users must enter some▪
+notes before they can successfully submit their request.
+▪Enhanced the requests app to expand the implementer tasks section  aut omatic ally  when the ▪
+implementer selects the request.
+Bravura Pass
+▪The Scenario.hid_authchain_forgot_password component now includes a global c on figur ation  option ▪
+to specify the email attribut e  that will be used to send emails to.
+▪Added the resextqa.exe plugin for managing external question  sets using SHA1 hashing. ▪
+▪Changed the PSR module  (on page 1194) name to "Password s ynchr oniz ation  r egis tr ation"  and ▪
+updated the description  for the PSR_ENABLED option.
+Certific ation
+▪ Modified  handling of two situations  where an e xisting  SoD violation  is resolved outside of the ▪
+CertApp:
+▪Case 1: The SoD violation  is resolved before the segment is loaded into the CertApp. ▪
+▪Case 2: The SoD violation  is resolved after  the segment is loaded into the CertApp but before it is ▪
+acted on in the CertApp.
+In both cases the SoD wizard will detect that the violation  is no longer present. Exiting  the Wizard
+popup will result in the CertApp tr eating  the violation  as resolved and allows the segment to be
+completed and signed off .
+▪ Certific ation  action  controls (certif y ,  reject, delegate, note) are now all accessible via keyboard focus ▪
+and screen readers
+▪Changed the handling of aut omation  for r e v oc ation: ▪
+▪ Entitlemen ts  that are deemed at risk are now identified  as "Revoke candidates" ▪
+▪Revoke candidates are identified  by a small red flag that is attached  to the upper right part of the ▪
+revoke action  icon
+▪In certific ation  segment, a new filt er  named "Revoke candidates" is added when there is at least ▪
+one revoke candidate
+▪Added support for the oper ations  "Certif y  Pr ofile  attribut es",  "Update account" and "Update pr ofile" ▪
+to Review certific ation  details  report. Now the certific ation  of the attribut es  of a user will be included
+in the report. If attribut e  values were changed by the reviewer, which generates w orkflo w  requests,
+these will also appear in the report.▪Revised handling of the detach user oper ation  in certific ation  segment. Now, action  icons will not be ▪
+shown except for the warning icon to indicate that the user is in the process of being transferred or
+detached.
+▪The tool tip text to indicate that the user is being transferred has been changed from "Item being ▪
+transferred" to "Item being transferred or detached"
+▪The tool tip text to indicate that the oper ation  was completed has been changed from "Transferred ▪
+item" to "Transferred or detached item".
+▪Added an info message when an empty segment is removed during the cr eation  of an orgchart based ▪
+certific ation  campaign to the idmsuite.log  in the following format:
+▪Segment [Description  of segment] in Campaign [Campaign description]  removed for Reviewer ▪
+[Reviewer Id] because it is empty.
+▪Corrected issue where the status of items that were deleted during the certific ation  campaign were ▪
+left in the state "Pending review". The corrected state is "Review not required".
+▪Improved performance of CertResAssignSingle stored procedure when certif ying  newly hired ▪
+contractors.
+▪The option  to disable self review is added on the Submit tab of the certific ation  c on figur ation  page . ▪
+By default the checkbox is clear, so self review is permitted
+▪If a reviewer's segment contains an entitlemen t  that belongs to them, it will not be presented with ▪
+the Certif y  or Revoke icons.
+▪Instead, an in f ormation  icon will be present with the hover text "Certific ation  of own entitlemen ts ▪
+are disabled".
+▪When a deleg ation  is performed to the owner of the item and further deleg ation  is not allowed in a ▪
+certific ation  where self review is disabled, a message will be displayed.
+▪"With Self review disabled - cannot delegate an item to the owner [Full name of delegate] of that▪
+item unless further deleg ation  is permitted".
+R eplic ation
+▪Added logic to intelligently deal with r eplic ation  queue files on upgrade. ▪
+▪Improved usability when pr opag ating  r eplic ation  c on figur ation  to other servers ▪
+▪Removed the "Disabled" mode option  for r eplic ation. ▪
+▪Updated the product installer to check whether r eplic ation  nodes are in a 'Disabled' mode before ▪
+proceeding.
+▪Improved usability when adding new replicas by cloning the c on figur ation  of e xisting  nodes. ▪
+▪Added a warning to the Database r eplic ation  screen when attempting  to start a r es ynchr oniz ation  if ▪
+the database is large enough that the process may take a long time.
+▪Improved resiliency around w orkflo w  actions,  especially for account check-out requests, when the ▪
+owning node for a request cannot be contacted.
+▪Added a new API function,  ReplicasAdd, to add nodes to r eplic ation. ▪Reports
+▪Added Managed system policy ID to the Onboarding and offboar ding  drill-down for onboarded ▪
+systems and accounts.
+▪Added option  with prompt 'Only include groups without direct owners:' when Report type: is set to ▪
+'Show managed group and authoriz ation  summary'. When this option  is enabled only groups without
+direct owners will be listed. Owners via groups that own a subgroup are not considered as direct
+owners.
+▪Added search criteria option  to the discoveredaccountstatus.exe report to include invalid accounts. ▪
+▪Added column to the discoveredaccountstatus.exe report to indicate whether the account is valid or▪
+not.
+▪The runtime  to display report content is improved for User report "Pr ofile  and request attribut es". ▪
+▪Added a clickable link to user ID in custom report when the user ID is mapped to RECIPIENT ID.▪
+▪Corrected Entitlemen ts  with invalid authorizers report for c alculation  of count of authorizers for ▪
+managed groups to include users from owner group.
+▪Changed the Group filt er  to apply to the column labeled Group ID in the SOX groups  report. ▪
+▪Corrected Review certific ation  deleg ations  report to exclude partially  delegated items that have been ▪
+signed off from being listed as delegated again as part of a delegate entir e  review oper ation.
+▪Changed label from "Latest last login time"  to "End date range" in both SOX reports. ▪
+▪Added the Database table audit  report to show database table change history. ▪
+▪Corrected the display of the account name in the SOX groups  report which was previously displaying ▪
+the pr ofile  name.
+▪Added a new analytics  report, Authentic ation  Chain St atistics  to the policies category which displays ▪
+the number of success and failure logins on the system.
+▪Updated the Search requests  report to support the following object r elationship  oper ations: ▪
+▪OBJREL_ADD▪
+▪OBJREL_DEL▪
+▪OBJREL_UPDATE.▪
+There are 7 new columns added to the output of the detailed version of the report:
+▪ R elationship▪
+▪Parent object type▪
+▪Parent target system▪
+▪Parent object description ▪
+▪Child object type▪
+▪Child target system▪
+▪Child object description ▪
+These columns have been added after  the Oper ation  column which was the last column in the
+detailed report. These columns will only contain in f ormation  for the oper ations  OBJREL_ADD,
+OBJREL_DEL and OBJREL_UPDATE.
+▪A new report Account existence  added to the Audit category. The purpose of the report is to list the ▪
+accounts that existed at a given reference date.▪Added "Con flicting  passwords" report to the "Privileged access: Con figur ation"  that returns current ▪
+c on flicting  password details.
+▪Saved reports can now be downloaded in HTML format.▪
+Upgrade
+▪ Modified  upgrade process on secondary nodes to finaliz e  file and database r eplic ation  from primary ▪
+before finishing.
+▪Updated the product installer to check for the following during the pr e-ins t allation  checks when ▪
+patching or upgrading a r eplic ation  node:
+▪Auto discovery, updinst, and/or persistent listing  is still running ▪
+▪ R eplic ation  queue contains too much data ▪
+▪ R eplic ation  queue delay is too long ▪
+▪Updated product installer to check for the following during upgrades:▪
+▪The Instance upgrade check during Pr e-Ins t allation  Check will verify that no management tools are ▪
+currently opened by the Micr osoft  Management Console.
+▪The installer will verify that no management tools are currently opened by the Micr osoft ▪
+Management Console while uninstalling the old services.
+▪Added usability improvements to the upgradetest.exe  utility  and when failure c onditions  are ▪
+encountered.
+▪Changed upgrades to not start secondary services until  user clicks [Next] button  on the post-upgrade ▪
+tasks dialog.
+▪Updated migratedata.exe , so if it fails to decrypt a field  value of a record during export, a dump ▪
+of the record's contents, including encrypted values, will be included in the log file.
+▪The installer will verify that the messaging service is stopped before the messaging service gets▪
+upgraded.
+See Bravura Security  Upgrade and Migr ation  documen t ation .
+Features and improvements
+▪The 'Change passwords' button  on the Change passwords page is now selectable by keyboard even ▪
+when not clickable and will be read out by screen readers along with its disabled status.
+▪Added managed group as a pr ofile  and request attribut e  type  (on page 1265). ▪
+▪Improved error handling around r eplic ating  registry values. ▪
+▪French Canadian tr anslations  added to the mobile app  (on page 1444). ▪
+▪ Modified  the T r ansaction  Monitor Service to be able to retry with returned data. ▪
+▪An agent can return a ACTryAgainLater code and send a data "cookie" to be returned on the next▪
+try and an amount of time  to wait before being called again.
+▪Added additional  debugging messages and error checking to network resource connector nrcifs. ▪
+▪Improved performance when checking for duplicate account association  entries in the database. ▪
+▪ Modified  the Scheduled jobs  (on page 2702) page to now display "Last run time"  and "Last finish  time" ▪
+as separate columns.▪ Modified  the user class c on figur ation  (on page 733) page to only display the fir s t 10 dependent ▪
+policies.
+▪Support has been added for Integers, Booleans, and string types for data c on fig  fields  of REG_DWORD ▪
+json files.
+▪Changed the severity of the log messages used to record license issues during report loading from▪
+Error to Warning.
+▪ Modified  the idwfm and idtm services to be able to aut omatic ally  complete (set reqbatch.status ▪
+to 'C') request stuck in processing due to idtm not g etting  agent returned results back in a timely
+manner (over 2 days), and it will mark the result of un finished  oper ation  as "N" (Unknown) on idtm
+service start.
+▪Remove the unneeded skin builder workaround for hid_dbe_update_trigger.▪
+▪A new builtin  administrator  (on page 672),_IDMSUITE_USER_ANONYMOUS has been added to allow ▪
+anonymous access to Ajax plugin endpoints de fined  in the hid_aja x_r outing  table.
+▪Requests to update single- or multiple- v alue  pr ofile  attribut es  of String type with leading or trailing ▪
+white spaces are not allowed.
+▪Requests to add white spaces as new values to single- or multiple- v alue  pr ofile  attribut es  of String ▪
+type are not allowed.
+▪Added tamper-resistance to network encr yption  protocol. ▪
+Resolved issues
+Usability
+▪Moved the 'Format requirement help' link closer to the top of the screen on the Update security ▪
+questions  page.
+▪Removed note about leading and trailing spaces being removed from the security questions  page. ▪
+▪Fixed an issue where the network resource icon was sometimes  being shown too large for higher ▪
+r esolutions.
+▪Fixed an issue in Groups app where unselected group appears in sidebar when double clicked.▪
+▪Fixed the issue where checkbox can't be toggled by pressing the space bar▪
+▪Disabled Firefox password aut ofill  feature in order to correct password policy c alculation  issue. ▪
+▪Fixed unexpected blank space at the bottom  of dialog windows for group pages when using the safari ▪
+browser.
+▪Resolved ambiguity around libidapi error codes and by extension pamutil  error codes. ▪
+▪Added pressing the Enter key to save the Saved search  functionality  across the product. ▪
+▪Display multi- v alue  attribut e  values properly in search pages. ▪
+▪Updated Group app accessibility.▪
+Privileged access management
+▪Updated the website disclosure c on figur ation  json for T witter . ▪▪Fixed a bug where a user could clear resource attribut e  values for a managed account if their ACLs ▪
+give them an update button  on the page, but the resource attribut e  is read-only.
+▪Corrected issue so that access expiry warning messages in Guacamole display the actual number of▪
+minutes left.
+▪Fixed an issue where aut omatic ally  discovered target's manage groups cannot be unmanaged. ▪
+▪Fixed missing securityDomain argument in Agent.agent_add_subscriber IDMLib function  page. ▪
+▪Updated Firefox Browser Extensions to version 1.1.0:▪
+▪Added support for Web App Privileged Sign-On▪
+▪ Modified  smonotu.exe to save plugin e x ecution  in f ormation  that can later be retrieved by ▪
+plugine x ecution.e x e  and plugine x ecution tr end.e x e  reports.
+▪Fixed unapproval v alidation  of group set check-out extension requests.privilege ▪
+▪Fixed missing securityDomain argument in Agent.agent_add_subscriber IDMLib function. ▪
+▪Fixed a bug where the smonclean utility  wouldn't delete screenshot folders if the ▪
+SMON_SCREENSHOT_STORAGE_PATH system variable was explicitly set and didn't end with a slash.
+▪ Modified  behavior so that if notific ation  is disabled for subscribers of a managed account, the ▪
+subscriber target will not be contacted during or ches tr ation/r andomiz ation.
+▪Resolved an issue where c on flicting  default values would prevent aut omatic  check-outs from ▪
+c ompleting.  RES_MAXIMUM_CHECKOUT_INTERVAL now correctly set in component scripts.
+▪Corrected issue so that recipients who have the ability to randomize/override passwords can force▪
+randomize c on flict ed  passwords from the Privileged Access app.
+▪When a Vaulted File is created without a password, a dummy password value specified  in language tag ▪
+NO_LARGE_CREDENTIAL_PASSWORD_PROVIDED is used instead of a fix ed  value.
+▪Fixed runwithpass to properly retrieve large cr edential  files when a valid system ID is specified, ▪
+regardless of case.
+▪Fixed runwithpass to properly validate whether an attribut e  key is provided when -do wnloadfile  is ▪
+specified.
+▪Fixed runwithpass to properly validate whether a directory is provided when -downloaddir is▪
+specified.
+▪ Modified  System: Onboard pr e-de fined  request to check c onnectivity  of the system as part of the ▪
+cr edential  check. Upon submission, if the system cannot be reached, the user will be redirected back
+to the System onboarding details screen.
+▪Fixed wizard to error out on submission if wfreq fails v alidation  on a previous page which is not the ▪
+same page as the page to submit the request, and presents that page to the user.
+▪Corrected issue so that import rules that use PSLang expressions as a c ondition  can be properly ▪
+loaded and installed using data components.
+▪ Modified  pam_system_management component so that multiple  Oracle Database instances hosted ▪
+on the same server can be onboarded.
+▪Fixed issue where subscriber r andomiz ation  would occasionally add a blank oper ation  dependency if ▪
+or ches tr ating  multiple  subscribers from the same target.
+▪Fixed the sesslog_full unique key violation  in SPROC PolicyRuleAccountDeploy when an unbind ▪
+managed account import rule runs.▪Improved error messages for duplicate team names in API submitted  Team: Create requests. ▪
+▪Fixed issue where iddiscover can time  out on startup if there are too many queued discoveries. ▪
+Privileged access usability
+▪Improved the reliability of access disclosure plugins when it er ations  of the disclosure is launched. ▪
+▪Corrected issue with session monitor playback of secure browser sessions so that playback does not▪
+jump to the end if the secure browser app was minimized for more than 30 seconds during the
+session.
+▪Fixed a bug where the smonclean utility  wouldn't delete screenshot folders if the ▪
+SMON_SCREENSHOT_STORAGE_PATH system variable was explicitly set and didn't end with a slash.
+▪Fixed the Account: Offboar d  PDR to use a default request team value if one cannot be obtained for ▪
+the account.
+▪ Modified  smonotu.exe  to save plugin e x ecution  in f ormation  that can later be retrieved by ▪
+plugine x ecution.e x e  and plugine x ecution tr end.e x e  reports.
+Bravura Identity
+Users and groups recorded in the known objects database table that were previously in the unknown
+objects table are no longer recorded as duplicates after  auto-discovery.
+Fixed WF REQUEST COMPLETED exit trap to trigger only once for single requests.
+Fixed the request links in the Requests app to work properly.
+Updated IDAPI functions  AccountGroupGet(), AccountGroupManage(), ResourceRead(), and
+ResourceSet(), for c on figuring  RBAC enforcement on targets and managed groups.
+Requesters that meet the access controls of the _UPDATE_GROUPS_ pr ede fined  request are presented
+with the Request access to network resources  menu selection  and can successfully request a resource.
+Removed "guid" field  (not useful any more) from userclasses / userclass points cache related tables,
+which helps with performance when r ec alculating  userclasses / userclass points cache during auto
+discovery.
+rbacenforce.exe  has been fix ed  to correctly resolve de ficits  for a user and prevent endless requests
+to resolve violations  in some cases.
+Fixed an issue where idapi fails v alidation  on GRUA oper ation  for new account expanded from role as
+required oper ation  of the PDR.
+Fixed c ondition  matching in hid_policy_request_chain table to properly interpret false matches as false
+and run accordingly.
+Fixed the archive-user script in im_t ermination  component to update user group memberships properly.
+Fix the issue where values of encrypted attribut es  appearing in the search results in reports were shown
+in plain text, now they are masked with ***.Fixed an issue where request failed to be submitted  due to the w orkflo w  manager service improperly
+v alidating  the password when missing required password is set by wfreq.
+Fixed rbacenforce utility  to not return subroles user doesn't have as de ficits  and not submit request to
+add subroles to the user.
+Bravura P attern  / Components
+▪Fixed a series of 12.2.0 upgrade scripts which used invalid component names which lead to duplicated▪
+data in some tables. (Data is fix ed  aut omatic ally  when upgrading to 12.3, but must be fix ed  manually
+in 12.2)
+▪Fixed stage numbering of pam_t eam_authoriz ation  rules so that Auto-Approve and Auto-Deny rules ▪
+don't interfere.
+▪pam_webapp_management: allow separate website disclosure c on figur ations  for secure browser and ▪
+web app privileged sign-on disclosures.
+▪im_corp_onboard : 'attr_actions_popula t e'  will default to 'True' for the exit trap and ▪
+process_start_date. API will then complete the request and properly c ontinue  with account disabling/
+enabling.
+▪ im_policy_authoriz ation : Changed underlying behavior when mako expressions in ExpressionFields ▪
+throw e x ceptions.
+▪ im_policy_authoriz ation : Multiple  instances of ExpressionField variable checks altered. ▪
+▪ Functional.pam_otp_a pi_manag emen t : Passwords for OTP API users created using team ▪
+management are now reset using the OTPAPIUserPasswordUpdate API function  instead of the
+adm_set utility .
+▪Corrected issue so that users that have the privilege to access team management pr e-de fined ▪
+requests can only act on teams they are a trustee of.
+▪Fixed upgrade for privilege disclosure components.▪
+▪PAM disclosure plugins : Fixed logic to calculate if an attribut e  value is required, or not, when ▪
+displaying the plugin.
+▪Upgrade 11.1.3 -> 12.2: some account management disclosure components failed to be upgraded,▪
+now fix ed.
+▪PAM disclosure plugins : Fixed logic to calculate if an attribut e  value is required, or not, when ▪
+displaying the plugin.
+▪Fixed the Functional.hid_bat ch_r eques t_submit  component to encrypt its sensitiv e  attribut es. ▪
+▪Corrected issue so that mako expressions are properly evaluated in the pam_disclosur e_filt er_action ▪
+extdb table.
+▪Corrected issue so that requesters with Cr edential  Manager privilege has the ability to force ▪
+randomize passwords from the PAM app.
+▪Fixed pam_otp_api_management  component so that the values of MS_TEAM and ▪
+SELECT_MULTI_MA attribut es  are validated when submitting  a P AMUtil:  Create OTP API User PDR
+request.
+▪Fix inconsistent behavior in Functional.im_r eques t_split  depending on how it was executed. ▪
+▪Maximum allowed number of values are now respected for request attribut es  in all scenarios. ▪▪Fixed an issue where Recaptcha components not triggering a skin rebuild when external data store is ▪
+modified.
+▪Corrected issue so that updating  between a team and a personal admin owner for an onboarded ▪
+account properly removes the previous team/owner value.
+▪Removed unsupported and unused password r andomiz ation  attribut es  and attribut e  groups. ▪
+▪Fixed issue so that accounts cannot be onboarded from a system that has been archived.▪
+▪Fixed 1_5to1_6.py upgrade script for Scenario.hid_saml_idp  to point to the correct csv file. ▪
+Certific ation
+▪Fixed a na vig ational  issue with the Certific ation  review  page after  the page is refreshed. ▪
+▪ Certific ation  action  controls (certif y ,  reject, delegate, note) have been made accessible via keyboard ▪
+focus and screen readers.
+▪ Certific ation  with consistency c alculations  now display correct progress in f ormation  on certific ation ▪
+review and summary pages.
+▪Fix the issue were a user without "View in f ormation:  Certific ation  campaigns" privilege was able to ▪
+view in f ormation  of certific ation  campaign via the clickable link of certific ation  description.
+▪Fix the issue if there was a partial  deleg ation  of a number of certific ation  items, an email would be ▪
+generated upon c ompletion  of the segment for each one of the items, both to the delegate and the
+original reviewer. Now there is only 1 email sent to the delegate and the original reviewer.
+▪Implement fix to correct handling of revoking items in certific ation  segment already signed off so that ▪
+the correct message is displayed in the warning icon in certific ation  review page and no error appears
+in system log.
+▪Reduce the log level of message "Wizard failed to load request..." from Error to Info when it failed to▪
+load request from session.
+▪Corrected issue where only the fir s t item was setup for timeout  of accepting  if multiple  items are ▪
+delegated in bulk from the certific ation.
+▪Fix the issue that if partial  deleg ations  already exist for the same certific ation  segment,reviewer and ▪
+delegate,no additional  emails will be sent when more partial  deleg ations  are performed.
+▪A new option  [Late binding authorizers] is added on the Submit tab in the process of entitlemen t  cert ▪
+c on figur ation
+▪The new option  controls whether the reviewer for a resource will be updated to one of the current ▪
+authorizers for that resource.
+▪This applies only to the certific ation  method "Entitlemen t  authorizers". ▪
+▪The certific ation  was modified  to respect the access control over viewing of resource or entitlemen t ▪
+attribut es  selected for display
+▪If a resource attribut e  is not viewable by the reviewer, it will be displayed with a set of asterisks ▪
+('*****').
+▪Fixed a bug in request Resolve Role De ficit  so that the request can be edited. ▪
+▪Corrected the Review certific ation  deleg ations  report to use the deleg ation  reason specified  when ▪
+the deleg ation  was performed instead of the comment left by the reviewer in the certific ation  review
+page.

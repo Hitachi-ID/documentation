@@ -1,0 +1,279 @@
+▪The Connector Pack  contains connectors which integrate Bravura Security Fabric  with target ▪
+systems.
+▪The setup of the proxy server’s Connector Pack  must match the setup of the Bravura Security ▪
+Fabric ’s Connector Pack ; for example, if the Bravura Security Fabric  install has an ins t ance-specific
+Connector Pack , the proxy server must be ins t ance-specific  also. Or, if the Bravura Security Fabric  is
+using the global Connector Pack , the proxy server must have the global Connector Pack .
+See the Connector Pack Documen t ation  for details.
+▪Installed and tested softw ar e: ▪
+▪ Nativ e  clients for the systems that Bravura Security Fabric  will interface with ▪
+Refer to the Connector Pack Documen t ation  for in f ormation  specific  to each type of target system.
+▪Python 3.11.2+▪
+Python 3.11.2+ must be installed before installing Bravura Security Fabric. It is optional  for
+Connector Pack, but is required for the agtpython  and pxpython  connectors.
+Ensure that Python is installed for all users. Python 3.11.2+ installs in the context of the current
+user by default. You must choose to do a custom install, then select ”all users” when the selection
+becomes available. This will allow the Bravura Security Fabric  service user (psadmin) account to
+have appropriate access to the Python ins t allation.
+It is recommended to add Python to the system PATH. This may also be added by selecting  the
+option  for ” Add Python 3.11.2+ to PATH” during the Python ins t allation.
+See Installing Python  (on page 200) for detailed ins tructions.
+▪ Micr osoft  Visual C++ 2015 Redistributable (x64) ▪
+Microsoft  Visual C++ 2015 Redistributable Package (x64) is required for Bravura Security Fabric
+10.0 and higher. It is required for certain Bravura Security Fabric run-time  components that use
+Visual C++.
+The Bravura Security Fabric server and Bravura Security Fabric proxy server must be installed on separate
+machines.
+Con figuring  proxy tunnel clients to map target systems to use proxy servers
+To c on figur e  proxy tunnel clients to map  a target system to use a proxy server:
+1.Log in to the Manage the system  (PSA) module on the main Bravura Security Fabric  server. 1.
+2.Click Manage the system > Resources > Proxy tunnel clients. 2.
+3.Click Add new . 3.
+4.Assign the name to tunnel client and port number that the proxy server will listens to.4.
+5.Click Add new . 5.
+6.Click Generate password  to generate a password that will be used when installing proxy tunnel on a 6.
+proxy server  (on page 262).
+7.Click Manage the System > Resources > Target systems > Manually de fined . 7.8.Select a target system you want to c on figur e. 8.
+9.Type In the List of proxies to run connectors on field  in the format: localhost /<portnumber> . 9.
+If there are multiple  proxy tunnel servers, separate them with a semicolon. 
+The localhost /<port number> string must be the same for all target systems that use the same proxy
+server.
+10. Click Update at the bottom  of the page. 10.
+Installing a proxy server using idmsetup.inf
+When you install Bravura Security Fabric  on the main server, an idmsetup.inf  file is created in the
+p sc on fig  directory. You can use this file to aid the ins t allation  of proxy servers. It contains the encrypted
+c ommunic ation  key (or Master Key)  and Connector encr yption  key and other correct default values for
+prompts during ins t allation.
+It is highly recommended that you:
+▪Copy the idmsetup.inf file to each proxy server and place it in the same directory from which ▪
+you will run the installer ( proxy.msi ).
+▪Ensure the architecture of the proxy server matches the architecture of the primary server. For▪
+example, if the primary instance is installed on a 32 bit oper ating  system, then idmsetup.inf
+should be used on a 32 bit oper ating  system.
+Your proxy server c onfiguration  must match that of your Bravura Security Fabric server.
+To install a proxy server using the idmsetup.inf  c on figur ation  file:
+1.Log in to the host Windows server as member of the Administrators group.1.
+2.If required, download and unzip the Bravura Security Fabric  dis tribution  folder. 2.
+Contact your Bravura Security account r epr esen t ativ e  for details.
+3.Copy idmsetup.inf from the p sc on fig  directory on the primary server to the proxy server and 3.
+place it in the root of the dis tribution  folder.
+4.Launch the setup program located at the root of the dis tribution  folder. 4.
+5.If you already have a Bravura Security Fabric  instance installed on the Windows server, setup 5.
+displays the Select an instance to c on figur e  page. Click Install New to proceed.
+The setup program asks you to choose a product to install.
+6.Select Bravura Security Fabric  Proxy Server . 6.
+Click Next .
+7.Verify that instance name is already filled  in and optionally  enter a description. 7.
+Click Next .
+8.Click Next . 8.
+The setup  program performs a pr e-ins t allation  check and v erifies  all of the requirements for
+ins t allation.
+9.If all of the checks are successful, click Next to proceed with the ins t allation. 9.If any of the pre-install checks produce warnings or errors, click Report for details. See
+T roubleshooting , T roubleshooting  for additional  troubleshooting  inf ormation.
+10. The setup  program launches proxy.msi . 10.
+11. Click Next . 11.
+12. Read and accept the license agreement. 12.
+Click Next .
+13. Choose the setup type: 13.
+▪Typical to accept recommended default settings. ▪
+If the default port 3344 is in use, setup increments to the next available port. Ensure the port is
+open.
+▪Custom to select: ▪
+▪Components to install – By default, Proxy Server  is selected and Proxy Tunnel  is optional. ▪
+▪ Ins t allation,  log file, and lock file paths – must be the same r elativ e  paths as c on figur ed  for the ▪
+main Bravura Security Fabric  server
+▪Proxy port – default is 3344▪
+14. Verify that the psadmin passwords are already filled  in (masked with stars). 14.
+Click Next .15. Verify that the c ommunic ation  key (or Master Key)  and Connector encr yption  key are the same as those 15.
+entered for the main Bravura Security Fabric  server.
+Click Next .
+16. If you installed Proxy Tunnel , verify that Bravura Security Fabric Proxy Server tunnel c onnection  URL 16.
+and tunnel client password  (on page 261) are filled.
+17. If you installed Login Manager  or Bravura Privilege , verify that the Data Key is the same as the one 17.
+entered for the main Bravura Security Fabric  server.
+Click Next .
+The installer displays the Con firm  Ins t allation  page.
+18. Click Next to start the ins t allation. 18.
+The installer begins copying files to your computer. The Ins t allation  Complete page appears after  the
+Proxy Service ( psproxy ) has been successfully installed.
+19. Click Finish to exit. 19.
+Next: 
+Install Connector Pack  and client softw ar e  for the systems that Bravura Security Fabric  will interact with.Installing Connector Pack  on a proxy server
+After  installing the proxy server, install the same version of Connector Pack  that the Bravura Security
+Fabric  server uses. The setup of the proxy server’s Connector Pack  must match the setup of the Bravura
+Security Fabric ’s Connector Pack ; for example, if the Bravura Security Fabric  install has an ins t ance-
+specific  Connector Pack , the proxy server must be ins t ance-specific  also. Or, if the Bravura Security Fabric
+is using the global Connector Pack , the proxy server must have the global Connector Pack .
+1.Navigate to the folder containing the setup program for Bravura Security Fabric . 1.
+2.Double-click setup to start the setup wizard. 2.
+You should see that the proxy server softw ar e  is already installed.
+3.To match your Bravura Security Fabric  ins t allation: 3.
+▪If you need to install an ins t ance-specific  connector pack, select your instance so that the installer ▪
+displays options,  and click Install a connector pack .
+▪If you need to install a global connector pack, click Install new to see that option. ▪
+4.Choose Connector Pack 64-bit 4.
+Click Next .
+The setup program performs a pr e-ins t allation  check. There should be no errors. A warning may be
+shown for some components, such as .NET WSE test, that are required for certain targets.
+5.Click Next . 5.
+After  a period of time,  the MSI should launch.
+6.Click Next to start the setup wizard. 6.
+7.Select the I accept the terms in the License Agreement checkbox, then click Next . 7.
+8.Choose the setup type to match the Connector Pack  installed for Bravura Security Fabric . 8.
+9.Click Install . 9.
+You may be notified  that the system will need to reboot to complete the ins t allation.  If you do, click
+OK to c ontinue.
+After  a period of time,  the ins t allation  should complete.
+10. Click Finish . 10.
+Once the installer has finished  its tasks, the Bravura Security product setup program will complete the
+pos t -ins t allation  process.
+11. Click Finish to complete the ins t allation. 11.
+Ensure that you install all nativ e  clients for the systems that Bravura Security Fabric  will interface with.
+Refer to the Connector Pack Documen t ation  for in f ormation  specific  to each type of target system.
+Con figuring  target systems to use proxy servers
+To c on figur e  a target system to use a proxy server:
+1.Log in to the Manage the system  (PSA) module on the main Bravura Security Fabric  server. 1.
+2.Click Manage the System > Resources > Target systems >  Manually de fined . 2.3.Select the target system you want to c on figur e. 3.
+4.Type the server name and port number for the proxy server in the List of proxies to run connectors 4.
+on field  in the format: <server name> /<portnumber> .
+If there are multiple  proxy servers, separate them with a semicolon.
+The <server name>/<port number> string must be the same for all target systems that use the same
+proxy server.
+If you write this string using the IP address and others using the DNS name, the updproxy program
+can’t recognize that the strings refer to the same machine. This is problematic  because the proxy
+server is updated more than once during auto discovery .
+5.Click Update at the bottom  of the page. 5.
+Updating  proxy servers
+After  the Bravura Security Fabric  softw ar e  is installed on the proxy server, you must copy over files
+(scripts, c on figur ation  files)  that have been created or modified  on the Bravura Security Fabric  server.
+This procedure is only required once, because the proxy server is aut omatic ally  refreshed whenever you
+run auto discovery .
+The Logging Service (idmlogsvc) is installed as part of the proxy server ins t allation.
+To update the proxy server using file r eplic ation:
+1.Log in to the Manage the system  (PSA) module on the main Bravura Security Fabric  server. 1.
+2.Click Manage the system > Maintenance > File s ynchr oniz ation  to see a list of proxy servers. 2.
+3.Select all the proxy servers that you want to update.3.
+4.Click Synchronize to begin synchronizing selected servers. 4.
+The UPDATE SYSTEM AGENT COUNT option  controls how many proxy servers can be updated
+simultaneously, in addition  to how many target systems can be listed simultaneously.
+See also: 
+You can update proxy servers manually from the command-line using the updproxy  program. See
+updproxy
+The updproxy program, installed on the Bravura Security Fabric  server, works in c onjunction  with the
+psproxy service. It is used to update the list of proxy servers registered on the Bravura Security Fabric
+server, and to push any files necessary to run connectors and list utilities  to the proxy servers. This
+includes the Logging Service ( idmlogsvc ) being used on the proxy servers. Normally, updproxy is
+invoked as one of the fir s t steps in the auto discovery batch file.
+The UPDATE SYSTEM AGENT COUNT option  controls how many proxy servers can be updated
+simultaneously. The default value is 50. This option  can be set at Manage the system  > Maintenance >
+Options .The UPDATE SYSTEM AGENT COUNT option  also controls how many target systems can be listed
+simultaneously.
+Usage
+updproxy.exe -list | -refresh | -rotatelog <N> | -proxy <IP address>/<port>
+Argument Description
+-list Lists all proxy servers registered with the Bravura Security
+Fabric server.
+-refresh Copies the latest agents to all proxy servers.
+-rotatelog <N> Rotate the log folder for at most <N> rounds.
+-proxy <IP address>/<port> Specifies  which proxy servers to refresh.
+Unlike updinst , updproxy  cannot  be controlled using a c on figur ation  file. Proxies have diff er en t
+requirements compared to full instances. Currently updproxy works based on a hardcoded list of
+things that are relevant to proxy instances:
+▪Connector Pack (instance or global)▪
+▪Some utilities  (updsvcpass, pscp, logutil) ▪
+▪\<instance>\script\▪
+▪\<instance>\lib\▪
+▪\<instance>\idmlib\▪
+▪\<instance>\license\▪
+▪\<instance>\component\▪
+▪Services (idmlogsvc, psproxy)▪
+Examples
+1.To show a list of currently registered proxy servers, type:1.
+updproxy -list
+2.To update agents on all the proxy servers, type:2.
+updproxy -refresh
+3.To update agents on a specific  server, type: 3.
+updproxy -refresh -proxy <IP address>/<port>
+for command-line arguments and examples.
+T r oubleshooting  proxy servers
+Using a web proxy server for Bravura Security Fabric to reach out to its targets
+Problem
+When an environment uses a proxy server to access web content, Bravura Security Fabric  connectors,
+scripts, and other programs may not be able to reach external targets. The result is a c onnection  timeout.Cause
+Bravura Security Fabric  connectors use the Windows proxy settings  (not always the ones from Control
+Panel> Internet Options ), which have to be set manually.
+Solution
+1.In an adminis tr ativ e  command prompt type: 1.
+netsh winhttp set proxy
+<my-proxy.company.com>:443
+Replace the proxy server name with the one in the actual environment.
+2.Restart all services (at a minimum, iddb and w3svc)2.
+This should allow set the proper proxy server and port in the winhttp  c on figur ation  that Bravura Security
+Fabric  will use. External targets should connect.Chapter 8 Con figuring  r eplic ation  servers
+Con figuring  Bravura Security Fabric  in a r eplic ation  environment off er s  the following advantages:
+▪In the event that a primary server crashes, a backup server can take over Bravura Security Fabric ▪
+functions
+▪ Multiple  servers allow for load balancing ▪
+Calculate the number of nodes required.
+Bravura Security  strongly recommends that you create at least two or three replicated Bravura Security
+Fabric  database nodes for fault tolerance and backup, depending on which products are licensed and
+which features are implemented. When Bravura Privilege  is installed, or when close to 100% uptime  is
+required from the instance, the recommended minimum is three. This is because when backend
+database r eplic ation  is performed, at least two database nodes have to go down at the same time.
+On the other hand, avoid setting  up too many replicated database nodes. It is likely that the additional
+overhead of any more than six fully replicated nodes would outweigh the advantage of having multiple
+nodes to do work. If you implement transparent password s ynchr oniz ation,  it is recommended that you
+avoid having more than fiv e concurrently activ e  database nodes.
+Calculate the number of database nodes you require with the following formula:
+N = ceil(1 + [ U∕P * 7∕5∕Z * A]∕[60  * 60 * C∕T])
+Where:
+▪U = # of users▪
+▪P = days between password expiry▪
+▪Z = time  zones ▪
+▪A = accounts/user▪
+▪C = # of concurrently running connectors▪
+▪T = seconds on average to change a password▪
+For example, when:
+▪U = 10000 people▪
+▪P = 45 days▪
+▪Z = 1 time  zone ▪
+▪A = 10 accounts/user▪
+▪C = 30 connectors at a time ▪
+▪T = 2 seconds▪
+then:
+▪N = ceil(1 + [10000∕45 * 7∕5∕1 * 10]∕[60 * 60 * 30∕2]) ▪
+▪N = ceil(1 + [3111]∕[54000]) ▪
+▪N = ceil(1.0576) ▪▪N = 2 ▪
+ See also: 
+▪Installing with a Shared Schema  (on page 229) ▪
+▪Recovery▪
+You can c on figur e  your r eplic ation  environment in multiple  ways depending on your requirements. The
+topics in this section  simply outline how to c on figur e  r eplic ation.  See the R eplic ation  and Recovery site
+for detailed in f ormation  about r eplic ation  architecture , for details in f ormation  about architecture, modes
+of failure, recovery, and more.
+Each server on which the Bravura Security Fabric  main applic ation  is installed is referred to as an
+applic ation  node. The node ID is aut omatic ally  generated in the format <servername>_<instancename>.
+As a result, all applic ation  nodes set in r eplic ation  must be installed with the same instance name. The
+name is case sensitiv e  (Instance_Dev is diff er en t  from instance_dev); Bravura Security suggests keeping
+the instance names in lower case only.
+Life cycle of an applic ation  node
+A Bravura Security Fabric  applic ation  node typically follows the following life cycle:
+1. Pr epar ation  (on page 270) 1.
+2.Adding a node  (on page 274) 2.
+3.Checking r eplic ation  status: 3.
+▪Manually, as an administrator  (on page 279) ▪
+▪ Aut omatic ally ,  when using a load balancer  (on page 280) ▪
+4. Con figuring  file s ynchr oniz ation  (on page 282) 4.
+5.Modifying node settings  (on page 288) 5.
+6.Removing a node from r eplic ation  (on page 291) 6.
+7.Cleaning up r eplic ation  c on figur ation  (on page 293) 7.
+Pr epar ation  for setting  up r eplic ation  environment
+Requirements
+Before setting  up a r eplic ation  environment, ensure that:
+▪All server clocks are synchronized.▪
+▪Only one user c on figur es  the r eplic ation  servers at any point. ▪
+No other users should be logged into any of the other Bravura Security Fabric  servers while the
+r eplic ation  environment is c on figur ed.
+▪The product administrator who is c on figuring  r eplic ation  has the right to maintain servers. ▪
+▪All servers have the same instance name and virtual directories.▪
+▪All servers use the same Connector Pack version and Connector Pack type.▪

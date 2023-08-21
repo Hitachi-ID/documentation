@@ -1,0 +1,351 @@
+▪WFRequest* API calls▪
+▪WFRequestCreate / WFR eques tAttr sSe t  / WFRequestSubmit / etc. ▪
+▪May also be called via SOAP or locally on applic ation  node. ▪
+▪Can provide more control over the process of cr eating  and submitting  a request in comparison to ▪
+WFPDRSubmit.
+Request structure
+A request consists of base metadata, actions,  authorizers and/or implementers and request attribut es.
+Through the lif etime  of the request this data is s t or ed/modified  in Bravura Identity 's backend SQL tables.
+The below sections  detail these SQL tables along with some of their more important columns.
+Base metadata
+Base metadata refers to in f ormation  about the request itself.  Some notable items are:
+▪Request ID:  This is a unique guid assigned to each request.  ▪
+In the Requests UI, when choosing a request, this guid can be seen in the URL bar. 
+This unique identifier  is useful for tr oubleshooting  exercises as:
+▪It can be used to trace request e x ecution  in the idmsuite logging. ▪
+▪It can be used to pull in f ormation  on the request from the backend SQL tables. ▪
+▪Request Name: This is a unique readable name assigned to the request.▪
+In the Requests UI, when choosing a request, this will show in right pane under Details and will be
+f ormatted  YYYYMMDD-X.
+▪Request Status: This is current oper ational  status of the request. ▪
+The status will clearly state if the request is "Processing", "Calculating  Authorizers", "Approved,
+performing requested oper ations",  "Processed".
+In the Requests UI, when choosing a request, this will show in the right pane under Details.
+▪Requester: Who initia t ed  the request. ▪
+▪Recipient: Who the request is for.▪
+▪PDR ID:  From which PDR the request was generated.▪
+The base metadata for a request is stored in the reqbatch table.
+Request attribut es
+Attribut es  (on page 1264) can be added to a request at submission time  and can be modified  further via
+custom request rewrite scripts or c omponen t -utiliz ed  policy tables.  These attribut es  can be used by
+custom or default component logic to execute their designated tasks.
+In reqinfo the attribut e's  name and value can be found in addition  to the request those request
+attribut e's  belong to.
+The attribut es  for a request are stored in the reqinfo table.Request actions
+A "Request Action"  comprises of a resource and an oper ation.  
+The resource is the object / entitlemen t  that will be modified  by the Oper ation.   Examples of resources
+are pr ofiles,  accounts and groups.
+An oper ation  is executed against a resource.  Examples of oper ations  are account additions/deletions,
+group additions  / deletions,  role additions  / deletions.   As the oper ation  executes its "status" (for
+example approved/canceled) and "result" (for example failed/successful) will be recorded.
+Request ACTIONS for a request are stored in the reqacct table.
+Authorizer and Implementers (stored in authreq table)
+An authorizer is a user who is assigned to approve/deny a request action.   An Implementer is a user who
+is assigned to a request action  which requires manual e x ecution  of tasks in target systems.
+For each request, Bravura Identity  records / modifies  the status of implementer and authorizer activities.  
+It also records / modifies  the assignment of authorizers and implementers to a request action.
+Authorizer and Implementer activity  is stored in the authreq table.  
+Request e x ecution
+When a request executes:
+1.Authorizers and implementers are calculated.1.
+2.Authorizers approve and implementers can fulfill  requests. 2.
+3.Component logic can be executed to modify the request,calculate attribut es,  and more. 3.
+4. Oper ations  are executed and request is completed. 4.
+The following outlines the processes involved in request e x ecution  and what r esponsibilities  they carry.
+W orkflo w  Manager (idwfm)
+1.Calculates authorizers / Implementers via:1.
+▪ Functional.im_policy_auth oriz ation  component. ▪
+Policy rules utiliz ed  by this component to calculate authorizers are in the im_policy_authoriz ation
+extdb table.
+These policy rules can override authoriz ation  c on figur ations  set in the Bravura Identity  UI.
+▪Custom components can calculate authorizers / implementers.  These components will implement▪
+plugin IDSYNCH_AUTH_CRITERIA_MOD_PLUGIN  (on page 1363).
+▪While custom standalone script can also calculate authorizers / implementers via plugin▪
+IDSYNCH_AUTH_CRITERIA_MOD_PLUGIN this was more common in older versions of Identity .  
+Custom components should be used instead wherever possible.
+2.Calculates request attribut es  and modifies  requests via: 2.
+▪ Attribut e  c alculation  via: ▪▪Policy rules in the hid_policy_attr v al_c alculation  extdb table. ▪
+▪Request rewrite logic from custom components.  ▪
+▪Request modific ation  via: ▪
+Custom components that implement request rewrite logic via plugin WF_WIZARD_PLUGIN  (on
+page 1416) to dynamically detach or attach  actions  to a request. 
+3.Executes logic from enabled components.3.
+4.Manages request status.  To view request status:4.
+▪Bravura Identity  UI ▪
+As an end user, click Requests  then click on the request of interest. In the right pane, click blue text
+with the batch name f ormatted  yyyymmdd-n  to see request details.
+▪SQL tables can be viewed for a lower level view into request status▪
+▪reqinfo for the request's attribut es. ▪
+▪authreq for the request's authorizers / implementers.▪
+▪reqacct for the request's oper ations. ▪
+▪reqbatch for the request's status .▪
+5.Calls T r ansaction  Monitor ( idtm ) to execute request oper ations. 5.
+The order in which oper ations  will execute can be enforced via Oper ation  dependencies  (on page
+645). 
+See more in f ormation  about the W orkflo w  Manager Service  (on page 2840).
+T r ansaction  Manager (idtm)
+1.Executes request oper ations  directed for a Target system (for example create account / modify group 1.
+membership).  It does this by:
+▪Calling the appropriate agent for the target system.▪
+▪Provides the agent with input values based on what was received from idwfm . ▪
+▪Receives response from target system (success / failure).▪
+▪Reports results back to idwfm . ▪
+The pstee  utility  can be used for debugging purposes to expose the agent inputs and target
+outputs as .kvg files in the logs directory.
+2.On success the Bravura Identity  database is updated. 2.
+For example on successful target account cr eation,  the account will also be added into the Bravura
+Identity  database.
+3.On failure Bravura Identity  retrIes the oper ation  as per the intervals de fined  in Maintenance -> 3.
+Services -> T r ansaction  Monitor Service .  The oper ation  fails after  all retries are spent.
+See more in f ormation  about the T r ansaction  Monitor Service  (on page 2842)Provisioning resources
+A resource is the basic building block during any Bravura Identity  provisioning oper ation.  The main
+resources used in provisioning oper ations  include:
+▪Template accounts▪
+▪Roles▪
+▪Managed groups▪
+Each Bravura Identity  resource type can have diff er en t  roles for diff er en t  provisioning requests. For
+example, in order to create a new user, the requester must select at least one Bravura Identity  template.
+For any selected template, certain pr ofile  and request attribut es  can be required.
+Resources can be selected manually from diff er en t  Bravura Identity  modules. For example, if requesters
+use the View and update pr ofile  (IDR) module to submit a new user request, they follow these steps:
+1.Enter or select pr ofile  and request attribut es. 1.
+2.Select roles or templates for the request.2.
+3.For the matching role or template, optionally  select an Bravura Identity managed group. 3.
+In cases where many resources are available for selection,  Bravura Identity  displays a search form which
+can make the selection  process easier.
+Filter resources
+Bravura Security Fabric  off er s  a resource filt ering  plugin infrastructure as an alt ernativ e  to aut omatic
+resource selection.  Resource filt ering  is complementary to the manual resource selection  process. The
+result of resource filt ering  is a shorter list of resources that is presented to users. With a shorter list, it is
+easier for the end user to select appropriate resources. You can also use this method to control the
+resources that product administrator s are allowed to manage in the Help users  (IDA) module and the
+Manage the system  (PSA) module.
+To use a resource filt er  plugin:
+1.Click Manage the system  > Modules  > Options . 1.
+2.Type the name of the plugin program or PSLang script in one of the following fields: 2.
+▪FILTER ACCOUNT PLUGIN – Filters the list of accounts the user can manage. ▪
+▪FILTER ACCTGROUP PLUGIN – Filters the list of available managed groups the user can pick from. ▪
+▪FILTER GROUP MEMBER PLUGIN – Filters managed groups that users can pick to add to, or remove ▪
+from, other groups.
+▪FILTER ROLE PLUGIN – Filters the list of available roles the user can pick from. ▪
+▪FILTER TEMPLATE PLUGIN – Filters the list of available templates the user can pick from. ▪
+3.Click Update . 3.
+You cannot use the same plugin program or script for more than one plugin point. The plugin must be
+altered for each filt er .If you want the filt er s  to operate when product administrator s use the Manage the system  (PSA) module,
+click > Manage the system  > Modules Manage the system  (PSA) and enable the PSA FILTERING option.
+This option  is turned off by default.
+There are no shipped plugins for the resource filt er  plugin points.
+See more in f ormation  on writing  a customized filt er  plugin for accounts, groups roles, and templates.
+Requirements
+The plugins are run with a maximum of RECORDS PER PAGE entries.
+See W riting  plugins  for general requirements.
+Ex ecution  points
+Resource filt er  plugins are run by modules when a user attemp ts  to manage, view, or select a resource,
+before the resource selection  page is displayed. This happens when a user is cr eating  a new user,
+managing an e xisting  user’s accounts, or adding new resources to e xisting  accounts. They can also be
+c on figur ed  to run in the Manage the system  (PSA) module.
+Filter plugins operate diff er en tly  from most plugins, which are synchronous. All filt er  plugins support
+asynchronous calling. There are two forms of asynchronous calling:
+▪Standard input/output mode that processes standard filt er  plugin input/output ▪
+In standard input/output (stdio) mode, filt er  plugins work in the following way:
+1.An event triggers a CGI program to call the plugin program or script and sends it standard user1.
+data.
+2.The calling program c ontinues  to stream input from stdin, one item at a time  until  there are no 2.
+more items.
+3.For each item, the plugin returns the filt er  result to stdout. 3.
+4.The calling program receives the final  standard output and c ontinues. 4.
+Input
+Input is similar for all resource filt er  plugins. The plugin fir s t receives standard data in the format:
+"" "" = {
+  "sessionid" = "<session ID>" # The session ID of the request.
+  "module" = "<idr|ids|idp|idwfm>"
+  "accountID" = "<account ID>" # The account ID of the recipient.
+  "template = "<template ID>" # The selected template ID.
+  "targetid" = "<target ID>" # The target ID for the recipient.
+  "navigation" "" = { ... } # User navigation data
+  "recipient" "<user|empty>" = {
+     # The "recipient" group contains standard information about the
+     # subject of the request.   }
+  "viewer" "user" = {
+     # The "viewer" group contains standard information about the
+     # person using the CGI.
+   }
+  "request" "" = {
+     # The "request" group contains standard information about the
+     # the request.
+   }
+ }
+Some of the values above may be empty, due to the stage and type of the request.
+The plugin then receives a series of KVGroups; one for each item. An account filt er  plugin receives, for
+example:
+"account" "" = {
+  "account" "" = {
+    "userid" = "ACOS0000"
+    "hostid" = "NORSE"
+    "longid" = "ACOS0000"
+    "shortid" = "ACOS0000"
+    "helpdesk" = "FALSE"
+    "list" = "TRUE"
+    "user" = "FALSE"
+    "associated" = "TRUE"
+    "invalid" = "FALSE"
+  }
+  "target" "" = {
+    "targetid" = "NORSE"
+    "platform" = "WIN2K"
+    "address" = "\\\\10.0.12.21/basedn=ou=staff"
+    "standardid" = "true"
+    "targetgroupid" = "DEFAULT"
+  }
+}
+A template filt er  plugin receives:
+"template" "" = {
+  "description" = "Corporate Active Directory"
+  "hostid" = "AD"
+  "id" = "AD_TEMPLATE"
+  "location" = ""  "longid" = "template_user"
+  "type" = ""
+}
+A group filt er  plugin receives:
+"nosgroup" "" = {
+  "addtype" = "MODR"
+  "deltype" = "MODR"
+  "groupid" = "CN=arch_frv_owners,OU=groups,OU=staff,DC=norse,DC=bravurasecurity,DC=com"
+  "hostid" = "AD"
+  "location" = ""
+  "mgrpid" = "e371a413-a417-4d67-9085-538ab963d886"
+  "subgrpid" = "00000000-0000-0000-0000-000000000000"
+  "type" = ""
+}
+A role filt er  plugin receives:
+ "role" "" = {
+  "desc" = "Corporate employee"
+  "roleid" = "CORP_AD_ROLE"
+}
+Output
+For each item, one output KVGroup is expected on stdout, with an optional  "filt er"  = "true" pair to
+indicate that the item should not be displayed:
+"" "" = {
+"filter" = "true|false"
+       # If false, the user is displayed
+       # If true, the user is not displayed
+"retval" = "<#>"
+       # Optional, if non-zero returned, abort the plugin
+}
+A plugin that encounters errors in its processing can add standard output pairs for individual items,
+which should cause the plugin e x ecution  to be aborted.
+.
+▪Callback mode that uses two functions  to process the input/output ▪
+In callback mode the resource filt er  plugin uses two functions:
+OnFilterInit(const $inkvg, output $detail)  This function  is called once to retrieve initial  in f ormation
+about the request, requester, and viewer.$inkvg – the viewer
+$detail – if 0, no detail provided on input kvg for each user
+– if 1, detail is provided on input kvg for each user
+– can also be expressed as a KVGroup
+OnItemFilter(const $inkvg, output $msg, output $allow)  This function  is called once per item to
+determine what resource the user can view or manage.
+$inkvg – the resource to filt er  (each item is as found in Listing  20.1.5.1)
+$msg – error message
+$allow – if 1, this user is displayed and available
+– if 0, this user is not displayed and is unavailable  
+Example
+A simple example is as follows:
+ function OnFilterInit( const $inkvg, output $detail )
+ {
+     log ( kvgToString( $inkvg ))
+     $detail = 0;
+     return 0;
+ }
+  function OnItemFilter(const $inkvg, output $msg, output $allow )
+ {
+     log ( "OnItemFilter:" );
+     log ( kvgToString( $inkvg ))
+      $msg = ""; # Error message
+     $allow = 0; # not allowed
+     # $allow = 1; # allowed
+     return 0;
+ }
+.
+This mode can be used to reduce processing time  in environments with large numbers of users.
+The group member plugin operates diff er en tly  to the other plugin types described in this section.  It’s
+rules and requirements are similar to the search filt er  plugin
+See more in f ormation  on writing  a customized filt er  plugin for group members
+The FILTER GROUP MEMBER PLUGIN operates diff er en tly  to other resource filt er  plugins. It uses the same
+rules and criteria as the search filt er  plugin but acts only on the GROUPFORGROUP search engine.
+You can use this plugin to:▪Create an include list for the GROUPFORGROUP search engine such that only search results in this list▪
+will be returned to the user.
+▪Create an exclude list for the GROUPFORGROUP search engine to exclude some search results.▪
+▪Set up some search criteria for groups so that only search results that satis f y  the criteria will be visible ▪
+to the user.
+An exclude list overrides an include list or filt er  criteria; that is, if an item is in an exclude list AND
+include list, or in an exclude list AND selected by criteria, then the item will be excluded.
+Requirements
+See W riting  plugins  for general requirements.
+Ex ecution  points
+This plugin is called by the GROUPFORGROUP search engine after  a user submits a search request.
+Input
+The input presented to the plugin is a KVGroup that includes the viewer in f ormation,  search type, and a
+list of advanced search keys; for example:
+"" "" = {
+  "viewer" "user" = {
+    "id" = "jonh"
+    "name" = "jon hoo"
+  };
+  "module" = "ajaxsvc"
+  "searchType" = "GROUPFORGROUP"
+  "ValidKeys" "" = {
+    "groupid" = ""
+    "groupname" = ""
+    "targetdesc" = ""
+    "targetid" = ""
+    "url" = ""
+    "RBACflag" = ""
+    "valid" = ""
+    "issecurity" = ""
+    "parentgroupid" = ""
+    "authorizer" = ""
+    "grouptype" = ""
+  };
+  "request" "" = {
+    "requestID" = "56677492AC6B0890CAD8144821AA1B3A"
+    "macroStatus" = "U"    "requester" = "jonh"
+    "requesterName" = "jon hoo"
+    "requesterEmail" = ""
+    "recipient" = "jonh"
+    "recipientEmail" = ""
+    "entryDate" = "1449620980"
+    "notes" = ""
+    "reason" = ""
+    "batchauthnote" = ""
+    "segment" = ""
+    "reservationid" = "00000000-0000-0000-0000-000000000000"
+    "autoressig" = ""
+    "prequest" = "PDR_CHILD"
+    "requestModule" = "idr.exe"
+    "resource" "566774A11814D12045F992432D55F6DF" = {
+      "childtargetid" = "OAK"
+      "childgroupID" = "CN=testgrp2,OU=ngrptest,DC=oak,DC=devel,DC=bravurasecurity,DC=com"
+      "itemType" = "groupID"
+      "groupID" = "CN=Account Operators,CN=Builtin,DC=jasonh,DC=bravurasecurity,DC=com"
+      "targetid" = "OAK"
+      "longIDSet" = "false"
+      "userid" = "jonh"
+      "newgroup" = "false"
+      "enact" = "true"
+      "pseudoOp" = "false"
+      "pseudoTag" = ""
+      "pseudoData" = ""
+      "finalized" = "false"
+      "authtype" = "P"
+      "operation" = "GRGA"
+      "status" = "O"
+      "statusreason" = ""
+      "notes" = ""
+      "reason" = ""
+      "acctauthnote" = ""
+      "result" = "I"
+      "implicit" = "false"
+      "groupApproval" = "00000000-0000-0000-0000-000000000000"
+      "parentRole" = ""
+      "autoselect" = "none"
+    };

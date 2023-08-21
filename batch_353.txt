@@ -1,0 +1,278 @@
+de fined  in the en-us-errmsg.kvg file. By default these tags are commented out. They are de fined  as
+follows for the value of N:
+▪N = 0  A return code of 0 signifies  success. Success messages often  return various warnings. You may or ▪
+may not want users to see these warning messages. To suppress the warnings, create a custom
+success message by modifying the error_agent_0 tag.
+▪N = 1,2,3...  P ositiv e  values for N indicate various errors. When a return code of N is returned by a ▪
+connector, the corresponding error_agent_<N> message is displayed.
+To create a custom connector error or success message, follow the procedure outlined in Altering text by
+editing  KVG files (on page 3489). Ensure that you uncomment the values that you want to modify.
+Creating  a custom message overrides all extra inf ormation  returned by the connector, including any
+warning messages that are returned.
+Example: Suppress success messages
+For example, to suppress any warnings that might be included in success messages, create a custom en-
+us-errmsg.kvg  file as follows:
+# KVGROUP-V1.0
+"language" "EN_US" = {
+  "ERROR_AGENT_0" "" = {
+    "text" = "Success"
+}
+E diting  email content
+Default email message text is controlled by the Bravura Security Fabric  . You can:
+▪Use the Manage the system  (PSA) module to customize w orkflo w  email content ▪
+▪Edit custom KVGroup files to modify any message subject and content, or prevent Bravura Security ▪
+Fabric  from sending specific  types of email
+Customize w orkflow  email using the Manage the system (PSA) module
+The Email cus t omiz ation  page provides easy access to w orkflo w  email language macros so that you can
+customize them without manually modifying any KVGroup files.
+To customize w orkflo w  email macros using the Email cus t omiz ation  page:
+1.Click Manage the system > W orkflo w  > Email cus t omiz ation . 1.
+2.Select values in at least one category of Type, Status , or P articipan t . 2.
+You can search all values in a category by leaving it set to "(Select one)".
+The values are described in table below.
+3.Click Select . 3.
+If the values you selected match any email macros, they are displayed below. The w orkflo w  email tag
+names use the following format: EM_W ORKFL O W_<type>_<s t a tus>_<participan t>_*.  If there are nomatches found, modify the category values and Select again.
+Each macro has a Default and Custom value. The Default value cannot be modified.
+4.Enable the Custom field  and type values as required. 4.
+You can copy and paste values from the Default field.
+5.Enable the Generate skin checkbox, at the bottom  of the table, if you want to generate the Bravura 5.
+Security Fabric  skins now.
+6.Click Update . 6.
+If you chose to generate the skin, your cus t omiz ations  are written  to the <lang>-<locale>-
+errmsg.kvg  file in the \<instance>\design\custom\ directory, for the language currently displayed
+in the browser.
+Email cus t omiz ation  categories
+Option Description
+CERT Bravura Group
+CICO Check-in / check-out of privileged accounts
+DELEG Deleg ation
+IMPL Implementers
+INV Inventory
+MULTI Matches macros set to MULTI, which are used to match multiple  types
+ORG Org Manager
+PASSWORD Passwords
+REQ Requests
+RESOURCE Bravura Privilege managed systems
+SMON Recorded sessions
+Status
+FINAL Processed
+INITIAL Request initia t ed
+MULTI Matches macros set to MULTI, which are used to match multiple  statuses
+ONHOLD On-hold pending administrator in t er v ention
+PROCESSING Approved, performing requested oper ations
+REMINDER Reminder
+THANKYOU Thank you
+P articipan t
+ADMIN Administrators, while not actual participan ts,  are notified  in cases where an error
+occurs and email is sent to them so they can correct the issue. These
+administrators are de fined  by the RECIPIENT EMAIL system variable.
+AUTHORIZER Authorizers, including delegated authorizers
+MULTI Matches macros set to MULTI, which are used to match multiple  participan ts
+RECIPIENT RecipientOption Description
+REQUESTER Requester
+Undo w orkflo w  email cus t omiz ations
+To reverse a cus t omiz ation  to a w orkflo w  email and return the message to it’s default value:
+1.Locate the appropriate macro, as described on Customizing w orkflo w  email using the Manage the 1.
+system (PSA) module  (on page 3521).
+2.Enable the Default field. 2.
+3.Enable the Generate skin checkbox, at the bottom  of the table, if you want to generate the Bravura 3.
+Security Fabric  skins now.
+4.Click Update . 4.
+If you chose to generate the skin, your cus t omiz ations  are deleted from the appropriate <lang>-
+<locale>-errmsg.kvg  file in the \<instance>\design\custom\ directory.
+Edit KVGroup files  to customize messages
+You can edit custom KVGroup files to customize any email message.
+Message content
+Like GUI message text, the content of email messages is de fined  in <lang>-<locale>-
+errmsg.kvg . To change the content of a message, follow the procedure outlined in Altering text by
+editing  KVG files (on page 3489) to create a custom <lang>-<locale>-errmsg.kvg file. Generally, email
+subject tags include _SUBJECT_ , and corresponding body text tags include _CONTENT_ .
+If more in f ormation  is required in email messages, then the following sub stitutions  are available:
+▪ %RE CIPIENT_<attrid>%  – the recipient of the request ▪
+▪ %RE QUE S TER_<attrid>%  – the requester of the request ▪
+▪ %EMAIL_RE CIPIENT_<attrid>%  – the recipient of the email; the "To:". ▪
+P r e v enting  email from being sent
+You can prevent Bravura Security Fabric  from sending specific  types of emails by adding the appropriate
+tag, with no content, to your custom <lang>-<locale>-errmsg.kvg  file. Finding where to edit
+(on page 3495) shows you how to locate the appropriate tag.
+For example, to prevent Bravura Security Fabric  from sending "Thank-you" emails to reviewers after  a
+certific ation  campaign has been reviewed:
+1.Open the en-us-errmsg.kvg file. 1.
+2.Retrieve this tag:2.
+"EM_WORKFLOW_CERT_THANKYOU_AUTHORIZER_THANKYOU_CONTENT_PRIMARY_ACTOR"
+"" =   {  
+   "text" = "EM_CERT_THANKYOU_CONTENT"  
+  }
+3.Empty the text:3.
+"EM_WORKFLOW_CERT_THANKYOU_AUTHORIZER_THANKYOU_CONTENT_PRIMARY_ACTOR"
+"" =  
+ {  
+   "text" = ""  
+  }
+4.Stop the W orkflo w  Manager Service (idwfm). 4.
+5.Generate the skin files;  for example: 5.
+make.bat default en-us 
+make.bat install default en-us
+6.Start the W orkflo w  Manager Service. 6.
+Edit text for password rule names and descriptions
+You can edit and modify password policy rule names. This changes the rule name that appears on the
+Password policy rules page, and the rule description  that appears on the Test passwords and Change
+password pages.
+1.Find the tag name of the rule that you want to change:1.
+a.In the \<instance>\design\ directory, regenerate the skins in debug mode by e x ecuting  the a.
+following commands:
+make.bat debug default en-us 
+make.bat install en-us
+b.Click Manage the system > Policies > Password policies . b.
+c.Select a password policy and click the Password policy  tab. c.
+d.Use the "Inspect element" or an equivalent option  in your web browser to see the current HTML d.
+source.
+"View page source" or an equivalent option  cannot be used as it will not show the relevant HTML
+code and debug comments.
+e.Search for the text you want to modify to find the tag name. The tag name is indicated by e.
+[PWID]=[<tag>] .
+The PWID and PWRULE lines only appear in the source code after  the skins have been regenerated
+in debug mode.
+For example, if you want to change the name "have at least N characters", then search for those
+words in the web page HTML source. The search finds  this section:
+[PROGRAM]=[psa.exe] 
+[PWID]=[MINPASSLENGTH] [PWNAME]=[pnMINPASSLENGTH] 
+[PWRULE]=[have at least N characters]
+In this case, the tag name is MINPASSLENGTH.
+2.Search for the tag name found in step 1e in en-us-errmsg.kvg , located in the 2.
+\<instance>\design\src\common directory. The rule names use the following naming c on v ention:
+STRENGTH_<tag>_RULE.
+3.Create a custom en-us-errmsg.kvg  file in the \<instance>\design\custom\ directory to overwrite 3.
+the rule name with your custom text.
+4.Add the following outer KVGroup to your custom en-us-errmsg.kvg  file: 4.
+# KVGROUP-V1.0 
+"language" "EN_US" = { 
+}
+5.Add a KVGroup to overwrite the name for the tag found in step 1e. Use the naming c on v ention 5.
+STRENGTH_<tag>_RULE_USER to override the default en-us-errmsg.kvg  file.
+For example, add the following KVGroup to the custom en-us-errmsg.kvg  file to change the rule
+name for the example found in step 1e:
+"language" "EN_US" = { 
+"STRENGTH_MINPASSLENGTH_RULE_USER" "" = { 
+  "text" = "the password must have at least %STRENGTH_MINPASSLENGTH_RULE_INTVAL
+% characters" 
+   } 
+}
+6.Save and close the custom KVGroup file. 6.
+7.Generate and install the skins7.
+To generate and install new or modified  skin files,  use the following format for the commands to run
+from the <instance>\design\ directory, where en-us  is American English:
+1.Compile the skins:1.
+make.bat default en-us
+Changes are saved in the instance's <instance>\design\skin\ directory
+2.Install the skins:2.
+make.bat install default en-us
+The compiled files are copied to the instance's skin\ directory
+3.If necessary, reload and review any changes to Bravura Security Fabric  web pages. 3.
+Do not run the second command to install the skins if they fail to compile, especially if the firs t m4
+file (links.m4) fails to compile.
+Skins can fail to compile if something in the environment is locking the skin files.  That can be a
+malware program, an automated backup tool running at the time,  but more likely the product UI itself
+being in use at the time  of the skin c ompilationHave a test instance where you can compile the skins when the instance is not being used. Make a
+backup copy of the files on the production  instance in case you need to quickly roll them back. Review
+changes on the test instance, then copy the skin files to the production  instance.
+.
+Make report columns hidden by default
+Bravura Security Fabric  allows you to make columns hidden by default in any report that is available in
+the applic ation;  end-users can display the columns at any time  via the [Show / Hide columns] menu.
+To hide a column by default:
+1.Open the reportHeaderVisibilityConfig.js  file located in the \<instance>\design\src\js\ 1.
+directory.
+2.Modify the defaultReportColumnVisibility  variable using the following format: 2.
+<report exec name>: [list of columns to hide]
+For example:
+var defaultReportColumnVisibility = {
+ACCOUNT: [angular.language._NPHPSA_USER_ID___,
+angular.language.C_TGROUP],
+MEMBERSHIP: [angular.language._NPHPSA_GROUPID__,angular.language.
+_NPHIDC_GROUP_DESC,’Path’]};
+You can use the column names as they appear in the report, but if other languages are installed for
+the applic ation,  you can use the KVG language tags. ACCOUNT and MEMBERSHIP are IDs of reports
+and can be obtained by calling the command from browser console: $(’div[data-
+name="ReportInputTable"]’).attr(’id’)
+3.Save the file and run the following two commands: 3.
+make.bat default en-us
+make.bat install default en-us
+4.Test the result by opening the report specified  in the reportHeaderVisibilityConfig.js 4.
+filePart III ADD-ONSGroup Management Shell Extension
+The Bravura Security Shell Extension  works in c onjunction  with Bravura Group  to allow e fficien t  access to
+protected network resources, for example – folders/shares, managed Activ e  Directory groups, printers,
+etc.
+Once installed, the Shell Extension is embedded into the oper ating  system. Instead of logging into
+Bravura Group , r equesting  access is as simple as a right-click or double click on the protected resource.
+Using the Shell Extension facilitates a simpler user experience. Users are led directly to the Bravura
+Group  page for the network resource to which they want to request access. Previously, users needed a
+better  working knowledge of Bravura Group  in order to perform the same task.
+The Shell Extension integrates seamlessly with the oper ating  system and is a transparent addition  to
+Bravura Group .
+All shared resources will reveal the “Request Access” option  when opening the context menu by right-
+clicking the resource.
+Before the Shell Extension can be installed, you must have the following installed:
+▪Bravura Group▪
+▪“Windows Activ e  Directory DN” connector ( agtaddn ) from the Connector Pack – see the Connector ▪
+Pack Documen t ation
+▪ Activ e  Directory – see the Connector Pack Documen t ation ▪
+The Shell Extension supports both 32 bit and 64 bit systems, including Windows 7/Vista and newer.
+You can install the Shell Extension softw ar e:
+▪Manually installing the Shell Extension  (on page 3528) ▪
+▪Installing aut omatic ally  (on page 3530) ▪
+Manually installing the Shell Extension
+1.Download the hidshext.msi installer to the client w ork s t ation.  If the client w ork s t ation  is running 1.
+64-bit Windows, use hidshext-x64.msi instead.
+The installer is located in the addon directory. If it is not, ensure that the add-ons subfeature of
+Bravura Group  was selected during ins t allation,  or run the Bravura Security Fabric  installer again,
+modify the installed instance, and select it.
+2.Launch the MSI installer with administrator privileges.2.
+Click Next
+3.Read and accept the license agreement. Click Next . 3.
+The installer displays setup types for you to select from.4.Select:4.
+▪Typical to install with the default settings. ▪
+or
+▪Custom to customize the ins t allation  directory. ▪
+Click Next .
+5. Con figur e  the c onnection  to the Bravura Security Fabric  server: 5.
+▪Bravura Security Fabric URL: the URL of the Bravura Security Fabric  server instance. ▪
+▪ Activ e  Directory Target System ID: the name of your Activ e  Directory target within the Bravura ▪
+Security Fabric .
+Click Next .
+6.Click Install to start the ins t allation. 6.7.Click Close to complete when ins t allation  has finished. 7.
+You are prompted to restart your system.
+Installing aut omatic ally
+You can easily deploy Shell Extension to a group of users or computers using a Windows group policy to
+automate the ins t allation  of the client softw ar e.  If you want the MSI installer to install aut omatic ally  with
+no end-user in t er action,  you must set ins t allation  options  by applying a Windows Installer Transform file
+(.mst) or by modifying the MSI installer with an MSI editor. The installer must be run with adminis tr ativ e
+privileges.
+For in f ormation  about installer command-line options,  visit:
+http s://docs.micr osoft.c om/ en-us/windo w s/win32/msi/ s t andar d-ins t aller -c ommand-line-options
+Con figuring  a group policy for unattended  softw ar e  ins t allation
+The following steps outline the general procedure for c on figuring  a group policy to deploy an installer
+package to computers in a domain (see your Windows help for more in f ormation).  You must perform
+these steps using administrator privileges:
+The following steps are for Active  Directory 2019, installed on Windows Server 2019 Datacenter. Details
+may vary depending on your version of Windows.
+1.Log into a domain controller.1.
+2.Copy the installer package and any transform files you have created to a shared folder with access 2.
+granted to all target machines.
+3.Launch Server Manager.3.
+4.Click Tools > Group Policy Management . 4.
+5.If necessary, create a new group policy. To do this, right click on the container where you wish to5.
+create the group policy; for example, the container in which the computers reside.
+6.Select Create a GPO in this domain, and Link it here... , and type a unique name for the policy. For 6.
+example, IDM Suite software policy .
+7.Click OK. 7.
+8.Ensure the group policy is applied only to the appropriate users, computers, or groups:8.
+a.On the left hand side, select the policy you just created. You may need to expand the tree before a.
+you can view the new policy.
+b.Select the Deleg ation  tab. b.
+c.Click the Advanced… button. c.
+d.Select the Authentic a t ed  Users group. d.
+Under the permissions for this group, clear the Allow checkbox for the Apply Group Policy
+permission.
+e.Click Add, type name of the users, computers, or groups to add, then click OK. e.
